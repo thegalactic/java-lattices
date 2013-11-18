@@ -1,0 +1,34 @@
+0. Metadata
+-----------
+Copyright:  2013 University of La Rochelle, France
+License:    http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+
+1. Copyright and disclaimer
+---------------------------
+This application is opensource software released under the CeCILL-B license. Please
+see source code at https://github.com/e-lang/moodle-mod_elang.
+
+2. Changelog
+------------
+This is a non-exhaustive (but still near complete) changelog for
+the lattices project, including alpha and beta versions.
+Our thanks to all those people who've contributed bug reports and
+code fixes.
+
+Legend:
+
+* -> Security Fix
+# -> Issue Fix
+$ -> Language fix or change
++ -> Addition
+^ -> Change
+- -> Removed
+! -> Note
+
+
+2013-11-18  Christophe Demko
+ + Adding the ChangeLog file
+
+2013-11-18  Karell Bertet
+ ! Adding the project to github
+
