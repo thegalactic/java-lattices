@@ -23,24 +23,14 @@ import java.util.TreeSet;
 * <p>
 * The coherence of the lectically sort between rules isn't ensured in case of modification
 * of the rule. Therefore, it is strongly advised to replace each modified rule by a new one.
-* <p>
-* <img src="..\..\..\images\lgpl.png" height="20" alt="lgpl"/>
- * Copyright 2010 Karell Bertet<p>
- * This file is part of lattice.
- * lattice is free package: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * Foobar is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- * You should have received a copy of the GNU General Public License
- * along with lattice.  If not, see <a href="http://www.gnu.org/licenses/" target="_blank">license</a>
- *
+ * <p>
+ * Copyright: 2013 University of La Rochelle, France
+ * @license: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ * This file is part of lattice, free package. You can redistribute it and/or modify
+ * it under the terms of CeCILL-B license.
  * @author Karell Bertet
- * @version 2010
-*/
+ * @version 2013
+ */
 public class Rule implements Comparable
 {
 	/* ------------- FIELDS ------------------ */		
