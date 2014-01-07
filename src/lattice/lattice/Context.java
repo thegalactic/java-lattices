@@ -10,6 +10,10 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.Iterator;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -68,6 +72,17 @@ public class Context extends ClosureSystem {
 	/** A map to associate a set of observations to each attribute */
 	protected TreeMap<Comparable,TreeSet<Comparable>> extent;
 
+//cguerin 2013-06-26 - Optimisation des calculs par BitSets
+    /* ------------- BITSET ADDON ------------------ */
+    
+    private BitSet b_attributes;
+    private BitSet b_obersavtions;
+    private TreeMap<Comparable,BitSet> b_intent;
+    private TreeMap<Comparable,BitSet> b_extent;
+    ArrayList<Comparable> array_observations;
+    ArrayList<Comparable> array_attributes;
+    public int vari;
+    //fin cguerin
 	/* ------------- CONSTRUCTORS ------------------ */	
 	
   	/** Constructs a new empty context */
@@ -76,18 +91,45 @@ public class Context extends ClosureSystem {
 		this.attributes = new TreeSet<Comparable>();
 		this.intent = new TreeMap<Comparable,TreeSet<Comparable>>();
 		this.extent = new TreeMap<Comparable,TreeSet<Comparable>>();
+        this.b_attributes = new BitSet();
+        this.b_obersavtions = new BitSet();
+        this.b_intent = new TreeMap();
+        this.b_extent = new TreeMap();
+        this.array_observations = new ArrayList();
+        this.array_attributes = new ArrayList();
 		}		
   	/** Constructs a new context as a copy of the specified context */
-	public Context (Context C) {
-		this.observations = new TreeSet<Comparable>();
-		this.attributes = new TreeSet<Comparable>();
-		this.intent = new TreeMap<Comparable,TreeSet<Comparable>>();
-		this.extent = new TreeMap<Comparable,TreeSet<Comparable>>();
-		for (Comparable o : C.getObservations())
-			this.intent.put(o, new TreeSet<Comparable>(C.getExtent(o)));
-		for (Comparable a : C.getAttributes())
-			this.extent.put(a, new TreeSet<Comparable>(C.getIntent(a)));
-		}				
+    public Context (Context C) {
+        this.observations = new TreeSet();
+        this.attributes = new TreeSet();
+        this.intent = new TreeMap();
+        this.extent = new TreeMap();
+
+
+
+        this.b_attributes = new BitSet();
+        this.b_obersavtions = new BitSet();
+        this.b_intent = new TreeMap();
+        this.b_extent = new TreeMap();
+        this.array_observations = new ArrayList();
+        this.array_attributes = new ArrayList();
+        
+        //cguerin - 2013-04-20 - add attributes and observation copy
+        this.attributes.addAll(C.getAttributes());
+        this.observations.addAll(C.getObservations());
+        //fin cguerin
+
+        //cguerin - 2013-04-20 - fix intent/extent inversion
+        for (Comparable o : C.getObservations()){
+            this.intent.put(o, new TreeSet(C.getIntent(o)));
+        }
+
+        for (Comparable a : C.getAttributes()){                
+            this.extent.put(a, new TreeSet(C.getExtent(a)));
+        }
+        //fin cguerin
+    }
+	
 	/** Constructs this component from the specified file. <p>
 	* The file have to respect a certain format : <p>
      * The list of observations separated by a space on the first line ;
@@ -355,19 +397,85 @@ public class Context extends ClosureSystem {
 			this.extent.get(att).remove(obs);
 		return this.observations.remove(obs); }
 		
+        //cguerin - 2013-06-28 - Setting of necessary variables for bitsets
+        
+        /*
+         * Set the needed structures for the bitset optimization.
+         * WARNING: this must be called each time your dataset change
+         */
+        public void setBitSets(){
+            this.setMaps();
+            this.setBitSetsIntentExtent();
+        }
+        
+        /*
+         * Set the mapping structure for the bitset optimization
+         */
+        private void setMaps(){
+            Iterator<Comparable> i = attributes.iterator();
+            int cpt = 0;
+            while(i.hasNext()){
+                Comparable c = i.next();
+                array_attributes.add(c);
+                ++cpt;
+            }
+            
+            i = observations.iterator();
+            cpt=0;
+            while(i.hasNext()){
+                Comparable c = i.next();
+                array_observations.add(c);
+                ++cpt;
+            }
+        }
+        
+        /*
+         * Set the extent and intent structures for the bitset optimization
+         */
+        private void setBitSetsIntentExtent(){
+            Iterator<Comparable> i = attributes.iterator();
+            BitSet b = new BitSet(this.observations.size());
+            while(i.hasNext()){
+                Comparable att = i.next();
+                for(Comparable c : this.extent.get(att)){
+                    b.set(array_observations.indexOf(c));
+                }
+                b_extent.put(att, (BitSet)b.clone());
+                b.clear();
+            }
+            i = observations.iterator();
+            b = new BitSet(this.attributes.size());
+            while(i.hasNext()){
+                Comparable obs = i.next();
+                for(Comparable c : this.intent.get(obs)){
+                    b.set(array_attributes.indexOf(c));
+                }
+                b_intent.put(obs, (BitSet)b.clone());
+                b.clear();
+            }
+        }
+        
+        //fin cguerin
 	/* --------------- HANDLING METHODS FOR INTENT AND EXTENT ------------ */	
 			
   	/** Returns the set of observations that are intent of the specified observation  */
-  	public TreeSet<Comparable> getIntent (Comparable obs) {
-		if (this.containsObservation(obs))
-			return this.intent.get(obs);
-		else return new TreeSet<Comparable>(); }
+  	public TreeSet<Comparable> getIntent (Comparable obs) {            
+            if (this.containsObservation(obs)){
+                return this.intent.get(obs);
+            }
+            else {
+                return new TreeSet<>();
+
+            } 
+        }
   	/** Returns the set of observations that are all intent of attributes of the specified set */
-  	public TreeSet<Comparable> getIntent (TreeSet<Comparable> X) {
-		TreeSet<Comparable> resIntent = new TreeSet<Comparable>(this.getAttributes());
-		for (Comparable obs : X)
-			resIntent.retainAll(this.getIntent(obs));
-		return resIntent; }
+        public TreeSet<Comparable> getIntent (TreeSet<Comparable> X) {                    
+            TreeSet<Comparable> resIntent = new TreeSet<Comparable>(this.getAttributes());            
+            for (Comparable obs : X){
+                resIntent.retainAll(this.getIntent(obs));
+            }
+            return resIntent;            
+        }
 	/** Checks if the second specified element is an intent of the first specified element */
 	public boolean containAsIntent (Comparable obs, Comparable att ) {
 		if (this.containsObservation(obs) && this.containsAttribute(att))
@@ -376,20 +484,46 @@ public class Context extends ClosureSystem {
 
   	/** Returns the set of attributes that are intent of the specified observation  */
   	public TreeSet<Comparable> getExtent (Comparable att) {
-		if (this.containsAttribute(att)) 
-			return this.extent.get(att);
-		else return new TreeSet<Comparable>(); }
+            if (this.containsAttribute(att)){
+                return this.extent.get(att);
+            }
+            else {
+                return new TreeSet<>();
+
+            } 
+        }
   	/** Returns the set of attributes that are all intent of observations of the specified set */
   	public TreeSet<Comparable> getExtent (TreeSet<Comparable> X) {
-		TreeSet<Comparable> ext = new TreeSet<Comparable>(this.getObservations());
-		for (Comparable att : X)
-			ext.retainAll(this.getExtent(att));
-		return ext; }		
+            TreeSet<Comparable> ext = new TreeSet<Comparable>(this.getObservations());
+            for (Comparable att : X){
+                ext.retainAll(this.getExtent(att));
+            }
+            return ext;
+        }		
+	public int getExtentNb (TreeSet<Comparable> X) {
+            int size = this.getObservations().size();
+            BitSet b_resExtent = new BitSet(size);
+            b_resExtent.set(0, size);
+            for (Comparable att : X){
+                try{
+                    b_resExtent.and(this.b_extent.get(att));
+                }
+                catch(NullPointerException e){
+                    return 0;
+                }
+            }
+            return b_resExtent.cardinality();
+        }
 	/** Checks if the second specified element is an intent of the first specified element */
 	public boolean containAsExtent (Comparable att, Comparable obs ) {
-		if (this.containsObservation(obs) && this.containsAttribute(att))
-			return this.extent.get(att).contains(obs);		
-		else return false; }		
+            if (this.containsObservation(obs) && this.containsAttribute(att)){
+                return this.extent.get(att).contains(obs);		
+
+            }
+            else {
+                return false;
+            } 
+        }	
 
 
 	/** Adds the second specified element as intent of the first one, 
@@ -547,6 +681,17 @@ public class Context extends ClosureSystem {
 		this.extent = sauv;			
 	}
 
+        //cguerin - 2013-04-20 - return a new reversed Context
+        public Context getReverseContext(){
+            Context context = new Context(this);
+            TreeSet<Comparable> tmp = context.attributes;
+            context.attributes = context.observations;
+            context.observations = tmp;
+            TreeMap<Comparable,TreeSet<Comparable>> sauv = context.intent;
+            context.intent = context.extent;
+            context.extent = sauv;
+            return context;
+        }
     /* --------------- IMPLEMENTATION OF CLOSURE SYSTEM ABSTRACT METHODS ------------ */
 	/* --------------- AND CONCEPT LATTICE GENERATION------------ */
 

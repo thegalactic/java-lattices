@@ -7,6 +7,8 @@ package lattice.lattice;
  *
  */
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
 import lattice.dgraph.Node;
@@ -243,4 +245,175 @@ public class Concept extends Node {
             return this.setB.compareTo(c.setB); 
         else return this.setA.compareTo(c.setA);
 		}**/
+        public ArrayList<TreeSet<Comparable>> immediateSuccessorsLOA(Context init){
+            ArrayList<TreeSet<Comparable>> succB = new ArrayList();
+            TreeSet<Comparable> attributes = (TreeSet<Comparable>) init.getSet().clone();
+            attributes.removeAll(this.getSetA());
+            
+            boolean add;
+            for (Comparable x : attributes){
+                add = true;
+                Iterator it = succB.iterator();
+                while(it.hasNext()){
+                    TreeSet X = (TreeSet) it.next();
+                    TreeSet<Comparable> Bx = (TreeSet<Comparable>) this.getSetA().clone();
+                    Bx.add(x);                    
+                    TreeSet<Comparable> BX = (TreeSet<Comparable>) this.getSetA().clone();
+                    BX.addAll(X);
+                    TreeSet<Comparable> BXx = (TreeSet<Comparable>) BX.clone();
+                    BXx.add(x);
+                    int cBx = count(init, Bx);
+                    int cBX = count(init, BX);
+                    int cBXx = count(init, BXx);
+                    if(cBx == cBX){
+                        if(cBXx == cBx){
+                            it.remove();
+                            TreeSet<Comparable> Xx = new TreeSet();
+                            Xx.addAll(X);
+                            Xx.add(x);
+                            succB.add(Xx);   
+                            add=false;
+                            break;
+                        }
+                    }
+                    if(cBx < cBX){
+                        if(cBXx == cBx){
+                            add=false;
+                            break;
+                        }
+                    }
+                    if(cBx > cBX){
+                        if(cBXx == cBX){
+                            it.remove();
+                        }
+                    }
+                }
+                if(add){
+                    TreeSet<Comparable> t = new TreeSet();
+                    t.add(x);
+                    succB.add(new TreeSet(t));
+                }
+            }
+            for (TreeSet t : succB){
+                t.addAll(this.getSetA());
+            }
+            return succB;
+        }
+        
+        private int count(Context init, TreeSet<Comparable> attributes){
+            return init.getExtentNb(attributes);
+        }
+        
+        //cguerin - 2013-04-12 - transfer immedateSuccessors method from ConceptLattice to Concept
+        public ArrayList<TreeSet<Comparable>> immediateSuccessors (ClosureSystem init) {
+            // Initialization of the dependance graph when not initialized by method recursiveDiagramLattice
+            DGraph dependanceGraph = null;
+            dependanceGraph = new DGraph();
+            for (Comparable c : init.getSet()){
+                dependanceGraph.addNode(new Node(c));
+            }
+            // computes newVal, the subset to be used to valuate every new dependance relation
+            // newVal = F\predecessors of F in the precedence graph of the closure system
+            // For a non reduced closure system, the precedence graph is not acyclic,
+            // and therefore strongly connected components have to be used.            
+            ComparableSet F = new ComparableSet (this.getSetA());
+            long start = System.currentTimeMillis();
+            System.out.print("Precedence graph... ");
+            DGraph prec = init.precedenceGraph();
+            System.out.println(System.currentTimeMillis()-start+"ms");
+            start = System.currentTimeMillis();
+            System.out.print("Srongly connected component... ");
+            DAGraph acyclPrec = prec.stronglyConnectedComponent();
+            System.out.println(System.currentTimeMillis()-start+"ms");
+            ComparableSet newVal = new ComparableSet ();
+            newVal.addAll(F);
+            for (Object x : F)  {
+                // computes nx, the strongly connected component containing x
+                Node nx = null;
+                for (Node cc : acyclPrec.getNodes()) {
+                    TreeSet<Node> CC = (TreeSet<Node>) cc.content;
+                    for (Node y : CC){
+                        if (x.equals(y.content)){
+                            nx=cc;
+                        }
+                    }
+                }
+                // computes the minorants of nx in the acyclic graph
+                TreeSet<Node> ccMinNx = acyclPrec.minorants(nx);
+                // removes from newVal every minorants of nx
+                for (Node cc : ccMinNx) {
+                    TreeSet<Node> CC = (TreeSet<Node>) cc.content;
+                    for (Node y : CC){
+                        newVal.remove(y.content);
+                    }
+                }
+            }
+            // computes the node belonging in S\F
+            TreeSet<Node> N = new TreeSet<Node> ();
+            for (Node in : dependanceGraph.getNodes()) {
+                if (!F.contains(in.content)){
+                    N.add(in);
+                }
+            }
+            
+            System.out.print("Dependance... ");
+            start = System.currentTimeMillis();
+            // computes the dependance relation between nodes in S\F
+            // and valuated this relation by the subset of S\F
+            TreeSet<Edge> E = new TreeSet<Edge>();
+            for (Node from : N) {
+                for (Node to : N) {
+                   if (!from.equals(to)) {
+                    // check if from is in dependance relation with to
+                    // i.e. "from" belongs to the closure of "F+to"
+                    ComparableSet FPlusTo = new ComparableSet(F);
+                    FPlusTo.add(to.content);
+                    FPlusTo = new ComparableSet(init.closure(FPlusTo));
+                    if (FPlusTo.contains(from.content)) {
+                        // there is a dependance relation between from and to
+                        // search for an existing edge between from and to
+                        Edge ed = dependanceGraph.getEdge(from, to);
+                        if (ed==null) {
+                            ed = new Edge (from,to,new TreeSet<ComparableSet>());
+                            dependanceGraph.addEdge(ed);
+                        }
+                        E.add(ed);
+                        // check if F is a minimal set closed for dependance relation between from and to
+                        ((TreeSet<ComparableSet>)ed.content()).add(newVal);
+                        TreeSet<ComparableSet> ValEd = new TreeSet<ComparableSet>((TreeSet<ComparableSet>)ed.content());
+                            for (ComparableSet X1 : ValEd) {
+                                if (X1.containsAll(newVal) && !newVal.containsAll(X1)){
+                                    ((TreeSet<ComparableSet>)ed.content()).remove(X1);
+                                }                                    
+                                if (!X1.containsAll(newVal) && newVal.containsAll(X1)){
+                                    ((TreeSet<ComparableSet>)ed.content()).remove(newVal);
+                                }
+                            }
+                        }
+                    }
+                }
+            }            
+            System.out.println(System.currentTimeMillis()-start+"ms");
+            System.out.print("Subgraph... ");
+            start = System.currentTimeMillis();
+            // computes the dependance subgraph of the closed set F as the reduction
+            // of the dependance graph composed of nodes in S\A and edges of the dependance relation
+            DGraph sub = dependanceGraph.subgraphByNodes(N);            
+            DGraph delta = sub.subgraphByEdges(E);            
+            // computes the sources of the CFC of the dependance subgraph
+            // that corresponds to successors of the closed set F
+            DAGraph CFC = delta.stronglyConnectedComponent();            
+            TreeSet<Node> SCCmin = CFC.sinks();
+            System.out.println(System.currentTimeMillis()-start+"ms");
+            ArrayList<TreeSet<Comparable>> immSucc = new ArrayList<TreeSet<Comparable>>();            
+            for (Node n1 : SCCmin) {
+                TreeSet s = new TreeSet(F);
+                TreeSet<Node> toadd = (TreeSet<Node>)n1.content;
+                for (Node n2 : toadd){
+                    s.add(n2.content);
+                }                        
+                immSucc.add(s);
+            }
+            return immSucc;
+        }
 }// end of Concept

@@ -1,3 +1,5 @@
+package lattice.lattice;
+
 
 /*
  * Examples.java
@@ -11,9 +13,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.TreeSet;
-import lattice.dgraph.DAGraph;
-import lattice.dgraph.DGraph;
-import lattice.dgraph.Node;
+import lattice.lattice.DAGraph;
+import lattice.lattice.DGraph;
+import lattice.lattice.Node;
 import lattice.lattice.*;
 /**
  * This classe provides some use examples of main classes of this lattice package.
@@ -219,6 +221,8 @@ class Examples {
             log = "-> Join irreducibles of ideal lattice: "+CSL.joinIrreducibles()+"\n";
             log += "Meet irreducibles of ideal lattice: "+CSL.meetIrreducibles()+"\n";
             System.out.println(log); file.write(log);
+            
+                    
 
             // reduces the ideal lattice by replacing each join irreducible node by one element
             Lattice L = CSL.getJoinReduction();
@@ -231,7 +235,7 @@ class Examples {
             log += "Meet irreducibles of reduced ideal lattice: "+L.meetIrreducibles()+"\n";
             System.out.println(log); file.write(log);
             // computes the table of the reduced lattice
-            Context T = L.getTable();
+            Context T = L.getTable();            
             String nameTable = name+"IrrTable.txt";
             T.toFile(outputDir+nameTable);
             log = "-> Irreducibles table of the reduced ideal lattice saved in "+nameTable+":\n "+T.toString();
@@ -409,6 +413,22 @@ class Examples {
             log += "-> Initial context:\n "+base+"\n";
             System.out.println(log); file.write(log);
 
+            // compute the immediate successors of a concept from the context using Limited Object Access algorihtm            
+            TreeSet<Comparable> setA = new TreeSet();
+            setA.add(base.getAttributes().first());
+            setA.addAll(base.closure(setA));
+            TreeSet<Comparable> setB = new TreeSet();
+            setB.addAll(base.getExtent(base.closure(setA)));
+            Concept concept = new Concept(setA, setB);
+            log = "Chosen concept "+concept.toString();
+            System.out.println(log); 
+            file.write(log);
+            
+            ArrayList<TreeSet<Comparable>> immsucc = concept.immediateSuccessorsLOA(base);
+            log = "First immediate successor concept "+new Concept(immsucc.get(0),base.getExtent(immsucc.get(0)))+"\n";
+            System.out.println(log); 
+            file.write(log);
+            
             // computes the precedence graph of the context
             DGraph prec = base.precedenceGraph();
             String namePrecGraph = name+"PrecedenceGraph.dot";
