@@ -1,4 +1,4 @@
-package lattice.lattice;
+package lattice;
 
 /*
  * ClosureSystem.java
@@ -9,9 +9,9 @@ package lattice.lattice;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
-import lattice.dgraph.DAGraph;
-import lattice.dgraph.DGraph;
-import lattice.dgraph.Node;
+import dgraph.DAGraph;
+import dgraph.DGraph;
+import dgraph.Node;
 /**
  * This class is an abstract class defining the common behavior of closure systems,
  * and specialy its closed set lattice generation.
