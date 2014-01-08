@@ -14,6 +14,7 @@ import dgraph.DAGraph;
 import dgraph.DGraph;
 import dgraph.Node;
 import lattice.*;
+
 /**
  * This classe provides some use examples of main classes of this lattice package.
  * <p>
