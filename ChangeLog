@@ -6,12 +6,12 @@ License:    http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B
 1. Copyright and disclaimer
 ---------------------------
 This application is opensource software released under the CeCILL-B license. Please
-see source code at https://github.com/e-lang/moodle-mod_elang.
+see source code at https://github.com/kbertet/java-lattices.
 
 2. Changelog
 ------------
 This is a non-exhaustive (but still near complete) changelog for
-the lattices project, including alpha and beta versions.
+the java-lattices project, including alpha and beta versions.
 Our thanks to all those people who've contributed bug reports and
 code fixes.
 
