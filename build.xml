@@ -1,24 +1,77 @@
 <?xml version="1.0"?>
-<project name="java-lattices" basedir="." default="jar">
-    <property name="src.dir"     value="src"/>
-    <property name="build.dir"   value="build"/>
-    <property name="classes.dir" value="${build.dir}/classes"/>
-    <property name="jar.dir"     value="${build.dir}/jar"/>
+<project name="lattices" basedir="." default="jar">
+	<property name="src.dir" value="src" />
+	<property name="examples.dir" value="examples" />
+	<property name="test.dir" value="test" />
 
-    <target name="clean">
-        <delete dir="${build.dir}"/>
-    </target>
+	<property name="build.dir" value="build" />
+	<property name="build.src.dir" value="${build.dir}/src" />
+	<property name="build.test.dir" value="${build.dir}/test" />
+	<property name="build.examples.dir" value="${build.dir}/examples" />
 
-    <target name="build">
-        <mkdir dir="${classes.dir}"/>
-        <javac includeantruntime="false" srcdir="${src.dir}" destdir="${classes.dir}"/>
-    </target>
+	<property name="build.jar.dir" value="${build.dir}/jar" />
 
-    <target name="jar" depends="build">
-        <mkdir dir="${jar.dir}"/>
-        <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}" />
-    </target>
+	<property name="output.examples.dir" value="${build.dir}/output" />
+	<property name="examples-class" value="Examples" />
 
-    <target name="clean-build" depends="clean,jar"/>
+	<target name="rebuild" depends="clean,jar" />
 
+	<target name="clean">
+		<delete dir="${build.dir}" />
+	</target>
+
+	<target name="build">
+		<mkdir dir="${build.src.dir}" />
+		<javac includeantruntime="false" srcdir="${src.dir}" destdir="${build.src.dir}" />
+	</target>
+
+	<target name="jar" depends="build">
+		<mkdir dir="${build.jar.dir}" />
+		<jar destfile="${build.jar.dir}/${ant.project.name}.jar" basedir="${build.src.dir}" />
+	</target>
+
+	<target name="build-test" depends="jar">
+		<mkdir dir="${build.test.dir}" />
+		<javac includeantruntime="false" srcdir="${test.dir}" destdir="${build.test.dir}">
+			<classpath>
+				<pathelement location="lib/junit.jar" />
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="build-examples" depends="jar">
+		<mkdir dir="${build.examples.dir}" />
+		<javac includeantruntime="false" srcdir="${examples.dir}" destdir="${build.examples.dir}">
+			<include name="**/*.java" />
+			<classpath>
+				<pathelement location="${build.jar.dir}/${ant.project.name}.jar" />
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="test" depends="build-test">
+		<junit printsummary="true">
+			<formatter type="plain" usefile="false" />
+			<classpath>
+				<pathelement location="${build.jar.dir}/${ant.project.name}.jar" />
+				<pathelement location="${build.test.dir}" />
+			</classpath>
+			
+			<batchtest fork="true">
+				<fileset dir="${test.dir}" includes="**/*Test.java" />
+			</batchtest>
+		</junit>
+	</target>
+
+	<target name="examples" depends="build-examples">
+		<mkdir dir="${output.examples.dir}" />
+		<java classname="${examples-class}">
+			<classpath>
+				<pathelement location="${build.jar.dir}/${ant.project.name}.jar" />
+				<pathelement location="${build.examples.dir}" />
+			</classpath>
+			<arg value="${examples.dir}" />
+			<arg value="${output.examples.dir}" />
+ 		</java>
+	</target>
 </project>

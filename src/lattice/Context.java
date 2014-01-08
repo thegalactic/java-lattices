@@ -304,7 +304,7 @@ public class Context extends ClosureSystem {
 			// Read each file
 			for (String linkFileName : linkFilesName){
 				// add an observation => file name
-				StringTokenizer st = new StringTokenizer(linkFileName,"\\");
+				StringTokenizer st = new StringTokenizer(linkFileName,File.separator);
 				String fileName = "";
 				while (st.hasMoreTokens())
 					fileName = st.nextToken();

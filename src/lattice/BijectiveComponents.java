@@ -115,7 +115,7 @@ public class BijectiveComponents {
     public void save (String directory, String name) {
         try 	{
             // create the directory
-            directory = directory+"\\"+name+"BijectiveComponents\\";
+            directory = directory+File.separator+name+"BijectiveComponents"+File.separator;
             File f = new File(directory);
             f.mkdir();
             directory += name;
