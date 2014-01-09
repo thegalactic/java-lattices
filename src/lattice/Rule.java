@@ -11,23 +11,26 @@ import java.util.StringTokenizer;
 import java.util.TreeSet;
 /**
 * This class gives a representation for an implicational rule.
-* <p>
+*
 * A rule is composed of a premise and a conclusion that are comparable sets,
 * i.e. sets of elements that can be sorted by the lectic order defined
-* by class <code>ComparableSet</code>.
-* <p>
-* This class implements class <code>Comparable</code> aiming at
-* sorting rules by providing the <code>compareTo()</code> method.
+* by class `ComparableSet`.
+*
+* This class implements class `Comparable` aiming at
+* sorting rules by providing the `compareTo()` method.
 * Comparison between this component and those in parameter is realised by sorting their premises (lecticaly order),
 * or their conclusion in case of equality of the premises.
-* <p>
+*
 * The coherence of the lectically sort between rules isn't ensured in case of modification
 * of the rule. Therefore, it is strongly advised to replace each modified rule by a new one.
- * <p>
+ *
  * Copyright: 2013 University of La Rochelle, France
+ *
  * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
  * This file is part of lattice, free package. You can redistribute it and/or modify
  * it under the terms of CeCILL-B license.
+ *
  * @author Karell Bertet
  * @version 2013
  */
@@ -88,7 +91,8 @@ public class Rule implements Comparable
 	
 	/* ------------- OVERLAPING METHODS ------------------ */		
 	/** Returns a String representation of this component.
-     * The following format is used: <p>
+     * The following format is used:
+     *
      * [elements of the premise separated by a space] -> [elements of the conclusion separated by a space]
      * a StringTokenizer is used to delete spaces in the
      * string description of each element of premise and conclusion
@@ -111,7 +115,8 @@ public class Rule implements Comparable
         return s;
     }
 		
-	/** Returns a String representation of this component to be saved in a file. <p>
+	/** Returns a String representation of this component to be saved in a file.
+	*
 	* Element in a set are separated by a space */
 	public String toFile(){
 		String res = "";

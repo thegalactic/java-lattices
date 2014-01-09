@@ -9,21 +9,24 @@ package dgraph;
 import java.util.StringTokenizer;
 /**
  * This class gives a standard representation for an edge of a graph.
- * <p>
- * An edge is composed of a content, and two nodes <code>from</code> and <code>to</code> of class <code>Node</code>.
- * <p>
- * This class implements class <code>Comparable</code> and provides
- * the  <code>compareTo()</code> method that compares the component with
+ *
+ * An edge is composed of a content, and two nodes `from` and `to` of class `Node`.
+ *
+ * This class implements class `Comparable` and provides
+ * the  `compareTo()` method that compares the component with
  * those in parameter by sorting indexes of the nodes that compose it.
- * <p>
+ *
  * Therefore, edges can be stored in a sorted collection since they are
  * comparable, and in particular in a sorted set where 
  * set operations are provided.
- * <p>
+ *
  * Copyright: 2013 University of La Rochelle, France
+ *
  * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
  * This file is part of lattice, free package. You can redistribute it and/or modify
  * it under the terms of CeCILL-B license.
+ *
  * @author Karell Bertet
  * @version 2013
  */

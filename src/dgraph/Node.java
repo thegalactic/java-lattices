@@ -10,21 +10,24 @@ package dgraph;
 import java.util.StringTokenizer;
 /**
  * This class gives a standard representation for a node of a graph.
- * <p>
- * A node is composed of a content</code> and an
+ *
+ * A node is composed of a `content` and an
  * automatiquely and unique index.
- * <p>
+ *
  * This class implements class <code>Comparable</code> aiming at
  * sorting nodes by providing the <code>compareTo()</code> method
  * that compares the component with those in parameter by comparing their indexes.
- * <p>
+ *
  * Since components are comparable, they can be stored in a sorted collection,
  * and in particular in a sorted set where set operations are provided.
- * <p>
+ *
  * Copyright: 2013 University of La Rochelle, France
+ *
  * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
  * This file is part of lattice, free package. You can redistribute it and/or modify
  * it under the terms of CeCILL-B license.
+ *
  * @author Karell Bertet
  * @version 2013
  */
