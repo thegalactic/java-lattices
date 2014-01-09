@@ -1,6 +1,10 @@
 java-lattices
 =============
 
+Build status
+------------
+[![Build Status](https://travis-ci.org/kbertet/java-lattices.png)](https://travis-ci.org/kbertet/java-lattices)
+
 Documentation
 -------------
 
