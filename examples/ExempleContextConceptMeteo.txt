@@ -1,0 +1,30 @@
+Observations: [HN,TD,VO] [HH,TD,VO] [HN,TF,VO] [HH,TC,VO] [HN,TD,VN] [HH,TD,VN] [HN,TC,VN] [HH,TC,VN] [HN,TF,VN] [HN,VO] [HF,TF] [TD,VO] [HN,TD] [HH,VO] [HH,TD] [HN,VN] [TD,VN] [HH,VN] [HH,TC] [TC,VN] [VO] [HN] [TD] [HH] [VN] [TC] [] [HH,HN,TC,TD,TF,VO,VN]
+Attributes: VO VN TD TC TF HN HH
+[HN,TD,VO] : VO TD HN 
+[HH,TD,VO] : VO TD HH 
+[HN,TF,VO] : VO HN TF 
+[HH,TC,VO] : VO TC HH 
+[HN,TD,VN] : VN TD HN 
+[HH,TD,VN] : VN TD HH 
+[HN,TC,VN] : VN TC HN 
+[HH,TC,VN] : VN TC HH 
+[HN,TF,VN] : VN HN TF 
+[HN,VO] : HN VO
+[HF,TF] : HF TF
+[TD,VO] : TD VO
+[HN,TD] : HN TD
+[HH,VO] : HH VO
+[HH,TD] : HH TD
+[HN,VN] : HN VN
+[TD,VN] : TD VN
+[HH,VN] : HH VN
+[HH,TC] : HH TC
+[TC,VN] : TC VN
+[VO] : VO
+[HN] : HN
+[TD] : TD
+[HH] : HH
+[VN] : VN
+[TC] : TC
+[] :
+[HH,HN,TC,TD,TF,VO,VN] : HH HN TC TD TF VO VN
