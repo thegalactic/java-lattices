@@ -464,7 +464,7 @@ public class Context extends ClosureSystem {
                 return this.intent.get(obs);
             }
             else {
-                return new TreeSet<>();
+                return new TreeSet<Comparable>();
 
             } 
         }
@@ -488,7 +488,7 @@ public class Context extends ClosureSystem {
                 return this.extent.get(att);
             }
             else {
-                return new TreeSet<>();
+                return new TreeSet<Comparable>();
 
             } 
         }
