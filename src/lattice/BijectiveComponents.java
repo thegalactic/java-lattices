@@ -31,12 +31,11 @@ import dgraph.DGraph;
  * <code>save</code> saves theses components in files.
  * <p>
  * This class can be used as follows:
- * <pre>
- * BijectiveComponents BC = new BijectiveComponents (initialClosureSystem);
- * BC.initialize();
- * BC.save(dirString,nameString);
- * </pre>
- * <p>
+ *
+ *     BijectiveComponents BC = new BijectiveComponents (initialClosureSystem);
+ *     BC.initialize();
+ *     BC.save(dirString,nameString);
+ *
  * Copyright: 2013 University of La Rochelle, France
  * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
  * This file is part of lattice, free package. You can redistribute it and/or modify
@@ -160,7 +159,7 @@ public class BijectiveComponents {
     	catch (Exception e) { e.printStackTrace(); }
     }
 
-	/** Returns the informativ generic basis
+	/* Returns the informativ generic basis
 	public IS getApproximativBasis () {
 		IS IGB = new IS(this.canonicalDirectBasis);
         IS tmp = new IS(this.canonicalDirectBasis);

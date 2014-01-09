@@ -79,6 +79,8 @@
 
 	<target name="doc" depends="build">
 		<mkdir dir="${build.doc.dir}" />
-		<javadoc sourcepath="${src.dir}" destdir="${build.doc.dir}" />
+		<javadoc sourcepath="${src.dir}" destdir="${build.doc.dir}">
+			<doclet name="ch.raffael.doclets.pegdown.PegdownDoclet" path="lib/pegdown-doclet.jar" />
+   		</javadoc>
 	</target>
 </project>

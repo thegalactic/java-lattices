@@ -18,20 +18,23 @@ import dgraph.Edge;
 
 /**
  * This class gives a representation for a concept, i.e. a node of a concept lattice.
- * <p>
- * A concept extends class <code>Node</code> by providing two comparable sets defined
- * by <code>ComparableSet</code>, namely setA and setB, aiming at storing set of a concepts.
- * <p>
+ *
+ * A concept extends class `Node` by providing two comparable sets defined
+ * by `ComparableSet`, namely setA and setB, aiming at storing set of a concepts.
+ *
  * This component can also be used to store a closed set by using only set A.
- * <p>
- * This class implements class <code>Comparable</code> aiming at
- * sorting concepts by providing the <code>compareTo()</code> method.
+ *
+ * This class implements class `Comparable` aiming at
+ * sorting concepts by providing the `compareTo()` method.
  * Comparison between this component and those in parameter is realised by comparing set A.
- * <p>
+ *
  * Copyright: 2013 University of La Rochelle, France
+ *
  * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
  * This file is part of lattice, free package. You can redistribute it and/or modify
  * it under the terms of CeCILL-B license.
+ *
  * @author Karell Bertet
  * @version 2013
  */

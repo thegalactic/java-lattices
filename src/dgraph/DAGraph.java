@@ -15,26 +15,29 @@ import lattice.Concept;
 import lattice.ConceptLattice;
 /**
  * This class extends the representation of a directed graph given by class 
- * <code>DGraph</code> for directed acyclic graph (DAG). 
- * <p>
+ * `DGraph` for directed acyclic graph (DAG). 
+ *
  * The main property of a directed acyclic graph is to be a partially ordered set (poset) when
  * transitively closed, and a Hasse diagram when transitively reduced.
- * <p>
+ *
  * This property is not ensured for components of this class because it would require a
  * checking treatment over the graph whenever a new edge or node is added.
  * However, this property can be explicitely ckecked using method
- * <code>boolean isAcyclic ()</code>.
- * <p> 
+ * `boolean isAcyclic ()`.
+ *
  * This class provides methods implementing classical operation on a directed acyclic graph:
  * minorants and majorants, filter and ideal, transitive reduction, ideal lattice, ...
- * <p>
+ *
  * This class also provides a static method randomly generating a directed acyclic graph,
  * and a static method generating the graph of divisors.
- * <p>
+ *
  * Copyright: 2013 University of La Rochelle, France
+ *
  * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
  * This file is part of lattice, free package. You can redistribute it and/or modify
  * it under the terms of CeCILL-B license.
+ *
  * @author Karell Bertet
  * @version 2013
  */
@@ -47,7 +50,8 @@ public class DAGraph extends DGraph {
 	* @param S the set of nodes **/
    public DAGraph (TreeSet<Node> S) { super (S); }
   	/** Constructs this component as a copy of the specified directed graph
-	* when it is acyclic. An empty ;<p>
+	* when it is acyclic. An empty ;
+	*
 	* Acyclic property is checked for the specified DAG.
 	* When not verified, this component is construct with an empty set of nodes. 	
 	* @param G the DAG to be copied */
@@ -70,15 +74,18 @@ public class DAGraph extends DGraph {
    public TreeSet<Node> max () {
 		return this.wells(); }
 
-	/** Returns the set of majorants of the specified node.<p>
-	* Majorants of a node are its successors in the transitive closure **/
+	/**
+	 * Returns the set of majorants of the specified node.
+	 *
+	 * Majorants of a node are its successors in the transitive closure **/
 	public TreeSet<Node> majorants (Node N) {
 		DAGraph G = new DAGraph (this);
 		G.transitiveClosure();		
 		return G.getNodesSucc(N);
 	}
-	/** Returns the set of minorants of the specified node.<p>
-	* Minorants of a node are its predecessors in the transitive closure **/
+	/** Returns the set of minorants of the specified node.
+	 *
+	 * Minorants of a node are its predecessors in the transitive closure **/
 	public TreeSet<Node> minorants (Node N) {
 		DAGraph G = new DAGraph (this);
 		G.transitiveClosure();
@@ -99,9 +106,10 @@ public class DAGraph extends DGraph {
 		return this.subgraphByNodes(S);
 	}
 
-	/** Returns the subgraph of this component induced by the specified set of nodes <p>
-	* The subgraph only contains nodes of the specified set that also are in this component. 
-	* **/
+	/** Returns the subgraph of this component induced by the specified set of nodes
+	 *
+	 * The subgraph only contains nodes of the specified set that also are in this component. 
+	 */
 	public DAGraph subgraphByNodes (TreeSet<Node> S) {
 		DGraph tmp = new DGraph (this);
 		tmp.transitiveClosure();
@@ -114,9 +122,11 @@ public class DAGraph extends DGraph {
 
 	/* --------------- DAG TREATMENT METHODS ------------ */	
 	
-   /** Computes the transitive reduction of this component. <p>
+   /** Computes the transitive reduction of this component.
+    *
 	* The transitive reduction is not uniquely defined only when the acyclic property 
-	* is verified. In this case, it corresponds to the Hasse diagram of the DAG. <p>
+	* is verified. In this case, it corresponds to the Hasse diagram of the DAG.
+	*
 	* This method is an implementation of the Goralcikova-Koubeck 
 	* algorithm that can also compute the transitive closure. 
 	* This tratment is performed in O(n+nm_r+nm_c), 
@@ -177,11 +187,13 @@ public class DAGraph extends DGraph {
 		return nb;
     }
 
-   /** Computes the transitive closure of this component.<p>
+   /** Computes the transitive closure of this component.
+    *
 	* This method overlaps the computation of the transitive closure for directed graph 
-	* in class <code>DGraph</code> with an implementation of the Goralcikova-Koubeck 
+	* in class `DGraph` with an implementation of the Goralcikova-Koubeck 
 	* algorithm dedicated to acyclic directed graph. This algorithm can also compute the 
-	* transitive reduction of a directed acyclic graph. <p>
+	* transitive reduction of a directed acyclic graph.
+	*
 	* This treatment is performed in O(n+nm_r+nm_c), where n corresponds to the number of nodes, 
 	* m_r to the numer of edges in the transitive closure, 
 	* and m_r the number of edges in the transitive reduction.

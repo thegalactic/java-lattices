@@ -13,39 +13,42 @@ import dgraph.DGraph;
 import dgraph.Edge;
 import dgraph.Node;
 /**
- * This class extends class <code>DAGraph</code> to provide specific methods
+ * This class extends class `DAGraph` to provide specific methods
  * to manipulate a lattice. 
- * <p>
+ *
  * A lattice is a directed acyclic graph (DAGraph) containing particular nodes denoted join and meet
  * (a dag is a lattice if and only if each pair of nodes admits a join and a meet.)
- * <p>
+ *
  * Since checking the lattice property is very time-expensive, this property is not ensured 
  * for components of this class. However, it can be explicitely ckecked using
- * method <code>boolean isLattice ()</code>.
- * <p>
+ * method `boolean isLattice ()`.
+ *
  * This class provides methods implementing classical operation on a lattice
  * issued from join and meet operation and irreducibles elements,
  * and methods that returns a condensed representation of a lattice.
- * <p>
+ *
  * A well-known condensed representation of a lattice is its table, obtained by method
- * <code>Context getTable()</code>,
+ * `Context getTable()`,
  * where join-irreducibles are in column and meet-irreducibles are in rown.
- * <p>
+ *
  * Another condensed representation is its dependance graph obtained by method
- * <code>DGraph getDependanceGraph()</code>.
+ * `DGraph getDependanceGraph()`.
  * The dependance graph is a directed graph where nodes are join-irreducibles, 
  * edges corresponds to the dependance relation between two join-irreducibles 
  * and are valuated by a family of subsets of irreducibles.
- * <p>
+ *
  * The dependance graph encodes two other condensed representation of a lattice
  * that are its minimal generators and its canonical direct basis
  * that can be obtained from the dependance graph by methods
- * <code>TreeSet getMinimalGenerators()</code> and <code>IS getCanonicalDirectBasis()</code>.
- * <p>
+ * `TreeSet getMinimalGenerators()` and `IS getCanonicalDirectBasis()`.
+ *
  * Copyright: 2013 University of La Rochelle, France
+ *
  * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
  * This file is part of lattice, free package. You can redistribute it and/or modify
  * it under the terms of CeCILL-B license.
+ *
  * @author Karell Bertet
  * @version 2013
  */
@@ -74,7 +77,8 @@ public class Lattice extends DAGraph {
    public Lattice (TreeSet<Node> S) {
        super (S);
    }
-	/**  Constructs this component as a copy of the specified lattice.<p>
+	/**  Constructs this component as a copy of the specified lattice.
+	 *
 	* Lattice property is checked for the specified lattice.
 	* When not verified, this component is construct with an empty set of nodes. 
 	* @param G the Lattice to be copied */
@@ -89,12 +93,13 @@ public class Lattice extends DAGraph {
 
     /* ------------- LATTICE CHEKING METHODS ------------------ */
  
-   /** Check if this component is a lattice.<p>
+   /** Check if this component is a lattice.
+    *
 	* There exists several caracterizations of a lattice. 
 	* The caracterization implemented is the following: 
 	* A lattice is a DAG if there exists a meet for each pair of node, 
 	* and an unique maximal node.
-	* <p>
+	*
 	* This treatment is performed in O(n^3), where n is the number of nodes.
 	*/
    public boolean isLattice () {
@@ -219,7 +224,8 @@ public class Lattice extends DAGraph {
 		return this.subgraphByNodes(Irr);
 	}	
 
-	/** Generates and returns the isomorphic closed set lattice defined on the join irreducibles set.<p>
+	/** Generates and returns the isomorphic closed set lattice defined on the join irreducibles set.
+	 *
 	* Each node of this component is replaced  by a node containing its join irreducibles 
 	* predecessors stored in a closed set. */
 	public ConceptLattice joinClosure () {
@@ -246,7 +252,8 @@ public class Lattice extends DAGraph {
 		return CSL;
 	}	
 
-	/** Generates and returns the isomorphic closed set lattice defined on the meet irreducibles set.<p>
+	/** Generates and returns the isomorphic closed set lattice defined on the meet irreducibles set.
+	*
 	* Each node of this component is replaced  by a node containing its meet irreducibles 
 	* successors stored in a closed set. */
 	public ConceptLattice meetClosure () {
@@ -274,7 +281,8 @@ public class Lattice extends DAGraph {
 	}	
 
 	/** Generates and returns the isomorphic concept lattice defined on the join and meet 
-	* irreducibles sets.<p>
+	* irreducibles sets.
+	*
 	* Each node of this component is replaced  by a node containing its meet irreducibles 
 	* successors and its join irreducibles predecessors stored in a concept. */
 	public ConceptLattice irreducibleClosure () {
@@ -307,7 +315,7 @@ public class Lattice extends DAGraph {
 	}	
 
 	/** Returns the table of the lattice, composed of the join and meet irreducibles nodes.
-	* <p>
+	*
 	* Each attribute of the table is a copy of a join irreducibles node.
 	* Each observation of the table is a copy of a meet irreducibles node.
 	* An attribute is extent of an observation when its join irreducible node
@@ -343,7 +351,7 @@ public class Lattice extends DAGraph {
 		}
 
 	/** Returns an IS of the lattice defined on the join irreducibles nodes.
-	* <p>
+	*
 	* Each element of the IS is a copy of a a join irreducibles node.	
 	*/	
 	public IS getIS () { 	
@@ -395,24 +403,25 @@ public class Lattice extends DAGraph {
 		}
    /* ------------- DEPENDANCE GRAPH RELATIVE METHODS ------------------ */
 
-   /** Returns the dependance graph of this component. <p>
+   /** Returns the dependance graph of this component.
+    *
     * The dependance graph is a condensed representation of a lattice that encodes
     * its minimal generators, and its canonical direct basis.
-    * <p>
+    *
     * In the dependance graph, nodes are join irreducibles,
     * egdes correspond to the dependance relation between join-irreducibles
      * (j -> j' if and only if there exists a node x in the lattice such that
      * x not greather than j and j', and x v j' > j),
      * and edges are labeled with the smallest subsets X of join-irreducibles such that
      * the join of elements of X corresponds to the node x of the lattice.
-     *<p>
+     *
     * The dependance graph could has been already computed in the case where this component 
     * has been instancied as the diagramm of the closed set lattice of a closure system 
     * using the static method
-    * <code>static ConceptLattice diagramLattice (ClosureSystem init)</code>
+    * `static ConceptLattice diagramLattice (ClosureSystem init)`
     * This method implements an adaptation adaptation of Bordat's
      * where the dependance graph is computed while the lattice is generated.
-    * <p>
+    *
     * However, it is generated in O(nj^3) where n is the number of nodes of the lattice, and
     * j is the number of join-irreducibles of the lattice.
     */
@@ -483,16 +492,17 @@ public class Lattice extends DAGraph {
         return this.dependanceGraph;
     }
 
-	/** Returns the canonical direct basis of the lattice.<p>
+	/** Returns the canonical direct basis of the lattice.
+	*
     * The canonical direct basis is a condensed representation of a lattice encoding
      * by the dependance graph.
-     * <p>
+     *
      * This canonical direct basis is deduced from the dependance graph of the lattice:
      * for each edge b -> a valuated by a subset X, the rule a+X->b is a rule of the
      * canonical direct basis.
-     * <p>
+     *
      * If not yet exists, the dependance graph of this component has to be generated
-     * by method <code>getDependanceGraph</code>.
+     * by method `getDependanceGraph`.
 	*/    
 public IS getCanonicalDirectBasis () {
         DGraph ODGraph = this.getDependanceGraph();
@@ -518,15 +528,16 @@ public IS getCanonicalDirectBasis () {
         return BCD;
     }
 
-    /** Returns the minimal generators of the lattice.<p>
+    /** Returns the minimal generators of the lattice.
+    *
     * Minimal generators a condensed representation of a lattice encoding
      * by the dependance graph.
-     * <p>
+     *
      * Minimal generators are premises of the canonical direct basis.
      * that  is deduced from the dependance graph of the lattice.
-     * <p>
+     *
      * If not yet exists, the dependance graph of this component has to be generated
-     * by method <code>getDependanceGraph</code>.
+     * by method `getDependanceGraph`.
 	*/
 	public TreeSet getMinimalGenerators () {
         IS BCD = this.getCanonicalDirectBasis();

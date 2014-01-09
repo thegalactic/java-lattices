@@ -12,22 +12,25 @@ import java.util.TreeSet;
 /**
 * This class gives a minimal representation of a comparable set where sets
 * are compared using the lectic order.
-* <p>
-* This class extends class <code>TreeSet</code>, implements class <code>Comparable</code> and provides
-* a <code>compareTo</code> method that implements the lectic order between two sets. 
+*
+* This class extends class `TreeSet`, implements class `Comparable` and provides
+* a `compareTo` method that implements the lectic order between two sets. 
 * Therefore, a comparable set can be stored in a sorted collection, and in particular in a sorted set where
 * set operations are provided.
-* <p>
+*
 * The lectic order extends the inclusion, and is defined only for comparable elements,
-* i.e. elements that can be sorted, as follows:<p>
+* i.e. elements that can be sorted, as follows:
+*
 * "a set A is smaller than a set B iff there exists an element in B\A
 * such that any smaller element belonging to A also belongs to B."
-* <p> 
- * <p>
+* 
  * Copyright: 2013 University of La Rochelle, France
+ *
  * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
  * This file is part of lattice, free package. You can redistribute it and/or modify
  * it under the terms of CeCILL-B license.
+ *
  * @author Karell Bertet
  * @version 2013
  */
@@ -73,9 +76,11 @@ public class ComparableSet extends TreeSet implements Comparable, Cloneable
     }
 
 
-   /** Compares this component with those in parameter according to the lectic order.<p>
+   /** Compares this component with those in parameter according to the lectic order.
+    *
 	* The lectic order defines a sort on sets of elements extending the inclusion order
-    * as follows:<p>
+    * as follows:
+    *
     * A set A is smaller than a set B iff there exists an element in B\A
     * such that any smaller element belonging to A also belongs to B.
     * The result is zero if the identifiers are equal; 1 if this component's identifier is greater,

@@ -15,23 +15,25 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 /**
  * This class gives a standard representation for a directed graph
- * by sets of successors and predecessors.<p>
+ * by sets of successors and predecessors.
  *
- * A directed graph is composed of a treeset of node, defined by class <code>Node</code> ;
+ * A directed graph is composed of a treeset of node, defined by class `Node` ;
  * a treemap of successors that associates to each node a treeset of successors ;
  * and a treemap of predecessors that associates to each node a treeset of predecessors.
- * <p>
+ *
  * This class provides methods implementing classical operation on a directed graph:
  * sinks, wells, subgraph, depth first search, reflexive closure and reduction,
  * transitive closure, strongly connected components, ...
- * <p>
+ *
  * This class also provides a static method randomly generating a directed graph.
- * <p>
- * <p>
+ *
  * Copyright: 2013 University of La Rochelle, France
+ *
  * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
  * This file is part of lattice, free package. You can redistribute it and/or modify
  * it under the terms of CeCILL-B license.
+ *
  * @author Karell Bertet
  * @version 2013
  */
@@ -287,7 +289,7 @@ public class DGraph {
 			(this.getEdgesSucc(ed.from())).contains(ed) &&
 			(this.getEdgesPred(ed.to())).contains(ed); }
     /** Adds an edge between the specified nodes to this component:
-	 * <code>to</code> is added as a successor of <code>from</code>.
+	 * `to` is added as a successor of `from`.
 	 * If the case where specified nodes don't belongs to the node set, 
 	 * then the edge will not be added.
 	 * @param from the node origine of the edge
@@ -313,8 +315,8 @@ public class DGraph {
 			}
 		return false; }
      /** Removes from this component the edge between the specified node.
-	 * <code>to</code> is removed from the successors of <code>from</code>
-	 * and <code>to</code> is removed from the predecessors of <code>from</code>.
+	 * `to` is removed from the successors of `from`
+	 * and `to` is removed from the predecessors of `from`.
 	 * @param from the node origine of the edge
 	 * @param to the node destination of the edge **/
     public boolean removeEdge (Node from, Node to) {
@@ -344,7 +346,8 @@ public class DGraph {
 		return (T.size() == this.nbNodes());
 	}
  
-   /** Returns a topological sort of the node of this component. <p>
+   /** Returns a topological sort of the node of this component.
+    *
 	* This topological sort is a sort on all the nodes according to their successors. 
 	* If the graph is not acyclic, some nodes don't belong to the sort. 
 	* This treatment is performed in O(n+m), where n corresponds to the number of nodes, 
@@ -399,7 +402,8 @@ public class DGraph {
 		return max;
     	}
 
-	/** Returns the subgraph of this component induced by the specified set of nodes <p>
+	/** Returns the subgraph of this component induced by the specified set of nodes
+	*
 	* The subgraph only contains nodes of the specified set that also are in this component. 
 	* **/
 	public DGraph subgraphByNodes (TreeSet<Node> S) {
@@ -414,7 +418,8 @@ public class DGraph {
         return G;
 		}
 
-    /** Returns the subgraph of this component induced by the specified set of edges <p>
+    /** Returns the subgraph of this component induced by the specified set of edges
+     *
 	 *  The subgraph contains all nodes of this components, and
      * only edges of the specified set that also are in this component.
 	 **/
@@ -473,12 +478,13 @@ public class DGraph {
 	return nb;
    }
 		 
-   /** Computes the transitive closure of this component.<p>
+   /** Computes the transitive closure of this component.
+    *
 	* This treatment is performed in O(nm+m_c), where n corresponds to the number of nodes,
 	* m to the number of edges, and m_c to the number of edges in the closure. 
 	* This treatment improves the Roy-Warshall algorithm that directly implements 
 	* the definition in O(logm n^3). 
-	* This treatment is overlapped in class <code>DAGrapg</code> 
+	* This treatment is overlapped in class `DAGrapg` 
 	* with a more efficient algorithm dedicated to directed acyclic graph.
 	* @return the number of removed edges
 	**/
