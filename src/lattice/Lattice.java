@@ -1,4 +1,4 @@
-package lattice.lattice;
+package lattice;
 
 /*
  * Lattice.java
@@ -8,10 +8,10 @@ package lattice.lattice;
  */
 import java.util.TreeMap;
 import java.util.TreeSet;
-import lattice.dgraph.DAGraph;
-import lattice.dgraph.DGraph;
-import lattice.dgraph.Edge;
-import lattice.dgraph.Node;
+import dgraph.DAGraph;
+import dgraph.DGraph;
+import dgraph.Edge;
+import dgraph.Node;
 /**
  * This class extends class <code>DAGraph</code> to provide specific methods
  * to manipulate a lattice. 

@@ -1,4 +1,4 @@
-package lattice.lattice;
+package lattice;
 
 /*
  * Context.java
@@ -17,7 +17,7 @@ import java.util.Iterator;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
 import java.util.TreeSet;
-import lattice.dgraph.Node;
+import dgraph.Node;
 
 /**
  * This class gives a standard representation for a context. <p>
@@ -304,7 +304,7 @@ public class Context extends ClosureSystem {
 			// Read each file
 			for (String linkFileName : linkFilesName){
 				// add an observation => file name
-				StringTokenizer st = new StringTokenizer(linkFileName,"\\");
+				StringTokenizer st = new StringTokenizer(linkFileName,File.separator);
 				String fileName = "";
 				while (st.hasMoreTokens())
 					fileName = st.nextToken();

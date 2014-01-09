@@ -1,4 +1,4 @@
-package lattice.lattice;
+package lattice;
 
 /*
  * ConceptLattice.java
@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
-import lattice.dgraph.DAGraph;
-import lattice.dgraph.DGraph;
-import lattice.dgraph.Edge;
-import lattice.dgraph.Node;
+import dgraph.DAGraph;
+import dgraph.DGraph;
+import dgraph.Edge;
+import dgraph.Node;
 /**
  * This class extends class <code>Lattice</code> to provide specific methods 
  * to manipulate both a concept lattice or a closed set lattice.

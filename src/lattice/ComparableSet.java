@@ -1,4 +1,4 @@
-package lattice.lattice;
+package lattice;
 
 /*
  * ComparableSet.java

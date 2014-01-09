@@ -1,0 +1,9 @@
+Observations: 1 2 3 4 5 6
+Attributes: a b c d e f 
+1 : b d f
+2 : b d e
+3 : b c e
+4 : a d f
+5 : a c f
+6 : a b d f
+

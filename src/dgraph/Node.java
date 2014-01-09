@@ -1,4 +1,4 @@
-package lattice.dgraph;
+package dgraph;
 
 /*
  * Node.java

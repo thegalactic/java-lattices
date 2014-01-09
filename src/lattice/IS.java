@@ -1,4 +1,4 @@
-package lattice.lattice;
+package lattice;
 
 /*
  * IS.java
@@ -15,9 +15,9 @@ import java.util.Collection;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
 import java.util.TreeSet;
-import lattice.dgraph.DGraph;
-import lattice.dgraph.Edge;
-import lattice.dgraph.Node;
+import dgraph.DGraph;
+import dgraph.Edge;
+import dgraph.Node;
 /**
 * This class gives a representation for an implicational system (IS), i.e. a set of rules.
  * <p>

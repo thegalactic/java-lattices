@@ -1,4 +1,4 @@
-package lattice.lattice;
+package lattice;
 
 /*
  * Concept.java
@@ -11,7 +11,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
-import lattice.dgraph.Node;
+import dgraph.Node;
+import dgraph.DGraph;
+import dgraph.DAGraph;
+import dgraph.Edge;
+
 /**
  * This class gives a representation for a concept, i.e. a node of a concept lattice.
  * <p>

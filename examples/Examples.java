@@ -11,10 +11,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.TreeSet;
-import lattice.dgraph.DAGraph;
-import lattice.dgraph.DGraph;
-import lattice.dgraph.Node;
-import lattice.lattice.*;
+import dgraph.DAGraph;
+import dgraph.DGraph;
+import dgraph.Node;
+import lattice.*;
 /**
  * This classe provides some use examples of main classes of this lattice package.
  * <p>
@@ -30,12 +30,12 @@ import lattice.lattice.*;
  * @version 2013
  */
 
-class Examples {
+public class Examples {
 
     /** Static fields specifying the input file directory **/
-    static String inputDir = "examples\\";
+    static String inputDir;
     /** Static fields specifying the output file directory **/
-    static String outputDir = "examples\\output\\";
+    static String outputDir;
 
     /** Replaces the input directory with the specified one **/
     public static void setInputDir (String input) {
@@ -48,7 +48,9 @@ class Examples {
 
     /** The main static method. **/
     public static void main (String arg[])
-    {   
+    {
+        setInputDir(arg[0]+File.separator);
+        setOutputDir(arg[1]+File.separator);
         double time = System.currentTimeMillis();
         //Examples.ExampleDGraph();
         //Examples.ExampleDAGraph ();
@@ -91,7 +93,7 @@ class Examples {
             File f = new File(outputDir+name);
             f.mkdir();
             // create the Readme file
-            name = name+"\\"+name;
+            name = name+File.separator+name;
 
             BufferedWriter file = new BufferedWriter(new FileWriter(outputDir+name+"Readme.txt"));
             String log = "EXAMPLE FOR DGRAPH AND DAGRAPH CLASSES\n";
@@ -156,7 +158,7 @@ class Examples {
             File f = new File(outputDir+name);
             f.mkdir();
             // create the Readme file
-            name = name+"\\"+name;
+            name = name+File.separator+name;
             BufferedWriter file = new BufferedWriter(new FileWriter(outputDir+name+"Readme.txt"));
             String log = "EXAMPLE FOR DAGRAPH AND LATTICE CLASSES\n";
             log += "-----------------------------------------\n";
@@ -246,7 +248,7 @@ class Examples {
             File f = new File(outputDir+name);
             f.mkdir();
             // create the Readme file
-            name = name+"\\"+name;
+            name = name+File.separator+name;
             BufferedWriter file = new BufferedWriter(new FileWriter (outputDir+name+"Readme.txt"));
             String log = "EXAMPLE FOR IS AND CONCEPTLATTICE CLASSES\n";
             log += "-----------------------------------------\n";                                    
@@ -386,7 +388,7 @@ class Examples {
             File f = new File(outputDir+name);
             f.mkdir();
             // create the Readme file
-            name = name+"\\"+name;
+            name = name+File.separator+name;
             BufferedWriter file = new BufferedWriter(new FileWriter (outputDir+name+"Readme.txt"));
             String log = "EXAMPLE FOR CONTEXT AND CONCEPTLATTICE CLASSES\n";
             log += "-----------------------------------------\n";

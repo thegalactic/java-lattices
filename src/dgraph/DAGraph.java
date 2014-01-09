@@ -1,4 +1,4 @@
-package lattice.dgraph;
+package dgraph;
 
 /*
  * DAGraph.java
@@ -11,8 +11,8 @@ package lattice.dgraph;
 import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.TreeSet;
-import lattice.lattice.Concept;
-import lattice.lattice.ConceptLattice;
+import lattice.Concept;
+import lattice.ConceptLattice;
 /**
  * This class extends the representation of a directed graph given by class 
  * <code>DGraph</code> for directed acyclic graph (DAG). 

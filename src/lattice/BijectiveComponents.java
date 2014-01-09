@@ -1,4 +1,4 @@
-package lattice.lattice;
+package lattice;
 
 /*
  * BijectiveComponents.java
@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.Date;
 import java.util.TreeSet;
-import lattice.dgraph.DGraph;
+import dgraph.DGraph;
 /**
  * This class generates bijective components issued from lattice theory for a specified
  * closure system.
@@ -115,7 +115,7 @@ public class BijectiveComponents {
     public void save (String directory, String name) {
         try 	{
             // create the directory
-            directory = directory+"\\"+name+"BijectiveComponents\\";
+            directory = directory+File.separator+name+"BijectiveComponents"+File.separator;
             File f = new File(directory);
             f.mkdir();
             directory += name;

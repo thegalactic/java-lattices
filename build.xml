@@ -1,65 +1,77 @@
-<?xml version="1.0" encoding="UTF-8"?><!-- You may freely edit this file. See commented blocks below for --><!-- some examples of how to customize the build. --><!-- (If you delete it and reopen the project it will be recreated.) --><!-- By default, only the Clean and Build commands use this build script. --><!-- Commands such as Run, Debug, and Test only use this build script if --><!-- the Compile on Save feature is turned off for the project. --><!-- You can turn off the Compile on Save (or Deploy on Save) setting --><!-- in the project's Project Properties dialog box.--><project name="lattice" default="default" basedir=".">
-    <description>Builds, tests, and runs the project lattice.</description>
-    <import file="nbproject/build-impl.xml"/>
-    <!--
+<?xml version="1.0"?>
+<project name="lattices" basedir="." default="jar">
+	<property name="src.dir" value="src" />
+	<property name="examples.dir" value="examples" />
+	<property name="test.dir" value="test" />
 
-    There exist several targets which are by default empty and which can be 
-    used for execution of your tasks. These targets are usually executed 
-    before and after some main targets. They are: 
+	<property name="build.dir" value="build" />
+	<property name="build.src.dir" value="${build.dir}/src" />
+	<property name="build.test.dir" value="${build.dir}/test" />
+	<property name="build.examples.dir" value="${build.dir}/examples" />
 
-      -pre-init:                 called before initialization of project properties
-      -post-init:                called after initialization of project properties
-      -pre-compile:              called before javac compilation
-      -post-compile:             called after javac compilation
-      -pre-compile-single:       called before javac compilation of single file
-      -post-compile-single:      called after javac compilation of single file
-      -pre-compile-test:         called before javac compilation of JUnit tests
-      -post-compile-test:        called after javac compilation of JUnit tests
-      -pre-compile-test-single:  called before javac compilation of single JUnit test
-      -post-compile-test-single: called after javac compilation of single JUunit test
-      -pre-jar:                  called before JAR building
-      -post-jar:                 called after JAR building
-      -post-clean:               called after cleaning build products
+	<property name="build.jar.dir" value="${build.dir}/jar" />
 
-    (Targets beginning with '-' are not intended to be called on their own.)
+	<property name="output.examples.dir" value="${build.dir}/output" />
+	<property name="examples-class" value="Examples" />
 
-    Example of inserting an obfuscator after compilation could look like this:
+	<target name="rebuild" depends="clean,jar" />
 
-        <target name="-post-compile">
-            <obfuscate>
-                <fileset dir="${build.classes.dir}"/>
-            </obfuscate>
-        </target>
+	<target name="clean">
+		<delete dir="${build.dir}" />
+	</target>
 
-    For list of available properties check the imported 
-    nbproject/build-impl.xml file. 
+	<target name="build">
+		<mkdir dir="${build.src.dir}" />
+		<javac includeantruntime="false" srcdir="${src.dir}" destdir="${build.src.dir}" />
+	</target>
 
+	<target name="jar" depends="build">
+		<mkdir dir="${build.jar.dir}" />
+		<jar destfile="${build.jar.dir}/${ant.project.name}.jar" basedir="${build.src.dir}" />
+	</target>
 
-    Another way to customize the build is by overriding existing main targets.
-    The targets of interest are: 
+	<target name="build-test" depends="jar">
+		<mkdir dir="${build.test.dir}" />
+		<javac includeantruntime="false" srcdir="${test.dir}" destdir="${build.test.dir}">
+			<classpath>
+				<pathelement location="lib/junit.jar" />
+			</classpath>
+		</javac>
+	</target>
 
-      -init-macrodef-javac:     defines macro for javac compilation
-      -init-macrodef-junit:     defines macro for junit execution
-      -init-macrodef-debug:     defines macro for class debugging
-      -init-macrodef-java:      defines macro for class execution
-      -do-jar-with-manifest:    JAR building (if you are using a manifest)
-      -do-jar-without-manifest: JAR building (if you are not using a manifest)
-      run:                      execution of project 
-      -javadoc-build:           Javadoc generation
-      test-report:              JUnit report generation
+	<target name="build-examples" depends="jar">
+		<mkdir dir="${build.examples.dir}" />
+		<javac includeantruntime="false" srcdir="${examples.dir}" destdir="${build.examples.dir}">
+			<include name="**/*.java" />
+			<classpath>
+				<pathelement location="${build.jar.dir}/${ant.project.name}.jar" />
+			</classpath>
+		</javac>
+	</target>
 
-    An example of overriding the target for project execution could look like this:
+	<target name="test" depends="build-test">
+		<junit printsummary="true">
+			<formatter type="plain" usefile="false" />
+			<classpath>
+				<pathelement location="${build.jar.dir}/${ant.project.name}.jar" />
+				<pathelement location="${build.test.dir}" />
+			</classpath>
+			
+			<batchtest fork="true">
+				<fileset dir="${test.dir}" includes="**/*Test.java" />
+			</batchtest>
+		</junit>
+	</target>
 
-        <target name="run" depends="lattice-impl.jar">
-            <exec dir="bin" executable="launcher.exe">
-                <arg file="${dist.jar}"/>
-            </exec>
-        </target>
-
-    Notice that the overridden target depends on the jar target and not only on 
-    the compile target as the regular run target does. Again, for a list of available 
-    properties which you can use, check the target you are overriding in the
-    nbproject/build-impl.xml file. 
-
-    -->
+	<target name="examples" depends="build-examples">
+		<mkdir dir="${output.examples.dir}" />
+		<java classname="${examples-class}">
+			<classpath>
+				<pathelement location="${build.jar.dir}/${ant.project.name}.jar" />
+				<pathelement location="${build.examples.dir}" />
+			</classpath>
+			<arg value="${examples.dir}" />
+			<arg value="${output.examples.dir}" />
+ 		</java>
+	</target>
 </project>
