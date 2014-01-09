@@ -3,6 +3,8 @@
 	<property name="src.dir" value="src" />
 	<property name="examples.dir" value="examples" />
 	<property name="test.dir" value="test" />
+	<property name="doc.dir" value="doc" />
+	<property name="overview.file" value="README.md" />
 
 	<property name="build.dir" value="build" />
 	<property name="build.src.dir" value="${build.dir}/src" />
@@ -79,8 +81,13 @@
 
 	<target name="doc" depends="build">
 		<mkdir dir="${build.doc.dir}" />
-		<javadoc sourcepath="${src.dir}" destdir="${build.doc.dir}">
+		<javadoc sourcepath="${src.dir}" destdir="${build.doc.dir}" overview="${doc.dir}/${overview.file}" doctitle="Java Lattices">
 			<doclet name="ch.raffael.doclets.pegdown.PegdownDoclet" path="lib/pegdown-doclet.jar" />
+			<arg value="-extensions" />
+			<arg value="fenced_code_blocks,autolinks,definitions,smartypants,tables,wikilinks" />
    		</javadoc>
+   		<copy todir="${build.doc.dir}/images">
+   			<fileset dir="${doc.dir}/images"/>
+   		</copy>
 	</target>
 </project>
