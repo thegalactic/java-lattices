@@ -29,4 +29,4 @@ Contributors:
 -------------
 
 * Clément Guérin
-
+* Christophe Demko
