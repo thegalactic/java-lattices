@@ -395,6 +395,22 @@ public class Examples {
             log += "-> Initial context:\n "+base+"\n";
             System.out.println(log); file.write(log);
 
+            // compute the immediate successors of a concept from the context using Limited Object Access algorihtm            
+            TreeSet<Comparable> setA = new TreeSet();
+            setA.add(base.getAttributes().first());
+            setA.addAll(base.closure(setA));
+            TreeSet<Comparable> setB = new TreeSet();
+            setB.addAll(base.getExtent(base.closure(setA)));
+            Concept concept = new Concept(setA, setB);
+            log = "Chosen concept "+concept.toString();
+            System.out.println(log); 
+            file.write(log);
+            
+            ArrayList<TreeSet<Comparable>> immsucc = concept.immediateSuccessorsLOA(base);
+            log = "First immediate successor concept "+new Concept(immsucc.get(0),base.getExtent(immsucc.get(0)))+"\n";
+            System.out.println(log); 
+            file.write(log);
+            
             // computes the precedence graph of the context
             DGraph prec = base.precedenceGraph();
             String namePrecGraph = name+"PrecedenceGraph.dot";
