@@ -53,6 +53,7 @@
 		<junit printsummary="true">
 			<formatter type="plain" usefile="false" />
 			<classpath>
+				<pathelement location="lib/junit.jar" />
 				<pathelement location="${build.jar.dir}/${ant.project.name}.jar" />
 				<pathelement location="${build.test.dir}" />
 			</classpath>
