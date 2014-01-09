@@ -29,7 +29,7 @@ import dgraph.Edge;
  * Comparison between this component and those in parameter is realised by comparing set A.
  * <p>
  * Copyright: 2013 University of La Rochelle, France
- * @license: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
  * This file is part of lattice, free package. You can redistribute it and/or modify
  * it under the terms of CeCILL-B license.
  * @author Karell Bertet
