@@ -8,6 +8,7 @@
 	<property name="build.src.dir" value="${build.dir}/src" />
 	<property name="build.test.dir" value="${build.dir}/test" />
 	<property name="build.examples.dir" value="${build.dir}/examples" />
+	<property name="build.doc.dir" value="${build.dir}/doc" />
 
 	<property name="build.jar.dir" value="${build.dir}/jar" />
 
@@ -74,5 +75,10 @@
 			<arg value="${examples.dir}" />
 			<arg value="${output.examples.dir}" />
  		</java>
+	</target>
+
+	<target name="doc" depends="build">
+		<mkdir dir="${build.doc.dir}" />
+		<javadoc sourcepath="${src.dir}" destdir="${build.doc.dir}" />
 	</target>
 </project>
