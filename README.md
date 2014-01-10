@@ -32,5 +32,5 @@ Author:
 Contributors:
 -------------
 
-* Clément Guérin
-* Christophe Demko
+* [Clément Guérin](https://github.com/guerinclement)
+* [Christophe Demko](https://github.com/chdemko)
