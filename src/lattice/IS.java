@@ -64,15 +64,15 @@ public class IS extends ClosureSystem
 	
 	/** Constructs a new empty component */
 	public IS() { 
-		this.sigma = new ComparableSet();
-		this.S = new TreeSet();
+		this.sigma = new TreeSet<Rule>();
+		this.S = new TreeSet<Comparable>();
 	}	
 		
 	/** Constructs this component from the specified set of rules `sigma`.
 	* @param sigma the set of rules 
 	*/
 	public IS (Collection<Rule> sigma) {
-		this.sigma = new TreeSet (sigma);
+		this.sigma = new TreeSet<Rule>(sigma);
 		this.S = new TreeSet<Comparable>();
 		for (Rule r: this.sigma) {
 			S.addAll(r.getPremise());
@@ -85,7 +85,7 @@ public class IS extends ClosureSystem
 	* @param s the IS to be copied 
 	*/	
 	public IS(IS s) {
-		this.sigma = new TreeSet(s.getRules());
+		this.sigma = new TreeSet<Rule>(s.getRules());
 		this.S = new TreeSet<Comparable>(s.getSet());
 	}	
 	/** Constructs this component from the specified file.
@@ -754,7 +754,7 @@ public class IS extends ClosureSystem
 				Node to = nodeCreated.get(a);
                 Edge ed;
                 if (pred.containsEdge(from, to))
-                   ed = pred.getEdge(from,to);
+                   ed = pred.edge(from,to);
                 else {
                    ed = new Edge (from,to,new TreeSet<ComparableSet>());
                    pred.addEdge(ed);

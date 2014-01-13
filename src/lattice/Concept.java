@@ -214,7 +214,7 @@ public class Concept extends Node {
 
     /** Returns the dot description of this component in a String */
 	public String toDot () {
-    	String s = this.ident+" [label=\" "  ;
+    	String s = this.identifier()+" [label=\" "  ;
         String tmp="";
        if (this.hasSetA()) tmp+=this.setA;
        if (this.hasSetA()&&this.hasSetB()) tmp+="\\n";
@@ -337,10 +337,10 @@ public class Concept extends Node {
             for (Object x : F)  {
                 // computes nx, the strongly connected component containing x
                 Node nx = null;
-                for (Node cc : acyclPrec.getNodes()) {
-                    TreeSet<Node> CC = (TreeSet<Node>) cc.content;
+                for (Node cc : acyclPrec.nodes()) {
+                    TreeSet<Node> CC = (TreeSet<Node>) cc.content();
                     for (Node y : CC){
-                        if (x.equals(y.content)){
+                        if (x.equals(y.content())){
                             nx=cc;
                         }
                     }
@@ -349,16 +349,16 @@ public class Concept extends Node {
                 TreeSet<Node> ccMinNx = acyclPrec.minorants(nx);
                 // removes from newVal every minorants of nx
                 for (Node cc : ccMinNx) {
-                    TreeSet<Node> CC = (TreeSet<Node>) cc.content;
+                    TreeSet<Node> CC = (TreeSet<Node>) cc.content();
                     for (Node y : CC){
-                        newVal.remove(y.content);
+                        newVal.remove(y.content());
                     }
                 }
             }
             // computes the node belonging in S\F
             TreeSet<Node> N = new TreeSet<Node> ();
-            for (Node in : dependanceGraph.getNodes()) {
-                if (!F.contains(in.content)){
+            for (Node in : dependanceGraph.nodes()) {
+                if (!F.contains(in.content())){
                     N.add(in);
                 }
             }
@@ -374,12 +374,12 @@ public class Concept extends Node {
                     // check if from is in dependance relation with to
                     // i.e. "from" belongs to the closure of "F+to"
                     ComparableSet FPlusTo = new ComparableSet(F);
-                    FPlusTo.add(to.content);
+                    FPlusTo.add(to.content());
                     FPlusTo = new ComparableSet(init.closure(FPlusTo));
-                    if (FPlusTo.contains(from.content)) {
+                    if (FPlusTo.contains(from.content())) {
                         // there is a dependance relation between from and to
                         // search for an existing edge between from and to
-                        Edge ed = dependanceGraph.getEdge(from, to);
+                        Edge ed = dependanceGraph.edge(from, to);
                         if (ed==null) {
                             ed = new Edge (from,to,new TreeSet<ComparableSet>());
                             dependanceGraph.addEdge(ed);
@@ -415,9 +415,9 @@ public class Concept extends Node {
             ArrayList<TreeSet<Comparable>> immSucc = new ArrayList<TreeSet<Comparable>>();            
             for (Node n1 : SCCmin) {
                 TreeSet s = new TreeSet(F);
-                TreeSet<Node> toadd = (TreeSet<Node>)n1.content;
+                TreeSet<Node> toadd = (TreeSet<Node>)n1.content();
                 for (Node n2 : toadd){
-                    s.add(n2.content);
+                    s.add(n2.content());
                 }                        
                 immSucc.add(s);
             }

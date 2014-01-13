@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
 <project name="lattices" basedir="." default="jar">
+
+	<taskdef resource="checkstyletask.properties" classpath="lib/checkstyle.jar"/>
+
 	<property name="src.dir" value="src" />
 	<property name="examples.dir" value="examples" />
 	<property name="test.dir" value="test" />
@@ -9,6 +12,8 @@
 	<property name="build.dir" value="build" />
 	<property name="build.src.dir" value="${build.dir}/src" />
 	<property name="build.test.dir" value="${build.dir}/test" />
+	<property name="build.reports-xml.dir" value="${build.dir}/reports/xml" />
+	<property name="build.reports-html.dir" value="${build.dir}/reports/html" />
 	<property name="build.examples.dir" value="${build.dir}/examples" />
 	<property name="build.doc.dir" value="${build.dir}/doc" />
 
@@ -25,7 +30,9 @@
 
 	<target name="build">
 		<mkdir dir="${build.src.dir}" />
-		<javac includeantruntime="false" srcdir="${src.dir}" destdir="${build.src.dir}" />
+		<javac includeantruntime="false" srcdir="${src.dir}" destdir="${build.src.dir}">
+			<!--compilerarg value="-Xlint" /-->
+		</javac>
 	</target>
 
 	<target name="jar" depends="build">
@@ -38,6 +45,7 @@
 		<javac includeantruntime="false" srcdir="${test.dir}" destdir="${build.test.dir}">
 			<classpath>
 				<pathelement location="lib/junit.jar" />
+				<pathelement location="${build.jar.dir}/${ant.project.name}.jar" />
 			</classpath>
 		</javac>
 	</target>
@@ -52,20 +60,31 @@
 		</javac>
 	</target>
 
-	<target name="test" depends="build-test">
-		<junit printsummary="true">
-			<formatter type="plain" usefile="false" />
+	<target name="junit" depends="build-test">
+		<mkdir dir="${build.reports-xml.dir}" />
+		<junit fork="yes" forkmode="once" haltonfailure="no" showoutput="no" printsummary="true">
+
+			<!--formatter type="plain" usefile="false" /-->
+			<formatter type="xml" />
 			<classpath>
 				<pathelement location="lib/junit.jar" />
 				<pathelement location="${build.jar.dir}/${ant.project.name}.jar" />
 				<pathelement location="${build.test.dir}" />
 			</classpath>
 			
-			<batchtest fork="true">
+			<batchtest fork="true" todir="${build.reports-xml.dir}">
 				<fileset dir="${test.dir}" includes="**/*Test.java" />
 			</batchtest>
 		</junit>
+		<junitreport todir="${build.reports-xml.dir}">
+			<fileset dir="${build.reports-xml.dir}">
+				<include name="TEST-*.xml"/>
+			</fileset>
+			<report format="frames" todir="${build.reports-html.dir}" />
+		</junitreport>
 	</target>
+
+	<target name="test" depends="junit,style,doc" />
 
 	<target name="examples" depends="build-examples">
 		<mkdir dir="${output.examples.dir}" />
@@ -90,4 +109,12 @@
    			<fileset dir="${doc.dir}/images"/>
    		</copy>
 	</target>
+
+	<target name="style" depends="build">
+		<checkstyle config="lib/style.xml">
+			<fileset dir="src" includes="dgraph/*.java"/>
+			<fileset dir="test" includes="**/*.java"/>
+		</checkstyle>
+	</target>
 </project>
+

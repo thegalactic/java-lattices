@@ -100,15 +100,15 @@ public class Examples {
             log += "--------------------------------------\n";
             System.out.println(log); file.write(log);
             // randomly generates a directed graph of 5 nodes
-            DGraph G = DGraph.randomDGraph (10);
+            DGraph G = DGraph.random(10);
             String nameGraph = name+".dot";
-            G.toDot(outputDir+nameGraph);
+            G.writeDot(outputDir+nameGraph);
             log = "-> Randomly generated DGraph saved in "+nameGraph+"\n";
             System.out.println(log+G.toString()); file.write(log);
             // compute the complementary graph
             G.complementary();
             String nameComp = name+"Complementary.dot";
-            G.toDot(outputDir+nameComp);
+            G.writeDot(outputDir+nameComp);
             log = "-> Complementary graph saved in "+nameComp+"\n ";
             System.out.println(log+G.toString());
             // check if the dgraph is acyclic
@@ -117,7 +117,7 @@ public class Examples {
             // computes and print the transitive closure of the dgraph
             G.transitiveClosure();
             String nameTransClosure = name+"TransitiveClosure.dot";
-            G.toDot(outputDir+nameTransClosure);
+            G.writeDot(outputDir+nameTransClosure);
             log = "-> Transitive closure saved in "+nameTransClosure+"\n";
             System.out.println(log+G.toString()); file.write(log);
             // computes and print a depth first search in the directed graph
@@ -129,7 +129,7 @@ public class Examples {
             // are strongly connected components of the directed graph
             DAGraph CC = G.stronglyConnectedComponent();
             String nameCC = name+"ConnectedComponents.dot";
-            CC.toDot(outputDir+nameCC);
+            CC.writeDot(outputDir+nameCC);
             log = "-> Strongly connected components saved in "+nameCC+"\n";
             System.out.println(log+CC.toString()); file.write(log);
             // verify that the dagraph is acyclic
@@ -137,11 +137,11 @@ public class Examples {
             System.out.println(log); file.write(log);
             // computes and print the sugbraph of the dgraph induces by 5 first nodes
             TreeSet<Node> X = new TreeSet();
-            for (Node n : G.getNodes())
+            for (Node n : G.nodes())
                 if (X.size()!=5) X.add(n);
             DGraph SG = G.subgraphByNodes(X);
             String nameSG = name+"Subgraph.dot";
-            SG.toDot(outputDir+nameSG);
+            SG.writeDot(outputDir+nameSG);
             log = "-> Subgraph induced by 5 first nodes saved in "+nameSG+"\n";
             System.out.println(log+SG.toString()); file.write(log);
             file.close();
@@ -164,9 +164,9 @@ public class Examples {
             log += "-----------------------------------------\n";
             System.out.println(log); file.write(log);
             // randomly generates a directed graph of 10 nodes
-            DAGraph G = DAGraph.randomDAGraph (10);
+            DAGraph G = DAGraph.random(10);
             String nameGraph = name+".dot";
-            G.toDot(outputDir+nameGraph);
+            G.writeDot(outputDir+nameGraph);
             log = "-> Randomly generated DAGraph saved in "+nameGraph+"\n";
             System.out.println(log+G.toString()); file.write(log);
             // verify if the dagraph is acyclic
@@ -176,26 +176,26 @@ public class Examples {
             // computes and print the transitive reduction of the dagraph
             G.transitiveReduction();
             String nameTR = name+"TransitiveReduction.dot";
-            G.toDot(outputDir+nameTR);
+            G.writeDot(outputDir+nameTR);
             log = "-> Transitive reduction saved in "+nameTR+"\n";
             System.out.println(log+G.toString()); file.write(log);
             // computes and print the ideal and the filter of the first node
-            Node n = G.getNodes().first();
+            Node n = G.nodes().first();
             DAGraph ideal = G.ideal(n);
             String nameIdeal = name+"Ideal.dot";
-            ideal.toDot(outputDir+nameIdeal);
+            ideal.writeDot(outputDir+nameIdeal);
             log = "-> Minorants of "+n+" : "+G.minorants(n)+"\n saved as a dagraph in "+nameIdeal+"\n";
             System.out.println(log); file.write(log);
             DAGraph filter = G.filter(n);
             String nameFilter = name+"Filter.dot";
-            filter.toDot(outputDir+nameFilter);
+            filter.writeDot(outputDir+nameFilter);
             log = "-> Majorants of "+n+" : "+G.majorants(n)+"\n saved as a dagraph in "+nameFilter+"\n";
             System.out.println(log); file.write(log);
 
             // computes and print the ideals lattice of the dagraph
             ConceptLattice CSL = G.idealsLattice();
             String nameIdealsLattice = name+"IdealsLattice.dot";
-            CSL.toDot(outputDir+nameIdealsLattice);
+            CSL.writeDot(outputDir+nameIdealsLattice);
             log = "-> Ideal lattice saved in "+nameIdealsLattice+"\n";
             System.out.println(log+CSL.toString()); file.write(log);
             // check if the ideals lattice is a lattice
@@ -209,7 +209,7 @@ public class Examples {
             // reduces the ideal lattice by replacing each join irreducible node by one element
             Lattice L = CSL.getJoinReduction();
             String nameReducedLattice = name+"ReducedLattice.dot";
-            L.toDot(outputDir+nameReducedLattice);
+            L.writeDot(outputDir+nameReducedLattice);
             log = "-> Reduced ideal lattice saved in "+nameReducedLattice+"\n";
             System.out.println(log+L.toString()); file.write(log);
             // print the irreducibles elements of the reduces ideal lattice
@@ -225,7 +225,7 @@ public class Examples {
             // compute the subgraph of join irreducible nodes
             DAGraph JIrr = L.joinIrreduciblesSubgraph();
             String nameIrrSG = name+"IrrSubgraph.dot";
-            JIrr.toDot(outputDir+nameIrrSG);
+            JIrr.writeDot(outputDir+nameIrrSG);
             log = "-> Join irreducibles subgraph saved in "+nameIrrSG+"\n";
             System.out.println(log+JIrr.toString()); file.write(log);
             // BIJECTION
@@ -258,7 +258,7 @@ public class Examples {
             // computes the precedence graph of the IS
             DGraph prec = base.precedenceGraph();
             String namePrecGraph = name+"PrecedenceGraph.dot";
-            prec.toDot(outputDir+namePrecGraph);
+            prec.writeDot(outputDir+namePrecGraph);
             log = "Precedence graph of IS saved in "+namePrecGraph+"\n";
             System.out.println(log+prec.toString()); file.write(log);
 
@@ -277,14 +277,14 @@ public class Examples {
             // computes and prints the closed set lattice of the initial rules with NextClosure
             ConceptLattice CLNC = base.closedSetLattice(false);
             String nameCLNC = name+"ClosedSetLatticeNextClosure.dot";
-            CLNC.toDot(outputDir+nameCLNC);
+            CLNC.writeDot(outputDir+nameCLNC);
             log = "-> Closed set lattice of IS (generated by Next Closure algorithm) saved in "+nameCLNC+"\n";
             System.out.println(log+CLNC.toString()); file.write(log);
 
             // computes and prints the closed set lattice of the initial rules with Bordat
             ConceptLattice CLBordat = base.closedSetLattice(true);
             String nameCLBordat = name+"ClosedSetLatticeBordat.dot";
-            CLBordat.toDot(outputDir+nameCLBordat);
+            CLBordat.writeDot(outputDir+nameCLBordat);
             log = "-> Closed set lattice of IS (generated by Bordat's algorithm) saved in "+nameCLBordat+"\n";
             System.out.println(log+CLBordat.toString()); file.write(log);
 
@@ -292,7 +292,7 @@ public class Examples {
             log = "-> Components generated while Bordat's algorithm computes the lattice:\n";
             DGraph ODG = CLBordat.getDependanceGraph();
             String nameODG = name+"DependanceGraphOfClosedSetLattice.dot";
-            ODG.toDot(outputDir+nameODG);
+            ODG.writeDot(outputDir+nameODG);
             log += "Dependance graph of closed set lattice saved in "+nameODG+"\n";
             System.out.println(log+ODG.toString()); file.write(log);
             TreeSet MinGen = CLBordat.getMinimalGenerators();
@@ -310,7 +310,7 @@ public class Examples {
             log = "Canonical basis ("+base.nbRules()+" rules) saved in "+nameBC+": \n"+base;
             ConceptLattice CLBC = base.closedSetLattice(true);
             String nameCLBC = name+"ClosedSetLatticeOfCanonicalBasis.dot";
-            CLBC.toDot(outputDir+nameCLBC);
+            CLBC.writeDot(outputDir+nameCLBC);
             log += "Closed set lattice of the canonical basis saved in "+nameCLBC+"\n";
             System.out.println(log+CLBC.toString()); file.write(log);
             // BIJECTION
@@ -334,7 +334,7 @@ public class Examples {
             // computes the closed set lattice of the canonical direct basis 
             ConceptLattice BCDCL = base.closedSetLattice(true);
             String nameBCDCL = name+"ClosedSetLatticeOfCanonicalDirectBasis.dot";
-            BCDCL.toDot(outputDir+nameCLBCD);
+            BCDCL.writeDot(outputDir+nameCLBCD);
             log += "-> Closed set lattice of the canonical direct basis saved in "+nameBCDCL+"\n";
             System.out.println(log+BCDCL.toString()); file.write(log);
             // BIJECTION
@@ -347,7 +347,7 @@ public class Examples {
             // computes and prints the join reduction of the closed set lattice
             Lattice L = CLBordat.getJoinReduction();
             String nameCLJoinReduced = name+"LatticeJoinReduction.dot";
-            L.toDot(outputDir+nameCLJoinReduced);
+            L.writeDot(outputDir+nameCLJoinReduced);
             log = "-> Join reduction of the concept lattice saved in "+nameCLJoinReduced+"\n";
             System.out.println(log+L.toString()); file.write(log);
 
@@ -361,7 +361,7 @@ public class Examples {
             // computes the concept lattice of the table            
             ConceptLattice CLTable = T.conceptLattice(false);
             String nameCLTable = name+"ConceptLatticeOfTable.dot";
-            CLTable.toDot(outputDir+nameCLTable);
+            CLTable.writeDot(outputDir+nameCLTable);
             log = "Concept lattice of the table saved in "+nameCLTable+"\n";
             System.out.println(log+CLTable.toString());
             file.write(log);
@@ -414,28 +414,28 @@ public class Examples {
             // computes the precedence graph of the context
             DGraph prec = base.precedenceGraph();
             String namePrecGraph = name+"PrecedenceGraph.dot";
-            prec.toDot(outputDir+namePrecGraph);
+            prec.writeDot(outputDir+namePrecGraph);
             log = "Precedence graph of Context saved in "+namePrecGraph+"\n";
             System.out.println(log+prec.toString()); file.write(log);
 
             // computes and prints the concept lattice of the context with NextClosure
             ConceptLattice CLNC = base.closedSetLattice(false);
             String nameCLNC = name+"ClosedSetLatticeNextClosure.dot";
-            CLNC.toDot(outputDir+nameCLNC);
+            CLNC.writeDot(outputDir+nameCLNC);
             log = "-> Closed set lattice of Context (generated by Next Closure algorithm) saved in "+nameCLNC+"\n";
             System.out.println(log+CLNC.toString()); file.write(log);
 
             // computes and prints the closed set lattice of the context with Bordat
             ConceptLattice CLBordat = base.closedSetLattice(true);
             String nameCLBordat = name+"ClosedSetLatticeBordat.dot";
-            CLBordat.toDot(outputDir+nameCLBordat);
+            CLBordat.writeDot(outputDir+nameCLBordat);
             log = "-> Closed set lattice of Context (generated by Bordat's algorithm) saved in "+nameCLBordat+"\n";
             System.out.println(log+CLBordat.toString()); file.write(log);
 
             // computes and prints the concept lattice of the context with Bordat
             ConceptLattice CBordat = base.conceptLattice(true);
             String nameCBordat = name+"ConceptLatticeBordat.dot";
-            CBordat.toDot(outputDir+nameCBordat);
+            CBordat.writeDot(outputDir+nameCBordat);
             log = "-> Concept lattice of Context (generated by Bordat's algorithm) saved in "+nameCBordat+"\n";
             System.out.println(log+CBordat.toString()); file.write(log);
 
@@ -443,7 +443,7 @@ public class Examples {
             log = "-> Components generated while Bordat's algorithm computes the lattice:\n";
             DGraph ODG = CLBordat.getDependanceGraph();
             String nameODG = name+"DependanceGraphOfClosedSetLattice.dot";
-            ODG.toDot(outputDir+nameODG);
+            ODG.writeDot(outputDir+nameODG);
             log += "Dependance graph of closed set lattice saved in "+nameODG+"\n";
             System.out.println(log+ODG.toString()); file.write(log);
             TreeSet MinGen = CLBordat.getMinimalGenerators();
@@ -463,7 +463,7 @@ public class Examples {
             log = "Reduced context saved in "+nameReduit+": \n"+reduit;
             ConceptLattice CLReduit = base.closedSetLattice(true);
             String nameCLReduit = name+"ClosedSetLatticeOfReducedContext.dot";
-            CLReduit.toDot(outputDir+nameCLReduit);
+            CLReduit.writeDot(outputDir+nameCLReduit);
             log += "Closed set lattice of the reduced context saved in "+nameCLReduit+"\n";
             System.out.println(log+CLReduit.toString()); file.write(log);
             // BIJECTION
@@ -488,7 +488,7 @@ public class Examples {
             // computes the closed set  lattice of the CDB
             ConceptLattice CLBCD = BCD.closedSetLattice(true);
             String nameCLBCD = name+"ConceptLatticeOfBCD.dot";
-            CLBCD.toDot(outputDir+nameCLBCD);
+            CLBCD.writeDot(outputDir+nameCLBCD);
             log = "Concept lattice of the CDB saved in "+nameCLBCD+"\n";
             System.out.println(log+CLBCD.toString());
             file.write(log);

@@ -85,9 +85,9 @@ public class Lattice extends DAGraph {
 	public Lattice (DAGraph G) {	
 		super (G);
 		if (!this.isAcyclic()) { 
-			this.nodes=new TreeSet<Node>(); 
-			this.succ=new TreeMap<Node,TreeSet<Edge>>();
-			this.pred=new TreeMap<Node,TreeSet<Edge>>();
+			this.setNodes(new TreeSet<Node>()); 
+			this.setSuccessors(new TreeMap<Node,TreeSet<Edge>>());
+			this.setPredecessors(new TreeMap<Node,TreeSet<Edge>>());
 			}
     }
 
@@ -104,8 +104,8 @@ public class Lattice extends DAGraph {
 	*/
    public boolean isLattice () {
 		if (!this.isAcyclic()) return false;
-		for (Node x : this.getNodes())
-			for (Node y : this.getNodes()) 
+		for (Node x : this.nodes())
+			for (Node y : this.nodes()) 
 				if (this.meet(x,y)==null) 
 					return false;
 		return (this.max().size()==1);							
@@ -167,8 +167,8 @@ public class Lattice extends DAGraph {
 		G.reflexiveReduction();
 		G.transitiveReduction();
 		TreeSet<Node> J = new TreeSet();
-		for (Node n : G.getNodes()) 
-			if (G.getNodesPred(n).size()==1) J.add(n);
+		for (Node n : G.nodes()) 
+			if (G.predecessorNodes(n).size()==1) J.add(n);
 		return J;	
  	 }
 
@@ -182,8 +182,8 @@ public class Lattice extends DAGraph {
 		G.reflexiveReduction();
 		G.transitiveReduction();
 		TreeSet<Node> M = new TreeSet();
-		for (Node n : G.getNodes()) 
-			if (G.getNodesSucc(n).size()==1) M.add(n);
+		for (Node n : G.nodes()) 
+			if (G.successorNodes(n).size()==1) M.add(n);
 		return M;	
  	 }
 
@@ -236,18 +236,18 @@ public class Lattice extends DAGraph {
 		Lattice L = new Lattice (this);
 		L.transitiveClosure();
 		L.reflexiveClosure();
-		for (Node to : L.getNodes()) {
+		for (Node to : L.nodes()) {
 			ComparableSet Jx = new ComparableSet();
-			for (Node from : L.getNodesPred(to))
+			for (Node from : L.predecessorNodes(to))
 				if (Join.contains(from))
-					Jx.add(from.content);
+					Jx.add(from.content());
 			closure.put(to,new Concept(Jx,false));
 		}
 		// addition of nodes
-		for (Node n : this.getNodes()) 
+		for (Node n : this.nodes()) 
 			CSL.addNode(closure.get(n));
 		// addition of edges
-		for (Edge ed : this.getEdges())
+		for (Edge ed : this.edges())
                     CSL.addEdge(closure.get(ed.from()),closure.get(ed.to()));
 		return CSL;
 	}	
@@ -264,18 +264,18 @@ public class Lattice extends DAGraph {
 		Lattice L = new Lattice (this);
 		L.transitiveClosure();
 		L.reflexiveClosure();
-		for (Node to : L.getNodes()) {
+		for (Node to : L.nodes()) {
 			ComparableSet Mx = new ComparableSet();
-			for (Node from : L.getNodesSucc(to))
+			for (Node from : L.successorNodes(to))
 				if (Meet.contains(from))
 					Mx.add(from);
         			closure.put(to,new Concept(false,Mx));
 		}
 		// addition of nodes
-		for (Node n : this.getNodes()) 
+		for (Node n : this.nodes()) 
 			CSL.addNode(closure.get(n));
 		// addition of edges
-		for (Edge ed : this.getEdges())
+		for (Edge ed : this.edges())
             CSL.addEdge(closure.get(ed.from()),closure.get(ed.to()));
 		return CSL;
 	}	
@@ -294,22 +294,22 @@ public class Lattice extends DAGraph {
 		Lattice L = new Lattice (this);
 		L.transitiveClosure();
 		L.reflexiveClosure();
-		for (Node to : L.getNodes()) {
+		for (Node to : L.nodes()) {
 			ComparableSet Jx = new ComparableSet();
-			for (Node from : L.getNodesPred(to))
+			for (Node from : L.predecessorNodes(to))
 				if (Join.contains(from))
 					Jx.add(from);
 			ComparableSet Mx = new ComparableSet();
-			for (Node from : L.getNodesSucc(to))
+			for (Node from : L.successorNodes(to))
 				if (Meet.contains(from))
 					Mx.add(from);		
 			closure.put(to,new Concept(Jx,Mx));
 		}
 		// addition of nodes
-		for (Node n : this.getNodes()) 
+		for (Node n : this.nodes()) 
 			CL.addNode(closure.get(n));
 		// addition of edges
-		for (Edge ed : this.getEdges())
+		for (Edge ed : this.edges())
             CL.addEdge(closure.get(ed.from()),closure.get(ed.to()));
 		return CL;
 	}	
@@ -344,7 +344,7 @@ public class Lattice extends DAGraph {
 		tmp.transitiveClosure();
 		for (Node j : join) 
 			for (Node m : meet) 
-				if (j.equals(m) || tmp.getNodesSucc(j).contains(m))
+				if (j.equals(m) || tmp.successorNodes(j).contains(m))
                     T.addExtentIntent (m,j);
 					//T.addExtentIntent (MeetContent.get(m),JoinContent.get(j));
 		return T;
@@ -359,12 +359,12 @@ public class Lattice extends DAGraph {
 		TreeSet<Node> join = this.joinIrreducibles();        
 		IS Sigma = new IS ();
 		for (Node j : join)           
-			Sigma.addElement((Comparable)j.content);
+			Sigma.addElement((Comparable)j.content());
 		// generation of the family of closures
                 TreeSet<ComparableSet> F = new TreeSet<ComparableSet> ();
 		Lattice L = new Lattice (this);
 		ConceptLattice CL = L.joinClosure();
-                for (Node n : CL.nodes) {
+                for (Node n : CL.nodes()) {
                     Concept c = (Concept) n;                                    
                     F.add(c.setA);
                 }
@@ -372,7 +372,7 @@ public class Lattice extends DAGraph {
                 for (ComparableSet Jx : F) {
                     for (Node j : join) {
                         ComparableSet P = new ComparableSet();
-                        P.add(j.content);
+                        P.add(j.content());
                         P.addAll(Jx);                               
                         if (!F.contains(P)) {
                             ComparableSet min = new ComparableSet();
@@ -394,7 +394,7 @@ public class Lattice extends DAGraph {
                 
 /**		for (Node j : join) 
 			for (Node m : meet) 
-				if (j.equals(m) || tmp.getNodesSucc(j).contains(m))
+				if (j.equals(m) || tmp.successorNodes(j).contains(m))
                     T.addExtentIntent (m,j);
 					//T.addExtentIntent (MeetContent.get(m),JoinContent.get(j));
 		return T;**/
@@ -443,7 +443,7 @@ public class Lattice extends DAGraph {
             for (Node j2 : J)
               if (!j1.equals(j2)) {
                 // computes the set S of nodes not greather than j1 and j2
-                TreeSet<Node> S = new TreeSet<Node>(this.getNodes());
+                TreeSet<Node> S = new TreeSet<Node>(this.nodes());
                 S.removeAll(majj1);
                 S.removeAll(this.majorants(j2));
                 S.remove(j1);
@@ -452,7 +452,7 @@ public class Lattice extends DAGraph {
                     // when j2 V x greather than j1 then add a new edge from j1 to J2
                     // or only a new valuation when the edge already exists
                     if (majj1.contains(this.join(j2,x))) {                        
-                        Edge ed = this.dependanceGraph.getEdge(j1,j2);
+                        Edge ed = this.dependanceGraph.edge(j1,j2);
                         if (ed==null) {
                             ed = new Edge (j1,j2,new TreeSet<ComparableSet>());
                             this.dependanceGraph.addEdge(ed);
@@ -462,11 +462,11 @@ public class Lattice extends DAGraph {
                         TreeSet<ComparableSet> ValEd = (TreeSet<ComparableSet>)ed.content();
                         ComparableSet newValByNode = new ComparableSet (this.joinIrreducibles(x));
                         for (Comparable j : this.joinIrreducibles(x))
-                            newValByNode.removeAll(joinG.getNodesPred((Node)j));
+                            newValByNode.removeAll(joinG.predecessorNodes((Node)j));
                         ComparableSet newVal = new ComparableSet ();
                         for (Object j : newValByNode) {
                             Node n = (Node) j;
-                            newVal.add(n.content);
+                            newVal.add(n.content());
                         }
                         ((TreeSet<ComparableSet>)ed.content()).add(newVal);
                         // Minimalisation by inclusion of valuations on edge j1->j2
@@ -482,7 +482,7 @@ public class Lattice extends DAGraph {
              }
          }
         // minimalisation of edge's content to get only inclusion-minimal valuation for each edge
-        /**for (Edge ed : this.dependanceGraph.getEdges()) {
+        /**for (Edge ed : this.dependanceGraph.edges()) {
              TreeSet<ComparableSet> valEd = new TreeSet<ComparableSet>(((TreeSet<ComparableSet>)ed.content()));
              for (ComparableSet X1 : valEd)
                  for (ComparableSet X2 : valEd)
@@ -508,18 +508,18 @@ public IS getCanonicalDirectBasis () {
         DGraph ODGraph = this.getDependanceGraph();
         // initialize elements of the IS with nodes of the ODGraph
         IS BCD = new IS();
-        for (Node n : ODGraph.getNodes())
-            BCD.addElement((Comparable)n.content);
+        for (Node n : ODGraph.nodes())
+            BCD.addElement((Comparable)n.content());
         // computes rules of the BCD from edges of the ODGraph		
-		for (Edge ed : ODGraph.getEdges()) {
+		for (Edge ed : ODGraph.edges()) {
             Node from = ed.from();
             Node to = ed.to();
             TreeSet<ComparableSet> L = (TreeSet<ComparableSet>) ed.content();                
             for (ComparableSet X : L) {                
                 ComparableSet premise = new ComparableSet(X);
-                premise.add((Comparable)to.content);
+                premise.add((Comparable)to.content());
                 ComparableSet conclusion = new ComparableSet();
-                conclusion.add((Comparable)from.content);
+                conclusion.add((Comparable)from.content());
                 BCD.addRule(new Rule(premise,conclusion));
 			}
         }

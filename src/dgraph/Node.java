@@ -1,24 +1,24 @@
-package dgraph;
-
 /*
  * Node.java
  *
- * last update on March 2010
- *
+ * last update on December 2013
  */
 
+package dgraph;
+
 import java.util.StringTokenizer;
+
 /**
  * This class gives a standard representation for a node of a graph.
  *
  * A node is composed of a `content` and an
- * automatiquely and unique index.
+ * automatically computed and unique index.
  *
- * This class implements class <code>Comparable</code> aiming at
- * sorting nodes by providing the <code>compareTo()</code> method
- * that compares the component with those in parameter by comparing their indexes.
+ * This class implements the `Comparable` interface aiming at
+ * sorting nodes by providing the `compareTo()` method
+ * that compares the node with those in parameter by comparing their indexes.
  *
- * Since components are comparable, they can be stored in a sorted collection,
+ * Since nodes are comparable, they can be stored in a sorted collection,
  * and in particular in a sorted set where set operations are provided.
  *
  * Copyright: 2013 University of La Rochelle, France
@@ -31,87 +31,178 @@ import java.util.StringTokenizer;
  * @author Karell Bertet
  * @version 2013
  */
-public class Node implements Comparable {
+public class Node implements Comparable<Object> {
+    /* ------------- FIELDS --------------------- */
 
-	/* ------------- CONSTRUCTORS ------------------ */	
-	
-	/** An uniquely defined identifier for this component*/
-   public final int ident;
-	/** An object to store information about the element */
-   public final Object content;
-	/** The total number of components. <p>
-	* Initialized to 0, it is incremented by the constructor,
-	* and used to inialize the identifier. */
-   protected static int count = 0;
+    /**
+     * An uniquely defined identifier for this node.
+     */
+   private int identifier;
 
-   /* ------------- CONSTRUCTORS ------------------ */
+    /**
+     * An object to store information about the element.
+     */
+   private Object content;
 
-    /** Constructs a new node containing the specified object <p>
-	* Ident of this component is initalized with the </code>count<code>
-	* variable wich is the incremented */
-    public Node (Object content) {
-        this.ident = ++count; this.content = content; }
-	/** Constructs a new node with a null content <p>
-    * Ident of this component is initalized with the </code>count<code>
-	* variable wich is the incremented */
-    public Node() { 
-	this.ident = ++count; this.content = null; }
-	/**  Constructs this component as a copy of the specified node </code>n<code>, 
-	* with the same index.  
-	* @param n the node to be copied */
-    public Node (Node n) { 
-	this.ident = n.ident; this.content = n.content; }
+    /**
+     * The total number of nodes.
+     *
+     * Initialized to 0, it is incremented by the constructor,
+     * and used to inialize the identifier.
+     */
+   private static int count = 0;
 
-	/* --------------- SAVING METHOD ------------ */
+    /* ------------- CONSTRUCTORS ------------------ */
 
-	/** Returns a String representation of this component without spaces */
- 	public String toString () {
-        String s = "";
-		if (this.content==null) s = this.ident+"";
-		else s = this.content.toString();
-        StringTokenizer st = new StringTokenizer (s);
-        s = "";
-		while (st.hasMoreTokens())
-				s+=st.nextToken();
-        return s;
-	}
-	/** Returns the dot description of this component  in a String */
-	public String toDot () {
-		String s = this.ident+" [label=\""  ;
-		StringTokenizer st = new StringTokenizer (this.toString(),"\"");
-		while (st.hasMoreTokens()) 
-				s+=st.nextToken();
-		s += "\"]";
-		return s;
-	}
+    /**
+     * Constructs a new node containing the specified content.
+     *
+     * Identifier of this node is initalized with the `count`
+     * variable wich is the incremented.
+     *
+     * @param   content  Content for this node
+     */
+    public Node(final Object content) {
+        this.identifier = ++count;
+        this.content = content;
+    }
 
-	/* --------------- OVERLAPPING METHODS ------------ */
+    /**
+     * Constructs a new node with a null content.
+     *
+     * Identifier of this node is initalized with the `count`
+     * variable wich is the incremented.
+     */
+    public Node() {
+        this.identifier = ++count;
+        this.content = null;
+    }
 
-  /** Returns a copy of this component **/
+    /**
+     * Constructs this node as a copy of the specified `node`, with the same index.
+     *
+     * @param   node  the node to be copied
+     */
+    public Node(final Node node) {
+        this.identifier = node.identifier;
+        this.content = node.content;
+    }
+
+    /* -------------- ACCESSORS ------------------- */
+
+    /**
+     * Get the identifier.
+     *
+     * @return  the node identifier
+     */
+    public int identifier() {
+        return this.identifier;
+    }
+
+    /**
+     * Get the content.
+     *
+     * @return  the node content
+     */
+    public Object content() {
+        return this.content;
+    }
+
+    /* --------------- SAVING METHOD ------------ */
+
+    /**
+     * Returns a string representation of this node without spaces.
+     *
+     * @return  the string representation
+     */
+     public String toString() {
+        String string = "";
+        if (this.content == null) {
+            string = this.identifier + "";
+        } else {
+            string = this.content.toString();
+        }
+        StringTokenizer tokenizer = new StringTokenizer(string);
+        string = "";
+        while (tokenizer.hasMoreTokens()) {
+            string += tokenizer.nextToken();
+        }
+        return string;
+    }
+
+    /**
+     * Returns the dot description of this node in a String.
+     *
+     * @return  the dot description
+     */
+    public String toDot() {
+        String dot = this.identifier + " [label=\"";
+        StringTokenizer tokenizer = new StringTokenizer(this.toString(), "\"");
+        while (tokenizer.hasMoreTokens()) {
+            dot += tokenizer.nextToken();
+        }
+        dot += "\"]";
+        return dot;
+    }
+
+    /* --------------- OVERLAPPING METHODS ------------ */
+
+    /**
+     * Returns a copy of this node.
+     *
+     * @return  a clone of this node
+     */
     public Node copy() {
         return new Node(this.content);
     }
 
-    /** Compares this component with the specified one
-	* @return true or false as this componant is equals to the specified object.
-	*/
-    public boolean equals (Object o) {
-        if (!(o instanceof Node)) return false;
-        Node c = (Node) o;
-        return (this.ident == c.ident);
+    /**
+     * Compares this node with the specified one.
+     *
+     * @param  object  The object to be tested with
+     *
+     * @return  true or false as this node is equal to the specified object.
+     */
+    public boolean equals(final Object object) {
+        if (!(object instanceof Node)) {
+            return false;
+        }
+        Node node = (Node) object;
+        return this.identifier == node.identifier;
     }
-   /** Compares this component with those in parameter, based on their identifiers.
-	* The result is zero if the identifiers are equal; 1 if this component's identifier is greater,
-	* and -1 otherwise
-	* This comparison method is needed to define a natural ordering.
-	* It allows to use objects of this class in a sorted collection
-	* @param o the specified element to be compared with this component
-	* @return a negative integer, zero, or a positive integer as this component is less than,
-	* equal to, or greater than the specified object.
-	*/
-   public int compareTo (Object o) {       
-      if (!(o instanceof Node)) return -1;
-      int id =  ((Node)o).ident;
-      return (this.ident > id)?1:((this.ident == id)?0:-1);
-   }
-}// end of Node
+
+    /**
+     * Compute the hash code.
+     *
+     * @return  an integer representing the object
+     */
+    public int hashCode() {
+        return this.identifier;
+    }
+
+   /**
+    * Compares this node with those in parameter, based on their identifiers.
+    *
+    * The result is zero if the identifiers are equal; 1 if this node's identifier is greater, and -1 otherwise.
+    * This comparison method is needed to define a natural ordering.
+    * It allows to use objects of this class in a sorted collection.
+    *
+    * @param   object  the specified element to be compared with this node
+    *
+    * @return  a negative integer, zero, or a positive integer as this node is less than, equal to, or greater than the specified object.
+    */
+    public int compareTo(final Object object) {
+        if (!(object instanceof Node)) {
+            return -1;
+        }
+        int id = ((Node) object).identifier;
+        if (this.identifier > id) {
+            return 1;
+        } else if (this.identifier == id) {
+            return 0;
+        } else {
+            return -1;
+        }
+    }
+}
+
