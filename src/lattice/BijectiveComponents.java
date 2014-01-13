@@ -16,30 +16,34 @@ import dgraph.DGraph;
 /**
  * This class generates bijective components issued from lattice theory for a specified
  * closure system.
- * <p>
+ *
  * Bijective components are:
  * closed set lattice or concept lattice, reduced lattice, reduced context, canonical direct basis, minimal generators
  * and canonical basis, dependance graph.
- * <p>
- * A closure system is described by the abstract class <code>ClosureSystem</code>.
+ *
+ * A closure system is described by the abstract class `ClosureSystem`.
  * In this package, a closure system can be instancied by an implicational
- * system described by class <code>IS</code>) or a context described by
- * class <code>Context</code>).
- * <p>
- * This class provides a constructor, and only two methods: the method <code>initialize</code>
- * generates all the bijective components of the specified closure system ; and the method
- * <code>save</code> saves theses components in files.
- * <p>
+ * system described by class `IS`) or a context described by
+ * class `Context`).
+ *
+ * This class provides a constructor, and only two methods: the method `initialize`
+ * generates all the bijective components of the specified closure system; and the method
+ * `save` saves theses components in files.
+ *
  * This class can be used as follows:
  *
- *     BijectiveComponents BC = new BijectiveComponents (initialClosureSystem);
- *     BC.initialize();
- *     BC.save(dirString,nameString);
+ * ~~~Java
+ * BijectiveComponents BC = new BijectiveComponents (initialClosureSystem);
+ * BC.initialize();
+ * BC.save(dirString,nameString);
+ * ~~~
  *
  * Copyright: 2013 University of La Rochelle, France
  * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
  * This file is part of lattice, free package. You can redistribute it and/or modify
  * it under the terms of CeCILL-B license.
+ *
  * @author Karell Bertet
  * @version 2013
  */
@@ -72,18 +76,57 @@ public class BijectiveComponents {
     }
 
     /** Generates all the bijective components included in this component
-     * issued from the initial closure system <code>init</code>.
-     * <p>
+     * issued from the initial closure system `init`.
+     *
      * The closed set lattice is generated when the closure system is an implicational system,
-     * and obtained by <code>this.init.closedSetLattice(true);</code> ;
+     * and obtained by
+     *
+     * ~~~Java
+     * this.init.closedSetLattice(true);
+     * ~~~
+     *
      * The concept lattice is generated when the closure system is a context, and obtained by
-     * by <code>this.init.conceptLattice(true);</code> ;
-     * The reduced lattice is obtained by <code>this.lattice.getIrreduciblesReduction();</code> ;
-     * The reduced table is obtained by <code>this.reducedLattice.getTable()</code> ;
-     * The dependance graph is obtained by <code>this.reducedLattice.getDependanceGraph() </code> ;
-     * Minimal generators are obtained by <code>this.reducedLattice.getMinimalGenerators() </code> ;
-     * The canonical direct basis is obtained by <code>this.reducedLattice.getCanonicalDirectBasis() </code> ;
-     * The canonical basis is obtained by <code>new IS(this.canonicalDirectBasis).makeCanonicalBasis(); </code> ;
+     * by
+     *
+     * ~~~Java
+     * this.init.conceptLattice(true);
+     * ~~~
+     *
+     * The reduced lattice is obtained by
+     *
+     * ~~~Java
+     * this.lattice.getIrreduciblesReduction();
+     * ~~~
+     *
+     * The reduced table is obtained by
+     *
+     * ~~~Java
+     * this.reducedLattice.getTable();
+     * ~~~
+     *
+     * The dependance graph is obtained by
+     *
+     * ~~~Java
+     * this.reducedLattice.getDependanceGraph();
+     * ~~~
+     *
+     * Minimal generators are obtained by
+     *
+     * ~~~Java
+     * this.reducedLattice.getMinimalGenerators();
+     * ~~~
+     *
+     * The canonical direct basis is obtained by
+     *
+     * ~~~Java
+     * this.reducedLattice.getCanonicalDirectBasis();
+     * ~~~
+     *
+     * The canonical basis is obtained by
+     *
+     * ~~~Java
+     * new IS(this.canonicalDirectBasis).makeCanonicalBasis();
+     * ~~~
      *
      * @return time of computation
      */
@@ -107,9 +150,9 @@ public class BijectiveComponents {
 
    /** Saves all the bijective components included in this component in files
     * saved in the specified directory.
-    * A global description is saved in file <code>name+"Readme.txt"</code>.
-    * <p>
-    * The specified name is used to defined a name for each file. <p>
+    * A global description is saved in file `name+"Readme.txt"`.
+    *
+    * The specified name is used to defined a name for each file.
     */
     public void save (String directory, String name) {
         try 	{
