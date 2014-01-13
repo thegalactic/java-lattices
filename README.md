@@ -18,7 +18,7 @@ License
 Citation
 --------
 
-If you are using this project in research activities including publication, you have to cite it using ([BibTeX format](cite.bib))
+If you are using this project in research activities including publication, you have to cite it using ([BibTeX format](https://raw.github.com/kbertet/java-lattices/master/cite.bib))
 * authors: Karell Bertet et al
 * title: java-lattices: a Java library for lattices computation
 * year: 2014
