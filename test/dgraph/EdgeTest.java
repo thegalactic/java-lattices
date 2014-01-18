@@ -18,9 +18,9 @@ public class EdgeTest {
         Node to = new Node();
         Object content = new Object();
         Edge edge = new Edge(from, to, content);
-        assertEquals(edge.content(), content);
-        assertEquals(edge.from(), from);
-        assertEquals(edge.to(), to);
+        assertEquals(edge.getContent(), content);
+        assertEquals(edge.getFrom(), from);
+        assertEquals(edge.getTo(), to);
     }
 
     /**
@@ -31,9 +31,9 @@ public class EdgeTest {
         Node from = new Node();
         Node to = new Node();
         Edge edge = new Edge(from, to);
-        assertEquals(edge.content(), null);
-        assertEquals(edge.from(), from);
-        assertEquals(edge.to(), to);
+        assertEquals(edge.getContent(), null);
+        assertEquals(edge.getFrom(), from);
+        assertEquals(edge.getTo(), to);
     }
 
     /**
@@ -46,7 +46,7 @@ public class EdgeTest {
         Edge edge = new Edge(from, to);
         Object content = new Object();
         assertEquals(edge.setContent(content), edge);
-        assertEquals(edge.content(), content);
+        assertEquals(edge.getContent(), content);
     }
 
     /**
@@ -94,14 +94,14 @@ public class EdgeTest {
     }
 
     /**
-     * Test the toDot() method.
+     * Test the toD.getFrom() method.
      */
     @Test
     public void testToDot() {
         Node from = new Node("Hello");
         Node to = new Node("World");
         Edge edge = new Edge(from, to, "happy new year");
-        assertEquals(edge.toDot(), from.identifier() + "->" + to.identifier() +  " [label=\"happy new year\"]");
+        assertEquals(edge.toDot(), from.getIdentifier() + "->" + to.getIdentifier() +  " [label=\"happy new year\"]");
     }
 }
 

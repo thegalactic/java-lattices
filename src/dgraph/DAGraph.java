@@ -87,7 +87,7 @@ public class DAGraph extends DGraph {
      * @return  the minimal element
      */
     public TreeSet<Node> min() {
-        return this.sinks();
+        return this.getSinks();
     }
 
     /**
@@ -96,7 +96,7 @@ public class DAGraph extends DGraph {
      * @return  the maximal element
      */
     public TreeSet<Node> max() {
-        return this.wells();
+        return this.getWells();
     }
 
     /**
@@ -111,7 +111,7 @@ public class DAGraph extends DGraph {
     public TreeSet<Node> majorants(final Node node) {
         DAGraph graph = new DAGraph(this);
         graph.transitiveClosure();
-        return graph.successorNodes(node);
+        return graph.getSuccessorNodes(node);
     }
 
     /**
@@ -126,7 +126,7 @@ public class DAGraph extends DGraph {
     public TreeSet<Node> minorants(final Node node) {
         DAGraph graph = new DAGraph(this);
         graph.transitiveClosure();
-        return graph.predecessorNodes(node);
+        return graph.getPredecessorNodes(node);
     }
 
     /**
@@ -140,7 +140,7 @@ public class DAGraph extends DGraph {
     public DAGraph filter(final Node node) {
         TreeSet<Node> set = this.majorants(node);
         set.add(node);
-        return this.subgraphByNodes(set);
+        return this.getSubgraphByNodes(set);
     }
 
     /**
@@ -154,7 +154,7 @@ public class DAGraph extends DGraph {
     public DAGraph ideal(final Node node) {
         TreeSet<Node> set = this.minorants(node);
         set.add(node);
-        return this.subgraphByNodes(set);
+        return this.getSubgraphByNodes(set);
     }
 
     /**
@@ -166,10 +166,10 @@ public class DAGraph extends DGraph {
      *
      * @return  The subgraph
      */
-    public DAGraph subgraphByNodes(final Set<Node> nodes) {
+    public DAGraph getSubgraphByNodes(final Set<Node> nodes) {
         DGraph tmp = new DGraph(this);
         tmp.transitiveClosure();
-        DGraph sub = tmp.subgraphByNodes(nodes);
+        DGraph sub = tmp.getSubgraphByNodes(nodes);
         DAGraph sub2 = new DAGraph(sub);
         sub2.transitiveReduction();
         return sub2;
@@ -199,23 +199,23 @@ public class DAGraph extends DGraph {
         graph.reflexiveReduction();
         // initalize this component with no edges
         this.setSuccessors(new TreeMap<Node, TreeSet<Edge>>());
-        for (Node node : this.nodes()) {
-            this.successors().put(node, new TreeSet<Edge>());
+        for (Node node : this.getNodes()) {
+            this.getSuccessors().put(node, new TreeSet<Edge>());
         }
         this.setPredecessors(new TreeMap<Node, TreeSet<Edge>>());
-        for (Node node : this.nodes()) {
-            this.predecessors().put(node, new TreeSet<Edge>());
+        for (Node node : this.getNodes()) {
+            this.getPredecessors().put(node, new TreeSet<Edge>());
         }
         int number = 0;
         // mark each node to false
         TreeMap<Node, Boolean> mark = new TreeMap<Node, Boolean>();
-        for (Node node : graph.nodes()) {
+        for (Node node : graph.getNodes()) {
             mark.put(node, new Boolean(false));
         }
         // treatment of nodes according to a topological sort
         ArrayList<Node> sort = graph.topologicalSort();
         for (Node x : sort) {
-            TreeSet<Node> set = new TreeSet<Node>(graph.successorNodes(x));
+            TreeSet<Node> set = new TreeSet<Node>(graph.getSuccessorNodes(x));
             while (!set.isEmpty()) {
                 // compute the smallest successor y of x according to the topological sort
                 int i = 0;
@@ -228,7 +228,7 @@ public class DAGraph extends DGraph {
                     this.addEdge(x, y);
                     graph.addEdge(x, y);
                 }
-                for (Node z : graph.successorNodes(y)) {
+                for (Node z : graph.getSuccessorNodes(y)) {
                     // treatment of z when not marked
                     if (!mark.get(z).booleanValue()) {
                         mark.put(z, new Boolean(true));
@@ -239,7 +239,7 @@ public class DAGraph extends DGraph {
                 }
                 set.remove(y);
             }
-            for (Node y : graph.successorNodes(x)) {
+            for (Node y : graph.getSuccessorNodes(x)) {
                 mark.put(y, new Boolean(false));
             }
         }
@@ -264,13 +264,13 @@ public class DAGraph extends DGraph {
         int number = 0;
         // mark each node to false
         TreeMap<Node, Boolean> mark = new TreeMap<Node, Boolean>();
-        for (Node node : this.nodes()) {
+        for (Node node : this.getNodes()) {
             mark.put(node, new Boolean(false));
         }
         // treatment of nodes according to a topological sort
         ArrayList<Node> sort = this.topologicalSort();
         for (Node x : sort) {
-            TreeSet<Node> set = new TreeSet<Node>(this.successorNodes(x));
+            TreeSet<Node> set = new TreeSet<Node>(this.getSuccessorNodes(x));
             while (!set.isEmpty()) {
                 // compute the smallest successor y of x according to the topological sort
                 int i = 0;
@@ -278,7 +278,7 @@ public class DAGraph extends DGraph {
                     i++;
                 } while (!set.contains(sort.get(i)));
                 Node y = sort.get(i);
-                for (Node z : this.successorNodes(y)) {
+                for (Node z : this.getSuccessorNodes(y)) {
                     // treatment of z when not marked
                     if (!mark.get(z).booleanValue()) {
                         mark.put(z, new Boolean(true));
@@ -289,7 +289,7 @@ public class DAGraph extends DGraph {
                 }
                 set.remove(y);
             }
-            for (Node y : this.successorNodes(x)) {
+            for (Node y : this.getSuccessorNodes(x)) {
                 mark.put(y, new Boolean(false));
             }
         }
@@ -320,10 +320,10 @@ public class DAGraph extends DGraph {
         ArrayList<Node> sort = graph.topologicalSort();
         for (Node x : sort) {
             // computation of Jx
-            TreeSet<Node> jxmoins = new TreeSet<Node>(graph.predecessorNodes(x));
+            TreeSet<Node> jxmoins = new TreeSet<Node>(graph.getPredecessorNodes(x));
             // storage of new ideals in a set
             TreeSet<Concept> toAdd = new TreeSet<Concept>();
-            for (Node j1 : conceptLattice.nodes()) {
+            for (Node j1 : conceptLattice.getNodes()) {
                 if (((Concept) j1).containsAllInA(jxmoins)) {
                      Concept newJ = new Concept(true, false);
                      newJ.addAllToA(((TreeSet) ((Concept) j1).getSetA()));
@@ -337,8 +337,8 @@ public class DAGraph extends DGraph {
             }
         }
         // computation of the inclusion relaton
-        for (Node node1 : conceptLattice.nodes()) {
-            for (Node node2 : conceptLattice.nodes()) {
+        for (Node node1 : conceptLattice.getNodes()) {
+            for (Node node2 : conceptLattice.getNodes()) {
                 if (((Concept) node1).containsAllInA(((Concept) node2).getSetA())) {
                     conceptLattice.addEdge(node2, node1);
                 }
@@ -369,10 +369,10 @@ public class DAGraph extends DGraph {
             graph.addNode(new Node(new Integer(i)));
         }
         // addition of edges
-        for (Node from : graph.nodes()) {
-            for (Node to : graph.nodes()) {
-               int v1 = ((Integer) from.content()).intValue();
-               int v2 = ((Integer) to.content()).intValue();
+        for (Node from : graph.getNodes()) {
+            for (Node to : graph.getNodes()) {
+               int v1 = ((Integer) from.getContent()).intValue();
+               int v2 = ((Integer) to.getContent()).intValue();
                if (v1 < v2 && v2 % v1 == 0) {
                    graph.addEdge(from, to);
                }
@@ -396,8 +396,8 @@ public class DAGraph extends DGraph {
             graph.addNode(new Node(new Integer(i)));
         }
         // addition of edges
-        for (Node from : graph.nodes()) {
-            for (Node to : graph.nodes()) {
+        for (Node from : graph.getNodes()) {
+            for (Node to : graph.getNodes()) {
                 // Test to avoid cycles
                 if (from.compareTo(to) > 0) {
                     if (Math.random() < threshold) {

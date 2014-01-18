@@ -88,7 +88,7 @@ public class Edge implements Comparable<Object> {
      *
      * @return  the origin node
      */
-    public Node from() {
+    public Node getFrom() {
         return this.from;
     }
 
@@ -97,7 +97,7 @@ public class Edge implements Comparable<Object> {
      *
      * @return  the destination node
      */
-    public Node to() {
+    public Node getTo() {
         return this.to;
     }
 
@@ -118,7 +118,7 @@ public class Edge implements Comparable<Object> {
      *
      * @return  the content
      */
-    public Object content() {
+    public Object getContent() {
         return this.content;
     }
 
@@ -151,11 +151,11 @@ public class Edge implements Comparable<Object> {
             return -1;
         }
         Edge edge = (Edge) object;
-        if (this.from.identifier() == edge.from().identifier() && this.to.identifier() == edge.to().identifier()) {
+        if (this.from.getIdentifier() == edge.getFrom().getIdentifier() && this.to.getIdentifier() == edge.getTo().getIdentifier()) {
             return 0;
         }
-        if (this.from.identifier() < edge.from().identifier()
-            || this.from.identifier() == edge.from().identifier() && this.to.identifier() < edge.to().identifier()) {
+        if (this.from.getIdentifier() < edge.getFrom().getIdentifier()
+            || this.from.getIdentifier() == edge.getFrom().getIdentifier() && this.to.getIdentifier() < edge.getTo().getIdentifier()) {
             return -1;
         }
         return 1;
@@ -180,7 +180,7 @@ public class Edge implements Comparable<Object> {
      * @return  The dot representation of this edge
      */
     public String toDot() {
-        String dot = this.from.identifier() + "->" + this.to.identifier();
+        String dot = this.from.getIdentifier() + "->" + this.to.getIdentifier();
         if (this.hasContent()) {
             dot = dot + " [" + "label=\"";
             StringTokenizer tokenizer = new StringTokenizer(this.content.toString(), "\"");

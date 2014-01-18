@@ -192,46 +192,46 @@ public TreeMap<Object, TreeSet> getReducibleElements() {
 	// First, compute each group of equivalent attributes          
 	// This group will be a strongly connected component on the graph. 
         // Then, only one element of each group	is skipped, others will be deleted. 
-	DAGraph CFC = G.stronglyConnectedComponent();                
-	for (Node C : CFC.nodes()) {             
+	DAGraph CFC = G.getStronglyConnectedComponent();                
+	for (Node C : CFC.getNodes()) {             
             // Get list of node of this component             
-            TreeSet<Node> sCC = (TreeSet) C.content(); 
+            TreeSet<Node> sCC = (TreeSet) C.getContent(); 
             if (sCC.size() > 1) {    
 		Node y = sCC.first(); 
 		TreeSet yClass = new TreeSet ();
-                yClass.add(y.content());
+                yClass.add(y.getContent());
 		for (Node x : sCC) 
-			if (!x.content().equals(y.content())) {                             			                         
+			if (!x.getContent().equals(y.getContent())) {                             			                         
                             G.removeNode(x);
-                            Red.put(x.content(), yClass);                                    
+                            Red.put(x.getContent(), yClass);                                    
 			}                 
             }
         }     
         // Next, check if an attribute is equivalent to emptyset
         // i.e. its closure is equal to emptyset closure
-        TreeSet <Node> sinks = G.sinks();
+        TreeSet <Node> sinks = G.getSinks();
         if (sinks.size()==1) {
             Node s = sinks.first();
-            Red.put (s.content(), new TreeSet());
+            Red.put (s.getContent(), new TreeSet());
             G.removeNode(s);
         }        
 	// Finaly, checking a remaining attribute equivalent to its predecessors or not may reduce more attributes. 
 	// Check all remaining nodes of graph G 
-	for (Node x : G.nodes()) { 	            
-            TreeSet<Node> P = G.predecessorNodes(x);	                
+	for (Node x : G.getNodes()) { 	            
+            TreeSet<Node> P = G.getPredecessorNodes(x);	                
             if (P.size() > 1) { 
                 // Create the closure of x 
 		TreeSet X = new TreeSet();
-                X.add(x.content());
+                X.add(x.getContent());
                 TreeSet closureX = this.closure(X);                                                                        			
 		// Create the closure of P 						                        
                 TreeSet<Comparable> Pred = new TreeSet <Comparable> ();
                 for (Node n : P)
-                    Pred.add((Comparable)n.content());    
+                    Pred.add((Comparable)n.getContent());    
                     TreeSet <Comparable> closureP = this.closure(Pred);                    
                     // Check the equality of two closures 
                     if (closureX.containsAll(closureP) && closureP.containsAll(closureX))
-                        Red.put(x.content(),Pred);                    
+                        Red.put(x.getContent(),Pred);                    
 		} 
 	} 
 	// Finally, return the list of reducible elements with their equivalent attributes. 

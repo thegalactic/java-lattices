@@ -127,7 +127,7 @@ public class Examples {
             System.out.println(log); file.write(log);
             // computes and print the directed acyclic graph whose nodes
             // are strongly connected components of the directed graph
-            DAGraph CC = G.stronglyConnectedComponent();
+            DAGraph CC = G.getStronglyConnectedComponent();
             String nameCC = name+"ConnectedComponents.dot";
             CC.writeDot(outputDir+nameCC);
             log = "-> Strongly connected components saved in "+nameCC+"\n";
@@ -137,9 +137,9 @@ public class Examples {
             System.out.println(log); file.write(log);
             // computes and print the sugbraph of the dgraph induces by 5 first nodes
             TreeSet<Node> X = new TreeSet();
-            for (Node n : G.nodes())
+            for (Node n : G.getNodes())
                 if (X.size()!=5) X.add(n);
-            DGraph SG = G.subgraphByNodes(X);
+            DGraph SG = G.getSubgraphByNodes(X);
             String nameSG = name+"Subgraph.dot";
             SG.writeDot(outputDir+nameSG);
             log = "-> Subgraph induced by 5 first nodes saved in "+nameSG+"\n";
@@ -180,7 +180,7 @@ public class Examples {
             log = "-> Transitive reduction saved in "+nameTR+"\n";
             System.out.println(log+G.toString()); file.write(log);
             // computes and print the ideal and the filter of the first node
-            Node n = G.nodes().first();
+            Node n = G.getNodes().first();
             DAGraph ideal = G.ideal(n);
             String nameIdeal = name+"Ideal.dot";
             ideal.writeDot(outputDir+nameIdeal);

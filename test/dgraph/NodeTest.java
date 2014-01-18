@@ -15,10 +15,10 @@ public class NodeTest {
     public void testConstructorFull() {
         Object content = new Object();
         Node node1 = new Node(content);
-        assertEquals(node1.content(), content);
+        assertEquals(node1.getContent(), content);
 
         Node node2 = new Node();
-        assertEquals(node1.identifier() + 1, node2.identifier());
+        assertEquals(node1.getIdentifier() + 1, node2.getIdentifier());
     }
 
     /**
@@ -27,7 +27,7 @@ public class NodeTest {
     @Test
     public void testConstructorEmpty() {
         Node node = new Node();
-        assertEquals(node.content(), null);
+        assertEquals(node.getContent(), null);
     }
 
     /**
@@ -38,8 +38,8 @@ public class NodeTest {
         Object content = new Object();
         Node node = new Node(content);
         Node copy = new Node(node);
-        assertEquals(copy.content(), content);
-        assertEquals(node.identifier(), copy.identifier());
+        assertEquals(copy.getContent(), content);
+        assertEquals(node.getIdentifier(), copy.getIdentifier());
     }
 
     /**
@@ -53,13 +53,13 @@ public class NodeTest {
     }
 
     /**
-     * Test the toDot() method.
+     * Test the toD.getFrom() method.
      */
     @Test
     public void testToDot() {
         String content = new String("Hello \"World\"");
         Node node = new Node(content);
-        assertEquals(node.toDot(), node.identifier() + " [label=\"HelloWorld\"]");
+        assertEquals(node.toDot(), node.getIdentifier() + " [label=\"HelloWorld\"]");
     }
 
     /**
@@ -70,7 +70,7 @@ public class NodeTest {
         Object content = new Object();
         Node node = new Node(content);
         Node copy = node.copy();
-        assertEquals(copy.content(), content);
+        assertEquals(copy.getContent(), content);
     }
 
     /**
@@ -89,7 +89,7 @@ public class NodeTest {
     @Test
     public void testHashCode() {
         Node node = new Node();
-        assertEquals(node.identifier(), node.hashCode());
+        assertEquals(node.getIdentifier(), node.hashCode());
     }
 
     /**

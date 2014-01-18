@@ -165,8 +165,8 @@ public class DGraph {
             map.put(node, nodeCopy);
             copy.addNode(nodeCopy);
         }
-        for (Edge edge : this.edges()) {
-            copy.addEdge(new Edge(map.get(edge.from()), map.get(edge.to()), edge.content()));
+        for (Edge edge : this.getEdges()) {
+            copy.addEdge(new Edge(map.get(edge.getFrom()), map.get(edge.getTo()), edge.getContent()));
         }
         return copy;
     }
@@ -176,7 +176,7 @@ public class DGraph {
      *
      * @return  the set of nodes
      */
-    public SortedSet<Node> nodes() {
+    public SortedSet<Node> getNodes() {
         return Collections.unmodifiableSortedSet((SortedSet<Node>) this.nodes);
     }
 
@@ -197,7 +197,7 @@ public class DGraph {
      *
      * @return  the map
      */
-    protected TreeMap<Node, TreeSet<Edge>> successors() {
+    protected TreeMap<Node, TreeSet<Edge>> getSuccessors() {
         return this.successors;
     }
 
@@ -218,7 +218,7 @@ public class DGraph {
      *
      * @return  the map
      */
-    protected TreeMap<Node, TreeSet<Edge>> predecessors() {
+    protected TreeMap<Node, TreeSet<Edge>> getPredecessors() {
         return this.predecessors;
     }
 
@@ -239,7 +239,7 @@ public class DGraph {
      *
      * @return  the set of edges
      */
-    public SortedSet<Edge> edges() {
+    public SortedSet<Edge> getEdges() {
         TreeSet<Edge> edges = new TreeSet<Edge>();
         for (Node node : this.nodes) {
             edges.addAll(this.successors.get(node));
@@ -254,7 +254,7 @@ public class DGraph {
      *
      * @return  the set of edges
      */
-    public SortedSet<Edge> successorEdges(final Node node) {
+    public SortedSet<Edge> getSuccessorEdges(final Node node) {
         return Collections.unmodifiableSortedSet((SortedSet<Edge>) this.successors.get(node));
     }
 
@@ -265,7 +265,7 @@ public class DGraph {
      *
      * @return  the set of edges
      */
-    public SortedSet<Edge> predecessorEdges(final Node node) {
+    public SortedSet<Edge> getPredecessorEdges(final Node node) {
         return Collections.unmodifiableSortedSet((SortedSet<Edge>) this.predecessors.get(node));
     }
 
@@ -276,10 +276,10 @@ public class DGraph {
      *
      * @return  the set of nodes
      */
-    public TreeSet<Node> successorNodes(final Node node) {
+    public TreeSet<Node> getSuccessorNodes(final Node node) {
        TreeSet<Node> successors = new TreeSet<Node>();
        for (Edge edge : this.successors.get(node)) {
-           successors.add(edge.to());
+           successors.add(edge.getTo());
        }
        return successors;
     }
@@ -291,10 +291,10 @@ public class DGraph {
      *
      * @return  the set of nodes
      */
-    public TreeSet<Node> predecessorNodes(final Node node) {
+    public TreeSet<Node> getPredecessorNodes(final Node node) {
         TreeSet<Node> predecessors = new TreeSet<Node>();
         for (Edge edge : this.predecessors.get(node)) {
-            predecessors.add(edge.from());
+            predecessors.add(edge.getFrom());
         }
         return predecessors;
     }
@@ -307,10 +307,10 @@ public class DGraph {
      *
      * @return  the found edge or null
      */
-    public Edge edge(final Node from, final Node to) {
+    public Edge getEdge(final Node from, final Node to) {
         if (this.containsEdge(from, to)) {
             for (Edge edge : this.successors.get(from)) {
-                if (edge.to().equals(to)) {
+                if (edge.getTo().equals(to)) {
                     return edge;
                 }
             }
@@ -325,7 +325,7 @@ public class DGraph {
      *
      * @return  the found node or null
      */
-     public Node node(final Object search) {
+     public Node getNode(final Object search) {
         for (Node node : this.nodes) {
             if (node.equals(search)) {
                 return node;
@@ -341,9 +341,9 @@ public class DGraph {
      *
      * @return  the found node or null
      */
-    public Node nodeByContent(final Object content) {
+    public Node getNodeByContent(final Object content) {
         for (Node node : this.nodes) {
-            if (node.content().equals(content)) {
+            if (node.getContent().equals(content)) {
                 return node;
             }
         }
@@ -357,9 +357,9 @@ public class DGraph {
      *
      * @return  the found node or null
      */
-    public Node nodeByIdentifier(int identifier) {
+    public Node getNodeByIdentifier(int identifier) {
         for (Node node : this.nodes) {
-            if (node.identifier() == identifier) {
+            if (node.getIdentifier() == identifier) {
                 return node;
             }
         }
@@ -371,7 +371,7 @@ public class DGraph {
      *
      * @return  the number of nodes
      */
-    public int sizeNodes() {
+    public int getSizeNodes() {
         return this.nodes.size();
     }
 
@@ -380,7 +380,7 @@ public class DGraph {
      *
      * @return  the number of edges
      */
-    public int sizeEdges() {
+    public int getSizeEdges() {
         int size = 0;
         for (Node node : this.nodes) {
             size += this.successors.get(node).size();
@@ -395,13 +395,13 @@ public class DGraph {
      */
     public String toString() {
         StringBuffer nodes  = new StringBuffer();
-        nodes.append(this.sizeNodes()).append(" Nodes: {");
+        nodes.append(this.getSizeNodes()).append(" Nodes: {");
         StringBuffer edges = new StringBuffer();
-        edges.append(this.sizeEdges()).append(" Edges: {");
+        edges.append(this.getSizeEdges()).append(" Edges: {");
         for (Node from : this.nodes) {
             nodes.append(from.toString() + ",");
         }
-        for (Edge ed : this.edges()) {
+        for (Edge ed : this.getEdges()) {
             edges.append(ed.toString() + ",");
         }
         nodes.append("}\n").append(edges).append("}\n");
@@ -424,7 +424,7 @@ public class DGraph {
             for (Node from : this.nodes) {
                 nodes.append(from.toDot()).append("\n");
             }
-            for (Edge edge : this.edges()) {
+            for (Edge edge : this.getEdges()) {
                 edges.append(edge.toDot()).append("\n");
             }
             out.writeBytes(nodes.toString());
@@ -477,10 +477,10 @@ public class DGraph {
         if (this.containsNode(node)) {
             // Remove the edges (node,to) with key node in successors, and key to in predecessors
             for (Edge successor : this.successors.get(node)) {
-                if (successor.to().compareTo(node) != 0) {
-                     for (Edge predecessor : this.predecessors.get(successor.to())) {
-                        if (predecessor.from().compareTo(node) == 0) {
-                            this.predecessors.get(successor.to()).remove(predecessor);
+                if (successor.getTo().compareTo(node) != 0) {
+                     for (Edge predecessor : this.predecessors.get(successor.getTo())) {
+                        if (predecessor.getFrom().compareTo(node) == 0) {
+                            this.predecessors.get(successor.getTo()).remove(predecessor);
                         }
                     }
                 }
@@ -488,10 +488,10 @@ public class DGraph {
             }
             // Remove the edges (from,node) with key node in predecessors, and key from in successors
             for (Edge predecessor : this.predecessors.get(node)) {
-                if (predecessor.from().compareTo(node) != 0) {
-                     for (Edge successor : this.successors.get(predecessor.from())) {
-                        if (successor.to().compareTo(node) == 0) {
-                            this.successors.get(predecessor.from()).remove(successor);
+                if (predecessor.getFrom().compareTo(node) != 0) {
+                     for (Edge successor : this.successors.get(predecessor.getFrom())) {
+                        if (successor.getTo().compareTo(node) == 0) {
+                            this.successors.get(predecessor.getFrom()).remove(successor);
                         }
                     }
                 }
@@ -532,8 +532,8 @@ public class DGraph {
     public boolean containsEdge(final Node from, final Node to) {
         return this.containsNode(from)
             && this.containsNode(to)
-            && this.successorNodes(from).contains(to)
-            && this.predecessorNodes(to).contains(from);
+            && this.getSuccessorNodes(from).contains(to)
+            && this.getPredecessorNodes(to).contains(from);
     }
 
     /**
@@ -544,7 +544,7 @@ public class DGraph {
      * @return  true if the edge is contained by this component
      */
     public boolean containsEdge(final Edge edge) {
-        return this.containsEdge(edge.from(), edge.to());
+        return this.containsEdge(edge.getFrom(), edge.getTo());
     }
 
     /**
@@ -587,8 +587,8 @@ public class DGraph {
     }
 
     /**
-     * Adds the specified edge to this component in the successors of edge.from() and in the
-     * predecessors of edge.to().
+     * Adds the specified edge to this component in the successors of edge.getFrom() and in the
+     * predecessors of edge.getTo().
      *
      * If the case where nodes to and from of this edges don't belongs to the node set,
      * then the edge will not be added.
@@ -598,9 +598,9 @@ public class DGraph {
      * @return  true if the edge was added
      */
     public boolean addEdge(final Edge edge) {
-        if (this.containsNode(edge.from()) && this.containsNode(edge.to())) {
-            this.successors.get(edge.from()).add(edge);
-            this.predecessors.get(edge.to()).add(edge);
+        if (this.containsNode(edge.getFrom()) && this.containsNode(edge.getTo())) {
+            this.successors.get(edge.getFrom()).add(edge);
+            this.predecessors.get(edge.getTo()).add(edge);
             return true;
         }
         return false;
@@ -628,8 +628,8 @@ public class DGraph {
     }
 
     /**
-     * Removes from this component the specified edge from the successors of edge.from()
-     * and from the predecessors of edge.to().
+     * Removes from this component the specified edge from the successors of edge.getFrom()
+     * and from the predecessors of edge.getTo().
      *
      * @param   edge  the edge to be removed.
      *
@@ -637,8 +637,8 @@ public class DGraph {
      */
     public boolean removeEdge(final Edge edge) {
          if (this.containsEdge(edge)) {
-            this.successors.get(edge.from()).remove(edge);
-            this.predecessors.get(edge.to()).remove(edge);
+            this.successors.get(edge.getFrom()).remove(edge);
+            this.predecessors.get(edge.getTo()).remove(edge);
             return true;
         }
         return false;
@@ -653,7 +653,7 @@ public class DGraph {
      */
     public boolean isAcyclic() {
         ArrayList<Node> nodes = this.topologicalSort();
-        return (nodes.size() == this.sizeNodes());
+        return (nodes.size() == this.getSizeNodes());
     }
 
     /**
@@ -667,18 +667,18 @@ public class DGraph {
      * @return  the nodes
      */
     public ArrayList<Node> topologicalSort() {
-        TreeSet<Node> sinks = this.sinks();
+        TreeSet<Node> sinks = this.getSinks();
         // initialize a map with the number of predecessors (value) for each node (key);
         TreeMap<Node, Integer> size = new TreeMap<Node, Integer>();
         for (Node node : this.nodes) {
-            size.put(node, new Integer(this.predecessorNodes(node).size()));
+            size.put(node, new Integer(this.getPredecessorNodes(node).size()));
         }
         ArrayList<Node> sort = new ArrayList<Node>();
         while (!sinks.isEmpty()) {
             Node node = sinks.pollFirst();
             sort.add(node);
             // updating of the set min by considering the successors of node
-            for (Node successor : this.successorNodes(node)) {
+            for (Node successor : this.getSuccessorNodes(node)) {
                 int newSize = size.get(successor).intValue() - 1;
                 size.put(successor, new Integer(newSize));
                 if (newSize == 0) {
@@ -696,7 +696,7 @@ public class DGraph {
     *
     * @return  the sinks
     */
-    public TreeSet<Node> sinks() {
+    public TreeSet<Node> getSinks() {
         TreeSet<Node> sinks = new TreeSet<Node>();
         for (Node node : this.nodes) {
             if (this.predecessors.get(node).isEmpty()) {
@@ -711,7 +711,7 @@ public class DGraph {
     *
     * @return  the wells
     */
-    public TreeSet<Node> wells() {
+    public TreeSet<Node> getWells() {
         TreeSet<Node> wells = new TreeSet<Node>();
         for (Node node : this.nodes) {
             if (this.successors.get(node).isEmpty()) {
@@ -730,7 +730,7 @@ public class DGraph {
      *
      * @return  The subgraph
      */
-    public DGraph subgraphByNodes(final Set<Node> nodes) {
+    public DGraph getSubgraphByNodes(final Set<Node> nodes) {
         DGraph graph = new DGraph();
         // addition of nodes in the subgraph
         for (Node node : nodes) {
@@ -739,8 +739,8 @@ public class DGraph {
             }
         }
         // addition of edges in the subgraph
-        for (Edge edge : this.edges()) {
-            if (graph.containsNode(edge.to())) {
+        for (Edge edge : this.getEdges()) {
+            if (graph.containsNode(edge.getTo())) {
                 graph.addEdge(edge);
             }
         }
@@ -757,7 +757,7 @@ public class DGraph {
      *
      * @return  The subgraph
      */
-    public DGraph subgraphByEdges(final Set<Edge> edges) {
+    public DGraph getSubgraphByEdges(final Set<Edge> edges) {
         DGraph graph = new DGraph();
         // addition of all nodes in the subgraph
         for (Node node : this.nodes) {
@@ -781,8 +781,8 @@ public class DGraph {
     public void complementary() {
         for (Node from : this.nodes) {
             TreeSet<Node> newSuccessors = new TreeSet<Node>(this.nodes);
-            newSuccessors.removeAll(this.successorNodes(from));
-            TreeSet<Node> oldSuccessors = new TreeSet<Node>(this.successorNodes(from));
+            newSuccessors.removeAll(this.getSuccessorNodes(from));
+            TreeSet<Node> oldSuccessors = new TreeSet<Node>(this.getSuccessorNodes(from));
             for (Node to : oldSuccessors) {
                 this.removeEdge(from, to);
             }
@@ -852,7 +852,7 @@ public class DGraph {
             list.add(x);
             while (!list.isEmpty()) {
                 Node y = list.remove(0);
-                for (Node z : this.successorNodes(y)) {
+                for (Node z : this.getSuccessorNodes(y)) {
                     // treatment of y when not marked
                     if (!mark.get(z).booleanValue()) {
                         mark.put(z, new Boolean(true));
@@ -862,7 +862,7 @@ public class DGraph {
                     }
                 }
             }
-            for (Node y : this.successorNodes(x)) {
+            for (Node y : this.getSuccessorNodes(x)) {
                 mark.put(y, new Boolean(false));
             }
         }
@@ -889,7 +889,7 @@ public class DGraph {
         if (sort != null) {
             // search according to a sort
             for (Node node : sort) {
-                if (this.successorNodes(source).contains(node) && !visited.contains(node)) {
+                if (this.getSuccessorNodes(source).contains(node) && !visited.contains(node)) {
                     arrayVisited = this.depthFirstSearch(node, visited, sort);
                     visited.addAll(arrayVisited[0]);
                     first.addAll(arrayVisited[0]);
@@ -898,7 +898,7 @@ public class DGraph {
             }
         } else {
             // classical search
-            for (Node node : this.successorNodes(source)) {
+            for (Node node : this.getSuccessorNodes(source)) {
                 if (!visited.contains(node)) {
                     arrayVisited = this.depthFirstSearch(node, visited, sort);
                     visited.addAll(arrayVisited[0]);
@@ -944,9 +944,9 @@ public class DGraph {
      */
     public void transpose() {
         DGraph tmp = new DGraph(this);
-        for (Edge edge : tmp.edges()) {
+        for (Edge edge : tmp.getEdges()) {
              this.removeEdge(edge);
-             this.addEdge(new Edge(edge.to(), edge.from(), edge.content()));
+             this.addEdge(new Edge(edge.getTo(), edge.getFrom(), edge.getContent()));
         }
     }
 
@@ -959,7 +959,7 @@ public class DGraph {
      *
      * @return  The directed acyclic graph
      */
-    public DAGraph stronglyConnectedComponent() {
+    public DAGraph getStronglyConnectedComponent() {
         DAGraph cc = new DAGraph();
         // first depth first search
         DGraph tmp = new DGraph(this);
@@ -986,11 +986,11 @@ public class DGraph {
             }
         }
         // edges between strongly connected component
-        for (Node ccFrom : cc.nodes()) {
-            for (Node ccTo : cc.nodes()) {
-                for (Node from : (TreeSet<Node>) ccFrom.content()) {
-                    for (Node to : ((TreeSet<Node>) ccTo.content())) {
-                        if (tmp.successorNodes(from).contains(to)) {
+        for (Node ccFrom : cc.getNodes()) {
+            for (Node ccTo : cc.getNodes()) {
+                for (Node from : (TreeSet<Node>) ccFrom.getContent()) {
+                    for (Node to : ((TreeSet<Node>) ccTo.getContent())) {
+                        if (tmp.getSuccessorNodes(from).contains(to)) {
                             cc.addEdge(ccFrom, ccTo);
                         }
                     }

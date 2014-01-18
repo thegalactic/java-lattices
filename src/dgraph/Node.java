@@ -95,7 +95,7 @@ public class Node implements Comparable<Object> {
      *
      * @return  the node identifier
      */
-    public int identifier() {
+    public int getIdentifier() {
         return this.identifier;
     }
 
@@ -104,7 +104,7 @@ public class Node implements Comparable<Object> {
      *
      * @return  the node content
      */
-    public Object content() {
+    public Object getContent() {
         return this.content;
     }
 

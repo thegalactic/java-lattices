@@ -751,7 +751,7 @@ public class Context extends ClosureSystem {
 	public ConceptLattice conceptLattice (boolean  diagram) {
 		ConceptLattice CSL = this.closedSetLattice(diagram);        
 		TreeMap<Concept,Concept> Nodes = new TreeMap<Concept,Concept>();
-		for (Node n : CSL.nodes()) {
+		for (Node n : CSL.getNodes()) {
 			 Concept cl = (Concept)n;
              cl.putSetB(new ComparableSet(this.getExtent(cl.getSetA())));
         }

@@ -754,12 +754,12 @@ public class IS extends ClosureSystem
 				Node to = nodeCreated.get(a);
                 Edge ed;
                 if (pred.containsEdge(from, to))
-                   ed = pred.edge(from,to);
+                   ed = pred.getEdge(from,to);
                 else {
                    ed = new Edge (from,to,new TreeSet<ComparableSet>());
                    pred.addEdge(ed);
                 }
-                ((TreeSet<ComparableSet>)ed.content()).add(diff);
+                ((TreeSet<ComparableSet>)ed.getContent()).add(diff);
 				}
 			}
 		return pred;
