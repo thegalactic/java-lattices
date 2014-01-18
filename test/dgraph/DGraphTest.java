@@ -102,10 +102,10 @@ public class DGraphTest {
     }
 
     /**
-     * Test the nodes method.
+     * Test the getNodes method.
      */
     @Test
-    public void testNodes() {
+    public void testGetNodes() {
         Node node1 = new Node();
         Node node2 = new Node();
         DGraph graph = new DGraph();
@@ -117,10 +117,10 @@ public class DGraphTest {
     }
 
     /**
-     * Test the edges method.
+     * Test the getEdges method.
      */
     @Test
-    public void testEdges() {
+    public void testGetEdges() {
         Node node1 = new Node();
         Node node2 = new Node();
         DGraph graph = new DGraph();
@@ -135,7 +135,7 @@ public class DGraphTest {
      * Test the getSuccessorEdges method.
      */
     @Test
-    public void testSuccessorEdges() {
+    public void testGetSuccessorEdges() {
         Node node1 = new Node();
         Node node2 = new Node();
         DGraph graph = new DGraph();
@@ -151,7 +151,7 @@ public class DGraphTest {
      * Test the getPredecessorEdges method.
      */
     @Test
-    public void testPredecessorEdges() {
+    public void testGetPredecessorEdges() {
         Node node1 = new Node();
         Node node2 = new Node();
         DGraph graph = new DGraph();
@@ -167,7 +167,7 @@ public class DGraphTest {
      * Test the getSuccessorNodes method.
      */
     @Test
-    public void testSuccessorNodes() {
+    public void testGetSuccessorNodes() {
         Node node1 = new Node();
         Node node2 = new Node();
         DGraph graph = new DGraph();
@@ -183,7 +183,7 @@ public class DGraphTest {
      * Test the getPredecessorNodes method.
      */
     @Test
-    public void testPredecessorNodes() {
+    public void testGetPredecessorNodes() {
         Node node1 = new Node();
         Node node2 = new Node();
         DGraph graph = new DGraph();
@@ -199,7 +199,7 @@ public class DGraphTest {
      * Test the getNodeByContent method.
      */
     @Test
-    public void testNodeByContent() {
+    public void testGetNodeByContent() {
         Node node = new Node("1");
         DGraph graph = new DGraph();
         graph.addNode(node);
@@ -211,7 +211,7 @@ public class DGraphTest {
      * Test the getNodeByIdentifier method.
      */
     @Test
-    public void testNodeByIdentifier() {
+    public void testGetNodeByIdentifier() {
         Node node = new Node();
         DGraph graph = new DGraph();
         graph.addNode(node);
@@ -220,10 +220,10 @@ public class DGraphTest {
     }
 
     /**
-     * Test the sizeNodes method.
+     * Test the getSizeNodes method.
      */
     @Test
-    public void testSizeNodes() {
+    public void testGetSizeNodes() {
         Node node1 = new Node();
         Node node2 = new Node();
         DGraph graph = new DGraph();
@@ -234,10 +234,10 @@ public class DGraphTest {
     }
 
     /**
-     * Test the sizeEdges method.
+     * Test the getSizeEdges method.
      */
     @Test
-    public void testSizeEdges() {
+    public void testGetSizeEdges() {
         Node node1 = new Node();
         Node node2 = new Node();
         DGraph graph = new DGraph();
@@ -488,7 +488,7 @@ public class DGraphTest {
      * Test the getSinks method.
      */
     @Test
-    public void testSinks() {
+    public void testGetSinks() {
         Node from = new Node();
         Node to = new Node();
         Edge edge = new Edge(from, to);
@@ -505,7 +505,7 @@ public class DGraphTest {
      * Test the getWells method.
      */
     @Test
-    public void testWells() {
+    public void testGetWells() {
         Node from = new Node();
         Node to = new Node();
         Edge edge = new Edge(from, to);
@@ -522,7 +522,7 @@ public class DGraphTest {
      * Test the getSubgraphByNodes method.
      */
     @Test
-    public void testSubgraphByNodes() {
+    public void testGetSubgraphByNodes() {
         DGraph graph = new DGraph();
         Node node1 = new Node();
         Node node2 = new Node();
@@ -571,7 +571,7 @@ public class DGraphTest {
      * Test the getSubgraphByEdges method.
      */
     @Test
-    public void testSubgraphByEdges() {
+    public void testGetSubgraphByEdges() {
         DGraph graph = new DGraph();
         Node node1 = new Node();
         Node node2 = new Node();
@@ -823,10 +823,10 @@ public class DGraphTest {
     }
 
     /**
-     * Test the stronglyConnectedComponent method.
+     * Test the getStronglyConnectedComponent method.
      */
     @Test
-    public void testStronglyConnectedComponent() {
+    public void testGetStronglyConnectedComponent() {
         DGraph graph = new DGraph();
         Node node1 = new Node();
         Node node2 = new Node();
