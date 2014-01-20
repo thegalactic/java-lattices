@@ -3,27 +3,38 @@ package dgraph;
 /*
  * DGraph.java
  *
- * last update on March 2010
- *
+ * last update on January 2014
  */
-//package lattice;
-//import lattice.lattice.Node;
+
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
+import java.util.Collections;
 import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.SortedSet;
+import java.util.Set;
+
 /**
  * This class gives a standard representation for a directed graph
  * by sets of successors and predecessors.
  *
- * A directed graph is composed of a treeset of node, defined by class `Node` ;
- * a treemap of successors that associates to each node a treeset of successors ;
- * and a treemap of predecessors that associates to each node a treeset of predecessors.
+ * A directed graph is composed of
+ *
+ * - a treeset of node, defined by class `Node`;
+ * - a treemap of successors that associates to each node a treeset of successors ;
+ * - a treemap of predecessors that associates to each node a treeset of predecessors.
  *
  * This class provides methods implementing classical operation on a directed graph:
- * sinks, wells, subgraph, depth first search, reflexive closure and reduction,
- * transitive closure, strongly connected components, ...
+ *
+ * - sinks
+ * - wells
+ * - subgraph
+ * - depth first search
+ * - reflexive closure and reduction
+ * - transitive closure
+ * - strongly connected components
+ * - ...
  *
  * This class also provides a static method randomly generating a directed graph.
  *
@@ -38,593 +49,956 @@ import java.util.TreeSet;
  * @version 2013
  */
 public class DGraph {
+    /* ------------- FIELDS ------------------ */
 
-	/* ------------- FIELD ------------------ */	
-	
-	/** A set of elements **/
-	protected TreeSet<Node> nodes;
-	/** A map to associate a set of successors to each node **/
-	protected TreeMap<Node,TreeSet<Edge>> succ;
-	/** A map to associate a set of predecessors to each node **/
-	protected TreeMap<Node,TreeSet<Edge>> pred;
+    /**
+     * A set of elements.
+     */
+    private TreeSet<Node> nodes;
 
-	/* ------------- CONSTRUCTORS ------------------ */	
-	
-  	/** Constructs a new directed graph with an empty set of node.**/
-   public DGraph () {
-		this.nodes = new TreeSet<Node> ();	
-		this.succ = new TreeMap<Node,TreeSet<Edge>>();
-		this.pred = new TreeMap<Node,TreeSet<Edge>>();
-		}
-  	/** Constructs a new directed graph from the specified set of nodes. 
-	* Successors and predessors of each nodes are initialised by an empty set. **/
-   public DGraph (TreeSet<Node> S) {
-		this.nodes = new TreeSet<Node> (S);
-		this.succ = new TreeMap<Node,TreeSet<Edge>>();
-		for (Node n : this.getNodes())
-			this.succ.put(n,new TreeSet<Edge>());
-		this.pred = new TreeMap<Node,TreeSet<Edge>>();
-		for (Node n : this.getNodes())
-			this.pred.put(n,new TreeSet<Edge>());
-		}
-	/**  Constructs this component as a copy of the specified directed graph.
-	* @param G the directed graph to be copied */
-	public DGraph (DGraph G) {
-		this.nodes = new TreeSet<Node> (G.getNodes());
-		this.succ = new TreeMap<Node,TreeSet<Edge>>();
-		this.pred = new TreeMap<Node,TreeSet<Edge>>();
-		for (Node n : G.getNodes()) {
-			this.succ.put(n, new TreeSet<Edge>(G.getEdgesSucc(n)));
-			this.pred.put(n, new TreeSet<Edge>(G.getEdgesPred(n)));
-		}
-	}	
-		
-	/* ----------- STATIC GENERATION METHODS ------------- */
+    /**
+     * A map to associate a set of successors to each node.
+     */
+    private TreeMap<Node, TreeSet<Edge>> successors;
 
-    /** Generates a random directed graph of nb nodes
-	 @param nb the number of nodes of the generated graph 
-	 **/
-    public static DGraph randomDGraph (int nb) {
-		DGraph G = new DGraph();
-		// addition of Nodes
-		for (int i=1; i<=nb; i++) {
-			Node N = new Node(new Integer(i));
-			G.addNode (N);
-			}
-		// addition of edges
-		for (Node from : G.getNodes()) 
-			for (Node to : G.getNodes()) {
-			    int choice = (int) Math.rint (10*Math.random());
-			    if (choice > 5) 	G.addEdge(from, to);
-				}
-		return G;
- 	   }
+    /**
+     * A map to associate a set of predecessors to each node.
+     */
+    private TreeMap<Node, TreeSet<Edge>> predecessors;
 
-	/* --------------- ACCESSOR AND OVERLAPPING METHODS ------------ */	
+    /* ------------- CONSTRUCTORS ------------------ */
 
+    /**
+     * Constructs a new directed graph with an empty set of node.
+     */
+    public DGraph() {
+        this.nodes = new TreeSet<Node>();
+        this.successors = new TreeMap<Node, TreeSet<Edge>>();
+        this.predecessors = new TreeMap<Node, TreeSet<Edge>>();
+    }
 
-    /** Returns a copy of this component composed of a copy of each node and each edge **/
+    /**
+     * Constructs a new directed graph from the specified set of nodes.
+     *
+     * Successors and predecessors of each nodes are initialised by an empty set.
+     *
+     * @param   set  the set of nodes
+     */
+    public DGraph(final Set<Node> set) {
+        this.nodes = new TreeSet<Node>(set);
+        this.successors = new TreeMap<Node, TreeSet<Edge>>();
+        for (Node node : this.nodes) {
+            this.successors.put(node, new TreeSet<Edge>());
+        }
+        this.predecessors = new TreeMap<Node, TreeSet<Edge>>();
+        for (Node node : this.nodes) {
+            this.predecessors.put(node, new TreeSet<Edge>());
+        }
+    }
+
+    /**
+     * Constructs this component as a copy of the specified directed graph.
+     *
+     * @param   graph  the directed graph to be copied
+     */
+    public DGraph(final DGraph graph) {
+        this.nodes = new TreeSet<Node>(graph.nodes);
+        this.successors = new TreeMap<Node, TreeSet<Edge>>();
+        this.predecessors = new TreeMap<Node, TreeSet<Edge>>();
+        for (Node node : graph.nodes) {
+            this.successors.put(node, new TreeSet<Edge>(graph.successors.get(node)));
+            this.predecessors.put(node, new TreeSet<Edge>(graph.predecessors.get(node)));
+        }
+    }
+
+    /* ----------- STATIC GENERATION METHODS ------------- */
+
+    /**
+     * Generates a random directed graph of size nodes.
+     *
+     * @param   size       the number of nodes of the generated graph
+     * @param   threshold  the threshold to generate an edge
+     *
+     * @return  a random graph
+     */
+    public static DGraph random(int size, double threshold) {
+        DGraph graph = new DGraph();
+        // addition of nodes
+        for (int i = 1; i <= size; i++) {
+            Node node = new Node(new Integer(i));
+            graph.addNode(node);
+        }
+        // addition of edges
+        for (Node from : graph.nodes) {
+            for (Node to : graph.nodes) {
+                if (Math.random() < threshold) {
+                    graph.addEdge(from, to);
+                }
+            }
+        }
+        return graph;
+    }
+
+    /**
+     * Generates a random directed graph of size nodes.
+     *
+     * @param   size  the number of nodes of the generated graph
+     *
+     * @return  a random graph
+     */
+    public static DGraph random(int size) {
+        return random(size, 0.5);
+    }
+
+    /* --------------- ACCESSOR AND OVERLAPPING METHODS ------------ */
+
+    /**
+     * Returns a copy of this component composed of a copy of each node and each edge.
+     *
+     * @return  the copy of this
+     */
     public DGraph copy() {
-        System.out.println("clone dans DGraph");
-        DGraph G = new DGraph();
-        TreeMap<Node,Node> copy = new TreeMap<Node,Node> ();
-        for (Node n : this.getNodes()) {
-            Node n2 = n.copy();
-            copy.put(n,n2);
-            G.addNode(n2);
+        DGraph copy = new DGraph();
+        TreeMap<Node, Node> map = new TreeMap<Node, Node>();
+        for (Node node : this.nodes) {
+            Node nodeCopy = node.copy();
+            map.put(node, nodeCopy);
+            copy.addNode(nodeCopy);
+        }
+        for (Edge edge : this.getEdges()) {
+            copy.addEdge(new Edge(map.get(edge.getFrom()), map.get(edge.getTo()), edge.getContent()));
+        }
+        return copy;
+    }
+
+    /**
+     * Returns the set of nodes of this component.
+     *
+     * @return  the set of nodes
+     */
+    public SortedSet<Node> getNodes() {
+        return Collections.unmodifiableSortedSet((SortedSet<Node>) this.nodes);
+    }
+
+    /**
+     * Set the set of nodes of this component.
+     *
+     * @param   nodes  The nodes
+     *
+     * @return  this for chaining
+     */
+    protected DGraph setNodes(final TreeSet<Node> nodes) {
+        this.nodes = nodes;
+        return this;
+    }
+
+    /**
+     * Returns the successors of this component.
+     *
+     * @return  the map
+     */
+    protected TreeMap<Node, TreeSet<Edge>> getSuccessors() {
+        return this.successors;
+    }
+
+    /**
+     * Set the successors of this component.
+     *
+     * @param   successors  The successors
+     *
+     * @return  this for chaining
+     */
+    protected DGraph setSuccessors(final TreeMap<Node, TreeSet<Edge>> successors) {
+        this.successors = successors;
+        return this;
+    }
+
+    /**
+     * Returns the predecessors of this component.
+     *
+     * @return  the map
+     */
+    protected TreeMap<Node, TreeSet<Edge>> getPredecessors() {
+        return this.predecessors;
+    }
+
+    /**
+     * Set the predecessors of this component.
+     *
+     * @param   predecessors  The predecessors
+     *
+     * @return  this for chaining
+     */
+    protected DGraph setPredecessors(final TreeMap<Node, TreeSet<Edge>> predecessors) {
+        this.predecessors = predecessors;
+        return this;
+    }
+
+    /**
+     * Returns the set of edges of this component.
+     *
+     * @return  the set of edges
+     */
+    public SortedSet<Edge> getEdges() {
+        TreeSet<Edge> edges = new TreeSet<Edge>();
+        for (Node node : this.nodes) {
+            edges.addAll(this.successors.get(node));
+        }
+        return edges;
+    }
+
+    /**
+     * Returns the set of edges successors of the specified node.
+     *
+     * @param   node  the node to search for
+     *
+     * @return  the set of edges
+     */
+    public SortedSet<Edge> getSuccessorEdges(final Node node) {
+        return Collections.unmodifiableSortedSet((SortedSet<Edge>) this.successors.get(node));
+    }
+
+    /**
+     * Returns the set of edges predecessors of the specified node.
+     *
+     * @param   node  the node to search for
+     *
+     * @return  the set of edges
+     */
+    public SortedSet<Edge> getPredecessorEdges(final Node node) {
+        return Collections.unmodifiableSortedSet((SortedSet<Edge>) this.predecessors.get(node));
+    }
+
+    /**
+     * Returns the set of nodes successors of the specified node.
+     *
+     * @param   node  the node to search for
+     *
+     * @return  the set of nodes
+     */
+    public TreeSet<Node> getSuccessorNodes(final Node node) {
+       TreeSet<Node> successors = new TreeSet<Node>();
+       for (Edge edge : this.successors.get(node)) {
+           successors.add(edge.getTo());
+       }
+       return successors;
+    }
+
+    /**
+     * Returns the set of nodes predecessors of the specified node.
+     *
+     * @param   node  the node to search for
+     *
+     * @return  the set of nodes
+     */
+    public TreeSet<Node> getPredecessorNodes(final Node node) {
+        TreeSet<Node> predecessors = new TreeSet<Node>();
+        for (Edge edge : this.predecessors.get(node)) {
+            predecessors.add(edge.getFrom());
+        }
+        return predecessors;
+    }
+
+    /**
+     * Returns, if it exists, the edge between node from and node to.
+     *
+     * @param   from  The origin node
+     * @param   to    The destination node
+     *
+     * @return  the found edge or null
+     */
+    public Edge getEdge(final Node from, final Node to) {
+        if (this.containsEdge(from, to)) {
+            for (Edge edge : this.successors.get(from)) {
+                if (edge.getTo().equals(to)) {
+                    return edge;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Returns the node that is equal to the specified one.
+     *
+     * @param   search  The node to search for
+     *
+     * @return  the found node or null
+     */
+     public Node getNode(final Object search) {
+        for (Node node : this.nodes) {
+            if (node.equals(search)) {
+                return node;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Returns the node whose content is equal to the specified one.
+     *
+     * @param   content  The content to search for
+     *
+     * @return  the found node or null
+     */
+    public Node getNodeByContent(final Object content) {
+        for (Node node : this.nodes) {
+            if (node.getContent().equals(content)) {
+                return node;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Returns the node whose ident is equal to the specified one.
+     *
+     * @param  identifier  node identifier
+     *
+     * @return  the found node or null
+     */
+    public Node getNodeByIdentifier(int identifier) {
+        for (Node node : this.nodes) {
+            if (node.getIdentifier() == identifier) {
+                return node;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Returns the number of nodes of this component.
+     *
+     * @return  the number of nodes
+     */
+    public int getSizeNodes() {
+        return this.nodes.size();
+    }
+
+    /**
+     * Returns the number of edges of this component.
+     *
+     * @return  the number of edges
+     */
+    public int getSizeEdges() {
+        int size = 0;
+        for (Node node : this.nodes) {
+            size += this.successors.get(node).size();
+        }
+        return size;
+    }
+
+    /**
+     * Returns a String representation of this component.
+     *
+     * @return  the string representation
+     */
+    public String toString() {
+        StringBuffer nodes  = new StringBuffer();
+        nodes.append(this.getSizeNodes()).append(" Nodes: {");
+        StringBuffer edges = new StringBuffer();
+        edges.append(this.getSizeEdges()).append(" Edges: {");
+        for (Node from : this.nodes) {
+            nodes.append(from.toString() + ",");
         }
         for (Edge ed : this.getEdges()) {
-            Edge ed2 = new Edge (copy.get(ed.from()), copy.get(ed.to()), ed.content());
-            G.addEdge (ed);
+            edges.append(ed.toString() + ",");
         }
-        return G;
+        nodes.append("}\n").append(edges).append("}\n");
+        return nodes.toString();
     }
 
-    /** Returns the set of nodes of this component */
-    public TreeSet<Node> getNodes () {
-		return this.nodes; }
-    /** Returns the set of edges of this component */
-    public TreeSet<Edge> getEdges () {
-        TreeSet X = new TreeSet();
-        for (Node n : this.getNodes())
-            X.addAll(this.getEdgesSucc(n));
-		return X; 
-    }
-    /** Returns the set of edges successors of the specified node  */
-    public TreeSet<Edge> getEdgesSucc (Node N) {
-		return (TreeSet<Edge>)this.succ.get(N);}
-    /** Returns the set of edges successors of the specified node  */
-    public TreeSet<Edge> getEdgesPred (Node N) {
-		return (TreeSet<Edge>)this.pred.get(N);}
-
-    /** Returns the set of nodes successors of the specified node  */
-    public TreeSet<Node> getNodesSucc (Node N) {
-	   TreeSet<Edge> edgesSucc = this.getEdgesSucc(N);
-       TreeSet<Node> nodesSucc = new TreeSet<Node> ();
-       for (Edge ed : edgesSucc)
-           nodesSucc.add(ed.to());
-       return nodesSucc;
-    }
-    /** Returns the set of nodes successors of the specified node  */
-    public TreeSet<Node> getNodesPred (Node N) {        
-        TreeSet<Edge> edgesPred = this.getEdgesPred(N);
-        TreeSet<Node> nodesPred = new TreeSet<Node> ();
-        for (Edge ed : edgesPred)
-            nodesPred.add(ed.from());
-        return nodesPred;
-    }
-    /** Returns, if it exists, the edge between node from and node to */
-    public Edge getEdge (Node from, Node to) {
-        if (this.containsEdge(from,to))
-            for (Edge ed : this.getEdgesSucc(from))
-                if (ed.to().equals(to))
-                    return ed;
-		return null;
-    }
-	 /** Returns the node that is equal to the specified one */
-	 public Node getNode (Object o) {
-	 	for (Node n : this.getNodes()) 
-			if (n.equals(o))
-				return n;
-		return null; }
-	 /** Returns the node whose content is equal to the specified one */
-	 public Node getNodeByContent (Object o) {
-	 	for (Node n : this.getNodes()) 
-			if (n.content.equals(o))
-				return n;
-		return null; }
-	 /** Returns the node whose ident is equal to the specified one */
-	 public Node getNodeByIdent (int id) {
-	 	for (Node n : this.getNodes()) 
-			if (n.ident == id)
-				return n;
-		return null; }
-					
-    /** Returns the number of nodes of this component **/
-    public int nbNodes () {
-		return this.getNodes().size(); }
-    /** Returns the number of edges of this component **/		
-    public int nbEdges () {
-	 	int nb=0;
-		for (Node n : this.getNodes())
-            nb+=this.getEdgesSucc(n).size();
-		return nb;	
-		}	
-		
-	/** Returns a String representation of this component */	
-    public String toString () {
-		StringBuffer nodes  = new StringBuffer();
-                nodes.append(this.nbNodes()).append(" Nodes: {");
-		StringBuffer edges = new StringBuffer ();
-                edges.append(this.nbEdges()).append(" Edges: {");
-		for (Node from : this.getNodes()) 
-			nodes.append(from.toString()+",");
-		for (Edge ed : this.getEdges())
-			edges.append(ed.toString()+",");
-		nodes.append("}\n").append(edges).append("}\n");
-                return nodes.toString();
-    	}
-	/** Write the dot description of this component in a file  which name is specified 
-	* @param filename the name of the file 
-	*/
-    public void toDot (String filename)  {
-	try {
-		FileOutputStream fich = new FileOutputStream(filename);
-		DataOutputStream out = new DataOutputStream(fich);		
-		out.writeBytes("digraph G {\n");
-                out.writeBytes("Graph [rankdir=BT]\n");
-		StringBuffer nodes  = new StringBuffer();
-		StringBuffer edges = new StringBuffer ();
-		for (Node from : this.getNodes())
-			nodes.append(from.toDot()).append("\n");
-                for (Edge ed : this.getEdges())
-                        edges.append(ed.toDot()).append("\n");
-		out.writeBytes(nodes.toString());
-                out.writeBytes(edges.toString());
-		out.writeBytes("}");
-		out.close();
- 	   }
-		catch (Exception e) { e.printStackTrace(); }
-	}			
-
-	/* --------------- NODES AND EDGES MODIFICATION METHODS ------------ */	
-
-    /** Checks if the specified node belong to this component **/
-    public boolean containsNode (Node N) { 
-		return this.getNodes().contains(N);}
-    /** Adds the specified node to the set of node of this component **/
-    public boolean addNode (Node N) {     
-		if (!this.getNodes().contains(N)) {                    
-			this.getNodes().add(N);
-			this.succ.put(N, new TreeSet<Edge>());
-			this.pred.put(N, new TreeSet<Edge>());
-			return true;
-			}
-		return false;}		
-    /** Removes the specified node from this component. **/
-    public boolean removeNode (Node n) {
-        if (this.getNodes().contains(n)) {            
-            // Remove the edges (n,to) with key n in succ, and key to in pred             
-            for (Edge ed : this.getEdgesSucc(n)) {
-                if (ed.to().compareTo(n)!=0) {                        
-                    TreeSet<Edge> predN = (TreeSet<Edge>) this.getEdgesPred(ed.to()).clone();                    
-                    for (Edge ed2 : predN) 
-                        if (ed2.from().compareTo(n)==0)
-                            this.pred.get(ed.to()).remove(ed2);
-                }
-                this.succ.remove(n); }                        
-            // Remove the edges (from,n) with key n in pred, and key from in succ              
-            for (Edge ed : this.getEdgesPred(n)) {
-                if (ed.from().compareTo(n)!=0) {
-                    TreeSet<Edge> succN = (TreeSet<Edge>) this.getEdgesSucc(ed.from()).clone();
-                    for (Edge ed2 : succN) 
-                        if (ed2.to().compareTo(n)==0)
-                            this.succ.get(ed.from()).remove(ed2);                
-                this.pred.remove(n);  }  
-            }
-            // Remove node n
-            this.getNodes().remove(n);
-            return true;
-	}
-    return false;}		
-                    
-    /** Removes the specified set of node from this component. **/
-    public boolean removeAllNodes (TreeSet<Node> X) {
-	 	boolean all = true;
-	 	for (Node n : X)
-			if (!this.removeNode(n)) 
-				all=false;
-		return all;}			
-    /** Checks if there exists an edge between the two specified nodes.
-	 * @param from the node origine of the edge
-	 * @param to the node destination of the edge **/
-    public boolean containsEdge (Node from, Node to) {
-		return this.containsNode(from) && this.containsNode(to) && 
-			(this.getNodesSucc(from)).contains(to) &&
-			(this.getNodesPred(to)).contains(from); }
-    /** Checks if the specified edge belong to this component.
-    ** @param ed the dege to be checked **/
-    public boolean containsEdge (Edge ed) {
-		return this.containsNode(ed.from()) && this.containsNode(ed.to()) &&
-			(this.getEdgesSucc(ed.from())).contains(ed) &&
-			(this.getEdgesPred(ed.to())).contains(ed); }
-    /** Adds an edge between the specified nodes to this component:
-	 * `to` is added as a successor of `from`.
-	 * If the case where specified nodes don't belongs to the node set, 
-	 * then the edge will not be added.
-	 * @param from the node origine of the edge
-	 * @param to the node destination of the edge **/	 
-    public boolean addEdge (Node from, Node to) {       
-	 	if (this.containsNode(from) && this.containsNode(to)) {
-            Edge ed = new Edge(from,to);
-			this.getEdgesSucc(from).add(ed);
-			this.getEdgesPred(to).add(ed);
-			return true;
-			}
-		return false; }
-    /** Adds the specified edge to this component in the successors of ed.from() and in the
-     * predecessors of ed.to(). 
-	 * If the case where nodes to and from of this edges don't belongs to the node set, 
-	 * then the edge will not be added.
-	 * @param ed the dege to be added **/	 
-    public boolean addEdge (Edge ed) {       
-	 	if (this.containsNode(ed.from()) && this.containsNode(ed.to())) {            
-			this.getEdgesSucc(ed.from()).add(ed);
-			this.getEdgesPred(ed.to()).add(ed);			
-			return true;
-			}
-		return false; }
-     /** Removes from this component the edge between the specified node.
-	 * `to` is removed from the successors of `from`
-	 * and `to` is removed from the predecessors of `from`.
-	 * @param from the node origine of the edge
-	 * @param to the node destination of the edge **/
-    public boolean removeEdge (Node from, Node to) {
-	 	if (this.containsEdge(from,to)) {
-            Edge ed = new Edge(from, to);
-			this.getEdgesSucc(from).remove(ed);
-			this.getEdgesPred(to).remove(ed);
-			return true;
-			}
-		return false; }
-     /** Removes from this component the specified edge from the successors od ed.from()
-	 * and  from the predecessors of ed.to().
-	 * @param ed the edge to be removed. **/
-    public boolean removeEdge (Edge ed) {
-	 	if (this.containsEdge(ed)) {
-			this.getEdgesSucc(ed.from()).remove(ed);
-			this.getEdgesPred(ed.to()).remove(ed);
-			return true;
-			}
-		return false; }
-
-	/* --------------- ACYCLIC CHECKING METHODS ------------ */	
-		
-   /** Check if this component is acyclic **/
-   public boolean isAcyclic () {
-		ArrayList T = this.topologicalSort();
-		return (T.size() == this.nbNodes());
-	}
- 
-   /** Returns a topological sort of the node of this component.
-    *
-	* This topological sort is a sort on all the nodes according to their successors. 
-	* If the graph is not acyclic, some nodes don't belong to the sort. 
-	* This treatment is performed in O(n+m), where n corresponds to the number of nodes, 
-	* and m corresponds to the number of edges. 
-	**/
-   public ArrayList<Node> topologicalSort () {
-		TreeSet<Node> sources = this.sinks();
-		// initialize a map with the number of predecessors (value) for each node (key);		
-		TreeMap nbpred = new TreeMap ();
-		for (Node n : this.getNodes()) 
-			nbpred.put (n, new Integer(this.getNodesPred(n).size()));
-		ArrayList sort = new ArrayList();
-		while (sources.size()!=0)	{
-			// random choice of a node in the set min 
-			int choice = (int)(Math.random()*(sources.size()-1));
-			int nb=0;
-			Node Nx = null;
-			for (Node N : sources) {
-				if (nb==choice) Nx = N;
-				nb++;			
-				} 
-			sources.remove(Nx);
-			sort.add(Nx);
-			// updating of the set min by considering the successors of Nx 
-			for (Node Ny : this.getNodesSucc(Nx)) {
-				int nbp = ((Integer)nbpred.remove(Ny)).intValue()-1;
-				nbpred.put (Ny, new Integer(nbp));
-				if (nbp==0)
-					sources.add(Ny);
-		   	}
-			}	
-			return sort;		
- 		}  
-
-	/* --------------- GRAPH HANDLING METHODS ------------ */	
-
-   /** Returns the sinks of this component **/
-   public TreeSet<Node> sinks () {
-		TreeSet<Node> min = new TreeSet<Node> ();
-		for (Node N : this.getNodes()) 
-			if (this.getEdgesPred(N).isEmpty())
-				min.add(N);
-		return min;
-    	}
-		
-   /** Returns the wells of this component **/
-   public TreeSet<Node> wells () {
-		TreeSet<Node> max = new TreeSet<Node> ();
-		for (Node N : this.getNodes()) 
-			if (this.getEdgesSucc(N).isEmpty())
-				max.add(N);
-		return max;
-    	}
-
-	/** Returns the subgraph of this component induced by the specified set of nodes
-	*
-	* The subgraph only contains nodes of the specified set that also are in this component. 
-	* **/
-	public DGraph subgraphByNodes (TreeSet<Node> S) {
-		DGraph G = new DGraph ();
-		// addition of nodes in the subgraph
-		for (Node n : S)
-			if (this.containsNode(n)) G.addNode(n);	
-		// addition of edges in the subgraph		
-		for (Edge ed : this.getEdges())
-			if (G.containsNode(ed.to()))
-				G.addEdge(ed);
-        return G;
-		}
-
-    /** Returns the subgraph of this component induced by the specified set of edges
+    /**
+     * Write the dot description of this component in a file  which name is specified.
      *
-	 *  The subgraph contains all nodes of this components, and
-     * only edges of the specified set that also are in this component.
-	 **/
-	public DGraph subgraphByEdges (TreeSet<Edge> S) {
-		DGraph G = new DGraph ();
-		// addition of all nodes in the subgraph
-		for (Node n : this.getNodes())
-			G.addNode(n);	
-		// addition of specified edges in the subgraph		
-		for (Edge ed : S)
-			if (this.containsEdge(ed))
-				G.addEdge(ed);
-        return G;
-		}
-	/** Replaces this component by its complementary graph.
-	* There is an edge between to nodes in the complementary graph when 
-	* there is no edges between the nodes in this component. 
-	* **/
-	public void complementary () {		
-		for (Node from : this.getNodes()) {
-			TreeSet<Node> newSucc = new TreeSet(this.getNodes());
-			newSucc.removeAll (this.getNodesSucc(from));
-			TreeSet<Node>oldSucc = new TreeSet(this.getNodesSucc(from));
-			for (Node to : oldSucc)
-				this.removeEdge(from,to);
-			for (Node to : newSucc)
-				this.addEdge(from,to);
-		}	
-	}	
-	
-	/* --------------- GRAPH TREATMENT METHODS ------------ */	
-
-   /** Computes the reflexive reduction of this component  
-	* @return the number of removed edges
-	**/
-   public int reflexiveReduction () {
-		int nb = 0;
-		for (Node N : this.getNodes()) 
-			if (this.containsEdge(N,N)) {
-				nb++;
-				this.removeEdge(N,N);
-			}	
-		return nb;		
-   }
-	
-   /** Computes the reflexive closure of this component  
-	* @return the number of added edges
-	**/
-   public int reflexiveClosure () {
-		int nb = 0;
-		for (Node N : this.getNodes()) 
-			if (!this.containsEdge(N,N)) {
-				nb++;
-				this.addEdge(N,N);
-	    	}
-	return nb;
-   }
-		 
-   /** Computes the transitive closure of this component.
-    *
-	* This treatment is performed in O(nm+m_c), where n corresponds to the number of nodes,
-	* m to the number of edges, and m_c to the number of edges in the closure. 
-	* This treatment improves the Roy-Warshall algorithm that directly implements 
-	* the definition in O(logm n^3). 
-	* This treatment is overlapped in class `DAGrapg` 
-	* with a more efficient algorithm dedicated to directed acyclic graph.
-	* @return the number of removed edges
-	**/
-   public int transitiveClosure () {
-		int nb=0;
-		// mark each node to false
-		TreeMap mark = new TreeMap ();
-		for (Node n : this.getNodes()) 
-			mark.put (n, new Boolean(false));					
-		// treatment of nodes 
-		for (Node x : this.getNodes()) {
-			ArrayList<Node> F = new ArrayList();
-			F.add(x);
-			while (!F.isEmpty()) {
-				Node y = F.get(0);
-				F.remove(y);
-				for (Node z : this.getNodesSucc(y)) {
-					// treatment of y when not marked
-					if (!((Boolean)mark.get(z)).booleanValue()) {
-						mark.remove(z);
-						mark.put(z,new Boolean(true));
-						this.addEdge(x,z);
-						nb++;
-						F.add(z);
-					}
-				}
-			}
-			for (Node y : this.getNodesSucc(x)) {
-				mark.remove(y);
-				mark.put(y,new Boolean(false));								
-			}
-		}					
-		return nb;
-    }
-	 
-	 /**Returns a two cells array containing the first visited sort on the nodes, 
-	 * and the last visited sort on the nodes, by a depth first traverse issued from 
-	 * the specified node.
-	 */
-	 public ArrayList<Node>[] depthFirstSearch (Node source, 
-	 								TreeSet<Node> visited, ArrayList<Node> sort) {
-		ArrayList<Node> first = new ArrayList();							
-		ArrayList<Node> last = new ArrayList();											
-		first.add(source);
-		visited.add(source);
-		ArrayList<Node>[] Tvisited = new ArrayList[2];
-		if (sort!=null) {
-			// search according to a sort		
-			for (Node n : sort) 
-				if (this.getNodesSucc(source).contains(n) && !visited.contains(n)) {
-					Tvisited = this.depthFirstSearch(n, visited, sort);
-					visited.addAll(Tvisited[0]);
-					first.addAll(Tvisited[0]);
-					last.addAll(Tvisited[1]);
-				}
-			}	
-			// classical search	
-		else {
-			for (Node n2 : this.getNodesSucc(source))
-				if (!visited.contains(n2)) {
-					Tvisited = this.depthFirstSearch(n2, visited, sort);
-					visited.addAll(Tvisited[0]);					
-					first.addAll(Tvisited[0]);
-					last.addAll(Tvisited[1]);
-				}	
-			}	
-		last.add(source);
-		Tvisited[0] = first;
-		Tvisited[1] = last;
-		return Tvisited;
-	}	
-	 /**Returns a two cells array containing the first visited sort on the nodes, 
-	 * and the last visited sort on the nodes, by a depth first search
-	 */
-	 public ArrayList<Node>[] depthFirstSearch () {
-		TreeSet<Node> visited = new TreeSet();
-		ArrayList<Node>[] Tvisited = new ArrayList[2];		
-	 	ArrayList first = new ArrayList();
-	 	ArrayList last = new ArrayList();
-		for (Node n : this.getNodes()) 
-			if (!visited.contains(n)) {
-				Tvisited = this.depthFirstSearch (n, visited, null);
-				visited.addAll(Tvisited[0]);				
-				first.addAll(Tvisited[0]);
-				last.addAll(Tvisited[1]);
-				}
-		Tvisited[0] = first;
-		Tvisited[1] = last;
-		return Tvisited;
-	}	
-	
-	/** Transposes this component by replacing for each node
-	* its successor set by its predecessor set, and its predecessor set 
-	* by its successor set.
-	*/ 
-	public void transpose () {
-        DGraph tmp = new DGraph (this);		
-        for (Edge ed : tmp.getEdges()) {
-             this.removeEdge(ed);
-             this.addEdge(new Edge(ed.to(), ed.from(), ed.content()));
-         }
-	}
-	
-	/** Returns the directed acyclic graph where each node corresponds to a 
-	* strongly connected component (SCC) of this component stored in a TreeSet of nodes.
-	* When two nodes in two different SCC are in relation, the same is for the SCC
-    * they belongs to.
+     * @param   filename  the name of the file
      */
-	public DAGraph stronglyConnectedComponent () {
-		DAGraph CC = new DAGraph();		
-		// first depth first search
+    public void writeDot(final String filename) {
+        try {
+            FileOutputStream fich = new FileOutputStream(filename);
+            DataOutputStream out = new DataOutputStream(fich);
+            out.writeBytes("digraph G {\n");
+            out.writeBytes("Graph [rankdir=BT]\n");
+            StringBuffer nodes  = new StringBuffer();
+            StringBuffer edges = new StringBuffer();
+            for (Node from : this.nodes) {
+                nodes.append(from.toDot()).append("\n");
+            }
+            for (Edge edge : this.getEdges()) {
+                edges.append(edge.toDot()).append("\n");
+            }
+            out.writeBytes(nodes.toString());
+            out.writeBytes(edges.toString());
+            out.writeBytes("}");
+            out.close();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    /* --------------- NODES AND EDGES MODIFICATION METHODS ------------ */
+
+    /**
+     * Checks if the specified node belong to this component.
+     *
+     * @param   node  the node to insert
+     *
+     * @return  true if the node has been successfully inserted
+     */
+    public boolean containsNode(final Node node) {
+        return this.nodes.contains(node);
+    }
+
+    /**
+     * Adds the specified node to the set of node of this component.
+     *
+     * @param   node  the node to insert
+     *
+     * @return  true if the node has been successfully inserted
+     */
+    public boolean addNode(final Node node) {
+        if (!this.containsNode(node)) {
+            this.nodes.add(node);
+            this.successors.put(node, new TreeSet<Edge>());
+            this.predecessors.put(node, new TreeSet<Edge>());
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Removes the specified node from this component.
+     *
+     * @param   node  the node to remove
+     *
+     * @return  true if the node was successfully removed
+     */
+    public boolean removeNode(final Node node) {
+        if (this.containsNode(node)) {
+            // Remove the edges (node,to) with key node in successors, and key to in predecessors
+            for (Edge successor : this.successors.get(node)) {
+                if (successor.getTo().compareTo(node) != 0) {
+                     for (Edge predecessor : this.predecessors.get(successor.getTo())) {
+                        if (predecessor.getFrom().compareTo(node) == 0) {
+                            this.predecessors.get(successor.getTo()).remove(predecessor);
+                        }
+                    }
+                }
+                this.successors.remove(node);
+            }
+            // Remove the edges (from,node) with key node in predecessors, and key from in successors
+            for (Edge predecessor : this.predecessors.get(node)) {
+                if (predecessor.getFrom().compareTo(node) != 0) {
+                     for (Edge successor : this.successors.get(predecessor.getFrom())) {
+                        if (successor.getTo().compareTo(node) == 0) {
+                            this.successors.get(predecessor.getFrom()).remove(successor);
+                        }
+                    }
+                }
+                this.predecessors.remove(node);
+            }
+            // Remove node
+            this.nodes.remove(node);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Removes the specified set of nodes from this component.
+     *
+     * @param   nodes  set of nodes
+     *
+     * @return  true if all nodes were removed
+     */
+    public boolean removeNodes(final Set<Node> nodes) {
+        boolean all = true;
+        for (Node node : nodes) {
+            if (!this.removeNode(node)) {
+                all = false;
+            }
+        }
+        return all;
+    }
+
+    /**
+     * Checks if there exists an edge between the two specified nodes.
+     *
+     * @param   from  the node origine of the edge
+     * @param   to    the node destination of the edge
+     *
+     * @return  true if the edge is contained by this component
+     */
+    public boolean containsEdge(final Node from, final Node to) {
+        return this.containsNode(from)
+            && this.containsNode(to)
+            && this.getSuccessorNodes(from).contains(to)
+            && this.getPredecessorNodes(to).contains(from);
+    }
+
+    /**
+     * Checks if the specified edge belong to this component.
+     *
+     * @param   edge  the edge to be checked
+     *
+     * @return  true if the edge is contained by this component
+     */
+    public boolean containsEdge(final Edge edge) {
+        return this.containsEdge(edge.getFrom(), edge.getTo());
+    }
+
+    /**
+     * Adds an edge between the specified nodes to this component:
+     * `to` is added as a successor of `from`.
+     *
+     * If the case where specified nodes don't belongs to the node set,
+     * then the edge will not be added.
+     *
+     * @param   from     the node origin of the edge
+     * @param   to       the node destination of the edge
+     * @param   content  the edge content
+     *
+     * @return  true if the edge was successfully added
+     */
+    public boolean addEdge(final Node from, final Node to, final Object content) {
+        if (this.containsNode(from) && this.containsNode(to)) {
+            Edge edge = new Edge(from, to, content);
+            this.successors.get(from).add(edge);
+            this.predecessors.get(to).add(edge);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Adds an edge between the specified nodes to this component:
+     * `to` is added as a successor of `from`.
+     *
+     * If the case where specified nodes don't belongs to the node set,
+     * then the edge will not be added.
+     *
+     * @param   from  the node origin of the edge
+     * @param   to    the node destination of the edge
+     *
+     * @return  true if the edge was successfully added
+     */
+    public boolean addEdge(final Node from, final Node to) {
+        return this.addEdge(from, to, null);
+    }
+
+    /**
+     * Adds the specified edge to this component in the successors of edge.getFrom() and in the
+     * predecessors of edge.getTo().
+     *
+     * If the case where nodes to and from of this edges don't belongs to the node set,
+     * then the edge will not be added.
+     *
+     * @param   edge  the edge to be added
+     *
+     * @return  true if the edge was added
+     */
+    public boolean addEdge(final Edge edge) {
+        if (this.containsNode(edge.getFrom()) && this.containsNode(edge.getTo())) {
+            this.successors.get(edge.getFrom()).add(edge);
+            this.predecessors.get(edge.getTo()).add(edge);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Removes from this component the edge between the specified node.
+     *
+     * `to` is removed from the successors of `from`
+     * and `to` is removed from the predecessors of `from`.
+     *
+     * @param   from  the node origine of the edge
+     * @param   to    the node destination of the edge
+     *
+     * @return  true if the edge was removed
+     */
+    public boolean removeEdge(final Node from, final Node to) {
+         if (this.containsEdge(from, to)) {
+            Edge edge = new Edge(from, to);
+            this.successors.get(from).remove(edge);
+            this.predecessors.get(to).remove(edge);
+            return true;
+            }
+        return false;
+    }
+
+    /**
+     * Removes from this component the specified edge from the successors of edge.getFrom()
+     * and from the predecessors of edge.getTo().
+     *
+     * @param   edge  the edge to be removed.
+     *
+     * @return  true if the edge was removed
+     */
+    public boolean removeEdge(final Edge edge) {
+         if (this.containsEdge(edge)) {
+            this.successors.get(edge.getFrom()).remove(edge);
+            this.predecessors.get(edge.getTo()).remove(edge);
+            return true;
+        }
+        return false;
+    }
+
+    /* --------------- ACYCLIC CHECKING METHODS ------------ */
+
+    /**
+     * Check if this component is acyclic.
+     *
+     * @return  true if the component is acyclic
+     */
+    public boolean isAcyclic() {
+        ArrayList<Node> nodes = this.topologicalSort();
+        return (nodes.size() == this.getSizeNodes());
+    }
+
+    /**
+     * Returns a topological sort of the node of this component.
+     *
+     * This topological sort is a sort on all the nodes according to their successors.
+     * If the graph is not acyclic, some nodes don't belong to the sort.
+     * This treatment is performed in O(n+m), where n corresponds to the number of nodes,
+     * and m corresponds to the number of edges.
+     *
+     * @return  the nodes
+     */
+    public ArrayList<Node> topologicalSort() {
+        TreeSet<Node> sinks = this.getSinks();
+        // initialize a map with the number of predecessors (value) for each node (key);
+        TreeMap<Node, Integer> size = new TreeMap<Node, Integer>();
+        for (Node node : this.nodes) {
+            size.put(node, new Integer(this.getPredecessorNodes(node).size()));
+        }
+        ArrayList<Node> sort = new ArrayList<Node>();
+        while (!sinks.isEmpty()) {
+            Node node = sinks.pollFirst();
+            sort.add(node);
+            // updating of the set min by considering the successors of node
+            for (Node successor : this.getSuccessorNodes(node)) {
+                int newSize = size.get(successor).intValue() - 1;
+                size.put(successor, new Integer(newSize));
+                if (newSize == 0) {
+                    sinks.add(successor);
+                }
+            }
+        }
+        return sort;
+    }
+
+    /* --------------- GRAPH HANDLING METHODS ------------ */
+
+   /**
+    * Returns the sinks of this component.
+    *
+    * @return  the sinks
+    */
+    public TreeSet<Node> getSinks() {
+        TreeSet<Node> sinks = new TreeSet<Node>();
+        for (Node node : this.nodes) {
+            if (this.predecessors.get(node).isEmpty()) {
+                sinks.add(node);
+            }
+        }
+        return sinks;
+    }
+
+   /**
+    * Returns the wells of this component.
+    *
+    * @return  the wells
+    */
+    public TreeSet<Node> getWells() {
+        TreeSet<Node> wells = new TreeSet<Node>();
+        for (Node node : this.nodes) {
+            if (this.successors.get(node).isEmpty()) {
+                wells.add(node);
+            }
+        }
+        return wells;
+    }
+
+    /**
+     * Returns the subgraph of this component induced by the specified set of nodes.
+     *
+     * The subgraph only contains nodes of the specified set that also are in this component.
+     *
+     * @param   nodes  The set of nodes
+     *
+     * @return  The subgraph
+     */
+    public DGraph getSubgraphByNodes(final Set<Node> nodes) {
+        DGraph graph = new DGraph();
+        // addition of nodes in the subgraph
+        for (Node node : nodes) {
+            if (this.containsNode(node)) {
+                graph.addNode(node);
+            }
+        }
+        // addition of edges in the subgraph
+        for (Edge edge : this.getEdges()) {
+            if (graph.containsNode(edge.getTo())) {
+                graph.addEdge(edge);
+            }
+        }
+        return graph;
+    }
+
+    /**
+     * Returns the subgraph of this component induced by the specified set of edges.
+     *
+     * The subgraph contains all nodes of this components, and
+     * only edges of the specified set that also are in this component.
+     *
+     * @param   edges  The set of edges
+     *
+     * @return  The subgraph
+     */
+    public DGraph getSubgraphByEdges(final Set<Edge> edges) {
+        DGraph graph = new DGraph();
+        // addition of all nodes in the subgraph
+        for (Node node : this.nodes) {
+            graph.addNode(node);
+        }
+        // addition of specified edges in the subgraph
+        for (Edge edge : edges) {
+            if (this.containsEdge(edge)) {
+                graph.addEdge(edge);
+            }
+        }
+        return graph;
+    }
+
+    /**
+     * Replaces this component by its complementary graph.
+     *
+     * There is an edge between to nodes in the complementary graph when
+     * there is no edges between the nodes in this component.
+     */
+    public void complementary() {
+        for (Node from : this.nodes) {
+            TreeSet<Node> newSuccessors = new TreeSet<Node>(this.nodes);
+            newSuccessors.removeAll(this.getSuccessorNodes(from));
+            TreeSet<Node> oldSuccessors = new TreeSet<Node>(this.getSuccessorNodes(from));
+            for (Node to : oldSuccessors) {
+                this.removeEdge(from, to);
+            }
+            for (Node to : newSuccessors) {
+                this.addEdge(from, to);
+            }
+        }
+    }
+
+    /* --------------- GRAPH TREATMENT METHODS ------------ */
+
+    /**
+     * Computes the reflexive reduction of this component.
+     *
+     * @return the number of removed edges
+     */
+    public int reflexiveReduction() {
+        int size = 0;
+        for (Node node : this.nodes) {
+            if (this.containsEdge(node, node)) {
+                size++;
+                this.removeEdge(node, node);
+            }
+        }
+        return size;
+    }
+
+    /**
+     * Computes the reflexive closure of this component.
+     *
+     * @return  the number of added edges
+     */
+    public int reflexiveClosure() {
+        int size = 0;
+        for (Node node : this.nodes) {
+            if (!this.containsEdge(node, node)) {
+                size++;
+                this.addEdge(node, node);
+            }
+        }
+        return size;
+    }
+
+    /**
+     * Computes the transitive closure of this component.
+     *
+     * This treatment is performed in O(nm+m_c), where n corresponds to the number of nodes,
+     * m to the number of edges, and m_c to the number of edges in the closure.
+     * This treatment improves the Roy-Warshall algorithm that directly implements
+     * the definition in O(logm n^3).
+     *
+     * This treatment is overlapped in class `DAGraph`
+     * with a more efficient algorithm dedicated to directed acyclic graph.
+     *
+     * @return  the number of added edges
+     */
+    public int transitiveClosure() {
+        int size = 0;
+        // mark each node to false
+        TreeMap<Node, Boolean> mark = new TreeMap<Node, Boolean>();
+        for (Node node : this.nodes) {
+            mark.put(node, new Boolean(false));
+        }
+        // treatment of nodes
+        for (Node x : this.nodes) {
+            ArrayList<Node> list = new ArrayList<Node>();
+            list.add(x);
+            while (!list.isEmpty()) {
+                Node y = list.remove(0);
+                for (Node z : this.getSuccessorNodes(y)) {
+                    // treatment of y when not marked
+                    if (!mark.get(z).booleanValue()) {
+                        mark.put(z, new Boolean(true));
+                        this.addEdge(x, z);
+                        size++;
+                        list.add(z);
+                    }
+                }
+            }
+            for (Node y : this.getSuccessorNodes(x)) {
+                mark.put(y, new Boolean(false));
+            }
+        }
+        return size;
+    }
+
+     /**
+      * Returns a two cells array containing the first visited sort on the nodes,
+      * and the last visited sort on the nodes, by a depth first traverse issued from
+      * the specified node.
+      *
+      * @param   source   The source node
+      * @param   visited  The visited nodes
+      * @param   sort     The sort parameter
+      *
+      * @return  The array
+      */
+     public ArrayList<Node>[] depthFirstSearch(Node source, TreeSet<Node> visited, ArrayList<Node> sort) {
+        ArrayList<Node> first = new ArrayList<Node>();
+        ArrayList<Node> last = new ArrayList<Node>();
+        first.add(source);
+        visited.add(source);
+        ArrayList<Node>[] arrayVisited = new ArrayList[2];
+        if (sort != null) {
+            // search according to a sort
+            for (Node node : sort) {
+                if (this.getSuccessorNodes(source).contains(node) && !visited.contains(node)) {
+                    arrayVisited = this.depthFirstSearch(node, visited, sort);
+                    visited.addAll(arrayVisited[0]);
+                    first.addAll(arrayVisited[0]);
+                    last.addAll(arrayVisited[1]);
+                }
+            }
+        } else {
+            // classical search
+            for (Node node : this.getSuccessorNodes(source)) {
+                if (!visited.contains(node)) {
+                    arrayVisited = this.depthFirstSearch(node, visited, sort);
+                    visited.addAll(arrayVisited[0]);
+                    first.addAll(arrayVisited[0]);
+                    last.addAll(arrayVisited[1]);
+                }
+            }
+        }
+        last.add(source);
+        arrayVisited[0] = first;
+        arrayVisited[1] = last;
+        return arrayVisited;
+    }
+
+     /**
+      * Returns a two cells array containing the first visited sort on the nodes,
+      * and the last visited sort on the nodes, by a depth first search.
+      *
+      * @return  The array
+      */
+    public ArrayList<Node>[] depthFirstSearch() {
+        TreeSet<Node> visited = new TreeSet<Node>();
+        ArrayList<Node>[] arrayVisited = new ArrayList[2];
+        ArrayList first = new ArrayList();
+        ArrayList last = new ArrayList();
+        for (Node node : this.nodes) {
+            if (!visited.contains(node)) {
+                arrayVisited = this.depthFirstSearch(node, visited, null);
+                visited.addAll(arrayVisited[0]);
+                first.addAll(arrayVisited[0]);
+                last.addAll(arrayVisited[1]);
+             }
+        }
+        arrayVisited[0] = first;
+        arrayVisited[1] = last;
+        return arrayVisited;
+    }
+
+    /**
+     * Transposes this component by replacing for each node
+     * its successor set by its predecessor set, and its predecessor set
+     * by its successor set.
+     */
+    public void transpose() {
+        DGraph tmp = new DGraph(this);
+        for (Edge edge : tmp.getEdges()) {
+             this.removeEdge(edge);
+             this.addEdge(new Edge(edge.getTo(), edge.getFrom(), edge.getContent()));
+        }
+    }
+
+    /**
+     * Returns the directed acyclic graph where each node corresponds to a
+     * strongly connected component (SCC) of this component stored in a TreeSet of nodes.
+     *
+     * When two nodes in two different SCC are in relation, the same is for the SCC
+     * they belongs to.
+     *
+     * @return  The directed acyclic graph
+     */
+    public DAGraph getStronglyConnectedComponent() {
+        DAGraph cc = new DAGraph();
+        // first depth first search
         DGraph tmp = new DGraph(this);
         tmp.transitiveClosure();
         ArrayList<Node> last = tmp.depthFirstSearch()[1];
         // transposition of the graph
-		DGraph Gt = new DGraph (this);
-		Gt.transpose();		
-		// sort nodes according to the reverse last sort
-		ArrayList<Node> sort = new ArrayList();
-		Object [] T = last.toArray();
-		for (int i=T.length-1 ; i>=0 ; i--) 
-			sort.add((Node)T[i]);
-		// second depth first search according to sort
-		TreeSet<Node> visited = new TreeSet();		
-		for (Node n : sort) 
-			if (!visited.contains(n)) {
-				last = Gt.depthFirstSearch(n, visited, sort)[1];
-				visited.addAll(last);				
-				TreeSet sCC = new TreeSet(last);
-				// a strongly connected component is generated
-				CC.addNode(new Node(sCC));	// addition of			
-			}
-		// edges between strongly connected component	
-		for (Node CCfrom : CC.getNodes()) 
-			for (Node CCto : CC.getNodes()) 
-				for (Node from : (TreeSet<Node>)CCfrom.content)
-					for (Node to : ((TreeSet<Node>)CCto.content))	
-						if (tmp.getNodesSucc(from).contains(to))
-							CC.addEdge(CCfrom,CCto);
-		CC.reflexiveReduction();															 							
-		return CC;
-	}	
-}// end of DGraph
+        DGraph transposedGraph = new DGraph(this);
+        transposedGraph.transpose();
+        // sort nodes according to the reverse last sort
+        ArrayList<Node> sort = new ArrayList();
+        Object [] array = last.toArray();
+        for (int i = array.length - 1; i >= 0; i--) {
+            sort.add((Node) array[i]);
+        }
+        // second depth first search according to sort
+        TreeSet<Node> visited = new TreeSet();
+        for (Node n : sort) {
+            if (!visited.contains(n)) {
+                last = transposedGraph.depthFirstSearch(n, visited, sort)[1];
+                visited.addAll(last);
+                TreeSet sCC = new TreeSet(last);
+                // a strongly connected component is generated
+                cc.addNode(new Node(sCC));    // addition of
+            }
+        }
+        // edges between strongly connected component
+        for (Node ccFrom : cc.getNodes()) {
+            for (Node ccTo : cc.getNodes()) {
+                for (Node from : (TreeSet<Node>) ccFrom.getContent()) {
+                    for (Node to : ((TreeSet<Node>) ccTo.getContent())) {
+                        if (tmp.getSuccessorNodes(from).contains(to)) {
+                            cc.addEdge(ccFrom, ccTo);
+                        }
+                    }
+                }
+            }
+        }
+        cc.reflexiveReduction();
+        return cc;
+    }
+}
+

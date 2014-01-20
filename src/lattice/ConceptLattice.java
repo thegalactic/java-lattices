@@ -65,9 +65,9 @@ public class ConceptLattice extends Lattice {
 	public ConceptLattice (Lattice L) {	
 		super (L);
 		if (!this.isConceptLattice()) { 
-			super.nodes=new TreeSet<Node>(); 
-			this.succ=new TreeMap<Node,TreeSet<Edge>>();
-			this.pred=new TreeMap<Node,TreeSet<Edge>>();
+			this.setNodes(new TreeSet<Node>()); 
+			this.setSuccessors(new TreeMap<Node,TreeSet<Edge>>());
+			this.setPredecessors(new TreeMap<Node,TreeSet<Edge>>());
 			}
 		}
 	/* ------------- OVERLAPPING METHODS ------------------ */						
@@ -134,7 +134,7 @@ public class ConceptLattice extends Lattice {
             CL.addNode(c2);
         }
         for (Edge ed : this.getEdges()) 
-            CL.addEdge (new Edge (copy.get(ed.from()), copy.get(ed.to()), ed.content()));
+            CL.addEdge (new Edge (copy.get(ed.getFrom()), copy.get(ed.getTo()), ed.getContent()));
         return CL;
     }
 
@@ -167,7 +167,7 @@ public class ConceptLattice extends Lattice {
             Concept c = (Concept) n;
             if (!c.hasSetA() && JoinIrr.contains(c)) {
                 ComparableSet X = new ComparableSet();
-                X.add(new Integer(c.ident));
+                X.add(new Integer(c.getIdentifier()));
                 c.putSetA(X);
                 }
             }
@@ -181,7 +181,7 @@ public class ConceptLattice extends Lattice {
              Concept c = (Concept) n;
              if (!c.hasSetB() && MeetIrr.contains(c)) {
                 ComparableSet X = new ComparableSet();
-                X.add(new Integer(c.ident));
+                X.add(new Integer(c.getIdentifier()));
                 c.putSetB(X);
              }
          }
@@ -209,7 +209,7 @@ public class ConceptLattice extends Lattice {
             // reduction of set A
             for (Node to : sort) {
                 Concept cto  = (Concept)to;
-                for (Node from : this.getNodesPred(to))  {
+                for (Node from : this.getPredecessorNodes(to))  {
                     Concept cfrom = (Concept)from;
                     cto.getSetA().removeAll(cfrom.getSetA());
                 }
@@ -222,7 +222,7 @@ public class ConceptLattice extends Lattice {
             // reduction of set B
             for (Node to : sort)	{
                 Concept cto  = (Concept)to;
-                for (Node from : this.getNodesSucc(to))  {
+                for (Node from : this.getSuccessorNodes(to))  {
                     Concept cfrom = (Concept)from;
                     cto.getSetB().removeAll(cfrom.getSetB());
                 }
@@ -257,9 +257,9 @@ public class ConceptLattice extends Lattice {
 	public boolean makeEdgeValuation () {
         if (!this.containsConcepts()) return false;
 		for (Node n1 : this.getNodes())
-            for (Edge ed : this.getEdgesSucc(n1))
+            for (Edge ed : this.getSuccessorEdges(n1))
              if (!ed.hasContent()) {
-                 Node n2 = ed.to();
+                 Node n2 = ed.getTo();
                  TreeSet diff = new TreeSet();
                  diff.addAll (((Concept)n2).getSetA());
                  diff.removeAll(((Concept)n1).getSetA());
@@ -299,7 +299,7 @@ public class ConceptLattice extends Lattice {
 			L.addNode(reduced.get(n));
 		// addtion of edges to L
 		for (Node from : CSL.getNodes())
-			for (Node to : CSL.getNodesSucc(from))
+			for (Node to : CSL.getSuccessorNodes(from))
 				L.addEdge (reduced.get(from),reduced.get(to));
 		return L;
 	}
@@ -332,7 +332,7 @@ public class ConceptLattice extends Lattice {
 			L.addNode(reduced.get(n));
 		// addtion of edges to L
 		for (Node from : CSL.getNodes()) 
-			for (Node to : CSL.getNodesSucc(from))
+			for (Node to : CSL.getSuccessorNodes(from))
 				L.addEdge (reduced.get(from),reduced.get(to));	
 		return L;
 	}	
@@ -381,7 +381,7 @@ public class ConceptLattice extends Lattice {
 			L.addNode(reduced.get(n));
 		// addtion of edges to L	
 		for (Node from : CSL.getNodes()) 
-			for (Node to : CSL.getNodesSucc(from))
+			for (Node to : CSL.getSuccessorNodes(from))
 				L.addEdge (reduced.get(from),reduced.get(to));	
 		return L;
 	}
@@ -448,11 +448,11 @@ public class ConceptLattice extends Lattice {
             L.recursiveDiagramLattice(bot, init);
             // minimalisation of edge's content to get only inclusion-minimal valuation for each edge
             /**for (Edge ed : L.dependanceGraph.getEdges()) {
-                TreeSet<ComparableSet> valEd = new TreeSet<ComparableSet>(((TreeSet<ComparableSet>)ed.content()));
+                TreeSet<ComparableSet> valEd = new TreeSet<ComparableSet>(((TreeSet<ComparableSet>)ed.getContent()));
                 for (ComparableSet X1 : valEd)
                     for (ComparableSet X2 : valEd)
                         if (X1.containsAll(X2) && !X2.containsAll(X1))
-                            ((TreeSet<ComparableSet>)ed.content()).remove(X1);
+                            ((TreeSet<ComparableSet>)ed.getContent()).remove(X1);
             }**/
         return L;
         }
@@ -516,31 +516,31 @@ public class ConceptLattice extends Lattice {
         // and therefore strongly connected components have to be used.
 		ComparableSet F = new ComparableSet (((Concept)n).getSetA());        
         DGraph prec = init.precedenceGraph();        
-        DAGraph acyclPrec = prec.stronglyConnectedComponent();        
+        DAGraph acyclPrec = prec.getStronglyConnectedComponent();        
         ComparableSet newVal = new ComparableSet ();
         newVal.addAll(F);
         for (Object x : F)  {
             // computes nx, the strongly connected component containing x
             Node nx = null;
             for (Node cc : acyclPrec.getNodes()) {
-                TreeSet<Node> CC = (TreeSet<Node>) cc.content;                
+                TreeSet<Node> CC = (TreeSet<Node>) cc.getContent();                
                 for (Node y : CC)
-                    if (x.equals(y.content))
+                    if (x.equals(y.getContent()))
                         nx=cc;
             }
             // computes the minorants of nx in the acyclic graph
             TreeSet<Node> ccMinNx = acyclPrec.minorants(nx);
             // removes from newVal every minorants of nx
             for (Node cc : ccMinNx) {
-                TreeSet<Node> CC = (TreeSet<Node>) cc.content;
+                TreeSet<Node> CC = (TreeSet<Node>) cc.getContent();
                 for (Node y : CC)
-                    newVal.remove(y.content);
+                    newVal.remove(y.getContent());
             }
         }
         // computes the node belonging in S\F
         TreeSet<Node> N = new TreeSet<Node> ();        
         for (Node in : this.dependanceGraph.getNodes())
-            if (!F.contains(in.content))
+            if (!F.contains(in.getContent()))
                 N.add(in);
         // computes the dependance relation between nodes in S\F
         // and valuated this relation by the subset of S\F
@@ -551,9 +551,9 @@ public class ConceptLattice extends Lattice {
                 // check if from is in dependance relation with to
                 // i.e. "from" belongs to the closure of "F+to"
                 ComparableSet FPlusTo = new ComparableSet(F);
-                FPlusTo.add(to.content);
+                FPlusTo.add(to.getContent());
                 FPlusTo = new ComparableSet(init.closure(FPlusTo));
-                if (FPlusTo.contains(from.content)) {
+                if (FPlusTo.contains(from.getContent())) {
                     // there is a dependance relation between from and to
                     // search for an existing edge between from and to
                     Edge ed = this.dependanceGraph.getEdge(from, to);
@@ -563,30 +563,30 @@ public class ConceptLattice extends Lattice {
                     }
                     E.add(ed);
                     // check if F is a minimal set closed for dependance relation between from and to
-                    ((TreeSet<ComparableSet>)ed.content()).add(newVal);
-                    TreeSet<ComparableSet> ValEd = new TreeSet<ComparableSet>((TreeSet<ComparableSet>)ed.content());
+                    ((TreeSet<ComparableSet>)ed.getContent()).add(newVal);
+                    TreeSet<ComparableSet> ValEd = new TreeSet<ComparableSet>((TreeSet<ComparableSet>)ed.getContent());
                         for (ComparableSet X1 : ValEd) {
                             if (X1.containsAll(newVal) && !newVal.containsAll(X1))
-                                ((TreeSet<ComparableSet>)ed.content()).remove(X1);
+                                ((TreeSet<ComparableSet>)ed.getContent()).remove(X1);
                             if (!X1.containsAll(newVal) && newVal.containsAll(X1))
-                                ((TreeSet<ComparableSet>)ed.content()).remove(newVal);
+                                ((TreeSet<ComparableSet>)ed.getContent()).remove(newVal);
                         }
                   }
                }
         // computes the dependance subgraph of the closed set F as the reduction
         // of the dependance graph composed of nodes in S\A and edges of the dependance relation
-        DGraph sub = this.dependanceGraph.subgraphByNodes(N);
-        DGraph delta = sub.subgraphByEdges(E);
+        DGraph sub = this.dependanceGraph.getSubgraphByNodes(N);
+        DGraph delta = sub.getSubgraphByEdges(E);
         // computes the sources of the CFC of the dependance subgraph
         // that corresponds to successors of the closed set F
-		DAGraph CFC = delta.stronglyConnectedComponent ();
-		TreeSet<Node> SCCmin = CFC.sinks();
+		DAGraph CFC = delta.getStronglyConnectedComponent();
+		TreeSet<Node> SCCmin = CFC.getSinks();
         Vector<TreeSet<Comparable>> immSucc = new Vector<TreeSet<Comparable>>();
         for (Node n1 : SCCmin) {
 			TreeSet s = new TreeSet(F);
-			TreeSet<Node> toadd = (TreeSet<Node>)n1.content;
+			TreeSet<Node> toadd = (TreeSet<Node>)n1.getContent();
 			for (Node n2 : toadd)
-				s.add(n2.content);
+				s.add(n2.getContent());
 			immSucc.add(s);
 		}
        return immSucc;

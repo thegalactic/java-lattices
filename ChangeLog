@@ -1,6 +1,6 @@
 0. Metadata
 -----------
-Copyright:  2013 University of La Rochelle, France
+Copyright:  2010-2014 University of La Rochelle, France
 License:    http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
 
 1. Copyright and disclaimer
@@ -17,7 +17,7 @@ code fixes.
 
 Legend:
 
-* -> Security Fix
+~ -> Security Fix
 # -> Issue Fix
 $ -> Language fix or change
 + -> Addition
@@ -25,13 +25,18 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-01-12 Christophe Demko <chdemko@gmail.com>
+	* src/dgraph/*.java:
+		^ Checkstyle
+	* test/dgraph/*.java:
+		+ Unit test
 
-2013-11-18  Christophe Demko
+2013-11-18 Christophe Demko <chdemko@gmail.com>
  + Adding licenses
 
-2013-11-18  Christophe Demko
+2013-11-18 Christophe Demko <chdemko@gmail.com>
  + Adding the ChangeLog file
 
-2013-11-18  Karell Bertet
+2013-11-18 Karell Bertet 
  ! Adding the project to github
 

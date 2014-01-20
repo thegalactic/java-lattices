@@ -214,7 +214,7 @@ public class Concept extends Node {
 
     /** Returns the dot description of this component in a String */
 	public String toDot () {
-    	String s = this.ident+" [label=\" "  ;
+    	String s = this.getIdentifier()+" [label=\" "  ;
         String tmp="";
        if (this.hasSetA()) tmp+=this.setA;
        if (this.hasSetA()&&this.hasSetB()) tmp+="\\n";
@@ -330,7 +330,7 @@ public class Concept extends Node {
             System.out.println(System.currentTimeMillis()-start+"ms");
             start = System.currentTimeMillis();
             System.out.print("Srongly connected component... ");
-            DAGraph acyclPrec = prec.stronglyConnectedComponent();
+            DAGraph acyclPrec = prec.getStronglyConnectedComponent();
             System.out.println(System.currentTimeMillis()-start+"ms");
             ComparableSet newVal = new ComparableSet ();
             newVal.addAll(F);
@@ -338,9 +338,9 @@ public class Concept extends Node {
                 // computes nx, the strongly connected component containing x
                 Node nx = null;
                 for (Node cc : acyclPrec.getNodes()) {
-                    TreeSet<Node> CC = (TreeSet<Node>) cc.content;
+                    TreeSet<Node> CC = (TreeSet<Node>) cc.getContent();
                     for (Node y : CC){
-                        if (x.equals(y.content)){
+                        if (x.equals(y.getContent())){
                             nx=cc;
                         }
                     }
@@ -349,16 +349,16 @@ public class Concept extends Node {
                 TreeSet<Node> ccMinNx = acyclPrec.minorants(nx);
                 // removes from newVal every minorants of nx
                 for (Node cc : ccMinNx) {
-                    TreeSet<Node> CC = (TreeSet<Node>) cc.content;
+                    TreeSet<Node> CC = (TreeSet<Node>) cc.getContent();
                     for (Node y : CC){
-                        newVal.remove(y.content);
+                        newVal.remove(y.getContent());
                     }
                 }
             }
             // computes the node belonging in S\F
             TreeSet<Node> N = new TreeSet<Node> ();
             for (Node in : dependanceGraph.getNodes()) {
-                if (!F.contains(in.content)){
+                if (!F.contains(in.getContent())){
                     N.add(in);
                 }
             }
@@ -374,9 +374,9 @@ public class Concept extends Node {
                     // check if from is in dependance relation with to
                     // i.e. "from" belongs to the closure of "F+to"
                     ComparableSet FPlusTo = new ComparableSet(F);
-                    FPlusTo.add(to.content);
+                    FPlusTo.add(to.getContent());
                     FPlusTo = new ComparableSet(init.closure(FPlusTo));
-                    if (FPlusTo.contains(from.content)) {
+                    if (FPlusTo.contains(from.getContent())) {
                         // there is a dependance relation between from and to
                         // search for an existing edge between from and to
                         Edge ed = dependanceGraph.getEdge(from, to);
@@ -386,14 +386,14 @@ public class Concept extends Node {
                         }
                         E.add(ed);
                         // check if F is a minimal set closed for dependance relation between from and to
-                        ((TreeSet<ComparableSet>)ed.content()).add(newVal);
-                        TreeSet<ComparableSet> ValEd = new TreeSet<ComparableSet>((TreeSet<ComparableSet>)ed.content());
+                        ((TreeSet<ComparableSet>)ed.getContent()).add(newVal);
+                        TreeSet<ComparableSet> ValEd = new TreeSet<ComparableSet>((TreeSet<ComparableSet>)ed.getContent());
                             for (ComparableSet X1 : ValEd) {
                                 if (X1.containsAll(newVal) && !newVal.containsAll(X1)){
-                                    ((TreeSet<ComparableSet>)ed.content()).remove(X1);
+                                    ((TreeSet<ComparableSet>)ed.getContent()).remove(X1);
                                 }                                    
                                 if (!X1.containsAll(newVal) && newVal.containsAll(X1)){
-                                    ((TreeSet<ComparableSet>)ed.content()).remove(newVal);
+                                    ((TreeSet<ComparableSet>)ed.getContent()).remove(newVal);
                                 }
                             }
                         }
@@ -405,19 +405,19 @@ public class Concept extends Node {
             start = System.currentTimeMillis();
             // computes the dependance subgraph of the closed set F as the reduction
             // of the dependance graph composed of nodes in S\A and edges of the dependance relation
-            DGraph sub = dependanceGraph.subgraphByNodes(N);            
-            DGraph delta = sub.subgraphByEdges(E);            
+            DGraph sub = dependanceGraph.getSubgraphByNodes(N);            
+            DGraph delta = sub.getSubgraphByEdges(E);            
             // computes the sources of the CFC of the dependance subgraph
             // that corresponds to successors of the closed set F
-            DAGraph CFC = delta.stronglyConnectedComponent();            
-            TreeSet<Node> SCCmin = CFC.sinks();
+            DAGraph CFC = delta.getStronglyConnectedComponent();            
+            TreeSet<Node> SCCmin = CFC.getSinks();
             System.out.println(System.currentTimeMillis()-start+"ms");
             ArrayList<TreeSet<Comparable>> immSucc = new ArrayList<TreeSet<Comparable>>();            
             for (Node n1 : SCCmin) {
                 TreeSet s = new TreeSet(F);
-                TreeSet<Node> toadd = (TreeSet<Node>)n1.content;
+                TreeSet<Node> toadd = (TreeSet<Node>)n1.getContent();
                 for (Node n2 : toadd){
-                    s.add(n2.content);
+                    s.add(n2.getContent());
                 }                        
                 immSucc.add(s);
             }

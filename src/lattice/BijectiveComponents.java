@@ -169,11 +169,11 @@ public class BijectiveComponents {
             fichier.write(this.init.toString()+"\n");
             // saves the closed set lattice
             String nameLattice = directory+"Lattice.dot";            
-            this.lattice.toDot(nameLattice);
+            this.lattice.writeDot(nameLattice);
             fichier.write("-> Closed set or concept lattice saved in "+nameLattice+"\n");
             // saves the reduced lattice
             String nameReducedLattice = directory+"ReducedLattice.dot";
-            this.reducedLattice.toDot(nameReducedLattice);
+            this.reducedLattice.writeDot(nameReducedLattice);
             fichier.write("-> Reduced lattice saved in "+nameReducedLattice+"\n");
             // saves the reduced table
             String nameTable = directory+"Table.txt";
@@ -192,7 +192,7 @@ public class BijectiveComponents {
             fichier.write(this.canonicalDirectBasis.toString()+"\n");
             // saves the dependance graph
             String nameODGraph = directory+"DependanceGraph.dot";
-            this.dependanceGraph.toDot(nameODGraph);
+            this.dependanceGraph.writeDot(nameODGraph);
 			fichier.write("-> Dependance Graph  of the reduced lattice saved in "+nameODGraph+" \n");
             // saves the minimal generators
 			fichier.write("-> Minimal generators  of the reduced lattice are "+this.minimalGenerators+"\n");
