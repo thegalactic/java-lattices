@@ -65,17 +65,23 @@ public class DAGraph extends DGraph {
      * Constructs this component as a copy of the specified directed graph.
      *
      * Acyclic property is checked for the specified DAG.
-     * When not verified, this component is construct with an empty set of nodes.
+     * When not verified, this component is construct with the same set of nodes but with no edges.
      *
      * @param   graph  the DGraph to be copied
      */
     public DAGraph(final DGraph graph) {
         super(graph);
-        this.reflexiveReduction();
-        if (!this.isAcyclic()) {
-            this.setNodes(new TreeSet<Node>());
-            this.setSuccessors(new TreeMap<Node, TreeSet<Edge>>());
-            this.setPredecessors(new TreeMap<Node, TreeSet<Edge>>());
+        if (this.isAcyclic()) {
+            this.reflexiveReduction();
+        } else {
+            TreeMap<Node, TreeSet<Edge>> successors = new TreeMap<Node, TreeSet<Edge>>();
+            TreeMap<Node, TreeSet<Edge>> predecessors = new TreeMap<Node, TreeSet<Edge>>();
+            for (Node node : this.getNodes()) {
+                successors.put(node, new TreeSet<Edge>());
+                predecessors.put(node, new TreeSet<Edge>());
+            }
+            this.setSuccessors(successors);
+            this.setPredecessors(predecessors);
         }
     }
 
