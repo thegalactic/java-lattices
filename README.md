@@ -28,13 +28,13 @@ If you are using this project in research activities including publication, you 
 * year: 2014
 * how published: http://kbertet.github.io/java-lattices
 
-Author:
---------
+Author
+------
 
 * [Karell Bertet](https://github.com/kbertet): main developer architect
 
-Contributors:
--------------
+Contributors
+------------
 
 * [Clément Guérin](https://github.com/guerinclement)
 * [Christophe Demko](https://github.com/chdemko)
