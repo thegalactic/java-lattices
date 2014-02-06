@@ -5,6 +5,10 @@ Build status
 ------------
 [![Build Status](https://travis-ci.org/kbertet/java-lattices.png)](https://travis-ci.org/kbertet/java-lattices)
 
+Version
+-------
+[![GitHub version](https://badge.fury.io/gh/kbertet%2Fjava-lattices.png)](http://badge.fury.io/gh/kbertet%2Fjava-lattices)
+
 Documentation
 -------------
 
@@ -24,13 +28,13 @@ If you are using this project in research activities including publication, you 
 * year: 2014
 * how published: http://kbertet.github.io/java-lattices
 
-Author:
---------
+Author
+------
 
 * [Karell Bertet](https://github.com/kbertet): main developer architect
 
-Contributors:
--------------
+Contributors
+------------
 
 * [Clément Guérin](https://github.com/guerinclement)
 * [Christophe Demko](https://github.com/chdemko)

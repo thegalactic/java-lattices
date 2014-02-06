@@ -1,6 +1,6 @@
 0. Metadata
 -----------
-Copyright:  2010-2014 University of La Rochelle, France
+Copyright:  2010-2014 Karell Bertet
 License:    http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
 
 1. Copyright and disclaimer
@@ -28,6 +28,8 @@ $ -> Language fix or change
 2014-01-20 Christophe Demko <chdemko@gmail.com>
 	* examples/Examples.java, src/lattice/ConceptLattice.java, src/dgraph/DAGraph.java:
 		^ Move idealsLattice method to ConceptLattice and allow a non empty set of nodes in DAGraph constructor
+	* src/dgraph/DGraph.java, test/dgraph/DGraphTest.java:
+		^ Renaming getSizeEdges and getSizeNodes methods
 
 2014-01-12 Christophe Demko <chdemko@gmail.com>
 	* src/dgraph/*.java:

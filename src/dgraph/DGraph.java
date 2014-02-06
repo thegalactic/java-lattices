@@ -371,7 +371,7 @@ public class DGraph {
      *
      * @return  the number of nodes
      */
-    public int getSizeNodes() {
+    public int sizeNodes() {
         return this.nodes.size();
     }
 
@@ -380,7 +380,7 @@ public class DGraph {
      *
      * @return  the number of edges
      */
-    public int getSizeEdges() {
+    public int sizeEdges() {
         int size = 0;
         for (Node node : this.nodes) {
             size += this.successors.get(node).size();
@@ -395,9 +395,9 @@ public class DGraph {
      */
     public String toString() {
         StringBuffer nodes  = new StringBuffer();
-        nodes.append(this.getSizeNodes()).append(" Nodes: {");
+        nodes.append(this.sizeNodes()).append(" Nodes: {");
         StringBuffer edges = new StringBuffer();
-        edges.append(this.getSizeEdges()).append(" Edges: {");
+        edges.append(this.sizeEdges()).append(" Edges: {");
         for (Node from : this.nodes) {
             nodes.append(from.toString() + ",");
         }
@@ -653,7 +653,7 @@ public class DGraph {
      */
     public boolean isAcyclic() {
         ArrayList<Node> nodes = this.topologicalSort();
-        return (nodes.size() == this.getSizeNodes());
+        return (nodes.size() == this.sizeNodes());
     }
 
     /**
