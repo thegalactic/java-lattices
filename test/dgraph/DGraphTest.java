@@ -34,7 +34,7 @@ public class DGraphTest {
         set.add(node1);
         set.add(node2);
         DGraph graph = new DGraph(set);
-        assertEquals(graph.getSizeNodes(), 2);
+        assertEquals(graph.sizeNodes(), 2);
         assertTrue(graph.getNodes().contains(node1));
         assertTrue(graph.getNodes().contains(node2));
         assertTrue(graph.getSuccessorEdges(node1).isEmpty());
@@ -56,7 +56,7 @@ public class DGraphTest {
         DGraph graph = new DGraph(set);
         graph.addEdge(node1, node2);
         DGraph copy = new DGraph(graph);
-        assertEquals(copy.getSizeNodes(), 2);
+        assertEquals(copy.sizeNodes(), 2);
         assertTrue(copy.getNodes().contains(node1));
         assertTrue(copy.getNodes().contains(node2));
         assertEquals(copy.getSuccessorEdges(node1).size(), 1);
@@ -72,12 +72,12 @@ public class DGraphTest {
     @Test
     public void testRandom() {
         DGraph graph = DGraph.random(10, 0);
-        assertEquals(graph.getSizeNodes(), 10);
-        assertEquals(graph.getSizeEdges(), 0);
+        assertEquals(graph.sizeNodes(), 10);
+        assertEquals(graph.sizeEdges(), 0);
 
         graph = DGraph.random(10, 1);
-        assertEquals(graph.getSizeNodes(), 10);
-        assertEquals(graph.getSizeEdges(), 100);
+        assertEquals(graph.sizeNodes(), 10);
+        assertEquals(graph.sizeEdges(), 100);
     }
 
     /**
@@ -93,7 +93,7 @@ public class DGraphTest {
         DGraph graph = new DGraph(set);
         graph.addEdge(node1, node2);
         DGraph copy = graph.copy();
-        assertEquals(copy.getSizeNodes(), 2);
+        assertEquals(copy.sizeNodes(), 2);
         node1 = copy.getNodeByContent("1");
         node2 = copy.getNodeByContent("2");
         assertTrue(node1 != null);
@@ -111,7 +111,7 @@ public class DGraphTest {
         DGraph graph = new DGraph();
         graph.addNode(node1);
         graph.addNode(node2);
-        assertEquals(graph.getSizeNodes(), 2);
+        assertEquals(graph.sizeNodes(), 2);
         assertTrue(graph.getNodes().contains(node1));
         assertTrue(graph.getNodes().contains(node2));
     }
@@ -127,7 +127,7 @@ public class DGraphTest {
         graph.addNode(node1);
         graph.addNode(node2);
         graph.addEdge(node1, node2);
-        assertEquals(graph.getSizeEdges(), 1);
+        assertEquals(graph.sizeEdges(), 1);
         assertEquals(graph.getEdges().first().compareTo(new Edge(node1, node2)), 0);
     }
 
@@ -220,32 +220,32 @@ public class DGraphTest {
     }
 
     /**
-     * Test the getSizeNodes method.
+     * Test the sizeNodes method.
      */
     @Test
-    public void testGetSizeNodes() {
+    public void testSizeNodes() {
         Node node1 = new Node();
         Node node2 = new Node();
         DGraph graph = new DGraph();
-        assertEquals(graph.getSizeNodes(), 0);
+        assertEquals(graph.sizeNodes(), 0);
         graph.addNode(node1);
         graph.addNode(node2);
-        assertEquals(graph.getSizeNodes(), 2);
+        assertEquals(graph.sizeNodes(), 2);
     }
 
     /**
-     * Test the getSizeEdges method.
+     * Test the sizeEdges method.
      */
     @Test
-    public void testGetSizeEdges() {
+    public void testSizeEdges() {
         Node node1 = new Node();
         Node node2 = new Node();
         DGraph graph = new DGraph();
-        assertEquals(graph.getSizeEdges(), 0);
+        assertEquals(graph.sizeEdges(), 0);
         graph.addNode(node1);
         graph.addNode(node2);
         graph.addEdge(node1, node2);
-        assertEquals(graph.getSizeEdges(), 1);
+        assertEquals(graph.sizeEdges(), 1);
     }
 
     /**
@@ -556,12 +556,12 @@ public class DGraphTest {
         set.add(node6);
         set.add(node7);
         DGraph subgraph = graph.getSubgraphByNodes(set);
-        assertEquals(subgraph.getSizeNodes(), 4);
+        assertEquals(subgraph.sizeNodes(), 4);
         assertTrue(subgraph.getNodes().contains(node1));
         assertTrue(subgraph.getNodes().contains(node4));
         assertTrue(subgraph.getNodes().contains(node6));
         assertTrue(subgraph.getNodes().contains(node7));
-        assertEquals(subgraph.getSizeEdges(), 3);
+        assertEquals(subgraph.sizeEdges(), 3);
         assertTrue(subgraph.getEdges().contains(new Edge(node1, node4)));
         assertTrue(subgraph.getEdges().contains(new Edge(node4, node6)));
         assertTrue(subgraph.getEdges().contains(new Edge(node4, node7)));
@@ -613,8 +613,8 @@ public class DGraphTest {
         set.add(edge2);
         set.add(edge3);
         DGraph subgraph = graph.getSubgraphByEdges(set);
-        assertEquals(subgraph.getSizeNodes(), graph.getSizeNodes());
-        assertEquals(subgraph.getSizeEdges(), 3);
+        assertEquals(subgraph.sizeNodes(), graph.sizeNodes());
+        assertEquals(subgraph.sizeEdges(), 3);
         assertTrue(subgraph.getEdges().contains(edge1));
         assertTrue(subgraph.getEdges().contains(edge2));
         assertTrue(subgraph.getEdges().contains(edge3));
@@ -637,7 +637,7 @@ public class DGraphTest {
         graph.addEdge(node2, node3);
 
         graph.complementary();
-        assertEquals(graph.getSizeEdges(), 6);
+        assertEquals(graph.sizeEdges(), 6);
         assertTrue(graph.getEdges().contains(new Edge(node1, node1)));
         assertTrue(graph.getEdges().contains(new Edge(node2, node1)));
         assertTrue(graph.getEdges().contains(new Edge(node2, node2)));
@@ -664,7 +664,7 @@ public class DGraphTest {
         graph.addEdge(node2, node3);
 
         assertEquals(graph.reflexiveReduction(), 1);
-        assertEquals(graph.getSizeEdges(), 3);
+        assertEquals(graph.sizeEdges(), 3);
         assertTrue(graph.getEdges().contains(new Edge(node1, node2)));
         assertTrue(graph.getEdges().contains(new Edge(node1, node3)));
         assertTrue(graph.getEdges().contains(new Edge(node2, node3)));
@@ -688,7 +688,7 @@ public class DGraphTest {
         graph.addEdge(node2, node3);
 
         assertEquals(graph.reflexiveClosure(), 2);
-        assertEquals(graph.getSizeEdges(), 6);
+        assertEquals(graph.sizeEdges(), 6);
         assertTrue(graph.getEdges().contains(new Edge(node1, node1)));
         assertTrue(graph.getEdges().contains(new Edge(node1, node2)));
         assertTrue(graph.getEdges().contains(new Edge(node1, node3)));
@@ -729,7 +729,7 @@ public class DGraphTest {
         graph.addEdge(node4, node8);
         graph.addEdge(node5, node7);
         graph.transitiveClosure();
-        assertEquals(graph.getSizeEdges(), 16);
+        assertEquals(graph.sizeEdges(), 16);
 
         assertTrue(graph.getEdges().contains(new Edge(node1, node4)));
         assertTrue(graph.getEdges().contains(new Edge(node1, node5)));
@@ -817,7 +817,7 @@ public class DGraphTest {
         graph.addEdge(node1, node2, "R1");
         graph.addEdge(node2, node3, "R2");
         graph.transpose();
-        assertEquals(graph.getSizeEdges(), 2);
+        assertEquals(graph.sizeEdges(), 2);
         assertTrue(graph.containsEdge(node2, node1));
         assertTrue(graph.containsEdge(node3, node2));
     }
@@ -860,8 +860,8 @@ public class DGraphTest {
         graph.addEdge(node8, node7);
         DAGraph dag = graph.getStronglyConnectedComponent();
 
-        assertEquals(dag.getSizeNodes(), 3);
-        assertEquals(dag.getSizeEdges(), 3);
+        assertEquals(dag.sizeNodes(), 3);
+        assertEquals(dag.sizeEdges(), 3);
 
         int i = 0;
         Node set1 = null;
