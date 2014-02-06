@@ -65,7 +65,7 @@ public class DAGraphTest {
         // Test for cyclic graph
         graph.addEdge(node2, node1);
         dag = new DAGraph(graph);
-        assertEquals(dag.sizeNodes(), 0);
+        assertEquals(dag.sizeNodes(), 2);
         assertTrue(dag.getSuccessorEdges(node1).isEmpty());
         assertTrue(dag.getSuccessorEdges(node2).isEmpty());
         assertTrue(dag.getPredecessorEdges(node1).isEmpty());
