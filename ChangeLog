@@ -25,6 +25,10 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-02-06 Christophe Demko <chdemko@gmail.com>
+	* test/dgraph/DAGraphTest.java:
+		+ Add unit test on DAGraph class
+
 2014-01-20 Christophe Demko <chdemko@gmail.com>
 	* examples/Examples.java, src/lattice/ConceptLattice.java, src/dgraph/DAGraph.java:
 		^ Move idealsLattice method to ConceptLattice and allow a non empty set of nodes in DAGraph constructor
