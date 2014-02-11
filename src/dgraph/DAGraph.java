@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Set;
-import lattice.Concept;
-import lattice.ConceptLattice;
 
 /**
  * This class extends the representation of a directed graph given by class
@@ -65,17 +63,23 @@ public class DAGraph extends DGraph {
      * Constructs this component as a copy of the specified directed graph.
      *
      * Acyclic property is checked for the specified DAG.
-     * When not verified, this component is construct with an empty set of nodes.
+     * When not verified, this component is construct with the same set of nodes but with no edges.
      *
      * @param   graph  the DGraph to be copied
      */
     public DAGraph(final DGraph graph) {
         super(graph);
-        this.reflexiveReduction();
-        if (!this.isAcyclic()) {
-            this.setNodes(new TreeSet<Node>());
-            this.setSuccessors(new TreeMap<Node, TreeSet<Edge>>());
-            this.setPredecessors(new TreeMap<Node, TreeSet<Edge>>());
+        if (this.isAcyclic()) {
+            this.reflexiveReduction();
+        } else {
+            TreeMap<Node, TreeSet<Edge>> successors = new TreeMap<Node, TreeSet<Edge>>();
+            TreeMap<Node, TreeSet<Edge>> predecessors = new TreeMap<Node, TreeSet<Edge>>();
+            for (Node node : this.getNodes()) {
+                successors.put(node, new TreeSet<Edge>());
+                predecessors.put(node, new TreeSet<Edge>());
+            }
+            this.setSuccessors(successors);
+            this.setPredecessors(predecessors);
         }
     }
 
@@ -294,58 +298,6 @@ public class DAGraph extends DGraph {
             }
         }
         return number;
-    }
-
-    /**
-     * Generate the lattice composed of all the antichains of this component
-     * ordered with the inclusion relation.
-     *
-     * This treatment is performed in O(??) by implementation of Nourine algorithm
-     * that consists in a sequence of doubling intervals of nodes.
-     *
-     * @return  the concept lattice
-     */
-   public ConceptLattice idealsLattice() {
-        if (!this.isAcyclic()) {
-            return null;
-        }
-        // initialize the poset of ideals with the emptyset
-        ConceptLattice conceptLattice = new ConceptLattice();
-        int id = 1;
-        conceptLattice.addNode(new Concept(true, false));
-        // travel on graph according to a topological sort
-        DAGraph graph = new DAGraph(this);
-        graph.transitiveClosure();
-        // treatment of nodes according to a topological sort
-        ArrayList<Node> sort = graph.topologicalSort();
-        for (Node x : sort) {
-            // computation of Jx
-            TreeSet<Node> jxmoins = new TreeSet<Node>(graph.getPredecessorNodes(x));
-            // storage of new ideals in a set
-            TreeSet<Concept> toAdd = new TreeSet<Concept>();
-            for (Node j1 : conceptLattice.getNodes()) {
-                if (((Concept) j1).containsAllInA(jxmoins)) {
-                     Concept newJ = new Concept(true, false);
-                     newJ.addAllToA(((TreeSet) ((Concept) j1).getSetA()));
-                     newJ.addToA(x);
-                     toAdd.add(newJ);
-                }
-            }
-            // addition of the new ideals in conceptLattice
-            for (Concept newJ : toAdd) {
-                conceptLattice.addNode(newJ);
-            }
-        }
-        // computation of the inclusion relaton
-        for (Node node1 : conceptLattice.getNodes()) {
-            for (Node node2 : conceptLattice.getNodes()) {
-                if (((Concept) node1).containsAllInA(((Concept) node2).getSetA())) {
-                    conceptLattice.addEdge(node2, node1);
-                }
-            }
-        }
-        conceptLattice.transitiveReduction();
-        return conceptLattice;
     }
 
     /* ----------- STATIC GENERATION METHODS ------------- */

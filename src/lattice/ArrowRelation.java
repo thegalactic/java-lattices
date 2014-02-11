@@ -35,7 +35,57 @@ public class ArrowRelation extends DGraph {
      */
     public ArrowRelation (Lattice L) {
         
-        super(L.ArrowRelation());
+        /* Nodes are join or meet irreductibles of the lattice. */
+        TreeSet<Node> J = new TreeSet<Node>(L.joinIrreducibles());
+        TreeSet<Node> M = new TreeSet<Node>(L.meetIrreducibles());
+        TreeSet<Node> nodes = new TreeSet<Node>(M);
+        nodes.addAll(J);
+        this.setNodes(nodes);
+        
+        TreeMap<Node, TreeSet<Edge>> successors = new TreeMap<Node, TreeSet<Edge>>();
+        for (Node node : nodes) {
+            successors.put(node, new TreeSet<Edge>());
+        }
+        this.setSuccessors(successors);
+        
+        TreeMap<Node, TreeSet<Edge>> predecessors = new TreeMap<Node, TreeSet<Edge>>();
+        for (Node node : nodes) {
+            predecessors.put(node, new TreeSet<Edge>());
+        }
+        this.setPredecessors(predecessors);
+        
+        Lattice LTC=new Lattice(L);
+        LTC.transitiveClosure();
+        Lattice LTR=new Lattice(L);
+        LTR.transitiveReduction();
+        Node jminus = new Node();
+        Node mplus = new Node();
+        String Arrow = "";
+        
+        /* Content of edges are arrows */
+        for (Node j : J){
+            for (Node m : M){
+                mplus=LTR.getSuccessorNodes(m).first();
+                jminus=LTR.getPredecessorNodes(j).first();
+                if (LTC.getSuccessorNodes(j).contains(m) || j.equals(m)){
+                    Arrow="Cross";
+                }else{
+                    if (LTC.getSuccessorNodes(jminus).contains(m)){
+                        Arrow="Down";
+                        if (LTC.getPredecessorNodes(mplus).contains(j)){
+                            Arrow="UpDown";
+                        }
+                    }else{
+                        if (LTC.getPredecessorNodes(mplus).contains(j)){
+                            Arrow="Up";
+                        }else{
+                            Arrow="Circ";
+                        }
+                    }
+                }
+                this.addEdge(m, j, Arrow);
+            } 
+        }
     }
     
     /**
@@ -70,23 +120,6 @@ public class ArrowRelation extends DGraph {
 		str+=m.getContent();
 		for (Node j : J){
                     Edge e= this.getEdge(m,j);
-                    if ((String)e.getContent()=="Up"){
-                        str+=" & $\\uparrow$";
-                    }else{
-                        if ((String)e.getContent()=="Down"){
-                        str+=" & $\\downarrow$";
-                    }else{
-                        if ((String)e.getContent()=="UpDown"){
-                        str+=" & $\\updownarrow$";
-                    }else{    
-                        if ((String)e.getContent()=="Cross"){
-                        str+=" & $\\times$";
-                    }else{        
-                        str+=" & $\\circ$";    
-                        }
-                        }
-                        }
-                    /* Previous code, in a Java7 only way, was :
                     switch ((String)e.getContent()){
                         case "Up":str+=" & $\\uparrow$";break;
                         case "Down":str+=" & $\\downarrow$";break;
@@ -94,7 +127,6 @@ public class ArrowRelation extends DGraph {
                         case "Cross":str+=" & $\\times$";break;    
                         case "Circ":str+=" & $\\circ$";break;    
                         default :break;
-                    */
                     }
 		}
 		str+="\\\\ \n";
