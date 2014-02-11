@@ -16,7 +16,7 @@ public class ArrowRelationTest {
      * Test the toLaTex method.
      */
     @Test
-    public void testtoLaTeX() {
+    public void testwriteLaTeX() {
         try {
         Lattice l = new Lattice();
         Node a = new Node("a"); l.addNode(a);
