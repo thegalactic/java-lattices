@@ -193,7 +193,7 @@ public class Examples {
             System.out.println(log); file.write(log);
 
             // computes and print the ideals lattice of the dagraph
-            ConceptLattice CSL = G.idealsLattice();
+            ConceptLattice CSL = ConceptLattice.idealsLattice(G);
             String nameIdealsLattice = name+"IdealsLattice.dot";
             CSL.writeDot(outputDir+nameIdealsLattice);
             log = "-> Ideal lattice saved in "+nameIdealsLattice+"\n";

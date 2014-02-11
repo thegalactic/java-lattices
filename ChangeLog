@@ -30,6 +30,8 @@ $ -> Language fix or change
 		+ Add unit test on DAGraph class
 
 2014-01-20 Christophe Demko <chdemko@gmail.com>
+	* examples/Examples.java, src/lattice/ConceptLattice.java, src/dgraph/DAGraph.java:
+		^ Move idealsLattice method to ConceptLattice and allow a non empty set of nodes in DAGraph constructor
 	* src/dgraph/DGraph.java, test/dgraph/DGraphTest.java:
 		^ Renaming getSizeEdges and getSizeNodes methods
 
