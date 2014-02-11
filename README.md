@@ -1,13 +1,5 @@
-java-lattices
+java-lattices [![Build Status](https://travis-ci.org/kbertet/java-lattices.png)](https://travis-ci.org/kbertet/java-lattices) [![GitHub version](https://badge.fury.io/gh/kbertet%2Fjava-lattices.png)](http://badge.fury.io/gh/kbertet%2Fjava-lattices)
 =============
-
-Build status
-------------
-[![Build Status](https://travis-ci.org/kbertet/java-lattices.png)](https://travis-ci.org/kbertet/java-lattices)
-
-Version
--------
-[![GitHub version](https://badge.fury.io/gh/kbertet%2Fjava-lattices.png)](http://badge.fury.io/gh/kbertet%2Fjava-lattices)
 
 Documentation
 -------------
