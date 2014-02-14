@@ -114,6 +114,7 @@
 		<checkstyle config="lib/style.xml">
 			<fileset dir="src" includes="dgraph/*.java"/>
 			<fileset dir="test" includes="**/*.java"/>
+			<fileset dir="src" includes="lattice/ArrowRelation.java"/>
 		</checkstyle>
 	</target>
 </project>

@@ -25,6 +25,12 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-02-14 Jean-Francois Viaud <jviaud@univ-lr.fr>
+	* src/lattice/package-info.java
+		+ Add file
+	* src/lattice/ArrowRelation.java
+		^ Checkstyle
+
 2014-02-11 Jean-Francois Viaud <jviaud@univ-lr.fr>
 	* src/lattice/ArrowRelation.java
 		+ Add class
