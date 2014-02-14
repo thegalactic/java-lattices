@@ -1,4 +1,4 @@
-before_install: sudo apt-get install graphviz 
+before_script: sudo apt-get install graphviz 
 language: java
 jdk:
   - oraclejdk7
