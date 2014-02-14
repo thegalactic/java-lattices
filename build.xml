@@ -103,7 +103,7 @@
 		<javadoc sourcepath="${src.dir}" destdir="${build.doc.dir}" overview="${doc.dir}/${overview.file}" doctitle="Java Lattices">
 			<doclet name="ch.raffael.doclets.pegdown.PegdownDoclet" path="lib/pegdown-doclet.jar" />
 			<arg value="-extensions" />
-			<arg value="fenced_code_blocks,autolinks,definitions,smartypants,tables,wikilinks" />
+			<arg value="all" />
    		</javadoc>
    		<copy todir="${build.doc.dir}/images">
    			<fileset dir="${doc.dir}/images"/>

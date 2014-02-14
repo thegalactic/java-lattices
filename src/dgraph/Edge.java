@@ -3,7 +3,15 @@ package dgraph;
 /*
  * Edge.java
  *
- * last update on January 2014
+ * Copyright: 2013 University of La Rochelle, France
+ *
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
+ * This file is part of lattice, free package. You can redistribute it and/or modify
+ * it under the terms of CeCILL-B license.
+ *
+ * @author Karell Bertet
+ * @version 2014
  */
 
 import java.util.StringTokenizer;
@@ -16,25 +24,64 @@ import java.util.StringTokenizer;
  * - `from`
  * - `to`
  *
- * of class `Node`.
+ * of class {@link Node}.
  *
  * This class implements class `Comparable` and provides
- * the  `compareTo()` method that compares the edge with
+ * the {@link #compareTo} method that compares the edge with
  * those in parameter by sorting indexes of the nodes that compose it.
  *
  * Therefore, edges can be stored in a sorted collection since they are
  * comparable, and in particular in a sorted set where
  * set operations are provided.
  *
- * Copyright: 2013 University of La Rochelle, France
+ * ![Edge](Edge.png)
  *
- * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ * @uml Edge.png
  *
- * This file is part of lattice, free package. You can redistribute it and/or modify
- * it under the terms of CeCILL-B license.
+ * Edge "many" *-- "2" Node : contains
  *
- * @author Karell Bertet
- * @version 2013
+ * class Edge {
+ *      -Node from
+ *      -Node to
+ *      -Object content
+ *
+ *      +Edge(final Node from, final Node to, final Object content)
+ *      +Edge(final Node from, final Node to)
+ *
+ *      +Node getFrom()
+ *      +Node getTo()
+ *      +Edge setContent(final Object content)
+ *      +Object getContent()
+ *      +boolean hasContent()
+ *
+ *      +String toString()
+ *      +String toDot()
+ *
+ *      +int compareTo(final Object object)
+ * }
+ *
+ * class Node {
+ *      -int identifier
+ *      -Object content
+ *      -{static} int count = 0
+ *
+ *      +Node(final Object content)
+ *      +Node()
+ *      +Node(final Node node)
+ *      +Node()
+ *
+ *      +int getIdentifier()
+ *      +Object getContent()
+ *
+ *      +String toString()
+ *      +String toDot()
+ *
+ *      +Node copy()
+ *
+ *      +boolean equals(final Object object)
+ *      +int hashCode()
+ *      +int compareTo(final Object object)
+ * }
  */
 public class Edge implements Comparable<Object> {
     /* ------------- FIELDS --------------------- */

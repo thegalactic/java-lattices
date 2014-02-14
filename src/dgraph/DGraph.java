@@ -3,7 +3,15 @@ package dgraph;
 /*
  * DGraph.java
  *
- * last update on January 2014
+ * Copyright: 2013 University of La Rochelle, France
+ *
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
+ * This file is part of lattice, free package. You can redistribute it and/or modify
+ * it under the terms of CeCILL-B license.
+ *
+ * @author Karell Bertet
+ * @version 2014
  */
 
 import java.io.DataOutputStream;
@@ -21,9 +29,9 @@ import java.util.Set;
  *
  * A directed graph is composed of
  *
- * - a treeset of node, defined by class `Node`;
- * - a treemap of successors that associates to each node a treeset of successors ;
- * - a treemap of predecessors that associates to each node a treeset of predecessors.
+ * - a treeset of node, defined by class {@link Node};
+ * - a treemap of successors that associates to each node a treeset of successors, defined by class {@link Edge};
+ * - a treemap of predecessors that associates to each node a treeset of predecessors, defined by class {@link Edge}.
  *
  * This class provides methods implementing classical operation on a directed graph:
  *
@@ -38,15 +46,119 @@ import java.util.Set;
  *
  * This class also provides a static method randomly generating a directed graph.
  *
- * Copyright: 2013 University of La Rochelle, France
+ * ![DGraph](DGraph.png)
  *
- * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ * @uml DGraph.png
  *
- * This file is part of lattice, free package. You can redistribute it and/or modify
- * it under the terms of CeCILL-B license.
+ * DGraph "*" o-- "*" Node
+ * DGraph "*" o-- "*" Edge
  *
- * @author Karell Bertet
- * @version 2013
+ * Edge "*" *-- "2" Node
+ *
+ * class DGraph {
+ *     -TreeSet<Node> nodes
+ *     -TreeMap<Node, TreeSet<Edge>> successors
+ *     -TreeMap<Node, TreeSet<Edge>> predecessors
+ *
+ *     +DGraph()
+ *     +DGraph(final Set<Node> set)
+ *     +DGraph(final DGraph graph)
+ *
+ *     +{static}DGraph random(int size, double threshold)
+ *     +{static}DGraph random(int size)
+ *
+ *     +int sizeNodes()
+ *     +int sizeEdges()
+ *     +SortedSet<Node> getNodes()
+ *     +SortedSet<Edge> getEdges()
+ *     +SortedSet<Edge> getSuccessorEdges(final Node node)
+ *     +SortedSet<Edge> getPredecessorEdges(final Node node)
+ *     +TreeSet<Node> getSuccessorNodes(final Node node)
+ *     +TreeSet<Node> getPredecessorNodes(final Node node)
+ *     +Edge getEdge(final Node from, final Node to)
+ *     +Node getNode(final Object search)
+ *     +Node getNodeByContent(final Object content)
+ *     +Node getNodeByIdentifier(int identifier)
+ *     #DGraph setNodes(final TreeSet<Node> nodes)
+ *     #TreeMap<Node, TreeSet<Edge>> getSuccessors()
+ *     #DGraph setSuccessors(final TreeMap<Node, TreeSet<Edge>> successors)
+ *     #TreeMap<Node, TreeSet<Edge>> getPredecessors()
+ *     #DGraph setPredecessors(final TreeMap<Node, TreeSet<Edge>> predecessors)
+ *
+ *     +String toString()
+ *     +void writeDot(final String filename)
+ *
+ *     +boolean containsNode(final Node node)
+ *     +boolean addNode(final Node node)
+ *     +boolean removeNode(final Node node)
+ *     +boolean removeNodes(final Set<Node> nodes)
+ *     +boolean containsEdge(final Node from, final Node to)
+ *     +boolean containsEdge(final Edge edge)
+ *     +boolean addEdge(final Node from, final Node to, final Object content)
+ *     +boolean addEdge(final Node from, final Node to)
+ *     +boolean addEdge(final Edge edge)
+ *     +boolean removeEdge(final Node from, final Node to)
+ *     +boolean removeEdge(final Edge edge)
+ *
+ *     +boolean isAcyclic()
+ *
+ *     +ArrayList<Node> topologicalSort()
+ *     +TreeSet<Node> getSinks()
+ *     +TreeSet<Node> getWells()
+ *     +DGraph getSubgraphByNodes(final Set<Node> nodes)
+ *     +DGraph getSubgraphByEdges(final Set<Edge> edges)
+ *     +void complementary()
+ *     +int reflexiveReduction()
+ *     +int reflexiveClosure()
+ *     +int transitiveClosure()
+ *     +ArrayList<Node>[] depthFirstSearch(Node source, TreeSet<Node> visited, ArrayList<Node> sort)
+ *     +ArrayList<Node>[] depthFirstSearch()
+ *     +void transpose()
+ *     +DAGraph getStronglyConnectedComponent()
+ * }
+ *
+ * class Node {
+ *      -int identifier
+ *      -Object content
+ *      -{static} int count = 0
+ *
+ *      +Node(final Object content)
+ *      +Node()
+ *      +Node(final Node node)
+ *      +Node()
+ *
+ *      +int getIdentifier()
+ *      +Object getContent()
+ *
+ *      +String toString()
+ *      +String toDot()
+ *
+ *      +Node copy()
+ *
+ *      +boolean equals(final Object object)
+ *      +int hashCode()
+ *      +int compareTo(final Object object)
+ * }
+ *
+ * class Edge {
+ *      -Node from
+ *      -Node to
+ *      -Object content
+ *
+ *      +Edge(final Node from, final Node to, final Object content)
+ *      +Edge(final Node from, final Node to)
+ *
+ *      +Node getFrom()
+ *      +Node getTo()
+ *      +Edge setContent(final Object content)
+ *      +Object getContent()
+ *      +boolean hasContent()
+ *
+ *      +String toString()
+ *      +String toDot()
+ *
+ *      +int compareTo(final Object object)
+ * }
  */
 public class DGraph {
     /* ------------- FIELDS ------------------ */
@@ -834,7 +946,7 @@ public class DGraph {
      * This treatment improves the Roy-Warshall algorithm that directly implements
      * the definition in O(logm n^3).
      *
-     * This treatment is overlapped in class `DAGraph`
+     * This treatment is overlapped in class {@link DAGraph}
      * with a more efficient algorithm dedicated to directed acyclic graph.
      *
      * @return  the number of added edges

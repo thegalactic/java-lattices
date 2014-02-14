@@ -1,7 +1,15 @@
 /*
  * Node.java
  *
- * last update on December 2013
+ * Copyright: 2013 University of La Rochelle, France
+ *
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
+ * This file is part of lattice, free package. You can redistribute it and/or modify
+ * it under the terms of CeCILL-B license.
+ *
+ * @author Karell Bertet
+ * @version 2014
  */
 
 package dgraph;
@@ -15,21 +23,38 @@ import java.util.StringTokenizer;
  * automatically computed and unique index.
  *
  * This class implements the `Comparable` interface aiming at
- * sorting nodes by providing the `compareTo()` method
+ * sorting nodes by providing the {@link #compareTo} method
  * that compares the node with those in parameter by comparing their indexes.
  *
  * Since nodes are comparable, they can be stored in a sorted collection,
  * and in particular in a sorted set where set operations are provided.
  *
- * Copyright: 2013 University of La Rochelle, France
+ * ![Node](Node.png)
  *
- * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ * @uml Node.png
  *
- * This file is part of lattice, free package. You can redistribute it and/or modify
- * it under the terms of CeCILL-B license.
+ * class Node {
+ *      -int identifier
+ *      -Object content
+ *      -{static} int count = 0
  *
- * @author Karell Bertet
- * @version 2013
+ *      +Node(final Object content)
+ *      +Node()
+ *      +Node(final Node node)
+ *      +Node()
+ *
+ *      +int getIdentifier()
+ *      +Object getContent()
+ *
+ *      +String toString()
+ *      +String toDot()
+ *
+ *      +Node copy()
+ *
+ *      +boolean equals(final Object object)
+ *      +int hashCode()
+ *      +int compareTo(final Object object)
+ * }
  */
 public class Node implements Comparable<Object> {
     /* ------------- FIELDS --------------------- */
@@ -58,7 +83,7 @@ public class Node implements Comparable<Object> {
      * Constructs a new node containing the specified content.
      *
      * Identifier of this node is initalized with the `count`
-     * variable wich is the incremented.
+     * variable which is the incremented.
      *
      * @param   content  Content for this node
      */
@@ -71,7 +96,7 @@ public class Node implements Comparable<Object> {
      * Constructs a new node with a null content.
      *
      * Identifier of this node is initalized with the `count`
-     * variable wich is the incremented.
+     * variable which is the incremented.
      */
     public Node() {
         this.identifier = ++count;
