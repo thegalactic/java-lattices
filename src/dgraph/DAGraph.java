@@ -3,8 +3,15 @@ package dgraph;
 /*
  * DAGraph.java
  *
- * last update on January 2014
+ * Copyright: 2013 University of La Rochelle, France
  *
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
+ * This file is part of lattice, free package. You can redistribute it and/or modify
+ * it under the terms of CeCILL-B license.
+ *
+ * @author Karell Bertet
+ * @version 2014
  */
 
 import java.util.ArrayList;
@@ -14,7 +21,7 @@ import java.util.Set;
 
 /**
  * This class extends the representation of a directed graph given by class
- * `DGraph` for directed acyclic graph (DAG).
+ * {@link DGraph} for directed acyclic graph (DAG).
  *
  * The main property of a directed acyclic graph is to be a partially ordered set (poset) when
  * transitively closed, and a Hasse diagram when transitively reduced.
@@ -22,7 +29,7 @@ import java.util.Set;
  * This property is not ensured for components of this class because it would require a
  * checking treatment over the graph whenever a new edge or node is added.
  * However, this property can be explicitely ckecked using method
- * `boolean isAcyclic()`.
+ * {@link #isAcyclic}.
  *
  * This class provides methods implementing classical operation on a directed acyclic graph:
  * minorants and majorants, filter and ideal, transitive reduction, ideal lattice, ...
@@ -30,15 +37,94 @@ import java.util.Set;
  * This class also provides a static method randomly generating a directed acyclic graph,
  * and a static method generating the graph of divisors.
  *
- * Copyright: 2013 University of La Rochelle, France
+ * ![DAGraph](DAGraph.png)
  *
- * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ * @uml DAGraph.png
  *
- * This file is part of lattice, free package. You can redistribute it and/or modify
- * it under the terms of CeCILL-B license.
+ * DGraph <|-- DAGraph
  *
- * @author Karell Bertet
- * @version 2013
+ * class DAGraph {
+ *      +DAGraph()
+ *      +DAGraph(final Set<Node> set)
+ *      +DAGraph(final DGraph graph)
+ *
+ *      +TreeSet<Node> min()
+ *      +TreeSet<Node> max()
+ *      +TreeSet<Node> majorants(final Node node)
+ *      +TreeSet<Node> minorants(final Node node)
+ *      +DAGraph filter(final Node node)
+ *      +DAGraph ideal(final Node node)
+ *      +DAGraph getSubgraphByNodes(final Set<Node> nodes)
+ *
+ *      +int transitiveReduction()
+ *      +int transitiveClosure()
+ *
+ *      +{static}DAGraph divisors(int number)
+ *      +{static}DAGraph random(int size, double threshold)
+ *      +{static}DAGraph random(int size)
+ * }
+ *
+ * class DGraph {
+ *     -TreeSet<Node> nodes
+ *     -TreeMap<Node, TreeSet<Edge>> successors
+ *     -TreeMap<Node, TreeSet<Edge>> predecessors
+ *
+ *     +DGraph()
+ *     +DGraph(final Set<Node> set)
+ *     +DGraph(final DGraph graph)
+ *
+ *     +{static}DGraph random(int size, double threshold)
+ *     +{static}DGraph random(int size)
+ *
+ *     +int sizeNodes()
+ *     +int sizeEdges()
+ *     +SortedSet<Node> getNodes()
+ *     +SortedSet<Edge> getEdges()
+ *     +SortedSet<Edge> getSuccessorEdges(final Node node)
+ *     +SortedSet<Edge> getPredecessorEdges(final Node node)
+ *     +TreeSet<Node> getSuccessorNodes(final Node node)
+ *     +TreeSet<Node> getPredecessorNodes(final Node node)
+ *     +Edge getEdge(final Node from, final Node to)
+ *     +Node getNode(final Object search)
+ *     +Node getNodeByContent(final Object content)
+ *     +Node getNodeByIdentifier(int identifier)
+ *     #DGraph setNodes(final TreeSet<Node> nodes)
+ *     #TreeMap<Node, TreeSet<Edge>> getSuccessors()
+ *     #DGraph setSuccessors(final TreeMap<Node, TreeSet<Edge>> successors)
+ *     #TreeMap<Node, TreeSet<Edge>> getPredecessors()
+ *     #DGraph setPredecessors(final TreeMap<Node, TreeSet<Edge>> predecessors)
+ *
+ *     +String toString()
+ *     +void writeDot(final String filename)
+ *
+ *     +boolean containsNode(final Node node)
+ *     +boolean addNode(final Node node)
+ *     +boolean removeNode(final Node node)
+ *     +boolean removeNodes(final Set<Node> nodes)
+ *     +boolean containsEdge(final Node from, final Node to)
+ *     +boolean containsEdge(final Edge edge)
+ *     +boolean addEdge(final Node from, final Node to, final Object content)
+ *     +boolean addEdge(final Node from, final Node to)
+ *     +boolean addEdge(final Edge edge)
+ *     +boolean removeEdge(final Node from, final Node to)
+ *     +boolean removeEdge(final Edge edge)
+ *
+ *     +boolean isAcyclic()
+ *
+ *     +ArrayList<Node> topologicalSort()
+ *     +TreeSet<Node> getSinks()
+ *     +TreeSet<Node> getWells()
+ *     +DGraph getSubgraphByNodes(final Set<Node> nodes)
+ *     +DGraph getSubgraphByEdges(final Set<Edge> edges)
+ *     +void complementary()
+ *     +int reflexiveReduction()
+ *     +int reflexiveClosure()
+ *     +int transitiveClosure()
+ *     +ArrayList<Node>[] depthFirstSearch(Node source, TreeSet<Node> visited, ArrayList<Node> sort)
+ *     +ArrayList<Node>[] depthFirstSearch()
+ *     +void transpose()
+ *     +DAGraph getStronglyConnectedComponent()
+ * }
  */
 public class DAGraph extends DGraph {
 
@@ -254,7 +340,7 @@ public class DAGraph extends DGraph {
     * Computes the transitive closure of this component.
     *
     * This method overlaps the computation of the transitive closure for directed graph
-    * in class `DGraph` with an implementation of the Goralcikova-Koubeck
+    * in class {@link DGraph} with an implementation of the Goralcikova-Koubeck
     * algorithm dedicated to acyclic directed graph. This algorithm can also compute the
     * transitive reduction of a directed acyclic graph.
     *

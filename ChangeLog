@@ -25,6 +25,10 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-02-14 Christophe Demko <chdemko@gmail.com>
+	* .travis.yml, build.xml, lib/style.xml, src/dgraph/DAGraph.java, src/dgraph/DGraph.java, src/dgraph/Edge.java, src/dgraph/Node.java
+		+ Add uml schema
+
 2014-02-14 Jean-Francois Viaud <jviaud@univ-lr.fr>
 	* src/lattice/package-info.java
 		+ Add file
