@@ -25,6 +25,22 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-02-11 Jean-Francois Viaud <jviaud@univ-lr.fr>
+	* src/lattice/ArrowRelation.java
+		+ Add class
+		+ Add constructor
+		+ Add writeLaTex method
+	* src/lattice/Lattice.java
+		+ Add ArrowRelation method
+	* test/lattice/ArrowRelationTest.java
+		+ Add class
+		+ Add unit test on writeLaTeX
+	* test/lattice/LatticeTest.java
+		+ Add class
+		+ add unit test on ArrowRelation
+	* test/lattice/package-info.java
+		+ Add file
+	
 2014-02-06 Christophe Demko <chdemko@gmail.com>
 	* test/dgraph/DAGraphTest.java:
 		+ Add unit test on DAGraph class
