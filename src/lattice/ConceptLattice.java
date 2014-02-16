@@ -490,9 +490,11 @@ public class ConceptLattice extends Lattice {
         //if (Diagram) {
             // computes the dependance graph of the closure system
             // addition of nodes in the precedence graph
-            L.dependanceGraph = new DGraph();
-            for (Comparable c : init.getSet())
-                L.dependanceGraph.addNode(new Node(c));
+            DGraph graph = new DGraph();
+            for (Comparable c : init.getSet()) {
+                graph.addNode(new Node(c));
+            }
+            L.setDependencyGraph(graph);
             // intialize the close set lattice with botom element
             Concept bot = new Concept (init.closure(new ComparableSet()), false);
             L.addNode(bot);
@@ -557,10 +559,12 @@ public class ConceptLattice extends Lattice {
 	*/
 	public Vector<TreeSet<Comparable>> immediateSuccessors (Node n, ClosureSystem init) {
         // Initialization of the dependance graph when not initialized by method recursiveDiagramLattice
-        if (this.dependanceGraph == null) {
-            this.dependanceGraph = new DGraph();
-            for (Comparable c : init.getSet())
-                this.dependanceGraph.addNode(new Node(c));
+        if (!this.hasDependencyGraph()) {
+            DGraph graph = new DGraph();
+            for (Comparable c : init.getSet()) {
+                graph.addNode(new Node(c));
+            }
+            this.setDependencyGraph(graph);            
         }
         // computes newVal, the subset to be used to valuate every new dependance relation
         // newVal = F\predecessors of F in the precedence graph of the closure system
@@ -591,7 +595,7 @@ public class ConceptLattice extends Lattice {
         }
         // computes the node belonging in S\F
         TreeSet<Node> N = new TreeSet<Node> ();        
-        for (Node in : this.dependanceGraph.getNodes())
+        for (Node in : this.getDependencyGraph().getNodes())
             if (!F.contains(in.getContent()))
                 N.add(in);
         // computes the dependance relation between nodes in S\F
@@ -608,10 +612,10 @@ public class ConceptLattice extends Lattice {
                 if (FPlusTo.contains(from.getContent())) {
                     // there is a dependance relation between from and to
                     // search for an existing edge between from and to
-                    Edge ed = this.dependanceGraph.getEdge(from, to);
+                    Edge ed = this.getDependencyGraph().getEdge(from, to);
                     if (ed==null) {
                         ed = new Edge (from,to,new TreeSet<ComparableSet>());
-                        this.dependanceGraph.addEdge(ed);
+                        this.getDependencyGraph().addEdge(ed);
                     }
                     E.add(ed);
                     // check if F is a minimal set closed for dependance relation between from and to
@@ -627,7 +631,7 @@ public class ConceptLattice extends Lattice {
                }
         // computes the dependance subgraph of the closed set F as the reduction
         // of the dependance graph composed of nodes in S\A and edges of the dependance relation
-        DGraph sub = this.dependanceGraph.getSubgraphByNodes(N);
+        DGraph sub = this.getDependencyGraph().getSubgraphByNodes(N);
         DGraph delta = sub.getSubgraphByEdges(E);
         // computes the sources of the CFC of the dependance subgraph
         // that corresponds to successors of the closed set F

@@ -139,7 +139,7 @@ public class BijectiveComponents {
             this.lattice = this.init.closedSetLattice(true);
         this.reducedLattice = this.lattice.getIrreduciblesReduction();
         this.table = this.lattice.getTable();
-        this.dependanceGraph = this.lattice.getDependanceGraph();
+        this.dependanceGraph = this.lattice.getDependencyGraph();
         this.minimalGenerators = this.lattice.getMinimalGenerators();
         this.canonicalDirectBasis = this.lattice.getCanonicalDirectBasis();
         this.canonicalBasis = new IS(this.canonicalDirectBasis);

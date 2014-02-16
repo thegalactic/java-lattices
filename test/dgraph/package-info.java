@@ -1,4 +1,5 @@
 /**
- * This package is for testing the dgraph package
+ * This package is for testing the dgraph package.
  */
+package dgraph;
 
