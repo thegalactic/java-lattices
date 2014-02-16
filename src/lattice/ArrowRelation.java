@@ -1,5 +1,19 @@
 package lattice;
 
+/*
+ * ArrowRelation.java
+ *
+ * Copyright: 2013 University of La Rochelle, France
+ *
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
+ * This file is part of lattice, free package. You can redistribute it and/or modify
+ * it under the terms of CeCILL-B license.
+ *
+ * @author Jean-Francois
+ * @version 2014
+ */
+
 import java.io.IOException;
 import java.io.File;
 import java.io.FileWriter;
@@ -8,6 +22,7 @@ import java.util.TreeSet;
 import dgraph.Edge;
 import dgraph.Node;
 import dgraph.DGraph;
+
 /**
  * The ArrowRelation class encodes arrow relation between meet & join-irreductibles of a lattice.
  *
@@ -18,8 +33,6 @@ import dgraph.DGraph;
  * j "Up Down Arrow" m (stored has "UpDown") iff j "Up" m and j "Down" m
  * j "Cross" m (stored has "Cross") iff j is less or equal than m
  * j "Circ" m (stored has "Circ") iff neither j "Up" m nor j "Down" m nor j "Cross" m
- *
- * @author Jean-Francois
  */
 public class ArrowRelation extends DGraph  {
     /**
@@ -31,7 +44,7 @@ public class ArrowRelation extends DGraph  {
      * @param l : Lattice from which this component is deduced.
      */
     public ArrowRelation(Lattice l) {
-        super(l.ArrowRelation());
+        super(l.arrowRelation());
     }
     /**
      * Produces the LaTex source code for the array of arrows of this component.

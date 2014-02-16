@@ -1,11 +1,7 @@
 /*
  * package-info.java
  *
- * last update on December 2013
- */
-
-/**
- * This package is designed to represent directed graph.
+ * last update on February 2014
  *
  * Copyright: 2013 University of La Rochelle, France
  *
@@ -15,5 +11,11 @@
  * it under the terms of CeCILL-B license.
  *
  * @author Karell Bertet
+ */
+
+/**
+ * This package is designed to represent directed graph.
+ *
+ * TODO setters should return this for chaining
  */
 package dgraph;

@@ -103,7 +103,7 @@
 		<javadoc sourcepath="${src.dir}" destdir="${build.doc.dir}" overview="${doc.dir}/${overview.file}" doctitle="Java Lattices">
 			<doclet name="ch.raffael.doclets.pegdown.PegdownDoclet" path="lib/pegdown-doclet.jar" />
 			<arg value="-extensions" />
-			<arg value="all" />
+			<arg value="fenced_code_blocks,autolinks,definitions,smartypants,tables,wikilinks" />
    		</javadoc>
    		<copy todir="${build.doc.dir}/images">
    			<fileset dir="${doc.dir}/images"/>
@@ -115,6 +115,7 @@
 			<fileset dir="src" includes="dgraph/*.java"/>
 			<fileset dir="test" includes="**/*.java"/>
 			<fileset dir="src" includes="lattice/ArrowRelation.java"/>
+			<fileset dir="src" includes="lattice/Lattice.java"/>
 		</checkstyle>
 	</target>
 </project>

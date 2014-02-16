@@ -32,7 +32,7 @@ public class LatticeTest {
         l.addEdge(e, g);
         l.addEdge(f, g);
         l.addEdge(g, h);
-        DGraph ar = l.ArrowRelation();
+        DGraph ar = l.arrowRelation();
         assertEquals((String) ar.getEdge(g, b).getContent(), "Cross");
         assertEquals((String) ar.getEdge(f, c).getContent(), "UpDown");
         assertEquals((String) ar.getEdge(f, e).getContent(), "Up");

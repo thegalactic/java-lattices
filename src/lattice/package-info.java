@@ -2,10 +2,6 @@
  * package-info.java
  *
  * last update on February 2014
- */
-
-/**
- * This package is designed to represent lattice.
  *
  * Copyright: 2013 University of La Rochelle, France
  *
@@ -15,5 +11,9 @@
  * it under the terms of CeCILL-B license.
  *
  * @author Karell Bertet
+ */
+
+/**
+ * This package is designed to represent lattice.
  */
 package lattice;

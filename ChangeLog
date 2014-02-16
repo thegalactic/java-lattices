@@ -25,6 +25,19 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-02-16 Christophe Demko <chdemko@gmail.com>
+	* build.xml
+	* src/dgraph/package-info.java
+	* src/lattice/ArrowRelation.java
+	* src/lattice/BijectiveComponents.java
+	* src/lattice/ConceptLattice.java
+	* src/lattice/Lattice.java
+	* src/lattice/package-info.java
+	* test/dgraph/package-info.java
+	* test/lattice/LatticeTest.java
+	* test/lattice/package-info.java
+		+ Check style for Lattice.java
+
 2014-02-14 Christophe Demko <chdemko@gmail.com>
 	* .travis.yml
 	* build.xml
