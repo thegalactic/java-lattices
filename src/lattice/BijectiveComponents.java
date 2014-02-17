@@ -3,7 +3,7 @@ package lattice;
 /*
  * BijectiveComponents.java
  *
- * last update on March 2010
+ * last update on February 2014
  *
  */
 
