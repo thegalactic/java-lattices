@@ -115,7 +115,7 @@
 			<fileset dir="src" includes="dgraph/*.java"/>
 			<fileset dir="test" includes="**/*.java"/>
 			<fileset dir="src" includes="lattice/ArrowRelation.java"/>
-			<fileset dir="src" includes="lattice/Lattice.java"/>
+			<fileset dir="src" includes="lattice/BijectiveComponents.java"/>
 		</checkstyle>
 	</target>
 </project>
