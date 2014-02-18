@@ -1,5 +1,4 @@
 *~
 build
-.gitignore
-/java-lattices/nbproject/private/
-/java-lattices/dist/
+
+/java-lattices/
