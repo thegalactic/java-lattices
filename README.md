@@ -7,7 +7,7 @@ This project uses:
 * [junit 4.11](https://github.com/junit-team/junit) for unit test
 * [jacoco 0.6.4](http://www.eclemma.org/jacoco) for code coverage
 * [pegdown doclet 1.1.1](https://github.com/Abnaxos/pegdown-doclet) for generating javadoc
-* [graphviz](http://www.graphviz.org/) for generating uml graphic
+* [graphviz](http://www.graphviz.org/) for generating uml graphics
 
 Documentation
 -------------
