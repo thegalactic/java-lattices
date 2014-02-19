@@ -5,6 +5,7 @@ if [ "$TRAVIS_REPO_SLUG" == "kbertet/java-lattices" ] && [ "$TRAVIS_JDK_VERSION"
   echo -e "Publishing javadoc...\n"
 
   cp -R build/doc $HOME/javadoc-latest
+  cp -R build/report/html $HOME/report-latest
 
   cd $HOME
   git config --global user.email "travis@travis-ci.org"
@@ -14,10 +15,11 @@ if [ "$TRAVIS_REPO_SLUG" == "kbertet/java-lattices" ] && [ "$TRAVIS_JDK_VERSION"
   cd gh-pages
   git rm -rf ./api
   cp -Rf $HOME/javadoc-latest ./api
+  cp -Rf $HOME/report-latest ./test
   git add -f .
-  git commit -m "Lastest javadoc on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages"
+  git commit -m "Lastest javadoc and test result on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages"
   git push -fq origin gh-pages > /dev/null
 
-  echo -e "Published Javadoc to gh-pages.\n"
+  echo -e "Published Javadoc and test result to gh-pages.\n"
   
 fi
