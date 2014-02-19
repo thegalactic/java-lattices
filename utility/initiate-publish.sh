@@ -14,6 +14,7 @@ if [ "$TRAVIS_REPO_SLUG" == "kbertet/java-lattices" ] && [ "$TRAVIS_JDK_VERSION"
 
   cd gh-pages
   git rm -rf ./api
+  git rm -rf ./test
   cp -Rf $HOME/javadoc-latest ./api
   cp -Rf $HOME/report-latest ./test
   git add -f .
