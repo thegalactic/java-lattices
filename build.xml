@@ -2,7 +2,7 @@
 <project name="lattices" basedir="." default="jar" xmlns:jacoco="antlib:org.jacoco.ant">
 
 	<!-- Import checkstyle task -->
-	<taskdef resource="checkstyletask.properties" classpath="lib/style/checkstyle-5.7.jar" />
+	<taskdef resource="checkstyletask.properties" classpath="lib/style/checkstyle-5.7-all.jar" />
 
 	<!--  Import JaCoCo Ant tasks  -->
 	<taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml" classpath="lib/jacoco/jacocoant.jar" />
@@ -150,7 +150,7 @@
 		</copy>
 	</target>
 
-	<target name="style" depends="build">
+	<target name="style">
 		<checkstyle config="lib/style/style.xml">
 			<fileset dir="src" includes="dgraph/*.java" />
 			<fileset dir="test" includes="**/*.java" />
