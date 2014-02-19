@@ -1,7 +1,16 @@
-before_script: sudo apt-get install graphviz 
+before_script: sudo apt-get install graphviz
+
 language: java
+
 jdk:
-  - oraclejdk7
-  - openjdk7
-  - openjdk6
+	- oraclejdk7
+	- openjdk7
+	- openjdk6
+
+env:
+	global:
+		- secure: NX/UL5eBTltE3rzP+aGnj7vwlU7DT1m3JPGSyiJSTUqzHN4iIE+8fm1o7/m/5OFZ7dWHKEJ83nlP8wT4owtj2m5OxwRIpoo5uwlXEHLWPa3DlIVWzXW/+W4peA6JrsP/vz0OU7pjZxNEQ6X/9+6klEBnboueZbiipjq5FMIqnQM=
+
+after_success:
+	- utility/initiate-publish.sh
 
