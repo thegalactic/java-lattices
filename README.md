@@ -1,6 +1,14 @@
 java-lattices [![Build Status](https://travis-ci.org/kbertet/java-lattices.png?branch=master)](https://travis-ci.org/kbertet/java-lattices) [![GitHub version](https://badge.fury.io/gh/kbertet%2Fjava-lattices.png)](http://badge.fury.io/gh/kbertet%2Fjava-lattices)
 =============
 
+This project uses:
+
+* [checkstyle 5.7](https://github.com/checkstyle/checkstyle) for checking java code style
+* [junit 4.11](https://github.com/junit-team/junit) for unit test
+* [jacoco 0.6.4](http://www.eclemma.org/jacoco) for code coverage
+* [pegdown doclet 1.1.1](https://github.com/Abnaxos/pegdown-doclet) for generating javadoc
+* [graphviz](http://www.graphviz.org/) for generating uml graphics
+
 Documentation
 -------------
 
