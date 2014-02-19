@@ -91,6 +91,7 @@
 				<formatter type="xml" />
 				<classpath>
 					<pathelement location="lib/junit/junit-4.11.jar" />
+					<pathelement location="lib/junit/hamcrest-core-1.3.jar" />
 					<pathelement location="${build.jar.dir}/${ant.project.name}-debug.jar" />
 					<pathelement location="${build.test.dir}" />
 				</classpath>
