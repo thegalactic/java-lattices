@@ -118,7 +118,7 @@
 				    <fileset dir="${build.debug.dir}" />
 				</classfiles>
 				<sourcefiles encoding="UTF-8">
-				    <fileset dir="src" includes="**/*.java" />
+				    <fileset dir="${src.dir}" includes="**/*.java" />
 				</sourcefiles>
 			</structure>
 
