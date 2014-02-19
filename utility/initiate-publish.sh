@@ -17,13 +17,14 @@ if [ "$TRAVIS_REPO_SLUG" == "kbertet/java-lattices" ] && [ "$TRAVIS_JDK_VERSION"
   git rm -rf ./api
   git rm -rf ./test
   git rm -rf ./coverage
+  touch .nojekyll
   cp -Rf $HOME/javadoc-latest ./api
   cp -Rf $HOME/reports-latest ./test
   cp -Rf $HOME/coverage-latest ./coverage
   git add -f .
-  git commit -m "Lastest javadoc and test result on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages"
+  git commit -m "Latest javadoc, test results and test coverage on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages"
   git push -fq origin gh-pages > /dev/null
 
-  echo -e "Published Javadoc and test result to gh-pages.\n"
+  echo -e "Published Javadoc, test results and test coverage to gh-pages.\n"
   
 fi
