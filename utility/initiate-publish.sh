@@ -5,7 +5,7 @@ if [ "$TRAVIS_REPO_SLUG" == "kbertet/java-lattices" ] && [ "$TRAVIS_JDK_VERSION"
   echo -e "Publishing javadoc...\n"
 
   cp -R build/doc $HOME/javadoc-latest
-  cp -R build/reports/html $HOME/report-latest
+  cp -R build/reports/html $HOME/reports-latest
 
   cd $HOME
   git config --global user.email "travis@travis-ci.org"
