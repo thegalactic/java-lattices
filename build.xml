@@ -1,21 +1,28 @@
 <?xml version="1.0"?>
-<project name="lattices" basedir="." default="jar">
+<project name="lattices" basedir="." default="jar" xmlns:jacoco="antlib:org.jacoco.ant">
 
-	<taskdef resource="checkstyletask.properties" classpath="lib/checkstyle.jar"/>
+	<!-- Import checkstyle task -->
+	<taskdef resource="checkstyletask.properties" classpath="lib/style/checkstyle-5.7.jar" />
+
+	<!--  Import JaCoCo Ant tasks  -->
+	<taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml" classpath="lib/jacoco/jacocoant.jar" />
 
 	<property name="src.dir" value="src" />
 	<property name="examples.dir" value="examples" />
 	<property name="test.dir" value="test" />
 	<property name="doc.dir" value="doc" />
 	<property name="overview.file" value="README.md" />
+	<property name="coverage.file" value="jacoco.exec" />
 
 	<property name="build.dir" value="build" />
 	<property name="build.src.dir" value="${build.dir}/src" />
+	<property name="build.debug.dir" value="${build.dir}/debug" />
 	<property name="build.test.dir" value="${build.dir}/test" />
 	<property name="build.reports-xml.dir" value="${build.dir}/reports/xml" />
 	<property name="build.reports-html.dir" value="${build.dir}/reports/html" />
 	<property name="build.examples.dir" value="${build.dir}/examples" />
 	<property name="build.doc.dir" value="${build.dir}/doc" />
+	<property name="build.coverage.dir" value="${build.dir}/coverage" />
 
 	<property name="build.jar.dir" value="${build.dir}/jar" />
 
@@ -23,6 +30,8 @@
 	<property name="examples-class" value="Examples" />
 
 	<target name="rebuild" depends="clean,jar" />
+
+	<target name="test" depends="junit,style,doc,coverage" />
 
 	<target name="clean">
 		<delete dir="${build.dir}" />
@@ -40,12 +49,24 @@
 		<jar destfile="${build.jar.dir}/${ant.project.name}.jar" basedir="${build.src.dir}" />
 	</target>
 
-	<target name="build-test" depends="jar">
+	<target name="build-debug">
+		<mkdir dir="${build.debug.dir}" />
+		<javac debug="on" includeantruntime="false" srcdir="${src.dir}" destdir="${build.debug.dir}">
+			<!--compilerarg value="-Xlint" /-->
+		</javac>
+	</target>
+
+	<target name="jar-debug" depends="build-debug">
+		<mkdir dir="${build.jar.dir}" />
+		<jar destfile="${build.jar.dir}/${ant.project.name}-debug.jar" basedir="${build.debug.dir}" />
+	</target>
+
+	<target name="build-test" depends="jar-debug">
 		<mkdir dir="${build.test.dir}" />
 		<javac includeantruntime="false" srcdir="${test.dir}" destdir="${build.test.dir}">
 			<classpath>
-				<pathelement location="lib/junit.jar" />
-				<pathelement location="${build.jar.dir}/${ant.project.name}.jar" />
+				<pathelement location="lib/junit/junit-4.11.jar" />
+				<pathelement location="${build.jar.dir}/${ant.project.name}-debug.jar" />
 			</classpath>
 		</javac>
 	</target>
@@ -62,29 +83,48 @@
 
 	<target name="junit" depends="build-test">
 		<mkdir dir="${build.reports-xml.dir}" />
-		<junit fork="yes" forkmode="once" haltonfailure="no" showoutput="no" printsummary="true">
+		<jacoco:coverage destfile="${build.dir}/${coverage.file}">
+			<junit fork="yes" forkmode="once" haltonfailure="no" showoutput="no" printsummary="true">
 
-			<!--formatter type="plain" usefile="false" /-->
-			<formatter type="xml" />
-			<classpath>
-				<pathelement location="lib/junit.jar" />
-				<pathelement location="${build.jar.dir}/${ant.project.name}.jar" />
-				<pathelement location="${build.test.dir}" />
-			</classpath>
-			
-			<batchtest fork="true" todir="${build.reports-xml.dir}">
-				<fileset dir="${test.dir}" includes="**/*Test.java" />
-			</batchtest>
-		</junit>
+				<!--formatter type="plain" usefile="false" /-->
+				<formatter type="xml" />
+				<classpath>
+					<pathelement location="lib/junit/junit-4.11.jar" />
+					<pathelement location="${build.jar.dir}/${ant.project.name}-debug.jar" />
+					<pathelement location="${build.test.dir}" />
+				</classpath>
+
+				<batchtest fork="true" todir="${build.reports-xml.dir}">
+					<fileset dir="${test.dir}" includes="**/*Test.java" />
+				</batchtest>
+			</junit>
+		</jacoco:coverage>
 		<junitreport todir="${build.reports-xml.dir}">
 			<fileset dir="${build.reports-xml.dir}">
-				<include name="TEST-*.xml"/>
+				<include name="TEST-*.xml" />
 			</fileset>
 			<report format="frames" todir="${build.reports-html.dir}" />
 		</junitreport>
 	</target>
 
-	<target name="test" depends="junit,style,doc" />
+	<target name="coverage" depends="junit">
+		<jacoco:report>
+			<executiondata>
+				<file file="${build.dir}/${coverage.file}" />
+			</executiondata>
+
+			<structure name="Java Lattices">
+				<classfiles>
+				    <fileset dir="${build.debug.dir}" />
+				</classfiles>
+				<sourcefiles encoding="UTF-8">
+				    <fileset dir="src" includes="**/*.java" />
+				</sourcefiles>
+			</structure>
+
+			<html destdir="${build.coverage.dir}" />
+		</jacoco:report>
+	</target>
 
 	<target name="examples" depends="build-examples">
 		<mkdir dir="${output.examples.dir}" />
@@ -101,22 +141,22 @@
 	<target name="doc" depends="build">
 		<mkdir dir="${build.doc.dir}" />
 		<javadoc sourcepath="${src.dir}" destdir="${build.doc.dir}" overview="${doc.dir}/${overview.file}" doctitle="Java Lattices">
-			<doclet name="ch.raffael.doclets.pegdown.PegdownDoclet" path="lib/pegdown-doclet.jar" />
+			<doclet name="ch.raffael.doclets.pegdown.PegdownDoclet" path="lib/doclet/pegdown-doclet-1.1.1-all.jar" />
 			<arg value="-extensions" />
 			<arg value="fenced_code_blocks,autolinks,definitions,smartypants,tables,wikilinks" />
-   		</javadoc>
-   		<copy todir="${build.doc.dir}/images">
-   			<fileset dir="${doc.dir}/images"/>
-   		</copy>
+		</javadoc>
+		<copy todir="${build.doc.dir}/images">
+			<fileset dir="${doc.dir}/images" />
+		</copy>
 	</target>
 
 	<target name="style" depends="build">
-		<checkstyle config="lib/style.xml">
-			<fileset dir="src" includes="dgraph/*.java"/>
-			<fileset dir="test" includes="**/*.java"/>
-			<fileset dir="src" includes="lattice/ArrowRelation.java"/>
-			<fileset dir="src" includes="lattice/Lattice.java"/>
-			<fileset dir="src" includes="lattice/BijectiveComponents.java"/>
+		<checkstyle config="lib/style/style.xml">
+			<fileset dir="src" includes="dgraph/*.java" />
+			<fileset dir="test" includes="**/*.java" />
+			<fileset dir="src" includes="lattice/ArrowRelation.java" />
+			<fileset dir="src" includes="lattice/Lattice.java" />
+			<fileset dir="src" includes="lattice/BijectiveComponents.java" />
 		</checkstyle>
 	</target>
 </project>
