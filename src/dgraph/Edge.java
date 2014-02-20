@@ -60,28 +60,7 @@ import java.util.StringTokenizer;
  *      +int compareTo(final Object object)
  * }
  *
- * class Node {
- *      -int identifier
- *      -Object content
- *      -{static} int count = 0
- *
- *      +Node(final Object content)
- *      +Node()
- *      +Node(final Node node)
- *      +Node()
- *
- *      +int getIdentifier()
- *      +Object getContent()
- *
- *      +String toString()
- *      +String toDot()
- *
- *      +Node copy()
- *
- *      +boolean equals(final Object object)
- *      +int hashCode()
- *      +int compareTo(final Object object)
- * }
+ * hide empty members
  */
 public class Edge implements Comparable<Object> {
     /* ------------- FIELDS --------------------- */
