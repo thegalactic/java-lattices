@@ -16,6 +16,7 @@
 /**
  * This package is designed to represent directed graph.
  *
- * TODO setters should return this for chaining
+ * @todo  setters should return this for chaining
+ * @todo  use global uml diagram and use hide facility from plant uml
  */
 package dgraph;
