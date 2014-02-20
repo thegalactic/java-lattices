@@ -125,6 +125,8 @@ import java.util.Set;
  *     +void transpose()
  *     +DAGraph getStronglyConnectedComponent()
  * }
+ *
+ * @todo  Do we forbid to add an edge that breaks acyclic property by verifying that the destination node has no successors?
  */
 public class DAGraph extends DGraph {
 
