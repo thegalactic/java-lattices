@@ -290,7 +290,7 @@ public class Examples {
 
             // computes dependance graph, minimal generators and canonical direct basis
             log = "-> Components generated while Bordat's algorithm computes the lattice:\n";
-            DGraph ODG = CLBordat.getDependanceGraph();
+            DGraph ODG = CLBordat.getDependencyGraph();
             String nameODG = name+"DependanceGraphOfClosedSetLattice.dot";
             ODG.writeDot(outputDir+nameODG);
             log += "Dependance graph of closed set lattice saved in "+nameODG+"\n";
@@ -441,7 +441,7 @@ public class Examples {
 
             // computes dependance graph, minimal generators and canonical direct basis
             log = "-> Components generated while Bordat's algorithm computes the lattice:\n";
-            DGraph ODG = CLBordat.getDependanceGraph();
+            DGraph ODG = CLBordat.getDependencyGraph();
             String nameODG = name+"DependanceGraphOfClosedSetLattice.dot";
             ODG.writeDot(outputDir+nameODG);
             log += "Dependance graph of closed set lattice saved in "+nameODG+"\n";

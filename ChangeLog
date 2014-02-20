@@ -25,6 +25,14 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-02-20 Christophe Demko <chdemko@gmail.com>
+	* src/lattice/BijectiveComponents.java:
+	* examples/Examples.java:
+		+ Add uml graph
+		^ reformat comments
+		^ rename dependance -> dependency
+		^ change public setters to protected
+
 2014-02-14 Jean-Francois Viaud <jviaud@univ-lr.fr>
 	* src/lattice/BijectiveComponents.java
 		+ Check style for BijectiveComponents.java
