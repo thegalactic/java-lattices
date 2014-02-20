@@ -107,6 +107,8 @@ public class Node implements Comparable<Object> {
      * Constructs this node as a copy of the specified `node`, with the same index.
      *
      * @param   node  the node to be copied
+     *
+     * @todo  Is this constructor usefull since it breaks identifier unicity
      */
     public Node(final Node node) {
         this.identifier = node.identifier;
@@ -139,6 +141,8 @@ public class Node implements Comparable<Object> {
      * Returns a string representation of this node without spaces.
      *
      * @return  the string representation
+     *
+     * @todo  Why do we need to remove spaces?
      */
      public String toString() {
         String string = "";

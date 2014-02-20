@@ -1,8 +1,6 @@
 package lattice;
 
 /*
- * TODO remove useless comments
- *
  * Lattice.java
  *
  * Copyright: 2013 University of La Rochelle, France
@@ -114,6 +112,8 @@ import dgraph.Node;
  *      +{static}DAGraph random(int size, double threshold)
  *      +{static}DAGraph random(int size)
  * }
+ *
+ * @todo  remove useless comments
  *
  */
 public class Lattice extends DAGraph {
