@@ -59,7 +59,7 @@ public class BijectiveComponents {
     /** The reduced lattice. **/
     private Lattice reducedLattice = null;
     /** The dependance graphe of the reduced lattice. **/
-    private DGraph dependancyGraph = null;
+    private DGraph dependencyGraph = null;
     /** The minimal generators of the reduced lattice. **/
     private TreeSet<ComparableSet> minimalGenerators = null;
     /** The canonical direct basis of the reduced lattice. **/
@@ -142,7 +142,7 @@ public class BijectiveComponents {
         }
         this.reducedLattice = this.lattice.getIrreduciblesReduction();
         this.table = this.lattice.getTable();
-        this.dependancyGraph = this.lattice.getDependencyGraph();
+        this.dependencyGraph = this.lattice.getDependencyGraph();
         this.minimalGenerators = this.lattice.getMinimalGenerators();
         this.canonicalDirectBasis = this.lattice.getCanonicalDirectBasis();
         this.canonicalBasis = new IS(this.canonicalDirectBasis);
@@ -198,9 +198,9 @@ public class BijectiveComponents {
             fichier.write("-> Canonical direct basis of the reduced lattice saved in " + nameCDB + ": \n");
             fichier.write(this.canonicalDirectBasis.toString() + "\n");
             // saves the dependance graph
-            String nameODGraph = directory + "DependanceGraph.dot";
-            this.dependancyGraph.writeDot(nameODGraph);
-            fichier.write("-> Dependance Graph  of the reduced lattice saved in " + nameODGraph + " \n");
+            String nameODGraph = directory + "DependencyGraph.dot";
+            this.dependencyGraph.writeDot(nameODGraph);
+            fichier.write("-> Dependency Graph  of the reduced lattice saved in " + nameODGraph + " \n");
             // saves the minimal generators
             fichier.write("-> Minimal generators  of the reduced lattice are " + this.minimalGenerators + "\n");
             fichier.close();
@@ -255,20 +255,20 @@ public class BijectiveComponents {
         this.reducedLattice = reducedLattice;
     }
 
-    /** Returns the Dependance of this component.
+    /** Returns the Dependency Graph of this component.
      *
-     * @return dependancyGraph of this component
+     * @return dependencyGraph of this component
      */
-    public DGraph getDependanceGraph() {
-        return dependancyGraph;
+    public DGraph getDependencyGraph() {
+        return dependencyGraph;
     }
 
-    /** Set the DependanceGraph of this component.
+    /** Set the DependencyGraph of this component.
      *
-     * @param dependancyGraph used to define field of this component
+     * @param dependencyGraph used to define field of this component
      */
-    public void setDependanceGraph(DGraph dependancyGraph) {
-        this.dependancyGraph = dependancyGraph;
+    public void setDependencyGraph(DGraph dependencyGraph) {
+        this.dependencyGraph = dependencyGraph;
     }
 
     /** Returns the MinimalGenerators of this component.
