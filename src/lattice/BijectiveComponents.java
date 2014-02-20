@@ -5,6 +5,13 @@ package lattice;
  *
  * last update on February 2014
  *
+ * Copyright: 2013 University of La Rochelle, France
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
+ * This file is part of lattice, free package. You can redistribute it and/or modify
+ * it under the terms of CeCILL-B license.
+ *
+ * @author Karell Bertet
  */
 
 import java.io.BufferedWriter;
@@ -19,65 +26,126 @@ import dgraph.DGraph;
  *
  * Bijective components are:
  * closed set lattice or concept lattice, reduced lattice, reduced context, canonical direct basis, minimal generators
- * and canonical basis, dependance graph.
+ * and canonical basis, dependency graph.
  *
- * A closure system is described by the abstract class `ClosureSystem`.
+ * A closure system is described by the abstract class {@link ClosureSystem}.
  * In this package, a closure system can be instancied by an implicational
- * system described by class `IS`) or a context described by
- * class `Context`).
+ * system described by class {@link IS}) or a context described by
+ * class {@link Context}).
  *
- * This class provides a constructor, and only two methods: the method `initialize`
+ * This class provides a constructor, and only two methods: the method {@link #initialize}
  * generates all the bijective components of the specified closure system; and the method
- * `save` saves theses components in files.
+ * {@link #save} saves theses components in files.
  *
  * This class can be used as follows:
  *
  * ~~~Java
- * BijectiveComponents BC = new BijectiveComponents (initialClosureSystem);
+ * BijectiveComponents BC = new BijectiveComponents(initialClosureSystem);
  * BC.initialize();
  * BC.save(dirString,nameString);
  * ~~~
  *
- * Copyright: 2013 University of La Rochelle, France
- * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ * ![BijectiveComponents](BijectiveComponents.png)
  *
- * This file is part of lattice, free package. You can redistribute it and/or modify
- * it under the terms of CeCILL-B license.
+ * @uml BijectiveComponents.png
  *
- * @author Karell Bertet
- * @version 2013
+ * BijectiveComponents "many" *-- "1" ClosureSystem
+ *
+ * class BijectiveComponents {
+ *      -ClosureSystem init
+ *      -ConceptLattice lattice
+ *      -Lattice reducedLattice
+ *      -DGraph dependencyGraph
+ *      -TreeSet<ComparableSet> minimalGenerators
+ *      -IS canonicalDirectBasis
+ *      -IS canonicalBasis
+ *      -Context table
+ *
+ *      +BijectiveComponents(ClosureSystem init)
+ *
+ *      +long initialize()
+ *      +void save(String directory, String name)
+ *
+ *      +ClosureSystem getInit()
+ *      +ConceptLattice getLattice()
+ *      +Lattice getReducedLattice()
+ *      +DGraph getDependencyGraph()
+ *      +TreeSet<ComparableSet> getMinimalGenerators()
+ *      +IS getCanonicalDirectBasis()
+ *      +IS getCanonicalBasis()
+ *      +Context getTable()
+ *      #void setInit(ClosureSystem init)
+ *      #void setLattice(ConceptLattice lattice)
+ *      #void setReducedLattice(Lattice reducedLattice)
+ *      #void setDependencyGraph(DGraph dependencyGraph)
+ *      #void setMinimalGenerators(TreeSet<ComparableSet> minimalGenerators)
+ *      #void setCanonicalDirectBasis(IS canonicalDirectBasis)
+ *      #void setCanonicalBasis(IS canonicalBasis)
+ *      #void setTable(Context table)
+ * }
+ *
+ * abstract class ClosureSystem
+ *
+ * @todo  comment the abstract class ClosureSystem
+ * @todo  compute information at demand
  */
 public class BijectiveComponents {
     /* ------------- FIELDS ------------------ */
-    /** The initial closure system. **/
+
+    /**
+     * The initial closure system.
+     */
+
     private ClosureSystem init;
-    /** The closed set lattice of the closure system when closure system is an implicational system.
+
+    /**
+     * The closed set lattice of the closure system when closure system is an implicational system.
      *
      * The concept lattice of the closure system when closure system is a context
-     **/
+     */
     private ConceptLattice lattice = null;
-    /** The reduced lattice. **/
+
+    /**
+     * The reduced lattice.
+     */
     private Lattice reducedLattice = null;
-    /** The dependance graphe of the reduced lattice. **/
-    private DGraph dependancyGraph = null;
-    /** The minimal generators of the reduced lattice. **/
+
+    /**
+     * The dependency graph of the reduced lattice.
+     */
+    private DGraph dependencyGraph = null;
+
+    /**
+     * The minimal generators of the reduced lattice.
+     */
     private TreeSet<ComparableSet> minimalGenerators = null;
-    /** The canonical direct basis of the reduced lattice. **/
+
+    /**
+     * The canonical direct basis of the reduced lattice.
+     */
     private IS canonicalDirectBasis = null;
-    /** The canonical basis of the reduced lattice. **/
+
+    /**
+     * The canonical basis of the reduced lattice.
+     */
     private IS canonicalBasis = null;
-    /** The table of the reduced lattice. **/
+
+    /**
+     * The table of the reduced lattice.
+     */
     private Context table = null;
 
-    /** Constructs this component with the specified Closure System as initial closure system.
+    /**
+     * Constructs this component with the specified Closure System as initial closure system.
      *
-     * @param init : initial closure system
-     **/
+     * @param   init  initial closure system
+     */
     public BijectiveComponents(ClosureSystem init) {
         this.init = init;
     }
 
-    /** Generates all the bijective components included in this component
+    /**
+     * Generates all the bijective components included in this component
      * issued from the initial closure system `init`.
      *
      * The closed set lattice is generated when the closure system is an implicational system,
@@ -106,10 +174,10 @@ public class BijectiveComponents {
      * this.reducedLattice.getTable();
      * ~~~
      *
-     * The dependance graph is obtained by
+     * The dependency graph is obtained by
      *
      * ~~~Java
-     * this.reducedLattice.getDependanceGraph();
+     * this.reducedLattice.getDependencyGraph();
      * ~~~
      *
      * Minimal generators are obtained by
@@ -130,7 +198,7 @@ public class BijectiveComponents {
      * new IS(this.canonicalDirectBasis).makeCanonicalBasis();
      * ~~~
      *
-     * @return time of computation
+     * @return  time of computation
      */
     public long initialize() {
         long debut = new Date().getTime();
@@ -142,7 +210,7 @@ public class BijectiveComponents {
         }
         this.reducedLattice = this.lattice.getIrreduciblesReduction();
         this.table = this.lattice.getTable();
-        this.dependancyGraph = this.lattice.getDependencyGraph();
+        this.dependencyGraph = this.lattice.getDependencyGraph();
         this.minimalGenerators = this.lattice.getMinimalGenerators();
         this.canonicalDirectBasis = this.lattice.getCanonicalDirectBasis();
         this.canonicalBasis = new IS(this.canonicalDirectBasis);
@@ -151,15 +219,15 @@ public class BijectiveComponents {
         return fin - debut;
     }
 
-   /** Saves all the bijective components included in this component in files
+   /**
+    * Saves all the bijective components included in this component in files
     * saved in the specified directory.
     * A global description is saved in file `name+"Readme.txt"`.
     *
     * The specified name is used to defined a name for each file.
     *
-    * @param directory : location to save file
-    *
-    * @param name : name of the files
+    * @param   directory  location to save file
+    * @param   name       name of the files
     */
     public void save(String directory, String name) {
         try {
@@ -168,169 +236,185 @@ public class BijectiveComponents {
             File f = new File(directory);
             f.mkdir();
             directory += name;
-            BufferedWriter fichier = new BufferedWriter(new FileWriter(directory + "Readme.txt"));
+            BufferedWriter file = new BufferedWriter(new FileWriter(directory + "Readme.txt"));
             // saves the inital closure system
             String nameInit = directory + "InitialClosureSystem.txt";
             this.init.toFile(nameInit);
-            fichier.write("-> Initial closure system saved in " + nameInit + ": \n");
-            fichier.write(this.init.toString() + "\n");
+            file.write("-> Initial closure system saved in " + nameInit + ": \n");
+            file.write(this.init.toString() + "\n");
             // saves the closed set lattice
             String nameLattice = directory + "Lattice.dot";
             this.lattice.writeDot(nameLattice);
-            fichier.write("-> Closed set or concept lattice saved in " + nameLattice + "\n");
+            file.write("-> Closed set or concept lattice saved in " + nameLattice + "\n");
             // saves the reduced lattice
             String nameReducedLattice = directory + "ReducedLattice.dot";
             this.reducedLattice.writeDot(nameReducedLattice);
-            fichier.write("-> Reduced lattice saved in " + nameReducedLattice + "\n");
+            file.write("-> Reduced lattice saved in " + nameReducedLattice + "\n");
             // saves the reduced table
             String nameTable = directory + "Table.txt";
             this.table.toFile(nameTable);
-            fichier.write("-> Table of the reduced lattice saved in " + nameTable + "\n");
-            fichier.write(this.table.toString() + "\n");
+            file.write("-> Table of the reduced lattice saved in " + nameTable + "\n");
+            file.write(this.table.toString() + "\n");
             // saves the canonical basis
             String nameCB = directory + "CanonicalBasis.txt";
             this.canonicalBasis.toFile(nameCB);
-            fichier.write("-> Canonical basis saved in " + nameCB + ": \n");
-            fichier.write(this.canonicalBasis.toString() + "\n");
+            file.write("-> Canonical basis saved in " + nameCB + ": \n");
+            file.write(this.canonicalBasis.toString() + "\n");
             // saves the canonical direct basis
             String nameCDB = directory + "CanonicalDirectBasis.txt";
             this.canonicalDirectBasis.toFile(nameCDB);
-            fichier.write("-> Canonical direct basis of the reduced lattice saved in " + nameCDB + ": \n");
-            fichier.write(this.canonicalDirectBasis.toString() + "\n");
-            // saves the dependance graph
-            String nameODGraph = directory + "DependanceGraph.dot";
-            this.dependancyGraph.writeDot(nameODGraph);
-            fichier.write("-> Dependance Graph  of the reduced lattice saved in " + nameODGraph + " \n");
+            file.write("-> Canonical direct basis of the reduced lattice saved in " + nameCDB + ": \n");
+            file.write(this.canonicalDirectBasis.toString() + "\n");
+            // saves the dependency graph
+            String nameODGraph = directory + "DependencyGraph.dot";
+            this.dependencyGraph.writeDot(nameODGraph);
+            file.write("-> Dependency Graph  of the reduced lattice saved in " + nameODGraph + " \n");
             // saves the minimal generators
-            fichier.write("-> Minimal generators  of the reduced lattice are " + this.minimalGenerators + "\n");
-            fichier.close();
+            file.write("-> Minimal generators  of the reduced lattice are " + this.minimalGenerators + "\n");
+            file.close();
         } catch (Exception e) { e.printStackTrace(); }
     }
 
-    /** Returns the Init of this component.
+    /**
+     * Returns the Init of this component.
      *
-     * @return init of this component
+     * @return  init of this component
      */
     public ClosureSystem getInit() {
         return init;
     }
 
-    /** Set the Init of this component.
+    /**
+     * Set the Init of this component.
      *
-     * @param init used to define field of this component
+     * @param   init  used to define field of this component
      */
-    public void setInit(ClosureSystem init) {
+    protected void setInit(ClosureSystem init) {
         this.init = init;
     }
 
-    /** Returns the Lattice of this component.
+    /**
+     * Returns the lattice of this component.
      *
-     * @return lattice of this component
+     * @return  lattice of this component
      */
     public ConceptLattice getLattice() {
         return lattice;
     }
 
-    /** Set the Lattice of this component.
+    /**
+     * Set the lattice of this component.
      *
-     * @param lattice used to define field of this component
+     * @param   lattice  used to define field of this component
      */
-    public void setLattice(ConceptLattice lattice) {
+    protected void setLattice(ConceptLattice lattice) {
         this.lattice = lattice;
     }
 
-    /** Returns the ReducedLattice of this component.
+    /**
+     * Returns the reduced lattice of this component.
      *
-     * @return reducedLattice of this component
+     * @return  reduced lattice of this component
      */
     public Lattice getReducedLattice() {
         return reducedLattice;
     }
 
-    /** Set the ReducedLattice of this component.
+    /**
+     * Set the reduced lattice of this component.
      *
-     * @param reducedLattice used to define field of this component
+     * @param  reducedLattice  used to define field of this component
      */
-    public void setReducedLattice(Lattice reducedLattice) {
+    protected void setReducedLattice(Lattice reducedLattice) {
         this.reducedLattice = reducedLattice;
     }
 
-    /** Returns the Dependance of this component.
+    /**
+     * Returns the dependency graph of this component.
      *
-     * @return dependancyGraph of this component
+     * @return  dependancyGraph  dependency graph of this component
      */
-    public DGraph getDependanceGraph() {
-        return dependancyGraph;
+    public DGraph getDependencyGraph() {
+        return dependencyGraph;
     }
 
-    /** Set the DependanceGraph of this component.
+    /**
+     * Set the dependency graph of this component.
      *
-     * @param dependancyGraph used to define field of this component
+     * @param   dependencyGraph  used to define field of this component
      */
-    public void setDependanceGraph(DGraph dependancyGraph) {
-        this.dependancyGraph = dependancyGraph;
+    protected void setDependencyGraph(DGraph dependencyGraph) {
+        this.dependencyGraph = dependencyGraph;
     }
 
-    /** Returns the MinimalGenerators of this component.
+    /**
+     * Returns the minimal generators of this component.
      *
-     * @return minimalGenerators of this component
+     * @return  minimal generators of this component
      */
     public TreeSet<ComparableSet> getMinimalGenerators() {
         return minimalGenerators;
     }
 
-    /** Set the MinimalGenerators of this component.
+    /**
+     * Set the minimal generators of this component.
      *
-     * @param minimalGenerators used to define field of this component
+     * @param   minimalGenerators  used to define field of this component
      */
-    public void setMinimalGenerators(TreeSet<ComparableSet> minimalGenerators) {
+    protected void setMinimalGenerators(TreeSet<ComparableSet> minimalGenerators) {
         this.minimalGenerators = minimalGenerators;
     }
 
-    /** Returns the CanonicalDirectBasis of this component.
+    /**
+     * Returns the canonical direct basis of this component.
      *
-     * @return canonicalDirectBasis of this component
+     * @return  the canonical direct basis of this component
      */
     public IS getCanonicalDirectBasis() {
         return canonicalDirectBasis;
     }
 
-    /** Set the CanonicalDirectBasis of this component.
+    /**
+     * Set the canonical direct basis of this component.
      *
-     * @param canonicalDirectBasis used to define field of this component
+     * @param   canonicalDirectBasis  used to define field of this component
      */
-    public void setCanonicalDirectBasis(IS canonicalDirectBasis) {
+    protected void setCanonicalDirectBasis(IS canonicalDirectBasis) {
         this.canonicalDirectBasis = canonicalDirectBasis;
     }
 
-    /** Returns the CanonicalBasis of this component.
+    /**
+     * Returns the canonical basis of this component.
      *
-     * @return canonicalBasis of this component
+     * @return  the canonical basis of this component
      */
     public IS getCanonicalBasis() {
         return canonicalBasis;
     }
 
-    /** Set the CanonicalBasis of this component.
+    /**
+     * Set the canonical basis of this component.
      *
-     * @param canonicalBasis used to define field of this component
+     * @param   canonicalBasis  used to define field of this component
      */
-    public void setCanonicalBasis(IS canonicalBasis) {
+    protected void setCanonicalBasis(IS canonicalBasis) {
         this.canonicalBasis = canonicalBasis;
     }
 
-    /** Returns the Table of this component.
+    /**
+     * Returns the Table of this component.
      *
-     * @return table of this component
+     * @return  table of this component
      */
     public Context getTable() {
         return table;
     }
-    /** Set the Table of this component.
+    /**
+     * Set the Table of this component.
      *
-     * @param table used to define field of this component
+     * @param   table  used to define field of this component
      */
-    public void setTable(Context table) {
+    protected void setTable(Context table) {
         this.table = table;
     }
 
