@@ -2,7 +2,7 @@
 
 if [ "$TRAVIS_REPO_SLUG" == "kbertet/java-lattices" ] && [ "$TRAVIS_JDK_VERSION" == "oraclejdk7" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; then
 
-  echo -e "Publishing javadoc...\n"
+  echo -e "Publishing javadoc, test results and test coverage...\n"
 
   cp -R build/doc $HOME/javadoc-latest
   cp -R build/reports/html $HOME/reports-latest

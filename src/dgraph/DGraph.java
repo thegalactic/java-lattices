@@ -452,6 +452,8 @@ public class DGraph {
      * @param   content  The content to search for
      *
      * @return  the found node or null
+     *
+     * @todo  this method is not efficient. Do we remove it or add an index on Dgraph using content field?
      */
     public Node getNodeByContent(final Object content) {
         for (Node node : this.nodes) {
@@ -991,6 +993,8 @@ public class DGraph {
       * @param   sort     The sort parameter
       *
       * @return  The array
+      *
+      * @todo  Do we change that to iterators?
       */
      public ArrayList<Node>[] depthFirstSearch(Node source, TreeSet<Node> visited, ArrayList<Node> sort) {
         ArrayList<Node> first = new ArrayList<Node>();
