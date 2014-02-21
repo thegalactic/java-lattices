@@ -25,6 +25,12 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-02-20 Jean-Francois Viaud <jviaud@univ-lr.fr>
+	* src/lattice/BijectiveComponents.java
+		^ Translate "DependanceGraphe" to "DependencyGraph"
+	* test/lattice/BijectiveComponentsTest.java
+		+ Add unit test on BijectiveComponents.java
+
 2014-02-20 Christophe Demko <chdemko@gmail.com>
 	* src/lattice/BijectiveComponents.java:
 	* examples/Examples.java:
@@ -81,7 +87,7 @@ $ -> Language fix or change
 		+ add unit test on ArrowRelation
 	* test/lattice/package-info.java
 		+ Add file
-	
+
 2014-02-06 Christophe Demko <chdemko@gmail.com>
 	* test/dgraph/DAGraphTest.java:
 		+ Add unit test on DAGraph class
