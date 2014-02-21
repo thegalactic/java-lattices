@@ -109,6 +109,7 @@ public class BijectiveComponents {
      * The reduced lattice.
      */
     private Lattice reducedLattice = null;
+
     /**
      * The dependency graph of the reduced lattice.
      */
