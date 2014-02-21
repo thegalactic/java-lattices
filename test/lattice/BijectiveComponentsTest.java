@@ -55,6 +55,15 @@ public class BijectiveComponentsTest {
     public void testinitalizeContext() {
         Context context = new Context();
         BijectiveComponents bc = new BijectiveComponents(context);
+        long time = bc.initialize();
+        assertTrue(bc.getInit() != null);
+        assertTrue(bc.getLattice() != null);
+        assertTrue(bc.getReducedLattice() != null);
+        assertTrue(bc.getDependencyGraph() != null);
+        assertTrue(bc.getMinimalGenerators() != null);
+        assertTrue(bc.getCanonicalDirectBasis() != null);
+        assertTrue(bc.getCanonicalBasis() != null);
+        assertTrue(bc.getTable() != null);
     }
     /**
      * Test the save method.
