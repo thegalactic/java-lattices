@@ -25,6 +25,13 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-02-26 Jean-Francois Viaud <jviaud@univ-lr.fr>
+	* src/lattice/Rule.java
+		^ Check style
+	* test/lattice/RuleTest.java
+		+ Add unit test on Rule.java
+	* build.xml
+
 2014-02-20 Jean-Francois Viaud <jviaud@univ-lr.fr>
 	* src/lattice/BijectiveComponents.java
 		^ Translate "DependanceGraphe" to "DependencyGraph"

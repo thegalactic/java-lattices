@@ -159,6 +159,8 @@
 			<fileset dir="src" includes="lattice/ArrowRelation.java" />
 			<fileset dir="src" includes="lattice/Lattice.java" />
 			<fileset dir="src" includes="lattice/BijectiveComponents.java" />
+			<fileset dir="src" includes="lattice/Rule.java" />
+
 		</checkstyle>
 	</target>
 </project>
