@@ -18,7 +18,6 @@ class Rule {
     +boolean removeAllFromConclusion(Collection<Comparable> a)
     .. Transformers ..
     +String toString()
-    .. Serialisation ..
     +String toFile()
     .. Comparators ..
     +int hashCode()

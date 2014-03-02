@@ -26,6 +26,10 @@ $ -> Language fix or change
 ! -> Note
 
 2014-03-02 Christophe Demko <chdemko@gmail.com>
+	* src/lattice/Rule.iuml
+		^ Change method category
+
+2014-03-02 Christophe Demko <chdemko@gmail.com>
 	* src/lattice/Rule.java
 	* src/lattice/Rule.iuml
 		+ Add uml description for Rule
