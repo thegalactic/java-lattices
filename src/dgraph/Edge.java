@@ -37,28 +37,9 @@ import java.util.StringTokenizer;
  * ![Edge](Edge.png)
  *
  * @uml Edge.png
+ * !include src/dgraph/Edge.iuml
  *
  * Edge "many" *-- "2" Node : contains
- *
- * class Edge {
- *      -Node from
- *      -Node to
- *      -Object content
- *
- *      +Edge(final Node from, final Node to, final Object content)
- *      +Edge(final Node from, final Node to)
- *
- *      +Node getFrom()
- *      +Node getTo()
- *      +Edge setContent(final Object content)
- *      +Object getContent()
- *      +boolean hasContent()
- *
- *      +String toString()
- *      +String toDot()
- *
- *      +int compareTo(final Object object)
- * }
  *
  * hide empty members
  */

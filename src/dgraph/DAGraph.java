@@ -40,91 +40,11 @@ import java.util.Set;
  * ![DAGraph](DAGraph.png)
  *
  * @uml DAGraph.png
+ * !include src/dgraph/DAGraph.iuml
  *
  * DGraph <|-- DAGraph
  *
- * class DAGraph {
- *      +DAGraph()
- *      +DAGraph(final Set<Node> set)
- *      +DAGraph(final DGraph graph)
- *
- *      +TreeSet<Node> min()
- *      +TreeSet<Node> max()
- *      +TreeSet<Node> majorants(final Node node)
- *      +TreeSet<Node> minorants(final Node node)
- *      +DAGraph filter(final Node node)
- *      +DAGraph ideal(final Node node)
- *      +DAGraph getSubgraphByNodes(final Set<Node> nodes)
- *
- *      +int transitiveReduction()
- *      +int transitiveClosure()
- *
- *      +{static}DAGraph divisors(int number)
- *      +{static}DAGraph random(int size, double threshold)
- *      +{static}DAGraph random(int size)
- * }
- *
- * class DGraph {
- *     -TreeSet<Node> nodes
- *     -TreeMap<Node, TreeSet<Edge>> successors
- *     -TreeMap<Node, TreeSet<Edge>> predecessors
- *
- *     +DGraph()
- *     +DGraph(final Set<Node> set)
- *     +DGraph(final DGraph graph)
- *
- *     +{static}DGraph random(int size, double threshold)
- *     +{static}DGraph random(int size)
- *
- *     +int sizeNodes()
- *     +int sizeEdges()
- *     +SortedSet<Node> getNodes()
- *     +SortedSet<Edge> getEdges()
- *     +SortedSet<Edge> getSuccessorEdges(final Node node)
- *     +SortedSet<Edge> getPredecessorEdges(final Node node)
- *     +TreeSet<Node> getSuccessorNodes(final Node node)
- *     +TreeSet<Node> getPredecessorNodes(final Node node)
- *     +Edge getEdge(final Node from, final Node to)
- *     +Node getNode(final Object search)
- *     +Node getNodeByContent(final Object content)
- *     +Node getNodeByIdentifier(int identifier)
- *     #DGraph setNodes(final TreeSet<Node> nodes)
- *     #TreeMap<Node, TreeSet<Edge>> getSuccessors()
- *     #DGraph setSuccessors(final TreeMap<Node, TreeSet<Edge>> successors)
- *     #TreeMap<Node, TreeSet<Edge>> getPredecessors()
- *     #DGraph setPredecessors(final TreeMap<Node, TreeSet<Edge>> predecessors)
- *
- *     +String toString()
- *     +void writeDot(final String filename)
- *
- *     +boolean containsNode(final Node node)
- *     +boolean addNode(final Node node)
- *     +boolean removeNode(final Node node)
- *     +boolean removeNodes(final Set<Node> nodes)
- *     +boolean containsEdge(final Node from, final Node to)
- *     +boolean containsEdge(final Edge edge)
- *     +boolean addEdge(final Node from, final Node to, final Object content)
- *     +boolean addEdge(final Node from, final Node to)
- *     +boolean addEdge(final Edge edge)
- *     +boolean removeEdge(final Node from, final Node to)
- *     +boolean removeEdge(final Edge edge)
- *
- *     +boolean isAcyclic()
- *
- *     +ArrayList<Node> topologicalSort()
- *     +TreeSet<Node> getSinks()
- *     +TreeSet<Node> getWells()
- *     +DGraph getSubgraphByNodes(final Set<Node> nodes)
- *     +DGraph getSubgraphByEdges(final Set<Edge> edges)
- *     +void complementary()
- *     +int reflexiveReduction()
- *     +int reflexiveClosure()
- *     +int transitiveClosure()
- *     +ArrayList<Node>[] depthFirstSearch(Node source, TreeSet<Node> visited, ArrayList<Node> sort)
- *     +ArrayList<Node>[] depthFirstSearch()
- *     +void transpose()
- *     +DAGraph getStronglyConnectedComponent()
- * }
+ * hide empty members
  *
  * @todo  Do we forbid to add an edge that breaks acyclic property by verifying that the destination node has no successors?
  */

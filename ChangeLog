@@ -25,6 +25,15 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-03-02 Christophe Demko <chdemko@gmail.com>
+	* src/dgraph/DAGraph.java
+	* src/dgraph/DGraph.java
+	* src/dgraph/Edge.java
+	* src/dgraph/Node.java
+	* src/lattice/BijectiveComponents.java
+	* src/lattice/Lattice.java
+		^ Describe uml in separate files
+
 2014-02-26 Jean-Francois Viaud <jviaud@univ-lr.fr>
 	* src/lattice/Rule.java
 		^ Check style

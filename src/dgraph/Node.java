@@ -32,29 +32,9 @@ import java.util.StringTokenizer;
  * ![Node](Node.png)
  *
  * @uml Node.png
+ * !include src/dgraph/Node.iuml
  *
- * class Node {
- *      -int identifier
- *      -Object content
- *      -{static} int count = 0
- *
- *      +Node(final Object content)
- *      +Node()
- *      +Node(final Node node)
- *      +Node()
- *
- *      +int getIdentifier()
- *      +Object getContent()
- *
- *      +String toString()
- *      +String toDot()
- *
- *      +Node copy()
- *
- *      +boolean equals(final Object object)
- *      +int hashCode()
- *      +int compareTo(final Object object)
- * }
+ * @todo  Do we implement mutator for content?
  */
 public class Node implements Comparable<Object> {
     /* ------------- FIELDS --------------------- */

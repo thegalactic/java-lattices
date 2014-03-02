@@ -48,43 +48,13 @@ import dgraph.DGraph;
  * ![BijectiveComponents](BijectiveComponents.png)
  *
  * @uml BijectiveComponents.png
+ * !include src/lattice/BijectiveComponents.iuml
  *
  * BijectiveComponents "many" *-- "1" ClosureSystem
  *
- * class BijectiveComponents {
- *      -ClosureSystem init
- *      -ConceptLattice lattice
- *      -Lattice reducedLattice
- *      -DGraph dependencyGraph
- *      -TreeSet<ComparableSet> minimalGenerators
- *      -IS canonicalDirectBasis
- *      -IS canonicalBasis
- *      -Context table
- *
- *      +BijectiveComponents(ClosureSystem init)
- *
- *      +long initialize()
- *      +void save(String directory, String name)
- *
- *      +ClosureSystem getInit()
- *      +ConceptLattice getLattice()
- *      +Lattice getReducedLattice()
- *      +DGraph getDependencyGraph()
- *      +TreeSet<ComparableSet> getMinimalGenerators()
- *      +IS getCanonicalDirectBasis()
- *      +IS getCanonicalBasis()
- *      +Context getTable()
- *      #void setInit(ClosureSystem init)
- *      #void setLattice(ConceptLattice lattice)
- *      #void setReducedLattice(Lattice reducedLattice)
- *      #void setDependencyGraph(DGraph dependencyGraph)
- *      #void setMinimalGenerators(TreeSet<ComparableSet> minimalGenerators)
- *      #void setCanonicalDirectBasis(IS canonicalDirectBasis)
- *      #void setCanonicalBasis(IS canonicalBasis)
- *      #void setTable(Context table)
- * }
- *
  * abstract class ClosureSystem
+ *
+ * hide empty members
  *
  * @todo  comment the abstract class ClosureSystem
  * @todo  compute information at demand

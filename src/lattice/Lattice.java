@@ -49,69 +49,16 @@ import dgraph.Node;
  * The dependency graph encodes two other condensed representation of a lattice
  * that are its minimal generators and its canonical direct basis
  * that can be obtained from the dependency graph by methods
- * {@link #getMinimalGenerators} and {@link IS getCanonicalDirectBasis}.
+ * {@link #getMinimalGenerators} and {@link #getCanonicalDirectBasis}.
  *
  * ![Lattice](Lattice.png)
  *
  * @uml Lattice.png
+ * !include src/lattice/Lattice.iuml
  *
  * DAGraph <|-- Lattice
  *
- * class Lattice {
- *      -DGraph dependencyGraph
- *
- *      +Lattice()
- *      +Lattice(TreeSet<Node> set)
- *      +Lattice(DAGraph graph)
- *
- *      +boolean isLattice()
- *
- *      +Node top()
- *      +Node bottom()
- *      +Node meet(Node x, Node y)
- *      +Node join(Node x, Node y)
- *
- *      +TreeSet<Node> joinIrreducibles()
- *      +TreeSet<Node> meetIrreducibles()
- *      +TreeSet<Comparable> joinIrreducibles(Node n)
- *      +TreeSet<Comparable> meetIrreducibles(Node n)
- *      +DAGraph joinIrreduciblesSubgraph()
- *      +DAGraph meetIrreduciblesSubgraph()
- *      +DAGraph irreduciblesSubgraph()
- *      +ConceptLattice joinClosure()
- *      +ConceptLattice meetClosure()
- *      +ConceptLattice irreducibleClosure()
- *      +Context getTable()
- *      +IS getIS()
- *
- *      +DGraph getDependencyGraph()
- *      #setDependencyGraph(DGraph graph)
- *      #hasDependencyGraph()
- *      +IS getCanonicalDirectBasis()
- *      +TreeSet getMinimalGenerators()
- *      +DGraph arrowRelation()
- * }
- *
- * class DAGraph {
- *      +DAGraph()
- *      +DAGraph(final Set<Node> set)
- *      +DAGraph(final DGraph graph)
- *
- *      +TreeSet<Node> min()
- *      +TreeSet<Node> max()
- *      +TreeSet<Node> majorants(final Node node)
- *      +TreeSet<Node> minorants(final Node node)
- *      +DAGraph filter(final Node node)
- *      +DAGraph ideal(final Node node)
- *      +DAGraph getSubgraphByNodes(final Set<Node> nodes)
- *
- *      +int transitiveReduction()
- *      +int transitiveClosure()
- *
- *      +{static}DAGraph divisors(int number)
- *      +{static}DAGraph random(int size, double threshold)
- *      +{static}DAGraph random(int size)
- * }
+ * hide empty members
  *
  * @todo  remove useless comments
  *
