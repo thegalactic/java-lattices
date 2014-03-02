@@ -26,6 +26,11 @@ $ -> Language fix or change
 ! -> Note
 
 2014-03-02 Christophe Demko <chdemko@gmail.com>
+	* src/lattice/Rule.java
+	* src/lattice/Rule.iuml
+		+ Add uml description for Rule
+
+2014-03-02 Christophe Demko <chdemko@gmail.com>
 	* src/dgraph/DAGraph.java
 	* src/dgraph/DGraph.java
 	* src/dgraph/Edge.java
