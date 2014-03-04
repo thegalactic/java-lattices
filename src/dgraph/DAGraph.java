@@ -42,9 +42,8 @@ import java.util.Set;
  * @uml DAGraph.png
  * !include src/dgraph/DAGraph.iuml
  *
- * DGraph <|-- DAGraph
- *
- * hide empty members
+ * hide members
+ * show DAGraph members
  *
  * @todo  Do we forbid to add an edge that breaks acyclic property by verifying that the destination node has no successors?
  */

@@ -61,3 +61,10 @@ class DGraph {
     +DAGraph getStronglyConnectedComponent()
 }
 
+
+DGraph o-- Node
+DGraph o-- Edge
+
+!include Node.iuml
+!include Edge.iuml
+

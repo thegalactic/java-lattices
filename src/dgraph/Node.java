@@ -34,6 +34,9 @@ import java.util.StringTokenizer;
  * @uml Node.png
  * !include src/dgraph/Node.iuml
  *
+ * hide members
+ * show Node members
+ *
  * @todo  Do we implement mutator for content?
  */
 public class Node implements Comparable<Object> {

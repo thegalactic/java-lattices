@@ -39,9 +39,8 @@ import java.util.StringTokenizer;
  * @uml Edge.png
  * !include src/dgraph/Edge.iuml
  *
- * Edge "many" *-- "2" Node : contains
- *
- * hide empty members
+ * hide members
+ * show Edge members
  */
 public class Edge implements Comparable<Object> {
     /* ------------- FIELDS --------------------- */

@@ -19,3 +19,7 @@ class DAGraph {
     +int transitiveClosure()
 }
 
+DGraph <|-- DAGraph
+
+!include DGraph.iuml
+
