@@ -51,12 +51,8 @@ import java.util.Set;
  * @uml DGraph.png
  * !include src/dgraph/DGraph.iuml
  *
- * DGraph "many" o-- "many" Node : contains
- * DGraph "many" o-- "many" Edge : contains
- *
- * Edge "many" *-- "2" Node : contains
- *
- * hide empty members
+ * hide members
+ * show DGraph members
  */
 public class DGraph {
     /* ------------- FIELDS ------------------ */

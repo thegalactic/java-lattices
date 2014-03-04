@@ -20,3 +20,7 @@ class Edge {
     +int compareTo(final Object object)
 }
 
+Edge *-- "2" Node
+
+!include Node.iuml
+

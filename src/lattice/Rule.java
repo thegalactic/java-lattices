@@ -39,7 +39,8 @@ import java.util.TreeSet;
  * @uml Rule.png
  * !include src/lattice/Rule.iuml
  *
- * hide empty members
+ * hide members
+ * show Rule members
  *
  * @todo  Do we use yaml representation?
  */

@@ -56,9 +56,8 @@ import dgraph.Node;
  * @uml Lattice.png
  * !include src/lattice/Lattice.iuml
  *
- * DAGraph <|-- Lattice
- *
- * hide empty members
+ * hide members
+ * show Lattice members
  *
  * @todo  remove useless comments
  *

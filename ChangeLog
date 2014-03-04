@@ -25,6 +25,21 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-03-04 Christophe Demko <chdemko@gmail.com>
+	* src/dgraph/DAGraph.iuml
+	* src/dgraph/DAGraph.java
+	* src/dgraph/DGraph.iuml
+	* src/dgraph/DGraph.java
+	* src/dgraph/Edge.iuml
+	* src/dgraph/Edge.java
+	* src/dgraph/Node.java
+	* src/lattice/BijectiveComponents.iuml
+	* src/lattice/BijectiveComponents.java
+	* src/lattice/Lattice.iuml
+	* src/lattice/Lattice.java
+	* src/lattice/Rule.java
+		^ Reorganize uml
+
 2014-03-02 Christophe Demko <chdemko@gmail.com>
 	* cite.bib
 		^ Move file to doc folder

@@ -33,3 +33,7 @@ class BijectiveComponents {
     #void setTable(Context table)
 }
 
+BijectiveComponents *-- "1" ClosureSystem
+
+abstract class ClosureSystem
+

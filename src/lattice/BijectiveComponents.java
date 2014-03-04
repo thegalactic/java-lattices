@@ -50,11 +50,8 @@ import dgraph.DGraph;
  * @uml BijectiveComponents.png
  * !include src/lattice/BijectiveComponents.iuml
  *
- * BijectiveComponents "many" *-- "1" ClosureSystem
- *
- * abstract class ClosureSystem
- *
- * hide empty members
+ * hide members
+ * show BijectiveComponents members
  *
  * @todo  comment the abstract class ClosureSystem
  * @todo  compute information at demand

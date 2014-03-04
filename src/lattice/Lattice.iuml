@@ -33,3 +33,7 @@ class Lattice {
     +DGraph arrowRelation()
 }
 
+DAGraph <|-- Lattice
+
+!include ../dgraph/DAGraph.iuml
+
