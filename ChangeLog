@@ -25,6 +25,12 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-03-05 Jean-François Viaud <jviaud@univ-lr.fr>
+	* build.xml
+	* src/lattice/Concept.java
+	* test/lattice/ConceptTest.java
+		+ Checkstyle, test on Concept
+
 2014-03-04 Christophe Demko <chdemko@gmail.com>
 	* build.xml
 	* src/lattice/ComparableSet.java

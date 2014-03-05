@@ -502,7 +502,8 @@ public class Lattice extends DAGraph {
         ConceptLattice conceptLattice = lattice.joinClosure();
         for (Node n : conceptLattice.getNodes()) {
             Concept c = (Concept) n;
-            family.add(c.setA);
+            ComparableSet setA = new ComparableSet(c.getSetA());
+            family.add(setA);
         }
         // rules generation
         for (ComparableSet jx : family) {
