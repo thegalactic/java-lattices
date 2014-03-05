@@ -3,27 +3,6 @@ package lattice;
 /*
  * ComparableSet.java
  *
- * last update on March 2010
- *
- */
-
-import java.util.StringTokenizer;
-import java.util.TreeSet;
-/**
-* This class gives a minimal representation of a comparable set where sets
-* are compared using the lectic order.
-*
-* This class extends class `TreeSet`, implements class `Comparable` and provides
-* a `compareTo` method that implements the lectic order between two sets. 
-* Therefore, a comparable set can be stored in a sorted collection, and in particular in a sorted set where
-* set operations are provided.
-*
-* The lectic order extends the inclusion, and is defined only for comparable elements,
-* i.e. elements that can be sorted, as follows:
-*
-* "a set A is smaller than a set B iff there exists an element in B\A
-* such that any smaller element belonging to A also belongs to B."
-* 
  * Copyright: 2013 University of La Rochelle, France
  *
  * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
@@ -32,89 +11,172 @@ import java.util.TreeSet;
  * it under the terms of CeCILL-B license.
  *
  * @author Karell Bertet
- * @version 2013
+ * @version 2014
  */
-public class ComparableSet extends TreeSet implements Comparable, Cloneable
-{
 
-	/* ------------- CONSTRUCTORS ------------------ */
-	/** Constructs a new and empty ComparableSet
-	 */
-	public ComparableSet () {
-		super();
-	}
-    /** Constructs a new ComparableSet with the set from the specified set
-	 * @param S a comparable set
-	 */
-	public ComparableSet (TreeSet<Comparable> S) {
-		super(S);
-	}
+import java.util.StringTokenizer;
+import java.util.TreeSet;
 
-	/* --------------- OVERLAPPING METHODS ------------ */
+/**
+ * This class gives a minimal representation of a comparable set where sets
+ * are compared using the lectic order.
+ *
+ * This class extends class `TreeSet`, implements class `Comparable` and provides
+ * a {@link #compareTo} method that implements the lectic order between two sets.
+ *
+ * Therefore, a comparable set can be stored in a sorted collection, and in particular in a sorted set where
+ * set operations are provided.
+ *
+ * The lectic order extends the inclusion, and is defined only for comparable elements,
+ * i.e. elements that can be sorted, as follows:
+ *
+ * "a set `A` is smaller than a set `B` iff there exists an element in `B\A`
+ * such that any smaller element belonging to `A` also belongs to `B`."
+ *
+ * ![ComparableSet](ComparableSet.png)
+ *
+ * @uml ComparableSet.png
+ * !include src/lattice/ComparableSet.iuml
+ *
+ * hide members
+ * show ComparableSet members
+ */
+public class ComparableSet extends TreeSet implements Comparable, Cloneable {
+    /* ------------- CONSTRUCTORS ------------------ */
 
-	/** Returns a String representation of this component without spaces */
- 	public String toFile () {
-		String res="";
-		StringTokenizer st = new StringTokenizer(this.toString());
-		while (st.hasMoreTokens())
-			res+=st.nextToken();
-		return res;
-	}
-	/** Compares this component with the specified one
-	* @return true or false as this componant is equals to the specified object.
-	*/
-    public boolean equals (Object o) {
-        //if (!(o instanceof lattice.ComparableSet)) return false;
-        if (!(o instanceof ComparableSet)) return false;
-        ComparableSet A = (ComparableSet) o;
-        return (super.equals(A));
+    /**
+     * Constructs a new and empty ComparableSet.
+     */
+    public ComparableSet() {
+        super();
     }
 
-    /** Returns a copy of this component **/
+    /**
+     * Constructs a new ComparableSet with the set from the specified set.
+     *
+     * @param   set  a comparable set
+     */
+    public ComparableSet(TreeSet<Comparable> set) {
+        super(set);
+    }
+
+    /* --------------- OVERLAPPING METHODS ------------ */
+
+    /**
+     * Returns a string representation of this component without spaces.
+     *
+     * @return  a string representation of this component without spaces
+     *
+     * @todo  Whe do we remove spaces? and why this method is not called toString?
+     */
+     public String toFile() {
+        String res = "";
+        StringTokenizer st = new StringTokenizer(this.toString());
+        while (st.hasMoreTokens()) {
+            res += st.nextToken();
+        }
+        return res;
+    }
+
+    /**
+     * Returns a copy of this component.
+     *
+     * @return  a copy of this component.
+     */
     public ComparableSet copy() {
-        return new ComparableSet((TreeSet)super.clone());
+        return new ComparableSet((TreeSet) super.clone());
     }
 
+    /**
+     * Compares this component with the specified one.
+     *
+     * @param   object  An object to compare with
+     *
+     * @return  true or false as this component is equal to the specified object.
+     */
+    public boolean equals(Object object) {
+        if (!(object instanceof ComparableSet)) {
+            return false;
+        }
+        return super.equals(object);
+    }
 
-   /** Compares this component with those in parameter according to the lectic order.
+    /**
+     * Compute the hash code.
+     *
+     * @return  an integer representing the object
+     */
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+   /**
+    * Compares this component with those in parameter according to the lectic order.
     *
-	* The lectic order defines a sort on sets of elements extending the inclusion order
+    * The lectic order defines a sort on sets of elements extending the inclusion order
     * as follows:
     *
-    * A set A is smaller than a set B iff there exists an element in B\A
+    * A set `A` is smaller than a set `B` iff there exists an element in `B\A`
     * such that any smaller element belonging to A also belongs to B.
-    * The result is zero if the identifiers are equal; 1 if this component's identifier is greater,
-	* and -1 otherwise. 
-	* This comparison method is needed to define a natural and total sort on a sets.
-	* It allows to use sets of this class in a sorted collection
-	* @param o the specified element to be compared with this component
-	* @return a negative integer, zero, or a positive integer as this component is less than,
-	* equal to, or greater than the specified object according to the lectic order.
-	*/    
-   public int compareTo (Object o) {
-        if (!(o instanceof ComparableSet)) return -1;
-        // case of equality between this component and o
-        if (this.equals(o)) return 0;
-        // test if this component is smaller than B by lectic order
-        ComparableSet B = (ComparableSet) o;
-        // computes index i of the first element in B minus A
-        // if i doesn't exist, then this component is not smaller than B by lectic order
-		TreeSet<Comparable> BminusA = new TreeSet(B);
-        BminusA.removeAll(this);
-        if (BminusA.isEmpty()) return 1;
-        Comparable i = BminusA.first();
-        // compute this inter {1, ...,i-1}
-        TreeSet AiMinus1 = new TreeSet();
-        for (Object c : this)
-            if (i.compareTo(c)>=1) AiMinus1.add(c);
-        // compute B inter {1, ...,i-1}
-        TreeSet BiMinus1 = new TreeSet();
-        for (Object c : B)
-            if (i.compareTo(c)>=1) BiMinus1.add(c);
-        // if Aiminus1 and Biminus1 are equal then this component is smaller than B by lectic order
-        if  (AiMinus1.equals(BiMinus1))
+    * The result is
+    * - zero if the identifiers are equal;
+    * - 1 if this component's identifier is greater,
+    * - -1 otherwise.
+    *
+    * This comparison method is needed to define a natural and total sort on a sets.
+    *
+    * It allows to use sets of this class in a sorted collection
+    *
+    * @param   object  the specified element to be compared with this component
+    *
+    * @return  a negative integer, zero, or a positive integer as this component is less than,
+    * equal to, or greater than the specified object according to the lectic order.
+    *
+    * @todo  Is this correct? (see test)
+    */
+   public int compareTo(Object object) {
+        // case of an object not instance of ComparableSet
+        if (!(object instanceof ComparableSet)) {
             return -1;
-        else
+        }
+
+        // case of equality between this component and object
+        if (this.equals(object)) {
+            return 0;
+        }
+
+        // test if this component is smaller than the set by lectic order
+        ComparableSet set = (ComparableSet) object;
+
+        // computes index i of the first element in set minus this
+        // if i doesn't exist, then this component is not smaller than the set by lectic order
+        TreeSet<Comparable> setMinusThis = new TreeSet(set);
+        setMinusThis.removeAll(this);
+        if (setMinusThis.isEmpty()) {
             return 1;
-		}
-}// end of ComparableSe
+        }
+
+        Comparable i = setMinusThis.first();
+        // compute this inter {1, ..., i-1}
+        TreeSet setAiMinus1 = new TreeSet();
+        for (Object c : this) {
+            if (i.compareTo(c) > 0) {
+                setAiMinus1.add(c);
+            }
+        }
+        // compute set inter {1, ..., i-1}
+        TreeSet setBiMinus1 = new TreeSet();
+        for (Object c : set) {
+            if (i.compareTo(c) > 0) {
+                setBiMinus1.add(c);
+            }
+        }
+        // if setAiminus1 and setBiminus1 are equal then this component is smaller than B by lectic order
+        if  (setAiMinus1.equals(setBiMinus1)) {
+            return -1;
+        } else {
+            return 1;
+        }
+    }
+}
+

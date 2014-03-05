@@ -26,6 +26,12 @@ $ -> Language fix or change
 ! -> Note
 
 2014-03-04 Christophe Demko <chdemko@gmail.com>
+	* build.xml
+	* src/lattice/ComparableSet.java
+	* test/lattice/ComparableSetTest.java
+		+ Checkstyle, uml and test on ComparableSet
+
+2014-03-04 Christophe Demko <chdemko@gmail.com>
 	* src/dgraph/DAGraph.iuml
 	* src/dgraph/DAGraph.java
 	* src/dgraph/DGraph.iuml

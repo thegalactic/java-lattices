@@ -160,6 +160,7 @@
 			<fileset dir="src" includes="lattice/Lattice.java" />
 			<fileset dir="src" includes="lattice/BijectiveComponents.java" />
 			<fileset dir="src" includes="lattice/Rule.java" />
+			<fileset dir="src" includes="lattice/ComparableSet.java" />
 
 		</checkstyle>
 	</target>
