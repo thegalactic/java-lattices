@@ -18,6 +18,7 @@ if [ "$TRAVIS_REPO_SLUG" == "kbertet/java-lattices" ] && [ "$TRAVIS_JDK_VERSION"
   git rm -rf ./test
   git rm -rf ./coverage
   touch .nojekyll
+  touch index.html
   cp -Rf $HOME/javadoc-latest ./api
   cp -Rf $HOME/reports-latest ./test
   cp -Rf $HOME/coverage-latest ./coverage
