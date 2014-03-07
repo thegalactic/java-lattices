@@ -7,7 +7,7 @@ How to contribute?
 
 This is a quick guide describing the essential steps to contribute.
 
-Step 1: Connect on github
+Step 1: Connect to github
 -------------------------
 
 [Create](https://github.com/join)/[Use](https://github.com/login) your github account
@@ -17,7 +17,7 @@ Step 2: Fork the project
 
 Fork the [project](https://github.com/kbertet/java-lattices/fork)
 
-Step 3: Clone your fork onto your local machine
+Step 3: Clone your fork into your local machine
 -----------------------------------------------
 
 If you use ssh:
@@ -55,7 +55,7 @@ Step 6: Push you branch
 
 Your code is now ready to be pushed onto your remote repository.
 
-`origin` is the name of your remote repository. You can get all your remote repositories with:
+`origin` is the default name of your remote repository. You can get all your remote repositories with:
 
 ~~~
 $ git remote -v
@@ -113,7 +113,7 @@ $ git push {your_account} :{new_branch_name}
 Step 10: Merge the official repository
 --------------------------------------
 
-If you want to add more features or to fix bugs, don't forget to merge the official repository onto your master branch.
+If you want to add more features or to fix bugs, don't forget to merge the official repository in your master branch.
 
 First you have to add a remote repository.
 
@@ -135,7 +135,7 @@ To view all your remote repositories:
 $ git remote -v
 ~~~
 
-You can now merge the up-to-date code onto your master branch
+You can now merge the up-to-date code in your master branch
 
 ~~~
 $ git pull kbertet master
