@@ -3,6 +3,7 @@ package dgraph;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 /**
  * Test the dgraph.Node class.
@@ -81,6 +82,7 @@ public class NodeTest {
         Node node = new Node();
         Node copy = new Node(node);
         assertTrue(copy.equals(node));
+        assertFalse(copy.equals(new Integer(1)));
     }
 
     /**
