@@ -25,6 +25,10 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-03-07 Christophe Demko <chdemko@gmail.com>
+	* test/dgraph/NodeTest.java
+		+ Complete unit test
+
 2014-03-05 Jean-François Viaud <jviaud@univ-lr.fr>
 	* build.xml
 	* src/lattice/Concept.java
