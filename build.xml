@@ -10,7 +10,8 @@
 	<property name="src.dir" value="src" />
 	<property name="examples.dir" value="examples" />
 	<property name="test.dir" value="test" />
-	<property name="doc.dir" value="doc" />
+	<property name="api.dir" value="doc/api" />
+	<property name="contribute.dir" value="doc" />
 	<property name="overview.file" value="README.md" />
 	<property name="coverage.file" value="jacoco.exec" />
 
@@ -21,7 +22,8 @@
 	<property name="build.reports-xml.dir" value="${build.dir}/reports/xml" />
 	<property name="build.reports-html.dir" value="${build.dir}/reports/html" />
 	<property name="build.examples.dir" value="${build.dir}/examples" />
-	<property name="build.doc.dir" value="${build.dir}/doc" />
+	<property name="build.api.dir" value="${build.dir}/api" />
+	<property name="build.contribute.dir" value="${build.dir}/contribute" />
 	<property name="build.coverage.dir" value="${build.dir}/coverage" />
 
 	<property name="build.jar.dir" value="${build.dir}/jar" />
@@ -31,7 +33,7 @@
 
 	<target name="rebuild" depends="clean,jar" />
 
-	<target name="test" depends="junit,style,doc,coverage" />
+	<target name="test" depends="junit,style,api,coverage,contribute" />
 
 	<target name="clean">
 		<delete dir="${build.dir}" />
@@ -140,15 +142,15 @@
  		</java>
 	</target>
 
-	<target name="doc" depends="build">
-		<mkdir dir="${build.doc.dir}" />
-		<javadoc sourcepath="${src.dir}" destdir="${build.doc.dir}" overview="${doc.dir}/${overview.file}" doctitle="Java Lattices">
+	<target name="api" depends="build">
+		<mkdir dir="${build.api.dir}" />
+		<javadoc sourcepath="${src.dir}" destdir="${build.api.dir}" overview="${api.dir}/${overview.file}" doctitle="Java Lattices">
 			<doclet name="ch.raffael.doclets.pegdown.PegdownDoclet" path="lib/doclet/pegdown-doclet-1.1.1-all.jar" />
 			<arg value="-extensions" />
 			<arg value="fenced_code_blocks,autolinks,definitions,smartypants,tables,wikilinks" />
 		</javadoc>
-		<copy todir="${build.doc.dir}/images">
-			<fileset dir="${doc.dir}/images" />
+		<copy todir="${build.api.dir}/images">
+			<fileset dir="${api.dir}/images" />
 		</copy>
 	</target>
 
@@ -163,6 +165,17 @@
 			<fileset dir="src" includes="lattice/ComparableSet.java" />
 			<fileset dir="src" includes="lattice/Concept.java" />
 		</checkstyle>
+	</target>
+
+	<target name="contribute">
+		<mkdir dir="${build.contribute.dir}" />
+		<exec executable="pandoc" output="${build.contribute.dir}/index.html">
+			<arg value="-c"/>
+			<arg value="markdown.css" />
+			<arg value="${contribute.dir}/Contribute.md" />
+		</exec>
+  
+		<copy todir="${build.contribute.dir}" file="${contribute.dir}/markdown.css" />
 	</target>
 </project>
 

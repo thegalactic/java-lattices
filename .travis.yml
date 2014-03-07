@@ -1,4 +1,6 @@
-before_script: sudo apt-get install graphviz
+before_script:
+  - sudo apt-get install graphviz
+  - sudo apt-get install pandoc
 
 language: java
 
