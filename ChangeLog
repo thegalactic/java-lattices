@@ -26,6 +26,14 @@ $ -> Language fix or change
 ! -> Note
 
 2014-03-07 Christophe Demko <chdemko@gmail.com>
+	* .travis.yml
+	* doc/
+	* build.xml
+	* utility/initiate-publish.sh
+		+ Add contribute page
+		^ Move javadoc overview in doc/api folder
+
+2014-03-07 Christophe Demko <chdemko@gmail.com>
 	* test/dgraph/NodeTest.java
 		+ Complete unit test
 
