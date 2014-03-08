@@ -10,9 +10,10 @@
 	<property name="src.dir" value="src" />
 	<property name="examples.dir" value="examples" />
 	<property name="test.dir" value="test" />
+	<property name="doc.dir" value="doc" />
 	<property name="api.dir" value="doc/api" />
-	<property name="contribute.dir" value="doc" />
-	<property name="overview.file" value="README.md" />
+	<property name="contribute.dir" value="doc/contribute" />
+	<property name="tutorial.dir" value="doc/tutorial" />
 	<property name="coverage.file" value="jacoco.exec" />
 
 	<property name="build.dir" value="build" />
@@ -24,6 +25,7 @@
 	<property name="build.examples.dir" value="${build.dir}/examples" />
 	<property name="build.api.dir" value="${build.dir}/api" />
 	<property name="build.contribute.dir" value="${build.dir}/contribute" />
+	<property name="build.tutorial.dir" value="${build.dir}/tutorial" />
 	<property name="build.coverage.dir" value="${build.dir}/coverage" />
 
 	<property name="build.jar.dir" value="${build.dir}/jar" />
@@ -33,7 +35,7 @@
 
 	<target name="rebuild" depends="clean,jar" />
 
-	<target name="test" depends="junit,style,api,coverage,contribute" />
+	<target name="test" depends="junit,style,api,coverage,contribute,tutorial" />
 
 	<target name="clean">
 		<delete dir="${build.dir}" />
@@ -144,7 +146,7 @@
 
 	<target name="api" depends="build">
 		<mkdir dir="${build.api.dir}" />
-		<javadoc sourcepath="${src.dir}" destdir="${build.api.dir}" overview="${api.dir}/${overview.file}" doctitle="Java Lattices">
+		<javadoc sourcepath="${src.dir}" destdir="${build.api.dir}" overview="${api.dir}/README.md" doctitle="Java Lattices">
 			<doclet name="ch.raffael.doclets.pegdown.PegdownDoclet" path="lib/doclet/pegdown-doclet-1.1.1-all.jar" />
 			<arg value="-extensions" />
 			<arg value="fenced_code_blocks,autolinks,definitions,smartypants,tables,wikilinks" />
@@ -172,10 +174,21 @@
 		<exec executable="pandoc" output="${build.contribute.dir}/index.html">
 			<arg value="-c"/>
 			<arg value="markdown.css" />
-			<arg value="${contribute.dir}/Contribute.md" />
+			<arg value="${contribute.dir}/title" />
+			<arg value="${contribute.dir}/README.md" />
 		</exec>
-  
 		<copy todir="${build.contribute.dir}" file="${contribute.dir}/markdown.css" />
 	</target>
+
+	<target name="tutorial">
+		<mkdir dir="${build.tutorial.dir}" />
+		<exec executable="pandoc">
+			<arg value="${tutorial.dir}/title" />
+			<arg value="${tutorial.dir}/introduction.md" />
+			<arg value="-o" />
+			<arg value="${build.tutorial.dir}/tutorial-java-lattices.pdf" />
+		</exec>
+	</target>
+
 </project>
 
