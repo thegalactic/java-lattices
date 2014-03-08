@@ -25,7 +25,7 @@ if [ "$TRAVIS_REPO_SLUG" == "kbertet/java-lattices" ] && [ "$TRAVIS_JDK_VERSION"
   cp -Rf $HOME/reports-latest ./test
   cp -Rf $HOME/coverage-latest ./coverage
   cp -Rf $HOME/contribute-latest ./contribute
-  cp $HOME/tutorial-java-lattices.pdf ./tutorial
+  cp $HOME/tutorial-java-lattices.pdf .
   git add -f .
   git commit -m "Latest doc on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages"
   git push -fq origin gh-pages > /dev/null
