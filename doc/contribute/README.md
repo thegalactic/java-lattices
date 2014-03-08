@@ -1,7 +1,3 @@
-% Java-lattices
-% Contributor's Guide
-% March 7, 2014
-
 How to contribute?
 ==================
 

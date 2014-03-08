@@ -25,6 +25,17 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-03-08 Christophe Demko <chdemko@gmail.com>
+	* build.xml
+	* doc/contribute/README.md
+	* doc/contribute/title
+	* doc/contribute/markdown.css
+	* doc/tutorial/introduction.md
+	* doc/tutorial/title
+	* utility/initiate-publish.sh
+		^ Reorganize contribute folder
+		+ Add start of a tutorial
+
 2014-03-07 Christophe Demko <chdemko@gmail.com>
 	* .travis.yml
 	* doc/
