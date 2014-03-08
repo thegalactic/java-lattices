@@ -183,6 +183,7 @@
 	<target name="tutorial">
 		<mkdir dir="${build.tutorial.dir}" />
 		<exec executable="pandoc">
+			<arg value="--variable=geometry:paper=a4paper,margin=1in" />
 			<arg value="${tutorial.dir}/title" />
 			<arg value="${tutorial.dir}/introduction.md" />
 			<arg value="-o" />
