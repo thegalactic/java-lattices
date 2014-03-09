@@ -26,6 +26,11 @@ $ -> Language fix or change
 ! -> Note
 
 2014-03-09 Christophe Demko <chdemko@gmail.com>
+	* src/lattice/ArrowRelation.java
+	* src/lattice/ArrowRelation.iuml
+		+ Add uml graph for ArrowRelation
+
+2014-03-09 Christophe Demko <chdemko@gmail.com>
 	* src/lattice/Concept.java
 	* src/lattice/Concept.iuml
 		+ Add uml graph for Concept

@@ -34,6 +34,14 @@ import dgraph.DGraph;
  * - j "Up Down Arrow" m (stored as "UpDown") iff j "Up" m and j "Down" m
  * - j "Cross" m (stored as "Cross") iff j is less or equal than m
  * - j "Circ" m (stored as "Circ") iff neither j "Up" m nor j "Down" m nor j "Cross" m
+ *
+ * ![ArrowRelation](ArrowRelation.png)
+ *
+ * @uml ArrowRelation.png
+ * !include src/lattice/ArrowRelation.iuml
+ *
+ * hide members
+ * show ArrowRelation members
  */
 public class ArrowRelation extends DGraph  {
     /**
@@ -42,16 +50,17 @@ public class ArrowRelation extends DGraph  {
      * Nodes are join or meet irreductibles of the lattice.
      * Edges content encodes arrows as String "Up", "Down", "UpDown", "Cross", "Circ".
      *
-     * @param l : Lattice from which this component is deduced.
+     * @param   lattice  Lattice from which this component is deduced.
      */
-    public ArrowRelation(Lattice l) {
-        super(l.arrowRelation());
+    public ArrowRelation(Lattice lattice) {
+        super(lattice.arrowRelation());
     }
+
     /**
      * Produces the LaTex source code for the array of arrows of this component.
      * The LaTeX source produced isn't autonomous. It must be included in a document.
      *
-     * @param filename : Name of the file to be writen.
+     * @param   filename  Name of the file to be writen.
      */
     public void writeLaTex(String filename) {
         try {
