@@ -35,5 +35,5 @@ class BijectiveComponents {
 
 BijectiveComponents *-- "1" ClosureSystem
 
-abstract class ClosureSystem
+!include ClosureSystem.iuml
 
