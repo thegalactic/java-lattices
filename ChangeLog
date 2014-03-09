@@ -26,6 +26,11 @@ $ -> Language fix or change
 ! -> Note
 
 2014-03-09 Christophe Demko <chdemko@gmail.com>
+	* build.xml
+	* src/lattice/Context.java
+		+ Check style for Context	
+
+2014-03-09 Christophe Demko <chdemko@gmail.com>
 	* src/lattice/ArrowRelation.java
 	* src/lattice/ArrowRelation.iuml
 		+ Add uml graph for ArrowRelation
