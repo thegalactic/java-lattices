@@ -63,6 +63,14 @@ import dgraph.Node;
  * 4 c e
  * ~~~
  *
+ * ![Context](Context.png)
+ *
+ * @uml Context.png
+ * !include src/lattice/Context.iuml
+ *
+ * hide members
+ * show Context members
+ *
  * @todo  Move specific phD students (Dounia and Van) constructors to other classes
  */
 public class Context extends ClosureSystem {
@@ -621,14 +629,14 @@ public class Context extends ClosureSystem {
 
     /* --------------- HANDLING METHODS FOR INTENT AND EXTENT ------------ */
 
-      /**
-       * Returns the set of observations that are intent of the specified observation.
-       *
-       * @param   obs  an observation
-       *
-       * @return  the set of observations
-       */
-      public TreeSet<Comparable> getIntent(Comparable obs) {
+    /**
+     * Returns the set of observations that are intent of the specified observation.
+     *
+     * @param   obs  an observation
+     *
+     * @return  the set of observations
+     */
+    public TreeSet<Comparable> getIntent(Comparable obs) {
         if (this.containsObservation(obs)) {
             return this.intent.get(obs);
         } else {
@@ -636,13 +644,13 @@ public class Context extends ClosureSystem {
         }
     }
 
-      /**
-       * Returns the set of observations that are all intent of attributes of the specified set.
-       *
-       * @param   set  set of observations
-       *
-       * @return  the set of observations
-       */
+    /**
+     * Returns the set of observations that are all intent of attributes of the specified set.
+     *
+     * @param   set  set of observations
+     *
+     * @return  the set of observations
+     */
     public TreeSet<Comparable> getIntent(TreeSet<Comparable> set) {
         TreeSet<Comparable> resIntent = new TreeSet<Comparable>(this.getAttributes());
         for (Comparable obs : set) {
@@ -667,14 +675,14 @@ public class Context extends ClosureSystem {
         }
     }
 
-      /**
-       * Returns the set of attributes that are intent of the specified attribute.
+    /**
+     * Returns the set of attributes that are intent of the specified attribute.
      *
      * @param   att  an attribute
      *
      * @return  the set of attributes
-       */
-      public TreeSet<Comparable> getExtent(Comparable att) {
+     */
+    public TreeSet<Comparable> getExtent(Comparable att) {
         if (this.containsAttribute(att)) {
             return this.extent.get(att);
         } else {
@@ -682,14 +690,14 @@ public class Context extends ClosureSystem {
         }
     }
 
-      /**
-       * Returns the set of attributes that are all intent of observations of the specified set.
+    /**
+     * Returns the set of attributes that are all intent of observations of the specified set.
      *
      * @param   set  set of attributes
      *
      * @return  the set of attributes
-       */
-      public TreeSet<Comparable> getExtent(TreeSet<Comparable> set) {
+     */
+    public TreeSet<Comparable> getExtent(TreeSet<Comparable> set) {
         TreeSet<Comparable> extent = new TreeSet<Comparable>(this.getObservations());
         for (Comparable att : set) {
             extent.retainAll(this.getExtent(att));
@@ -1042,6 +1050,5 @@ public class Context extends ClosureSystem {
         }
         return csl;
     }
-
 }
 
