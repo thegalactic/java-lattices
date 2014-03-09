@@ -1,0 +1,14 @@
+class ClosureSystem {
+    +{abstract} TreeSet<Comparable> getSet()
+    +{abstract} TreeSet<Comparable> closure(TreeSet<Comparable> set)
+    +{abstract} void toFile(String file)
+    
+    +ConceptLattice closedSetLattice(boolean  diagram)
+    +Vector<Concept> allClosures()
+    +Concept nextClosure(Concept cl)
+    +DGraph precedenceGraph()
+    +TreeMap<Object, TreeSet> getReducibleElements()
+}
+
+abstract class ClosureSystem
+

@@ -27,8 +27,18 @@ $ -> Language fix or change
 
 2014-03-09 Christophe Demko <chdemko@gmail.com>
 	* build.xml
+	* src/lattice/ClosureSystem.java
+	* src/lattice/ClosureSystem.iuml
+	* src/lattice/BijectiveComponents.iuml
+		+ Check style for ClosureSystem
+		+ Add uml graph for ClosureSystem
+
+2014-03-09 Christophe Demko <chdemko@gmail.com>
+	* build.xml
 	* src/lattice/Context.java
-		+ Check style for Context	
+	* src/lattice/Context.iuml
+		+ Check style for Context
+		+ Add uml graph for Context
 
 2014-03-09 Christophe Demko <chdemko@gmail.com>
 	* src/lattice/ArrowRelation.java
