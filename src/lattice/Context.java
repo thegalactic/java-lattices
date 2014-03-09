@@ -199,11 +199,11 @@ public class Context extends ClosureSystem {
     public Context(String filename) {
         this();
         try {
-            BufferedReader fichier = new BufferedReader(new FileReader(filename));
+            BufferedReader file = new BufferedReader(new FileReader(filename));
             // first line : All observations separated by a space
             // a StringTokenizer is used to divide the line into different observations
             // considering spaces as separator.
-            StringTokenizer st =  new StringTokenizer(fichier.readLine());
+            StringTokenizer st =  new StringTokenizer(file.readLine());
             st.nextToken(); // first token corresponds to the string "Observations:"
             while (st.hasMoreTokens()) {
                 String n = new String(st.nextToken());
@@ -212,7 +212,7 @@ public class Context extends ClosureSystem {
             // second line : All attributes separated by a space
             // a StringTokenizer is used to divide the line into different token,
             // considering spaces as separator.
-            st =  new StringTokenizer(fichier.readLine());
+            st =  new StringTokenizer(file.readLine());
             st.nextToken(); // first token corresponds to the string "Attributes:"
             while (st.hasMoreTokens()) {
                 String n = new String(st.nextToken());
@@ -221,7 +221,7 @@ public class Context extends ClosureSystem {
             // next lines : All intents of observations, one on each line:
             // observation : list of attributes
             // a StringTokenizer is used to divide each intent.
-            String line = fichier.readLine();
+            String line = file.readLine();
             while (line != null && !line.isEmpty()) {
                 st = new StringTokenizer(line);
                 String word = st.nextToken();
@@ -248,9 +248,9 @@ public class Context extends ClosureSystem {
                         }
                     }
                 }
-                line = fichier.readLine();
+                line = file.readLine();
             }
-            fichier.close();
+            file.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -280,8 +280,8 @@ public class Context extends ClosureSystem {
     public Context(String filename, int thresholdBinary) {
         this();
         try {
-            BufferedReader fichier = new BufferedReader(new FileReader(filename));
-            String line = fichier.readLine();
+            BufferedReader file = new BufferedReader(new FileReader(filename));
+            String line = file.readLine();
             while (line != null && !line.isEmpty()) {
                 // first line : an observation
                 StringTokenizer st = new StringTokenizer(line);
@@ -291,7 +291,7 @@ public class Context extends ClosureSystem {
                 // second line : All attributes separated by a space
                 // a StringTokenizer is used to divide the line into different token,
                 // considering spaces as separator.
-                line = fichier.readLine();
+                line = file.readLine();
                 st = new StringTokenizer(line);
                 int idAtt = 0;
                 while (st.hasMoreTokens()) {
@@ -302,9 +302,9 @@ public class Context extends ClosureSystem {
                         this.addExtentIntent(o, Integer.toString(idAtt));
                     }
                 }
-                line = fichier.readLine();
+                line = file.readLine();
             }
-            fichier.close();
+            file.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -321,8 +321,8 @@ public class Context extends ClosureSystem {
         this();
         try {
             for (String fileName : filesname) {
-                BufferedReader fichier = new BufferedReader(new FileReader(link + fileName));
-                String line = fichier.readLine();
+                BufferedReader file = new BufferedReader(new FileReader(link + fileName));
+                String line = file.readLine();
                 while (line != null && !line.isEmpty()) {
                     // first line : an observation
                     StringTokenizer st = new StringTokenizer(line);
@@ -332,7 +332,7 @@ public class Context extends ClosureSystem {
                     // second line : All attributes separated by a space
                     // a StringTokenizer is used to divide the line into different token,
                 // considering spaces as separator.
-                    line = fichier.readLine();
+                    line = file.readLine();
                     st = new StringTokenizer(line);
                     int idAtt = 0;
                     while (st.hasMoreTokens()) {
@@ -343,9 +343,9 @@ public class Context extends ClosureSystem {
                             this.addExtentIntent(o, Integer.toString(idAtt));
                         }
                     }
-                    line = fichier.readLine();
+                    line = file.readLine();
                 }
-                fichier.close();
+                file.close();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -391,8 +391,8 @@ public class Context extends ClosureSystem {
                 // add attributes
                 // each line is an attribute
                 // space is the sepaarator between id and value of attribute
-                BufferedReader fichier = new BufferedReader(new FileReader(linkFileName));
-                String line = fichier.readLine();
+                BufferedReader file = new BufferedReader(new FileReader(linkFileName));
+                String line = file.readLine();
                 while (line != null && !line.isEmpty()) {
                     st = new StringTokenizer(line);
                     String id = st.nextToken();
@@ -403,9 +403,9 @@ public class Context extends ClosureSystem {
                             this.addExtentIntent(o, id);
                         }
                     }
-                    line = fichier.readLine();
+                    line = file.readLine();
                 }
-                fichier.close();
+                file.close();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -872,9 +872,9 @@ public class Context extends ClosureSystem {
      */
     public void toFile(String filename)    {
         try {
-            BufferedWriter fichier = new BufferedWriter(new FileWriter(filename));
-            fichier.write(this.toString());
-            fichier.close();
+            BufferedWriter file = new BufferedWriter(new FileWriter(filename));
+            file.write(this.toString());
+            file.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
