@@ -167,6 +167,7 @@
 			<fileset dir="src" includes="lattice/ComparableSet.java" />
 			<fileset dir="src" includes="lattice/Concept.java" />
 			<fileset dir="src" includes="lattice/Context.java" />
+			<fileset dir="src" includes="lattice/ClosureSystem.java" />
 		</checkstyle>
 	</target>
 
