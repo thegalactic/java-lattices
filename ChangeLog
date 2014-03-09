@@ -25,6 +25,11 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-03-09 Christophe Demko <chdemko@gmail.com>
+	* src/lattice/Concept.java
+	* src/lattice/Concept.iuml
+		+ Add uml graph for Concept
+
 2014-03-08 Christophe Demko <chdemko@gmail.com>
 	* build.xml
 	* doc/contribute/README.md
