@@ -426,13 +426,13 @@ public class ConceptTest {
      * Test the immediateSuccessorsLOA method.
      */
     @Test
-    public static void main(String[] args) {
+    public void testimmediateSuccessorsLOA() {
         Context ctx = new Context();
         ctx.addToAttributes('b');
         ctx.addToAttributes('h');
         ctx.addToAttributes('m');
         ctx.addToAttributes('t');
-        ctx.addToAttributes('w');        
+        ctx.addToAttributes('w');
         ctx.addToObservations('1');
         ctx.addToObservations('2');
         ctx.addToObservations('3');
@@ -463,11 +463,10 @@ public class ConceptTest {
         //setB.add('4');
         //setB.add('5');
         //setA.addAll(ctx.closure(setA));
-        System.out.println(setA.toString());
         setB.addAll(ctx.getExtent(setA));
-        Concept c = new Concept(setA,setB);
+        Concept c = new Concept(setA, setB);
         //assertTrue(c.immediateSuccessorsLOA(ctx).size() == 1);
-        ArrayList<TreeSet<Comparable>> Succ = c.immediateSuccessorsLOA(ctx);
+        ArrayList<TreeSet<Comparable>> succ = c.immediateSuccessorsLOA(ctx);
     }
     /**
      * Test the immediateSuccessors method.
