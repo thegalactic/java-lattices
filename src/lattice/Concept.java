@@ -413,7 +413,6 @@ public class Concept extends Node {
             ArrayList<TreeSet<Comparable>> succB = new ArrayList();
             TreeSet<Comparable> attributes = (TreeSet<Comparable>) init.getSet().clone();
             attributes.removeAll(this.getSetA());
-
             boolean add;
             for (Comparable x : attributes) {
                 add = true;

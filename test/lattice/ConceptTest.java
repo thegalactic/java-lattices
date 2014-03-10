@@ -426,20 +426,48 @@ public class ConceptTest {
      * Test the immediateSuccessorsLOA method.
      */
     @Test
-    public void testimmediateSuccessorsLOA() {
+    public static void main(String[] args) {
         Context ctx = new Context();
-        ctx.addToAttributes('a');
         ctx.addToAttributes('b');
+        ctx.addToAttributes('h');
+        ctx.addToAttributes('m');
+        ctx.addToAttributes('t');
+        ctx.addToAttributes('w');        
         ctx.addToObservations('1');
         ctx.addToObservations('2');
-        ctx.addExtentIntent('1', 'a');
+        ctx.addToObservations('3');
+        ctx.addToObservations('4');
+        ctx.addToObservations('5');
+        ctx.addExtentIntent('1', 'b');
         ctx.addExtentIntent('2', 'b');
+        ctx.addExtentIntent('3', 'b');
+        ctx.addExtentIntent('4', 'b');
+        ctx.addExtentIntent('1', 'h');
+        ctx.addExtentIntent('4', 'h');
+        ctx.addExtentIntent('3', 'm');
+        ctx.addExtentIntent('5', 'm');
+        ctx.addExtentIntent('4', 't');
+        ctx.addExtentIntent('5', 't');
+        ctx.addExtentIntent('2', 'w');
+        ctx.addExtentIntent('5', 'w');
         TreeSet<Comparable> setA = new TreeSet<Comparable>();
         TreeSet<Comparable> setB = new TreeSet<Comparable>();
-        setA.add('1');
-        setB.add('a');
-        Concept c = new Concept(setA, setB);
-        assertTrue(c.immediateSuccessorsLOA(ctx).size() == 1);
+        setA.add('b');
+        //setA.add('h');
+        //setA.add('m');
+        //setA.add('t');
+        //setA.add('w');
+        //setB.add('1');
+        //setB.add('2');
+        //setB.add('3');
+        //setB.add('4');
+        //setB.add('5');
+        //setA.addAll(ctx.closure(setA));
+        System.out.println(setA.toString());
+        setB.addAll(ctx.getExtent(setA));
+        Concept c = new Concept(setA,setB);
+        //assertTrue(c.immediateSuccessorsLOA(ctx).size() == 1);
+        ArrayList<TreeSet<Comparable>> Succ = c.immediateSuccessorsLOA(ctx);
     }
     /**
      * Test the immediateSuccessors method.
