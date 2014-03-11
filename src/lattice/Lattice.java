@@ -483,16 +483,16 @@ public class Lattice extends DAGraph {
     }
 
     /**
-     * Returns an IS of the lattice defined on the join irreducibles nodes.
+     * Returns an ImplicationalSystem of the lattice defined on the join irreducibles nodes.
      *
-     * Each element of the IS is a copy of a a join irreducibles node.
+     * Each element of the ImplicationalSystem is a copy of a a join irreducibles node.
      *
      * @return  an implicational system
      */
-    public IS getIS() {
-        // initialization of IS
+    public ImplicationalSystem getIS() {
+        // initialization of ImplicationalSystem
         TreeSet<Node> join = this.joinIrreducibles();
-        IS sigma = new IS();
+        ImplicationalSystem sigma = new ImplicationalSystem();
         for (Node j : join) {
             sigma.addElement((Comparable) j.getContent());
         }
@@ -671,10 +671,10 @@ public class Lattice extends DAGraph {
      *
      * @return  the canonical direct basis of the lattice
      */
-    public IS getCanonicalDirectBasis() {
+    public ImplicationalSystem getCanonicalDirectBasis() {
         DGraph odGraph = this.getDependencyGraph();
-        // initialize elements of the IS with nodes of the ODGraph
-        IS bcd = new IS();
+        // initialize elements of the ImplicationalSystem with nodes of the ODGraph
+        ImplicationalSystem bcd = new ImplicationalSystem();
         for (Node n : odGraph.getNodes()) {
             bcd.addElement((Comparable) n.getContent());
         }
@@ -711,7 +711,7 @@ public class Lattice extends DAGraph {
      * @return  a TreeSet of the minimal generators
      */
     public TreeSet getMinimalGenerators() {
-        IS bcd = this.getCanonicalDirectBasis();
+        ImplicationalSystem bcd = this.getCanonicalDirectBasis();
         TreeSet genMin = new TreeSet();
         for (Rule r : bcd.getRules()) {
             genMin.add(r.getPremise());

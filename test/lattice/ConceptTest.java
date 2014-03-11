@@ -427,6 +427,7 @@ public class ConceptTest {
      */
     @Test
     public void testimmediateSuccessorsLOA() {
+        // The following context is present in the paper "An efficient algorithm ..."
         Context ctx = new Context();
         ctx.addToAttributes('b');
         ctx.addToAttributes('h');
@@ -450,6 +451,7 @@ public class ConceptTest {
         ctx.addExtentIntent('5', 't');
         ctx.addExtentIntent('2', 'w');
         ctx.addExtentIntent('5', 'w');
+        ctx.setBitSets();
         TreeSet<Comparable> setA = new TreeSet<Comparable>();
         TreeSet<Comparable> setB = new TreeSet<Comparable>();
         setA.add('b');
@@ -462,11 +464,11 @@ public class ConceptTest {
         //setB.add('3');
         //setB.add('4');
         //setB.add('5');
-        //setA.addAll(ctx.closure(setA));
+        setA.addAll(ctx.closure(setA));
         setB.addAll(ctx.getExtent(setA));
         Concept c = new Concept(setA, setB);
-        //assertTrue(c.immediateSuccessorsLOA(ctx).size() == 1);
         ArrayList<TreeSet<Comparable>> succ = c.immediateSuccessorsLOA(ctx);
+        assertTrue(succ.size() == 3);
     }
     /**
      * Test the immediateSuccessors method.
@@ -492,7 +494,7 @@ public class ConceptTest {
         rs.add(r1);
         rs.add(r2);
         rs.add(r3);
-        IS is = new IS(rs);
+        ImplicationalSystem is = new ImplicationalSystem(rs);
         ArrayList<TreeSet<Comparable>> succ = cA.immediateSuccessors(is);
         assertTrue(succ.get(0).contains(a));
         assertTrue(succ.get(0).contains(b));

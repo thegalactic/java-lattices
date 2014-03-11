@@ -535,13 +535,13 @@ public ArrayList<TreeSet<Comparable>> immediateSuccessorsLOA(Context init) {
                 int cBx = count(init, bx);
                 int cBX = count(init, bX);
                 int cBXx = count(init, bXx);
-                if (cBx == cBX) {
+                if (cBx == cBX) { // Try to group tests by pairs.
                     if (cBXx == cBx) {
-                        it.remove();
-                        TreeSet<Comparable> xx = new TreeSet();
-                        xx.addAll(tX);
-                        xx.add(x);
-                        succB.add(xx);
+                        it.remove(); // Update present potential successor.
+                        TreeSet<Comparable> xX = new TreeSet();
+                        xX.addAll(tX);
+                        xX.add(x);
+                        succB.add(xX);
                         add = false;
                         break;
                     }
@@ -570,12 +570,12 @@ public ArrayList<TreeSet<Comparable>> immediateSuccessorsLOA(Context init) {
         return succB;
     }
 /**
-     * Returns the number of attributes in the init context.
+     * Returns the number of observations corresponding to the set of attributes in the init context.
      *
      * @param   init        initial context from which attributes are count.
-     * @param   attributes  attributes to count.
+     * @param   attributes  attributes from which observations are counted.
      *
-     * @return  number of attributes in init context.
+     * @return  number of observations corresponding to the set of attributes in init context.
      */
     private int count(Context init, TreeSet<Comparable> attributes) {
         return init.getExtentNb(attributes);
