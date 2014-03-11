@@ -25,6 +25,13 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-03-11 Jean-François Viaud <jviaud@univ-lr.fr>
+	* build.xml
+	* src/lattice/ImplicationalSystem.java
+		+ Rename & Update other classes
+		+ Check Style
+	+ test/lattice/ImplicationSystemTest.java
+
 2014-03-09 Christophe Demko <chdemko@gmail.com>
 	* build.xml
 	* src/lattice/ClosureSystem.java
