@@ -19,7 +19,7 @@ public class BijectiveComponentsTest {
      */
     @Test
     public void testBijectiveComponent() {
-        IS is = new IS();
+        ImplicationalSystem is = new ImplicationalSystem();
         BijectiveComponents bc = new BijectiveComponents(is);
         long time = bc.initialize();
         assertTrue(bc.getInit() != null);
@@ -36,7 +36,7 @@ public class BijectiveComponentsTest {
      */
     @Test
     public void testinitalizeIS() {
-        IS is = new IS();
+        ImplicationalSystem is = new ImplicationalSystem();
         BijectiveComponents bc = new BijectiveComponents(is);
         long time = bc.initialize();
         assertTrue(bc.getInit() != null);
@@ -71,7 +71,7 @@ public class BijectiveComponentsTest {
     @Test
     public void testsave() {
         try {
-            IS is = new IS();
+            ImplicationalSystem is = new ImplicationalSystem();
             BijectiveComponents bc = new BijectiveComponents(is);
             long time = bc.initialize();
             File file = File.createTempFile("junit", ".txt");
@@ -119,7 +119,7 @@ public class BijectiveComponentsTest {
      */
     @Test
     public void testgetInit() {
-        IS is = new IS();
+        ImplicationalSystem is = new ImplicationalSystem();
         BijectiveComponents bc = new BijectiveComponents(is);
         assertEquals(bc.getInit(), is);
     }
@@ -128,7 +128,7 @@ public class BijectiveComponentsTest {
      */
     @Test
     public void testsetInit() {
-        IS is = new IS();
+        ImplicationalSystem is = new ImplicationalSystem();
         BijectiveComponents bc = new BijectiveComponents(is);
         bc.setInit(is);
         assertEquals(bc.getInit(), is);
@@ -138,7 +138,7 @@ public class BijectiveComponentsTest {
      */
     @Test
     public void testsetLattice() {
-        IS is = new IS();
+        ImplicationalSystem is = new ImplicationalSystem();
         BijectiveComponents bc = new BijectiveComponents(is);
         ConceptLattice cl = new ConceptLattice();
         bc.setLattice(cl);
@@ -149,7 +149,7 @@ public class BijectiveComponentsTest {
      */
     @Test
     public void testgetLattice() {
-        IS is = new IS();
+        ImplicationalSystem is = new ImplicationalSystem();
         BijectiveComponents bc = new BijectiveComponents(is);
         ConceptLattice cl = new ConceptLattice();
         bc.setLattice(cl);
@@ -160,7 +160,7 @@ public class BijectiveComponentsTest {
      */
     @Test
     public void testsetReducedLattice() {
-        IS is = new IS();
+        ImplicationalSystem is = new ImplicationalSystem();
         BijectiveComponents bc = new BijectiveComponents(is);
         Lattice l = new Lattice();
         bc.setReducedLattice(l);
@@ -171,7 +171,7 @@ public class BijectiveComponentsTest {
      */
     @Test
     public void testgetReducedLattice() {
-        IS is = new IS();
+        ImplicationalSystem is = new ImplicationalSystem();
         BijectiveComponents bc = new BijectiveComponents(is);
         Lattice l = new Lattice();
         bc.setReducedLattice(l);
@@ -182,7 +182,7 @@ public class BijectiveComponentsTest {
      */
     @Test
     public void testsetDependencyGraph() {
-        IS is = new IS();
+        ImplicationalSystem is = new ImplicationalSystem();
         BijectiveComponents bc = new BijectiveComponents(is);
         DGraph dg = new DGraph();
         bc.setDependencyGraph(dg);
@@ -193,7 +193,7 @@ public class BijectiveComponentsTest {
      */
     @Test
     public void testgetDependencyGraph() {
-        IS is = new IS();
+        ImplicationalSystem is = new ImplicationalSystem();
         BijectiveComponents bc = new BijectiveComponents(is);
         Lattice l = new Lattice();
         bc.setReducedLattice(l);
@@ -204,7 +204,7 @@ public class BijectiveComponentsTest {
      */
     @Test
     public void testsetMinimalGenerators() {
-        IS is = new IS();
+        ImplicationalSystem is = new ImplicationalSystem();
         BijectiveComponents bc = new BijectiveComponents(is);
         TreeSet<ComparableSet> mingen = new TreeSet<ComparableSet>();
         bc.setMinimalGenerators(mingen);
@@ -215,7 +215,7 @@ public class BijectiveComponentsTest {
      */
     @Test
     public void testgetMinimalGenerators() {
-        IS is = new IS();
+        ImplicationalSystem is = new ImplicationalSystem();
         BijectiveComponents bc = new BijectiveComponents(is);
         Context table = new Context();
         bc.setTable(table);
@@ -226,7 +226,7 @@ public class BijectiveComponentsTest {
      */
     @Test
     public void testsetCanonicalDirectBasis() {
-        IS is = new IS();
+        ImplicationalSystem is = new ImplicationalSystem();
         BijectiveComponents bc = new BijectiveComponents(is);
         bc.setCanonicalDirectBasis(is);
         assertEquals(bc.getCanonicalDirectBasis(), is);
@@ -236,7 +236,7 @@ public class BijectiveComponentsTest {
      */
     @Test
     public void testgetCanonicalDirectBasis() {
-        IS is = new IS();
+        ImplicationalSystem is = new ImplicationalSystem();
         BijectiveComponents bc = new BijectiveComponents(is);
         bc.setCanonicalDirectBasis(is);
         assertEquals(bc.getCanonicalDirectBasis(), is);
@@ -246,7 +246,7 @@ public class BijectiveComponentsTest {
      */
     @Test
     public void testsetCanonicalBasis() {
-        IS is = new IS();
+        ImplicationalSystem is = new ImplicationalSystem();
         BijectiveComponents bc = new BijectiveComponents(is);
         bc.setCanonicalBasis(is);
         assertEquals(bc.getCanonicalBasis(), is);
@@ -256,7 +256,7 @@ public class BijectiveComponentsTest {
      */
     @Test
     public void testgetCanonicalBasis() {
-        IS is = new IS();
+        ImplicationalSystem is = new ImplicationalSystem();
         BijectiveComponents bc = new BijectiveComponents(is);
         bc.setCanonicalBasis(is);
         assertEquals(bc.getCanonicalBasis(), is);
@@ -266,7 +266,7 @@ public class BijectiveComponentsTest {
      */
     @Test
     public void testsetTable() {
-        IS is = new IS();
+        ImplicationalSystem is = new ImplicationalSystem();
         BijectiveComponents bc = new BijectiveComponents(is);
         Context table = new Context();
         bc.setTable(table);
@@ -277,7 +277,7 @@ public class BijectiveComponentsTest {
      */
     @Test
     public void testgetTable() {
-        IS is = new IS();
+        ImplicationalSystem is = new ImplicationalSystem();
         BijectiveComponents bc = new BijectiveComponents(is);
         Context table = new Context();
         bc.setTable(table);

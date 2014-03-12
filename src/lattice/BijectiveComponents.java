@@ -30,7 +30,7 @@ import dgraph.DGraph;
  *
  * A closure system is described by the abstract class {@link ClosureSystem}.
  * In this package, a closure system can be instancied by an implicational
- * system described by class {@link IS}) or a context described by
+ * system described by class {@link ImplicationalSystem}) or a context described by
  * class {@link Context}).
  *
  * This class provides a constructor, and only two methods: the method {@link #initialize}
@@ -90,12 +90,12 @@ public class BijectiveComponents {
     /**
      * The canonical direct basis of the reduced lattice.
      */
-    private IS canonicalDirectBasis = null;
+    private ImplicationalSystem canonicalDirectBasis = null;
 
     /**
      * The canonical basis of the reduced lattice.
      */
-    private IS canonicalBasis = null;
+    private ImplicationalSystem canonicalBasis = null;
 
     /**
      * The table of the reduced lattice.
@@ -116,54 +116,54 @@ public class BijectiveComponents {
      * issued from the initial closure system `init`.
      *
      * The closed set lattice is generated when the closure system is an implicational system,
-     * and obtained by
-     *
-     * ~~~Java
-     * this.init.closedSetLattice(true);
-     * ~~~
-     *
-     * The concept lattice is generated when the closure system is a context, and obtained by
-     * by
-     *
-     * ~~~Java
-     * this.init.conceptLattice(true);
-     * ~~~
-     *
-     * The reduced lattice is obtained by
-     *
-     * ~~~Java
-     * this.lattice.getIrreduciblesReduction();
-     * ~~~
-     *
-     * The reduced table is obtained by
-     *
-     * ~~~Java
-     * this.reducedLattice.getTable();
-     * ~~~
-     *
-     * The dependency graph is obtained by
-     *
-     * ~~~Java
-     * this.reducedLattice.getDependencyGraph();
-     * ~~~
-     *
-     * Minimal generators are obtained by
-     *
-     * ~~~Java
-     * this.reducedLattice.getMinimalGenerators();
-     * ~~~
-     *
-     * The canonical direct basis is obtained by
-     *
-     * ~~~Java
-     * this.reducedLattice.getCanonicalDirectBasis();
-     * ~~~
-     *
-     * The canonical basis is obtained by
-     *
-     * ~~~Java
-     * new IS(this.canonicalDirectBasis).makeCanonicalBasis();
-     * ~~~
+ and obtained by
+
+ ~~~Java
+ this.init.closedSetLattice(true);
+ ~~~
+
+ The concept lattice is generated when the closure system is a context, and obtained by
+ by
+
+ ~~~Java
+ this.init.conceptLattice(true);
+ ~~~
+
+ The reduced lattice is obtained by
+
+ ~~~Java
+ this.lattice.getIrreduciblesReduction();
+ ~~~
+
+ The reduced table is obtained by
+
+ ~~~Java
+ this.reducedLattice.getTable();
+ ~~~
+
+ The dependency graph is obtained by
+
+ ~~~Java
+ this.reducedLattice.getDependencyGraph();
+ ~~~
+
+ Minimal generators are obtained by
+
+ ~~~Java
+ this.reducedLattice.getMinimalGenerators();
+ ~~~
+
+ The canonical direct basis is obtained by
+
+ ~~~Java
+ this.reducedLattice.getCanonicalDirectBasis();
+ ~~~
+
+ The canonical basis is obtained by
+
+ ~~~Java
+ new ImplicationalSystem(this.canonicalDirectBasis).makeCanonicalBasis();
+ ~~~
      *
      * @return  time of computation
      */
@@ -180,7 +180,7 @@ public class BijectiveComponents {
         this.dependencyGraph = this.lattice.getDependencyGraph();
         this.minimalGenerators = this.lattice.getMinimalGenerators();
         this.canonicalDirectBasis = this.lattice.getCanonicalDirectBasis();
-        this.canonicalBasis = new IS(this.canonicalDirectBasis);
+        this.canonicalBasis = new ImplicationalSystem(this.canonicalDirectBasis);
         this.canonicalBasis.makeCanonicalBasis();
         long fin = new Date().getTime();
         return fin - debut;
@@ -337,7 +337,7 @@ public class BijectiveComponents {
      *
      * @return  the canonical direct basis of this component
      */
-    public IS getCanonicalDirectBasis() {
+    public ImplicationalSystem getCanonicalDirectBasis() {
         return canonicalDirectBasis;
     }
 
@@ -346,7 +346,7 @@ public class BijectiveComponents {
      *
      * @param   canonicalDirectBasis  used to define field of this component
      */
-    protected void setCanonicalDirectBasis(IS canonicalDirectBasis) {
+    protected void setCanonicalDirectBasis(ImplicationalSystem canonicalDirectBasis) {
         this.canonicalDirectBasis = canonicalDirectBasis;
     }
 
@@ -355,7 +355,7 @@ public class BijectiveComponents {
      *
      * @return  the canonical basis of this component
      */
-    public IS getCanonicalBasis() {
+    public ImplicationalSystem getCanonicalBasis() {
         return canonicalBasis;
     }
 
@@ -364,7 +364,7 @@ public class BijectiveComponents {
      *
      * @param   canonicalBasis  used to define field of this component
      */
-    protected void setCanonicalBasis(IS canonicalBasis) {
+    protected void setCanonicalBasis(ImplicationalSystem canonicalBasis) {
         this.canonicalBasis = canonicalBasis;
     }
 
