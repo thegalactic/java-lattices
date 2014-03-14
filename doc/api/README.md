@@ -5,7 +5,7 @@ Description
 
 This package both provides classes to manipulate a binary table (or a context) and its concept lattice; a set of rules (or an implicational system) and its closed set lattice, but also capitalizes on results issued from lattice theory stating that there exists bijective links between lattices, reduced contexts and canonical direct basis of rules (see figure).
 
-![UML diagram](images/UML.png)
+![UML diagram](UML.png)
 
 A context is defined by class `Context` that provides methods implementing classical operations on a context, as the reduction for example.
 An implicational system, defined by class `IS`, provides methods for classical transformations of an implicational system, and in particular
@@ -190,4 +190,25 @@ The following table illustrates the generated bijective components when the init
 ##### Minimal generators
 
     [[d], [c], [c, g], [c, e], [c, d], [b, e], [b, d], [b, c], [a, b]]
+
+@uml UML.png
+
+title Main UML graph
+
+!include src/dgraph/DGraph.iuml
+!include src/dgraph/Edge.iuml
+!include src/dgraph/DAGraph.iuml
+!include src/dgraph/Node.iuml
+!include src/lattice/ComparableSet.iuml
+!include src/lattice/Concept.iuml
+!include src/lattice/ConceptLattice.iuml
+!include src/lattice/Context.iuml
+!include src/lattice/ArrowRelation.iuml
+!include src/lattice/ClosureSystem.iuml
+!include src/lattice/Lattice.iuml
+!include src/lattice/Rule.iuml
+!include src/lattice/BijectiveComponents.iuml
+!include src/lattice/ImplicationalSystem.iuml
+
+hide members
 

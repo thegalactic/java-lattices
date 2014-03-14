@@ -1,22 +1,23 @@
-class Node {
-	-int identifier
-    -Object content
-    -{static} int count = 0
-	.. Constructors ..
-    +Node(final Object content)
-    +Node()
-    +Node(final Node node)
-	.. Creators ..
-    +Node copy()
-	.. Accessors ..
-    +int getIdentifier()
-    +Object getContent()
-	.. Transformers ..
-    +String toString()
-    +String toDot()
-	.. Comparators ..
-    +boolean equals(final Object object)
-    +int hashCode()
-    +int compareTo(final Object object)
+package dgraph {
+    class Node {
+        -int identifier
+        -Object content
+        -{static} int count = 0
+        .. Constructors ..
+        +Node(final Object content)
+        +Node()
+        +Node(final Node node)
+        .. Creators ..
+        +Node copy()
+        .. Accessors ..
+        +int getIdentifier()
+        +Object getContent()
+        .. Transformers ..
+        +String toString()
+        +String toDot()
+        .. Comparators ..
+        +boolean equals(final Object object)
+        +int hashCode()
+        +int compareTo(final Object object)
+    }
 }
-

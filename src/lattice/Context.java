@@ -67,9 +67,12 @@ import dgraph.Node;
  *
  * @uml Context.png
  * !include src/lattice/Context.iuml
+ * !include src/lattice/ClosureSystem.iuml
  *
  * hide members
  * show Context members
+ * class Context #LightCyan
+ * title Context UML graph
  *
  * @todo  Move specific phD students (Dounia and Van) constructors to other classes
  */

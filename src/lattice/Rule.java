@@ -41,6 +41,8 @@ import java.util.TreeSet;
  *
  * hide members
  * show Rule members
+ * class Rule #LightCyan
+ * title Rule UML graph
  *
  * @todo  Do we use yaml representation?
  */

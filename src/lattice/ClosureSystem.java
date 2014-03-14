@@ -51,6 +51,8 @@ import dgraph.Node;
  *
  * hide members
  * show ClosureSystem members
+ * class ClosureSystem #LightCyan
+ * title ClosureSystem UML graph
  */
 public abstract class ClosureSystem {
 

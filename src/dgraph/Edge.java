@@ -38,9 +38,12 @@ import java.util.StringTokenizer;
  *
  * @uml Edge.png
  * !include src/dgraph/Edge.iuml
+ * !include src/dgraph/Node.iuml
  *
  * hide members
  * show Edge members
+ * class Edge #LightCyan
+ * title Edge UML graph
  */
 public class Edge implements Comparable<Object> {
     /* ------------- FIELDS --------------------- */

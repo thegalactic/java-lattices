@@ -56,9 +56,12 @@ import dgraph.Node;
  *
  * @uml ImplicationalSystem.png
  * !include src/lattice/ImplicationalSystem.iuml
+ * !include src/lattice/ClosureSystem.iuml
  *
  * hide members
  * show ImplicationalSystem members
+ * class ImplicationalSystem #LightCyan
+ * title ImplicationalSystem UML graph
  *
  * @todo  Standardize "count" method names
  */

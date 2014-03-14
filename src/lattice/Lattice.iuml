@@ -1,39 +1,39 @@
-class Lattice {
-    -DGraph dependencyGraph
-    .. Constructors ..
-    +Lattice()
-    +Lattice(TreeSet<Node> set)
-    +Lattice(DAGraph graph)
-    .. Predicates ..
-    +boolean isLattice()
-    .. Operations ..
-    +Node top()
-    +Node bottom()
-    +Node meet(Node x, Node y)
-    +Node join(Node x, Node y)
+package lattice {
+    class Lattice {
+        -DGraph dependencyGraph
+        .. Constructors ..
+        +Lattice()
+        +Lattice(TreeSet<Node> set)
+        +Lattice(DAGraph graph)
+        .. Predicates ..
+        +boolean isLattice()
+        .. Operations ..
+        +Node top()
+        +Node bottom()
+        +Node meet(Node x, Node y)
+        +Node join(Node x, Node y)
 
-    +TreeSet<Node> joinIrreducibles()
-    +TreeSet<Node> meetIrreducibles()
-    +TreeSet<Comparable> joinIrreducibles(Node n)
-    +TreeSet<Comparable> meetIrreducibles(Node n)
-    +DAGraph joinIrreduciblesSubgraph()
-    +DAGraph meetIrreduciblesSubgraph()
-    +DAGraph irreduciblesSubgraph()
-    +ConceptLattice joinClosure()
-    +ConceptLattice meetClosure()
-    +ConceptLattice irreducibleClosure()
-    +Context getTable()
-    +IS getIS()
+        +TreeSet<Node> joinIrreducibles()
+        +TreeSet<Node> meetIrreducibles()
+        +TreeSet<Comparable> joinIrreducibles(Node n)
+        +TreeSet<Comparable> meetIrreducibles(Node n)
+        +DAGraph joinIrreduciblesSubgraph()
+        +DAGraph meetIrreduciblesSubgraph()
+        +DAGraph irreduciblesSubgraph()
+        +ConceptLattice joinClosure()
+        +ConceptLattice meetClosure()
+        +ConceptLattice irreducibleClosure()
+        +Context getTable()
+        +IS getIS()
 
-    +DGraph getDependencyGraph()
-    #setDependencyGraph(DGraph graph)
-    #hasDependencyGraph()
-    +IS getCanonicalDirectBasis()
-    +TreeSet getMinimalGenerators()
-    +DGraph arrowRelation()
+        +DGraph getDependencyGraph()
+        #setDependencyGraph(DGraph graph)
+        #hasDependencyGraph()
+        +IS getCanonicalDirectBasis()
+        +TreeSet getMinimalGenerators()
+        +DGraph arrowRelation()
+    }
+
+    DAGraph <|-- Lattice
 }
-
-DAGraph <|-- Lattice
-
-!include ../dgraph/DAGraph.iuml
 

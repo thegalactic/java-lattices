@@ -1,14 +1,15 @@
-class ComparableSet {
-    .. Constructors ..
-    +ComparableSet()
-    +ComparableSet(TreeSet<Comparable> set)
-    .. Transformers ..
-    +String toFile()
-    .. Generators ..
-    +ComparableSet copy()
-    .. Comparators ..
-    +boolean equals(Object object)
-    +int hashCode()
-    +int compareTo(Object object)
+package lattice {
+    class ComparableSet {
+        .. Constructors ..
+        +ComparableSet()
+        +ComparableSet(TreeSet<Comparable> set)
+        .. Transformers ..
+        +String toFile()
+        .. Generators ..
+        +ComparableSet copy()
+        .. Comparators ..
+        +boolean equals(Object object)
+        +int hashCode()
+        +int compareTo(Object object)
+    }
 }
-

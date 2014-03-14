@@ -158,17 +158,8 @@
 
 	<target name="style">
 		<checkstyle config="lib/style/style.xml">
-			<fileset dir="src" includes="dgraph/*.java" />
+			<fileset dir="src" includes="**/*.java" />
 			<fileset dir="test" includes="**/*.java" />
-			<fileset dir="src" includes="lattice/ArrowRelation.java" />
-			<fileset dir="src" includes="lattice/Lattice.java" />
-			<fileset dir="src" includes="lattice/BijectiveComponents.java" />
-			<fileset dir="src" includes="lattice/Rule.java" />
-			<fileset dir="src" includes="lattice/ComparableSet.java" />
-			<fileset dir="src" includes="lattice/Concept.java" />
-			<fileset dir="src" includes="lattice/Context.java" />
-			<fileset dir="src" includes="lattice/ClosureSystem.java" />
-			<fileset dir="src" includes="lattice/ImplicationalSystem.java" />
 		</checkstyle>
 	</target>
 

@@ -41,9 +41,14 @@ import java.util.Set;
  *
  * @uml DAGraph.png
  * !include src/dgraph/DAGraph.iuml
+ * !include src/dgraph/DGraph.iuml
+ * !include src/dgraph/Edge.iuml
+ * !include src/dgraph/Node.iuml
  *
  * hide members
  * show DAGraph members
+ * class DAGraph #LightCyan
+ * title DAGraph UML graph
  *
  * @todo  Do we forbid to add an edge that breaks acyclic property by verifying that the destination node has no successors?
  */
