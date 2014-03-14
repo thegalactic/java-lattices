@@ -25,6 +25,15 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-03-14 Christophe Demko <chdemko@gmail.com>
+	* src/lattice/ImplicationalSystem.java
+	* test/lattice/ArrowRelationTest.java
+	* test/lattice/BijectiveComponentsTest.java
+	* test/lattice/ImplicationalSystemTest.java
+	* src/lattice/ImplicationalSystem.iuml
+		+ Add uml graph for Implicationalsystem
+		^ Correct some minor errors in test
+
 2014-03-11 Jean-François Viaud <jviaud@univ-lr.fr>
 	* build.xml
 	* src/lattice/ImplicationalSystem.java

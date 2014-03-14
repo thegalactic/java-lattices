@@ -78,6 +78,7 @@ public class BijectiveComponentsTest {
             String filename = file.getName();
             String directory = file.getParent();
             bc.save(directory, "");
+            file.delete();
             file = new File(directory + File.separator + "BijectiveComponents" + File.separator + "Readme.txt");
             Scanner scanner = new Scanner(file);
             String content = "";

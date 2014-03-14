@@ -38,7 +38,7 @@ public class ArrowRelationTest {
         file = new File(filename);
         Scanner scanner = new Scanner(file);
         while (scanner.hasNextLine()) {
-        content += scanner.nextLine();
+            content += scanner.nextLine();
         }
         assertEquals(content, "\\begin{tabular}{|c|*{3}{c|}}"
                 + "\\hline"
@@ -51,8 +51,8 @@ public class ArrowRelationTest {
                 + "d & $\\updownarrow$ & $\\uparrow$ & $\\times$\\\\ "
                 + "\\hline"
                 + "\\end{tabular}"
-            );
-            file.delete();
+        );
+        file.delete();
     } catch (IOException e) { System.out.println("IOException : " + e.getMessage()); }
 }
 }
