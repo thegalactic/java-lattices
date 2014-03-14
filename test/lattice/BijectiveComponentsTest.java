@@ -67,6 +67,8 @@ public class BijectiveComponentsTest {
     }
     /**
      * Test the save method.
+     *
+     * @todo make the test Windows compliant
      */
     @Test
     public void testsave() {

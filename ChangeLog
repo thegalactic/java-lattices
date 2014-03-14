@@ -25,6 +25,14 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-03-14 Jean-François Viaud <jviaud@univ-lr.fr>
+	* src/lattice/ImplicationalSystem.java
+		^ Correct some minor errors in makeRightMaximal
+	* src/test/ImplicationalSystem.java
+		+ Add test for makeRightMaximal
+	* src/test/BijectiveComponenetsTest.java
+		! testsave is not Windows compliant
+
 2014-03-14 Christophe Demko <chdemko@gmail.com>
 	* build.xml
 	* doc/api/README.md
