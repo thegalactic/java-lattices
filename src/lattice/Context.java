@@ -953,12 +953,7 @@ public class Context extends ClosureSystem {
      */
     public Context getReverseContext() {
         Context context = new Context(this);
-        TreeSet<Comparable> tmp = context.attributes;
-        context.attributes = context.observations;
-        context.observations = tmp;
-        TreeMap<Comparable, TreeSet<Comparable>> sauv = context.intent;
-        context.intent = context.extent;
-        context.extent = sauv;
+        context.reverse();
         return context;
     }
 
