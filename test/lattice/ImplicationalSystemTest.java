@@ -186,7 +186,6 @@ public class ImplicationalSystemTest {
         Rule rb = new Rule();
         rb.addToPremise('f');
         rb.addToConclusion('f');
-        is.addRule(ra);
         is.replaceRule(ra, rb);
         assertFalse(is.containsRule(ra));
         assertTrue(is.containsRule(rb));
@@ -242,19 +241,17 @@ public class ImplicationalSystemTest {
     }
     /**
      * Test for the isRightMaximal method.
-     *
-     * @todo To be improved ...
      */
     @Test
     public void testisRightMaximal() {
         ImplicationalSystem is = new ImplicationalSystem();
-//        TreeSet<Comparable> elements = new TreeSet<Comparable>();
-//        elements.add('a');
-//        is.addAllElements(elements);
-//        Rule r = new Rule();
-//        r.addToPremise('a');
-//        r.addToConclusion('a');
-//        is.addRule(r);
+        TreeSet<Comparable> elements = new TreeSet<Comparable>();
+        elements.add('a');
+        is.addAllElements(elements);
+        Rule r = new Rule();
+        r.addToPremise('a');
+        r.addToConclusion('a');
+        is.addRule(r);
         assertTrue(is.isRightMaximal());
     }
     /**
@@ -370,14 +367,12 @@ public class ImplicationalSystemTest {
     }
     /**
      * Test for the makeRightMaximal methods.
-     *
-     * @todo Find the bug ...
      */
     @Test
     public void testmakeRightMaximal() {
         ImplicationalSystem is = ImplicationalSystem.random(13, 8);
-        //is.makeRightMaximal();
-        //assertTrue(is.isRightMaximal());
+        is.makeRightMaximal();
+        assertTrue(is.isRightMaximal());
     }
     /**
      * Test for the makeLeftMinimal methods.

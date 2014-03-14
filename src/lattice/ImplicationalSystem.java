@@ -215,7 +215,9 @@ public class ImplicationalSystem extends ClosureSystem {
                     premisse.add(c);
                 }
             }
-            sigma.addRule(new Rule(premisse, conclusion));
+            //if (!premisse.isEmpty()) {
+                sigma.addRule(new Rule(premisse, conclusion));
+            //}
         }
         return sigma;
     }
@@ -515,7 +517,7 @@ public class ImplicationalSystem extends ClosureSystem {
      */
     public boolean isRightMaximal() {
         for (Rule r : this.sigma) {
-            if (!r.getConclusion().equals(this.closure(r.getConclusion()))) {
+            if (!r.getConclusion().containsAll(this.closure(r.getConclusion()))) {
                 return false;
             }
         }
@@ -749,7 +751,6 @@ public class ImplicationalSystem extends ClosureSystem {
         ImplicationalSystem sauv = new ImplicationalSystem(this);
         for (Rule r : sauv.sigma) {
             Rule newR = new Rule(r.getPremise(), this.closure(r.getPremise()));
-            newR.removeAllFromConclusion(newR.getPremise());
             if (!r.equals(newR)) {
                 this.replaceRule(r, newR);
             }
@@ -1021,7 +1022,7 @@ public class ImplicationalSystem extends ClosureSystem {
      *
      * The closure is initialized with X. The closure is incremented with
      * the conclusion of each rule whose premise is included in it.
-     * Iterations over the rules are performed until no new elemnet has to be added
+     * Iterations over the rules are performed until no new element has to be added
      * in the closure.
      *
      * For direct ImplicationalSystem, only one iteration is needed, and the treatment is
@@ -1041,7 +1042,7 @@ public class ImplicationalSystem extends ClosureSystem {
         do {
             oldES.addAll(newES);
             for (Rule r : this.sigma) {
-                if (newES.containsAll(r.getPremise())) {
+                if (newES.containsAll(r.getPremise()) || r.getPremise().isEmpty()) {
                     newES.addAll(r.getConclusion());
                 }
             }
@@ -1049,4 +1050,3 @@ public class ImplicationalSystem extends ClosureSystem {
         return newES;
     }
 }
-
