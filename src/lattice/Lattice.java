@@ -54,13 +54,18 @@ import dgraph.Node;
  * ![Lattice](Lattice.png)
  *
  * @uml Lattice.png
+ * !include src/dgraph/DAGraph.iuml
+ * !include src/dgraph/DGraph.iuml
+ * !include src/dgraph/Edge.iuml
+ * !include src/dgraph/Node.iuml
  * !include src/lattice/Lattice.iuml
  *
  * hide members
  * show Lattice members
+ * class Lattice #LightCyan
+ * title Lattice UML graph
  *
  * @todo  remove useless comments
- *
  */
 public class Lattice extends DAGraph {
 

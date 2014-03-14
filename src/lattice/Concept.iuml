@@ -1,51 +1,49 @@
-class Concept {
-    -ComparableSet setA
-    -ComparableSet setB
-    .. Constructors ..
-    +Concept(TreeSet<Comparable> setA, TreeSet<Comparable> setB)
-    +Concept(boolean setA, boolean setB)
-    +Concept(TreeSet<Comparable> setA, boolean setB)
-    +Concept(boolean setA, TreeSet<Comparable> setB)
-    +Concept(Concept c)
-    .. Generators ..
-    +Concept copy()
-    .. Predicates ..
-    +boolean hasSetB()
-    +boolean hasSetA()
-    +boolean containsInA(Comparable x)
-    +boolean containsInB(Comparable x)
-    +boolean containsAllInA(TreeSet x)
-    +boolean containsAllInB(TreeSet x)
-    .. Accessors ..
-    +TreeSet<Comparable> getSetA()
-    +TreeSet<Comparable> getSetB()
-    .. Operations ..
-    +void putSetB(ComparableSet x)
-    +void putSetA(ComparableSet x)
-    +boolean addToA(Comparable x)
-    +boolean addToB(Comparable x)
-    +boolean addAllToA(TreeSet x)
-    +boolean addAllToB(TreeSet x)
-    +boolean removeFromA(Comparable x)
-    +boolean removeFromB(Comparable x)
-    +boolean removeAllFromA(TreeSet x)
-    +boolean removeAllFromB(TreeSet x)
-    .. Transformers ..
-    +String toString()
-    +String toDot()
-    .. Comparators ..
-    +int hashCode()
-    +boolean equals(Object o)
-    .. Successors computation ..
-    +ArrayList<TreeSet<Comparable>> immediateSuccessorsLOA(Context init)
-    -int count(Context init, TreeSet<Comparable> attributes)
-    +ArrayList<TreeSet<Comparable>> immediateSuccessors(ClosureSystem init)
+package lattice {
+    class Concept {
+        -ComparableSet setA
+        -ComparableSet setB
+        .. Constructors ..
+        +Concept(TreeSet<Comparable> setA, TreeSet<Comparable> setB)
+        +Concept(boolean setA, boolean setB)
+        +Concept(TreeSet<Comparable> setA, boolean setB)
+        +Concept(boolean setA, TreeSet<Comparable> setB)
+        +Concept(Concept c)
+        .. Generators ..
+        +Concept copy()
+        .. Predicates ..
+        +boolean hasSetB()
+        +boolean hasSetA()
+        +boolean containsInA(Comparable x)
+        +boolean containsInB(Comparable x)
+        +boolean containsAllInA(TreeSet x)
+        +boolean containsAllInB(TreeSet x)
+        .. Accessors ..
+        +TreeSet<Comparable> getSetA()
+        +TreeSet<Comparable> getSetB()
+        .. Operations ..
+        +void putSetB(ComparableSet x)
+        +void putSetA(ComparableSet x)
+        +boolean addToA(Comparable x)
+        +boolean addToB(Comparable x)
+        +boolean addAllToA(TreeSet x)
+        +boolean addAllToB(TreeSet x)
+        +boolean removeFromA(Comparable x)
+        +boolean removeFromB(Comparable x)
+        +boolean removeAllFromA(TreeSet x)
+        +boolean removeAllFromB(TreeSet x)
+        .. Transformers ..
+        +String toString()
+        +String toDot()
+        .. Comparators ..
+        +int hashCode()
+        +boolean equals(Object o)
+        .. Successors computation ..
+        +ArrayList<TreeSet<Comparable>> immediateSuccessorsLOA(Context init)
+        -int count(Context init, TreeSet<Comparable> attributes)
+        +ArrayList<TreeSet<Comparable>> immediateSuccessors(ClosureSystem init)
+    }
+
+    Node <|-- Concept
+
+    Concept *-- "2" ComparableSet
 }
-
-Node <|-- Concept
-
-Concept *-- "2" ComparableSet
-
-!include ComparableSet.iuml
-!include ../dgraph/Node.iuml
-

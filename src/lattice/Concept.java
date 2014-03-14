@@ -39,10 +39,14 @@ import dgraph.Edge;
  * ![Concept](Concept.png)
  *
  * @uml Concept.png
+ * !include src/dgraph/Node.iuml
  * !include src/lattice/Concept.iuml
+ * !include src/lattice/ComparableSet.iuml
  *
  * hide members
  * show Concept members
+ * class Concept #LightCyan
+ * title Concept UML graph
  */
 public class Concept extends Node {
     /* ------------- FIELDS ------------------ */

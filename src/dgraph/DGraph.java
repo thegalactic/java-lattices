@@ -50,9 +50,13 @@ import java.util.Set;
  *
  * @uml DGraph.png
  * !include src/dgraph/DGraph.iuml
+ * !include src/dgraph/Edge.iuml
+ * !include src/dgraph/Node.iuml
  *
  * hide members
  * show DGraph members
+ * class DGraph #LightCyan
+ * title DGraph UML graph
  */
 public class DGraph {
     /* ------------- FIELDS ------------------ */

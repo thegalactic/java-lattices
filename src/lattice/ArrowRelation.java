@@ -38,10 +38,15 @@ import dgraph.DGraph;
  * ![ArrowRelation](ArrowRelation.png)
  *
  * @uml ArrowRelation.png
+ * !include src/dgraph/DGraph.iuml
+ * !include src/dgraph/Edge.iuml
+ * !include src/dgraph/Node.iuml
  * !include src/lattice/ArrowRelation.iuml
  *
  * hide members
  * show ArrowRelation members
+ * class ArrowRelation #LightCyan
+ * title ArrowRelation UML graph
  */
 public class ArrowRelation extends DGraph  {
     /**

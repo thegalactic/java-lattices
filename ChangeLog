@@ -26,6 +26,39 @@ $ -> Language fix or change
 ! -> Note
 
 2014-03-14 Christophe Demko <chdemko@gmail.com>
+	* build.xml
+	* doc/api/README.md
+	* src/dgraph/DAGraph.iuml
+	* src/dgraph/DAGraph.java
+	* src/dgraph/DGraph.iuml
+	* src/dgraph/DGraph.java
+	* src/dgraph/Edge.iuml
+	* src/dgraph/Edge.java
+	* src/dgraph/Node.iuml
+	* src/dgraph/Node.java
+	* src/lattice/ArrowRelation.iuml
+	* src/lattice/ArrowRelation.java
+	* src/lattice/BijectiveComponents.iuml
+	* src/lattice/BijectiveComponents.java
+	* src/lattice/ClosureSystem.iuml
+	* src/lattice/ClosureSystem.java
+	* src/lattice/ComparableSet.iuml
+	* src/lattice/ComparableSet.java
+	* src/lattice/Concept.iuml
+	* src/lattice/Concept.java
+	* src/lattice/ConceptLattice.java
+	* src/lattice/Context.iuml
+	* src/lattice/Context.java
+	* src/lattice/ImplicationalSystem.iuml
+	* src/lattice/ImplicationalSystem.java
+	* src/lattice/Lattice.iuml
+	* src/lattice/Lattice.java
+	* src/lattice/Rule.iuml
+	* src/lattice/Rule.java
+	* src/lattice/ConceptLattice.iuml
+		+ Finish UML graphs
+
+2014-03-14 Christophe Demko <chdemko@gmail.com>
 	* src/lattice/ImplicationalSystem.java
 	* test/lattice/ArrowRelationTest.java
 	* test/lattice/BijectiveComponentsTest.java

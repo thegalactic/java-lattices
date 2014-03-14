@@ -49,9 +49,12 @@ import dgraph.DGraph;
  *
  * @uml BijectiveComponents.png
  * !include src/lattice/BijectiveComponents.iuml
+ * !include src/lattice/ClosureSystem.iuml
  *
  * hide members
  * show BijectiveComponents members
+ * class BijectiveComponents #LightCyan
+ * title BijectiveComponents UML graph
  *
  * @todo  comment the abstract class ClosureSystem
  * @todo  compute information at demand

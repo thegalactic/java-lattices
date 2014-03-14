@@ -36,6 +36,8 @@ import java.util.StringTokenizer;
  *
  * hide members
  * show Node members
+ * class Node #LightCyan
+ * title Node UML graph
  *
  * @todo  Do we implement mutator for content?
  */
