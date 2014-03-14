@@ -62,24 +62,27 @@ public class ImplicationalSystemTest {
     @Test
     public void testImplicationalSystemFile() {
         try {
-            File file = File.createTempFile("junit", ".dot");
-            String filename = file.getName();
-            File outfile = new File(filename);
-            FileWriter out = new FileWriter(outfile);
+            File file = File.createTempFile("junit", ".rule1");
+//            String filename = file.getName();
+//            File outfile = new File(filename);
+            FileWriter out = new FileWriter(file);
             out.write("a b c \n");
             out.write("a -> b c \n");
             out.close();
-            ImplicationalSystem is = new ImplicationalSystem(filename);
+            ImplicationalSystem is = new ImplicationalSystem(file.getAbsolutePath());
             assertEquals(is.toString(), "a b c \n" + "a  -> b c \n");
             assertEquals(is.getRules().size(), 1);
-        } catch (IOException e) { System.out.println("IOException : " + e.getMessage()); }
+            file.delete();
+        } catch (IOException e) {
+            System.out.println("IOException : " + e.getMessage());
+        }
     }
     /**
-     * Test the randomIS method.
+     * Test the random method.
      */
     @Test
-    public void testrandomIS() {
-        ImplicationalSystem is = ImplicationalSystem.randomIS(13, 7);
+    public void testrandom() {
+        ImplicationalSystem is = ImplicationalSystem.random(13, 7);
         assertEquals(is.getRules().size(), 7);
         assertEquals(is.getSet().size(), 13);
     }
@@ -88,7 +91,7 @@ public class ImplicationalSystemTest {
      */
     @Test
     public void testaccessors() {
-        ImplicationalSystem is = ImplicationalSystem.randomIS(13, 7);
+        ImplicationalSystem is = ImplicationalSystem.random(13, 7);
         assertEquals(is.getRules().size(), 7);
         assertEquals(is.getSet().size(), 13);
         assertEquals(is.nbRules(), 7);
@@ -205,7 +208,7 @@ public class ImplicationalSystemTest {
             r.addToConclusion('b');
             r.addToConclusion('c');
             is.addRule(r);
-            File file = File.createTempFile("junit", ".dot");
+            File file = File.createTempFile("junit", ".rule2");
             String filename = file.getName();
             file.delete();
             is.toFile(filename);
@@ -343,7 +346,7 @@ public class ImplicationalSystemTest {
      */
     @Test
     public void testmakeProper() {
-        ImplicationalSystem is = ImplicationalSystem.randomIS(13, 8);
+        ImplicationalSystem is = ImplicationalSystem.random(13, 8);
         is.makeProper();
         assertTrue(is.isProper());
     }
@@ -352,7 +355,7 @@ public class ImplicationalSystemTest {
      */
     @Test
     public void testmakeUnary() {
-        ImplicationalSystem is = ImplicationalSystem.randomIS(13, 8);
+        ImplicationalSystem is = ImplicationalSystem.random(13, 8);
         is.makeUnary();
         assertTrue(is.isUnary());
     }
@@ -361,7 +364,7 @@ public class ImplicationalSystemTest {
      */
     @Test
     public void testmakeCompact() {
-        ImplicationalSystem is = ImplicationalSystem.randomIS(13, 8);
+        ImplicationalSystem is = ImplicationalSystem.random(13, 8);
         is.makeCompact();
         assertTrue(is.isCompact());
     }
@@ -372,7 +375,7 @@ public class ImplicationalSystemTest {
      */
     @Test
     public void testmakeRightMaximal() {
-        ImplicationalSystem is = ImplicationalSystem.randomIS(13, 8);
+        ImplicationalSystem is = ImplicationalSystem.random(13, 8);
         //is.makeRightMaximal();
         //assertTrue(is.isRightMaximal());
     }
@@ -381,7 +384,7 @@ public class ImplicationalSystemTest {
      */
     @Test
     public void testmakeLeftMinimal() {
-        ImplicationalSystem is = ImplicationalSystem.randomIS(13, 8);
+        ImplicationalSystem is = ImplicationalSystem.random(13, 8);
         is.makeLeftMinimal();
         assertTrue(is.isLeftMinimal());
     }
@@ -390,7 +393,7 @@ public class ImplicationalSystemTest {
      */
     @Test
     public void testmakeDirect() {
-        ImplicationalSystem is = ImplicationalSystem.randomIS(13, 8);
+        ImplicationalSystem is = ImplicationalSystem.random(13, 8);
         is.makeDirect();
         assertTrue(is.isDirect());
     }
@@ -399,7 +402,7 @@ public class ImplicationalSystemTest {
      */
     @Test
     public void testmakeMinimum() {
-        ImplicationalSystem is = ImplicationalSystem.randomIS(13, 8);
+        ImplicationalSystem is = ImplicationalSystem.random(13, 8);
         is.makeMinimum();
         assertTrue(is.isMinimum());
     }
@@ -408,7 +411,7 @@ public class ImplicationalSystemTest {
      */
     @Test
     public void testmakeCanonicalDirectBasis() {
-        ImplicationalSystem is = ImplicationalSystem.randomIS(13, 8);
+        ImplicationalSystem is = ImplicationalSystem.random(13, 8);
         is.makeCanonicalDirectBasis();
         assertTrue(is.isCanonicalDirectBasis());
     }
@@ -417,7 +420,7 @@ public class ImplicationalSystemTest {
      */
     @Test
     public void testmakeCanonicalBasis() {
-        ImplicationalSystem is = ImplicationalSystem.randomIS(13, 8);
+        ImplicationalSystem is = ImplicationalSystem.random(13, 8);
         is.makeCanonicalBasis();
         assertTrue(is.isCanonicalBasis());
     }
