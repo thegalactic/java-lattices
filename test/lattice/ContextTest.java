@@ -254,4 +254,26 @@ public class ContextTest {
         observations.remove("1");
         assertTrue(context.getIntentNb(observations) == 2);
     }
+    /**
+     * Test reverse context
+     */
+    @Test
+    public void testGetReverseContext() {
+        Context context = new Context();
+        context.addToAttributes("a");
+        context.addToAttributes("b");
+        context.addToAttributes("c");
+        context.addToObservations("1");
+        context.addToObservations("2");
+        context.addToObservations("3");
+        context.addExtentIntent("1", "a");
+        context.addExtentIntent("1", "b");
+        context.addExtentIntent("2", "a");
+        context.addExtentIntent("3", "b");
+        context.addExtentIntent("3", "c");
+        Context iContext = context.getReverseContext();
+        assertFalse(context.getAttributes().equals(context.getObservations()));
+        assertTrue(context.getAttributes().equals(iContext.getObservations()));
+        assertTrue(iContext.getAttributes().equals(context.getObservations()));
+    }
 }
