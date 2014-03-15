@@ -25,6 +25,10 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-03-14 Clement Guerin <guerin.clement@live.fr>
+	* src/lattice/Context.java
+		^ Correct getReverseContext() method
+
 2014-03-14 Christophe Demko <chdemko@gmail.com>
 	* build.xml
 	* doc/api/README.md
