@@ -25,6 +25,14 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-03-15 Clement Guerin <guerin.clement@live.fr>
+        * test/lattice/ContextTest.java
+        * src/lattice/Context.java
+            ^ Correct a few mix-ups on extent/intent comments
+            ^ Simplify setMaps() (arrayAttributes and arrayObservations might be redondant with attributes and observations)
+            + Add getIntentNb method
+            + Add setBitSets calls each time attributes, observations, intents or extents are modified
+
 2014-03-14 Clement Guerin <guerin.clement@live.fr>
 	* src/lattice/Context.java
 		^ Correct getReverseContext() method
