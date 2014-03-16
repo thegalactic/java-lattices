@@ -1,14 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package lattice;
 
-import java.util.Collections;
 import java.util.TreeSet;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 /**
@@ -17,7 +12,7 @@ import org.junit.Test;
  */
 public class ContextTest {
     /**
-     * Test the empty constructor of Context
+     * Test the empty constructor of Context.
      */
     @Test
     public void testEmptyContext() {
@@ -26,7 +21,7 @@ public class ContextTest {
         assertEquals(context.getObservations(), new TreeSet<Comparable>());
     }
     /**
-     * Test the copy constructor of Context
+     * Test the copy constructor of Context.
      */
     @Test
     public void testCopyContext() {
@@ -36,7 +31,7 @@ public class ContextTest {
         context.addToAttributes("c");
         context.addToObservations("1");
         context.addToObservations("2");
-        context.addToObservations("3");        
+        context.addToObservations("3");
         context.addExtentIntent("1", "a");
         context.addExtentIntent("1", "b");
         context.addExtentIntent("2", "a");
@@ -49,7 +44,7 @@ public class ContextTest {
         assertEquals(context.getExtent("c"), copy.getExtent("c"));
     }
     /**
-     * Test containsAttribute
+     * Test of containsAttribute.
      */
     @Test
     public void testContainsAttribute() {
@@ -59,7 +54,7 @@ public class ContextTest {
         assertFalse(context.containsObservation("b"));
     }
     /**
-     * Test containsAttributes
+     * Test of containsAllAttributes.
      */
     @Test
     public void testContainsAllAttributes() {
@@ -76,7 +71,7 @@ public class ContextTest {
         assertFalse(context.containsAllAttributes(attributesFalse));
     }
     /**
-     * Test containsObservation
+     * Test of containsObservation.
      */
     @Test
     public void testContainsObservation() {
@@ -86,7 +81,7 @@ public class ContextTest {
         assertFalse(context.containsObservation("2"));
     }
     /**
-     * Test containsObservations
+     * Test of containsAllObservations.
      */
     @Test
     public void testContainsAllObservations() {
@@ -103,7 +98,7 @@ public class ContextTest {
         assertFalse(context.containsAllObservations(observationsFalse));
     }
     /**
-     * Test add attribute
+     * Test of the insertion of an attribute.
      */
     @Test
     public void testAddAttribute() {
@@ -112,7 +107,7 @@ public class ContextTest {
         assertFalse(context.addToAttributes("a"));
     }
     /**
-     * Test add attributes
+     * Test of the insertion of some attributes.
      */
     @Test
     public void testAddAttributes() {
@@ -127,7 +122,7 @@ public class ContextTest {
         assertFalse(context.addAllToAttributes(attributesFalse));
     }
     /**
-     * Test add observation
+     * Test of the insertion of an observation.
      */
     @Test
     public void testAddObservation() {
@@ -136,7 +131,7 @@ public class ContextTest {
         assertFalse(context.addToObservations("1"));
     }
     /**
-     * Test add observations
+     * Test of the insertion of some observations.
      */
     @Test
     public void testAddObservations() {
@@ -151,7 +146,7 @@ public class ContextTest {
         assertFalse(context.addAllToObservations(observationsFalse));
     }
     /**
-     * Test remove attribute
+     * Test of the removal of an attribute.
      */
     @Test
     public void testRemoveAttribute() {
@@ -173,7 +168,7 @@ public class ContextTest {
         assertFalse(context.removeFromAttributes("d"));
     }
     /**
-     * Test remove observation
+     * Test of the removal of an observation.
      */
     @Test
     public void testRemoveObservation() {
@@ -195,7 +190,7 @@ public class ContextTest {
         assertFalse(context.removeFromAttributes("4"));
     }
     /**
-     * Test extentNb
+     * Test of getExtentNb.
      */
     @Test
     public void testExtentNb() {
@@ -226,7 +221,7 @@ public class ContextTest {
         assertTrue(context.getExtentNb(attributes) == 3);
     }
     /**
-     * Test intentNb
+     * Test of getIntentNb.
      */
     @Test
     public void testIntentNb() {
@@ -248,14 +243,14 @@ public class ContextTest {
         observations.add("2");
         assertTrue(context.getIntentNb(observations) == 1);
         observations.add("3");
-        assertTrue(context.getIntentNb(observations) == 0);        
+        assertTrue(context.getIntentNb(observations) == 0);
         observations.remove("2");
         assertTrue(context.getIntentNb(observations) == 1);
         observations.remove("1");
         assertTrue(context.getIntentNb(observations) == 2);
     }
     /**
-     * Test reverse context
+     * Test of context reversion.
      */
     @Test
     public void testGetReverseContext() {

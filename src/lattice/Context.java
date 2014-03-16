@@ -688,7 +688,7 @@ public class Context extends ClosureSystem {
         }
         return obsIntent.cardinality();
     }
-    
+
     /**
      * Checks if the second specified element is an intent of the first specified element.
      *
