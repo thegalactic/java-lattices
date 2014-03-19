@@ -25,6 +25,21 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-03-19 Jean-François Viaud <jviaud@univ-lr.fr>
+	*src/test/BijectiveComponenetTest.java
+		# Path are now Windows/Linux compliants
+	*src/lattice/ImplicationalSystem.java
+		+ Add isReduced method
+		* Modify reduction method
+	*src/lattice/ClosureSystem.java
+		* Modify the comment of precedenceGraph method
+		* Modify the getReductibleElements method
+	*src/test/ImplicationalSystemTest.java
+		+ Complete tests
+	*src/test/ClosureSystemTest.java
+		+ Add file
+		+ Add 2 tests over 5
+
 2014-03-15 Clement Guerin <guerin.clement@live.fr>
         * test/lattice/ContextTest.java
         * src/lattice/Context.java

@@ -1,5 +1,8 @@
 package lattice;
 
+import dgraph.DGraph;
+import dgraph.Edge;
+import dgraph.Node;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -421,26 +424,67 @@ public class ImplicationalSystemTest {
     }
     /**
      * Test for the representativeGraph method.
-     *
-     * @todo implementing test.
      */
     @Test
     public void testrepresentativeGraph() {
+        ImplicationalSystem is = new ImplicationalSystem();
+        TreeSet<Comparable> elements = new TreeSet<Comparable>();
+        elements.add('a');
+        elements.add('b');
+        elements.add('c');
+        is.addAllElements(elements);
+        Rule r = new Rule();
+        r.addToPremise('a');
+        r.addToPremise('b');
+        r.addToConclusion('c');
+        is.addRule(r);
+        DGraph dg = is.representativeGraph();
+        Node a = new Node(dg.getNodeByContent('a'));
+        Node b = new Node(dg.getNodeByContent('b'));
+        Node c = new Node(dg.getNodeByContent('c'));
+        assertTrue(dg.containsNode(a));
+        assertTrue(dg.containsNode(b));
+        assertTrue(dg.containsNode(c));
+        Edge cToa = dg.getEdge(c, a);
+        assertEquals(cToa.getContent().toString(), "[[b]]");
+        Edge cTob = dg.getEdge(c, b);
+        assertEquals(cTob.getContent().toString(), "[[a]]");
     }
     /**
      * Test for the dependencyGraph method.
-     *
-     * @todo implementing test.
      */
     @Test
     public void testdependencyGraph() {
+        ImplicationalSystem is = new ImplicationalSystem();
+        TreeSet<Comparable> elements = new TreeSet<Comparable>();
+        elements.add('a');
+        elements.add('b');
+        elements.add('c');
+        is.addAllElements(elements);
+        Rule r = new Rule();
+        r.addToPremise('a');
+        r.addToPremise('b');
+        r.addToConclusion('c');
+        is.addRule(r);
+        DGraph dg = is.dependencyGraph();
+        Node a = new Node(dg.getNodeByContent('a'));
+        Node b = new Node(dg.getNodeByContent('b'));
+        Node c = new Node(dg.getNodeByContent('c'));
+        assertTrue(dg.containsNode(a));
+        assertTrue(dg.containsNode(b));
+        assertTrue(dg.containsNode(c));
+        Edge cToa = dg.getEdge(c, a);
+        assertEquals(cToa.getContent().toString(), "[[b]]");
+        Edge cTob = dg.getEdge(c, b);
+        assertEquals(cTob.getContent().toString(), "[[a]]");
     }
     /**
-     * Test for the reduction method.
-     *
-     * @todo implementing test.
+     * Test for the reduction and isReduced methods.
      */
     @Test
     public void testreduction() {
+        ImplicationalSystem is = ImplicationalSystem.random(13, 8);
+        is.reduction();
+        assertTrue(is.isReduced());
     }
 }
