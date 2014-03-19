@@ -40,6 +40,11 @@ $ -> Language fix or change
 		+ Add file
 		+ Add 2 tests over 5
 
+2014-03-18 Christophe Demko <chdemko@gmail.com>
+	* README.md
+	* lib/jacoco/jacocoant.jar
+		^ Use jacoco 0.6.5
+
 2014-03-15 Clement Guerin <guerin.clement@live.fr>
         * test/lattice/ContextTest.java
         * src/lattice/Context.java
