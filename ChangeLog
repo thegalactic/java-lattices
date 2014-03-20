@@ -25,6 +25,10 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-03-20 Jean-François Viaud <jviaud@univ-lr.fr>
+	*src/lattice/ImplicationalSystem.iuml
+		+ Add isReduced method
+
 2014-03-19 Jean-François Viaud <jviaud@univ-lr.fr>
 	*src/test/BijectiveComponenetTest.java
 		# Path are now Windows/Linux compliants
