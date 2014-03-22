@@ -25,22 +25,32 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-03-22 Jean-François Viaud <jviaud@univ-lr.fr>
+	* src/lattice/Context.java
+		+ Add random method
+	* src/lattice/Context.iuml
+		* Update file with random method
+	* test/lattice/ContextTest.java
+		+ Add test for random method
+	* test/lattice/ClosureSystemTest.java
+		+ Add missing tests
+
 2014-03-20 Jean-François Viaud <jviaud@univ-lr.fr>
-	*src/lattice/ImplicationalSystem.iuml
+	* src/lattice/ImplicationalSystem.iuml
 		+ Add isReduced method
 
 2014-03-19 Jean-François Viaud <jviaud@univ-lr.fr>
-	*src/test/BijectiveComponenetTest.java
+	* src/test/BijectiveComponenetTest.java
 		# Path are now Windows/Linux compliants
-	*src/lattice/ImplicationalSystem.java
+	* src/lattice/ImplicationalSystem.java
 		+ Add isReduced method
 		* Modify reduction method
-	*src/lattice/ClosureSystem.java
+	* src/lattice/ClosureSystem.java
 		* Modify the comment of precedenceGraph method
 		* Modify the getReductibleElements method
-	*src/test/ImplicationalSystemTest.java
+	* src/test/ImplicationalSystemTest.java
 		+ Complete tests
-	*src/test/ClosureSystemTest.java
+	* src/test/ClosureSystemTest.java
 		+ Add file
 		+ Add 2 tests over 5
 
