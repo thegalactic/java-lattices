@@ -1,0 +1,14 @@
+package lattice {
+    class LatticeFactory {
+        .. Constructor ..
+        +LatticeFactory()
+        .. Generators ..
+        {static}+Lattice random(int nb)
+        {static}+Lattice booleanAlgebra(int nb)
+        {static}+Lattice permutationLattice(int n)
+        {static}+Lattice product(Lattice L, Lattice R)
+        .. Operations ..
+        {static}-recursiveBooleanAlgebra(Node node, Lattice l, int n)
+        {static}-recursivePermutationLattice(Node node, Lattice l, int n)
+    }
+}

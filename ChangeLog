@@ -25,6 +25,21 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-03-27 Jean-François Viaud <jviaud@univ-lr.fr>
+	+ src/lattice/Couple.java
+		+ Add new class to generate lattice products
+		+ Add corresponding iuml file
+		+ Add corresponding test file
+	+ src/lattice/Permutation.java
+		+ Add new class to generate lattice of permutations
+		+ Add corresponding iuml file
+		+ Add corresponding test file
+	+ src/lattice/LatticeFactory.java
+		+ Add this classe to generate examples : random, product,
+		permutation, boolean algebra
+		+ Add corresponding iuml file
+		+ Add corresponding test file
+
 2014-03-22 Jean-François Viaud <jviaud@univ-lr.fr>
 	* src/lattice/Context.java
 		+ Add random method
