@@ -40,6 +40,10 @@ $ -> Language fix or change
 		+ Add corresponding iuml file
 		+ Add corresponding test file
 
+2014-03-27 Christophe Demko <chdemko@gmail.com>
+	* utility/initiate-publish.sh
+		+ Publish jar and compressed api doc
+
 2014-03-22 Jean-François Viaud <jviaud@univ-lr.fr>
 	* src/lattice/Context.java
 		+ Add random method
