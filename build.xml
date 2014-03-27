@@ -35,7 +35,7 @@
 
 	<target name="rebuild" depends="clean,jar" />
 
-	<target name="test" depends="junit,style,api,coverage,contribute,tutorial" />
+	<target name="test" depends="jar,junit,style,api,coverage,contribute,tutorial" />
 
 	<target name="clean">
 		<delete dir="${build.dir}" />
