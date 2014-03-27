@@ -25,6 +25,10 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-03-27 Christophe Demko <chdemko@gmail.com>
+	* utility/initiate-publish.sh
+		+ Publish jar and compressed api doc
+
 2014-03-18 Christophe Demko <chdemko@gmail.com>
 	* README.md
 	* lib/jacoco/jacocoant.jar
