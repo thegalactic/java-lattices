@@ -23,15 +23,17 @@ if [ "$TRAVIS_REPO_SLUG" == "kbertet/java-lattices" ] && [ "$TRAVIS_JDK_VERSION"
   git rm -rf ./test
   git rm -rf ./coverage
   git rm -rf ./download
+  mkdir docs
+  mkdir jar
   touch .nojekyll
   cp -Rf $HOME/javadoc-latest ./api
   cp -Rf $HOME/reports-latest ./test
   cp -Rf $HOME/coverage-latest ./coverage
   cp -Rf $HOME/contribute-latest ./contribute
-  cp -Rf $HOME/lattices-debug.jar ./download
-  cp -Rf $HOME/lattices.jar ./download
-  cp $HOME/tutorial-java-lattices.pdf .
-  cp $HOME/lattices-api.zip .
+  cp -Rf $HOME/lattices-debug.jar ./jar
+  cp -Rf $HOME/lattices.jar ./jar
+  cp $HOME/tutorial-java-lattices.pdf ./docs
+  cp $HOME/lattices-api.zip ./docs
   git add -f .
   git commit -m "Latest doc on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages"
   git push -fq origin gh-pages > /dev/null
