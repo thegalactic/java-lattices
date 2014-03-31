@@ -1,47 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package lattice;
 
 import dgraph.DAGraph;
 import dgraph.Node;
 import java.util.TreeSet;
 import java.util.Vector;
-//import org.junit.After;
-//import org.junit.AfterClass;
-//import org.junit.Before;
-//import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
-//import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 
-/**
- *
- * @author ndao01
- */
 public class ConceptLatticeTest {
-//    public ConceptLatticeTest() {
-//    }
-//    @BeforeClass
-//    public static void setUpClass() {
-//        // to do
-//    }
-//    @AfterClass
-//    public static void tearDownClass() {
-//        // to do
-//    }
-//    @Before
-//    public void setUp() {
-//        // to do
-//    }
-//    @After
-//    public void tearDown() {
-//        // to do
-//    }
     /**
      * Test of addNode method, of class ConceptLattice.
      */
@@ -57,6 +24,7 @@ public class ConceptLatticeTest {
         assertEquals(2, cl.getNodes().size());
         assertEquals(1, cl.getEdges().size());
     }
+    
     /**
      * Test of addNode method, of class ConceptLattice.
      */
@@ -66,6 +34,7 @@ public class ConceptLatticeTest {
         ConceptLattice instance = new ConceptLattice();
         assertTrue(instance.addNode(n));
     }
+    
     /**
      * Test of addEdge method, of class ConceptLattice.
      */
@@ -78,6 +47,7 @@ public class ConceptLatticeTest {
         instance.addNode(to);
         assertTrue(instance.addEdge(from, to));
     }
+    
     /**
      * Test of containsConcepts method, of class ConceptLattice.
      */
@@ -92,6 +62,7 @@ public class ConceptLatticeTest {
         cl.addEdge(concept1, concept2);
         assertTrue(cl.containsConcepts());
     }
+    
     /**
      * Test of isConceptLattice method, of class ConceptLattice.
      */
@@ -108,6 +79,7 @@ public class ConceptLatticeTest {
         cl.addEdge(concept1, concept2);
         assertTrue(cl.isConceptLattice());
     }
+    
     /**
      * Test of containsAllSetA method, of class ConceptLattice.
      */
@@ -125,6 +97,7 @@ public class ConceptLatticeTest {
         boolean result = instance.containsAllSetA();
         assertEquals(expResult, result);
     }
+    
     /**
      * Test of containsAllSetB method, of class ConceptLattice.
      */
@@ -142,6 +115,7 @@ public class ConceptLatticeTest {
         boolean result = instance.containsAllSetB();
         assertEquals(expResult, result);
     }
+    
     /**
      * Test of copy method, of class ConceptLattice.
      */
@@ -156,6 +130,7 @@ public class ConceptLatticeTest {
         assertEquals(b, result.getNode(b));
         assertTrue(result.getEdges().isEmpty());
     }
+    
     /**
      * Test of removeAllSetA method, of class ConceptLattice.
      */
@@ -164,6 +139,7 @@ public class ConceptLatticeTest {
         ConceptLattice instance = new ConceptLattice();
         assertTrue(instance.removeAllSetA());
     }
+    
     /**
      * Test of removeAllSetB method, of class ConceptLattice.
      */
@@ -172,6 +148,7 @@ public class ConceptLatticeTest {
         ConceptLattice instance = new ConceptLattice();
         assertTrue(instance.removeAllSetB());
     }
+    
     /**
      * Test of initializeSetAForJoin method, of class ConceptLattice.
      */
@@ -180,6 +157,7 @@ public class ConceptLatticeTest {
         ConceptLattice instance = new ConceptLattice();
         assertTrue(instance.initializeSetAForJoin());
     }
+    
     /**
      * Test of initializeSetBForMeet method, of class ConceptLattice.
      */
@@ -188,6 +166,7 @@ public class ConceptLatticeTest {
         ConceptLattice instance = new ConceptLattice();
         assertTrue(instance.initializeSetBForMeet());
     }
+    
     /**
      * Test of makeInclusionReduction method, of class ConceptLattice.
      */
@@ -196,6 +175,7 @@ public class ConceptLatticeTest {
         ConceptLattice instance = new ConceptLattice();
         assertTrue(instance.makeInclusionReduction());
     }
+    
     /**
      * Test of makeIrreduciblesReduction method, of class ConceptLattice.
      */
@@ -204,6 +184,7 @@ public class ConceptLatticeTest {
         ConceptLattice instance = new ConceptLattice();
         assertTrue(instance.makeIrreduciblesReduction());
     }
+    
     /**
      * Test of makeEdgeValuation method, of class ConceptLattice.
      */
@@ -212,6 +193,7 @@ public class ConceptLatticeTest {
         ConceptLattice instance = new ConceptLattice();
         assertTrue(instance.makeEdgeValuation());
     }
+    
     /**
      * Test of getJoinReduction method, of class ConceptLattice.
      */
@@ -235,6 +217,7 @@ public class ConceptLatticeTest {
         assertEquals(2, lat.getNodes().size());
         assertEquals(1, lat.getEdges().size());
     }
+    
     /**
      * Test of getMeetReduction method, of class ConceptLattice.
      */
@@ -258,6 +241,7 @@ public class ConceptLatticeTest {
         assertEquals(2, lat.getNodes().size());
         assertEquals(1, lat.getEdges().size());
     }
+    
     /**
      * Test of getIrreduciblesReduction method, of class ConceptLattice.
      */
@@ -284,6 +268,7 @@ public class ConceptLatticeTest {
             assertTrue(n.getContent() != null);
         }
     }
+    
     /**
      * Test of idealsLattice method, of class ConceptLattice.
      */
@@ -300,6 +285,7 @@ public class ConceptLatticeTest {
         assertEquals(3, result.getNodes().size());
         assertTrue(result.getEdges().isEmpty());
     }
+    
     /**
      * Test of completeLattice method, of class ConceptLattice.
      */
@@ -322,6 +308,7 @@ public class ConceptLatticeTest {
         assertEquals(4, result.getNodes().size());
         assertEquals(9, result.getEdges().size());
     }
+    
     /**
      * Test of diagramLattice method, of class ConceptLattice.
      */
@@ -345,47 +332,7 @@ public class ConceptLatticeTest {
         ConceptLattice result = ConceptLattice.diagramLattice(cs);
         assertEquals(null, result.getNodes().first().getContent());
     }
-//    /**
-//     * Test of recursiveDiagramLattice method, of class ConceptLattice.
-//     */
-//    @Test
-//    public void testRecursiveDiagramLattice() {
-//        System.out.println("recursiveDiagramLattice");
-//        TreeSet<Comparable> comparablesAtts = new TreeSet<Comparable>();
-//        TreeSet<Comparable> comparablesObjs = new TreeSet<Comparable>();
-//        comparablesAtts.add((Comparable) "a");
-//        comparablesAtts.add((Comparable) "b");
-//        comparablesAtts.add((Comparable) "c");
-//        comparablesAtts.add((Comparable) "d");
-//        comparablesObjs.add((Comparable) "1");
-//        comparablesObjs.add((Comparable) "2");
-//        comparablesObjs.add((Comparable) "3");
-//        Context cs = new Context();
-//        cs.addAllToAttributes(comparablesAtts);
-//        cs.addAllToObservations(comparablesObjs);
-//        cs.addExtentIntent("1", "a");
-//        cs.addExtentIntent("1", "c");
-//        cs.addExtentIntent("2", "a");
-//        cs.addExtentIntent("2", "b");
-//        cs.addExtentIntent("2", "c");
-//        cs.addExtentIntent("2", "d");
-//        cs.addExtentIntent("3", "a");
-//        cs.addExtentIntent("3", "b");
-//        TreeSet<Comparable> A = new TreeSet<Comparable>();
-//        A.add((Comparable) "a");
-//        A.add((Comparable) "b");
-//        Concept c = new Concept(true, true);
-//        DAGraph da = new DAGraph(cs.precedenceGraph());
-//        Lattice l = new Lattice(da);
-//        ConceptLattice instance = new ConceptLattice(l);
-//        instance.recursiveDiagramLattice(c, cs);
-////        Concept n = null;
-////        ClosureSystem init = null;
-////        ConceptLattice instance = new ConceptLattice();
-////        instance.recursiveDiagramLattice(n, init);
-////        // TODO review the generated test code and remove the default call to fail.
-////        fail("The test case is a prototype.");
-//    }
+    
     /**
      * Test of immediateSuccessors method, of class ConceptLattice.
      */
