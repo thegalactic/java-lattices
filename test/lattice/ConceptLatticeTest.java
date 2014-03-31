@@ -7,7 +7,9 @@ import java.util.Vector;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
-
+/**
+* Test of class ConceptLattice.
+*/
 public class ConceptLatticeTest {
     /**
      * Test of addNode method, of class ConceptLattice.
