@@ -28,15 +28,19 @@ public class ConceptLatticeTest {
     }
     @BeforeClass
     public static void setUpClass() {
+        // to do
     }
     @AfterClass
     public static void tearDownClass() {
+        // to do
     }
     @Before
     public void setUp() {
+        // to do
     }
     @After
     public void tearDown() {
+        // to do
     }
     /**
      * Test of addNode method, of class ConceptLattice.
@@ -44,11 +48,11 @@ public class ConceptLatticeTest {
     @Test
     public void testConstructorFromLattice() {
         Lattice l = new Lattice();
-        ConceptLattice CL = new ConceptLattice(l);
-        assertTrue(CL.isLattice());
-        assertFalse(CL.containsConcepts());
-        assertTrue(CL.getNodes().isEmpty());
-        assertTrue(CL.getEdges().isEmpty());
+        ConceptLattice cl = new ConceptLattice(l);
+        assertTrue(cl.isLattice());
+        assertFalse(cl.containsConcepts());
+        assertTrue(cl.getNodes().isEmpty());
+        assertTrue(cl.getEdges().isEmpty());
     }
     /**
      * Test of addNode method, of class ConceptLattice.
@@ -392,7 +396,7 @@ public class ConceptLatticeTest {
         comparablesAtts.add((Comparable) "d");
         comparablesObjs.add((Comparable) "1");
         comparablesObjs.add((Comparable) "2");
-        comparablesObjs.add((Comparable) "3");        
+        comparablesObjs.add((Comparable) "3");
         Context cs = new Context();
         cs.addAllToAttributes(comparablesAtts);
         cs.addAllToObservations(comparablesObjs);
@@ -404,20 +408,20 @@ public class ConceptLatticeTest {
         cs.addExtentIntent("2", "d");
         cs.addExtentIntent("3", "a");
         cs.addExtentIntent("3", "b");
-        TreeSet<Comparable> A = new TreeSet<Comparable>();
-        A.add((Comparable) "a");
-        A.add((Comparable) "b");
-        Concept c = new Concept(A, true);
+        TreeSet<Comparable> a = new TreeSet<Comparable>();
+        a.add((Comparable) "a");
+        a.add((Comparable) "b");
+        Concept c = new Concept(a, true);
         DAGraph da = new DAGraph(cs.precedenceGraph());
         Lattice l = new Lattice(da);
         ConceptLattice instance = new ConceptLattice(l);
         Vector<TreeSet<Comparable>> result = instance.immediateSuccessors(c, cs);
-        TreeSet<Comparable> B = new TreeSet<Comparable>();
-        B.add("a");
-        B.add("b");
-        B.add("c");
+        TreeSet<Comparable> b = new TreeSet<Comparable>();
+        b.add("a");
+        b.add("b");
+        b.add("c");
         Vector<TreeSet<Comparable>> expResult = new Vector<TreeSet<Comparable>>();
-        expResult.add(B);
+        expResult.add(b);
         assertEquals(expResult, result);
     }
 }
