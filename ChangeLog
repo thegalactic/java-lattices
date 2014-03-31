@@ -25,6 +25,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-03-31 Ngoc Bich Dao <dao.nbich@gmail.com>
+	* test/lattice/ConceptLatticeTest.java
+
 2014-03-27 Christophe Demko <chdemko@gmail.com>
 	* utility/initiate-publish.sh
 		+ Publish jar and compressed api doc
