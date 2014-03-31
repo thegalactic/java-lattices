@@ -45,7 +45,8 @@ public class ConceptLatticeTest {
     public void testConstructorFromLattice() {
         Lattice l = new Lattice();
         ConceptLattice CL = new ConceptLattice(l);
-        assertFalse(CL.isConceptLattice());
+        assertTrue(CL.isLattice());
+        assertFalse(CL.containsConcepts());
         assertTrue(CL.getNodes().isEmpty());
         assertTrue(CL.getEdges().isEmpty());
     }
@@ -388,11 +389,10 @@ public class ConceptLatticeTest {
         comparablesAtts.add((Comparable) "a");
         comparablesAtts.add((Comparable) "b");
         comparablesAtts.add((Comparable) "c");
-        comparablesAtts.add((Comparable) "d");        
+        comparablesAtts.add((Comparable) "d");
         comparablesObjs.add((Comparable) "1");
         comparablesObjs.add((Comparable) "2");
-        comparablesObjs.add((Comparable) "3");
-        
+        comparablesObjs.add((Comparable) "3");        
         Context cs = new Context();
         cs.addAllToAttributes(comparablesAtts);
         cs.addAllToObservations(comparablesObjs);
@@ -403,15 +403,15 @@ public class ConceptLatticeTest {
         cs.addExtentIntent("2", "c");
         cs.addExtentIntent("2", "d");
         cs.addExtentIntent("3", "a");
-        cs.addExtentIntent("3", "b");        
+        cs.addExtentIntent("3", "b");
         TreeSet<Comparable> A = new TreeSet<Comparable>();
         A.add((Comparable) "a");
         A.add((Comparable) "b");
-        Concept c = new Concept(A, true);        
+        Concept c = new Concept(A, true);
         DAGraph da = new DAGraph(cs.precedenceGraph());
         Lattice l = new Lattice(da);
         ConceptLattice instance = new ConceptLattice(l);
-        Vector<TreeSet<Comparable>> result = instance.immediateSuccessors(c, cs);        
+        Vector<TreeSet<Comparable>> result = instance.immediateSuccessors(c, cs);
         TreeSet<Comparable> B = new TreeSet<Comparable>();
         B.add("a");
         B.add("b");
@@ -419,5 +419,5 @@ public class ConceptLatticeTest {
         Vector<TreeSet<Comparable>> expResult = new Vector<TreeSet<Comparable>>();
         expResult.add(B);
         assertEquals(expResult, result);
-    }    
+    }
 }
