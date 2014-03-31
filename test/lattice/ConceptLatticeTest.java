@@ -16,6 +16,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -44,7 +45,7 @@ public class ConceptLatticeTest {
     public void testConstructorFromLattice() {
         Lattice l = new Lattice();
         ConceptLattice CL = new ConceptLattice(l);
-        assertTrue(CL.isConceptLattice());
+        assertFalse(CL.isConceptLattice());
         assertTrue(CL.getNodes().isEmpty());
         assertTrue(CL.getEdges().isEmpty());
     }
