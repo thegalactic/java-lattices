@@ -10,13 +10,13 @@ import dgraph.DAGraph;
 import dgraph.Node;
 import java.util.TreeSet;
 import java.util.Vector;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+//import org.junit.After;
+//import org.junit.AfterClass;
+//import org.junit.Before;
+//import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
+//import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -48,11 +48,14 @@ public class ConceptLatticeTest {
     @Test
     public void testConstructorFromLattice() {
         Lattice l = new Lattice();
+        Concept a = new Concept(true, true); l.addNode(a);
+        Concept b = new Concept(true, true); l.addNode(b);
+        l.addEdge(a, b);
         ConceptLattice cl = new ConceptLattice(l);
         assertTrue(cl.isLattice());
-        assertFalse(cl.containsConcepts());
-        assertTrue(cl.getNodes().isEmpty());
-        assertTrue(cl.getEdges().isEmpty());
+        assertTrue(cl.containsConcepts());
+        assertEquals(2, cl.getNodes().size());
+        assertEquals(1, cl.getEdges().size());
     }
     /**
      * Test of addNode method, of class ConceptLattice.
