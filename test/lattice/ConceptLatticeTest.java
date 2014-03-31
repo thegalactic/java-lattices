@@ -16,7 +16,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -43,15 +42,11 @@ public class ConceptLatticeTest {
      */
     @Test
     public void testConstructorFromLattice() {
-        Lattice lat = new Lattice();
-        Concept a = new Concept(true, true); lat.addNode(a);
-        Concept b = new Concept(true, true); lat.addNode(b);
-        lat.addEdge(a, b);
-        ConceptLattice CL = new ConceptLattice(lat);
-        if (!CL.isConceptLattice()) {
-            assertTrue(CL.getNodes().isEmpty());
-            assertTrue(CL.getEdges().isEmpty());
-        }
+        Lattice l = new Lattice();
+        ConceptLattice CL = new ConceptLattice(l);
+        assertTrue(CL.isConceptLattice());
+        assertTrue(CL.getNodes().isEmpty());
+        assertTrue(CL.getEdges().isEmpty());
     }
     /**
      * Test of addNode method, of class ConceptLattice.
@@ -225,7 +220,7 @@ public class ConceptLatticeTest {
         Concept a = new Concept(com1, com4); l.addNode(a);
         Concept b = new Concept(com3, com2); l.addNode(b);
         l.addEdge(a, b);
-        ConceptLattice instance = new ConceptLattice(l); 
+        ConceptLattice instance = new ConceptLattice(l);
         Lattice lat = instance.getJoinReduction();
         assertTrue(lat.isLattice());
         assertEquals(2, lat.getNodes().size());
@@ -292,7 +287,7 @@ public class ConceptLatticeTest {
         set.add(node2);
         DAGraph dag = new DAGraph(set);
         dag.addEdge(node1, node2);
-        ConceptLattice result = ConceptLattice.idealsLattice(dag);        
+        ConceptLattice result = ConceptLattice.idealsLattice(dag);
         assertEquals(3, result.getNodes().size());
         assertTrue(result.getEdges().isEmpty());
     }
@@ -392,8 +387,7 @@ public class ConceptLatticeTest {
         comparablesAtts.add((Comparable) "a");
         comparablesAtts.add((Comparable) "b");
         comparablesAtts.add((Comparable) "c");
-        comparablesAtts.add((Comparable) "d");       
-        
+        comparablesAtts.add((Comparable) "d");        
         comparablesObjs.add((Comparable) "1");
         comparablesObjs.add((Comparable) "2");
         comparablesObjs.add((Comparable) "3");
@@ -422,7 +416,7 @@ public class ConceptLatticeTest {
         B.add("b");
         B.add("c");
         Vector<TreeSet<Comparable>> expResult = new Vector<TreeSet<Comparable>>();
-        expResult.add(B);        
+        expResult.add(B);
         assertEquals(expResult, result);
     }    
 }
