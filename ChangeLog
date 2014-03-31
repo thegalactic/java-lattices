@@ -25,6 +25,10 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-03-31 Jean-François Viaud <jviaud@univ-lr.fr>
+	+ test/lattice/LatticeTest.java
+		+ Add unit tests
+
 2014-03-27 Jean-François Viaud <jviaud@univ-lr.fr>
 	+ src/lattice/Couple.java
 		+ Add new class to generate lattice products
