@@ -24,24 +24,24 @@ import static org.junit.Assert.assertEquals;
  * @author ndao01
  */
 public class ConceptLatticeTest {
-    public ConceptLatticeTest() {
-    }
-    @BeforeClass
-    public static void setUpClass() {
-        // to do
-    }
-    @AfterClass
-    public static void tearDownClass() {
-        // to do
-    }
-    @Before
-    public void setUp() {
-        // to do
-    }
-    @After
-    public void tearDown() {
-        // to do
-    }
+//    public ConceptLatticeTest() {
+//    }
+//    @BeforeClass
+//    public static void setUpClass() {
+//        // to do
+//    }
+//    @AfterClass
+//    public static void tearDownClass() {
+//        // to do
+//    }
+//    @Before
+//    public void setUp() {
+//        // to do
+//    }
+//    @After
+//    public void tearDown() {
+//        // to do
+//    }
     /**
      * Test of addNode method, of class ConceptLattice.
      */
