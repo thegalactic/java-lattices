@@ -26,7 +26,7 @@ public class ConceptLatticeTest {
         assertEquals(2, cl.getNodes().size());
         assertEquals(1, cl.getEdges().size());
     }
-    
+
     /**
      * Test of addNode method, of class ConceptLattice.
      */
@@ -36,7 +36,7 @@ public class ConceptLatticeTest {
         ConceptLattice instance = new ConceptLattice();
         assertTrue(instance.addNode(n));
     }
-    
+
     /**
      * Test of addEdge method, of class ConceptLattice.
      */
@@ -49,7 +49,7 @@ public class ConceptLatticeTest {
         instance.addNode(to);
         assertTrue(instance.addEdge(from, to));
     }
-    
+
     /**
      * Test of containsConcepts method, of class ConceptLattice.
      */
@@ -64,7 +64,7 @@ public class ConceptLatticeTest {
         cl.addEdge(concept1, concept2);
         assertTrue(cl.containsConcepts());
     }
-    
+
     /**
      * Test of isConceptLattice method, of class ConceptLattice.
      */
@@ -81,7 +81,7 @@ public class ConceptLatticeTest {
         cl.addEdge(concept1, concept2);
         assertTrue(cl.isConceptLattice());
     }
-    
+
     /**
      * Test of containsAllSetA method, of class ConceptLattice.
      */
@@ -99,7 +99,7 @@ public class ConceptLatticeTest {
         boolean result = instance.containsAllSetA();
         assertEquals(expResult, result);
     }
-    
+
     /**
      * Test of containsAllSetB method, of class ConceptLattice.
      */
@@ -117,7 +117,7 @@ public class ConceptLatticeTest {
         boolean result = instance.containsAllSetB();
         assertEquals(expResult, result);
     }
-    
+
     /**
      * Test of copy method, of class ConceptLattice.
      */
@@ -132,7 +132,7 @@ public class ConceptLatticeTest {
         assertEquals(b, result.getNode(b));
         assertTrue(result.getEdges().isEmpty());
     }
-    
+
     /**
      * Test of removeAllSetA method, of class ConceptLattice.
      */
@@ -141,7 +141,7 @@ public class ConceptLatticeTest {
         ConceptLattice instance = new ConceptLattice();
         assertTrue(instance.removeAllSetA());
     }
-    
+
     /**
      * Test of removeAllSetB method, of class ConceptLattice.
      */
@@ -150,7 +150,7 @@ public class ConceptLatticeTest {
         ConceptLattice instance = new ConceptLattice();
         assertTrue(instance.removeAllSetB());
     }
-    
+
     /**
      * Test of initializeSetAForJoin method, of class ConceptLattice.
      */
@@ -159,7 +159,7 @@ public class ConceptLatticeTest {
         ConceptLattice instance = new ConceptLattice();
         assertTrue(instance.initializeSetAForJoin());
     }
-    
+
     /**
      * Test of initializeSetBForMeet method, of class ConceptLattice.
      */
@@ -168,7 +168,7 @@ public class ConceptLatticeTest {
         ConceptLattice instance = new ConceptLattice();
         assertTrue(instance.initializeSetBForMeet());
     }
-    
+
     /**
      * Test of makeInclusionReduction method, of class ConceptLattice.
      */
@@ -177,7 +177,7 @@ public class ConceptLatticeTest {
         ConceptLattice instance = new ConceptLattice();
         assertTrue(instance.makeInclusionReduction());
     }
-    
+
     /**
      * Test of makeIrreduciblesReduction method, of class ConceptLattice.
      */
@@ -186,7 +186,7 @@ public class ConceptLatticeTest {
         ConceptLattice instance = new ConceptLattice();
         assertTrue(instance.makeIrreduciblesReduction());
     }
-    
+
     /**
      * Test of makeEdgeValuation method, of class ConceptLattice.
      */
@@ -195,7 +195,7 @@ public class ConceptLatticeTest {
         ConceptLattice instance = new ConceptLattice();
         assertTrue(instance.makeEdgeValuation());
     }
-    
+
     /**
      * Test of getJoinReduction method, of class ConceptLattice.
      */
@@ -219,7 +219,7 @@ public class ConceptLatticeTest {
         assertEquals(2, lat.getNodes().size());
         assertEquals(1, lat.getEdges().size());
     }
-    
+
     /**
      * Test of getMeetReduction method, of class ConceptLattice.
      */
@@ -243,7 +243,7 @@ public class ConceptLatticeTest {
         assertEquals(2, lat.getNodes().size());
         assertEquals(1, lat.getEdges().size());
     }
-    
+
     /**
      * Test of getIrreduciblesReduction method, of class ConceptLattice.
      */
@@ -270,7 +270,7 @@ public class ConceptLatticeTest {
             assertTrue(n.getContent() != null);
         }
     }
-    
+
     /**
      * Test of idealsLattice method, of class ConceptLattice.
      */
@@ -287,7 +287,7 @@ public class ConceptLatticeTest {
         assertEquals(3, result.getNodes().size());
         assertTrue(result.getEdges().isEmpty());
     }
-    
+
     /**
      * Test of completeLattice method, of class ConceptLattice.
      */
@@ -310,7 +310,7 @@ public class ConceptLatticeTest {
         assertEquals(4, result.getNodes().size());
         assertEquals(9, result.getEdges().size());
     }
-    
+
     /**
      * Test of diagramLattice method, of class ConceptLattice.
      */
@@ -334,7 +334,7 @@ public class ConceptLatticeTest {
         ConceptLattice result = ConceptLattice.diagramLattice(cs);
         assertEquals(null, result.getNodes().first().getContent());
     }
-    
+
     /**
      * Test of immediateSuccessors method, of class ConceptLattice.
      */
