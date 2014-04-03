@@ -25,12 +25,13 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
-2014-03-31 Ngoc Bich Dao <dao.nbich@gmail.com>
-        * test/lattice/ConceptLatticeTest.java
-
 2014-03-31 Jean-François Viaud <jviaud@univ-lr.fr>
 	+ test/lattice/LatticeTest.java
 		+ Add unit tests
+
+2014-03-31 Ngoc Bich Dao <dao.nbich@gmail.com>
+	* test/lattice/ConceptLatticeTest.java
+                + Add unit tests
 
 2014-03-27 Jean-François Viaud <jviaud@univ-lr.fr>
 	+ src/lattice/Couple.java
