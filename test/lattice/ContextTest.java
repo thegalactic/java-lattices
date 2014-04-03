@@ -44,6 +44,15 @@ public class ContextTest {
         assertEquals(context.getExtent("c"), copy.getExtent("c"));
     }
     /**
+     * Test random method.
+     */
+    @Test
+    public void testrandom() {
+        Context ctx = Context.random(10, 53, 20);
+        assertEquals(ctx.getObservations().size(), 10);
+        assertEquals(ctx.getAttributes().size(), 1060);
+    }
+    /**
      * Test of containsAttribute.
      */
     @Test

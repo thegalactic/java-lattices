@@ -1,0 +1,19 @@
+package lattice {
+    class Permutation {
+        -int length
+        -int[] content
+        .. Constructors ..
+        +Permutation(int n)
+        .. Accessors ..
+        +int getLength()
+        +int[] getContent()
+        .. Mutators ..
+        +boolean setLength()
+        +void setContent()
+        .. Transformers ..
+        +String toString()
+        .. Predicates ..
+        +boolean equals(Permutation s)
+        +int hashCode()
+    }
+}

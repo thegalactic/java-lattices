@@ -270,7 +270,7 @@ public class Lattice extends DAGraph {
     }
 
     /**
-     * Returns the set of join-irreducibles thar are minorants of the specified node.
+     * Returns the set of join-irreducibles that are minorants of the specified node.
      *
      * @param   n  a specified node
      *
@@ -490,7 +490,7 @@ public class Lattice extends DAGraph {
     /**
      * Returns an ImplicationalSystem of the lattice defined on the join irreducibles nodes.
      *
-     * Each element of the ImplicationalSystem is a copy of a a join irreducibles node.
+     * Each element of the ImplicationalSystem is a copy of a join irreducible node.
      *
      * @return  an implicational system
      */
@@ -571,7 +571,7 @@ public class Lattice extends DAGraph {
     * @return  the dependency graph
     */
     public DGraph getDependencyGraph() {
-        if (this.dependencyGraph == null) {
+        if (!(this.dependencyGraph == null)) {
             return this.dependencyGraph;
         }
         this.dependencyGraph = new DGraph();

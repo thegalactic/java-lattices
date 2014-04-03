@@ -978,6 +978,8 @@ public class ImplicationalSystem extends ClosureSystem {
     public TreeMap<Comparable, TreeSet<Comparable>> reduction() {
         // compute the reducible elements
         TreeMap red = this.getReducibleElements();
+        // collect elements implied by nothing
+        TreeSet<Comparable> truth = this.closure(new TreeSet<Comparable>());
         // modify each rule
         for (Object x : red.keySet()) {
             TreeSet<Rule> rules = this.getRules();
@@ -1009,13 +1011,31 @@ public class ImplicationalSystem extends ClosureSystem {
                 }
                 // replace the rule if modified
                 if (modif) {
-                    this.replaceRule(r, r2);
+                    if (truth.containsAll(r2.getConclusion())) {
+                        this.removeRule(r); // Conclusions of this rule are always true, thus the rule is useless
+                    } else {
+                        this.replaceRule(r, r2);
+                    }
+                } else {
+                    if (truth.containsAll(r.getConclusion())) {
+                        this.removeRule(r); // Conclusions of this rule are always true, thus the rule is useless
+                    }
                 }
             }
             // remove the reducible elements from the elements set
             this.deleteElement((Comparable) x);
         }
         return red;
+    }
+    /**
+     * Return true if this component is reduced.
+     *
+     * @return true if this component is reduced.
+     */
+    public boolean isReduced() {
+        // Copy this component not to modify it
+        ImplicationalSystem tmp = new ImplicationalSystem(this);
+        return tmp.reduction().isEmpty();
     }
 
     /* --------------- IMPLEMENTATION OF CLOSURESYSTEM ABSTRACT METHODS ------------ */
