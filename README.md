@@ -40,3 +40,4 @@ Contributors
 * [Clément Guérin](https://github.com/guerinclement)
 * [Christophe Demko](https://github.com/chdemko)
 * [Jean-François Viaud](https://github.com/JeanFrancoisViaud)
+* [Ngoc Bich Dao](https://github.com/ngocbichdao)

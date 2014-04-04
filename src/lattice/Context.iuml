@@ -17,6 +17,8 @@ package lattice {
         +Context(String filename, int thresholdBinary)
         +Context(String link, TreeSet<String> filesname, int thresholdBinary)
         +Context(TreeSet<String> linkFilesName, int thresholdBinary)
+        .. Generators ..
+        {static}+Context random(int nbObs, int nbGrp, int nbAttrPerGrp)
         .. Accessors ..
         +TreeSet<Comparable> getAttributes()
         +TreeSet<Comparable> getObservations()

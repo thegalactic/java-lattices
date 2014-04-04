@@ -22,6 +22,7 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -259,6 +260,55 @@ public class Context extends ClosureSystem {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    /**
+     * Generates a partially random context.
+     *
+     * @param nbObs number of observations
+     * @param nbGrp number of groups of attributes . Attributes are grouped such that each observation has one attribute per group.
+     * @param nbAttrPerGrp number of attributes per group.
+     * @return randomly generated context
+     */
+    public static Context random(int nbObs, int nbGrp, int nbAttrPerGrp) {
+        Context ctx = new Context();
+// Generates Observations.
+         for (int i = 1; i <= nbObs; i++) {
+            ctx.addToObservations(Integer.toString(i));
+         }
+// Generates Attributes.
+         for (int i = 1; i <= nbGrp; i++) {
+            for (int j = 1; j <= nbAttrPerGrp; j++) {
+                int q = i;
+                int rem = 0;
+                String name = "";
+                do {
+                    rem = q % 26;
+                    q = q / 26;
+                    name = name + (char) (rem + 65);
+                } while (q != 0);
+                ctx.addToAttributes(name + Integer.toString(j)); // These names are cool ...
+            }
+         }
+      // Generates all requested observations.
+         Random r = new Random();
+         int attr = r.nextInt(nbAttrPerGrp) + 1;
+         for (int i = 1; i <= nbObs; i++) { // i : Observation
+            for (int j = 1; j <= nbGrp; j++) { // j : Familly
+                int q = j;
+                int rem = 0;
+                String name = "";
+                do {
+                    rem = q % 26;
+                    q = q / 26;
+                    name = name + (char) (rem + 65);
+                } while (q != 0);
+               name = name + Integer.toString(attr); // These names are really cool, aren't they ?
+               ctx.addExtentIntent(Integer.toString(i), name);
+               attr = r.nextInt(nbAttrPerGrp) + 1;
+            }
+         }
+         ctx.setBitSets();
+         return ctx;
     }
 
     /**
@@ -1087,4 +1137,3 @@ public class Context extends ClosureSystem {
         return csl;
     }
 }
-

@@ -187,8 +187,11 @@ public abstract class ClosureSystem {
     *
     * Nodes of the graph are elements of this component.
     * There is an edge from element a to element b when
-    * b belongs to the closure of a.
-    * When precedenc graph is acyclic, then this component is a reduced one.
+    * a belongs to the closure of b.
+    *
+    * The rule a -> a isn't added to the precedence graph
+    *
+    * When precedence graph is acyclic, then this component is a reduced one.
     *
     * @return  the precedence graph
     */
@@ -229,9 +232,11 @@ public abstract class ClosureSystem {
      * Reducible elements are computed using the precedence graph of the closure system.
      * Complexity is in O()
      *
-     * @return  The map of reduced attributes with their equivalent attributes
+     * @return  The map of reductible attributes with their equivalent attributes
      */
     public TreeMap<Object, TreeSet> getReducibleElements() {
+        // If you can't remove nodes, put them in the rubbish bin ...
+        TreeSet<Node> rubbishBin = new TreeSet<Node>();
         // Initialize a map Red of reducible attributes
         TreeMap<Object, TreeSet> red = new TreeMap();
         // Initialize the precedence graph G of the closure system
@@ -242,14 +247,14 @@ public abstract class ClosureSystem {
         DAGraph cfc = graph.getStronglyConnectedComponent();
         for (Node node : cfc.getNodes()) {
             // Get list of node of this component
-            TreeSet<Node> sCC = (TreeSet) node.getContent();
+            TreeSet<Node> sCC = (TreeSet<Node>) node.getContent();
             if (sCC.size() > 1) {
                 Node y = sCC.first();
                 TreeSet yClass = new TreeSet();
                 yClass.add(y.getContent());
                 for (Node x : sCC) {
                     if (!x.getContent().equals(y.getContent())) {
-                        graph.removeNode(x);
+                        rubbishBin.add(x); // instead of : graph.removeNode(x);
                         red.put(x.getContent(), yClass);
                     }
                 }
@@ -258,15 +263,22 @@ public abstract class ClosureSystem {
         // Next, check if an attribute is equivalent to emptyset
         // i.e. its closure is equal to emptyset closure
         TreeSet<Node> sinks = graph.getSinks();
+        sinks.removeAll(rubbishBin);
         if (sinks.size() == 1) {
             Node s = sinks.first();
             red.put(s.getContent(), new TreeSet());
-            graph.removeNode(s);
+            rubbishBin.add(s); // instead of : graph.removeNode(s);
         }
         // Finaly, checking a remaining attribute equivalent to its predecessors or not may reduce more attributes.
         // Check all remaining nodes of graph G
-        for (Node x : graph.getNodes()) {
+        TreeSet<Node> remainingNodes = new TreeSet<Node>();
+        for (Node n : graph.getNodes()) {
+            remainingNodes.add(n);
+        }
+        remainingNodes.removeAll(rubbishBin);
+        for (Node x : remainingNodes) {
             TreeSet<Node> predecessors = graph.getPredecessorNodes(x);
+            predecessors.removeAll(rubbishBin);
             if (predecessors.size() > 1) {
                 // Create the closure of x
                 TreeSet set = new TreeSet();
