@@ -3,7 +3,7 @@ package lattice;
 import dgraph.DAGraph;
 import dgraph.Node;
 import java.util.TreeSet;
-import java.util.Vector;
+//import java.util.Vector;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
