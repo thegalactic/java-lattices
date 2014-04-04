@@ -25,10 +25,63 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-03-31 Jean-François Viaud <jviaud@univ-lr.fr>
+	+ test/lattice/LatticeTest.java
+		+ Add unit tests
+
+2014-03-31 Ngoc Bich Dao <dao.nbich@gmail.com>
+	* test/lattice/ConceptLatticeTest.java
+		+ Add unit tests
+
+2014-03-27 Jean-François Viaud <jviaud@univ-lr.fr>
+	+ src/lattice/Couple.java
+		+ Add new class to generate lattice products
+		+ Add corresponding iuml file
+		+ Add corresponding test file
+	+ src/lattice/Permutation.java
+		+ Add new class to generate lattice of permutations
+		+ Add corresponding iuml file
+		+ Add corresponding test file
+	+ src/lattice/LatticeFactory.java
+		+ Add this classe to generate examples : random, product,
+		permutation, boolean algebra
+		+ Add corresponding iuml file
+		+ Add corresponding test file
+
 2014-03-27 Christophe Demko <chdemko@gmail.com>
 	* utility/initiate-publish.sh
 		+ Publish jar and compressed api doc
 
+2014-03-22 Jean-François Viaud <jviaud@univ-lr.fr>
+	* src/lattice/Context.java
+		+ Add random method
+	* src/lattice/Context.iuml
+		* Update file with random method
+	* test/lattice/ContextTest.java
+		+ Add test for random method
+	* test/lattice/ClosureSystemTest.java
+		+ Add missing tests
+
+2014-03-20 Jean-François Viaud <jviaud@univ-lr.fr>
+	* src/lattice/ImplicationalSystem.iuml
+		+ Add isReduced method
+
+2014-03-19 Jean-François Viaud <jviaud@univ-lr.fr>
+	* src/test/BijectiveComponenetTest.java
+		# Path are now Windows/Linux compliants
+	* src/lattice/ImplicationalSystem.java
+		+ Add isReduced method
+		* Modify reduction method
+	* src/lattice/ClosureSystem.java
+		* Modify the comment of precedenceGraph method
+		* Modify the getReductibleElements method
+	* src/test/ImplicationalSystemTest.java
+		+ Complete tests
+	* src/test/ClosureSystemTest.java
+		+ Add file
+		+ Add 2 tests over 5
+
+>>>>>>> 6742e87de51205923e158db93fd495ffa381f10a
 2014-03-18 Christophe Demko <chdemko@gmail.com>
 	* README.md
 	* lib/jacoco/jacocoant.jar
@@ -79,7 +132,7 @@ $ -> Language fix or change
 	* src/lattice/ConceptLattice.iuml
 		+ Finish UML graphs
 
-2014-03-14 Jean-FranÃ§ois Viaud <jviaud@univ-lr.fr>
+2014-03-14 Jean-François Viaud <jviaud@univ-lr.fr>
 	* src/lattice/ImplicationalSystem.java
 		^ Correct some minor errors in makeRightMaximal
 	* src/test/ImplicationalSystem.java
@@ -96,7 +149,7 @@ $ -> Language fix or change
 		+ Add uml graph for Implicationalsystem
 		^ Correct some minor errors in test
 
-2014-03-11 Jean-FranÃ§ois Viaud <jviaud@univ-lr.fr>
+2014-03-11 Jean-François Viaud <jviaud@univ-lr.fr>
 	* build.xml
 	* src/lattice/ImplicationalSystem.java
 		+ Rename & Update other classes
@@ -151,7 +204,7 @@ $ -> Language fix or change
 	* test/dgraph/NodeTest.java
 		+ Complete unit test
 
-2014-03-05 Jean-FranÃ§ois Viaud <jviaud@univ-lr.fr>
+2014-03-05 Jean-François Viaud <jviaud@univ-lr.fr>
 	* build.xml
 	* src/lattice/Concept.java
 	* test/lattice/ConceptTest.java
