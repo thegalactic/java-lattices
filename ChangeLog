@@ -131,7 +131,7 @@ $ -> Language fix or change
 	* src/lattice/ConceptLattice.iuml
 		+ Finish UML graphs
 
-2014-03-14 Jean-FranÃ§ois Viaud <jviaud@univ-lr.fr>
+2014-03-14 Jean-François Viaud <jviaud@univ-lr.fr>
 	* src/lattice/ImplicationalSystem.java
 		^ Correct some minor errors in makeRightMaximal
 	* src/test/ImplicationalSystem.java
@@ -148,7 +148,7 @@ $ -> Language fix or change
 		+ Add uml graph for Implicationalsystem
 		^ Correct some minor errors in test
 
-2014-03-11 Jean-FranÃ§ois Viaud <jviaud@univ-lr.fr>
+2014-03-11 Jean-François Viaud <jviaud@univ-lr.fr>
 	* build.xml
 	* src/lattice/ImplicationalSystem.java
 		+ Rename & Update other classes
@@ -203,7 +203,7 @@ $ -> Language fix or change
 	* test/dgraph/NodeTest.java
 		+ Complete unit test
 
-2014-03-05 Jean-FranÃ§ois Viaud <jviaud@univ-lr.fr>
+2014-03-05 Jean-François Viaud <jviaud@univ-lr.fr>
 	* build.xml
 	* src/lattice/Concept.java
 	* test/lattice/ConceptTest.java
