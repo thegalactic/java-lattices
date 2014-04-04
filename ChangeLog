@@ -26,6 +26,10 @@ $ -> Language fix or change
 ! -> Note
 
 2014-04-04 Christophe Demko <chdemko@gmail.com>
+	* build.xml:
+		+ Add a code coverage rule
+
+2014-04-04 Christophe Demko <chdemko@gmail.com>
 	* doc/api/README.md:
 		+ Add new classes
 	* test/lattice/ConceptLatticeTest.java:
