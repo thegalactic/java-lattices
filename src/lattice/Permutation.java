@@ -20,9 +20,11 @@ package lattice;
  *
  * The content contains :
  *
+ * ~~~
  * content[0]=1
  * content[1]=0
  * content[2]=2
+ * ~~~
  *
  * ![Permutation](Permutation.png)
  *
@@ -44,9 +46,11 @@ public class Permutation {
      * If this component transforms : 0 -> 1, 1 -> 0 & 2 -> 2.
      * The field content contains :
      *
+     * ~~~
      * content[0]=1
      * content[1]=0
      * content[2]=2
+     * ~~~
      */
     private int[] content;
     /**

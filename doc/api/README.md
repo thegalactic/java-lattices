@@ -209,6 +209,9 @@ title Main UML graph
 !include src/lattice/Rule.iuml
 !include src/lattice/BijectiveComponents.iuml
 !include src/lattice/ImplicationalSystem.iuml
+!include src/lattice/Couple.iuml
+!include src/lattice/LatticeFactory.iuml
+!include src/lattice/Permutation.iuml
 
 hide members
 

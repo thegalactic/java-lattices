@@ -25,6 +25,14 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-04-04 Christophe Demko <chdemko@gmail.com>
+	* doc/api/README.md:
+		+ Add new classes
+	* test/lattice/ConceptLatticeTest.java:
+		- Remove bad tests
+	* src/lattice/Permutation.java:
+		^ Change doc
+
 2014-03-31 Jean-François Viaud <jviaud@univ-lr.fr>
 	* test/lattice/LatticeTest.java
 		+ Add unit tests
