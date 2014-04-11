@@ -25,6 +25,14 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-04-11 Jean-François Viaud <jviaud@univ-lr.fr>
+	* test/lattice/ConceptLatticeTest.java
+		* Modify two failling tests
+	* src/lattice/LatticeFactory.java
+		+ add doublingConvex method
+		+ add corresponding test
+		* update iuml file
+
 2014-04-04 Christophe Demko <chdemko@gmail.com>
 	* build.xml:
 		+ Add a code coverage rule

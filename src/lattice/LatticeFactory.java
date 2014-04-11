@@ -220,4 +220,80 @@ public class LatticeFactory {
         }
         return prod;
     }
+    /**
+     * Returns lattice l in which convex c has been doubled.
+     *
+     * @param l a lattice
+     * @param c a convex subset of l, to be doubled.
+     * @return a lattice construct from l by doubling the convex subset c.
+     */
+    public static Lattice doublingConvex(Lattice l, DAGraph c) {
+        Lattice doubled = new Lattice();
+        // Copy nodes by Content
+        for (Node n : l.getNodes()) {
+            if (c.containsNode(n)) {
+                // These nodes are doubled
+                Couple cpl0 = new Couple(n.getContent(), 0);
+                Node n0 = new Node(cpl0);
+                Couple cpl1 = new Couple(n.getContent(), 1);
+                Node n1 = new Node(cpl1);
+                doubled.addNode(n0);
+                doubled.addNode(n1);
+            } else {
+                // These nodes are just copied
+                doubled.addNode(new Node(n.getContent()));
+            }
+        }
+        // Construct edges of doubled
+        Couple test = new Couple(0, 0); // used to test class of contents
+        for (Node x : doubled.getNodes()) {
+            for (Node y : doubled.getNodes()) {
+                // Add an edge if x < y
+                if (x.getContent().getClass() == test.getClass()) { // x was in convex c
+                    if (y.getContent().getClass() == test.getClass()) { // y was also in convex c
+                        // x & y were in convex c
+                        Couple cX = (Couple) x.getContent();
+                        Couple cY = (Couple) y.getContent();
+                        if ((cX.getLeft() == cY.getLeft()) && (((Integer) cX.getRight()).intValue() == 0)
+                                && (((Integer) cY.getRight()).intValue() == 1)) {
+                            // Same content means same node. x is of the form (cX, 0) and y is of the for (cX, 1) so x < y in doubled.
+                            doubled.addEdge(x, y);
+                        } else {
+                            if (l.majorants(l.getNodeByContent(cX.getLeft())).contains(l.getNodeByContent(cY.getLeft()))
+                                    && (cX.getRight() == cY.getRight())) {
+                                // x < y in l and x & y have the same second component si x < y in doubled.
+                                doubled.addEdge(x, y);
+                            }
+                        }
+                    } else { // y wasn't in convex c
+                        // x was in c & y wasn't
+                        Couple cX = (Couple) x.getContent();
+                        if (l.majorants(l.getNodeByContent(cX.getLeft())).contains(l.getNodeByContent(y.getContent()))
+                                && (((Integer) cX.getRight()).intValue() == 1)) {
+                            // x < y in l and second component of x is 1.
+                            doubled.addEdge(x, y);
+                        }
+                    }
+                } else { // x wasn't in convex c
+                    if (y.getContent().getClass() == test.getClass()) { // y was in convex c
+                        // x wasn't in c but y was
+                        Couple cY = (Couple) y.getContent();
+                        if (l.majorants(l.getNodeByContent(x.getContent())).contains(l.getNodeByContent(cY.getLeft()))
+                                && (((Integer) cY.getRight()).intValue() == 0)) {
+                                // x < y in l and x & second component of y is 0.
+                                doubled.addEdge(x, y);
+                            }
+                    } else { // y wasn't in convex c
+                        // x wasn't in c nor y
+                        if (l.majorants(l.getNodeByContent(x.getContent())).contains(l.getNodeByContent(y.getContent()))) {
+                                // x < y in l and x & second component of y is 0.
+                                doubled.addEdge(x, y);
+                            }
+                    }
+                }
+            }
+        }
+        doubled.transitiveReduction();
+        return doubled;
+    }
 }
