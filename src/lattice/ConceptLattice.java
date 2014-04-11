@@ -220,6 +220,7 @@ public class ConceptLattice extends Lattice {
      *
      * @return  a concept lattice
      */
+    @Override
     public ConceptLattice copy() {
         ConceptLattice conceptLattice = new ConceptLattice();
         TreeMap<Concept, Concept> copy = new TreeMap<Concept, Concept>();

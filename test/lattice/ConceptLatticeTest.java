@@ -3,7 +3,7 @@ package lattice;
 import dgraph.DAGraph;
 import dgraph.Node;
 import java.util.TreeSet;
-//import java.util.Vector;
+import java.util.Vector;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
@@ -124,17 +124,15 @@ public class ConceptLatticeTest {
      */
     @Test
     public void testCopy() {
-    // Does not work here
-/*
         Lattice l = new Lattice();
         Concept a = new Concept(true, true); l.addNode(a);
         Concept b = new Concept(true, true); l.addNode(b);
-        ConceptLattice instance = new ConceptLattice(l);
-        ConceptLattice result = instance.copy();
+        l.addEdge(a, b);
+        ConceptLattice cl = new ConceptLattice(l);
+        ConceptLattice result = cl.copy();
         assertEquals(a, result.getNode(a));
         assertEquals(b, result.getNode(b));
-        assertTrue(result.getEdges().isEmpty());
-*/
+        assertEquals(1, result.getEdges().size());
     }
 
     /**
@@ -344,8 +342,6 @@ public class ConceptLatticeTest {
      */
     @Test
     public void testImmediateSuccessors() {
-    // Does not work
-/*
         TreeSet<Comparable> comparablesAtts = new TreeSet<Comparable>();
         TreeSet<Comparable> comparablesObjs = new TreeSet<Comparable>();
         comparablesAtts.add((Comparable) "a");
@@ -378,9 +374,9 @@ public class ConceptLatticeTest {
         b.add("a");
         b.add("b");
         b.add("c");
+        b.add("d");
         Vector<TreeSet<Comparable>> expResult = new Vector<TreeSet<Comparable>>();
         expResult.add(b);
         assertEquals(expResult, result);
-*/
     }
 }
