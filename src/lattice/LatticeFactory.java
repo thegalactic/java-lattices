@@ -254,7 +254,7 @@ public class LatticeFactory {
                         // x & y were in convex c
                         Couple cX = (Couple) x.getContent();
                         Couple cY = (Couple) y.getContent();
-                        if ((cX.getLeft() == cY.getLeft()) && ((int) cX.getRight() == 0) && ((int) cY.getRight() == 1)) {
+                        if ((cX.getLeft() == cY.getLeft()) && (((int) cX.getRight()) == 0) && (((int) cY.getRight()) == 1)) {
                             // Same content means same node. x is of the form (cX, 0) and y is of the for (cX, 1) so x < y in doubled.
                             doubled.addEdge(x, y);
                         } else {
@@ -268,7 +268,7 @@ public class LatticeFactory {
                         // x was in c & y wasn't
                         Couple cX = (Couple) x.getContent();
                         if (l.majorants(l.getNodeByContent(cX.getLeft())).contains(l.getNodeByContent(y.getContent()))
-                                && ((int) cX.getRight() == 1)) {
+                                && (((int) cX.getRight()) == 1)) {
                             // x < y in l and second component of x is 1.
                             doubled.addEdge(x, y);
                         }
@@ -278,7 +278,7 @@ public class LatticeFactory {
                         // x wasn't in c but y was
                         Couple cY = (Couple) y.getContent();
                         if (l.majorants(l.getNodeByContent(x.getContent())).contains(l.getNodeByContent(cY.getLeft()))
-                                && ((int) cY.getRight() == 0)) {
+                                && (((int) cY.getRight()) == 0)) {
                                 // x < y in l and x & second component of y is 0.
                                 doubled.addEdge(x, y);
                             }
