@@ -119,54 +119,54 @@ public class BijectiveComponents {
      * issued from the initial closure system `init`.
      *
      * The closed set lattice is generated when the closure system is an implicational system,
- and obtained by
-
- ~~~Java
- this.init.closedSetLattice(true);
- ~~~
-
- The concept lattice is generated when the closure system is a context, and obtained by
- by
-
- ~~~Java
- this.init.conceptLattice(true);
- ~~~
-
- The reduced lattice is obtained by
-
- ~~~Java
- this.lattice.getIrreduciblesReduction();
- ~~~
-
- The reduced table is obtained by
-
- ~~~Java
- this.reducedLattice.getTable();
- ~~~
-
- The dependency graph is obtained by
-
- ~~~Java
- this.reducedLattice.getDependencyGraph();
- ~~~
-
- Minimal generators are obtained by
-
- ~~~Java
- this.reducedLattice.getMinimalGenerators();
- ~~~
-
- The canonical direct basis is obtained by
-
- ~~~Java
- this.reducedLattice.getCanonicalDirectBasis();
- ~~~
-
- The canonical basis is obtained by
-
- ~~~Java
- new ImplicationalSystem(this.canonicalDirectBasis).makeCanonicalBasis();
- ~~~
+     * and obtained by
+     *
+     * ~~~Java
+     * this.init.closedSetLattice(true);
+     * ~~~
+     *
+     * The concept lattice is generated when the closure system is a context, and obtained by
+     * by
+     *
+     * ~~~Java
+     * this.init.conceptLattice(true);
+     * ~~~
+     *
+     * The reduced lattice is obtained by
+     *
+     * ~~~Java
+     * this.lattice.getIrreduciblesReduction();
+     * ~~~
+     *
+     * The reduced table is obtained by
+     *
+     * ~~~Java
+     * this.reducedLattice.getTable();
+     * ~~~
+     *
+     * The dependency graph is obtained by
+     *
+     * ~~~Java
+     * this.reducedLattice.getDependencyGraph();
+     * ~~~
+     *
+     * Minimal generators are obtained by
+     *
+     * ~~~Java
+     * this.reducedLattice.getMinimalGenerators();
+     * ~~~
+     *
+     * The canonical direct basis is obtained by
+     *
+     * ~~~Java
+     * this.reducedLattice.getCanonicalDirectBasis();
+     * ~~~
+     *
+     * The canonical basis is obtained by
+     *
+     * ~~~Java
+     * new ImplicationalSystem(this.canonicalDirectBasis).makeCanonicalBasis();
+     * ~~~
      *
      * @return  time of computation
      */
