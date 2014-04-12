@@ -36,11 +36,13 @@ public class LatticeFactory {
     protected LatticeFactory() {
         super();
     }
+
     /**
      * Returns a randomly generated lattice with nb nodes.
      *
-     * @param nb Number of nodes in the randomly generated lattice
-     * @return a randomly generated lattice with nb nodes
+     * @param   nb  Number of nodes in the randomly generated lattice
+     *
+     * @return  a randomly generated lattice with nb nodes
      */
     public static Lattice random(int nb) {
         boolean done = false;
@@ -69,11 +71,13 @@ public class LatticeFactory {
         }
         return l;
     }
+
     /**
      * Returns the boolean algebra of cardinal 2^n.
      *
-     * @param n cardinal of the boolean algebra return by this method is 2^n
-     * @return the boolean algebra of cardinal 2^n
+     * @param   n  cardinal of the boolean algebra return by this method is 2^n
+     *
+     * @return  the boolean algebra of cardinal 2^n
      */
     public static Lattice booleanAlgebra(int n) {
         Lattice l = new Lattice();
@@ -90,12 +94,13 @@ public class LatticeFactory {
         }
         return l;
     }
+
     /**
      * Computes successors of node n in the boolean algebra currently generated.
      *
-     * @param node this method compute successors of this node
-     * @param l boolean algebra currently generated
-     * @param n the number of node of l will be 2^n at the end of computation
+     * @param   node  this method compute successors of this node
+     * @param   l     boolean algebra currently generated
+     * @param   n     the number of node of l will be 2^n at the end of computation
      */
     private static void recursiveBooleanAlgebra(Node node, Lattice l, int n) {
         for (int i = 0; i < n; i++) {
@@ -114,6 +119,7 @@ public class LatticeFactory {
             }
         }
     }
+
     /**
      * Returns the lattice of permutations of 1..n.
      *
@@ -125,8 +131,9 @@ public class LatticeFactory {
      *
      * The bottom of this lattice is identity (for exemple 123456) and the top is for instance 654321.
      *
-     * @param n the lattice of permutations of the set 1..n
-     * @return the lattice of permutations of 1..n.
+     * @param   n  the lattice of permutations of the set 1..n
+     *
+     * @return  the lattice of permutations of 1..n.
      */
     public static Lattice permutationLattice(int n) {
         Lattice l = new Lattice();
@@ -151,12 +158,13 @@ public class LatticeFactory {
         }
         return l;
     }
+
     /**
      * Computes successors of node n in the lattice l.
      *
-     * @param node successors of this node are computed by this method
-     * @param l lattice of permutations currently generated
-     * @param n lattice of permutation of the set 1..n is currently generated
+     * @param   node  successors of this node are computed by this method
+     * @param   l     lattice of permutations currently generated
+     * @param   n     lattice of permutation of the set 1..n is currently generated
      */
     private static void recursivePermutationLattice(Node node, Lattice l, int n) {
         Permutation s = (Permutation) node.getContent();
@@ -188,6 +196,7 @@ public class LatticeFactory {
             }
         }
     }
+
     /**
      * Returns the lattice cartesian product of l and r.
      *
@@ -195,9 +204,10 @@ public class LatticeFactory {
      *
      * There is an edge (n1, m1) -> (n2, m2) if and only if there are edges n1 -> n2 and m1 -> m2
      *
-     * @param l Lattice of the left hand side of the product
-     * @param r Lattice of the right hand side of the product
-     * @return the lattice cartesian product of l and r
+     * @param   l  Lattice of the left hand side of the product
+     * @param   r  Lattice of the right hand side of the product
+     *
+     * @return  the lattice cartesian product of l and r
      */
     public static Lattice product(Lattice l, Lattice r) {
         Lattice prod = new Lattice();
@@ -223,9 +233,10 @@ public class LatticeFactory {
     /**
      * Returns lattice l in which convex c has been doubled.
      *
-     * @param l a lattice
-     * @param c a convex subset of l, to be doubled.
-     * @return a lattice construct from l by doubling the convex subset c.
+     * @param   l  a lattice
+     * @param   c  a convex subset of l, to be doubled.
+     *
+     * @return  a lattice construct from l by doubling the convex subset c.
      */
     public static Lattice doublingConvex(Lattice l, DAGraph c) {
         Lattice doubled = new Lattice();

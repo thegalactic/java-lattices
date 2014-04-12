@@ -40,6 +40,7 @@ public class Permutation {
      * This component is a permutation of 0..length-1.
      */
     private int length;
+
     /**
      * The transformation represented by this component.
      *
@@ -53,10 +54,11 @@ public class Permutation {
      * ~~~
      */
     private int[] content;
+
     /**
      * Constructs identity of the set 0..n-1.
      *
-     * @param n permutation of the set 0..n-1.
+     * @param   n  permutation of the set 0..n-1.
      */
     public Permutation(int n) {
         this.length = n;
@@ -65,39 +67,43 @@ public class Permutation {
             this.content[i] = i;
         }
     }
+
     /**
      * Returns the transformation coded by this component.
      *
-     * @return the transformation coded by this component.
+     * @return  the transformation coded by this component.
      */
     public int[] getContent() {
         return this.content;
     }
+
     /**
      * Set the transformation coded by this component.
      *
      * Length of this component is update by this method.
      *
-     * @param c the transformation coded in this component.
+     * @param   c  the transformation coded in this component.
      */
     public void setContent(int[] c) {
         this.content = c;
         this.length = c.length;
     }
+
     /**
      * Return length of this component.
      *
-     * @return length of this component.
+     * @return  length of this component.
      */
     public int getLength() {
         return this.length;
     }
+
     /**
      * Set length of this componenet.
      *
-     * @param l length of this component.
+     * @param   l  length of this component.
      *
-     * @return true if update is successful.
+     * @return  true if update is successful.
      */
     public boolean setLength(int l) {
         if ((this.content.length == l) && (l <= this.getLength())) {
@@ -107,10 +113,11 @@ public class Permutation {
             return false;
         }
     }
+
     /**
      * Returns a string representation of this component.
      *
-     * @return a string representation of this component.
+     * @return  a string representation of this component.
      */
     @Override
     public String toString() {
@@ -120,11 +127,13 @@ public class Permutation {
         }
         return str;
     }
+
     /**
      * Returns true if this component is equal to s.
      *
-     * @param s test if this component is equal to s
-     * @return true if this component is equal to s
+     * @param   s  test if this component is equal to s
+     *
+     * @return  true if this component is equal to s
      */
     public boolean equals(Permutation s) {
         if (!(s.getLength() == this.length)) {
@@ -137,6 +146,7 @@ public class Permutation {
             return tmp;
         }
     }
+
     /**
      * Compute the hash code.
      *

@@ -271,12 +271,12 @@ public class Context extends ClosureSystem {
      */
     public static Context random(int nbObs, int nbGrp, int nbAttrPerGrp) {
         Context ctx = new Context();
-// Generates Observations.
-         for (int i = 1; i <= nbObs; i++) {
+        // Generates Observations.
+        for (int i = 1; i <= nbObs; i++) {
             ctx.addToObservations(Integer.toString(i));
-         }
-// Generates Attributes.
-         for (int i = 1; i <= nbGrp; i++) {
+        }
+        // Generates Attributes.
+        for (int i = 1; i <= nbGrp; i++) {
             for (int j = 1; j <= nbAttrPerGrp; j++) {
                 int q = i;
                 int rem = 0;
@@ -288,11 +288,11 @@ public class Context extends ClosureSystem {
                 } while (q != 0);
                 ctx.addToAttributes(name + Integer.toString(j)); // These names are cool ...
             }
-         }
-      // Generates all requested observations.
-         Random r = new Random();
-         int attr = r.nextInt(nbAttrPerGrp) + 1;
-         for (int i = 1; i <= nbObs; i++) { // i : Observation
+        }
+        // Generates all requested observations.
+        Random r = new Random();
+        int attr = r.nextInt(nbAttrPerGrp) + 1;
+        for (int i = 1; i <= nbObs; i++) { // i : Observation
             for (int j = 1; j <= nbGrp; j++) { // j : Familly
                 int q = j;
                 int rem = 0;
@@ -306,9 +306,9 @@ public class Context extends ClosureSystem {
                ctx.addExtentIntent(Integer.toString(i), name);
                attr = r.nextInt(nbAttrPerGrp) + 1;
             }
-         }
-         ctx.setBitSets();
-         return ctx;
+        }
+        ctx.setBitSets();
+        return ctx;
     }
 
     /**

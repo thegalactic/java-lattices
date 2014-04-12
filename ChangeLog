@@ -25,6 +25,15 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-04-13 Christophe Demko <chdemko@gmail.com>
+	* src/lattice/BijectiveComponents.java
+	* src/lattice/Concept.java
+	* src/lattice/Context.java
+	* src/lattice/Couple.java
+	* src/lattice/LatticeFactory.java
+	* src/lattice/Permutation.java
+		^ Check style
+
 2014-04-11 Jean-François Viaud <jviaud@univ-lr.fr>
 	* test/lattice/ConceptLatticeTest.java
 		* Modify two failling tests

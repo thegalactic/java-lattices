@@ -512,14 +512,15 @@ public class Concept extends Node {
     return this.setA.compareTo(c.setA);
     }
     }*/
+
     /**
-* Computes the immediate successors of this component with the LOA algorithm.
-*
-* @param init context from which successor of this component are computed.
-*
-* @return immediate successors of this component.
-*/
-public ArrayList<TreeSet<Comparable>> immediateSuccessorsLOA(Context init) {
+     * Computes the immediate successors of this component with the LOA algorithm.
+     *
+     * @param init context from which successor of this component are computed.
+     *
+     * @return immediate successors of this component.
+     */
+     public ArrayList<TreeSet<Comparable>> immediateSuccessorsLOA(Context init) {
         ArrayList<TreeSet<Comparable>> succB = new ArrayList();
         TreeSet<Comparable> attributes = (TreeSet<Comparable>) init.getSet().clone();
         attributes.removeAll(this.getSetA());
@@ -573,7 +574,8 @@ public ArrayList<TreeSet<Comparable>> immediateSuccessorsLOA(Context init) {
         }
         return succB;
     }
-/**
+
+    /**
      * Returns the number of observations corresponding to the set of attributes in the init context.
      *
      * @param   init        initial context from which attributes are count.
