@@ -31,7 +31,8 @@ package lattice {
         #hasDependencyGraph()
         +IS getCanonicalDirectBasis()
         +TreeSet getMinimalGenerators()
-        +DGraph arrowRelation()
+        +DGraph getArrowRelation()
+        +Context getDoubleArrowTable()
     }
 
     DAGraph <|-- Lattice

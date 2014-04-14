@@ -58,7 +58,7 @@ public class ArrowRelation extends DGraph  {
      * @param   lattice  Lattice from which this component is deduced.
      */
     public ArrowRelation(Lattice lattice) {
-        super(lattice.arrowRelation());
+        super(lattice.getArrowRelation());
     }
 
     /**

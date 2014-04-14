@@ -451,7 +451,7 @@ public class Lattice extends DAGraph {
      * Each attribute of the table is a copy of a join irreducibles node.
      * Each observation of the table is a copy of a meet irreducibles node.
      * An attribute is extent of an observation when its join irreducible node
-     * is greather than the meet irreducible node in the lattice.
+     * is greater than the meet irreducible node in the lattice.
      *
      * @return  the table of the lattice
      */
@@ -743,7 +743,7 @@ public class Lattice extends DAGraph {
       *
       * @author Jean-Francois
       */
-     public DGraph arrowRelation() {
+     public DGraph getArrowRelation() {
 
         /* Nodes are join or meet irreductibles of the lattice. */
         TreeSet<Node> joins = new TreeSet<Node>(this.joinIrreducibles());
@@ -787,5 +787,50 @@ public class Lattice extends DAGraph {
         }
         return graph;
     }
-}
 
+     /**
+     * Returns the table of the lattice, composed of the join and meet irreducibles nodes.
+     *
+     * Each attribute of the table is a copy of a join irreducibles node.
+     * Each observation of the table is a copy of a meet irreducibles node.
+     * An attribute is extent of an observation when its join irreducible node
+     * is in double arrow relation with the meet irreducible node in the lattice.
+     *
+     * @return  the table of the lattice
+     */
+    public Context getDoubleArrowTable() {
+        // generation of attributes
+        TreeSet<Node> join = this.joinIrreducibles();
+        Context context = new Context();
+        for (Node j : join) {
+            context.addToAttributes(j);
+        }
+        // generation of observations
+        TreeSet<Node> meet = this.meetIrreducibles();
+        for (Node m : meet) {
+            context.addToObservations(m);
+        }
+        // generation of extent-intent
+        Lattice transitiveClosure = new Lattice(this);
+        transitiveClosure.transitiveClosure();
+        Lattice transitiveReduction = new Lattice(this);
+        transitiveReduction.transitiveReduction();
+        Node jminus = new Node();
+        Node mplus = new Node();
+        String arrow = "";
+
+        /* Content of edges are arrows */
+        for (Node j : join) {
+            for (Node m : meet) {
+                if (!(m.equals(j) || transitiveClosure.getSuccessorNodes(j).contains(m))) {
+                    mplus = transitiveReduction.getSuccessorNodes(m).first();
+                    jminus = transitiveReduction.getPredecessorNodes(j).first();
+                    if (transitiveClosure.getSuccessorNodes(jminus).contains(m) && (transitiveClosure.getPredecessorNodes(mplus).contains(j))) {
+                        context.addExtentIntent(m, j);
+                    }
+                }
+            }
+        }
+        return context;
+    }
+}
