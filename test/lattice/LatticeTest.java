@@ -237,6 +237,85 @@ public class LatticeTest {
         l.addEdge(e, d);
         assertFalse(l.isLattice());
     }
+
+    /**
+     * Test isCN.
+     */
+    @Test
+    public void testisCN() {
+        Lattice l = new Lattice();
+        Node n1 = new Node(1);
+        Node n2 = new Node(2);
+        Node n3 = new Node(3);
+        Node n4 = new Node(4);
+        Node n5 = new Node(5);
+        Node n8 = new Node(8);
+        Node n9 = new Node(9);
+        Node n10 = new Node(10);
+        Node n12 = new Node(12);
+        Node n14 = new Node(14);
+        Node n19 = new Node(19);
+        l.addNode(n1);
+        l.addNode(n2);
+        l.addNode(n3);
+        l.addNode(n4);
+        l.addNode(n5);
+        l.addNode(n8);
+        l.addNode(n9);
+        l.addNode(n10);
+        l.addNode(n12);
+        l.addNode(n14);
+        l.addNode(n19);
+        l.addEdge(n1, n2);
+        l.addEdge(n1, n4);
+        l.addEdge(n1, n8);
+        l.addEdge(n2, n3);
+        l.addEdge(n3, n19);
+        l.addEdge(n4, n9);
+        l.addEdge(n4, n14);
+        l.addEdge(n8, n3);
+        l.addEdge(n8, n9);
+        l.addEdge(n8, n12);
+        l.addEdge(n9, n10);
+        l.addEdge(n10, n5);
+        l.addEdge(n12, n10);
+        l.addEdge(n12, n19);
+        l.addEdge(n14, n10);
+        l.addEdge(n19, n5);
+
+        assertTrue(l.isCN());
+
+        DAGraph c = new DAGraph();
+        c.addNode(n2);
+        c.addNode(n3);
+        c.addNode(n8);
+        c.addNode(n12);
+        c.addEdge(n2, n3);
+        c.addEdge(n3, n8);
+        c.addEdge(n8, n12);
+        Lattice dbl = LatticeFactory.doublingConvex(l, c);
+
+        assertTrue(dbl.isCN());
+
+        Lattice notcn = new Lattice();
+        notcn.addNode(n1);
+        notcn.addNode(n2);
+        notcn.addNode(n3);
+        notcn.addNode(n8);
+        notcn.addNode(n9);
+        notcn.addNode(n10);
+        notcn.addNode(n12);
+        notcn.addEdge(n1, n2);
+        notcn.addEdge(n1, n3);
+        notcn.addEdge(n2, n8);
+        notcn.addEdge(n2, n9);
+        notcn.addEdge(n3, n10);
+        notcn.addEdge(n8, n12);
+        notcn.addEdge(n9, n12);
+        notcn.addEdge(n10, n12);
+
+        assertFalse(notcn.isCN());
+    }
     /**
      * Test join method.
      */
@@ -460,9 +539,9 @@ public class LatticeTest {
         Edge ft = new Edge(f, t); l.addEdge(ft);
         Edge gt = new Edge(g, t); l.addEdge(gt);
         Context ctx = l.getDoubleArrowTable();
-        assertTrue(ctx.getIntent(c).contains(d));
-        assertTrue(ctx.getIntent(e).contains(d));
-        assertTrue(ctx.getIntent(f).contains(e));
-        assertTrue(ctx.getIntent(g).contains(c));
+        assertTrue(ctx.getExtent(c).contains(d));
+        assertTrue(ctx.getExtent(e).contains(d));
+        assertTrue(ctx.getExtent(f).contains(e));
+        assertTrue(ctx.getExtent(g).contains(c));
     }
 }

@@ -7,6 +7,7 @@ package lattice {
         +Lattice(DAGraph graph)
         .. Predicates ..
         +boolean isLattice()
+        +boolean isCN() 
         .. Operations ..
         +Node top()
         +Node bottom()
