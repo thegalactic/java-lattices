@@ -25,6 +25,27 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-04-16 Jean-François Viaud <jviaud@univ-lr.fr>
+	* src/lattice/Lattice.java
+		+ add isCN method
+	* src/lattice/Lattice.iuml
+		+ add isCN method
+	* test/lattice/LatticeTest.java
+		+ add testisCN
+
+2014-04-14 Jean-François Viaud <jviaud@univ-lr.fr>
+	* src/lattice/Lattice.java
+		+ add getDoubleArrowTable method
+		* rename getArrowRelation method
+	* src/lattice/Lattice.iuml
+		+ add getDoubleArrowTable method
+	* test/lattice/LatticeTest.java
+		+ add testgetDoubleArrowTable
+	* doc/tutorial/tutorial_lattice.md
+		+ begin to write tutorial
+	* doc/tutorial/images
+		+ add directory
+
 2014-04-13 Christophe Demko <chdemko@gmail.com>
 	* src/lattice/BijectiveComponents.java
 	* src/lattice/Concept.java

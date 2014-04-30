@@ -20,6 +20,7 @@ import dgraph.DAGraph;
 import dgraph.DGraph;
 import dgraph.Edge;
 import dgraph.Node;
+import java.util.ArrayList;
 
 /**
  * This class extends class {@link dgraph.DAGraph} to provide specific methods to manipulate a lattice.
@@ -147,6 +148,90 @@ public class Lattice extends DAGraph {
         return this.max().size() == 1;
     }
 
+   /**
+    * Return true if this component is congruence normal.
+    *
+    * A lattice $L$ is in class CN (Congruence Normal) is there exists a sequence $L_1,\ldots,L_p$ of lattices with $L_p=L$,
+    * together with a sequence $C_1,\ldots,C_{p-1}$ such that $C_i$ is a convex of $L_i$ and $L_{i+1}$ is obtained
+    * by doubling the convex $C_i$ in $L_i$.
+    *
+    * See {@link lattice.LatticeFactory} for the doubling convex method which is not used here.
+    *
+    * This computation is done in O((|J|+|M|)^2|X|) from the transitive reduction of L.
+    *
+    * This recognition algorithm was first written in :
+    * "Doubling convex serts in lattices : characterizations and recognition algorithm", Bertet K., Caspard N. 2002.
+    *
+    * @return true if this component is congruence normal.
+    */
+   public boolean isCN() {
+       TreeSet<Node> joins = this.joinIrreducibles();
+       TreeSet<Node> meats = this.meetIrreducibles();
+       DGraph arrows = new ArrowRelation(this);
+       Context dbl = this.getDoubleArrowTable();
+       // steps are connected component of the double arrow table.
+       ArrayList<Concept> steps = new ArrayList<Concept>();
+       while (!joins.isEmpty()) {
+           TreeSet<Comparable> setA = new TreeSet<Comparable>();
+           TreeSet<Comparable> setB = new TreeSet<Comparable>();
+           int cardA = setA.size();
+           setA.add(joins.first());
+           while (cardA != setA.size()) { // something added
+               cardA = setA.size(); // update card
+               for (Comparable c : setA) {
+                   setB.addAll(dbl.getIntent(c));
+               }
+               for (Comparable c : setB) {
+                   setA.addAll(dbl.getExtent(c));
+               }
+           }
+           steps.add(new Concept(setA, setB));
+           joins.removeAll(setA);
+       }
+       for (Concept c : steps) {
+           if (c.getSetB().isEmpty()) { // to be verified :-)
+               return false;
+           }
+           for (Comparable j : c.getSetA()) {
+               for (Comparable m : c.getSetB()) {
+                   if ((arrows.getEdge((Node) m, (Node) j).getContent() != "UpDown")
+                           && (arrows.getEdge((Node) m, (Node) j).getContent() != "Circ")) {
+                       return false;
+                   }
+               }
+           }
+       }
+       joins = this.joinIrreducibles();
+       meats = this.meetIrreducibles();
+       DGraph phi = new DGraph();
+       for (Node j : joins) {
+           for (Node m : meats) {
+               int indJ = 0; // Search for the step containning j
+               while ((indJ < steps.size()) && (!steps.get(indJ).containsInA(j))) {
+                   indJ++;
+               }
+               if ((phi.getNodeByContent(indJ) == null) && (indJ != steps.size())) {
+                   phi.addNode(new Node(indJ));
+               }
+               int indM = 0; // Search for the step containning m
+               while ((indM < steps.size()) && (!steps.get(indM).containsInB(m))) {
+                   indM++;
+               }
+               if ((phi.getNodeByContent(indM) == null) && (indM != steps.size())) {
+                   phi.addNode(new Node(indM));
+               }
+               if (indM != steps.size() && indJ != steps.size()) {
+                   if (arrows.getEdge((Node) m, (Node) j).getContent() == "Up") {
+                       phi.addEdge(phi.getNodeByContent(indM), phi.getNodeByContent(indJ));
+                   }
+                   if (arrows.getEdge((Node) m, (Node) j).getContent() == "Down") {
+                       phi.addEdge(phi.getNodeByContent(indJ), phi.getNodeByContent(indM));
+                   }
+               }
+           }
+       }
+       return (phi.isAcyclic());
+   }
     /* --------------- LATTICE HANDLING METHODS ------------ */
 
     /**
@@ -451,7 +536,7 @@ public class Lattice extends DAGraph {
      * Each attribute of the table is a copy of a join irreducibles node.
      * Each observation of the table is a copy of a meet irreducibles node.
      * An attribute is extent of an observation when its join irreducible node
-     * is greather than the meet irreducible node in the lattice.
+     * is greater than the meet irreducible node in the lattice.
      *
      * @return  the table of the lattice
      */
@@ -743,7 +828,7 @@ public class Lattice extends DAGraph {
       *
       * @author Jean-Francois
       */
-     public DGraph arrowRelation() {
+     public DGraph getArrowRelation() {
 
         /* Nodes are join or meet irreductibles of the lattice. */
         TreeSet<Node> joins = new TreeSet<Node>(this.joinIrreducibles());
@@ -787,5 +872,47 @@ public class Lattice extends DAGraph {
         }
         return graph;
     }
-}
 
+     /**
+     * Returns the table of the lattice, composed of the join and meet irreducibles nodes.
+     *
+     * Each attribute of the table is a copy of a join irreducibles node.
+     * Each observation of the table is a copy of a meet irreducibles node.
+     * An attribute is extent of an observation when its join irreducible node
+     * is in double arrow relation with the meet irreducible node in the lattice.
+     *
+     * @return  the table of the lattice
+     */
+    public Context getDoubleArrowTable() {
+        // generation of attributes
+        TreeSet<Node> join = this.joinIrreducibles();
+        Context context = new Context();
+        for (Node j : join) {
+            context.addToObservations(j);
+        }
+        // generation of observations
+        TreeSet<Node> meet = this.meetIrreducibles();
+        for (Node m : meet) {
+            context.addToAttributes(m);
+        }
+        // generation of extent-intent
+        Lattice transitiveClosure = new Lattice(this);
+        transitiveClosure.transitiveClosure();
+        Lattice transitiveReduction = new Lattice(this);
+        transitiveReduction.transitiveReduction();
+        Node jminus = new Node();
+        Node mplus = new Node();
+        for (Node j : join) {
+            for (Node m : meet) {
+                if (!(m.equals(j) || transitiveClosure.getSuccessorNodes(j).contains(m))) {
+                    mplus = transitiveReduction.getSuccessorNodes(m).first();
+                    jminus = transitiveReduction.getPredecessorNodes(j).first();
+                    if (transitiveClosure.getSuccessorNodes(jminus).contains(m) && (transitiveClosure.getPredecessorNodes(mplus).contains(j))) {
+                        context.addExtentIntent(j, m);
+                    }
+                }
+            }
+        }
+        return context;
+    }
+}

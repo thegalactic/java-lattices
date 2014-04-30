@@ -1,0 +1,13 @@
+digraph G {
+Graph [rankdir=BT]
+90 [label="a"]
+91 [label="b"]
+92 [label="c"]
+93 [label="d"]
+94 [label="e"]
+90->91
+90->93
+91->92
+93->94
+94->92
+}

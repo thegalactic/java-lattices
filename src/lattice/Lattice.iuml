@@ -7,6 +7,7 @@ package lattice {
         +Lattice(DAGraph graph)
         .. Predicates ..
         +boolean isLattice()
+        +boolean isCN() 
         .. Operations ..
         +Node top()
         +Node bottom()
@@ -31,7 +32,8 @@ package lattice {
         #hasDependencyGraph()
         +IS getCanonicalDirectBasis()
         +TreeSet getMinimalGenerators()
-        +DGraph arrowRelation()
+        +DGraph getArrowRelation()
+        +Context getDoubleArrowTable()
     }
 
     DAGraph <|-- Lattice
