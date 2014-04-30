@@ -1136,4 +1136,13 @@ public class Context extends ClosureSystem {
         }
         return csl;
     }
+
+    /**
+     * Returns the lattice of this component.
+     *
+     * @return  The lattice induced by this component
+     */
+    public ConceptLattice lattice() {
+        return this.conceptLattice(true);
+    }
 }

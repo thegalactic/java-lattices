@@ -5,6 +5,7 @@ package lattice {
         +{abstract} void toFile(String file)
         
         +ConceptLattice closedSetLattice(boolean  diagram)
+        +ConceptLattice lattice()
         +Vector<Concept> allClosures()
         +Concept nextClosure(Concept cl)
         +DGraph precedenceGraph()

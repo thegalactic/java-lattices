@@ -111,6 +111,15 @@ public abstract class ClosureSystem {
         }
     }
 
+    /**
+     * Returns the lattice of this component.
+     *
+     * @return  The concept lattice
+     */
+    public ConceptLattice lattice() {
+        return this.closedSetLattice(true);
+    }
+
    /**
     * Returns all the closed sets of the specified closure system
     * (that can be an IS or a context).

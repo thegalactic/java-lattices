@@ -172,12 +172,7 @@ public class BijectiveComponents {
      */
     public long initialize() {
         long debut = new Date().getTime();
-        //if (this.init instanceof lattice.Context)
-        if (this.init instanceof Context) {
-            this.lattice = ((Context) this.init).conceptLattice(true);
-        } else {
-            this.lattice = this.init.closedSetLattice(true);
-        }
+        this.lattice = this.init.lattice();
         this.reducedLattice = this.lattice.getIrreduciblesReduction();
         this.table = this.lattice.getTable();
         this.dependencyGraph = this.lattice.getDependencyGraph();

@@ -26,6 +26,14 @@ $ -> Language fix or change
 ! -> Note
 
 2014-04-30 Christophe Demko <chdemko@gmail.com>
+	* src/lattice/BijectiveComponents.java
+	* src/lattice/ClosureSystem.iuml
+	* src/lattice/ClosureSystem.java
+	* src/lattice/Context.iuml
+	* src/lattice/Context.java
+		^ Remove test of instance
+
+2014-04-30 Christophe Demko <chdemko@gmail.com>
 	* README.md
 	* lib/jacoco/jacocoant.jar
 		+ Use jacoco 0.7.0
