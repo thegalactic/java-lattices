@@ -26,6 +26,11 @@ $ -> Language fix or change
 ! -> Note
 
 2014-04-30 Christophe Demko <chdemko@gmail.com>
+	* README.md
+	* lib/jacoco/jacocoant.jar
+		+ Use jacoco 0.7.0
+
+2014-04-30 Christophe Demko <chdemko@gmail.com>
 	* doc/cite.bib
 		+ Correct cide.bib
 
