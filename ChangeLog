@@ -25,6 +25,10 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-04-30 Christophe Demko <chdemko@gmail.com>
+	* doc/cite.bib
+		+ Correct cide.bib
+
 2014-04-16 Jean-François Viaud <jviaud@univ-lr.fr>
 	* src/lattice/Lattice.java
 		+ add isCN method
