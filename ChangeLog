@@ -26,6 +26,30 @@ $ -> Language fix or change
 ! -> Note
 
 2014-05-01 Christophe Demko <chdemko@gmail.com>
+	* build.xml
+	* README.md
+	* doc/api/README.md
+	* examples/Examples.java
+	* lib/commons-io/commons-io-2.4.jar
+	* src/dgraph/DGraph.iuml
+	* src/dgraph/DGraph.java
+	* src/dgraph/DGraphWriter.iuml
+	* src/dgraph/DGraphWriter.java
+	* src/dgraph/DGraphWriterDot.iuml
+	* src/dgraph/DGraphWriterDot.java
+	* src/dgraph/DGraphWriterFactory.iuml
+	* src/dgraph/DGraphWriterFactory.java
+	* src/dgraph/Edge.iuml
+	* src/dgraph/Edge.java
+	* src/dgraph/Node.iuml
+	* src/dgraph/Node.java
+	* src/lattice/BijectiveComponents.java
+	* test/dgraph/DGraphTest.java
+	* test/dgraph/EdgeTest.java
+	* test/dgraph/NodeTest.java
+		^ Implement abstract writer pattern for DGraph
+
+2014-05-01 Christophe Demko <chdemko@gmail.com>
 	* examples/Examples.java
 		^ Update examples
 

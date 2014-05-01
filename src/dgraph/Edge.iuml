@@ -16,7 +16,6 @@ package dgraph {
         +boolean hasContent()
         .. Transformers ..
         +String toString()
-        +String toDot()
         .. Comparators ..
         +int compareTo(final Object object)
     }

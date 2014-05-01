@@ -14,8 +14,6 @@ package dgraph;
  * @version 2014
  */
 
-import java.util.StringTokenizer;
-
 /**
  * This class gives a standard representation for an edge of a graph.
  *
@@ -181,24 +179,6 @@ public class Edge implements Comparable<Object> {
             string = string + "(" + this.content + ")";
         }
         return string;
-    }
-
-    /**
-     * Returns the dot description of this edge in a String.
-     *
-     * @return  The dot representation of this edge
-     */
-    public String toDot() {
-        String dot = this.from.getIdentifier() + "->" + this.to.getIdentifier();
-        if (this.hasContent()) {
-            dot = dot + " [" + "label=\"";
-            StringTokenizer tokenizer = new StringTokenizer(this.content.toString(), "\"");
-            while (tokenizer.hasMoreTokens()) {
-                dot += tokenizer.nextToken();
-            }
-            dot = dot + "\"]";
-        }
-        return dot;
     }
 }
 
