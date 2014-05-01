@@ -1,0 +1,10 @@
+package lattice {
+    class ContextWriterText {
+    	-{static}ContextWriterText instance
+        +void write(Context context, BufferedWriter file)
+        +{static}ContextWriterText getInstance()
+        +{static}void register()
+    }
+
+    ContextWriter <|-- ContextWriterText
+}

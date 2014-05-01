@@ -1,7 +1,7 @@
 package dgraph {
     class DGraphWriterDot {
     	-{static}DGraphWriterDot instance
-        +void write(DGraph graph, DataOutputStream out)
+        +void write(DGraph graph, BufferedWriter file)
         +{static}DGraphWriterDot getInstance()
         +{static}void register()
     }

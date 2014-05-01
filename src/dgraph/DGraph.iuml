@@ -39,7 +39,7 @@ package dgraph {
         .. Transformers ..
         +String toString()
         .. Persistence ..
-        +void write(final String filename)
+        +void save(final String filename)
         .. Operations ..
         +boolean addNode(final Node node)
         +boolean addEdge(final Node from, final Node to, final Object content)

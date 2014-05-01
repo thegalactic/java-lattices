@@ -14,7 +14,7 @@ package dgraph;
  * @version 2014
  */
 
-import java.io.DataOutputStream;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
@@ -61,13 +61,13 @@ public final class DGraphWriterDot implements DGraphWriter {
      * Write a graph to a output stream.
      *
      * @param   graph  a graph to write
-     * @param   out    an output stream
+     * @param   file   a file
      *
      * @throws  IOException  When an IOException occurs
      */
-    public void write(DGraph graph, DataOutputStream out) throws IOException {
-        out.writeBytes("digraph G {\n");
-        out.writeBytes("Graph [rankdir=BT]\n");
+    public void write(DGraph graph, BufferedWriter file) throws IOException {
+        file.write("digraph G {\n");
+        file.write("Graph [rankdir=BT]\n");
         StringBuffer nodes  = new StringBuffer();
         StringBuffer edges = new StringBuffer();
         for (Node node : graph.getNodes()) {
@@ -91,9 +91,9 @@ public final class DGraphWriterDot implements DGraphWriter {
             }
             edges.append(dot).append("\n");
         }
-        out.writeBytes(nodes.toString());
-        out.writeBytes(edges.toString());
-        out.writeBytes("}");
+        file.write(nodes.toString());
+        file.write(edges.toString());
+        file.write("}");
     }
 }
 

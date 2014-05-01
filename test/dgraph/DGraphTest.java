@@ -249,10 +249,10 @@ public class DGraphTest {
     }
 
     /**
-     * Test the write method.
+     * Test the save method.
      */
     @Test
-    public void testWrite() {
+    public void testSave() {
         try {
             File file = File.createTempFile("junit", ".dot");
             String filename = file.getName();
@@ -266,7 +266,7 @@ public class DGraphTest {
             graph.addNode(node3);
             graph.addEdge(node1, node2, "R1");
             graph.addEdge(node2, node3, "R2");
-            graph.write(filename);
+            graph.save(filename);
             String content = "";
             file = new File(filename);
             Scanner scanner = new Scanner(file);

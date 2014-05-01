@@ -59,7 +59,7 @@ package lattice {
         +ConceptLattice lattice()
         .. Transformers ..
         String toString()
-        void toFile(String filename)
+        void save(String filename)
     }
 
     ClosureSystem <|-- Context

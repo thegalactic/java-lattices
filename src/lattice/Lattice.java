@@ -579,7 +579,7 @@ public class Lattice extends DAGraph {
      *
      * @return  an implicational system
      */
-    public ImplicationalSystem getIS() {
+    public ImplicationalSystem getImplicationalSystem() {
         // initialization of ImplicationalSystem
         TreeSet<Node> join = this.joinIrreducibles();
         ImplicationalSystem sigma = new ImplicationalSystem();

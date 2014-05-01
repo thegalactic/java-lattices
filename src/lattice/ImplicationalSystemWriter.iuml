@@ -1,0 +1,5 @@
+package lattice {
+    interface ImplicationalSystemWriter {
+        +void write(ImplicationalSystem system, BufferedWriter file)
+    }
+}

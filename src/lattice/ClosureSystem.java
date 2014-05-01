@@ -32,7 +32,7 @@ import dgraph.Node;
  * A closure system is formaly defined by a set of indexed elements and a closure operator
  * (abstract methods {@link #getSet} and {@link #closure}).
  *
- * Abstract method {@link #toFile} also describe
+ * Abstract method {@link #save} also describe
  * the common behavior of a closure system.
  *
  * However, this abstract class provides both abstract and non abstract methods.
@@ -82,7 +82,7 @@ public abstract class ClosureSystem {
      *
      * @throws  IOException  When an IOException occurs
      */
-    public abstract void toFile(String file) throws IOException;
+    public abstract void save(String file) throws IOException;
 
     /* ------------- IMPLEMENTED METHODS ------------------ */
 

@@ -78,6 +78,14 @@ import java.util.TreeSet;
  * @todo  Move specific phD students (Dounia and Van) constructors to other classes
  */
 public class Context extends ClosureSystem {
+    /*
+     * Register txt writer
+     */
+    static {
+        if (ContextWriterFactory.get("txt") == null) {
+            ContextWriterText.register();
+        }
+    }
 
     /* ------------- FIELD ------------------ */
 
@@ -781,30 +789,20 @@ public class Context extends ClosureSystem {
     }
 
     /**
-     * Saves this component in a text file which name is specified.
-     *
-     * The following format is respected:
-     *
-     * The list of observations separated by a space on the first line ;
-     * the list of attrbutes separated by a space on the second line ;
-     * then, for each observations o, the list of its intent on a line, written like o a1 a2 ...
-     *
-     * ~~~
-     * Observations: 1 2 3
-     * Attributes: a b c d e
-     * 1 a c
-     * 2 a b
-     * 3 b d e
-     * 4 c e
-     * ~~~
+     * Save the description of this component in a file whose name is specified.
      *
      * @param   filename  the name of the file
      *
      * @throws  IOException  When an IOException occurs
      */
-    public void toFile(String filename) throws IOException {
+    public void save(final String filename) throws IOException {
+        String extension = "";
+        int index = filename.lastIndexOf('.');
+        if (index > 0) {
+            extension = filename.substring(index + 1);
+        }
         BufferedWriter file = new BufferedWriter(new FileWriter(filename));
-        file.write(this.toString());
+        ContextWriterFactory.get(extension).write(this, file);
         file.close();
     }
 

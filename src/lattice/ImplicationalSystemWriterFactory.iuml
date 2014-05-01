@@ -1,0 +1,10 @@
+package lattice {
+    class ImplicationalSystemWriterFactory {
+    	-{static}HashMap<String, ImplicationalSystemWriter> writers
+        +{static}ImplicationalSystemWriter register(ImplicationalSystemWriter writer, String extension)
+        +{static}ImplicationalSystemWriter unregister(String extension)
+        +{static}ImplicationalSystemWriter get(String extension)
+    }
+
+    ImplicationalSystemWriterFactory o-- ImplicationalSystemWriter
+}
