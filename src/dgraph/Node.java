@@ -38,8 +38,6 @@ import java.util.StringTokenizer;
  * show Node members
  * class Node #LightCyan
  * title Node UML graph
- *
- * @todo  Do we implement mutator for content?
  */
 public class Node implements Comparable<Object> {
     /* ------------- FIELDS --------------------- */
@@ -84,20 +82,7 @@ public class Node implements Comparable<Object> {
      * variable which is the incremented.
      */
     public Node() {
-        this.identifier = ++count;
-        this.content = null;
-    }
-
-    /**
-     * Constructs this node as a copy of the specified `node`, with the same index.
-     *
-     * @param   node  the node to be copied
-     *
-     * @todo  Is this constructor usefull since it breaks identifier unicity
-     */
-    public Node(final Node node) {
-        this.identifier = node.identifier;
-        this.content = node.content;
+        this(null);
     }
 
     /* -------------- ACCESSORS ------------------- */
@@ -118,6 +103,18 @@ public class Node implements Comparable<Object> {
      */
     public Object getContent() {
         return this.content;
+    }
+
+    /**
+     * Set the content.
+     *
+     * @param   content  Content for this node
+     *
+     * @return  this for chaining
+     */
+    public Node setContent(final Object content) {
+        this.content = content;
+        return this;
     }
 
     /* --------------- SAVING METHOD ------------ */

@@ -6,12 +6,13 @@ package dgraph {
         .. Constructors ..
         +Node(final Object content)
         +Node()
-        +Node(final Node node)
         .. Creators ..
         +Node copy()
         .. Accessors ..
         +int getIdentifier()
         +Object getContent()
+        .. Mutators ..
+        +Node setContent(final Object content)
         .. Transformers ..
         +String toString()
         +String toDot()
