@@ -118,18 +118,10 @@ public class BijectiveComponents {
      * Generates all the bijective components included in this component
      * issued from the initial closure system `init`.
      *
-     * The closed set lattice is generated when the closure system is an implicational system,
-     * and obtained by
+     * The closed set lattice is generated and obtained by
      *
      * ~~~Java
-     * this.init.closedSetLattice(true);
-     * ~~~
-     *
-     * The concept lattice is generated when the closure system is a context, and obtained by
-     * by
-     *
-     * ~~~Java
-     * this.init.conceptLattice(true);
+     * this.init.lattice();
      * ~~~
      *
      * The reduced lattice is obtained by
