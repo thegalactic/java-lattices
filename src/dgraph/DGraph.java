@@ -14,7 +14,6 @@ package dgraph;
  * @version 2014
  */
 
-import org.apache.commons.io.FilenameUtils;
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -439,7 +438,11 @@ public class DGraph {
      * @throws  IOException  When an IOException occurs
      */
     public void write(final String filename) throws IOException {
-        String extension = FilenameUtils.getExtension(filename);
+        String extension = "";
+        int index = filename.lastIndexOf('.');
+        if (index > 0) {
+            extension = filename.substring(index + 1);
+        }
         DataOutputStream out = new DataOutputStream(new FileOutputStream(filename));
         DGraphWriterFactory.get(extension).write(this, out);
         out.close();

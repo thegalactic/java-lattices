@@ -44,9 +44,6 @@
 	<target name="build">
 		<mkdir dir="${build.src.dir}" />
 		<javac includeantruntime="false" srcdir="${src.dir}" destdir="${build.src.dir}">
-			<classpath>
-				<pathelement location="lib/commons-io/commons-io-2.4.jar"/>
-			</classpath>
 			<!--compilerarg value="-Xlint" /-->
 		</javac>
 	</target>
@@ -59,9 +56,6 @@
 	<target name="build-debug">
 		<mkdir dir="${build.debug.dir}" />
 		<javac debug="on" includeantruntime="false" srcdir="${src.dir}" destdir="${build.debug.dir}">
-			<classpath>
-				<pathelement location="lib/commons-io/commons-io-2.4.jar"/>
-			</classpath>
 			<!--compilerarg value="-Xlint" /-->
 		</javac>
 	</target>
@@ -102,7 +96,6 @@
 				<classpath>
 					<pathelement location="lib/junit/junit-4.11.jar" />
 					<pathelement location="lib/junit/hamcrest-core-1.3.jar" />
-					<pathelement location="lib/commons-io/commons-io-2.4.jar" />
 					<pathelement location="${build.jar.dir}/${ant.project.name}-debug.jar" />
 					<pathelement location="${build.test.dir}" />
 				</classpath>
@@ -151,7 +144,6 @@
 		<mkdir dir="${output.examples.dir}" />
 		<java classname="${examples-class}">
 			<classpath>
-				<pathelement location="lib/commons-io/commons-io-2.4.jar" />
 				<pathelement location="${build.jar.dir}/${ant.project.name}.jar" />
 				<pathelement location="${build.examples.dir}" />
 			</classpath>
@@ -163,9 +155,6 @@
 	<target name="api" depends="build">
 		<mkdir dir="${build.api.dir}" />
 		<javadoc sourcepath="${src.dir}" destdir="${build.api.dir}" overview="${api.dir}/README.md" doctitle="Java Lattices">
-			<classpath>
-				<pathelement location="lib/commons-io/commons-io-2.4.jar" />
-			</classpath>
 			<doclet name="ch.raffael.doclets.pegdown.PegdownDoclet" path="lib/doclet/pegdown-doclet-1.1.1-all.jar" />
 			<arg value="-extensions" />
 			<arg value="fenced_code_blocks,autolinks,definitions,smartypants,tables,wikilinks" />
