@@ -199,35 +199,35 @@ public class BijectiveComponents {
         BufferedWriter file = new BufferedWriter(new FileWriter(directory + "Readme.txt"));
         // saves the inital closure system
         String nameInit = directory + "InitialClosureSystem.txt";
-        this.init.toFile(nameInit);
+        this.init.save(nameInit);
         file.write("-> Initial closure system saved in " + nameInit + ": \n");
         file.write(this.init.toString() + "\n");
         // saves the closed set lattice
         String nameLattice = directory + "Lattice.dot";
-        this.lattice.write(nameLattice);
+        this.lattice.save(nameLattice);
         file.write("-> Closed set or concept lattice saved in " + nameLattice + "\n");
         // saves the reduced lattice
         String nameReducedLattice = directory + "ReducedLattice.dot";
-        this.reducedLattice.write(nameReducedLattice);
+        this.reducedLattice.save(nameReducedLattice);
         file.write("-> Reduced lattice saved in " + nameReducedLattice + "\n");
         // saves the reduced table
         String nameTable = directory + "Table.txt";
-        this.table.toFile(nameTable);
+        this.table.save(nameTable);
         file.write("-> Table of the reduced lattice saved in " + nameTable + "\n");
         file.write(this.table.toString() + "\n");
         // saves the canonical basis
         String nameCB = directory + "CanonicalBasis.txt";
-        this.canonicalBasis.toFile(nameCB);
+        this.canonicalBasis.save(nameCB);
         file.write("-> Canonical basis saved in " + nameCB + ": \n");
         file.write(this.canonicalBasis.toString() + "\n");
         // saves the canonical direct basis
         String nameCDB = directory + "CanonicalDirectBasis.txt";
-        this.canonicalDirectBasis.toFile(nameCDB);
+        this.canonicalDirectBasis.save(nameCDB);
         file.write("-> Canonical direct basis of the reduced lattice saved in " + nameCDB + ": \n");
         file.write(this.canonicalDirectBasis.toString() + "\n");
         // saves the dependency graph
         String nameODGraph = directory + "DependencyGraph.dot";
-        this.dependencyGraph.write(nameODGraph);
+        this.dependencyGraph.save(nameODGraph);
         file.write("-> Dependency Graph  of the reduced lattice saved in " + nameODGraph + " \n");
         // saves the minimal generators
         file.write("-> Minimal generators  of the reduced lattice are " + this.minimalGenerators + "\n");

@@ -37,7 +37,7 @@ package lattice {
         +boolean isReduced()
         .. Transformers ..
         +String toString()
-        +void toFile(String filename)
+        +void save(String filename)
         .. Operations ..
         +int makeProper()
         +int makeUnary()

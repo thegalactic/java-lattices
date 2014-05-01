@@ -14,8 +14,8 @@ package dgraph;
  * @version 2014
  */
 
-import java.io.DataOutputStream;
-import java.io.FileOutputStream;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.ArrayList;
@@ -431,21 +431,21 @@ public class DGraph {
     }
 
     /**
-     * Write the description of this component in a file whose name is specified.
+     * Save the description of this component in a file whose name is specified.
      *
      * @param   filename  the name of the file
      *
      * @throws  IOException  When an IOException occurs
      */
-    public void write(final String filename) throws IOException {
+    public void save(final String filename) throws IOException {
         String extension = "";
         int index = filename.lastIndexOf('.');
         if (index > 0) {
             extension = filename.substring(index + 1);
         }
-        DataOutputStream out = new DataOutputStream(new FileOutputStream(filename));
-        DGraphWriterFactory.get(extension).write(this, out);
-        out.close();
+        BufferedWriter file = new BufferedWriter(new FileWriter(filename));
+        DGraphWriterFactory.get(extension).write(this, file);
+        file.close();
     }
 
     /* --------------- NODES AND EDGES MODIFICATION METHODS ------------ */

@@ -115,17 +115,17 @@ public class LatticeTest {
         assertEquals(l.getDependencyGraph(), dg);
     }
     /**
-     * Test getIS method.
+     * Test getImplicationalSystem method.
      */
     @Test
-    public void testgetIS() {
+    public void testgetImplicationalSystem() {
         Lattice l = new Lattice();
         Node a = new Node("a"); l.addNode(a);
         Node b = new Node("b"); l.addNode(b);
         Node c = new Node("c"); l.addNode(c);
         l.addEdge(a, b);
         l.addEdge(b, c);
-        ImplicationalSystem is = l.getIS();
+        ImplicationalSystem is = l.getImplicationalSystem();
         is.makeDirect();
         Rule r = new Rule();
         r.addToPremise("c");

@@ -195,10 +195,10 @@ public class ImplicationalSystemTest {
         assertTrue(is.containsRule(rb));
     }
     /**
-     * Test for the toFile method.
+     * Test for the save method.
      */
     @Test
-    public void testtoFile() {
+    public void testsave() {
         try {
             ImplicationalSystem is = new ImplicationalSystem();
             TreeSet<Comparable> elements = new TreeSet<Comparable>();
@@ -211,10 +211,10 @@ public class ImplicationalSystemTest {
             r.addToConclusion('b');
             r.addToConclusion('c');
             is.addRule(r);
-            File file = File.createTempFile("junit", ".rule2");
+            File file = File.createTempFile("junit", ".txt");
             String filename = file.getName();
             file.delete();
-            is.toFile(filename);
+            is.save(filename);
             String content = "";
             file = new File(filename);
             Scanner scanner = new Scanner(file);

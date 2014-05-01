@@ -67,6 +67,14 @@ import dgraph.Node;
  * @todo  Standardize "count" method names
  */
 public class ImplicationalSystem extends ClosureSystem {
+    /*
+     * Register txt writer
+     */
+    static {
+        if (ImplicationalSystemWriterFactory.get("txt") == null) {
+            ImplicationalSystemWriterText.register();
+        }
+    }
     /*--------------- FIELDS -----------------*/
 
     /**
@@ -435,28 +443,20 @@ public class ImplicationalSystem extends ClosureSystem {
     }
 
     /**
-     * Saves this component in a file which name is specified.
-     *
-     * The following format is used:
-     *
-     * An implicational system can be instancied from and save to a text file in the following format:
-     * A list of elements separated by a space in the first line ;
-     * then, each rule on a line, written like [premise] -> [conclusion]
-     * where elements are separated by a space.
-     *
-     * ~~~
-     * a b c d e
-     * a b -> c d
-     * c d -> e
-     * ~~~
+     * Save the description of this component in a file whose name is specified.
      *
      * @param   filename  the name of the file
      *
      * @throws  IOException  When an IOException occurs
      */
-    public void toFile(String filename) throws IOException {
+    public void save(final String filename) throws IOException {
+        String extension = "";
+        int index = filename.lastIndexOf('.');
+        if (index > 0) {
+            extension = filename.substring(index + 1);
+        }
         BufferedWriter file = new BufferedWriter(new FileWriter(filename));
-        file.write(this.toString());
+        ImplicationalSystemWriterFactory.get(extension).write(this, file);
         file.close();
     }
 

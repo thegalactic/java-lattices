@@ -14,7 +14,7 @@ package dgraph;
  * @version 2014
  */
 
-import java.io.DataOutputStream;
+import java.io.BufferedWriter;
 import java.io.IOException;
 
 /**
@@ -35,10 +35,10 @@ interface DGraphWriter {
      * Write a graph to a output stream.
      *
      * @param   graph  a graph to write
-     * @param   out    an output stream
+     * @param   file   a file
      *
      * @throws  IOException  When an IOException occurs
      */
-    void write(DGraph graph, DataOutputStream out) throws IOException;
+    void write(DGraph graph, BufferedWriter file) throws IOException;
 }
 
