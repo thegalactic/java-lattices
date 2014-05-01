@@ -14,6 +14,7 @@ package lattice;
  * @version 2013
  */
 
+import java.io.IOException;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
@@ -78,8 +79,10 @@ public abstract class ClosureSystem {
      * Saves this component in a file which name is specified.
      *
      * @param   file  name of file
+     *
+     * @throws  IOException  When an IOException occurs
      */
-    public abstract void toFile(String file);
+    public abstract void toFile(String file) throws IOException;
 
     /* ------------- IMPLEMENTED METHODS ------------------ */
 

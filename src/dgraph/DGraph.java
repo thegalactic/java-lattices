@@ -16,6 +16,7 @@ package dgraph;
 
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.ArrayList;
 import java.util.TreeMap;
@@ -424,28 +425,26 @@ public class DGraph {
      * Write the dot description of this component in a file  which name is specified.
      *
      * @param   filename  the name of the file
+     *
+     * @throws  IOException  When an IOException occurs
      */
-    public void writeDot(final String filename) {
-        try {
-            FileOutputStream fich = new FileOutputStream(filename);
-            DataOutputStream out = new DataOutputStream(fich);
-            out.writeBytes("digraph G {\n");
-            out.writeBytes("Graph [rankdir=BT]\n");
-            StringBuffer nodes  = new StringBuffer();
-            StringBuffer edges = new StringBuffer();
-            for (Node from : this.nodes) {
-                nodes.append(from.toDot()).append("\n");
-            }
-            for (Edge edge : this.getEdges()) {
-                edges.append(edge.toDot()).append("\n");
-            }
-            out.writeBytes(nodes.toString());
-            out.writeBytes(edges.toString());
-            out.writeBytes("}");
-            out.close();
-        } catch (Exception exception) {
-            exception.printStackTrace();
+    public void writeDot(final String filename) throws IOException {
+        FileOutputStream fich = new FileOutputStream(filename);
+        DataOutputStream out = new DataOutputStream(fich);
+        out.writeBytes("digraph G {\n");
+        out.writeBytes("Graph [rankdir=BT]\n");
+        StringBuffer nodes  = new StringBuffer();
+        StringBuffer edges = new StringBuffer();
+        for (Node from : this.nodes) {
+            nodes.append(from.toDot()).append("\n");
         }
+        for (Edge edge : this.getEdges()) {
+            edges.append(edge.toDot()).append("\n");
+        }
+        out.writeBytes(nodes.toString());
+        out.writeBytes(edges.toString());
+        out.writeBytes("}");
+        out.close();
     }
 
     /* --------------- NODES AND EDGES MODIFICATION METHODS ------------ */
