@@ -18,6 +18,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
@@ -134,55 +135,55 @@ public class ImplicationalSystem extends ClosureSystem {
      * Each rule must have a non empty concusion, otherwise, it is not added in the component
      *
      * @param   filename  the name of the file
+     *
+     * @throws  IOException  When an IOException occurs
      */
-    public ImplicationalSystem(String filename) {
-        try {
-            this.sigma = new TreeSet<Rule>();
-            this.set = new TreeSet<Comparable>();
-            BufferedReader file = new BufferedReader(new FileReader(filename));
-            // first line : All elements of S separated by a space
-            // a StringTokenizer is used to divide the line into different token,
-            // considering spaces as separator.
-            StringTokenizer st =  new StringTokenizer(file.readLine());
+    public ImplicationalSystem(String filename) throws IOException {
+        this.sigma = new TreeSet<Rule>();
+        this.set = new TreeSet<Comparable>();
+        BufferedReader file = new BufferedReader(new FileReader(filename));
+        // first line : All elements of S separated by a space
+        // a StringTokenizer is used to divide the line into different token,
+        // considering spaces as separator.
+        StringTokenizer st =  new StringTokenizer(file.readLine());
+        while (st.hasMoreTokens()) {
+            String n = new String(st.nextToken());
+            this.addElement(n);
+        }
+        // next lines : [elements of the premise separated by a space] -> [elements of the conclusion separated by a space]
+        // a StringTokenizer is used to divide each rule.
+        String line = file.readLine();
+        while (!(line == null) && !line.isEmpty()) {
+            st = new StringTokenizer(line);
+            Rule r = new Rule();
+            boolean prem = true;
             while (st.hasMoreTokens()) {
-                String n = new String(st.nextToken());
-                this.addElement(n);
-            }
-            // next lines : [elements of the premise separated by a space] -> [elements of the conclusion separated by a space]
-            // a StringTokenizer is used to divide each rule.
-            String line = file.readLine();
-            while (!(line == null) && !line.isEmpty()) {
-                st = new StringTokenizer(line);
-                Rule r = new Rule();
-                boolean prem = true;
-                while (st.hasMoreTokens()) {
-                    String word = st.nextToken();
-                    if (word.equals("->")) {
-                        prem = false;
-                    } else {
-                        String x = null;
-                        // search of x in S
-                        for (Comparable e : this.set) {
-                            if (((String) e).equals(word)) {
-                                x = (String) e;
-                            }
+                String word = st.nextToken();
+                if (word.equals("->")) {
+                    prem = false;
+                } else {
+                    String x = null;
+                    // search of x in S
+                    for (Comparable e : this.set) {
+                        if (((String) e).equals(word)) {
+                            x = (String) e;
                         }
-                        if (x != null) {
-                            if (prem) {
-                                r.addToPremise(x);
-                            } else {
-                            r.addToConclusion(x);
-                            }
+                    }
+                    if (x != null) {
+                        if (prem) {
+                            r.addToPremise(x);
+                        } else {
+                        r.addToConclusion(x);
                         }
                     }
                 }
-                if (!r.getConclusion().isEmpty()) {
-                    this.addRule(r);
-                }
-                line = file.readLine();
             }
-            file.close();
-        } catch (Exception e) { e.printStackTrace(); }
+            if (!r.getConclusion().isEmpty()) {
+                this.addRule(r);
+            }
+            line = file.readLine();
+        }
+        file.close();
     }
 
     /**
@@ -450,13 +451,13 @@ public class ImplicationalSystem extends ClosureSystem {
      * ~~~
      *
      * @param   filename  the name of the file
+     *
+     * @throws  IOException  When an IOException occurs
      */
-    public void toFile(String filename) {
-        try {
-            BufferedWriter file = new BufferedWriter(new FileWriter(filename));
-            file.write(this.toString());
-            file.close();
-        } catch (Exception e) { e.printStackTrace(); }
+    public void toFile(String filename) throws IOException {
+        BufferedWriter file = new BufferedWriter(new FileWriter(filename));
+        file.write(this.toString());
+        file.close();
     }
 
     /*-----------  PROPERTIES TEST METHODS -------------------- */

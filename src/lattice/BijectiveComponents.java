@@ -17,6 +17,7 @@ package lattice;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Date;
 import java.util.TreeSet;
 import dgraph.DGraph;
@@ -176,60 +177,60 @@ public class BijectiveComponents {
         return fin - debut;
     }
 
-   /**
-    * Saves all the bijective components included in this component in files
-    * saved in the specified directory.
-    * A global description is saved in file `name+"Readme.txt"`.
-    *
-    * The specified name is used to defined a name for each file.
-    *
-    * @param   directory  location to save file
-    * @param   name       name of the files
-    */
-    public void save(String directory, String name) {
-        try {
-            // create the directory
-            directory = directory + File.separator + name + "BijectiveComponents" + File.separator;
-            File f = new File(directory);
-            f.mkdir();
-            directory += name;
-            BufferedWriter file = new BufferedWriter(new FileWriter(directory + "Readme.txt"));
-            // saves the inital closure system
-            String nameInit = directory + "InitialClosureSystem.txt";
-            this.init.toFile(nameInit);
-            file.write("-> Initial closure system saved in " + nameInit + ": \n");
-            file.write(this.init.toString() + "\n");
-            // saves the closed set lattice
-            String nameLattice = directory + "Lattice.dot";
-            this.lattice.writeDot(nameLattice);
-            file.write("-> Closed set or concept lattice saved in " + nameLattice + "\n");
-            // saves the reduced lattice
-            String nameReducedLattice = directory + "ReducedLattice.dot";
-            this.reducedLattice.writeDot(nameReducedLattice);
-            file.write("-> Reduced lattice saved in " + nameReducedLattice + "\n");
-            // saves the reduced table
-            String nameTable = directory + "Table.txt";
-            this.table.toFile(nameTable);
-            file.write("-> Table of the reduced lattice saved in " + nameTable + "\n");
-            file.write(this.table.toString() + "\n");
-            // saves the canonical basis
-            String nameCB = directory + "CanonicalBasis.txt";
-            this.canonicalBasis.toFile(nameCB);
-            file.write("-> Canonical basis saved in " + nameCB + ": \n");
-            file.write(this.canonicalBasis.toString() + "\n");
-            // saves the canonical direct basis
-            String nameCDB = directory + "CanonicalDirectBasis.txt";
-            this.canonicalDirectBasis.toFile(nameCDB);
-            file.write("-> Canonical direct basis of the reduced lattice saved in " + nameCDB + ": \n");
-            file.write(this.canonicalDirectBasis.toString() + "\n");
-            // saves the dependency graph
-            String nameODGraph = directory + "DependencyGraph.dot";
-            this.dependencyGraph.writeDot(nameODGraph);
-            file.write("-> Dependency Graph  of the reduced lattice saved in " + nameODGraph + " \n");
-            // saves the minimal generators
-            file.write("-> Minimal generators  of the reduced lattice are " + this.minimalGenerators + "\n");
-            file.close();
-        } catch (Exception e) { e.printStackTrace(); }
+    /**
+     * Saves all the bijective components included in this component in files
+     * saved in the specified directory.
+     * A global description is saved in file `name+"Readme.txt"`.
+     *
+     * The specified name is used to defined a name for each file.
+     *
+     * @param   directory  location to save file
+     * @param   name       name of the files
+     *
+     * @throws  IOException  When an IOException occurs
+     */
+    public void save(String directory, String name) throws IOException {
+        // create the directory
+        directory = directory + File.separator + name + "BijectiveComponents" + File.separator;
+        File f = new File(directory);
+        f.mkdir();
+        directory += name;
+        BufferedWriter file = new BufferedWriter(new FileWriter(directory + "Readme.txt"));
+        // saves the inital closure system
+        String nameInit = directory + "InitialClosureSystem.txt";
+        this.init.toFile(nameInit);
+        file.write("-> Initial closure system saved in " + nameInit + ": \n");
+        file.write(this.init.toString() + "\n");
+        // saves the closed set lattice
+        String nameLattice = directory + "Lattice.dot";
+        this.lattice.writeDot(nameLattice);
+        file.write("-> Closed set or concept lattice saved in " + nameLattice + "\n");
+        // saves the reduced lattice
+        String nameReducedLattice = directory + "ReducedLattice.dot";
+        this.reducedLattice.writeDot(nameReducedLattice);
+        file.write("-> Reduced lattice saved in " + nameReducedLattice + "\n");
+        // saves the reduced table
+        String nameTable = directory + "Table.txt";
+        this.table.toFile(nameTable);
+        file.write("-> Table of the reduced lattice saved in " + nameTable + "\n");
+        file.write(this.table.toString() + "\n");
+        // saves the canonical basis
+        String nameCB = directory + "CanonicalBasis.txt";
+        this.canonicalBasis.toFile(nameCB);
+        file.write("-> Canonical basis saved in " + nameCB + ": \n");
+        file.write(this.canonicalBasis.toString() + "\n");
+        // saves the canonical direct basis
+        String nameCDB = directory + "CanonicalDirectBasis.txt";
+        this.canonicalDirectBasis.toFile(nameCDB);
+        file.write("-> Canonical direct basis of the reduced lattice saved in " + nameCDB + ": \n");
+        file.write(this.canonicalDirectBasis.toString() + "\n");
+        // saves the dependency graph
+        String nameODGraph = directory + "DependencyGraph.dot";
+        this.dependencyGraph.writeDot(nameODGraph);
+        file.write("-> Dependency Graph  of the reduced lattice saved in " + nameODGraph + " \n");
+        // saves the minimal generators
+        file.write("-> Minimal generators  of the reduced lattice are " + this.minimalGenerators + "\n");
+        file.close();
     }
 
     /**

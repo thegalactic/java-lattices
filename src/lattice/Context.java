@@ -16,9 +16,9 @@ package lattice;
 import dgraph.Node;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Iterator;
@@ -200,67 +200,66 @@ public class Context extends ClosureSystem {
      * Each attribute must be declared on the second line, otherwise, it is not added
      *
      * @param   filename  the name of the file
+     *
+     * @throws  IOException  When an IOException occurs
      */
-    public Context(String filename) {
+    public Context(String filename) throws IOException {
         this();
-        try {
-            BufferedReader file = new BufferedReader(new FileReader(filename));
-            // first line : All observations separated by a space
-            // a StringTokenizer is used to divide the line into different observations
-            // considering spaces as separator.
-            StringTokenizer st =  new StringTokenizer(file.readLine());
-            st.nextToken(); // first token corresponds to the string "Observations:"
-            while (st.hasMoreTokens()) {
-                String n = new String(st.nextToken());
-                this.addToObservations(n);
-            }
-            // second line : All attributes separated by a space
-            // a StringTokenizer is used to divide the line into different token,
-            // considering spaces as separator.
-            st =  new StringTokenizer(file.readLine());
-            st.nextToken(); // first token corresponds to the string "Attributes:"
-            while (st.hasMoreTokens()) {
-                String n = new String(st.nextToken());
-                this.addToAttributes(n);
-            }
-            // next lines : All intents of observations, one on each line:
-            // observation : list of attributes
-            // a StringTokenizer is used to divide each intent.
-            String line = file.readLine();
-            while (line != null && !line.isEmpty()) {
-                st = new StringTokenizer(line);
-                String word = st.nextToken();
-                Comparable o = null;
-                // search of o in observations
-                for (Comparable e : this.getObservations()) {
-                    if (e.equals(word)) {
-                        o = e;
-                    }
-                }
-                if (o != null) {
-                    word = st.nextToken(); // this token corresponds to the sting ":"
-                    while (st.hasMoreTokens()) {
-                        word = st.nextToken();
-                        Comparable a = null;
-                        // search of a in attributes
-                        for (Comparable e : this.getAttributes()) {
-                            if (e.equals(word)) {
-                                a = e;
-                            }
-                        }
-                        if (a != null) {
-                            this.addExtentIntent(o, a);
-                        }
-                    }
-                }
-                line = file.readLine();
-            }
-            file.close();
-            this.setBitSets();
-        } catch (Exception e) {
-            e.printStackTrace();
+        BufferedReader file = new BufferedReader(new FileReader(filename));
+        // first line : All observations separated by a space
+        // a StringTokenizer is used to divide the line into different observations
+        // considering spaces as separator.
+        StringTokenizer st =  new StringTokenizer(file.readLine());
+        st.nextToken(); // first token corresponds to the string "Observations:"
+        while (st.hasMoreTokens()) {
+            String n = new String(st.nextToken());
+            this.addToObservations(n);
         }
+        // second line : All attributes separated by a space
+        // a StringTokenizer is used to divide the line into different token,
+        // considering spaces as separator.
+        st =  new StringTokenizer(file.readLine());
+        st.nextToken(); // first token corresponds to the string "Attributes:"
+        while (st.hasMoreTokens()) {
+            String n = new String(st.nextToken());
+            this.addToAttributes(n);
+        }
+        // next lines : All intents of observations, one on each line:
+        // observation : list of attributes
+        // a StringTokenizer is used to divide each intent.
+        String line = file.readLine();
+        while (line != null && !line.isEmpty()) {
+            st = new StringTokenizer(line);
+            String word = st.nextToken();
+            Comparable o = null;
+            // search of o in observations
+            for (Comparable e : this.getObservations()) {
+                if (e.equals(word)) {
+                    o = e;
+                }
+            }
+            if (o != null) {
+                word = st.nextToken(); // this token corresponds to the sting ":"
+                while (st.hasMoreTokens()) {
+                    word = st.nextToken();
+                    Comparable a = null;
+                    // search of a in attributes
+                    for (Comparable e : this.getAttributes()) {
+                        if (e.equals(word)) {
+                            a = e;
+                        }
+                    }
+                    if (a != null) {
+                        this.addExtentIntent(o, a);
+                    }
+                }
+            }
+            line = file.readLine();
+        }
+        file.close();
+        this.setBitSets();
     }
+
     /**
      * Generates a partially random context.
      *
@@ -310,163 +309,6 @@ public class Context extends ClosureSystem {
         ctx.setBitSets();
         return ctx;
     }
-
-    /**
-     * This fonction just for read file of Dounia.
-     *
-     * The following format is respected:
-     *
-     * For each observations o
-     * The name of observations separated on a line ;
-     * then, the list of frequence of each attrbutes intent on a line, written like a1 a2 ...
-     *
-     * ~~~
-     * 0002.png
-     * 0 0 0 3 0 0 3 0 0 0 0 0 6 0 5 3 11
-     * 0004.png
-     * 0 0 0 8 0 0 5 0 0 0 0 0 4 0 9 1 8
-     * 0007.png
-     * 0 0 0 3 0 0 4 0 0 0 0 0 27 0 3 4 9
-     * ~~~
-     *
-     * @param   filename         Some comment
-     * @param   thresholdBinary  Some comment
-     */
-    public Context(String filename, int thresholdBinary) {
-        this();
-        try {
-            BufferedReader file = new BufferedReader(new FileReader(filename));
-            String line = file.readLine();
-            while (line != null && !line.isEmpty()) {
-                // first line : an observation
-                StringTokenizer st = new StringTokenizer(line);
-                String o = new String(st.nextToken());
-                this.addToObservations(o);
-
-                // second line : All attributes separated by a space
-                // a StringTokenizer is used to divide the line into different token,
-                // considering spaces as separator.
-                line = file.readLine();
-                st = new StringTokenizer(line);
-                int idAtt = 0;
-                while (st.hasMoreTokens()) {
-                    idAtt += 1;
-                    int a = Integer.parseInt(st.nextToken());
-                    if (a > thresholdBinary) {
-                        this.addToAttributes(Integer.toString(idAtt));
-                        this.addExtentIntent(o, Integer.toString(idAtt));
-                    }
-                }
-                line = file.readLine();
-            }
-            file.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Read all file in a folder in a context C (files Dounia).
-     *
-     * @param  link             some comment
-     * @param  filesname        some comment
-     * @param  thresholdBinary  some comment
-     */
-    public Context(String link, TreeSet<String> filesname, int thresholdBinary) {
-        this();
-        try {
-            for (String fileName : filesname) {
-                BufferedReader file = new BufferedReader(new FileReader(link + fileName));
-                String line = file.readLine();
-                while (line != null && !line.isEmpty()) {
-                    // first line : an observation
-                    StringTokenizer st = new StringTokenizer(line);
-                    String o = new String(st.nextToken());
-                    this.addToObservations(o);
-
-                    // second line : All attributes separated by a space
-                    // a StringTokenizer is used to divide the line into different token,
-                // considering spaces as separator.
-                    line = file.readLine();
-                    st = new StringTokenizer(line);
-                    int idAtt = 0;
-                    while (st.hasMoreTokens()) {
-                        idAtt += 1;
-                        int a = Integer.parseInt(st.nextToken());
-                        if (a > thresholdBinary) {
-                            this.addToAttributes(Integer.toString(idAtt));
-                            this.addExtentIntent(o, Integer.toString(idAtt));
-                        }
-                    }
-                    line = file.readLine();
-                }
-                file.close();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * This fonction just for read files of Van.
-     * The following format is respected:
-     *
-     * The name of observations is the name of files
-     * For each file (observations o)
-     * Each line present an attrbute: id with the frequence of him.
-     *
-     * ~~~
-     * 1000.png
-     * 0 0
-     * 1 0
-     * 2 1
-     * ...
-     * 500 0
-     * ~~~
-     *
-     * @param  linkFilesName    some comment
-     * @param  thresholdBinary  some comment
-     */
-    public Context(TreeSet<String> linkFilesName, int thresholdBinary) {
-        this();
-        try {
-            // Read each file
-            for (String linkFileName : linkFilesName) {
-                // add an observation => file name
-                StringTokenizer st = new StringTokenizer(linkFileName, File.separator);
-                String fileName = "";
-                while (st.hasMoreTokens()) {
-                    fileName = st.nextToken();
-                }
-                // remove .bow
-                st = new StringTokenizer(fileName, ".");
-                String o = st.nextToken() + "." + st.nextToken();
-                this.addToObservations(o);
-
-                // add attributes
-                // each line is an attribute
-                // space is the sepaarator between id and value of attribute
-                BufferedReader file = new BufferedReader(new FileReader(linkFileName));
-                String line = file.readLine();
-                while (line != null && !line.isEmpty()) {
-                    st = new StringTokenizer(line);
-                    String id = st.nextToken();
-                    if (st.hasMoreTokens()) {
-                        int value = Integer.parseInt(st.nextToken());
-                        if (value > thresholdBinary) {
-                            this.addToAttributes(id);
-                            this.addExtentIntent(o, id);
-                        }
-                    }
-                    line = file.readLine();
-                }
-                file.close();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 
     /* --------------- HANDLING METHODS FOR ATTRIBUTES AND OBSERVATIONS ------------ */
 
@@ -957,15 +799,13 @@ public class Context extends ClosureSystem {
      * ~~~
      *
      * @param   filename  the name of the file
+     *
+     * @throws  IOException  When an IOException occurs
      */
-    public void toFile(String filename)    {
-        try {
-            BufferedWriter file = new BufferedWriter(new FileWriter(filename));
-            file.write(this.toString());
-            file.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void toFile(String filename) throws IOException {
+        BufferedWriter file = new BufferedWriter(new FileWriter(filename));
+        file.write(this.toString());
+        file.close();
     }
 
     /**
