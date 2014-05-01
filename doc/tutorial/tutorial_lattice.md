@@ -34,7 +34,7 @@ Edge ec = new Edge(e, c); l.addEdge(ec);
 You can now verify your lattice with two following methods :
 
 1. A string representation on the standard output : `System.out.println(l.toString());`
-2. An export in .dot format file : `l.writeDot("M5.dot");`
+2. An export in .dot format file : `l.write("M5.dot");`
 
 Note that these two last methods are inherited from `DGraph`.
 
