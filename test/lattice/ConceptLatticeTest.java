@@ -274,10 +274,10 @@ public class ConceptLatticeTest {
     }
 
     /**
-     * Test of idealsLattice method, of class ConceptLattice.
+     * Test of idealLattice method, of class ConceptLattice.
      */
     @Test
-    public void testIdealsLattice() {
+    public void testIdealLattice() {
         TreeSet<Node> set = new TreeSet<Node>();
         Node node1 = new Node("e");
         Node node2 = new Node("f");
@@ -285,7 +285,7 @@ public class ConceptLatticeTest {
         set.add(node2);
         DAGraph dag = new DAGraph(set);
         dag.addEdge(node1, node2);
-        ConceptLattice result = ConceptLattice.idealsLattice(dag);
+        ConceptLattice result = ConceptLattice.idealLattice(dag);
         assertEquals(3, result.getNodes().size());
         assertTrue(result.getEdges().isEmpty());
     }

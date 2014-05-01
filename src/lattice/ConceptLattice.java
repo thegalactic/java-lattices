@@ -591,7 +591,7 @@ public class ConceptLattice extends Lattice {
      *
      * @return  the concept lattice
      */
-    public static ConceptLattice idealsLattice(DAGraph dag) {
+    public static ConceptLattice idealLattice(DAGraph dag) {
         if (!dag.isAcyclic()) {
             return null;
         }
