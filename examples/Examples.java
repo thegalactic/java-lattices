@@ -9,6 +9,7 @@
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.TreeSet;
 import dgraph.DAGraph;
@@ -16,12 +17,12 @@ import dgraph.DGraph;
 import dgraph.Node;
 import lattice.*;
 /**
- * This classe provides some use examples of main classes of this lattice package.
- * <p>
+ * This class provides some use examples of main classes of this lattice package.
+ *
  * This class is composed of static method giving some use examples of
- * class <code>DGraph</code>, class <code>DAGraph</code>, class <code>Context</code>,
- * class <code>IS</code> and the specific class <code>BijectiveComponents</code>.
- * <p>
+ * class `DGraph`, class `DAGraph`, class `Context`,
+ * class `ImplicationalSystem` and the specific class `BijectiveComponents`.
+ *
  * Copyright: 2013 University of La Rochelle, France
  * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
  * This file is part of lattice, free package. You can redistribute it and/or modify
@@ -49,22 +50,26 @@ public class Examples {
     /** The main static method. **/
     public static void main (String arg[])
     {
-        setInputDir(arg[0]+File.separator);
-        setOutputDir(arg[1]+File.separator);
-        double time = System.currentTimeMillis();
-        //Examples.ExampleDGraph();
-        //Examples.ExampleDAGraph ();
-        //Examples.ExampleIS("ExampleIS");
-        //Examples.ExampleContext("ExampleContext");
-        //Examples.ExampleBijectiveComponentsForContext("ExampleContext");
-        Examples.ExampleBijectiveComponentsForIS("ExampleIS");        
-        System.out.println("Computing time: " + (System.currentTimeMillis() - time));
+        try {
+            setInputDir(arg[0]+File.separator);
+            setOutputDir(arg[1]+File.separator);
+            double time = System.currentTimeMillis();
+            //Examples.ExampleDGraph();
+            //Examples.ExampleDAGraph ();
+            //Examples.ExampleIS("ExampleIS");
+            //Examples.ExampleContext("ExampleContext");
+            //Examples.ExampleBijectiveComponentsForContext("ExampleContext");
+            Examples.ExampleBijectiveComponentsForIS("ExampleIS");        
+            System.out.println("Computing time: " + (System.currentTimeMillis() - time));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /** Use example for BijectiveComponent class
      * with an implicational system as initial closure system **/
-    public static void ExampleBijectiveComponentsForIS (String name) {
-        IS Init = new IS (inputDir+name+".txt");                
+    public static void ExampleBijectiveComponentsForIS (String name) throws IOException {
+        ImplicationalSystem Init = new ImplicationalSystem (inputDir+name+".txt");                
         BijectiveComponents BC = new BijectiveComponents (Init);
         double time = BC.initialize();
         BC.save(outputDir,name);
@@ -73,14 +78,14 @@ public class Examples {
 
     /** Use example for BijectiveComponent class
      * with a context as initial closure system **/
-    public static void ExampleBijectiveComponentsForContext (String name) {
+    public static void ExampleBijectiveComponentsForContext (String name) throws IOException {
         Context Init = new Context (inputDir+name+".txt");
         BijectiveComponents BC = new BijectiveComponents (Init);
         double time = BC.initialize();
         BC.save(outputDir, name);
         Init.reverse();
         ConceptLattice CL = Init.closedSetLattice(true);
-        IS BCD = CL.getCanonicalDirectBasis();
+        ImplicationalSystem BCD = CL.getCanonicalDirectBasis();
         System.out.println(BCD);
         System.out.println("time: "+time);
     }
@@ -243,7 +248,7 @@ public class Examples {
         try {
             // load an IS from the "ISrules.txt" file
             String nameIS = name+".txt";
-            IS base = new IS (inputDir+nameIS);
+            ImplicationalSystem base = new ImplicationalSystem (inputDir+nameIS);
             // create the directory to save files
             File f = new File(outputDir+name);
             f.mkdir();
@@ -297,7 +302,7 @@ public class Examples {
             System.out.println(log+ODG.toString()); file.write(log);
             TreeSet MinGen = CLBordat.getMinimalGenerators();
             log = "Minimal generators of closed set lattice : "+MinGen+"\n";
-            IS CLBCD = CLBordat.getCanonicalDirectBasis();
+            ImplicationalSystem CLBCD = CLBordat.getCanonicalDirectBasis();
             String nameCLBCD = name+"CanonicalDirectBasisOfClosedSetLattice.txt";
             CLBCD.toFile(outputDir+nameCLBCD);
             log += "Canonical direct basis of closed set lattice saved in "+nameCLBCD+": \n"+CLBCD.toString();
@@ -448,7 +453,7 @@ public class Examples {
             System.out.println(log+ODG.toString()); file.write(log);
             TreeSet MinGen = CLBordat.getMinimalGenerators();
             log = "Minimal generators of closed set lattice : "+MinGen+"\n";
-            IS BCD = CLBordat.getCanonicalDirectBasis();
+            ImplicationalSystem BCD = CLBordat.getCanonicalDirectBasis();
             String nameBCD = name+"CanonicalDirectBasisOfClosedSetLattice.txt";
             BCD.toFile(outputDir+nameBCD);
             log += "Canonical direct basis of closed set lattice saved in "+nameBCD+": \n"+BCD.toString();
