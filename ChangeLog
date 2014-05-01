@@ -26,6 +26,13 @@ $ -> Language fix or change
 ! -> Note
 
 2014-05-01 Christophe Demko <chdemko@gmail.com>
+	* src/dgraph/Node.iuml
+	* src/dgraph/Node.java
+	* test/dgraph/NodeTest.java
+	* test/lattice/ImplicationalSystemTest.java
+		- Remove constructor by copy
+
+2014-05-01 Christophe Demko <chdemko@gmail.com>
 	* src/dgraph/DGraph.java
 	* src/lattice/ArrowRelation.java
 	* src/lattice/BijectiveComponents.java

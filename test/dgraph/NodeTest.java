@@ -32,18 +32,6 @@ public class NodeTest {
     }
 
     /**
-     * Test the copy constructor.
-     */
-    @Test
-    public void testConstructorCopy() {
-        Object content = new Object();
-        Node node = new Node(content);
-        Node copy = new Node(node);
-        assertEquals(copy.getContent(), content);
-        assertEquals(node.getIdentifier(), copy.getIdentifier());
-    }
-
-    /**
      * Test the toString() method.
      */
     @Test
@@ -80,9 +68,8 @@ public class NodeTest {
     @Test
     public void testEquals() {
         Node node = new Node();
-        Node copy = new Node(node);
-        assertTrue(copy.equals(node));
-        assertFalse(copy.equals(new Integer(1)));
+        assertTrue(node.equals(node));
+        assertFalse(node.equals(new Integer(1)));
     }
 
     /**
