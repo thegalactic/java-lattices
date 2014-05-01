@@ -9,7 +9,6 @@ This project uses:
 * [pegdown doclet 1.1.1](https://github.com/Abnaxos/pegdown-doclet) for generating javadoc
 * [graphviz](http://www.graphviz.org/) for generating uml graphics
 * [pandoc](http://johnmacfarlane.net/pandoc/) and LaTex for the tutorials
-* [commons-io 2.4](http://commons.apache.org/proper/commons-io) for manipulating filenames
 
 Documentation
 -------------

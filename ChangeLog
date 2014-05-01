@@ -26,6 +26,13 @@ $ -> Language fix or change
 ! -> Note
 
 2014-05-01 Christophe Demko <chdemko@gmail.com>
+	* README.md
+	* build.xml
+	* lib/commons-io/commons-io-2.4.jar
+	* src/dgraph/DGraph.java
+		- Remove commons-io
+
+2014-05-01 Christophe Demko <chdemko@gmail.com>
 	* build.xml
 	* README.md
 	* doc/api/README.md
