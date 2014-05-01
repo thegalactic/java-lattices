@@ -196,6 +196,9 @@ The following table illustrates the generated bijective components when the init
 title Main UML graph
 
 !include src/dgraph/DGraph.iuml
+!include src/dgraph/DGraphWriter.iuml
+!include src/dgraph/DGraphWriterDot.iuml
+!include src/dgraph/DGraphWriterFactory.iuml
 !include src/dgraph/Edge.iuml
 !include src/dgraph/DAGraph.iuml
 !include src/dgraph/Node.iuml

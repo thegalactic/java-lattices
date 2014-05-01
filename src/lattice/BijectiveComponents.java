@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.TreeSet;
 import dgraph.DGraph;
+
 /**
  * This class generates bijective components issued from lattice theory for a specified
  * closure system.
@@ -203,11 +204,11 @@ public class BijectiveComponents {
         file.write(this.init.toString() + "\n");
         // saves the closed set lattice
         String nameLattice = directory + "Lattice.dot";
-        this.lattice.writeDot(nameLattice);
+        this.lattice.write(nameLattice);
         file.write("-> Closed set or concept lattice saved in " + nameLattice + "\n");
         // saves the reduced lattice
         String nameReducedLattice = directory + "ReducedLattice.dot";
-        this.reducedLattice.writeDot(nameReducedLattice);
+        this.reducedLattice.write(nameReducedLattice);
         file.write("-> Reduced lattice saved in " + nameReducedLattice + "\n");
         // saves the reduced table
         String nameTable = directory + "Table.txt";
@@ -226,7 +227,7 @@ public class BijectiveComponents {
         file.write(this.canonicalDirectBasis.toString() + "\n");
         // saves the dependency graph
         String nameODGraph = directory + "DependencyGraph.dot";
-        this.dependencyGraph.writeDot(nameODGraph);
+        this.dependencyGraph.write(nameODGraph);
         file.write("-> Dependency Graph  of the reduced lattice saved in " + nameODGraph + " \n");
         // saves the minimal generators
         file.write("-> Minimal generators  of the reduced lattice are " + this.minimalGenerators + "\n");

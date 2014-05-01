@@ -14,6 +14,7 @@ package dgraph;
  * @version 2014
  */
 
+import org.apache.commons.io.FilenameUtils;
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -60,6 +61,15 @@ import java.util.Set;
  * title DGraph UML graph
  */
 public class DGraph {
+    /*
+     * Register dot writer
+     */
+    static {
+        if (DGraphWriterFactory.get("dot") == null) {
+            DGraphWriterDot.register();
+        }
+    }
+
     /* ------------- FIELDS ------------------ */
 
     /**
@@ -422,28 +432,16 @@ public class DGraph {
     }
 
     /**
-     * Write the dot description of this component in a file  which name is specified.
+     * Write the description of this component in a file whose name is specified.
      *
      * @param   filename  the name of the file
      *
      * @throws  IOException  When an IOException occurs
      */
-    public void writeDot(final String filename) throws IOException {
-        FileOutputStream fich = new FileOutputStream(filename);
-        DataOutputStream out = new DataOutputStream(fich);
-        out.writeBytes("digraph G {\n");
-        out.writeBytes("Graph [rankdir=BT]\n");
-        StringBuffer nodes  = new StringBuffer();
-        StringBuffer edges = new StringBuffer();
-        for (Node from : this.nodes) {
-            nodes.append(from.toDot()).append("\n");
-        }
-        for (Edge edge : this.getEdges()) {
-            edges.append(edge.toDot()).append("\n");
-        }
-        out.writeBytes(nodes.toString());
-        out.writeBytes(edges.toString());
-        out.writeBytes("}");
+    public void write(final String filename) throws IOException {
+        String extension = FilenameUtils.getExtension(filename);
+        DataOutputStream out = new DataOutputStream(new FileOutputStream(filename));
+        DGraphWriterFactory.get(extension).write(this, out);
         out.close();
     }
 

@@ -141,21 +141,6 @@ public class Node implements Comparable<Object> {
         return string;
     }
 
-    /**
-     * Returns the dot description of this node in a String.
-     *
-     * @return  the dot description
-     */
-    public String toDot() {
-        String dot = this.identifier + " [label=\"";
-        StringTokenizer tokenizer = new StringTokenizer(this.toString(), "\"");
-        while (tokenizer.hasMoreTokens()) {
-            dot += tokenizer.nextToken();
-        }
-        dot += "\"]";
-        return dot;
-    }
-
     /* --------------- OVERLAPPING METHODS ------------ */
 
     /**

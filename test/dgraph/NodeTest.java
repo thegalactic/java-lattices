@@ -42,16 +42,6 @@ public class NodeTest {
     }
 
     /**
-     * Test the toD.getFrom() method.
-     */
-    @Test
-    public void testToDot() {
-        String content = new String("Hello \"World\"");
-        Node node = new Node(content);
-        assertEquals(node.toDot(), node.getIdentifier() + " [label=\"HelloWorld\"]");
-    }
-
-    /**
      * Test the copy() method.
      */
     @Test

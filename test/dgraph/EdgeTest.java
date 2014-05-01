@@ -92,16 +92,5 @@ public class EdgeTest {
         Edge edge = new Edge(from, to, "happy new year");
         assertEquals(edge.toString(), "Hello->World(happy new year)");
     }
-
-    /**
-     * Test the toD.getFrom() method.
-     */
-    @Test
-    public void testToDot() {
-        Node from = new Node("Hello");
-        Node to = new Node("World");
-        Edge edge = new Edge(from, to, "happy new year");
-        assertEquals(edge.toDot(), from.getIdentifier() + "->" + to.getIdentifier() +  " [label=\"happy new year\"]");
-    }
 }
 

@@ -1,0 +1,10 @@
+package dgraph {
+    class DGraphWriterFactory {
+    	-{static}HashMap<String, DGraphWriter> writers
+        +{static}DGraphWriter register(DGraphWriter writer, String extension)
+        +{static}DGraphWriter unregister(String extension)
+        +{static}DGraphWriter get(String extension)
+    }
+
+    DGraphWriterFactory o-- DGraphWriter
+}

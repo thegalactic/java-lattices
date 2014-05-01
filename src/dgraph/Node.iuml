@@ -15,7 +15,6 @@ package dgraph {
         +Node setContent(final Object content)
         .. Transformers ..
         +String toString()
-        +String toDot()
         .. Comparators ..
         +boolean equals(final Object object)
         +int hashCode()
