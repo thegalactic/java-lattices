@@ -65,7 +65,9 @@ public class DGraph {
      * Register dot writer
      */
     static {
-        DGraphWriterDot.register();
+        if (DGraphWriterFactory.get("dot") == null) {
+            DGraphWriterDot.register();
+        }
     }
 
     /* ------------- FIELDS ------------------ */
