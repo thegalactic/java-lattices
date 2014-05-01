@@ -29,6 +29,7 @@ $ -> Language fix or change
 	* build.xml
 	* README.md
 	* doc/api/README.md
+	* doc/tutorial/tutorial_lattice.md
 	* examples/Examples.java
 	* lib/commons-io/commons-io-2.4.jar
 	* src/dgraph/DGraph.iuml
