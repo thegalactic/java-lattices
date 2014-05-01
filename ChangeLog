@@ -26,6 +26,11 @@ $ -> Language fix or change
 ! -> Note
 
 2014-05-01 Christophe Demko <chdemko@gmail.com>
+	* src/lattice/ConceptLattice.java
+	* test/lattice/ConceptLatticeTest.java
+		^ Correct english grammar
+
+2014-05-01 Christophe Demko <chdemko@gmail.com>
 	* README.md
 	* build.xml
 	* lib/commons-io/commons-io-2.4.jar
