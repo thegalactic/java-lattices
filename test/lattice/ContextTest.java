@@ -1,6 +1,7 @@
 package lattice;
 
 import java.util.TreeSet;
+import java.io.File;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -20,6 +21,7 @@ public class ContextTest {
         assertEquals(context.getAttributes(), new TreeSet<Comparable>());
         assertEquals(context.getObservations(), new TreeSet<Comparable>());
     }
+
     /**
      * Test the copy constructor of Context.
      */
@@ -43,6 +45,40 @@ public class ContextTest {
         assertEquals(context.getIntent("1"), copy.getIntent("1"));
         assertEquals(context.getExtent("c"), copy.getExtent("c"));
     }
+
+    /**
+     * Test the constructor from file of Context.
+     */
+    @Test
+    public void testFileContext() {
+        try {
+            File file = File.createTempFile("junit", ".txt");
+            String filename = file.getName();
+            file.delete();
+            Context context = new Context();
+            context.addToAttributes("a");
+            context.addToAttributes("b");
+            context.addToAttributes("c");
+            context.addToObservations("1");
+            context.addToObservations("2");
+            context.addToObservations("3");
+            context.addExtentIntent("1", "a");
+            context.addExtentIntent("1", "b");
+            context.addExtentIntent("2", "a");
+            context.addExtentIntent("3", "b");
+            context.addExtentIntent("3", "c");
+            context.save(filename);
+            Context copy = new Context(filename);
+            assertEquals(context.getAttributes(), copy.getAttributes());
+            assertEquals(context.getObservations(), copy.getObservations());
+            assertEquals(context.getIntent("1"), copy.getIntent("1"));
+            assertEquals(context.getExtent("c"), copy.getExtent("c"));
+            new File(filename).delete();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Test random method.
      */
@@ -52,6 +88,7 @@ public class ContextTest {
         assertEquals(ctx.getObservations().size(), 10);
         assertEquals(ctx.getAttributes().size(), 1060);
     }
+
     /**
      * Test of containsAttribute.
      */
@@ -62,6 +99,7 @@ public class ContextTest {
         assertTrue(context.containsAttribute("a"));
         assertFalse(context.containsObservation("b"));
     }
+
     /**
      * Test of containsAllAttributes.
      */
@@ -79,6 +117,7 @@ public class ContextTest {
         assertTrue(context.containsAllAttributes(attributes));
         assertFalse(context.containsAllAttributes(attributesFalse));
     }
+
     /**
      * Test of containsObservation.
      */
@@ -89,6 +128,7 @@ public class ContextTest {
         assertTrue(context.containsObservation("1"));
         assertFalse(context.containsObservation("2"));
     }
+
     /**
      * Test of containsAllObservations.
      */
@@ -106,6 +146,7 @@ public class ContextTest {
         assertTrue(context.containsAllObservations(observations));
         assertFalse(context.containsAllObservations(observationsFalse));
     }
+
     /**
      * Test of the insertion of an attribute.
      */
@@ -115,6 +156,7 @@ public class ContextTest {
         assertTrue(context.addToAttributes("a"));
         assertFalse(context.addToAttributes("a"));
     }
+
     /**
      * Test of the insertion of some attributes.
      */
@@ -130,6 +172,7 @@ public class ContextTest {
         assertTrue(context.addAllToAttributes(attributes));
         assertFalse(context.addAllToAttributes(attributesFalse));
     }
+
     /**
      * Test of the insertion of an observation.
      */
@@ -139,6 +182,7 @@ public class ContextTest {
         assertTrue(context.addToObservations("1"));
         assertFalse(context.addToObservations("1"));
     }
+
     /**
      * Test of the insertion of some observations.
      */
@@ -154,6 +198,7 @@ public class ContextTest {
         assertTrue(context.addAllToObservations(observations));
         assertFalse(context.addAllToObservations(observationsFalse));
     }
+
     /**
      * Test of the removal of an attribute.
      */
@@ -176,6 +221,7 @@ public class ContextTest {
         assertFalse(context.getIntent("2").contains("a"));
         assertFalse(context.removeFromAttributes("d"));
     }
+
     /**
      * Test of the removal of an observation.
      */
@@ -198,6 +244,7 @@ public class ContextTest {
         assertFalse(context.getExtent("b").contains("1"));
         assertFalse(context.removeFromAttributes("4"));
     }
+
     /**
      * Test of getExtentNb.
      */
@@ -229,6 +276,7 @@ public class ContextTest {
         attributes.remove("b");
         assertTrue(context.getExtentNb(attributes) == 3);
     }
+
     /**
      * Test of getIntentNb.
      */
@@ -258,6 +306,7 @@ public class ContextTest {
         observations.remove("1");
         assertTrue(context.getIntentNb(observations) == 2);
     }
+
     /**
      * Test of context reversion.
      */

@@ -66,7 +66,7 @@ public class ImplicationalSystemTest {
     @Test
     public void testImplicationalSystemFile() {
         try {
-            File file = File.createTempFile("junit", ".rule1");
+            File file = File.createTempFile("junit", ".txt");
 //            String filename = file.getName();
 //            File outfile = new File(filename);
             FileWriter out = new FileWriter(file);

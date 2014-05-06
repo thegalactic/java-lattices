@@ -25,6 +25,27 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-05-06 Christophe Demko <chdemko@gmail.com>
+	* src/lattice/Context.iuml
+	* src/lattice/Context.java
+	* src/lattice/ImplicationalSystem.iuml
+	* src/lattice/ImplicationalSystem.java
+	* test/lattice/ContextTest.java
+	* test/lattice/ImplicationalSystemTest.java
+	* src/lattice/ContextReader.iuml
+	* src/lattice/ContextReader.java
+	* src/lattice/ContextReaderFactory.iuml
+	* src/lattice/ContextReaderFactory.java
+	* src/lattice/ContextReaderText.iuml
+	* src/lattice/ContextReaderText.java
+	* src/lattice/ImplicationalSystemReader.iuml
+	* src/lattice/ImplicationalSystemReader.java
+	* src/lattice/ImplicationalSystemReaderFactory.iuml
+	* src/lattice/ImplicationalSystemReaderFactory.java
+	* src/lattice/ImplicationalSystemReaderText.iuml
+	* src/lattice/ImplicationalSystemReaderText.java
+		^ Implement abstract reader pattern for Context and ImplicationalSystem
+
 2014-05-01 Christophe Demko <chdemko@gmail.com>
 	* doc/api/README.md
 	* src/dgraph/DGraph.iuml

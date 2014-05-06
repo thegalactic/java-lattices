@@ -38,6 +38,7 @@ package lattice {
         .. Transformers ..
         +String toString()
         +void save(String filename)
+        +void parse(String filename)
         .. Operations ..
         +int makeProper()
         +int makeUnary()

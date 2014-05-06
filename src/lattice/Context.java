@@ -79,11 +79,14 @@ import java.util.TreeSet;
  */
 public class Context extends ClosureSystem {
     /*
-     * Register txt writer
+     * Register txt writer and reader
      */
     static {
         if (ContextWriterFactory.get("txt") == null) {
             ContextWriterText.register();
+        }
+        if (ContextReaderFactory.get("txt") == null) {
+            ContextReaderText.register();
         }
     }
 
@@ -213,59 +216,7 @@ public class Context extends ClosureSystem {
      */
     public Context(String filename) throws IOException {
         this();
-        BufferedReader file = new BufferedReader(new FileReader(filename));
-        // first line : All observations separated by a space
-        // a StringTokenizer is used to divide the line into different observations
-        // considering spaces as separator.
-        StringTokenizer st =  new StringTokenizer(file.readLine());
-        st.nextToken(); // first token corresponds to the string "Observations:"
-        while (st.hasMoreTokens()) {
-            String n = new String(st.nextToken());
-            this.addToObservations(n);
-        }
-        // second line : All attributes separated by a space
-        // a StringTokenizer is used to divide the line into different token,
-        // considering spaces as separator.
-        st =  new StringTokenizer(file.readLine());
-        st.nextToken(); // first token corresponds to the string "Attributes:"
-        while (st.hasMoreTokens()) {
-            String n = new String(st.nextToken());
-            this.addToAttributes(n);
-        }
-        // next lines : All intents of observations, one on each line:
-        // observation : list of attributes
-        // a StringTokenizer is used to divide each intent.
-        String line = file.readLine();
-        while (line != null && !line.isEmpty()) {
-            st = new StringTokenizer(line);
-            String word = st.nextToken();
-            Comparable o = null;
-            // search of o in observations
-            for (Comparable e : this.getObservations()) {
-                if (e.equals(word)) {
-                    o = e;
-                }
-            }
-            if (o != null) {
-                word = st.nextToken(); // this token corresponds to the sting ":"
-                while (st.hasMoreTokens()) {
-                    word = st.nextToken();
-                    Comparable a = null;
-                    // search of a in attributes
-                    for (Comparable e : this.getAttributes()) {
-                        if (e.equals(word)) {
-                            a = e;
-                        }
-                    }
-                    if (a != null) {
-                        this.addExtentIntent(o, a);
-                    }
-                }
-            }
-            line = file.readLine();
-        }
-        file.close();
-        this.setBitSets();
+        this.parse(filename);
     }
 
     /**
@@ -803,6 +754,24 @@ public class Context extends ClosureSystem {
         }
         BufferedWriter file = new BufferedWriter(new FileWriter(filename));
         ContextWriterFactory.get(extension).write(this, file);
+        file.close();
+    }
+
+    /**
+     * Parse the description of this component from a file whose name is specified.
+     *
+     * @param   filename  the name of the file
+     *
+     * @throws  IOException  When an IOException occurs
+     */
+    public void parse(final String filename) throws IOException {
+        String extension = "";
+        int index = filename.lastIndexOf('.');
+        if (index > 0) {
+            extension = filename.substring(index + 1);
+        }
+        BufferedReader file = new BufferedReader(new FileReader(filename));
+        ContextReaderFactory.get(extension).read(this, file);
         file.close();
     }
 
