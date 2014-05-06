@@ -109,8 +109,8 @@ public class ImplicationalSystemTest {
         ImplicationalSystem is = ImplicationalSystem.random(13, 7);
         assertEquals(is.getRules().size(), 7);
         assertEquals(is.getSet().size(), 13);
-        assertEquals(is.nbRules(), 7);
-        assertEquals(is.getSet().size(), is.nbElements());
+        assertEquals(is.sizeRules(), 7);
+        assertEquals(is.getSet().size(), is.sizeElements());
     }
     /**
      * Test for the addElement method.
@@ -131,7 +131,7 @@ public class ImplicationalSystemTest {
         elements.add('e');
         elements.add('f');
         is.addAllElements(elements);
-        assertEquals(is.nbElements(), 2);
+        assertEquals(is.sizeElements(), 2);
     }
     /**
      * Test for the addRule, containsRule and deleteElement methods.

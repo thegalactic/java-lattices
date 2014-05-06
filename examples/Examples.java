@@ -255,7 +255,7 @@ public class Examples {
             BufferedWriter file = new BufferedWriter(new FileWriter (outputDir+name+"Readme.txt"));
             String log = "EXAMPLE FOR IS AND CONCEPTLATTICE CLASSES\n";
             log += "-----------------------------------------\n";                                    
-            log += "-> Initial set of rules ("+base.nbRules()+" rules):\n"+base+"\n";
+            log += "-> Initial set of rules ("+base.sizeRules()+" rules):\n"+base+"\n";
             System.out.println(log); file.write(log);
             
             // computes the precedence graph of the IS
@@ -268,13 +268,13 @@ public class Examples {
             // some IS transformation
             log = "-> Some IS transformations: \n";
             base.makeUnary();
-            log += "-> Unary equivalent rules ("+base.nbRules()+" rules):\n"+base+"\n";
+            log += "-> Unary equivalent rules ("+base.sizeRules()+" rules):\n"+base+"\n";
             base.makeLeftMinimal();
-            log += "Left minimal equivalent rules ("+base.nbRules()+" rules):\n"+base+"\n";
+            log += "Left minimal equivalent rules ("+base.sizeRules()+" rules):\n"+base+"\n";
             base.makeRightMaximal();
-            log += "Right maximal equivalent rules ("+base.nbRules()+" rules):\n"+base+"\n";
+            log += "Right maximal equivalent rules ("+base.sizeRules()+" rules):\n"+base+"\n";
             base.makeCompact();
-            log += "Compact equivalent rules ("+base.nbRules()+" rules):\n"+base+"\n";
+            log += "Compact equivalent rules ("+base.sizeRules()+" rules):\n"+base+"\n";
             System.out.println(log); file.write(log);
 
             // computes and prints the closed set lattice of the initial rules with NextClosure
@@ -310,7 +310,7 @@ public class Examples {
             base.makeCanonicalBasis();
             String nameBC = name+"CanonicalBasis.txt";
             base.save(outputDir+nameBC);
-            log = "Canonical basis ("+base.nbRules()+" rules) saved in "+nameBC+": \n"+base;
+            log = "Canonical basis ("+base.sizeRules()+" rules) saved in "+nameBC+": \n"+base;
             ConceptLattice CLBC = base.closedSetLattice(true);
             String nameCLBC = name+"ClosedSetLatticeOfCanonicalBasis.dot";
             CLBC.save(outputDir+nameCLBC);
@@ -326,7 +326,7 @@ public class Examples {
             base.makeCanonicalDirectBasis();
             String nameBCD = name+"CanonicalDirectBasis.txt";
             base.save(outputDir+nameBC);
-            log = "-> Canonical direct basis ("+base.nbRules()+" rules) saved in "+nameBCD+": \n"+base;            
+            log = "-> Canonical direct basis ("+base.sizeRules()+" rules) saved in "+nameBCD+": \n"+base;            
             System.out.println(log); file.write(log);
             // BIJECTION
             log = "--- BIJECTION --- \n";
