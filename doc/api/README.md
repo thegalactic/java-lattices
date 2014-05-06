@@ -197,8 +197,8 @@ title Main UML graph
 
 !include src/dgraph/DGraph.iuml
 !include src/dgraph/DGraphWriter.iuml
-!include src/dgraph/DGraphWriterDot.iuml
 !include src/dgraph/DGraphWriterFactory.iuml
+!include src/dgraph/DGraphWriterDot.iuml
 !include src/dgraph/Edge.iuml
 !include src/dgraph/DAGraph.iuml
 !include src/dgraph/Node.iuml
@@ -206,15 +206,24 @@ title Main UML graph
 !include src/lattice/Concept.iuml
 !include src/lattice/ConceptLattice.iuml
 !include src/lattice/Context.iuml
-!include src/lattice/ContextWriterFactory.iuml
+!include src/lattice/ContextReader.iuml
+!include src/lattice/ContextReaderFactory.iuml
+!include src/lattice/ContextReaderText.iuml
 !include src/lattice/ContextWriter.iuml
+!include src/lattice/ContextWriterFactory.iuml
 !include src/lattice/ContextWriterText.iuml
 !include src/lattice/ArrowRelation.iuml
+!include src/lattice/ArrowRelationWriter.iuml
+!include src/lattice/ArrowRelationWriterFactory.iuml
+!include src/lattice/ArrowRelationWriterTeX.iuml
 !include src/lattice/ClosureSystem.iuml
 !include src/lattice/Lattice.iuml
 !include src/lattice/Rule.iuml
 !include src/lattice/BijectiveComponents.iuml
 !include src/lattice/ImplicationalSystem.iuml
+!include src/lattice/ImplicationalSystemReader.iuml
+!include src/lattice/ImplicationalSystemReaderFactory.iuml
+!include src/lattice/ImplicationalSystemReaderText.iuml
 !include src/lattice/ImplicationalSystemWriter.iuml
 !include src/lattice/ImplicationalSystemWriterFactory.iuml
 !include src/lattice/ImplicationalSystemWriterText.iuml
