@@ -42,6 +42,8 @@ import java.util.TreeSet;
  * show ComparableSet members
  * class ComparableSet #LightCyan
  * title ComparableSet UML graph
+ *
+ * @todo  Check if this class is correctly used (performance)
  */
 public class ComparableSet extends TreeSet implements Comparable, Cloneable {
     /* ------------- CONSTRUCTORS ------------------ */
@@ -68,12 +70,10 @@ public class ComparableSet extends TreeSet implements Comparable, Cloneable {
      * Returns a string representation of this component without spaces.
      *
      * @return  a string representation of this component without spaces
-     *
-     * @todo  Whe do we remove spaces? and why this method is not called toString?
      */
-     public String toFile() {
+     public String toString() {
         String res = "";
-        StringTokenizer st = new StringTokenizer(this.toString());
+        StringTokenizer st = new StringTokenizer(super.toString());
         while (st.hasMoreTokens()) {
             res += st.nextToken();
         }

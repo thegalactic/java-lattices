@@ -37,7 +37,6 @@ import dgraph.Edge;
  * Comparison between this component and those in parameter is realised by comparing set `A`.
  *
  * @todo  Should not inherit from Node since content is not used
- * @todo  Deal with toDot
  *
  * ![Concept](Concept.png)
  *
