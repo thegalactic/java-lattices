@@ -26,6 +26,10 @@ $ -> Language fix or change
 ! -> Note
 
 2014-05-06 Christophe Demko <chdemko@gmail.com>
+	* doc/api/README.md
+		^ Update api doc
+
+2014-05-06 Christophe Demko <chdemko@gmail.com>
 	* src/lattice/ArrowRelation.java
 	* src/lattice/ArrowRelationWriter.iuml
 	* src/lattice/ArrowRelationWriter.java
