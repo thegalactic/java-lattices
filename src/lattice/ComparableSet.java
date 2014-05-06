@@ -42,6 +42,8 @@ import java.util.TreeSet;
  * show ComparableSet members
  * class ComparableSet #LightCyan
  * title ComparableSet UML graph
+ *
+ * @todo  Check if this class is correctly used (performance)
  */
 public class ComparableSet extends TreeSet implements Comparable, Cloneable {
     /* ------------- CONSTRUCTORS ------------------ */

@@ -74,8 +74,6 @@ import java.util.TreeSet;
  * show Context members
  * class Context #LightCyan
  * title Context UML graph
- *
- * @todo  Move specific phD students (Dounia and Van) constructors to other classes
  */
 public class Context extends ClosureSystem {
     /*

@@ -26,6 +26,13 @@ $ -> Language fix or change
 ! -> Note
 
 2014-05-06 Christophe Demko <chdemko@gmail.com>
+	* src/dgraph/package-info.java
+	* src/lattice/ComparableSet.java
+	* src/lattice/Concept.java
+	* src/lattice/Context.java
+		^ Update todo
+
+2014-05-06 Christophe Demko <chdemko@gmail.com>
 	* src/lattice/ComparableSet.iuml
 	* src/lattice/ComparableSet.java
 	* test/lattice/ComparableSetTest.java
