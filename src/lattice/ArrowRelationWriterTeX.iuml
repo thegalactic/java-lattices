@@ -1,5 +1,5 @@
 package lattice {
-    class ArrowRelationWriterText {
+    class ArrowRelationWriterTeX {
     	-{static}ArrowRelationWriterTeX instance
         +void write(ArrowRelation arrow, BufferedWriter file)
         +{static}ArrowRelationWriterTeX getInstance()
