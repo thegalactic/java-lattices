@@ -26,6 +26,10 @@ $ -> Language fix or change
 ! -> Note
 
 2014-05-06 Christophe Demko <chdemko@gmail.com>
+	* all files
+		^ Update Copyright
+
+2014-05-06 Christophe Demko <chdemko@gmail.com>
 	* src/dgraph/package-info.java
 	* src/lattice/ComparableSet.java
 	* src/lattice/Concept.java
