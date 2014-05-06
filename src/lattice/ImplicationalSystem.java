@@ -74,6 +74,9 @@ public class ImplicationalSystem extends ClosureSystem {
         if (ImplicationalSystemWriterFactory.get("txt") == null) {
             ImplicationalSystemWriterText.register();
         }
+        if (ImplicationalSystemReaderFactory.get("txt") == null) {
+            ImplicationalSystemReaderText.register();
+        }
     }
     /*--------------- FIELDS -----------------*/
 
@@ -147,51 +150,8 @@ public class ImplicationalSystem extends ClosureSystem {
      * @throws  IOException  When an IOException occurs
      */
     public ImplicationalSystem(String filename) throws IOException {
-        this.sigma = new TreeSet<Rule>();
-        this.set = new TreeSet<Comparable>();
-        BufferedReader file = new BufferedReader(new FileReader(filename));
-        // first line : All elements of S separated by a space
-        // a StringTokenizer is used to divide the line into different token,
-        // considering spaces as separator.
-        StringTokenizer st =  new StringTokenizer(file.readLine());
-        while (st.hasMoreTokens()) {
-            String n = new String(st.nextToken());
-            this.addElement(n);
-        }
-        // next lines : [elements of the premise separated by a space] -> [elements of the conclusion separated by a space]
-        // a StringTokenizer is used to divide each rule.
-        String line = file.readLine();
-        while (!(line == null) && !line.isEmpty()) {
-            st = new StringTokenizer(line);
-            Rule r = new Rule();
-            boolean prem = true;
-            while (st.hasMoreTokens()) {
-                String word = st.nextToken();
-                if (word.equals("->")) {
-                    prem = false;
-                } else {
-                    String x = null;
-                    // search of x in S
-                    for (Comparable e : this.set) {
-                        if (((String) e).equals(word)) {
-                            x = (String) e;
-                        }
-                    }
-                    if (x != null) {
-                        if (prem) {
-                            r.addToPremise(x);
-                        } else {
-                        r.addToConclusion(x);
-                        }
-                    }
-                }
-            }
-            if (!r.getConclusion().isEmpty()) {
-                this.addRule(r);
-            }
-            line = file.readLine();
-        }
-        file.close();
+        this();
+        this.parse(filename);
     }
 
     /**
@@ -457,6 +417,24 @@ public class ImplicationalSystem extends ClosureSystem {
         }
         BufferedWriter file = new BufferedWriter(new FileWriter(filename));
         ImplicationalSystemWriterFactory.get(extension).write(this, file);
+        file.close();
+    }
+
+    /**
+     * Parse the description of this component from a file whose name is specified.
+     *
+     * @param   filename  the name of the file
+     *
+     * @throws  IOException  When an IOException occurs
+     */
+    public void parse(final String filename) throws IOException {
+        String extension = "";
+        int index = filename.lastIndexOf('.');
+        if (index > 0) {
+            extension = filename.substring(index + 1);
+        }
+        BufferedReader file = new BufferedReader(new FileReader(filename));
+        ImplicationalSystemReaderFactory.get(extension).read(this, file);
         file.close();
     }
 

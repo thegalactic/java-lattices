@@ -1,0 +1,5 @@
+package lattice {
+    interface ContextReader {
+        +void read(Context context, BufferedReader file)
+    }
+}
