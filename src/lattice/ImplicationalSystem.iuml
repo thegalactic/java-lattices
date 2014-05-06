@@ -12,8 +12,8 @@ package lattice {
         .. Accessors ..
         +TreeSet<Rule> getRules()
         +TreeSet<Comparable> getSet()
-        +int nbElements()
-        +nbRules()
+        +int sizeElements()
+        +int sizeRules()
         .. Modifications ..
         +boolean addElement(Comparable e)
         +boolean addAllElements(TreeSet<Comparable> x)

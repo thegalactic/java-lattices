@@ -60,8 +60,6 @@ import dgraph.Node;
  * show ImplicationalSystem members
  * class ImplicationalSystem #LightCyan
  * title ImplicationalSystem UML graph
- *
- * @todo  Standardize "count" method names
  */
 public class ImplicationalSystem extends ClosureSystem {
     /*
@@ -216,7 +214,7 @@ public class ImplicationalSystem extends ClosureSystem {
      *
      * @return  the number of elements in the elements space of this component.
      */
-    public int nbElements() {
+    public int sizeElements() {
         return this.set.size();
     }
 
@@ -225,7 +223,7 @@ public class ImplicationalSystem extends ClosureSystem {
      *
      * @return  the number of rules of this component.
      */
-    public int nbRules() {
+    public int sizeRules() {
         return this.sigma.size();
     }
 
@@ -653,7 +651,7 @@ public class ImplicationalSystem extends ClosureSystem {
                 this.removeRule(newR);
             }
         }
-        return sauv.nbRules() - this.nbRules();
+        return sauv.sizeRules() - this.sizeRules();
     }
 
     /**
@@ -683,7 +681,7 @@ public class ImplicationalSystem extends ClosureSystem {
                 }
             }
         }
-        return sauv.nbRules() - this.nbRules();
+        return sauv.sizeRules() - this.sizeRules();
     }
 
     /**
@@ -713,7 +711,7 @@ public class ImplicationalSystem extends ClosureSystem {
                 }
             }
         }
-        return sauv.nbRules() - this.nbRules();
+        return sauv.sizeRules() - this.sizeRules();
     }
 
     /**
@@ -725,7 +723,7 @@ public class ImplicationalSystem extends ClosureSystem {
      * @return  the difference between the number of rules of this component before and after this treatment
      */
     public int makeRightMaximal() {
-        int s = this.nbRules();
+        int s = this.sizeRules();
         this.makeCompact();
         ImplicationalSystem sauv = new ImplicationalSystem(this);
         for (Rule r : sauv.sigma) {
@@ -734,7 +732,7 @@ public class ImplicationalSystem extends ClosureSystem {
                 this.replaceRule(r, newR);
             }
         }
-        return s - this.nbRules();
+        return s - this.sizeRules();
     }
 
     /**
@@ -760,7 +758,7 @@ public class ImplicationalSystem extends ClosureSystem {
             }
         }
         this.makeCompact();
-        return sauv.nbRules() - this.nbRules();
+        return sauv.sizeRules() - this.sizeRules();
     }
 
     /**
@@ -780,7 +778,7 @@ public class ImplicationalSystem extends ClosureSystem {
     public int makeDirect() {
         this.makeUnary();
         this.makeProper();
-        int s = this.nbRules();
+        int s = this.sizeRules();
         boolean ok = true;
         while (ok) {
             ImplicationalSystem sauv = new ImplicationalSystem(this);
@@ -801,12 +799,12 @@ public class ImplicationalSystem extends ClosureSystem {
                     }
                 }
             }
-            if (this.nbRules() == sauv.nbRules()) {
+            if (this.sizeRules() == sauv.sizeRules()) {
                 ok = false;
             }
         }
         this.makeCompact();
-        return s - this.nbRules();
+        return s - this.sizeRules();
     }
 
     /**
@@ -830,7 +828,7 @@ public class ImplicationalSystem extends ClosureSystem {
                 this.removeRule(r);
             }
         }
-        return sauv.nbRules() - this.nbRules();
+        return sauv.sizeRules() - this.sizeRules();
     }
 
     /**
@@ -845,13 +843,13 @@ public class ImplicationalSystem extends ClosureSystem {
      * @return  the difference between the number of rules of this component before and after this treatment
      */
     public int makeCanonicalDirectBasis() {
-        int s = this.nbRules();
+        int s = this.sizeRules();
         this.makeProper();
         this.makeLeftMinimal();
         this.makeDirect();
         this.makeLeftMinimal();
         this.makeCompact();
-        return s - this.nbRules();
+        return s - this.sizeRules();
     }
 
     /**
@@ -876,7 +874,7 @@ public class ImplicationalSystem extends ClosureSystem {
             }
         }
         this.makeProper();
-        return sauv.nbRules() - this.nbRules();
+        return sauv.sizeRules() - this.sizeRules();
     }
 
     /* --------------- METHODS BASED ON GRAPH ------------ */

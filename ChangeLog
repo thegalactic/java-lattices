@@ -26,6 +26,13 @@ $ -> Language fix or change
 ! -> Note
 
 2014-05-06 Christophe Demko <chdemko@gmail.com>
+	* examples/Examples.java
+	* src/lattice/ImplicationalSystem.iuml
+	* src/lattice/ImplicationalSystem.java
+	* test/lattice/ImplicationalSystemTest.java
+		^ Standardize count method names
+
+2014-05-06 Christophe Demko <chdemko@gmail.com>
 	* src/lattice/ArrowRelationWriterTeX.iuml
 		^ Correct typo
 
@@ -218,7 +225,7 @@ $ -> Language fix or change
 	* doc/cite.bib
 		+ Correct cide.bib
 
-2014-04-16 Jean-François Viaud <jviaud@univ-lr.fr>
+2014-04-16 Jean-FranÃ§ois Viaud <jviaud@univ-lr.fr>
 	* src/lattice/Lattice.java
 		+ add isCN method
 	* src/lattice/Lattice.iuml
@@ -226,7 +233,7 @@ $ -> Language fix or change
 	* test/lattice/LatticeTest.java
 		+ add testisCN
 
-2014-04-14 Jean-François Viaud <jviaud@univ-lr.fr>
+2014-04-14 Jean-FranÃ§ois Viaud <jviaud@univ-lr.fr>
 	* src/lattice/Lattice.java
 		+ add getDoubleArrowTable method
 		* rename getArrowRelation method
@@ -248,7 +255,7 @@ $ -> Language fix or change
 	* src/lattice/Permutation.java
 		^ Check style
 
-2014-04-11 Jean-François Viaud <jviaud@univ-lr.fr>
+2014-04-11 Jean-FranÃ§ois Viaud <jviaud@univ-lr.fr>
 	* test/lattice/ConceptLatticeTest.java
 		* Modify two failling tests
 	* src/lattice/LatticeFactory.java
@@ -268,7 +275,7 @@ $ -> Language fix or change
 	* src/lattice/Permutation.java:
 		^ Change doc
 
-2014-03-31 Jean-François Viaud <jviaud@univ-lr.fr>
+2014-03-31 Jean-FranÃ§ois Viaud <jviaud@univ-lr.fr>
 	* test/lattice/LatticeTest.java
 		+ Add unit tests
 
@@ -276,7 +283,7 @@ $ -> Language fix or change
 	* test/lattice/ConceptLatticeTest.java
 		+ Add unit tests
 
-2014-03-27 Jean-François Viaud <jviaud@univ-lr.fr>
+2014-03-27 Jean-FranÃ§ois Viaud <jviaud@univ-lr.fr>
 	* src/lattice/Couple.java
 		+ Add new class to generate lattice products
 		+ Add corresponding iuml file
@@ -295,7 +302,7 @@ $ -> Language fix or change
 	* utility/initiate-publish.sh
 		+ Publish jar and compressed api doc
 
-2014-03-22 Jean-François Viaud <jviaud@univ-lr.fr>
+2014-03-22 Jean-FranÃ§ois Viaud <jviaud@univ-lr.fr>
 	* src/lattice/Context.java
 		+ Add random method
 	* src/lattice/Context.iuml
@@ -305,11 +312,11 @@ $ -> Language fix or change
 	* test/lattice/ClosureSystemTest.java
 		+ Add missing tests
 
-2014-03-20 Jean-François Viaud <jviaud@univ-lr.fr>
+2014-03-20 Jean-FranÃ§ois Viaud <jviaud@univ-lr.fr>
 	* src/lattice/ImplicationalSystem.iuml
 		+ Add isReduced method
 
-2014-03-19 Jean-François Viaud <jviaud@univ-lr.fr>
+2014-03-19 Jean-FranÃ§ois Viaud <jviaud@univ-lr.fr>
 	* src/test/BijectiveComponenetTest.java
 		# Path are now Windows/Linux compliants
 	* src/lattice/ImplicationalSystem.java
@@ -374,7 +381,7 @@ $ -> Language fix or change
 	* src/lattice/ConceptLattice.iuml
 		+ Finish UML graphs
 
-2014-03-14 Jean-François Viaud <jviaud@univ-lr.fr>
+2014-03-14 Jean-FranÃ§ois Viaud <jviaud@univ-lr.fr>
 	* src/lattice/ImplicationalSystem.java
 		^ Correct some minor errors in makeRightMaximal
 	* src/test/ImplicationalSystem.java
@@ -391,7 +398,7 @@ $ -> Language fix or change
 		+ Add uml graph for Implicationalsystem
 		^ Correct some minor errors in test
 
-2014-03-11 Jean-François Viaud <jviaud@univ-lr.fr>
+2014-03-11 Jean-FranÃ§ois Viaud <jviaud@univ-lr.fr>
 	* build.xml
 	* src/lattice/ImplicationalSystem.java
 		+ Rename & Update other classes
@@ -446,7 +453,7 @@ $ -> Language fix or change
 	* test/dgraph/NodeTest.java
 		+ Complete unit test
 
-2014-03-05 Jean-François Viaud <jviaud@univ-lr.fr>
+2014-03-05 Jean-FranÃ§ois Viaud <jviaud@univ-lr.fr>
 	* build.xml
 	* src/lattice/Concept.java
 	* test/lattice/ConceptTest.java
