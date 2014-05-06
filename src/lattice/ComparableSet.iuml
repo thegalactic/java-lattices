@@ -4,7 +4,7 @@ package lattice {
         +ComparableSet()
         +ComparableSet(TreeSet<Comparable> set)
         .. Transformers ..
-        +String toFile()
+        +String toString()
         .. Generators ..
         +ComparableSet copy()
         .. Comparators ..

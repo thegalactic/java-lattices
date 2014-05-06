@@ -26,6 +26,12 @@ $ -> Language fix or change
 ! -> Note
 
 2014-05-06 Christophe Demko <chdemko@gmail.com>
+	* src/lattice/ComparableSet.iuml
+	* src/lattice/ComparableSet.java
+	* test/lattice/ComparableSetTest.java
+		^ Rename method
+
+2014-05-06 Christophe Demko <chdemko@gmail.com>
 	* doc/api/README.md
 	* src/lattice/Concept.java
 	* src/lattice/ConceptLattice.java

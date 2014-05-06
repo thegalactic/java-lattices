@@ -33,13 +33,13 @@ public class ComparableSetTest {
     }
 
     /**
-     * Test the toFile method.
+     * Test the toString method.
      */
     @Test
-    public void testToFile() {
+    public void testToString() {
         ComparableSet set = new ComparableSet();
         set.add(new String("Hello world"));
-        assertEquals(set.toFile(), "[Helloworld]");
+        assertEquals(set.toString(), "[Helloworld]");
     }
 
     /**
