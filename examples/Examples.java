@@ -2,9 +2,13 @@
 /*
  * Examples.java
  *
- * last update on December 2013
+ * Copyright: 2013 Karell Bertet, France
  *
- **/
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
+ * This file is part of lattice, free package. You can redistribute it and/or modify
+ * it under the terms of CeCILL-B license.
+ */
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -16,19 +20,13 @@ import dgraph.DAGraph;
 import dgraph.DGraph;
 import dgraph.Node;
 import lattice.*;
+
 /**
  * This class provides some use examples of main classes of this lattice package.
  *
  * This class is composed of static method giving some use examples of
  * class `DGraph`, class `DAGraph`, class `Context`,
  * class `ImplicationalSystem` and the specific class `BijectiveComponents`.
- *
- * Copyright: 2013 University of La Rochelle, France
- * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
- * This file is part of lattice, free package. You can redistribute it and/or modify
- * it under the terms of CeCILL-B license.
- * @author Karell Bertet
- * @version 2013
  */
 
 public class Examples {
