@@ -21,6 +21,7 @@ public class RuleTest {
         Rule r = new Rule();
         assertTrue(r.getPremise().isEmpty());
     }
+
     /**
      * Test the constructor.
      */
@@ -32,6 +33,7 @@ public class RuleTest {
         assertEquals(r.getPremise(), p);
         assertEquals(r.getConclusion(), c);
     }
+
     /**
      * Test the getPremise method.
      */
@@ -43,6 +45,7 @@ public class RuleTest {
         assertEquals(r.getPremise(), p);
         assertEquals(r.getConclusion(), c);
     }
+
     /**
      * Test the getConclusion method.
      */
@@ -54,6 +57,7 @@ public class RuleTest {
         assertEquals(r.getPremise(), p);
         assertEquals(r.getConclusion(), c);
     }
+
     /**
      * Test the addToPremise method.
      */
@@ -64,6 +68,7 @@ public class RuleTest {
         r.addToPremise(s);
         assertTrue(r.getPremise().contains(s));
     }
+
     /**
      * Test the removeFromPremise method.
      */
@@ -76,6 +81,7 @@ public class RuleTest {
         r.removeFromPremise(s);
         assertFalse(r.getPremise().contains(s));
     }
+
     /**
      * Test the addToConclusion method.
      */
@@ -86,6 +92,7 @@ public class RuleTest {
         r.addToConclusion(s);
         assertTrue(r.getConclusion().contains(s));
     }
+
     /**
      * Test the removeFromConclusion method.
      */
@@ -98,6 +105,7 @@ public class RuleTest {
         r.removeFromConclusion(s);
         assertFalse(r.getConclusion().contains(s));
     }
+
     /**
      * Test the addAllToPremise method.
      */
@@ -113,6 +121,7 @@ public class RuleTest {
         assertTrue(r.getPremise().contains(a));
         assertTrue(r.getPremise().contains(b));
     }
+
     /**
      * Test the removeAllFromPremise method.
      */
@@ -124,6 +133,7 @@ public class RuleTest {
         r.removeAllFromPremise((Collection) s);
         assertTrue(r.getPremise().isEmpty());
     }
+
     /**
      * Test the addAllToConclusion method.
      */
@@ -139,6 +149,7 @@ public class RuleTest {
         assertTrue(r.getConclusion().contains(a));
         assertTrue(r.getConclusion().contains(b));
     }
+
     /**
      * Test the removeAllFromConclusion method.
      */
@@ -150,6 +161,7 @@ public class RuleTest {
         r.removeAllFromConclusion((Collection) s);
         assertTrue(r.getConclusion().isEmpty());
     }
+
     /**
      * Test the toString method.
      */
@@ -162,18 +174,7 @@ public class RuleTest {
         r.addToConclusion(b);
         assertEquals(r.toString(), "a  -> b ");
     }
-    /**
-     * Test the toFile method.
-     */
-    @Test
-    public void testtoFile() {
-        Rule r = new Rule();
-        Node a = new Node('a');
-        Node b = new Node('b');
-        r.addToPremise(a);
-        r.addToConclusion(b);
-        assertEquals(r.toFile(), "a-> b");
-    }
+
     /**
      * Test the hashCode method.
      */
@@ -182,6 +183,7 @@ public class RuleTest {
         Rule r = new Rule();
         assertEquals(r.hashCode(), (Object) r.hashCode());
     }
+
     /**
      * Test the Equals method.
      */
@@ -189,7 +191,9 @@ public class RuleTest {
     public void testEquals() {
         Rule r = new Rule();
         assertTrue(r.equals(r));
+        assertFalse(r.equals(new Object()));
     }
+
     /**
      * Test the compareTo method.
      */

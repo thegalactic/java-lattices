@@ -227,25 +227,6 @@ public class Rule implements Comparable {
     }
 
     /**
-     * Returns a String representation of this component to be saved in a file.
-     *
-     * Element in a set are separated by a space
-     *
-     * @return  a string made of premises followed by -> and the conclusions.
-     */
-    public String toFile() {
-        String res = "";
-        for (Object e : this.premise) {
-            res += e.toString();
-        }
-        res += "-> ";
-        for (Object e : this.conclusion) {
-            res += e.toString();
-        }
-        return res;
-    }
-
-    /**
      * Returns the hash code of this component.
      *
      * @return  hash code of this component
