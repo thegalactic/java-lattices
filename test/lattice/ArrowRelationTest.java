@@ -16,7 +16,7 @@ public class ArrowRelationTest {
      * Test the toLaTex method.
      */
     @Test
-    public void testwriteLaTeX() {
+    public void testSave() {
         try {
         Lattice l = new Lattice();
         Node a = new Node("a"); l.addNode(a);
@@ -30,10 +30,10 @@ public class ArrowRelationTest {
         l.addEdge(a, d);
         l.addEdge(d, e);
         ArrowRelation ar = new ArrowRelation(l);
-        File file = File.createTempFile("junit", ".dot");
+        File file = File.createTempFile("junit", ".tex");
         String filename = file.getName();
         file.delete();
-        ar.writeLaTex(filename);
+        ar.save(filename);
         String content = "";
         file = new File(filename);
         Scanner scanner = new Scanner(file);

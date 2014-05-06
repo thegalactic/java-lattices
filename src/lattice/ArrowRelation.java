@@ -15,12 +15,8 @@ package lattice;
  */
 
 import java.io.IOException;
-import java.io.File;
 import java.io.FileWriter;
-import java.util.SortedSet;
-import java.util.TreeSet;
-import dgraph.Edge;
-import dgraph.Node;
+import java.io.BufferedWriter;
 import dgraph.DGraph;
 
 /**
@@ -49,6 +45,15 @@ import dgraph.DGraph;
  * title ArrowRelation UML graph
  */
 public class ArrowRelation extends DGraph  {
+    /*
+     * Register tex writer
+     */
+    static {
+        if (ArrowRelationWriterFactory.get("tex") == null) {
+            ArrowRelationWriterTeX.register();
+        }
+    }
+
     /**
      * Unique constructor of this component from a lattice.
      *
@@ -62,66 +67,20 @@ public class ArrowRelation extends DGraph  {
     }
 
     /**
-     * Produces the LaTex source code for the array of arrows of this component.
-     * The LaTeX source produced isn't autonomous. It must be included in a document.
+     * Save the description of this component in a file whose name is specified.
      *
-     * @param   filename  Name of the file to be writen.
+     * @param   filename  the name of the file
      *
      * @throws  IOException  When an IOException occurs
      */
-    public void writeLaTex(String filename) throws IOException {
-        File outfile = new File(filename);
-        FileWriter out = new FileWriter(outfile);
-        SortedSet<Edge> edges = this.getEdges();
-        TreeSet<Node> m = new TreeSet<Node>();
-        TreeSet<Node> j = new TreeSet<Node>();
-        for (Edge e : edges) {
-            m.add(e.getFrom());
-            j.add(e.getTo());
+    public void save(final String filename) throws IOException {
+        String extension = "";
+        int index = filename.lastIndexOf('.');
+        if (index > 0) {
+            extension = filename.substring(index + 1);
         }
-        String str = "\\begin{tabular}{|c|*{" + Integer.toString(j.size()) + "}{c|}}\n";
-        str += "\\hline\n";
-        for (Node nj : j) {
-            str += " & " + nj.getContent();
-        }
-        str += "\\\\ \n";
-        str += "\\hline\n";
-        for (Node nm : m) {
-            str += nm.getContent();
-            for (Node nj : j) {
-                Edge e = this.getEdge(nm, nj);
-                if ((String) e.getContent() == "Up") {
-                    str += " & $\\uparrow$";
-                } else {
-                    if ((String) e.getContent() == "Down") {
-                    str += " & $\\downarrow$";
-                } else {
-                    if ((String) e.getContent() == "UpDown") {
-                    str += " & $\\updownarrow$";
-                } else {
-                    if ((String) e.getContent() == "Cross") {
-                    str += " & $\\times$";
-                } else {
-                    str += " & $\\circ$";
-                    }
-                    }
-                    }
-                /* Previous code, in a Java7 only way, was :
-                switch ((String)e.getContent()) {
-                    case "Up":str += " & $\\uparrow$";break;
-                    case "Down":str += " & $\\downarrow$";break;
-                    case "UpDown":str += " & $\\updownarrow$";break;
-                    case "Cross":str += " & $\\times$";break;
-                    case "Circ":str += " & $\\circ$";break;
-                    default :break;
-                */
-                }
-            }
-            str += "\\\\ \n";
-            str += "\\hline\n";
-        }
-        str += "\\end{tabular}\n";
-        out.write(str);
-        out.close();
+        BufferedWriter file = new BufferedWriter(new FileWriter(filename));
+        ArrowRelationWriterFactory.get(extension).write(this, file);
+        file.close();
     }
 }

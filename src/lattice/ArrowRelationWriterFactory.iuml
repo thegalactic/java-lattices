@@ -1,0 +1,10 @@
+package lattice {
+    class ArrowRelationWriterFactory {
+    	-{static}HashMap<String, ArrowRelationWriter> writers
+        +{static}ArrowRelationWriter register(ArrowRelationWriter writer, String extension)
+        +{static}ArrowRelationWriter unregister(String extension)
+        +{static}ArrowRelationWriter get(String extension)
+    }
+
+    ArrowRelationWriterFactory o-- ArrowRelationWriter
+}
