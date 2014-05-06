@@ -4,6 +4,8 @@ import dgraph.DAGraph;
 import dgraph.Node;
 import java.util.TreeSet;
 import java.util.Vector;
+import java.util.Scanner;
+import java.io.File;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
@@ -378,5 +380,37 @@ public class ConceptLatticeTest {
         Vector<TreeSet<Comparable>> expResult = new Vector<TreeSet<Comparable>>();
         expResult.add(b);
         assertEquals(expResult, result);
+    }
+
+    /**
+     * Test the save method.
+     */
+    @Test
+    public void testSave() {
+        try {
+            File file = File.createTempFile("junit", ".dot");
+            String filename = file.getName();
+            file.delete();
+            Lattice l = new Lattice();
+            Concept a = new Concept(true, true); l.addNode(a);
+            Concept b = new Concept(true, true); l.addNode(b);
+            l.addEdge(a, b);
+            l.save(filename);
+            String content = "";
+            file = new File(filename);
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                content += scanner.nextLine();
+            }
+            assertEquals(content, "digraph G {Graph [rankdir=BT]"
+                + a.getIdentifier() + " [label=\"[]-[]\"]"
+                + b.getIdentifier() + " [label=\"[]-[]\"]"
+                + a.getIdentifier() + "->" + b.getIdentifier()
+                + "}"
+            );
+            file.delete();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
 }

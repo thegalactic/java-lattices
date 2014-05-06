@@ -205,6 +205,9 @@ title Main UML graph
 !include src/lattice/ComparableSet.iuml
 !include src/lattice/Concept.iuml
 !include src/lattice/ConceptLattice.iuml
+!include src/lattice/ConceptLatticeWriter.iuml
+!include src/lattice/ConceptLatticeWriterFactory.iuml
+!include src/lattice/ConceptLatticeWriterDot.iuml
 !include src/lattice/Context.iuml
 !include src/lattice/ContextReader.iuml
 !include src/lattice/ContextReaderFactory.iuml

@@ -18,6 +18,9 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import dgraph.DAGraph;
 import dgraph.DGraph;
 import dgraph.Edge;
@@ -60,6 +63,14 @@ import dgraph.Node;
  * title ConceptLattice UML graph
  */
 public class ConceptLattice extends Lattice {
+    /*
+     * Register dot writer
+     */
+    static {
+        if (ConceptLatticeWriterFactory.get("dot") == null) {
+            ConceptLatticeWriterDot.register();
+        }
+    }
 
     /* ------------- CONSTRUCTORS ------------------ */
 
@@ -872,6 +883,29 @@ public class ConceptLattice extends Lattice {
             immSucc.add(s);
         }
        return immSucc;
+    }
+
+    /**
+     * Save the description of this component in a file whose name is specified.
+     *
+     * @param   filename  the name of the file
+     *
+     * @throws  IOException  When an IOException occurs
+     */
+    public void save(final String filename) throws IOException {
+        String extension = "";
+        int index = filename.lastIndexOf('.');
+        if (index > 0) {
+            extension = filename.substring(index + 1);
+        }
+        ConceptLatticeWriter writer = ConceptLatticeWriterFactory.get(extension);
+        if (writer == null) {
+            super.save(filename);
+        } else {
+            BufferedWriter file = new BufferedWriter(new FileWriter(filename));
+            writer.write(this, file);
+            file.close();
+        }
     }
 }
 

@@ -442,31 +442,6 @@ public class Concept extends Node {
     }
 
     /**
-     * Returns the dot description of this component in a String.
-     *
-     * @return  the dot description of this component in a String.
-     */
-    public String toDot() {
-        String s = this.getIdentifier() + " [label=\" ";
-        String tmp = "";
-        if (this.hasSetA()) {
-            tmp += this.setA;
-        }
-        if (this.hasSetA() && this.hasSetB()) {
-            tmp += "\\n";
-        }
-        if (this.hasSetB()) {
-            tmp += this.setB;
-        }
-        StringTokenizer st = new StringTokenizer(tmp, "\"");
-        while (st.hasMoreTokens()) {
-            s += st.nextToken();
-        }
-        s += "\"]";
-        return s;
-    }
-
-    /**
      * Returns the hash code of this component.
      *
      * @return  hash code of this component
