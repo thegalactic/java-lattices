@@ -15,13 +15,8 @@ package lattice;
  */
 
 import java.io.IOException;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
-import java.util.SortedSet;
-import java.util.TreeSet;
-import dgraph.Edge;
-import dgraph.Node;
 import dgraph.DGraph;
 
 /**
