@@ -26,6 +26,17 @@ $ -> Language fix or change
 ! -> Note
 
 2014-05-06 Christophe Demko <chdemko@gmail.com>
+	* src/lattice/ArrowRelation.java
+	* src/lattice/ArrowRelationWriter.iuml
+	* src/lattice/ArrowRelationWriter.java
+	* src/lattice/ArrowRelationWriterFactory.iuml
+	* src/lattice/ArrowRelationWriterFactory.java
+	* src/lattice/ArrowRelationWriterTeX.iuml
+	* test/lattice/ArrowRelationTest.java
+	* src/lattice/ArrowRelationWriterTeX.java
+		^ Implement abstract writer pattern for ArrowRelation
+
+2014-05-06 Christophe Demko <chdemko@gmail.com>
 	* examples/Examples.java
 		^ Use new methods for saving and parsing
 

@@ -17,6 +17,7 @@ package lattice;
 import java.io.IOException;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.BufferedWriter;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import dgraph.Edge;
@@ -49,6 +50,15 @@ import dgraph.DGraph;
  * title ArrowRelation UML graph
  */
 public class ArrowRelation extends DGraph  {
+    /*
+     * Register tex writer
+     */
+    static {
+        if (ArrowRelationWriterFactory.get("tex") == null) {
+            ArrowRelationWriterTeX.register();
+        }
+    }
+
     /**
      * Unique constructor of this component from a lattice.
      *
@@ -59,6 +69,24 @@ public class ArrowRelation extends DGraph  {
      */
     public ArrowRelation(Lattice lattice) {
         super(lattice.getArrowRelation());
+    }
+
+    /**
+     * Save the description of this component in a file whose name is specified.
+     *
+     * @param   filename  the name of the file
+     *
+     * @throws  IOException  When an IOException occurs
+     */
+    public void save(final String filename) throws IOException {
+        String extension = "";
+        int index = filename.lastIndexOf('.');
+        if (index > 0) {
+            extension = filename.substring(index + 1);
+        }
+        BufferedWriter file = new BufferedWriter(new FileWriter(filename));
+        ArrowRelationWriterFactory.get(extension).write(this, file);
+        file.close();
     }
 
     /**
