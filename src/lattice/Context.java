@@ -146,16 +146,7 @@ public class Context extends ClosureSystem {
      * Constructs a new empty context.
      */
     public Context() {
-        this.observations = new TreeSet();
-        this.attributes = new TreeSet();
-        this.intent = new TreeMap();
-        this.extent = new TreeMap();
-        this.bitsetAttributes = new BitSet();
-        this.bitsetObservations = new BitSet();
-        this.bitsetIntent = new TreeMap();
-        this.bitsetExtent = new TreeMap();
-        this.arrayObservations = new ArrayList();
-        this.arrayAttributes = new ArrayList();
+        this.init();
     }
 
     /**
@@ -164,16 +155,7 @@ public class Context extends ClosureSystem {
      * @param   context  context to be copied
      */
     public Context(Context context) {
-        this.observations = new TreeSet();
-        this.attributes = new TreeSet();
-        this.intent = new TreeMap();
-        this.extent = new TreeMap();
-        this.bitsetAttributes = new BitSet();
-        this.bitsetObservations = new BitSet();
-        this.bitsetIntent = new TreeMap();
-        this.bitsetExtent = new TreeMap();
-        this.arrayObservations = new ArrayList();
-        this.arrayAttributes = new ArrayList();
+        this();
         this.attributes.addAll(context.getAttributes());
         this.observations.addAll(context.getObservations());
         for (Comparable o : context.getObservations()) {
@@ -211,8 +193,26 @@ public class Context extends ClosureSystem {
      * @throws  IOException  When an IOException occurs
      */
     public Context(String filename) throws IOException {
-        this();
         this.parse(filename);
+    }
+
+    /**
+     * Initialise the context.
+     *
+     * @return  this for chaining
+     */
+    public Context init() {
+        this.observations = new TreeSet();
+        this.attributes = new TreeSet();
+        this.intent = new TreeMap();
+        this.extent = new TreeMap();
+        this.bitsetAttributes = new BitSet();
+        this.bitsetObservations = new BitSet();
+        this.bitsetIntent = new TreeMap();
+        this.bitsetExtent = new TreeMap();
+        this.arrayObservations = new ArrayList();
+        this.arrayAttributes = new ArrayList();
+        return this;
     }
 
     /**
@@ -758,9 +758,12 @@ public class Context extends ClosureSystem {
      *
      * @param   filename  the name of the file
      *
+     * @return  this for chaining
+     *
      * @throws  IOException  When an IOException occurs
      */
-    public void parse(final String filename) throws IOException {
+    public Context parse(final String filename) throws IOException {
+        this.init();
         String extension = "";
         int index = filename.lastIndexOf('.');
         if (index > 0) {
@@ -769,6 +772,7 @@ public class Context extends ClosureSystem {
         BufferedReader file = new BufferedReader(new FileReader(filename));
         ContextReaderFactory.get(extension).read(this, file);
         file.close();
+        return this;
     }
 
     /**

@@ -26,6 +26,12 @@ $ -> Language fix or change
 ! -> Note
 
 2014-05-07 Christophe Demko <chdemko@gmail.com>
+	* src/lattice/Context.java
+	* src/lattice/ImplicationalSystem.java
+		# parse methods should init components
+		+ parse and init methods return this for chaining
+
+2014-05-07 Christophe Demko <chdemko@gmail.com>
 	* src/dgraph/DGraphWriterDot.java
 	* src/lattice/ArrowRelationWriterTeX.java
 	* src/lattice/ConceptLatticeWriterDot.java

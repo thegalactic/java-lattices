@@ -91,8 +91,7 @@ public class ImplicationalSystem extends ClosureSystem {
      * Constructs a new empty component.
      */
     public ImplicationalSystem() {
-        this.sigma = new TreeSet<Rule>();
-        this.set = new TreeSet<Comparable>();
+        this.init();
     }
 
     /**
@@ -145,8 +144,18 @@ public class ImplicationalSystem extends ClosureSystem {
      * @throws  IOException  When an IOException occurs
      */
     public ImplicationalSystem(String filename) throws IOException {
-        this();
         this.parse(filename);
+    }
+
+    /**
+     * Initialise the implicational system.
+     *
+     * @return  this for chaining
+     */
+    public ImplicationalSystem init() {
+        this.sigma = new TreeSet<Rule>();
+        this.set = new TreeSet<Comparable>();
+        return this;
     }
 
     /**
@@ -420,9 +429,12 @@ public class ImplicationalSystem extends ClosureSystem {
      *
      * @param   filename  the name of the file
      *
+     * @return  this for chaining
+     *
      * @throws  IOException  When an IOException occurs
      */
-    public void parse(final String filename) throws IOException {
+    public ImplicationalSystem parse(final String filename) throws IOException {
+        this.init();
         String extension = "";
         int index = filename.lastIndexOf('.');
         if (index > 0) {
@@ -431,6 +443,7 @@ public class ImplicationalSystem extends ClosureSystem {
         BufferedReader file = new BufferedReader(new FileReader(filename));
         ImplicationalSystemReaderFactory.get(extension).read(this, file);
         file.close();
+        return this;
     }
 
     /*-----------  PROPERTIES TEST METHODS -------------------- */
