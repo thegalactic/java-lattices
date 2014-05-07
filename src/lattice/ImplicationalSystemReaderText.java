@@ -31,6 +31,12 @@ import java.io.IOException;
  */
 public final class ImplicationalSystemReaderText implements ImplicationalSystemReader {
     /**
+     * This class is not designed to be publicly instantiated.
+     */
+    private ImplicationalSystemReaderText() {
+    }
+
+    /**
      * The singleton instance.
      */
     private static ImplicationalSystemReaderText instance = null;

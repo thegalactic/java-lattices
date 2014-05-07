@@ -30,6 +30,12 @@ import java.io.IOException;
  */
 public final class ContextWriterText implements ContextWriter {
     /**
+     * This class is not designed to be publicly instantiated.
+     */
+    private ContextWriterText() {
+    }
+
+    /**
      * The singleton instance.
      */
     private static ContextWriterText instance = null;

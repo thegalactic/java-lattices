@@ -25,6 +25,16 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-05-07 Christophe Demko <chdemko@gmail.com>
+	* src/dgraph/DGraphWriterDot.java
+	* src/lattice/ArrowRelationWriterTeX.java
+	* src/lattice/ConceptLatticeWriterDot.java
+	* src/lattice/ContextReaderText.java
+	* src/lattice/ContextWriterText.java
+	* src/lattice/ImplicationalSystemReaderText.java
+	* src/lattice/ImplicationalSystemWriterText.java
+		+ These classes are not designed to be publicly instantiated
+
 2014-05-06 Christophe Demko <chdemko@gmail.com>
 	* examples/Examples.java
 	* src/lattice/ImplicationalSystem.iuml

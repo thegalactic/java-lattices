@@ -34,6 +34,12 @@ import dgraph.Node;
  */
 public final class ArrowRelationWriterTeX implements ArrowRelationWriter {
     /**
+     * This class is not designed to be publicly instantiated.
+     */
+    private ArrowRelationWriterTeX() {
+    }
+
+    /**
      * The singleton instance.
      */
     private static ArrowRelationWriterTeX instance = null;

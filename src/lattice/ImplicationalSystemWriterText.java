@@ -30,6 +30,12 @@ import java.io.IOException;
  */
 public final class ImplicationalSystemWriterText implements ImplicationalSystemWriter {
     /**
+     * This class is not designed to be publicly instantiated.
+     */
+    private ImplicationalSystemWriterText() {
+    }
+
+    /**
      * The singleton instance.
      */
     private static ImplicationalSystemWriterText instance = null;
