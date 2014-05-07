@@ -33,6 +33,12 @@ import dgraph.Node;
  */
 public final class ConceptLatticeWriterDot implements ConceptLatticeWriter {
     /**
+     * This class is not designed to be publicly instantiated.
+     */
+    private ConceptLatticeWriterDot() {
+    }
+
+    /**
      * The singleton instance.
      */
     private static ConceptLatticeWriterDot instance = null;

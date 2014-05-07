@@ -31,6 +31,12 @@ import java.io.IOException;
  */
 public final class ContextReaderText implements ContextReader {
     /**
+     * This class is not designed to be publicly instantiated.
+     */
+    private ContextReaderText() {
+    }
+
+    /**
      * The singleton instance.
      */
     private static ContextReaderText instance = null;

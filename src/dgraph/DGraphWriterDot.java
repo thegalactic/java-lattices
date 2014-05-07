@@ -31,6 +31,12 @@ import java.util.StringTokenizer;
  */
 public final class DGraphWriterDot implements DGraphWriter {
     /**
+     * This class is not designed to be publicly instantiated.
+     */
+    private DGraphWriterDot() {
+    }
+
+    /**
      * The singleton instance.
      */
     private static DGraphWriterDot instance = null;
