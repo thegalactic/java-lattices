@@ -25,6 +25,10 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-05-08 Christophe Demko <chdemko@gmail.com>
+	* all *.java files
+		^ Change licence info
+
 2014-05-07 Christophe Demko <chdemko@gmail.com>
 	* src/lattice/Context.java
 	* src/lattice/ImplicationalSystem.java
