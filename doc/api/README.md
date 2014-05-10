@@ -5,7 +5,7 @@ Description
 
 This package both provides classes to manipulate a binary table (or a context) and its concept lattice; a set of rules (or an implicational system) and its closed set lattice, but also capitalizes on results issued from lattice theory stating that there exists bijective links between lattices, reduced contexts and canonical direct basis of rules (see figure).
 
-![UML diagram](UML.png)
+![UML diagram](images/UML.png)
 
 A context is defined by class `Context` that provides methods implementing classical operations on a context, as the reduction for example.
 An implicational system, defined by class `IS`, provides methods for classical transformations of an implicational system, and in particular
