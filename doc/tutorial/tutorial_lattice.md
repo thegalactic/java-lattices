@@ -4,7 +4,7 @@ Lattice
 Create your own lattice
 -----------------------
 
-* Manually
+### Manually
 
 You can define your own (small) lattice by creating its nodes and edges.
 
@@ -33,10 +33,23 @@ Edge ec = new Edge(e, c); l.addEdge(ec);
 
 You can now verify your lattice with two following methods :
 
-1. A string representation on the standard output : `System.out.println(l.toString());`
-2. An export in .dot format file : `l.write("M5.dot");`
+1. A string representation on the standard output : `System.out.println(l.toString());`. This method is inherited from `DGraph`.
 
-Note that these two last methods are inherited from `DGraph`.
+2. An export in .dot format file with the writer :
+
+~~~Java
+File file = new File("MyLattice.dot");
+try {
+    file.createNewFile();
+} catch (IOException ex) {
+    Logger.getLogger(LatticeTest.class.getName()).log(Level.SEVERE, null, ex);
+}
+FileWriter fw = new FileWriter(file.getAbsoluteFile());
+BufferedWriter bw = new BufferedWriter(fw);
+DGraphWriterDot dgwd = DGraphWriterDot.getInstance();
+dgwd.write(l, bw);
+bw.close();
+~~~
 
 Generated `M5.dot` contains :
 
@@ -56,22 +69,22 @@ Generated `M5.dot` contains :
 
 With [graphviz tools](http://www.graphviz.org/), you can generate the following `.png` image :
 
-![M_5 Lattice](images/M5.png)
+![$M_5$ Lattice](M5.png)
 
-* From `LatticeFactory`
+### From `LatticeFactory`
 
 LatticeFactory class provides few methods to get example lattices :
 
-1. Call `Lattice b = LatticeFactory.booleanAlgebra(13);` to get boolean algebra with $2^13$ elements in variable `b`.
+1. Call `Lattice b = LatticeFactory.booleanAlgebra(13);` to get boolean algebra with $2^{13}$ elements in variable `b`.
 2. Call `Lattice p = LatticeFactory.permutationLattice(7);` to get lattice of permutation of the set $\{1,\ldots,7\}$ in variable `p`.
 3. Call `Lattice r = LatticeFactory.randomLattice(19);` to get a random lattice with $19$ nodes in variable `r`.
 4. Call `Lattice p = LatticeFactory.product(l, r);` to get cartesian product lattice $l \times r$ in variable `p`.
 5. Call `Lattice d = LatticeFactory.doublingConvex(l, c);` to get lattice in which convex $c$ of lattice $l$ has been doubled in variable `d`.
 
-* From wherever you want
+### From wherever you want
 
-1. From a context, you can generate a `ConceptLattice` which is of course a lattice, by calling `context.conceptLattice(true);`. [INSERT LINK TO CONCEPTLATTICE TUTORIAL]
-2. From an implicational system, via `BijectiveComponent`.[INSERT LINK TO BIJECTIVECOMPONENT TUTORIAL]
+1. From a context, you can generate a `ConceptLattice` which is of course a lattice, by calling `context.conceptLattice(true);`. See ConceptLattice tutorial for more details.
+2. From an implicational system, via `BijectiveComponent`. See BijectiveComponent tutorial for more details.
 
 Basic computations
 ------------------
@@ -153,7 +166,7 @@ Edge gt = new Edge(g, t); l.addEdge(gt);
 
 Such lattice is better understood with a nice picture :
 
-![Example Lattice](images/Example.png)
+![Example Lattice](Example.png)
 
 Here, join irreductibles are $c$, $d$ and $e$ whereas meet irreductibles are $c$, $d$, $f$ and $g$
 
@@ -167,7 +180,7 @@ Dually, `TreeSet<Comparable> meetgen = l.meetIrreducibles(d);` show that node $d
 
 To conclude on these irreductibles, you can compute the subgraph of all irreductibles with `DAGraph dag = l.irreduciblesSubgraph();`, and get following result :
 
-[Irreductible Graph](images/IrreductibleGraph.png)
+![Irreductible Graph](IrreductibleGraph.png)
 
 And, last but not least, you can compute the context :
 
@@ -185,22 +198,112 @@ That computation is done by `Context ctx = l.getTable();`.
 Closure computations
 --------------------
 
-* irreductibleClosure
+* `joinClosure` method
 
-* joinClosure
+First recall that any lattice $L$ is isomorphic to the lattice obtained by replacing each node $n$ of $L$ by the node containing all join irreductible predecessors of $n$. 
 
-* meetClosure
+Given a lattice $l$, calling `l.joinClosure();` returns this isomorphic lattice. Be careful of the fact that `joinClosure()` actually returns a `ConceptLattice`.
+
+Using the previous example, you get :
+
+![Join Closure](JoinClosure.png)
+
+* `meetClosure` method
+
+This is the dual of the previous method which is used in the same way.
+
+From our example, `l.meetClosure();` gives :
+
+![Meet Closure](MeetClosure.png)
+
+* `irreductibleClosure` method
+
+This time, we get the two previous results in one ConceptLattice.
+
+From our example, `l.irreductibleClosure();` gives :
+
+![Irreductible Closure](IrreductibleClosure.png)
 
 Implicational System computations
 ---------------------------------
 
-* IS
+* `getImplicationalSystem` method
 
-* Min Gen
+An implicational system of a lattice corresponds to the set of functionnal dependancies, a database notion, on join irreductibles of the lattice.
 
-* DG
+First recall our example :
 
-* CDB
+![Example Lattice](Example.png)
+
+Then take its join closure :
+
+![Join Closure](JoinClosure.png)
+
+Thus, the only functionnal dependancy you can get is :
+
+    c e -> d
+	
+However, the `getImplicationalSystem` method returns a right maximal system. 
+Then, the instruction `l.getImplicationalSystem()` returns :
+
+    c e -> c d e
+
+* `getDependencyGraph` method
+
+The dependency graph is a condensed representation of a lattice that encodes its minimal generators, and its canonical direct basis.
+In the dependency graph, nodes are join irreducibles, egdes correspond to the dependency relation between join-irreducibles :
+
+$j \rightarrow j'$ if and only if there exists a node $x$ in the lattice such that $x$ is not greater than $j$ and $j'$, and $x \vee j' > j$
+
+Edges are labeled with the smallest subsets $X$ of join-irreducibles such that the join of elements of $X$ corresponds to the node $x$ of the lattice.
+
+The dependency graph is generated in ${\cal O}(nj^3)$ where $n$ is the number of nodes of the lattice, and $j$ is the number of join-irreducibles of the lattice.
+
+Going on with the same lattice, we get its dependancy graph with `l.getDependencyGraph();`
+
+![Dependency Graph](DependencyGraph.png)
+
+* `getCanonicalDirectBasis` method
+
+The canonical direct basis is a condensed representation of a lattice encoding by the dependency graph.
+
+This canonical direct basis is deduced from the dependency graph of the lattice : 
+for each edge $b \rightarrow a$ valuated by a subset $X$, the rule $a+X \rightarrow b$ is a rule of the canonical direct basis.
+
+With our example, `l.getCanonicalDirectBasis();` gives :
+
+    c d e 
+    c e  -> d
+
+* `getMinimalGenerators()` method
+
+Minimal generators a condensed representation of a lattice encoding by the dependency graph.
+
+Minimal generators are premises of the canonical direct basis that is deduced from the dependency graph of the lattice.
+
+With our example, `l.getMinimalGenerators();` gives :
+
+    [[c,e]]
 
 Arrow computations
 ------------------
+
+First recall basic definitions about arrows in a lattice :
+
+Let $m$ and $j$ be respectively meet and join irreductibles of a lattice $l$.
+Recall that $m$ has a unique successor say $m^+$ and $j$ has a unique predecessor say $j^-$, then :
+
+* $j$ "Up Arrow" $m$ (stored has "Up") iff $j$ is not less or equal than $m$ and $j$ is less than $m^+$.
+* $j$ "Down Arrow" $m$ (stored has "Down") iff $j$ is not less or equal than $m$ and $j^-$ is less than $m$.
+* $j$ "Up Down Arrow" $m$ (stored has "UpDown") iff $j$ "Up" $m$ and $j$ "Down" $m$.
+* $j$ "Cross" $m$ (stored has "Cross") iff $j$ is less or equal than $m$.
+* $j$ "Circ" $m$ (stored has "Circ") iff neither $j$ "Up" $m$ nor $j$ "Down" $m$ nor $j$ "Cross" $m$.
+
+Given a lattice `l`, the instruction `l.getArrowRelation();` returns a `DGraph` in which :
+
+* Nodes are join or meet irreductibles of the lattice.
+* Edges content encodes arrows as String "Up", "Down", "UpDown", "Cross", "Circ". 
+
+Still using the same example, we get :
+
+![Arrow Relation](ArrowRelation.png)
