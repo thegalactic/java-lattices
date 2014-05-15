@@ -35,21 +35,7 @@ You can now verify your lattice with two following methods :
 
 1. A string representation on the standard output : `System.out.println(l.toString());`. This method is inherited from `DGraph`.
 
-2. An export in .dot format file with the writer :
-
-~~~Java
-File file = new File("MyLattice.dot");
-try {
-    file.createNewFile();
-} catch (IOException ex) {
-    Logger.getLogger(LatticeTest.class.getName()).log(Level.SEVERE, null, ex);
-}
-FileWriter fw = new FileWriter(file.getAbsoluteFile());
-BufferedWriter bw = new BufferedWriter(fw);
-DGraphWriterDot dgwd = DGraphWriterDot.getInstance();
-dgwd.write(l, bw);
-bw.close();
-~~~
+2. An export in .dot format file with the instruction : `l.save("M5.dot");`.
 
 Generated `M5.dot` contains :
 
