@@ -25,6 +25,10 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-05-15 Christophe Demko <chdemko@gmail.com>
+	* .travis.yml
+		# Add texlive-latex-extra for fancybox LaTeX package
+
 2014-05-14 Jean-François Viaud <jviaud@univ-lr.fr>
 	* build.xml
 	* doc/tutorial/ArrowRelation.dot
