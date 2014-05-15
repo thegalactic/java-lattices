@@ -25,6 +25,43 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-05-15 Christophe Demko <chdemko@gmail.com>
+	* .travis.yml
+		# Add texlive-latex-extra for fancybox LaTeX package
+
+2014-05-14 Jean-François Viaud <jviaud@univ-lr.fr>
+	* build.xml
+	* doc/tutorial/ArrowRelation.dot
+		+ add file
+	* doc/tutorial/DependencyGraph.dot
+		+ add file
+	* doc/tutorial/Example.dot
+		^ move from doc/tutorial/images/Example.dot
+	* doc/tutorial/IrreductibleClosure.dot
+		+ add file
+	* doc/tutorial/IrreductibleGraph.dot
+		+ move from doc/tutorial/images/IrreductibleGraph.dot
+	* doc/tutorial/JoinClosure.dot
+		+ add file
+	* doc/tutorial/M5.dot
+		+ move from doc/tutorial/images/M5.dot
+	* doc/tutorial/MeetClosure.dot
+		+ add file
+	* doc/tutorial/images/Example.png
+		+ add file
+	* doc/tutorial/images/IrreductibleGraph.png
+		+ add file
+	* doc/tutorial/images/M5.png
+		+ add file
+	* doc/tutorial/title
+		+ update date
+	* doc/tutorial/tutorial_bijectivecomponent.md
+		+ add file
+	* doc/tutorial/tutorial_conceptlattice.md
+		+ add file
+	* doc/tutorial/tutorial_lattice.md
+		^ complete tutorial
+
 2014-05-08 Christophe Demko <chdemko@gmail.com>
 	* all *.java files
 		^ Change licence info
