@@ -1,0 +1,8 @@
+digraph G {
+Graph [rankdir=BT]
+25 [label="c"]
+26 [label="d"]
+27 [label="e"]
+26->25 [label="[[e]]"]
+26->27 [label="[[c]]"]
+}
