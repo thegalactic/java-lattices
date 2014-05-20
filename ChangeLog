@@ -25,6 +25,11 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-05-20 Christophe Demko <chdemko@gmail.com>
+	* README.md
+	* lib/jacoco/jacocoant.jar
+		^ Use jacoco 0.7.1
+
 2014-05-15 Christophe Demko <chdemko@gmail.com>
 	* .travis.yml
 		# Add texlive-latex-extra for fancybox LaTeX package
