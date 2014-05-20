@@ -25,6 +25,16 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-05-20 Jean-François Viaud <jviaud@univ-lr.fr>
+	* src/lattice/Lattice.java
+		+ add isAtomistic
+		+ add isCoAtomistic
+		+ add getDoubleCircArrowTable
+	* src/lattice/Lattice.iuml
+		* update file
+	* test/lattice/LatticeTest.java
+		* update file
+
 2014-05-20 Christophe Demko <chdemko@gmail.com>
 	* README.md
 	* lib/jacoco/jacocoant.jar

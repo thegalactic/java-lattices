@@ -7,7 +7,9 @@ package lattice {
         +Lattice(DAGraph graph)
         .. Predicates ..
         +boolean isLattice()
-        +boolean isCN() 
+        +boolean isCN()
+        +boolean isAtomistic()
+        +boolean isCoAtomistic()
         .. Operations ..
         +Node top()
         +Node bottom()
@@ -34,6 +36,7 @@ package lattice {
         +TreeSet getMinimalGenerators()
         +DGraph getArrowRelation()
         +Context getDoubleArrowTable()
+        +Context getDoubleCircArrowTable()
     }
 
     DAGraph <|-- Lattice

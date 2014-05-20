@@ -229,6 +229,30 @@ public class Lattice extends DAGraph {
        }
        return (phi.isAcyclic());
    }
+   /**
+    * Returns true if this component is an atomistic lattice.
+    *
+    * A lattice is atomistic if its join irreductibles are atoms (e.g. successors of bottom)
+    *
+    * @return true if this component is atomistic.
+    */
+   public boolean isAtomistic() {
+       TreeSet<Node> join = this.joinIrreducibles();
+       TreeSet<Node> atoms = this.getSuccessorNodes(this.bottom());
+       return join.containsAll(atoms) && atoms.containsAll(join);
+   }
+   /**
+    * Returns true if this component is an coatomistic lattice.
+    *
+    * A lattice is coatomistic if its mett irreductibles are coatoms (e.g. predecessors of top)
+    *
+    * @return true if this component is coatomistic.
+    */
+   public boolean isCoAtomistic() {
+       TreeSet<Node> meet = this.meetIrreducibles();
+       TreeSet<Node> coatoms = this.getPredecessorNodes(this.top());
+       return meet.containsAll(coatoms) && coatoms.containsAll(meet);
+   }
     /* --------------- LATTICE HANDLING METHODS ------------ */
 
     /**
@@ -908,6 +932,39 @@ public class Lattice extends DAGraph {
                         context.addExtentIntent(j, m);
                     }
                 }
+            }
+        }
+        return context;
+    }
+
+    /**
+     * Returns the table of the lattice, composed of the join and meet irreducibles nodes.
+     *
+     * Each attribute of the table is a copy of a join irreducibles node.
+     * Each observation of the table is a copy of a meet irreducibles node.
+     * An attribute is extent of an observation when its join irreducible node
+     * is in double arrow relation or circ relation with the meet irreducible node in the lattice.
+     *
+     * @return  the table of the lattice
+     */
+    public Context getDoubleCircArrowTable() {
+        // generation of attributes
+        TreeSet<Node> join = this.joinIrreducibles();
+        Context context = new Context();
+        for (Node j : join) {
+            context.addToObservations(j);
+        }
+        // generation of observations
+        TreeSet<Node> meet = this.meetIrreducibles();
+        for (Node m : meet) {
+            context.addToAttributes(m);
+        }
+        // generation of extent-intent
+        
+        DGraph arrow = this.getArrowRelation();
+        for (Edge e : arrow.getEdges()) {
+            if (e.getContent() == "UpDown" || e.getContent() == "Circ") {
+                context.addExtentIntent(e.getTo(), e.getFrom());
             }
         }
         return context;

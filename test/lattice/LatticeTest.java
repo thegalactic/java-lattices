@@ -328,6 +328,44 @@ public class LatticeTest {
         assertFalse(notcn.isCN());
     }
     /**
+     * Test isAtomistic method.
+     */
+    @Test
+    public void testisAtomistic() {
+        Lattice l = new Lattice();
+        Node a = new Node("a"); l.addNode(a);
+        Node b = new Node("b"); l.addNode(b);
+        Node c = new Node("c"); l.addNode(c);
+        Node d = new Node("d"); l.addNode(d);
+        l.addEdge(a, b);
+        l.addEdge(a, c);
+        l.addEdge(b, d);
+        l.addEdge(c, d);
+        assertTrue(l.isAtomistic());
+        Node e = new Node("e"); l.addNode(e);
+        l.addEdge(e, a);
+        assertFalse(l.isAtomistic());
+    }
+    /**
+     * Test isCoAtomistic method.
+     */
+    @Test
+    public void testisCoAtomistic() {
+        Lattice l = new Lattice();
+        Node a = new Node("a"); l.addNode(a);
+        Node b = new Node("b"); l.addNode(b);
+        Node c = new Node("c"); l.addNode(c);
+        Node d = new Node("d"); l.addNode(d);
+        l.addEdge(b, a);
+        l.addEdge(c, a);
+        l.addEdge(d, a);
+        l.addEdge(d, a);
+        assertTrue(l.isCoAtomistic());
+        Node e = new Node("e"); l.addNode(e);
+        l.addEdge(a, e);
+        assertFalse(l.isCoAtomistic());
+    }
+    /**
      * Test join method.
      */
     @Test
@@ -554,5 +592,31 @@ public class LatticeTest {
         assertTrue(ctx.getExtent(e).contains(d));
         assertTrue(ctx.getExtent(f).contains(e));
         assertTrue(ctx.getExtent(g).contains(c));
+    }
+    /**
+     * Test getDoubleArrowTable method.
+     */
+    @Test
+    public void testgetDoubleCircArrowTable() {
+        Lattice l = new Lattice();
+        Node a = new Node('a'); l.addNode(a);
+        Node b = new Node('b'); l.addNode(b);
+        Node c = new Node('c'); l.addNode(c);
+        Node d = new Node('d'); l.addNode(d);
+        Node e = new Node('e'); l.addNode(e);
+        Node f = new Node('f'); l.addNode(f);
+        Node g = new Node('g'); l.addNode(g);
+        Node h = new Node('h'); l.addNode(h);
+        Edge ab = new Edge(a, b); l.addEdge(ab);
+        Edge bc = new Edge(b, c); l.addEdge(bc);
+        Edge cd = new Edge(c, d); l.addEdge(cd);
+        Edge de = new Edge(d, e); l.addEdge(de);
+        Edge af = new Edge(a, f); l.addEdge(af);
+        Edge fg = new Edge(f, g); l.addEdge(fg);
+        Edge gh = new Edge(g, h); l.addEdge(gh);
+        Edge he = new Edge(h, e); l.addEdge(he);
+        Context ctx = l.getDoubleCircArrowTable();
+        assertTrue(ctx.getExtent(f).contains(c));
+        assertTrue(ctx.getExtent(f).contains(d));
     }
 }
