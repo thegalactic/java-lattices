@@ -960,7 +960,7 @@ public class Lattice extends DAGraph {
             context.addToAttributes(m);
         }
         // generation of extent-intent
-        
+
         DGraph arrow = this.getArrowRelation();
         for (Edge e : arrow.getEdges()) {
             if (e.getContent() == "UpDown" || e.getContent() == "Circ") {
