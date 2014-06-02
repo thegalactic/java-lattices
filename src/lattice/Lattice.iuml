@@ -35,8 +35,6 @@ package lattice {
         +ImplicationalSystem getCanonicalDirectBasis()
         +TreeSet getMinimalGenerators()
         +DGraph getArrowRelation()
-        +Context getDoubleArrowTable()
-        +Context getDoubleCircArrowTable()
     }
 
     DAGraph <|-- Lattice

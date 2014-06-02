@@ -14,6 +14,7 @@ package lattice;
 import java.io.IOException;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
+import dgraph.Edge;
 import dgraph.DGraph;
 
 /**
@@ -79,5 +80,59 @@ public class ArrowRelation extends DGraph  {
         BufferedWriter file = new BufferedWriter(new FileWriter(filename));
         ArrowRelationWriterFactory.get(extension).write(this, file);
         file.close();
+    }
+
+    /**
+     * Returns the table of the lattice, composed of the join and meet irreducibles nodes.
+     *
+     * Each attribute of the table is a copy of a join irreducibles node.
+     * Each observation of the table is a copy of a meet irreducibles node.
+     * An attribute is extent of an observation when its join irreducible node
+     * is in double arrow relation with the meet irreducible node in the lattice.
+     *
+     * @return  the table of the lattice
+     */
+    public Context getDoubleArrowTable() {
+        Context context = new Context();
+        // observations are join irreductibles
+        // attributes are meet irreductibles
+        for (Edge e : this.getEdges()) {
+            context.addToObservations(e.getFrom());
+            context.addToAttributes(e.getTo());
+        }
+        // generation of extent-intent
+        for (Edge e : this.getEdges()) {
+            if (e.getContent() == "UpDown") {
+                context.addExtentIntent(e.getFrom(), e.getTo());
+            }
+        }
+        return context;
+    }
+
+    /**
+     * Returns the table of the lattice, composed of the join and meet irreducibles nodes.
+     *
+     * Each attribute of the table is a copy of a join irreducibles node.
+     * Each observation of the table is a copy of a meet irreducibles node.
+     * An attribute is extent of an observation when its join irreducible node
+     * is in double arrow relation or circ relation with the meet irreducible node in the lattice.
+     *
+     * @return  the table of the lattice
+     */
+    public Context getDoubleCircArrowTable() {
+        Context context = new Context();
+        // observations are join irreductibles
+        // attributes are meet irreductibles
+        for (Edge e : this.getEdges()) {
+            context.addToObservations(e.getFrom());
+            context.addToAttributes(e.getTo());
+        }
+        // generation of extent-intent
+        for (Edge e : this.getEdges()) {
+            if (e.getContent() == "UpDown" || e.getContent() == "Circ") {
+                context.addExtentIntent(e.getFrom(), e.getTo());
+            }
+        }
+        return context;
     }
 }
