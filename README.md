@@ -1,4 +1,4 @@
-java-lattices [![Build Status](https://travis-ci.org/kbertet/java-lattices.png?branch=master)](https://travis-ci.org/kbertet/java-lattices) [![GitHub version](https://badge.fury.io/gh/kbertet%2Fjava-lattices.png)](http://badge.fury.io/gh/kbertet%2Fjava-lattices)
+ java-lattices [![Build Status](https://travis-ci.org/kbertet/java-lattices.png?branch=master)](https://travis-ci.org/kbertet/java-lattices) [![GitHub version](https://badge.fury.io/gh/kbertet%2Fjava-lattices.png)](http://badge.fury.io/gh/kbertet%2Fjava-lattices)
 =============
 
 This project uses:
