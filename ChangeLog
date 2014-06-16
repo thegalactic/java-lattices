@@ -25,6 +25,12 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-06-16 Jean-François Viaud <jviaud@univ-lr.fr>
+	* doc/tutorial
+		* update script that generates tutorial
+	* src/lattice/ArrowRelation.java
+		* Move code and correct other classes for compatibility
+
 2014-06-02 Jean-François Viaud <jviaud@univ-lr.fr>
 	* doc/tutorial
 		+ add readme.md for details about tutorial generation
