@@ -848,49 +848,7 @@ public class Lattice extends DAGraph {
       * - Edges content encodes arrows as String "Up", "Down", "UpDown", "Cross", "Circ".
       *
       */
-     public DGraph getArrowRelation() {
-
-        /* Nodes are join or meet irreductibles of the lattice. */
-        TreeSet<Node> joins = new TreeSet<Node>(this.joinIrreducibles());
-        TreeSet<Node> meets = new TreeSet<Node>(this.meetIrreducibles());
-        TreeSet<Node> nodes = new TreeSet<Node>(meets);
-        nodes.addAll(joins);
-
-        DGraph graph = new DGraph(nodes);
-
-        Lattice transitiveClosure = new Lattice(this);
-        transitiveClosure.transitiveClosure();
-        Lattice transitiveReduction = new Lattice(this);
-        transitiveReduction.transitiveReduction();
-        Node jminus = new Node();
-        Node mplus = new Node();
-        String arrow = "";
-
-        /* Content of edges are arrows */
-        for (Node j : joins) {
-            for (Node m : meets) {
-                mplus = transitiveReduction.getSuccessorNodes(m).first();
-                jminus = transitiveReduction.getPredecessorNodes(j).first();
-                if (transitiveClosure.getSuccessorNodes(j).contains(m) || j.equals(m)) {
-                    arrow = "Cross";
-                } else {
-                    if (transitiveClosure.getSuccessorNodes(jminus).contains(m) || jminus.equals(m)) {
-                        arrow = "Down";
-                        if (transitiveClosure.getPredecessorNodes(mplus).contains(j) || mplus.equals(j)) {
-                            arrow = "UpDown";
-                        }
-                    } else {
-                        if (transitiveClosure.getPredecessorNodes(mplus).contains(j)) {
-                            arrow = "Up";
-                        } else {
-                            arrow = "Circ";
-                        }
-                    }
-                }
-                graph.addEdge(j, m, arrow);
-            }
-        }
-        return graph;
-    }
-
+     public ArrowRelation getArrowRelation() {
+         return new ArrowRelation(this);
+     }
 }

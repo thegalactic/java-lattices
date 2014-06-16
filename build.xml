@@ -198,7 +198,7 @@
 			<arg value="${build.tutorial.dir}/tutorial-java-lattices.pdf" />
 		</exec>
 		<exec executable="rm">
-			<arg value="ArrowRelation.png" />
+			<arg value="TutoArrowRelation.png" />
 			<arg value="DependencyGraph.png" />
 			<arg value="Example.png" />
 			<arg value="IrreductibleClosure.png" />

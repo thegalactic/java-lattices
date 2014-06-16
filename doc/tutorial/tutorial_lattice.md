@@ -11,27 +11,30 @@ You can define your own (small) lattice by creating its nodes and edges.
 Exemple : the non-modular lattice $M_5$ can be defined as follow :
 
 1. Call the empty constructor `Lattice l = new Lattice();`
-2. Add nodes :
+2. Add nodes
+3. Add edges
 
-~~~Java
+~~~Java 
+Lattice l = new Lattice();
 Node a = new Node('a'); l.addNode(a);
 Node b = new Node('b'); l.addNode(b);
 Node c = new Node('c'); l.addNode(c);
 Node d = new Node('d'); l.addNode(d);
 Node e = new Node('e'); l.addNode(e);
-~~~
-
-3. Add edges :
-
-~~~Java
 Edge ab = new Edge(a, b); l.addEdge(ab);
 Edge bc = new Edge(b, c); l.addEdge(bc);
 Edge ad = new Edge(a, d); l.addEdge(ad);
 Edge de = new Edge(d, e); l.addEdge(de);
 Edge ec = new Edge(e, c); l.addEdge(ec);
+System.out.println(l.toString());
+try {
+    l.save("M5.dot");
+    } catch (IOException ex) {
+            ex.printStackTrace();
+    }
 ~~~
 
-You can now verify your lattice with two following methods :
+The two last lines help you verify your lattice with following methods :
 
 1. A string representation on the standard output : `System.out.println(l.toString());`. This method is inherited from `DGraph`.
 
@@ -40,17 +43,17 @@ You can now verify your lattice with two following methods :
 Generated `M5.dot` contains :
 
     digraph G {
-        Graph [rankdir=BT]
-        90 [label="a"]
-        91 [label="b"]
-        92 [label="c"]
-        93 [label="d"]
-        94 [label="e"]
-        90->91
-        90->93
-        91->92
-        93->94
-        94->92
+    Graph [rankdir=BT]
+    1 [label="a"]
+    2 [label="b"]
+    3 [label="c"]
+    4 [label="d"]
+    5 [label="e"]
+    1->2
+    1->4
+    2->3
+    4->5
+    5->3
     }
 
 With [graphviz tools](http://www.graphviz.org/), you can generate the following `.png` image :
@@ -62,9 +65,9 @@ With [graphviz tools](http://www.graphviz.org/), you can generate the following 
 LatticeFactory class provides few methods to get example lattices :
 
 1. Call `Lattice b = LatticeFactory.booleanAlgebra(13);` to get boolean algebra with $2^{13}$ elements in variable `b`.
-2. Call `Lattice p = LatticeFactory.permutationLattice(7);` to get lattice of permutation of the set $\{1,\ldots,7\}$ in variable `p`.
+2. Call `Lattice p = LatticeFactory.permutationLattice(7);` to get lattice of permutation of the set ${1,ldots,7}$ in variable `p`.
 3. Call `Lattice r = LatticeFactory.randomLattice(19);` to get a random lattice with $19$ nodes in variable `r`.
-4. Call `Lattice p = LatticeFactory.product(l, r);` to get cartesian product lattice $l \times r$ in variable `p`.
+4. Call `Lattice p = LatticeFactory.product(l, r);` to get cartesian product lattice $l times r$ in variable `p`.
 5. Call `Lattice d = LatticeFactory.doublingConvex(l, c);` to get lattice in which convex $c$ of lattice $l$ has been doubled in variable `d`.
 
 ### From wherever you want
@@ -130,7 +133,7 @@ In the previous example $M_5$, nodes $b$, $d$, $e$ are join and meet irreductibl
 
 Consider the all new lattice :
 
-~~~Java
+~~~Java 
 Lattice l = new Lattice();
 Node b = new Node('b'); l.addNode(b);
 Node c = new Node('c'); l.addNode(c);
@@ -148,6 +151,11 @@ Edge dg = new Edge(d, g); l.addEdge(dg);
 Edge eg = new Edge(e, g); l.addEdge(eg);
 Edge ft = new Edge(f, t); l.addEdge(ft);
 Edge gt = new Edge(g, t); l.addEdge(gt);
+try {
+        l.save("Example.dot");
+    } catch (IOException ex) {
+        ex.printStackTrace();
+    }
 ~~~
 
 Such lattice is better understood with a nice picture :
@@ -170,16 +178,47 @@ To conclude on these irreductibles, you can compute the subgraph of all irreduct
 
 And, last but not least, you can compute the context :
 
-        Observations: c e f g 
-        Attributes: c d e 
-        c : c 
-        e : e 
-        f : c d 
-        g : d e 
+    Observations: c e f g 
+    Attributes: c d e 
+    c : c 
+    e : e 
+    f : c d 
+    g : d e 
+
 
 in which observations are meet irreductibles, attributes are join irreductibles, and an attribute is extent of an observation when its join irreducible node is greater than the meet irreducible node in the lattice.
 
 That computation is done by `Context ctx = l.getTable();`.
+
+The whole source code to get these results is the following :
+
+~~~Java 
+Lattice l = new Lattice();
+Node b = new Node('b'); l.addNode(b);
+Node c = new Node('c'); l.addNode(c);
+Node d = new Node('d'); l.addNode(d);
+Node e = new Node('e'); l.addNode(e);
+Node f = new Node('f'); l.addNode(f);
+Node g = new Node('g'); l.addNode(g);
+Node t = new Node('t'); l.addNode(t);
+Edge bc = new Edge(b, c); l.addEdge(bc);
+Edge bd = new Edge(b, d); l.addEdge(bd);
+Edge be = new Edge(b, e); l.addEdge(be);
+Edge cf = new Edge(c, f); l.addEdge(cf);
+Edge df = new Edge(d, f); l.addEdge(df);
+Edge dg = new Edge(d, g); l.addEdge(dg);
+Edge eg = new Edge(e, g); l.addEdge(eg);
+Edge ft = new Edge(f, t); l.addEdge(ft);
+Edge gt = new Edge(g, t); l.addEdge(gt);
+DAGraph dag = l.irreduciblesSubgraph();
+try{
+    dag.save("IrreductibleGraph.dot");
+    Context ctx = l.getTable();
+    ctx.save("IrreductibleGraph.txt");
+    } catch (IOException ex) {
+        ex.printStackTrace();
+    }
+~~~
 
 Closure computations
 --------------------
@@ -210,6 +249,38 @@ From our example, `l.irreductibleClosure();` gives :
 
 ![Irreductible Closure](IrreductibleClosure.png)
 
+The full source code to get these computations is :
+
+~~~Java 
+Lattice l = new Lattice();
+Node b = new Node('b'); l.addNode(b);
+Node c = new Node('c'); l.addNode(c);
+Node d = new Node('d'); l.addNode(d);
+Node e = new Node('e'); l.addNode(e);
+Node f = new Node('f'); l.addNode(f);
+Node g = new Node('g'); l.addNode(g);
+Node t = new Node('t'); l.addNode(t);
+Edge bc = new Edge(b, c); l.addEdge(bc);
+Edge bd = new Edge(b, d); l.addEdge(bd);
+Edge be = new Edge(b, e); l.addEdge(be);
+Edge cf = new Edge(c, f); l.addEdge(cf);
+Edge df = new Edge(d, f); l.addEdge(df);
+Edge dg = new Edge(d, g); l.addEdge(dg);
+Edge eg = new Edge(e, g); l.addEdge(eg);
+Edge ft = new Edge(f, t); l.addEdge(ft);
+Edge gt = new Edge(g, t); l.addEdge(gt);
+try {
+    ConceptLattice jc = l.joinClosure();
+    jc.save("JoinClosure.dot");
+    ConceptLattice mc = l.meetClosure();
+    mc.save("MeetClosure.dot");
+    ConceptLattice ic = l.irreducibleClosure();
+    ic.save("IrreductibleClosure.dot");
+    } catch (IOException ex) {
+        ex.printStackTrace();
+    }
+~~~
+
 Implicational System computations
 ---------------------------------
 
@@ -232,18 +303,20 @@ Thus, the only functionnal dependancy you can get is :
 However, the `getImplicationalSystem` method returns a right maximal system. 
 Then, the instruction `l.getImplicationalSystem()` returns :
 
-    c e -> c d e
+    c d e 
+    c e  -> c d e 
+
 
 * `getDependencyGraph` method
 
 The dependency graph is a condensed representation of a lattice that encodes its minimal generators, and its canonical direct basis.
 In the dependency graph, nodes are join irreducibles, egdes correspond to the dependency relation between join-irreducibles :
 
-$j \rightarrow j'$ if and only if there exists a node $x$ in the lattice such that $x$ is not greater than $j$ and $j'$, and $x \vee j' > j$
+$j rightarrow j'$ if and only if there exists a node $x$ in the lattice such that $x$ is not greater than $j$ and $j'$, and $x vee j' > j$
 
 Edges are labeled with the smallest subsets $X$ of join-irreducibles such that the join of elements of $X$ corresponds to the node $x$ of the lattice.
 
-The dependency graph is generated in ${\cal O}(nj^3)$ where $n$ is the number of nodes of the lattice, and $j$ is the number of join-irreducibles of the lattice.
+The dependency graph is generated in ${cal O}(nj^3)$ where $n$ is the number of nodes of the lattice, and $j$ is the number of join-irreducibles of the lattice.
 
 Going on with the same lattice, we get its dependancy graph with `l.getDependencyGraph();`
 
@@ -254,12 +327,13 @@ Going on with the same lattice, we get its dependancy graph with `l.getDependenc
 The canonical direct basis is a condensed representation of a lattice encoding by the dependency graph.
 
 This canonical direct basis is deduced from the dependency graph of the lattice : 
-for each edge $b \rightarrow a$ valuated by a subset $X$, the rule $a+X \rightarrow b$ is a rule of the canonical direct basis.
+for each edge $b rightarrow a$ valuated by a subset $X$, the rule $a+X rightarrow b$ is a rule of the canonical direct basis.
 
 With our example, `l.getCanonicalDirectBasis();` gives :
 
     c d e 
-    c e  -> d
+    c e  -> d 
+;
 
 * `getMinimalGenerators()` method
 
@@ -270,6 +344,38 @@ Minimal generators are premises of the canonical direct basis that is deduced fr
 With our example, `l.getMinimalGenerators();` gives :
 
     [[c,e]]
+
+To conclude this section about implicationnal systems, here is the full source code to get these computations :
+
+~~~Java 
+Lattice l = new Lattice();
+Node b = new Node('b'); l.addNode(b);
+Node c = new Node('c'); l.addNode(c);
+Node d = new Node('d'); l.addNode(d);
+Node e = new Node('e'); l.addNode(e);
+Node f = new Node('f'); l.addNode(f);
+Node g = new Node('g'); l.addNode(g);
+Node t = new Node('t'); l.addNode(t);
+Edge bc = new Edge(b, c); l.addEdge(bc);
+Edge bd = new Edge(b, d); l.addEdge(bd);
+Edge be = new Edge(b, e); l.addEdge(be);
+Edge cf = new Edge(c, f); l.addEdge(cf);
+Edge df = new Edge(d, f); l.addEdge(df);
+Edge dg = new Edge(d, g); l.addEdge(dg);
+Edge eg = new Edge(e, g); l.addEdge(eg);
+Edge ft = new Edge(f, t); l.addEdge(ft);
+Edge gt = new Edge(g, t); l.addEdge(gt);
+try {
+    ImplicationalSystem is = l.getImplicationalSystem();
+    is.save("ImplicationalSystem.txt");
+    DGraph dGraph = l.getDependencyGraph();
+    dGraph.save("DependencyGraph.dot");
+    ImplicationalSystem cdb = l.getCanonicalDirectBasis();
+    cdb.save("CanonicalDirectBasis.txt");
+    } catch (IOException ex) {
+        ex.printStackTrace();
+    }
+~~~
 
 Arrow computations
 ------------------
@@ -292,4 +398,34 @@ Given a lattice `l`, the instruction `l.getArrowRelation();` returns a `DGraph` 
 
 Still using the same example, we get :
 
-![Arrow Relation](ArrowRelation.png)
+![Arrow Relation](TutoArrowRelation.png)
+
+You can use the following source code to get these results :
+
+~~~Java 
+Lattice l = new Lattice();
+Node b = new Node('b'); l.addNode(b);
+Node c = new Node('c'); l.addNode(c);
+Node d = new Node('d'); l.addNode(d);
+Node e = new Node('e'); l.addNode(e);
+Node f = new Node('f'); l.addNode(f);
+Node g = new Node('g'); l.addNode(g);
+Node t = new Node('t'); l.addNode(t);
+Edge bc = new Edge(b, c); l.addEdge(bc);
+Edge bd = new Edge(b, d); l.addEdge(bd);
+Edge be = new Edge(b, e); l.addEdge(be);
+Edge cf = new Edge(c, f); l.addEdge(cf);
+Edge df = new Edge(d, f); l.addEdge(df);
+Edge dg = new Edge(d, g); l.addEdge(dg);
+Edge eg = new Edge(e, g); l.addEdge(eg);
+Edge ft = new Edge(f, t); l.addEdge(ft);
+Edge gt = new Edge(g, t); l.addEdge(gt);
+ArrowRelation ar = l.getArrowRelation();
+DGraph dar = new DGraph((DGraph) ar);
+try {
+    dar.save("TutoArrowRelation.dot");
+    } catch (IOException ex) {
+        ex.printStackTrace();
+    }
+~~~
+

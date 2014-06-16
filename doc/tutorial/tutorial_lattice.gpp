@@ -376,11 +376,11 @@ Given a lattice `l`, the instruction `l.getArrowRelation();` returns a `DGraph` 
 
 Still using the same example, we get :
 
-![Arrow Relation](ArrowRelation.png)
+![Arrow Relation](TutoArrowRelation.png)
 
 You can use the following source code to get these results :
 
-~~~Code(ArrowRelation.tmp,
+~~~Code(TutoArrowRelation.tmp,
 Lattice l = new Lattice();
 Node b = new Node('b'); l.addNode(b);
 Node c = new Node('c'); l.addNode(c);
@@ -398,9 +398,10 @@ Edge dg = new Edge(d, g); l.addEdge(dg);
 Edge eg = new Edge(e, g); l.addEdge(eg);
 Edge ft = new Edge(f, t); l.addEdge(ft);
 Edge gt = new Edge(g, t); l.addEdge(gt);
-DGraph ar = l.getArrowRelation();
+ArrowRelation ar = l.getArrowRelation();
+DGraph dar = new DGraph((DGraph) ar);
 try {
-    ar.save(\\\"ArrowRelation.dot\\\");
+    dar.save(\\\"TutoArrowRelation.dot\\\");
     } catch (IOException ex) {
         ex.printStackTrace();
     }

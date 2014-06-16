@@ -76,12 +76,12 @@ public class LatticeTest {
         l.addEdge(e, g);
         l.addEdge(f, g);
         l.addEdge(g, h);
-        DGraph ar = l.getArrowRelation();
-        assertEquals((String) ar.getEdge(b, g).getContent(), "Cross");
-        assertEquals((String) ar.getEdge(c, f).getContent(), "UpDown");
-        assertEquals((String) ar.getEdge(e, f).getContent(), "Up");
-        assertEquals((String) ar.getEdge(c, d).getContent(), "Down");
-        assertEquals((String) ar.getEdge(h, a).getContent(), "Circ");
+        ArrowRelation ar = l.getArrowRelation();
+        assertTrue(ar.isCross(ar.getEdge(b, g)));
+        assertTrue(ar.isUpDown(ar.getEdge(c, f)));
+        assertTrue(ar.isUp(ar.getEdge(e, f)));
+        assertTrue(ar.isDown(ar.getEdge(c, d)));
+        assertTrue(ar.isCirc(ar.getEdge(h, a)));
     }
     /**
      * Test bottom method.

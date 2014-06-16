@@ -21,21 +21,21 @@ done
 # Compiling java source files
 for file in *.java
 do
-	javac -classpath ../../src $file
+	javac -classpath ../../build/classes $file
 done
 # Run java class files
-cp *.class ../../src
-cd ../../src
+cp *.class ../../build/classes
+cd ../../build/classes
 for file in *.class
 do
 	java ${file%%.*}
 done
-cp *.dot ../doc/tutorial
-cp *.txt ../doc/tutorial
+cp *.dot ../../doc/tutorial
+cp *.txt ../../doc/tutorial
 rm *.class
 rm *.dot
 rm *.txt
-cd ../doc/tutorial
+cd ../../doc/tutorial
 
 # Generate images with dot
 for file in *.dot
