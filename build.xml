@@ -184,53 +184,8 @@
 
 	<target name="tutorial">
 		<mkdir dir="${build.tutorial.dir}" />
-		<exec executable="dot">
-			<arg value="-Tpng" />
-			<arg value="${tutorial.dir}/M5.dot" />
-			<arg value="-o" />
-			<arg value="M5.png" />
-		</exec>
-		<exec executable="dot">
-			<arg value="-Tpng" />
-			<arg value="${tutorial.dir}/Example.dot" />
-			<arg value="-o" />
-			<arg value="Example.png" />
-		</exec>
-		<exec executable="dot">
-			<arg value="-Tpng" />
-			<arg value="${tutorial.dir}/IrreductibleGraph.dot" />
-			<arg value="-o" />
-			<arg value="IrreductibleGraph.png" />
-		</exec>
-		<exec executable="dot">
-			<arg value="-Tpng" />
-			<arg value="${tutorial.dir}/IrreductibleClosure.dot" />
-			<arg value="-o" />
-			<arg value="IrreductibleClosure.png" />
-		</exec>
-		<exec executable="dot">
-			<arg value="-Tpng" />
-			<arg value="${tutorial.dir}/JoinClosure.dot" />
-			<arg value="-o" />
-			<arg value="JoinClosure.png" />
-		</exec>
-		<exec executable="dot">
-			<arg value="-Tpng" />
-			<arg value="${tutorial.dir}/MeetClosure.dot" />
-			<arg value="-o" />
-			<arg value="MeetClosure.png" />
-		</exec>
-		<exec executable="dot">
-			<arg value="-Tpng" />
-			<arg value="${tutorial.dir}/DependencyGraph.dot" />
-			<arg value="-o" />
-			<arg value="DependencyGraph.png" />
-		</exec>
-		<exec executable="dot">
-			<arg value="-Tpng" />
-			<arg value="${tutorial.dir}/ArrowRelation.dot" />
-			<arg value="-o" />
-			<arg value="ArrowRelation.png" />
+		<exec executable="bash">
+			<arg value="${tutorial.dir}/generate_tutorial.sh"/>
 		</exec>
 		<exec executable="pandoc">
 			<arg value="--variable=geometry:paper=a4paper,margin=1in" />
@@ -243,7 +198,7 @@
 			<arg value="${build.tutorial.dir}/tutorial-java-lattices.pdf" />
 		</exec>
 		<exec executable="rm">
-			<arg value="ArrowRelation.png" />
+			<arg value="TutoArrowRelation.png" />
 			<arg value="DependencyGraph.png" />
 			<arg value="Example.png" />
 			<arg value="IrreductibleClosure.png" />

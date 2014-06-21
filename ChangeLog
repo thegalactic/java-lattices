@@ -25,6 +25,40 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-06-16 Jean-François Viaud <jviaud@univ-lr.fr>
+	* doc/tutorial
+		* update script that generates tutorial
+	* src/lattice/ArrowRelation.java
+		* Move code and correct other classes for compatibility
+
+2014-06-02 Jean-François Viaud <jviaud@univ-lr.fr>
+	* doc/tutorial
+		+ add readme.md for details about tutorial generation
+		+ add *.gpp files
+		+ add generate_tutorial.sh file
+		- remove *.dot files
+	* build.xml
+		* update for tutorial generation
+	* .travis.yml
+		* update for tutorial generation
+	* src/lattice/Lattice.java
+		- remove getDoubleArrowTable method
+		- remove getDoubleCircArrowTable method
+		* correct a bug in getArrowTable method
+	* src/lattice/ArrowRelation.java
+		+ add getDoubleArrowTable method
+		+ add getDoubleCircArrowTable method
+
+2014-05-20 Jean-François Viaud <jviaud@univ-lr.fr>
+	* src/lattice/Lattice.java
+		+ add isAtomistic
+		+ add isCoAtomistic
+		+ add getDoubleCircArrowTable
+	* src/lattice/Lattice.iuml
+		* update file
+	* test/lattice/LatticeTest.java
+		* update file
+
 2014-05-20 Christophe Demko <chdemko@gmail.com>
 	* README.md
 	* lib/jacoco/jacocoant.jar

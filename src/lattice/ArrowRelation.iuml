@@ -4,6 +4,9 @@ package lattice {
         +ArrowRelation(Lattice lattice)
         .. Transformers ..
         +void writeLaTex(String filename)
+        .. Operations ..
+        +Context getDoubleArrowTable()
+        +Context getDoubleCircArrowTable()
     }
 
     DGraph <|-- ArrowRelation

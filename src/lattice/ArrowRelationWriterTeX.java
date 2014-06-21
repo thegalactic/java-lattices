@@ -91,16 +91,16 @@ public final class ArrowRelationWriterTeX implements ArrowRelationWriter {
             str += nm.getContent();
             for (Node nj : j) {
                 Edge e = arrow.getEdge(nm, nj);
-                if ((String) e.getContent() == "Up") {
+                if (arrow.isUp(e)) {
                     str += " & $\\uparrow$";
                 } else {
-                    if ((String) e.getContent() == "Down") {
+                    if (arrow.isDown(e)) {
                     str += " & $\\downarrow$";
                 } else {
-                    if ((String) e.getContent() == "UpDown") {
+                    if (arrow.isUpDown(e)) {
                     str += " & $\\updownarrow$";
                 } else {
-                    if ((String) e.getContent() == "Cross") {
+                    if (arrow.isCross(e)) {
                     str += " & $\\times$";
                 } else {
                     str += " & $\\circ$";
@@ -125,4 +125,3 @@ public final class ArrowRelationWriterTeX implements ArrowRelationWriter {
         file.write(str);
     }
 }
-

@@ -15,7 +15,6 @@ import dgraph.DAGraph;
 import org.junit.Test;
 import dgraph.Node;
 import dgraph.DGraph;
-import dgraph.Edge;
 import java.util.TreeSet;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
@@ -77,12 +76,12 @@ public class LatticeTest {
         l.addEdge(e, g);
         l.addEdge(f, g);
         l.addEdge(g, h);
-        DGraph ar = l.getArrowRelation();
-        assertEquals((String) ar.getEdge(g, b).getContent(), "Cross");
-        assertEquals((String) ar.getEdge(f, c).getContent(), "UpDown");
-        assertEquals((String) ar.getEdge(f, e).getContent(), "Up");
-        assertEquals((String) ar.getEdge(d, c).getContent(), "Down");
-        assertEquals((String) ar.getEdge(a, h).getContent(), "Circ");
+        ArrowRelation ar = l.getArrowRelation();
+        assertTrue(ar.isCross(ar.getEdge(b, g)));
+        assertTrue(ar.isUpDown(ar.getEdge(c, f)));
+        assertTrue(ar.isUp(ar.getEdge(e, f)));
+        assertTrue(ar.isDown(ar.getEdge(c, d)));
+        assertTrue(ar.isCirc(ar.getEdge(h, a)));
     }
     /**
      * Test bottom method.
@@ -328,6 +327,44 @@ public class LatticeTest {
         assertFalse(notcn.isCN());
     }
     /**
+     * Test isAtomistic method.
+     */
+    @Test
+    public void testisAtomistic() {
+        Lattice l = new Lattice();
+        Node a = new Node("a"); l.addNode(a);
+        Node b = new Node("b"); l.addNode(b);
+        Node c = new Node("c"); l.addNode(c);
+        Node d = new Node("d"); l.addNode(d);
+        l.addEdge(a, b);
+        l.addEdge(a, c);
+        l.addEdge(b, d);
+        l.addEdge(c, d);
+        assertTrue(l.isAtomistic());
+        Node e = new Node("e"); l.addNode(e);
+        l.addEdge(e, a);
+        assertFalse(l.isAtomistic());
+    }
+    /**
+     * Test isCoAtomistic method.
+     */
+    @Test
+    public void testisCoAtomistic() {
+        Lattice l = new Lattice();
+        Node a = new Node("a"); l.addNode(a);
+        Node b = new Node("b"); l.addNode(b);
+        Node c = new Node("c"); l.addNode(c);
+        Node d = new Node("d"); l.addNode(d);
+        l.addEdge(b, a);
+        l.addEdge(c, a);
+        l.addEdge(d, a);
+        l.addEdge(d, a);
+        assertTrue(l.isCoAtomistic());
+        Node e = new Node("e"); l.addNode(e);
+        l.addEdge(a, e);
+        assertFalse(l.isCoAtomistic());
+    }
+    /**
      * Test join method.
      */
     @Test
@@ -526,33 +563,5 @@ public class LatticeTest {
         Node b = new Node("b"); l.addNode(b);
         l.addEdge(a, b);
         assertEquals(l.top(), b);
-    }
-    /**
-     * Test getDoubleArrowTable method.
-     */
-    @Test
-    public void testgetDoubleArrowTable() {
-        Lattice l = new Lattice();
-        Node b = new Node('b'); l.addNode(b);
-        Node c = new Node('c'); l.addNode(c);
-        Node d = new Node('d'); l.addNode(d);
-        Node e = new Node('e'); l.addNode(e);
-        Node f = new Node('f'); l.addNode(f);
-        Node g = new Node('g'); l.addNode(g);
-        Node t = new Node('t'); l.addNode(t);
-        Edge bc = new Edge(b, c); l.addEdge(bc);
-        Edge bd = new Edge(b, d); l.addEdge(bd);
-        Edge be = new Edge(b, e); l.addEdge(be);
-        Edge cf = new Edge(c, f); l.addEdge(cf);
-        Edge df = new Edge(d, f); l.addEdge(df);
-        Edge dg = new Edge(d, g); l.addEdge(dg);
-        Edge eg = new Edge(e, g); l.addEdge(eg);
-        Edge ft = new Edge(f, t); l.addEdge(ft);
-        Edge gt = new Edge(g, t); l.addEdge(gt);
-        Context ctx = l.getDoubleArrowTable();
-        assertTrue(ctx.getExtent(c).contains(d));
-        assertTrue(ctx.getExtent(e).contains(d));
-        assertTrue(ctx.getExtent(f).contains(e));
-        assertTrue(ctx.getExtent(g).contains(c));
     }
 }

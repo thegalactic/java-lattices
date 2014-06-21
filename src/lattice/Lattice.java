@@ -164,8 +164,8 @@ public class Lattice extends DAGraph {
    public boolean isCN() {
        TreeSet<Node> joins = this.joinIrreducibles();
        TreeSet<Node> meats = this.meetIrreducibles();
-       DGraph arrows = new ArrowRelation(this);
-       Context dbl = this.getDoubleArrowTable();
+       ArrowRelation arrows = new ArrowRelation(this);
+       Context dbl = arrows.getDoubleArrowTable();
        // steps are connected component of the double arrow table.
        ArrayList<Concept> steps = new ArrayList<Concept>();
        while (!joins.isEmpty()) {
@@ -191,8 +191,8 @@ public class Lattice extends DAGraph {
            }
            for (Comparable j : c.getSetA()) {
                for (Comparable m : c.getSetB()) {
-                   if ((arrows.getEdge((Node) m, (Node) j).getContent() != "UpDown")
-                           && (arrows.getEdge((Node) m, (Node) j).getContent() != "Circ")) {
+                   if ((arrows.getEdge((Node) j, (Node) m).getContent() != "UpDown")
+                           && (arrows.getEdge((Node) j, (Node) m).getContent() != "Circ")) {
                        return false;
                    }
                }
@@ -218,16 +218,40 @@ public class Lattice extends DAGraph {
                    phi.addNode(new Node(indM));
                }
                if (indM != steps.size() && indJ != steps.size()) {
-                   if (arrows.getEdge((Node) m, (Node) j).getContent() == "Up") {
+                   if (arrows.getEdge((Node) j, (Node) m).getContent() == "Up") {
                        phi.addEdge(phi.getNodeByContent(indM), phi.getNodeByContent(indJ));
                    }
-                   if (arrows.getEdge((Node) m, (Node) j).getContent() == "Down") {
+                   if (arrows.getEdge((Node) j, (Node) m).getContent() == "Down") {
                        phi.addEdge(phi.getNodeByContent(indJ), phi.getNodeByContent(indM));
                    }
                }
            }
        }
        return (phi.isAcyclic());
+   }
+   /**
+    * Returns true if this component is an atomistic lattice.
+    *
+    * A lattice is atomistic if its join irreductibles are atoms (e.g. successors of bottom)
+    *
+    * @return true if this component is atomistic.
+    */
+   public boolean isAtomistic() {
+       TreeSet<Node> join = this.joinIrreducibles();
+       TreeSet<Node> atoms = this.getSuccessorNodes(this.bottom());
+       return join.containsAll(atoms) && atoms.containsAll(join);
+   }
+   /**
+    * Returns true if this component is an coatomistic lattice.
+    *
+    * A lattice is coatomistic if its mett irreductibles are coatoms (e.g. predecessors of top)
+    *
+    * @return true if this component is coatomistic.
+    */
+   public boolean isCoAtomistic() {
+       TreeSet<Node> meet = this.meetIrreducibles();
+       TreeSet<Node> coatoms = this.getPredecessorNodes(this.top());
+       return meet.containsAll(coatoms) && coatoms.containsAll(meet);
    }
     /* --------------- LATTICE HANDLING METHODS ------------ */
 
@@ -823,93 +847,8 @@ public class Lattice extends DAGraph {
       * - Nodes are join or meet irreductibles of the lattice.
       * - Edges content encodes arrows as String "Up", "Down", "UpDown", "Cross", "Circ".
       *
-      * @author Jean-Francois
       */
-     public DGraph getArrowRelation() {
-
-        /* Nodes are join or meet irreductibles of the lattice. */
-        TreeSet<Node> joins = new TreeSet<Node>(this.joinIrreducibles());
-        TreeSet<Node> meets = new TreeSet<Node>(this.meetIrreducibles());
-        TreeSet<Node> nodes = new TreeSet<Node>(meets);
-        nodes.addAll(joins);
-
-        DGraph graph = new DGraph(nodes);
-
-        Lattice transitiveClosure = new Lattice(this);
-        transitiveClosure.transitiveClosure();
-        Lattice transitiveReduction = new Lattice(this);
-        transitiveReduction.transitiveReduction();
-        Node jminus = new Node();
-        Node mplus = new Node();
-        String arrow = "";
-
-        /* Content of edges are arrows */
-        for (Node j : joins) {
-            for (Node m : meets) {
-                mplus = transitiveReduction.getSuccessorNodes(m).first();
-                jminus = transitiveReduction.getPredecessorNodes(j).first();
-                if (transitiveClosure.getSuccessorNodes(j).contains(m) || j.equals(m)) {
-                    arrow = "Cross";
-                } else {
-                    if (transitiveClosure.getSuccessorNodes(jminus).contains(m)) {
-                        arrow = "Down";
-                        if (transitiveClosure.getPredecessorNodes(mplus).contains(j)) {
-                            arrow = "UpDown";
-                        }
-                    } else {
-                        if (transitiveClosure.getPredecessorNodes(mplus).contains(j)) {
-                            arrow = "Up";
-                        } else {
-                            arrow = "Circ";
-                        }
-                    }
-                }
-                graph.addEdge(m, j, arrow);
-            }
-        }
-        return graph;
-    }
-
-     /**
-     * Returns the table of the lattice, composed of the join and meet irreducibles nodes.
-     *
-     * Each attribute of the table is a copy of a join irreducibles node.
-     * Each observation of the table is a copy of a meet irreducibles node.
-     * An attribute is extent of an observation when its join irreducible node
-     * is in double arrow relation with the meet irreducible node in the lattice.
-     *
-     * @return  the table of the lattice
-     */
-    public Context getDoubleArrowTable() {
-        // generation of attributes
-        TreeSet<Node> join = this.joinIrreducibles();
-        Context context = new Context();
-        for (Node j : join) {
-            context.addToObservations(j);
-        }
-        // generation of observations
-        TreeSet<Node> meet = this.meetIrreducibles();
-        for (Node m : meet) {
-            context.addToAttributes(m);
-        }
-        // generation of extent-intent
-        Lattice transitiveClosure = new Lattice(this);
-        transitiveClosure.transitiveClosure();
-        Lattice transitiveReduction = new Lattice(this);
-        transitiveReduction.transitiveReduction();
-        Node jminus = new Node();
-        Node mplus = new Node();
-        for (Node j : join) {
-            for (Node m : meet) {
-                if (!(m.equals(j) || transitiveClosure.getSuccessorNodes(j).contains(m))) {
-                    mplus = transitiveReduction.getSuccessorNodes(m).first();
-                    jminus = transitiveReduction.getPredecessorNodes(j).first();
-                    if (transitiveClosure.getSuccessorNodes(jminus).contains(m) && (transitiveClosure.getPredecessorNodes(mplus).contains(j))) {
-                        context.addExtentIntent(j, m);
-                    }
-                }
-            }
-        }
-        return context;
-    }
+     public ArrowRelation getArrowRelation() {
+         return new ArrowRelation(this);
+     }
 }
