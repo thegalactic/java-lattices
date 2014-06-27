@@ -26,7 +26,20 @@ $ -> Language fix or change
 ! -> Note
 
 2014-06-27 Christophe Demko <chdemko@gmail.com>
-	* all files:
+	* doc/api/README.md
+	* examples/Examples.java
+	* src/fr/kbertet/dgraph/DGraph.java
+	* src/fr/kbertet/dgraph/Node.java
+	* src/fr/kbertet/lattice/BijectiveComponents.iuml
+	* src/fr/kbertet/lattice/BijectiveComponents.java
+	* src/fr/kbertet/lattice/ClosureSystem.java
+	* src/fr/kbertet/lattice/Concept.java
+	* src/fr/kbertet/lattice/ConceptLattice.iuml
+	* src/fr/kbertet/lattice/ConceptLattice.java
+	* src/fr/kbertet/lattice/ImplicationalSystem.java
+	* src/fr/kbertet/lattice/Lattice.java
+	* test/fr/kbertet/lattice/BijectiveComponentsTest.java
+	* test/fr/kbertet/lattice/ConceptLatticeTest.java
 		# Compute information at demand
 
 2014-06-27 Christophe Demko <chdemko@gmail.com>
