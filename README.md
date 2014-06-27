@@ -8,7 +8,7 @@ This project uses:
 * [jacoco 0.7.1](http://www.eclemma.org/jacoco) for code coverage
 * [pegdown doclet 1.1.1](https://github.com/Abnaxos/pegdown-doclet) for generating javadoc
 * [graphviz](http://www.graphviz.org/) for generating uml graphics
-* [pandoc](http://johnmacfarlane.net/pandoc/) and LaTex for the tutorials
+* [pandoc](http://johnmacfarlane.net/pandoc/), [gpp](http://en.nothingisreal.com/wiki/GPP/) and LaTex for the tutorials
 
 Documentation
 -------------
