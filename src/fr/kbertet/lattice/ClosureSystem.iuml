@@ -1,0 +1,16 @@
+package fr.kbertet.lattice {
+    class ClosureSystem {
+        +{abstract} TreeSet<Comparable> getSet()
+        +{abstract} TreeSet<Comparable> closure(TreeSet<Comparable> set)
+        +{abstract} void save(String file)
+        
+        +ConceptLattice closedSetLattice(boolean  diagram)
+        +ConceptLattice lattice()
+        +Vector<Concept> allClosures()
+        +Concept nextClosure(Concept cl)
+        +DGraph precedenceGraph()
+        +TreeMap<Object, TreeSet> getReducibleElements()
+    }
+
+    abstract class ClosureSystem
+}

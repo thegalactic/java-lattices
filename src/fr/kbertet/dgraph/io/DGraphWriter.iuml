@@ -1,0 +1,5 @@
+package fr.kbertet.dgraph.io {
+    interface DGraphWriter {
+        +void write(DGraph graph, BufferedWriter file)
+    }
+}

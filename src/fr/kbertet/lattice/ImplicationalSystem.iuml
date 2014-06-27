@@ -1,0 +1,62 @@
+package fr.kbertet.lattice {
+    class ImplicationalSystem {
+        -TreeSet<Rule> sigma
+        -TreeSet<Comparable> set
+        .. Constructors ..
+        +ImplicationalSystem()
+        +ImplicationalSystem(Collection<Rule> sigma)
+        +ImplicationalSystem(ImplicationalSystem s)
+        +ImplicationalSystem(String filename)
+        .. Generators ..
+        {static}+ImplicationalSystem random(int nbS, int nbR)
+        .. Accessors ..
+        +TreeSet<Rule> getRules()
+        +TreeSet<Comparable> getSet()
+        +int sizeElements()
+        +int sizeRules()
+        .. Modifications ..
+        +boolean addElement(Comparable e)
+        +boolean addAllElements(TreeSet<Comparable> x)
+        +boolean deleteElement(Comparable e)
+        +boolean addRule(Rule r)
+        +boolean removeRule(Rule r)
+        +boolean replaceRule(Rule r1, Rule r2)
+        .. Predicates ..
+        +boolean checkRuleElements(Rule r)
+        +boolean containsRule(Rule r)
+        +boolean isProper()
+        +boolean isUnary()
+        +boolean isCompact()
+        +boolean isRightMaximal()
+        +boolean isLeftMinimal()
+        +boolean isDirect()
+        +boolean isMinimum()
+        +boolean isCanonicalDirectBasis()
+        +boolean isCanonicalBasis()
+        +boolean isIncludedIn(ImplicationalSystem is)
+        +boolean isReduced()
+        .. Transformers ..
+        +String toString()
+        +void save(String filename)
+        +void parse(String filename)
+        .. Operations ..
+        +int makeProper()
+        +int makeUnary()
+        +int makeCompact()
+        +int makeRightMaximal()
+        +int makeLeftMinimal()
+        +int makeDirect()
+        +int makeMinimum()
+        +int makeCanonicalDirectBasis()
+        +int makeCanonicalBasis()
+        +DGraph representativeGraph()
+        +DGraph dependencyGraph()
+        +TreeMap<Comparable, TreeSet<Comparable>> reduction()
+        +TreeSet<Comparable> closure(TreeSet<Comparable> x)
+    }
+
+
+    ClosureSystem <|-- ImplicationalSystem
+    ImplicationalSystem o-- Rule
+}
+

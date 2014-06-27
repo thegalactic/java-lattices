@@ -1,0 +1,10 @@
+package fr.kbertet.lattice.io {
+    class ContextReaderText {
+    	-{static}ContextReaderText instance
+        +void read(Context context, BufferedReader file)
+        +{static}ContextReaderText getInstance()
+        +{static}void register()
+    }
+
+    ContextReader <|-- ContextReaderText
+}

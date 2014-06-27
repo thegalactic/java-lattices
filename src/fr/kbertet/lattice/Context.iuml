@@ -1,0 +1,67 @@
+package fr.kbertet.lattice {
+    class Context {
+        -TreeSet<Comparable> observations
+        -TreeSet<Comparable> attributes
+        -TreeMap<Comparable, TreeSet<Comparable>> intent
+        -TreeMap<Comparable, TreeSet<Comparable>> extent
+        -BitSet bitsetAttributes
+        -BitSet bitsetObservations
+        -TreeMap<Comparable, BitSet> bitsetIntent
+        -TreeMap<Comparable, BitSet> bitsetExtent
+        -ArrayList<Comparable> arrayObservations
+        -ArrayList<Comparable> arrayAttributes
+        .. Constructors ..
+        +Context()
+        +Context(Context context)
+        +Context(String filename)
+        +Context(String filename, int thresholdBinary)
+        +Context(String link, TreeSet<String> filesname, int thresholdBinary)
+        +Context(TreeSet<String> linkFilesName, int thresholdBinary)
+        .. Generators ..
+        {static}+Context random(int nbObs, int nbGrp, int nbAttrPerGrp)
+        .. Accessors ..
+        +TreeSet<Comparable> getAttributes()
+        +TreeSet<Comparable> getObservations()
+        +TreeSet<Comparable> getIntent(Comparable obs)
+        +TreeSet<Comparable> getIntent(TreeSet<Comparable> set)
+        +TreeSet<Comparable> getExtent(Comparable att)
+        +TreeSet<Comparable> getExtent(TreeSet<Comparable> set)
+        +int getExtentNb(TreeSet<Comparable> set)
+        +TreeMap<Comparable, TreeSet<Comparable>> attributesReduction()
+        +TreeMap<Comparable, TreeSet<Comparable>> observationsReduction()
+        +Context getReverseContext()
+        +TreeSet<Comparable> getSet()
+        +TreeSet<Comparable> getExtentUnion(TreeSet<Comparable> set)
+        .. Predicates ..
+        +boolean containsAttribute(Comparable att)
+        +boolean containsAllAttributes(TreeSet<Comparable> set)
+        +boolean containsObservation(Comparable obs)
+        +boolean containsAllObservations(TreeSet<Comparable> set)
+        +boolean containAsIntent(Comparable obs, Comparable att)
+        +boolean containAsExtent(Comparable att, Comparable obs)
+        .. Operations ..
+        +boolean addToAttributes(Comparable att)
+        +boolean addAllToAttributes(TreeSet<Comparable> set)
+        +boolean removeFromAttributes(Comparable att)
+        +boolean addToObservations(Comparable obs)
+        +boolean addAllToObservations(TreeSet<Comparable> set)
+        +boolean removeFromObservations(Comparable obs)
+        +void setBitSets()
+        -void setMaps()
+        -void setBitSetsIntentExtent()
+        +boolean addExtentIntent(Comparable obs, Comparable att)
+        +boolean removeExtentIntent(Comparable obs, Comparable att)
+        +TreeMap<Comparable, TreeSet<Comparable>> reduction()
+        +void reverse()
+        +TreeSet<Comparable> closure(TreeSet<Comparable> set)
+        +ComparableSet inverseClosure(ComparableSet set)
+        +ConceptLattice conceptLattice(boolean  diagram)
+        +ConceptLattice lattice()
+        .. Transformers ..
+        String toString()
+        void save(String filename)
+        void parse(String filename)
+    }
+
+    ClosureSystem <|-- Context
+}

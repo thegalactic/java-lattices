@@ -42,19 +42,7 @@ The two last lines help you verify your lattice with following methods :
 
 Generated `M5.dot` contains :
 
-    digraph G {
-    Graph [rankdir=BT]
-    1 [label="a"]
-    2 [label="b"]
-    3 [label="c"]
-    4 [label="d"]
-    5 [label="e"]
-    1->2
-    1->4
-    2->3
-    4->5
-    5->3
-    }
+
 
 With [graphviz tools](http://www.graphviz.org/), you can generate the following `.png` image :
 
@@ -178,12 +166,6 @@ To conclude on these irreductibles, you can compute the subgraph of all irreduct
 
 And, last but not least, you can compute the context :
 
-    Observations: c e f g 
-    Attributes: c d e 
-    c : c 
-    e : e 
-    f : c d 
-    g : d e 
 
 
 in which observations are meet irreductibles, attributes are join irreductibles, and an attribute is extent of an observation when its join irreducible node is greater than the meet irreducible node in the lattice.
@@ -303,8 +285,6 @@ Thus, the only functionnal dependancy you can get is :
 However, the `getImplicationalSystem` method returns a right maximal system. 
 Then, the instruction `l.getImplicationalSystem()` returns :
 
-    c d e 
-    c e  -> c d e 
 
 
 * `getDependencyGraph` method
@@ -331,8 +311,6 @@ for each edge $b rightarrow a$ valuated by a subset $X$, the rule $a+X rightarro
 
 With our example, `l.getCanonicalDirectBasis();` gives :
 
-    c d e 
-    c e  -> d 
 ;
 
 * `getMinimalGenerators()` method

@@ -1,0 +1,5 @@
+package fr.kbertet.lattice.io {
+    interface ImplicationalSystemReader {
+        +void read(ImplicationalSystem system, BufferedReader file)
+    }
+}

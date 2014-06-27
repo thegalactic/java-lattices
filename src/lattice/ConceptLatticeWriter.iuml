@@ -1,5 +1,0 @@
-package lattice {
-    interface ConceptLatticeWriter {
-        +void write(ConceptLattice lattice, BufferedWriter file)
-    }
-}

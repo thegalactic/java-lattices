@@ -1,5 +1,0 @@
-package lattice {
-    interface ContextWriter {
-        +void write(Context context, BufferedWriter file)
-    }
-}

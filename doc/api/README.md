@@ -6,6 +6,7 @@ Description
 This package both provides classes to manipulate a binary table (or a context) and its concept lattice; a set of rules (or an implicational system) and its closed set lattice, but also capitalizes on results issued from lattice theory stating that there exists bijective links between lattices, reduced contexts and canonical direct basis of rules (see figure).
 
 ![UML diagram](UML.png)
+![Input/Output diagram](IO.png)
 
 A context is defined by class `Context` that provides methods implementing classical operations on a context, as the reduction for example.
 An implicational system, defined by class `IS`, provides methods for classical transformations of an implicational system, and in particular
@@ -191,48 +192,60 @@ The following table illustrates the generated bijective components when the init
 
     [[d], [c], [c, g], [c, e], [c, d], [b, e], [b, d], [b, c], [a, b]]
 
-@uml UML.png
+@startuml UML.png
 
 title Main UML graph
 
-!include src/dgraph/DGraph.iuml
-!include src/dgraph/DGraphWriter.iuml
-!include src/dgraph/DGraphWriterFactory.iuml
-!include src/dgraph/DGraphWriterDot.iuml
-!include src/dgraph/Edge.iuml
-!include src/dgraph/DAGraph.iuml
-!include src/dgraph/Node.iuml
-!include src/lattice/ComparableSet.iuml
-!include src/lattice/Concept.iuml
-!include src/lattice/ConceptLattice.iuml
-!include src/lattice/ConceptLatticeWriter.iuml
-!include src/lattice/ConceptLatticeWriterFactory.iuml
-!include src/lattice/ConceptLatticeWriterDot.iuml
-!include src/lattice/Context.iuml
-!include src/lattice/ContextReader.iuml
-!include src/lattice/ContextReaderFactory.iuml
-!include src/lattice/ContextReaderText.iuml
-!include src/lattice/ContextWriter.iuml
-!include src/lattice/ContextWriterFactory.iuml
-!include src/lattice/ContextWriterText.iuml
-!include src/lattice/ArrowRelation.iuml
-!include src/lattice/ArrowRelationWriter.iuml
-!include src/lattice/ArrowRelationWriterFactory.iuml
-!include src/lattice/ArrowRelationWriterTeX.iuml
-!include src/lattice/ClosureSystem.iuml
-!include src/lattice/Lattice.iuml
-!include src/lattice/Rule.iuml
-!include src/lattice/BijectiveComponents.iuml
-!include src/lattice/ImplicationalSystem.iuml
-!include src/lattice/ImplicationalSystemReader.iuml
-!include src/lattice/ImplicationalSystemReaderFactory.iuml
-!include src/lattice/ImplicationalSystemReaderText.iuml
-!include src/lattice/ImplicationalSystemWriter.iuml
-!include src/lattice/ImplicationalSystemWriterFactory.iuml
-!include src/lattice/ImplicationalSystemWriterText.iuml
-!include src/lattice/Couple.iuml
-!include src/lattice/LatticeFactory.iuml
-!include src/lattice/Permutation.iuml
+!include src/fr/kbertet/dgraph/DGraph.iuml
+!include src/fr/kbertet/dgraph/Edge.iuml
+!include src/fr/kbertet/dgraph/DAGraph.iuml
+!include src/fr/kbertet/dgraph/Node.iuml
+
+!include src/fr/kbertet/lattice/ComparableSet.iuml
+!include src/fr/kbertet/lattice/Concept.iuml
+!include src/fr/kbertet/lattice/ConceptLattice.iuml
+!include src/fr/kbertet/lattice/Context.iuml
+!include src/fr/kbertet/lattice/ArrowRelation.iuml
+!include src/fr/kbertet/lattice/ClosureSystem.iuml
+!include src/fr/kbertet/lattice/Lattice.iuml
+!include src/fr/kbertet/lattice/Rule.iuml
+!include src/fr/kbertet/lattice/BijectiveComponents.iuml
+!include src/fr/kbertet/lattice/ImplicationalSystem.iuml
+!include src/fr/kbertet/lattice/Couple.iuml
+!include src/fr/kbertet/lattice/LatticeFactory.iuml
+!include src/fr/kbertet/lattice/Permutation.iuml
+
 
 hide members
+@enduml
+
+@startuml IO.png
+
+title Input/Output UML graph
+
+!include src/fr/kbertet/dgraph/io/DGraphWriter.iuml
+!include src/fr/kbertet/dgraph/io/DGraphWriterFactory.iuml
+!include src/fr/kbertet/dgraph/io/DGraphWriterDot.iuml
+
+!include src/fr/kbertet/lattice/io/ArrowRelationWriter.iuml
+!include src/fr/kbertet/lattice/io/ArrowRelationWriterFactory.iuml
+!include src/fr/kbertet/lattice/io/ArrowRelationWriterTeX.iuml
+!include src/fr/kbertet/lattice/io/ConceptLatticeWriter.iuml
+!include src/fr/kbertet/lattice/io/ConceptLatticeWriterFactory.iuml
+!include src/fr/kbertet/lattice/io/ConceptLatticeWriterDot.iuml
+!include src/fr/kbertet/lattice/io/ContextReader.iuml
+!include src/fr/kbertet/lattice/io/ContextReaderFactory.iuml
+!include src/fr/kbertet/lattice/io/ContextReaderText.iuml
+!include src/fr/kbertet/lattice/io/ContextWriter.iuml
+!include src/fr/kbertet/lattice/io/ContextWriterFactory.iuml
+!include src/fr/kbertet/lattice/io/ContextWriterText.iuml
+!include src/fr/kbertet/lattice/io/ImplicationalSystemReader.iuml
+!include src/fr/kbertet/lattice/io/ImplicationalSystemReaderFactory.iuml
+!include src/fr/kbertet/lattice/io/ImplicationalSystemReaderText.iuml
+!include src/fr/kbertet/lattice/io/ImplicationalSystemWriter.iuml
+!include src/fr/kbertet/lattice/io/ImplicationalSystemWriterFactory.iuml
+!include src/fr/kbertet/lattice/io/ImplicationalSystemWriterText.iuml
+
+hide members
+@enduml
 

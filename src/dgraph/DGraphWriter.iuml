@@ -1,5 +1,0 @@
-package dgraph {
-    interface DGraphWriter {
-        +void write(DGraph graph, BufferedWriter file)
-    }
-}

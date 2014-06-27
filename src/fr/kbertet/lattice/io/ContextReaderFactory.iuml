@@ -1,0 +1,10 @@
+package fr.kbertet.lattice.io {
+    class ContextReaderFactory {
+    	-{static}HashMap<String, ContextReader> readers
+        +{static}ContextReader register(ContextReader reader, String extension)
+        +{static}ContextReader unregister(String extension)
+        +{static}ContextReader get(String extension)
+    }
+
+    ContextReaderFactory o-- ContextReader
+}

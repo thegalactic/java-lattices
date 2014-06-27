@@ -26,6 +26,10 @@ $ -> Language fix or change
 ! -> Note
 
 2014-06-27 Christophe Demko <chdemko@gmail.com>
+	* all files:
+		^ Add fr.kbertet package prefix
+
+2014-06-27 Christophe Demko <chdemko@gmail.com>
 	* src/dgraph/DAGraph.java
 	* src/dgraph/DGraph.java
 	* src/dgraph/Node.java

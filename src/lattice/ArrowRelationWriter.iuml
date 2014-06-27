@@ -1,5 +1,0 @@
-package lattice {
-    interface ArrowRelationWriter {
-        +void write(ArrowRelation arrow, BufferedWriter file)
-    }
-}

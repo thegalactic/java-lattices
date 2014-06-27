@@ -1,0 +1,24 @@
+package fr.kbertet.dgraph {
+    class DAGraph {
+        .. Constructors ..
+        +DAGraph()
+        +DAGraph(final Set<Node> set)
+        +DAGraph(final DGraph graph)
+        .. Generators ..
+        +{static}DAGraph divisors(int number)
+        +{static}DAGraph random(int size, double threshold)
+        +{static}DAGraph random(int size)
+        .. Operations ..
+        +TreeSet<Node> min()
+        +TreeSet<Node> max()
+        +TreeSet<Node> majorants(final Node node)
+        +TreeSet<Node> minorants(final Node node)
+        +DAGraph filter(final Node node)
+        +DAGraph ideal(final Node node)
+        +DAGraph getSubgraphByNodes(final Set<Node> nodes)
+        +int transitiveReduction()
+        +int transitiveClosure()
+    }
+
+    DGraph <|-- DAGraph
+}
