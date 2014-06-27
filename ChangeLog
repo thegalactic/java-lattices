@@ -25,6 +25,19 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-06-27 Christophe Demko <chdemko@gmail.com>
+	* src/dgraph/DAGraph.java
+	* src/dgraph/DGraph.java
+	* src/dgraph/Node.java
+	* src/dgraph/package-info.java
+	* src/lattice/BijectiveComponents.java
+	* src/lattice/ComparableSet.java
+	* src/lattice/Concept.java
+	* src/lattice/ConceptLattice.java
+	* src/lattice/Lattice.java
+	* src/lattice/Rule.java
+		+ Comment TODO
+
 2014-06-16 Jean-François Viaud <jviaud@univ-lr.fr>
 	* doc/tutorial
 		* update script that generates tutorial
