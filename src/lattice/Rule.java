@@ -40,8 +40,6 @@ import java.util.TreeSet;
  * show Rule members
  * class Rule #LightCyan
  * title Rule UML graph
- *
- * @todo  Do we use yaml representation?
  */
 public class Rule implements Comparable {
     /* ------------- FIELDS ------------------ */

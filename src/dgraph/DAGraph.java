@@ -48,6 +48,7 @@ import java.util.Set;
  * title DAGraph UML graph
  *
  * @todo  Do we forbid to add an edge that breaks acyclic property by verifying that the destination node has no successors?
+ *        May be a DAGraph could contain a DGraph and export only interesting method by proxy
  */
 public class DAGraph extends DGraph {
 

@@ -33,7 +33,7 @@ import dgraph.Edge;
  * sorting concepts by providing the {@link #compareTo} method.
  * Comparison between this component and those in parameter is realised by comparing set `A`.
  *
- * @todo  Should not inherit from Node since content is not used
+ * @todo  Should not inherit from Node since content is not used. Maybe by using interface.
  *
  * ![Concept](Concept.png)
  *

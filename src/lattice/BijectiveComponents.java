@@ -55,7 +55,7 @@ import dgraph.DGraph;
  * title BijectiveComponents UML graph
  *
  * @todo  comment the abstract class ClosureSystem
- * @todo  compute information at demand
+ * @todo  compute information at demand. Yes it is fairly simple to add test in each getter.
  */
 public class BijectiveComponents {
     /* ------------- FIELDS ------------------ */

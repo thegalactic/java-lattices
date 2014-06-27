@@ -122,6 +122,7 @@ public class Node implements Comparable<Object> {
      * @return  the string representation
      *
      * @todo  Why do we need to remove spaces?
+     *        Should be linked to import/export methods
      */
      public String toString() {
         String string = "";

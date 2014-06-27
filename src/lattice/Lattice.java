@@ -63,7 +63,7 @@ import java.util.ArrayList;
  * class Lattice #LightCyan
  * title Lattice UML graph
  *
- * @todo  remove useless comments
+ * @todo  remove useless comments: Karell
  */
 public class Lattice extends DAGraph {
 

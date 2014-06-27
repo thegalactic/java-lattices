@@ -12,6 +12,6 @@
 /**
  * This package is designed to represent directed graph.
  *
- * @todo  setters should return this for chaining
+ * @todo  setters should return this for chaining: yes
  */
 package dgraph;

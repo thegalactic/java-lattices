@@ -190,7 +190,7 @@ public class ConceptLattice extends Lattice {
      *
      * @return  a boolean
      *
-     * @todo  Comment the return
+     * @todo  Comment the return: conception
      */
     public boolean containsAllSetA() {
         if (!this.containsConcepts()) {

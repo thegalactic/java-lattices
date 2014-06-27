@@ -40,7 +40,7 @@ import java.util.TreeSet;
  * class ComparableSet #LightCyan
  * title ComparableSet UML graph
  *
- * @todo  Check if this class is correctly used (performance)
+ * @todo  Check if this class is correctly used (performance). Overload modification method to compute the hashCode only once.
  */
 public class ComparableSet extends TreeSet implements Comparable, Cloneable {
     /* ------------- CONSTRUCTORS ------------------ */
