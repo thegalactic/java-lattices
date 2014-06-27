@@ -132,7 +132,7 @@
 
 			<check>
 				<rule element="PACKAGE">
-					<limit counter="LINE" value="COVEREDRATIO" minimum="0.85"/>
+					<limit counter="LINE" value="COVEREDRATIO" minimum="0.80"/>
 					<limit counter="CLASS" value="MISSEDCOUNT" maximum="0"/>
 				</rule>
 			</check>
