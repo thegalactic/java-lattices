@@ -322,6 +322,7 @@ public class BijectiveComponents {
      */
     public DGraph getDependencyGraph() {
         if (dependencyGraph == null) {
+            // FIXME: do we use getLattice or getReducedLattice ?
             dependencyGraph = this.getLattice().getDependencyGraph();
         }
         return dependencyGraph;
