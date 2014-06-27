@@ -26,6 +26,7 @@ $ -> Language fix or change
 ! -> Note
 
 2014-06-27 Christophe Demko <chdemko@gmail.com>
+	* src/fr/kbertet/dgraph/package-info.java
 	* src/fr/kbertet/lattice/Couple.iuml
 	* src/fr/kbertet/lattice/Couple.java
 	* src/fr/kbertet/lattice/Lattice.iuml
