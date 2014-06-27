@@ -1034,7 +1034,7 @@ public class ImplicationalSystem extends ClosureSystem {
     /**
      * Builds the closure of a set X of indexed elements.
      *
-     * The closure is initialized with X. The closure is incremented with
+     * The closure is initialised with X. The closure is incremented with
      * the conclusion of each rule whose premise is included in it.
      * Iterations over the rules are performed until no new element has to be added
      * in the closure.

@@ -56,7 +56,7 @@ Consider the following instanciation of the main class `BijectiveComponents`:
 
 ~~~Java
 BijectiveComponents BC = new BijectiveComponents (initialClosureSystem);
-BC.initialize();
+BC.initialise();
 BC.save(dirString,nameString);
 ~~~
 

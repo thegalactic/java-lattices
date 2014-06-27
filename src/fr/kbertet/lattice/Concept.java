@@ -573,10 +573,10 @@ public class Concept extends Node {
      * and g is the number of minimal generators of the lattice.
      *
      * This treatment is recursively invoked by method recursiveDiagramlattice. In this case, the dependance graph
-     * is initialized by method recursiveDiagramMethod, and updated by this method,
+     * is initialised by method recursiveDiagramMethod, and updated by this method,
      * with addition some news edges and/or new valuations on existing edges.
      * When this treatment is not invoked by method recursiveDiagramLattice, then the dependance graph
-     * is initialized, but it may be not complete. It is the case for example for on-line generation of the
+     * is initialised, but it may be not complete. It is the case for example for on-line generation of the
      * concept lattice.
      *
      * cguerin - 2013-04-12 - transfer immedateSuccessors method from ConceptLattice to Concept
@@ -586,7 +586,7 @@ public class Concept extends Node {
      * @return  the list of immediate successors of this component.
      */
     public ArrayList<TreeSet<Comparable>> immediateSuccessors(ClosureSystem init) {
-        // Initialization of the dependance graph when not initialized by method recursiveDiagramLattice
+        // Initialisation of the dependance graph when not initialised by method recursiveDiagramLattice
         DGraph dependanceGraph = null;
         dependanceGraph = new DGraph();
         for (Comparable c : init.getSet()) {

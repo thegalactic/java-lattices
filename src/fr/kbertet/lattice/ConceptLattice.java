@@ -293,7 +293,7 @@ public class ConceptLattice extends Lattice {
      *
      * @todo  Comment the return
      */
-    public boolean initializeSetAForJoin() {
+    public boolean initialiseSetAForJoin() {
         if (!this.containsConcepts()) {
             return false;
         }
@@ -316,7 +316,7 @@ public class ConceptLattice extends Lattice {
      *
      * @todo  Comment the return
      */
-    public boolean initializeSetBForMeet() {
+    public boolean initialiseSetBForMeet() {
         if (!this.containsConcepts()) {
             return false;
         }
@@ -606,7 +606,7 @@ public class ConceptLattice extends Lattice {
         if (!dag.isAcyclic()) {
             return null;
         }
-        // initialize the poset of ideals with the emptyset
+        // initialise the poset of ideals with the emptyset
         ConceptLattice conceptLattice = new ConceptLattice();
         int id = 1;
         conceptLattice.addNode(new Concept(true, false));
@@ -773,10 +773,10 @@ public class ConceptLattice extends Lattice {
      * and g is the number of minimal generators of the lattice.
      *
      * This treatment is recursively invoked by method recursiveDiagramlattice. In this case, the dependance graph
-     * is initialized by method recursiveDiagramMethod, and updated by this method,
+     * is initialised by method recursiveDiagramMethod, and updated by this method,
      * with addition some news edges and/or new valuations on existing edges.
      * When this treatment is not invoked by method recursiveDiagramLattice, then the dependance graph
-     * is initialized, but it may be not complete. It is the case for example for on-line generation of the
+     * is initialised, but it may be not complete. It is the case for example for on-line generation of the
      * concept lattice.
      *
      * @param   n     a node
@@ -785,7 +785,7 @@ public class ConceptLattice extends Lattice {
      * @return  a set of immediate successors
      */
     public Vector<TreeSet<Comparable>> immediateSuccessors(Node n, ClosureSystem init) {
-        // Initialization of the dependance graph when not initialized by method recursiveDiagramLattice
+        // Initialisation of the dependance graph when not initialised by method recursiveDiagramLattice
         if (!this.hasDependencyGraph()) {
             DGraph graph = new DGraph();
             for (Comparable c : init.getSet()) {

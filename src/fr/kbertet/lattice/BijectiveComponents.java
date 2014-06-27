@@ -10,13 +10,13 @@ package fr.kbertet.lattice;
  * it under the terms of CeCILL-B license.
  */
 
+import fr.kbertet.dgraph.DGraph;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
 import java.util.TreeSet;
-import fr.kbertet.dgraph.DGraph;
 
 /**
  * This class generates bijective components issued from lattice theory for a specified
@@ -31,16 +31,16 @@ import fr.kbertet.dgraph.DGraph;
  * system described by class {@link ImplicationalSystem}) or a context described by
  * class {@link Context}).
  *
- * This class provides a constructor, and only two methods: the method {@link #initialize}
+ * This class provides a constructor, and only two methods: the method {@link #initialise}
  * generates all the bijective components of the specified closure system; and the method
  * {@link #save} saves theses components in files.
  *
  * This class can be used as follows:
  *
  * ~~~Java
- * BijectiveComponents BC = new BijectiveComponents(initialClosureSystem);
- * BC.initialize();
- * BC.save(dirString,nameString);
+ * BijectiveComponents bc = new BijectiveComponents(initialClosureSystem);
+ * bc.compute();
+ * bc.save(dirString,nameString);
  * ~~~
  *
  * ![BijectiveComponents](BijectiveComponents.png)
@@ -53,9 +53,6 @@ import fr.kbertet.dgraph.DGraph;
  * show BijectiveComponents members
  * class BijectiveComponents #LightCyan
  * title BijectiveComponents UML graph
- *
- * @todo  comment the abstract class ClosureSystem
- * @todo  compute information at demand. Yes it is fairly simple to add test in each getter.
  */
 public class BijectiveComponents {
     /* ------------- FIELDS ------------------ */
@@ -109,7 +106,26 @@ public class BijectiveComponents {
      * @param   init  initial closure system
      */
     public BijectiveComponents(ClosureSystem init) {
+        this.initialise(init);
+    }
+
+    /**
+     * Initialise the closure system.
+     *
+     * @param   init  initial closure system
+     *
+     * @return  this for chaining
+     */
+    public BijectiveComponents initialise(ClosureSystem init) {
         this.init = init;
+        this.lattice = null;
+        this.reducedLattice = null;
+        this.table = null;
+        this.dependencyGraph = null;
+        this.minimalGenerators = null;
+        this.canonicalDirectBasis = null;
+        this.canonicalBasis = null;
+        return this;
     }
 
     /**
@@ -155,21 +171,21 @@ public class BijectiveComponents {
      * The canonical basis is obtained by
      *
      * ~~~Java
-     * new ImplicationalSystem(this.canonicalDirectBasis).makeCanonicalBasis();
+     * (new ImplicationalSystem(this.canonicalDirectBasis)).makeCanonicalBasis();
      * ~~~
      *
      * @return  time of computation
      */
-    public long initialize() {
+    public long compute() {
+        this.initialise(init);
         long debut = new Date().getTime();
-        this.lattice = this.init.lattice();
-        this.reducedLattice = this.lattice.getIrreduciblesReduction();
-        this.table = this.lattice.getTable();
-        this.dependencyGraph = this.lattice.getDependencyGraph();
-        this.minimalGenerators = this.lattice.getMinimalGenerators();
-        this.canonicalDirectBasis = this.lattice.getCanonicalDirectBasis();
-        this.canonicalBasis = new ImplicationalSystem(this.canonicalDirectBasis);
-        this.canonicalBasis.makeCanonicalBasis();
+        this.getLattice();
+        this.getReducedLattice();
+        this.getTable();
+        this.getDependencyGraph();
+        this.getMinimalGenerators();
+        this.getCanonicalDirectBasis();
+        this.getCanonicalBasis();
         long fin = new Date().getTime();
         return fin - debut;
     }
@@ -200,30 +216,30 @@ public class BijectiveComponents {
         file.write(this.init.toString() + "\n");
         // saves the closed set lattice
         String nameLattice = directory + "Lattice.dot";
-        this.lattice.save(nameLattice);
+        this.getLattice().save(nameLattice);
         file.write("-> Closed set or concept lattice saved in " + nameLattice + "\n");
         // saves the reduced lattice
         String nameReducedLattice = directory + "ReducedLattice.dot";
-        this.reducedLattice.save(nameReducedLattice);
+        this.getReducedLattice().save(nameReducedLattice);
         file.write("-> Reduced lattice saved in " + nameReducedLattice + "\n");
         // saves the reduced table
         String nameTable = directory + "Table.txt";
-        this.table.save(nameTable);
+        this.getTable().save(nameTable);
         file.write("-> Table of the reduced lattice saved in " + nameTable + "\n");
         file.write(this.table.toString() + "\n");
         // saves the canonical basis
         String nameCB = directory + "CanonicalBasis.txt";
-        this.canonicalBasis.save(nameCB);
+        this.getCanonicalBasis().save(nameCB);
         file.write("-> Canonical basis saved in " + nameCB + ": \n");
         file.write(this.canonicalBasis.toString() + "\n");
         // saves the canonical direct basis
         String nameCDB = directory + "CanonicalDirectBasis.txt";
-        this.canonicalDirectBasis.save(nameCDB);
+        this.getCanonicalDirectBasis().save(nameCDB);
         file.write("-> Canonical direct basis of the reduced lattice saved in " + nameCDB + ": \n");
         file.write(this.canonicalDirectBasis.toString() + "\n");
         // saves the dependency graph
         String nameODGraph = directory + "DependencyGraph.dot";
-        this.dependencyGraph.save(nameODGraph);
+        this.getDependencyGraph().save(nameODGraph);
         file.write("-> Dependency Graph  of the reduced lattice saved in " + nameODGraph + " \n");
         // saves the minimal generators
         file.write("-> Minimal generators  of the reduced lattice are " + this.minimalGenerators + "\n");
@@ -243,9 +259,12 @@ public class BijectiveComponents {
      * Set the Init of this component.
      *
      * @param   init  used to define field of this component
+     *
+     * @return  this for chaining
      */
-    protected void setInit(ClosureSystem init) {
+    protected BijectiveComponents setInit(ClosureSystem init) {
         this.init = init;
+        return this;
     }
 
     /**
@@ -254,6 +273,9 @@ public class BijectiveComponents {
      * @return  lattice of this component
      */
     public ConceptLattice getLattice() {
+        if (lattice == null) {
+            lattice = this.init.lattice();
+        }
         return lattice;
     }
 
@@ -261,9 +283,12 @@ public class BijectiveComponents {
      * Set the lattice of this component.
      *
      * @param   lattice  used to define field of this component
+     *
+     * @return  this for chaining
      */
-    protected void setLattice(ConceptLattice lattice) {
+    protected BijectiveComponents setLattice(ConceptLattice lattice) {
         this.lattice = lattice;
+        return this;
     }
 
     /**
@@ -272,24 +297,33 @@ public class BijectiveComponents {
      * @return  reduced lattice of this component
      */
     public Lattice getReducedLattice() {
+        if (reducedLattice == null) {
+            reducedLattice = this.getLattice().getIrreduciblesReduction();
+        }
         return reducedLattice;
     }
 
     /**
      * Set the reduced lattice of this component.
      *
-     * @param  reducedLattice  used to define field of this component
+     * @param   reducedLattice  used to define field of this component
+     *
+     * @return  this for chaining
      */
-    protected void setReducedLattice(Lattice reducedLattice) {
+    protected BijectiveComponents setReducedLattice(Lattice reducedLattice) {
         this.reducedLattice = reducedLattice;
+        return this;
     }
 
     /**
      * Returns the dependency graph of this component.
      *
-     * @return  dependancyGraph  dependency graph of this component
+     * @return  dependencyGraph  dependency graph of this component
      */
     public DGraph getDependencyGraph() {
+        if (dependencyGraph == null) {
+            dependencyGraph = this.getLattice().getDependencyGraph();
+        }
         return dependencyGraph;
     }
 
@@ -297,9 +331,12 @@ public class BijectiveComponents {
      * Set the dependency graph of this component.
      *
      * @param   dependencyGraph  used to define field of this component
+     *
+     * @return  this for chaining
      */
-    protected void setDependencyGraph(DGraph dependencyGraph) {
+    protected BijectiveComponents setDependencyGraph(DGraph dependencyGraph) {
         this.dependencyGraph = dependencyGraph;
+        return this;
     }
 
     /**
@@ -308,6 +345,10 @@ public class BijectiveComponents {
      * @return  minimal generators of this component
      */
     public TreeSet<ComparableSet> getMinimalGenerators() {
+        if (minimalGenerators == null) {
+            // FIXME: do we use getLattice or getReducedLattice ?
+            minimalGenerators = this.getLattice().getMinimalGenerators();
+        }
         return minimalGenerators;
     }
 
@@ -315,9 +356,12 @@ public class BijectiveComponents {
      * Set the minimal generators of this component.
      *
      * @param   minimalGenerators  used to define field of this component
+     *
+     * @return  this for chaining
      */
-    protected void setMinimalGenerators(TreeSet<ComparableSet> minimalGenerators) {
+    protected BijectiveComponents setMinimalGenerators(TreeSet<ComparableSet> minimalGenerators) {
         this.minimalGenerators = minimalGenerators;
+        return this;
     }
 
     /**
@@ -326,6 +370,10 @@ public class BijectiveComponents {
      * @return  the canonical direct basis of this component
      */
     public ImplicationalSystem getCanonicalDirectBasis() {
+        if (canonicalDirectBasis == null) {
+            // FIXME: do we use getLattice or getReducedLattice ?
+            canonicalDirectBasis = this.getLattice().getCanonicalDirectBasis();
+        }
         return canonicalDirectBasis;
     }
 
@@ -333,9 +381,12 @@ public class BijectiveComponents {
      * Set the canonical direct basis of this component.
      *
      * @param   canonicalDirectBasis  used to define field of this component
+     *
+     * @return  return this for chaining
      */
-    protected void setCanonicalDirectBasis(ImplicationalSystem canonicalDirectBasis) {
+    protected BijectiveComponents setCanonicalDirectBasis(ImplicationalSystem canonicalDirectBasis) {
         this.canonicalDirectBasis = canonicalDirectBasis;
+        return this;
     }
 
     /**
@@ -344,6 +395,10 @@ public class BijectiveComponents {
      * @return  the canonical basis of this component
      */
     public ImplicationalSystem getCanonicalBasis() {
+        if (canonicalBasis == null) {
+            canonicalBasis = new ImplicationalSystem(this.getCanonicalDirectBasis());
+            canonicalBasis.makeCanonicalBasis();
+        }
         return canonicalBasis;
     }
 
@@ -351,9 +406,12 @@ public class BijectiveComponents {
      * Set the canonical basis of this component.
      *
      * @param   canonicalBasis  used to define field of this component
+     *
+     * @return  this for chaining
      */
-    protected void setCanonicalBasis(ImplicationalSystem canonicalBasis) {
+    protected BijectiveComponents setCanonicalBasis(ImplicationalSystem canonicalBasis) {
         this.canonicalBasis = canonicalBasis;
+        return this;
     }
 
     /**
@@ -362,15 +420,22 @@ public class BijectiveComponents {
      * @return  table of this component
      */
     public Context getTable() {
+        if (table == null) {
+            // FIXME: do we use getLattice or getReducedLattice ?
+            table = this.getLattice().getTable();
+        }
         return table;
     }
     /**
      * Set the Table of this component.
      *
      * @param   table  used to define field of this component
+     *
+     * @return  this for chaining
      */
-    protected void setTable(Context table) {
+    protected BijectiveComponents setTable(Context table) {
         this.table = table;
+        return this;
     }
 
 /** Returns the informativ generic basis

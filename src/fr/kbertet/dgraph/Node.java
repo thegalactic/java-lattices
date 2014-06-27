@@ -52,7 +52,7 @@ public class Node implements Comparable<Object> {
     /**
      * The total number of nodes.
      *
-     * Initialized to 0, it is incremented by the constructor,
+     * Initialised to 0, it is incremented by the constructor,
      * and used to inialize the identifier.
      */
    private static int count = 0;

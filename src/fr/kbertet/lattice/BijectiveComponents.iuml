@@ -5,13 +5,15 @@ package fr.kbertet.lattice {
         -Lattice reducedLattice
         -DGraph dependencyGraph
         -TreeSet<ComparableSet> minimalGenerators
-        -IS canonicalDirectBasis
-        -IS canonicalBasis
+        -ImplicationalSystem canonicalDirectBasis
+        -ImplicationalSystem canonicalBasis
         -Context table
         .. Constructors ..
         +BijectiveComponents(ClosureSystem init)
+        .. Computation ..
+        +long compute()
         .. Initialisation ..
-        +long initialize()
+        +BijectiveComponents initialise()
         .. Persistence ..
         +void save(String directory, String name)
         .. Accessors ..
@@ -20,18 +22,18 @@ package fr.kbertet.lattice {
         +Lattice getReducedLattice()
         +DGraph getDependencyGraph()
         +TreeSet<ComparableSet> getMinimalGenerators()
-        +IS getCanonicalDirectBasis()
-        +IS getCanonicalBasis()
+        +ImplicationalSystem getCanonicalDirectBasis()
+        +ImplicationalSystem getCanonicalBasis()
         +Context getTable()
         .. Mutators ..
-        #void setInit(ClosureSystem init)
-        #void setLattice(ConceptLattice lattice)
-        #void setReducedLattice(Lattice reducedLattice)
-        #void setDependencyGraph(DGraph dependencyGraph)
-        #void setMinimalGenerators(TreeSet<ComparableSet> minimalGenerators)
-        #void setCanonicalDirectBasis(IS canonicalDirectBasis)
-        #void setCanonicalBasis(IS canonicalBasis)
-        #void setTable(Context table)
+        #BijectiveComponents setInit(ClosureSystem init)
+        #BijectiveComponents setLattice(ConceptLattice lattice)
+        #BijectiveComponents setReducedLattice(Lattice reducedLattice)
+        #BijectiveComponents setDependencyGraph(DGraph dependencyGraph)
+        #BijectiveComponents setMinimalGenerators(TreeSet<ComparableSet> minimalGenerators)
+        #BijectiveComponents setCanonicalDirectBasis(ImplicationalSystem canonicalDirectBasis)
+        #BijectiveComponents setCanonicalBasis(ImplicationalSystem canonicalBasis)
+        #BijectiveComponents setTable(Context table)
     }
 
     BijectiveComponents *-- "1" ClosureSystem

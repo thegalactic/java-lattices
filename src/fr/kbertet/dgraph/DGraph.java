@@ -680,7 +680,7 @@ public class DGraph {
      */
     public ArrayList<Node> topologicalSort() {
         TreeSet<Node> sinks = this.getSinks();
-        // initialize a map with the number of predecessors (value) for each node (key);
+        // initialise a map with the number of predecessors (value) for each node (key);
         TreeMap<Node, Integer> size = new TreeMap<Node, Integer>();
         for (Node node : this.nodes) {
             size.put(node, new Integer(this.getPredecessorNodes(node).size()));

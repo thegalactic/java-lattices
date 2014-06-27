@@ -601,7 +601,7 @@ public class Lattice extends DAGraph {
      * @return  an implicational system
      */
     public ImplicationalSystem getImplicationalSystem() {
-        // initialization of ImplicationalSystem
+        // initialisation of ImplicationalSystem
         TreeSet<Node> join = this.joinIrreducibles();
         ImplicationalSystem sigma = new ImplicationalSystem();
         for (Node j : join) {
@@ -784,7 +784,7 @@ public class Lattice extends DAGraph {
      */
     public ImplicationalSystem getCanonicalDirectBasis() {
         DGraph odGraph = this.getDependencyGraph();
-        // initialize elements of the ImplicationalSystem with nodes of the ODGraph
+        // initialise elements of the ImplicationalSystem with nodes of the ODGraph
         ImplicationalSystem bcd = new ImplicationalSystem();
         for (Node n : odGraph.getNodes()) {
             bcd.addElement((Comparable) n.getContent());

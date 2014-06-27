@@ -32,7 +32,7 @@ public class BijectiveComponentsTest {
     public void testBijectiveComponent() {
         ImplicationalSystem is = new ImplicationalSystem();
         BijectiveComponents bc = new BijectiveComponents(is);
-        long time = bc.initialize();
+        long time = bc.compute();
         assertTrue(bc.getInit() != null);
         assertTrue(bc.getLattice() != null);
         assertTrue(bc.getReducedLattice() != null);
@@ -43,13 +43,13 @@ public class BijectiveComponentsTest {
         assertTrue(bc.getTable() != null);
     }
     /**
-     * Test the initialize method with an implicationnal system.
+     * Test the compute method with an implicationnal system.
      */
     @Test
     public void testinitalizeIS() {
         ImplicationalSystem is = new ImplicationalSystem();
         BijectiveComponents bc = new BijectiveComponents(is);
-        long time = bc.initialize();
+        long time = bc.compute();
         assertTrue(bc.getInit() != null);
         assertTrue(bc.getLattice() != null);
         assertTrue(bc.getReducedLattice() != null);
@@ -60,13 +60,13 @@ public class BijectiveComponentsTest {
         assertTrue(bc.getTable() != null);
     }
     /**
-     * Test the initialize method with a context.
+     * Test the compute method with a context.
      */
     @Test
     public void testinitalizeContext() {
         Context context = new Context();
         BijectiveComponents bc = new BijectiveComponents(context);
-        long time = bc.initialize();
+        long time = bc.compute();
         assertTrue(bc.getInit() != null);
         assertTrue(bc.getLattice() != null);
         assertTrue(bc.getReducedLattice() != null);
@@ -86,7 +86,7 @@ public class BijectiveComponentsTest {
         try {
             ImplicationalSystem is = new ImplicationalSystem();
             BijectiveComponents bc = new BijectiveComponents(is);
-            long time = bc.initialize();
+            long time = bc.compute();
             File file = File.createTempFile("junit", ".txt");
             String filename = file.getName();
             String directory = file.getParent();

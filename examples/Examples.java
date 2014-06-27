@@ -16,10 +16,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.TreeSet;
-import dgraph.DAGraph;
-import dgraph.DGraph;
-import dgraph.Node;
-import lattice.*;
+import fr.kbertet.dgraph.DAGraph;
+import fr.kbertet.dgraph.DGraph;
+import fr.kbertet.dgraph.Node;
+import fr.kbertet.lattice.*;
 
 /**
  * This class provides some use examples of main classes of this lattice package.
@@ -69,7 +69,7 @@ public class Examples {
     public static void ExampleBijectiveComponentsForIS (String name) throws IOException {
         ImplicationalSystem Init = new ImplicationalSystem (inputDir+name+".txt");                
         BijectiveComponents BC = new BijectiveComponents (Init);
-        double time = BC.initialize();
+        double time = BC.compute();
         BC.save(outputDir,name);
         System.out.println("time: "+time);        
     }
@@ -79,7 +79,7 @@ public class Examples {
     public static void ExampleBijectiveComponentsForContext (String name) throws IOException {
         Context Init = new Context (inputDir+name+".txt");
         BijectiveComponents BC = new BijectiveComponents (Init);
-        double time = BC.initialize();
+        double time = BC.compute();
         BC.save(outputDir, name);
         Init.reverse();
         ConceptLattice CL = Init.closedSetLattice(true);

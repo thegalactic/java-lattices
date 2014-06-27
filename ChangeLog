@@ -27,6 +27,10 @@ $ -> Language fix or change
 
 2014-06-27 Christophe Demko <chdemko@gmail.com>
 	* all files:
+		# Compute information at demand
+
+2014-06-27 Christophe Demko <chdemko@gmail.com>
+	* all files:
 		^ Add fr.kbertet package prefix
 
 2014-06-27 Christophe Demko <chdemko@gmail.com>

@@ -167,21 +167,21 @@ public class ConceptLatticeTest {
     }
 
     /**
-     * Test of initializeSetAForJoin method, of class ConceptLattice.
+     * Test of initialiseSetAForJoin method, of class ConceptLattice.
      */
     @Test
-    public void testInitializeSetAForJoin() {
+    public void testInitialiseSetAForJoin() {
         ConceptLattice instance = new ConceptLattice();
-        assertTrue(instance.initializeSetAForJoin());
+        assertTrue(instance.initialiseSetAForJoin());
     }
 
     /**
-     * Test of initializeSetBForMeet method, of class ConceptLattice.
+     * Test of initialiseSetBForMeet method, of class ConceptLattice.
      */
     @Test
-    public void testInitializeSetBForMeet() {
+    public void testInitialiseSetBForMeet() {
         ConceptLattice instance = new ConceptLattice();
-        assertTrue(instance.initializeSetBForMeet());
+        assertTrue(instance.initialiseSetBForMeet());
     }
 
     /**

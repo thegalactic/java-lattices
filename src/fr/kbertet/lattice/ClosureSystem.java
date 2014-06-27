@@ -246,9 +246,9 @@ public abstract class ClosureSystem {
     public TreeMap<Object, TreeSet> getReducibleElements() {
         // If you can't remove nodes, put them in the rubbish bin ...
         TreeSet<Node> rubbishBin = new TreeSet<Node>();
-        // Initialize a map Red of reducible attributes
+        // Initialise a map Red of reducible attributes
         TreeMap<Object, TreeSet> red = new TreeMap();
-        // Initialize the precedence graph G of the closure system
+        // Initialise the precedence graph G of the closure system
         DGraph graph = this.precedenceGraph();
         // First, compute each group of equivalent attributes
         // This group will be a strongly connected component on the graph.
