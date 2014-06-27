@@ -8,8 +8,8 @@ package fr.kbertet.lattice {
         +Object getLeft()
         +Object getRight()
         .. Mutators ..
-        +void setLeft(Object left)
-        +void setRight(Object right)
+        +Couple setLeft(Object left)
+        +Couple setRight(Object right)
         .. Transformers ..
         +String toString()
         .. Predicates ..

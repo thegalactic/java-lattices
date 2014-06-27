@@ -57,9 +57,12 @@ public class Couple {
      * Set left hand side of this component.
      *
      * @param   left  hand side of this component
+     *
+     * @return  this for chaining
      */
-    public void setLeft(Object left) {
+    public Couple setLeft(Object left) {
         this.left = left;
+        return this;
     }
 
     /**
@@ -75,9 +78,12 @@ public class Couple {
      * Set right hand side of this component.
      *
      * @param   right  hand side of this component
+     *
+     * @return  this for chaining
      */
-    public void setRight(Object right) {
+    public Couple setRight(Object right) {
         this.right = right;
+        return this;
     }
 
     /**

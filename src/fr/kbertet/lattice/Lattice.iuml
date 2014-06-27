@@ -30,7 +30,7 @@ package fr.kbertet.lattice {
         +ImplicationalSystem getImplicationalSystem()
 
         +DGraph getDependencyGraph()
-        #setDependencyGraph(DGraph graph)
+        #Lattice setDependencyGraph(DGraph graph)
         #hasDependencyGraph()
         +ImplicationalSystem getCanonicalDirectBasis()
         +TreeSet getMinimalGenerators()

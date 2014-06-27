@@ -753,9 +753,12 @@ public class Lattice extends DAGraph {
      * Set the dependency graph.
      *
      * @param   graph  the dependency graph
+     *
+     * @return  this for chaining
      */
-    protected void setDependencyGraph(DGraph graph) {
+    protected Lattice setDependencyGraph(DGraph graph) {
         this.dependencyGraph = graph;
+        return this;
     }
 
     /**

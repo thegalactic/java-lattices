@@ -9,7 +9,7 @@ package fr.kbertet.lattice {
         +int[] getContent()
         .. Mutators ..
         +boolean setLength()
-        +void setContent()
+        +Permutation setContent()
         .. Transformers ..
         +String toString()
         .. Predicates ..

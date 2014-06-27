@@ -81,10 +81,13 @@ public class Permutation {
      * Length of this component is update by this method.
      *
      * @param   c  the transformation coded in this component.
+     *
+     * @return  this for chaining
      */
-    public void setContent(int[] c) {
+    public Permutation setContent(int[] c) {
         this.content = c;
         this.length = c.length;
+        return this;
     }
 
     /**

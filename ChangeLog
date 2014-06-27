@@ -26,6 +26,15 @@ $ -> Language fix or change
 ! -> Note
 
 2014-06-27 Christophe Demko <chdemko@gmail.com>
+	* src/fr/kbertet/lattice/Couple.iuml
+	* src/fr/kbertet/lattice/Couple.java
+	* src/fr/kbertet/lattice/Lattice.iuml
+	* src/fr/kbertet/lattice/Lattice.java
+	* src/fr/kbertet/lattice/Permutation.iuml
+	* src/fr/kbertet/lattice/Permutation.java
+		^ Setters return this for chaining
+
+2014-06-27 Christophe Demko <chdemko@gmail.com>
 	* doc/api/README.md
 	* examples/Examples.java
 	* src/fr/kbertet/dgraph/DGraph.java
