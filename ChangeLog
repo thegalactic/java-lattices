@@ -25,6 +25,10 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-06-28 Jean-François Viaud <jviaud@univ-lr.fr>
+	* doc/tutorial/generate_tutorial.sh
+		^ Correct classpath issues
+
 2014-06-27 Christophe Demko <chdemko@gmail.com>
 	* src/fr/kbertet/dgraph/package-info.java
 	* src/fr/kbertet/lattice/Couple.iuml
