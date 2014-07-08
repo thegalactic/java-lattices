@@ -25,6 +25,12 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-07-08 Christophe Demko <chdemko@gmail.com>
+	* src/fr/kbertet/lattice/BijectiveComponents.java
+	* test/fr/kbertet/lattice/BijectiveComponentsTest.java
+		^ Use getReducedLattice method
+		^ Use setClosureSystem and getClosureSystem instead of setInit and getInit in BijectiveComponents
+
 2014-06-28 Jean-François Viaud <jviaud@univ-lr.fr>
 	* doc/tutorial/generate_tutorial.sh
 		^ Correct classpath issues

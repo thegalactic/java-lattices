@@ -33,7 +33,7 @@ public class BijectiveComponentsTest {
         ImplicationalSystem is = new ImplicationalSystem();
         BijectiveComponents bc = new BijectiveComponents(is);
         long time = bc.compute();
-        assertTrue(bc.getInit() != null);
+        assertTrue(bc.getClosureSystem() != null);
         assertTrue(bc.getLattice() != null);
         assertTrue(bc.getReducedLattice() != null);
         assertTrue(bc.getDependencyGraph() != null);
@@ -46,11 +46,11 @@ public class BijectiveComponentsTest {
      * Test the compute method with an implicationnal system.
      */
     @Test
-    public void testinitalizeIS() {
+    public void testCompute() {
         ImplicationalSystem is = new ImplicationalSystem();
         BijectiveComponents bc = new BijectiveComponents(is);
         long time = bc.compute();
-        assertTrue(bc.getInit() != null);
+        assertTrue(bc.getClosureSystem() != null);
         assertTrue(bc.getLattice() != null);
         assertTrue(bc.getReducedLattice() != null);
         assertTrue(bc.getDependencyGraph() != null);
@@ -67,7 +67,7 @@ public class BijectiveComponentsTest {
         Context context = new Context();
         BijectiveComponents bc = new BijectiveComponents(context);
         long time = bc.compute();
-        assertTrue(bc.getInit() != null);
+        assertTrue(bc.getClosureSystem() != null);
         assertTrue(bc.getLattice() != null);
         assertTrue(bc.getReducedLattice() != null);
         assertTrue(bc.getDependencyGraph() != null);
@@ -130,23 +130,23 @@ public class BijectiveComponentsTest {
         } catch (IOException e) { System.out.println("IOException : " + e.getMessage()); }
     }
     /**
-     * Test the getInit method.
+     * Test the getClosureSystem method.
      */
     @Test
-    public void testgetInit() {
+    public void testgetClosureSystem() {
         ImplicationalSystem is = new ImplicationalSystem();
         BijectiveComponents bc = new BijectiveComponents(is);
-        assertEquals(bc.getInit(), is);
+        assertEquals(bc.getClosureSystem(), is);
     }
     /**
-     * Test the setInit method.
+     * Test the setClosureSystem method.
      */
     @Test
-    public void testsetInit() {
+    public void testsetClosureSystem() {
         ImplicationalSystem is = new ImplicationalSystem();
         BijectiveComponents bc = new BijectiveComponents(is);
-        bc.setInit(is);
-        assertEquals(bc.getInit(), is);
+        bc.setClosureSystem(is);
+        assertEquals(bc.getClosureSystem(), is);
     }
     /**
      * Test the setLattice method.
