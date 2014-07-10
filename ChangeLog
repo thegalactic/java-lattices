@@ -25,6 +25,8 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+-------------------- 1.0.0 Release [2014-07-10] ------------------
+
 2014-07-08 Christophe Demko <chdemko@gmail.com>
 	* src/fr/kbertet/lattice/BijectiveComponents.java
 	* test/fr/kbertet/lattice/BijectiveComponentsTest.java
