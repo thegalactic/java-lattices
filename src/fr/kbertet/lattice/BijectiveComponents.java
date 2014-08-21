@@ -31,7 +31,7 @@ import java.util.TreeSet;
  * system described by class {@link ImplicationalSystem}) or a context described by
  * class {@link Context}).
  *
- * This class provides a constructor, and only two methods: the method {@link #initialise}
+ * This class provides a constructor, and only two methods: the method {@link #compute}
  * generates all the bijective components of the specified closure system; and the method
  * {@link #save} saves theses components in files.
  *
@@ -61,7 +61,7 @@ public class BijectiveComponents {
      * The initial closure system.
      */
 
-    private ClosureSystem init;
+    private ClosureSystem closureSystem;
 
     /**
      * The closed set lattice of the closure system when closure system is an implicational system.
@@ -103,21 +103,21 @@ public class BijectiveComponents {
     /**
      * Constructs this component with the specified Closure System as initial closure system.
      *
-     * @param   init  initial closure system
+     * @param   closureSystem  initial closure system
      */
-    public BijectiveComponents(ClosureSystem init) {
-        this.initialise(init);
+    public BijectiveComponents(ClosureSystem closureSystem) {
+        this.initialise(closureSystem);
     }
 
     /**
      * Initialise the closure system.
      *
-     * @param   init  initial closure system
+     * @param   closureSystem  initial closure system
      *
      * @return  this for chaining
      */
-    public BijectiveComponents initialise(ClosureSystem init) {
-        this.init = init;
+    public BijectiveComponents initialise(ClosureSystem closureSystem) {
+        this.closureSystem = closureSystem;
         this.lattice = null;
         this.reducedLattice = null;
         this.table = null;
@@ -130,42 +130,42 @@ public class BijectiveComponents {
 
     /**
      * Generates all the bijective components included in this component
-     * issued from the initial closure system `init`.
+     * issued from the initial closure system `closureSystem`.
      *
      * The closed set lattice is generated and obtained by
      *
      * ~~~Java
-     * this.init.lattice();
+     * this.getClosureSystem().lattice();
      * ~~~
      *
      * The reduced lattice is obtained by
      *
      * ~~~Java
-     * this.lattice.getIrreduciblesReduction();
+     * this.getLattice().getIrreduciblesReduction();
      * ~~~
      *
      * The reduced table is obtained by
      *
      * ~~~Java
-     * this.reducedLattice.getTable();
+     * this.getReducedLattice().getTable();
      * ~~~
      *
      * The dependency graph is obtained by
      *
      * ~~~Java
-     * this.reducedLattice.getDependencyGraph();
+     * this.getReducedLattice().getDependencyGraph();
      * ~~~
      *
      * Minimal generators are obtained by
      *
      * ~~~Java
-     * this.reducedLattice.getMinimalGenerators();
+     * this.getReducedLattice().getMinimalGenerators();
      * ~~~
      *
      * The canonical direct basis is obtained by
      *
      * ~~~Java
-     * this.reducedLattice.getCanonicalDirectBasis();
+     * this.getReducedLattice().getCanonicalDirectBasis();
      * ~~~
      *
      * The canonical basis is obtained by
@@ -177,7 +177,7 @@ public class BijectiveComponents {
      * @return  time of computation
      */
     public long compute() {
-        this.initialise(init);
+        this.initialise(closureSystem);
         long debut = new Date().getTime();
         this.getLattice();
         this.getReducedLattice();
@@ -211,9 +211,9 @@ public class BijectiveComponents {
         BufferedWriter file = new BufferedWriter(new FileWriter(directory + "Readme.txt"));
         // saves the inital closure system
         String nameInit = directory + "InitialClosureSystem.txt";
-        this.init.save(nameInit);
+        this.closureSystem.save(nameInit);
         file.write("-> Initial closure system saved in " + nameInit + ": \n");
-        file.write(this.init.toString() + "\n");
+        file.write(this.closureSystem.toString() + "\n");
         // saves the closed set lattice
         String nameLattice = directory + "Lattice.dot";
         this.getLattice().save(nameLattice);
@@ -247,23 +247,23 @@ public class BijectiveComponents {
     }
 
     /**
-     * Returns the Init of this component.
+     * Returns the closure system of this component.
      *
-     * @return  init of this component
+     * @return  closure system of this component
      */
-    public ClosureSystem getInit() {
-        return init;
+    public ClosureSystem getClosureSystem() {
+        return closureSystem;
     }
 
     /**
-     * Set the Init of this component.
+     * Set the closure system of this component.
      *
-     * @param   init  used to define field of this component
+     * @param   closureSystem  used to define field of this component
      *
      * @return  this for chaining
      */
-    protected BijectiveComponents setInit(ClosureSystem init) {
-        this.init = init;
+    protected BijectiveComponents setClosureSystem(ClosureSystem closureSystem) {
+        this.closureSystem = closureSystem;
         return this;
     }
 
@@ -274,7 +274,7 @@ public class BijectiveComponents {
      */
     public ConceptLattice getLattice() {
         if (lattice == null) {
-            lattice = this.init.lattice();
+            lattice = this.closureSystem.lattice();
         }
         return lattice;
     }
@@ -323,7 +323,7 @@ public class BijectiveComponents {
     public DGraph getDependencyGraph() {
         if (dependencyGraph == null) {
             // FIXME: do we use getLattice or getReducedLattice ?
-            dependencyGraph = this.getLattice().getDependencyGraph();
+            dependencyGraph = this.getReducedLattice().getDependencyGraph();
         }
         return dependencyGraph;
     }
@@ -348,7 +348,7 @@ public class BijectiveComponents {
     public TreeSet<ComparableSet> getMinimalGenerators() {
         if (minimalGenerators == null) {
             // FIXME: do we use getLattice or getReducedLattice ?
-            minimalGenerators = this.getLattice().getMinimalGenerators();
+            minimalGenerators = this.getReducedLattice().getMinimalGenerators();
         }
         return minimalGenerators;
     }
@@ -373,7 +373,7 @@ public class BijectiveComponents {
     public ImplicationalSystem getCanonicalDirectBasis() {
         if (canonicalDirectBasis == null) {
             // FIXME: do we use getLattice or getReducedLattice ?
-            canonicalDirectBasis = this.getLattice().getCanonicalDirectBasis();
+            canonicalDirectBasis = this.getReducedLattice().getCanonicalDirectBasis();
         }
         return canonicalDirectBasis;
     }
@@ -423,7 +423,7 @@ public class BijectiveComponents {
     public Context getTable() {
         if (table == null) {
             // FIXME: do we use getLattice or getReducedLattice ?
-            table = this.getLattice().getTable();
+            table = this.getReducedLattice().getTable();
         }
         return table;
     }
