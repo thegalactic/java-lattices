@@ -25,6 +25,15 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-08-21 Jean-François Viaud <jviaud@univ-lr.fr>
+	+ src/fr/kbertet/lattice/io/ContextReaderBurmeister.java
+	+ src/fr/kbertet/lattice/io/ContextReaderBurmeister.iuml
+	+ src/fr/kbertet/lattice/io/ContextWriterBurmeister.java
+	+ src/fr/kbertet/lattice/io/ContextWriterBurmeister.iuml
+	* src/fr/kbertet/lattice/Context.java
+	* test/fr/kbertet/lattice/ContextText.java
+	+ examples/cxt
+
 2014-06-28 Jean-François Viaud <jviaud@univ-lr.fr>
 	* doc/tutorial/generate_tutorial.sh
 		^ Correct classpath issues

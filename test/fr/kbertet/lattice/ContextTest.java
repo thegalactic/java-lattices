@@ -58,12 +58,44 @@ public class ContextTest {
     }
 
     /**
-     * Test the constructor from file of Context.
+     * Test the constructor from file .txt of Context.
      */
     @Test
-    public void testFileContext() {
+    public void testFileContextText() {
         try {
             File file = File.createTempFile("junit", ".txt");
+            String filename = file.getName();
+            file.delete();
+            Context context = new Context();
+            context.addToAttributes("a");
+            context.addToAttributes("b");
+            context.addToAttributes("c");
+            context.addToObservations("1");
+            context.addToObservations("2");
+            context.addToObservations("3");
+            context.addExtentIntent("1", "a");
+            context.addExtentIntent("1", "b");
+            context.addExtentIntent("2", "a");
+            context.addExtentIntent("3", "b");
+            context.addExtentIntent("3", "c");
+            context.save(filename);
+            Context copy = new Context(filename);
+            assertEquals(context.getAttributes(), copy.getAttributes());
+            assertEquals(context.getObservations(), copy.getObservations());
+            assertEquals(context.getIntent("1"), copy.getIntent("1"));
+            assertEquals(context.getExtent("c"), copy.getExtent("c"));
+            new File(filename).delete();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+/**
+     * Test the constructor from file .cxt of Context.
+     */
+    @Test
+    public void testFileContextBurmeister() {
+        try {
+            File file = File.createTempFile("junit", ".cxt");
             String filename = file.getName();
             file.delete();
             Context context = new Context();
