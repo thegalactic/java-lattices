@@ -1,0 +1,10 @@
+package fr.kbertet.lattice.io {
+    class ContextWriterBurmeister {
+    	-{static}ContextWriterBurmeister instance
+        +void write(Context context, BufferedWriter file)
+        +{static}ContextWriterBurmeister getInstance()
+        +{static}void register()
+    }
+
+    ContextWriter <|-- ContextWriterBurmeister
+}

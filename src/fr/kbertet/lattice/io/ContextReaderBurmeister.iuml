@@ -1,0 +1,10 @@
+package fr.kbertet.lattice.io {
+    class ContextReaderBurmeister {
+    	-{static}ContextReaderBurmeister instance
+        +void read(Context context, BufferedReader file)
+        +{static}ContextReaderBurmeister getInstance()
+        +{static}void register()
+    }
+
+    ContextReader <|-- ContextReaderBurmeister
+}
