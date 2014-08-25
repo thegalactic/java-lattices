@@ -89,7 +89,7 @@ public class ContextTest {
             e.printStackTrace();
         }
     }
-/**
+    /**
      * Test the constructor from file .cxt of Context.
      */
     @Test
@@ -122,6 +122,36 @@ public class ContextTest {
         }
     }
 
+    /**
+     * Test the constructor from file .dat of Context.
+     */
+    @Test
+    public void testFileContextFIMI() {
+        try {
+            File file = File.createTempFile("junit", ".dat");
+            String filename = file.getName();
+            file.delete();
+            Context context = new Context();
+            context.addToAttributes("a");
+            context.addToAttributes("b");
+            context.addToAttributes("c");
+            context.addToObservations("1");
+            context.addToObservations("2");
+            context.addToObservations("3");
+            context.addExtentIntent("1", "a");
+            context.addExtentIntent("1", "b");
+            context.addExtentIntent("2", "a");
+            context.addExtentIntent("3", "b");
+            context.addExtentIntent("3", "c");
+            context.save(filename);
+            Context copy = new Context(filename);
+            assertEquals(context.getAttributes().size(), copy.getAttributes().size());
+            assertEquals(context.getObservations().size(), copy.getObservations().size());
+            new File(filename).delete();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * Test random method.
      */

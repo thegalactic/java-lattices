@@ -25,6 +25,14 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-08-25 Jean-François Viaud <jviaud@univ-lr.fr>
+	+ src/fr/kbertet/lattice/io/ContextReaderFIMI.java
+	+ src/fr/kbertet/lattice/io/ContextReaderFIMI.iuml
+	+ src/fr/kbertet/lattice/io/ContextWriterFIMI.java
+	+ src/fr/kbertet/lattice/io/ContextWriterFIMI.iuml
+	* src/fr/kbertet/lattice/Context.java
+	* test/fr/kbertet/lattice/ContextText.java
+
 2014-08-21 Jean-François Viaud <jviaud@univ-lr.fr>
 	+ src/fr/kbertet/lattice/io/ContextReaderBurmeister.java
 	+ src/fr/kbertet/lattice/io/ContextReaderBurmeister.iuml

@@ -13,9 +13,11 @@ package fr.kbertet.lattice;
 
 import fr.kbertet.dgraph.Node;
 import fr.kbertet.lattice.io.ContextReaderBurmeister;
+import fr.kbertet.lattice.io.ContextReaderFIMI;
 import fr.kbertet.lattice.io.ContextReaderFactory;
 import fr.kbertet.lattice.io.ContextReaderText;
 import fr.kbertet.lattice.io.ContextWriterBurmeister;
+import fr.kbertet.lattice.io.ContextWriterFIMI;
 import fr.kbertet.lattice.io.ContextWriterFactory;
 import fr.kbertet.lattice.io.ContextWriterText;
 import java.io.BufferedReader;
@@ -95,6 +97,12 @@ public class Context extends ClosureSystem {
         }
         if (ContextReaderFactory.get("cxt") == null) {
             ContextReaderBurmeister.register();
+        }
+        if (ContextWriterFactory.get("dat") == null) {
+            ContextWriterFIMI.register();
+        }
+        if (ContextReaderFactory.get("dat") == null) {
+            ContextReaderFIMI.register();
         }
     }
 

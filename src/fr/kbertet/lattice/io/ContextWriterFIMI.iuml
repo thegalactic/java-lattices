@@ -1,0 +1,10 @@
+package fr.kbertet.lattice.io {
+    class ContextWriterFIMI {
+    	-{static}ContextWriterFIMI instance
+        +void write(Context context, BufferedWriter file)
+        +{static}ContextWriterFIMI getInstance()
+        +{static}void register()
+    }
+
+    ContextWriter <|-- ContextWriterFIMI
+}
