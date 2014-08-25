@@ -70,7 +70,7 @@ public final class ContextWriterFIMI implements ContextWriter {
      *
      * Each line corresponds to an observation
      * Each line is made of a list of integers corresponding to attributes separated by a space
-     * 
+     *
      * ~~~
      * 1 3
      * 2 4 5
@@ -93,7 +93,7 @@ public final class ContextWriterFIMI implements ContextWriter {
         }
         for (Comparable obs : context.getObservations()) {
             for (Comparable att : context.getIntent(obs)) {
-                file.write(map.get(att)+" ");
+                file.write(map.get(att) + " ");
             }
             file.write("\n");
         }

@@ -70,7 +70,7 @@ public final class ContextReaderFIMI implements ContextReader {
      *
      * Each line corresponds to an observation
      * Each line is made of a list of integers corresponding to attributes separated by a space
-     * 
+     *
      * ~~~
      * 1 3
      * 2 4 5
@@ -81,7 +81,7 @@ public final class ContextReaderFIMI implements ContextReader {
      * For reading convinience, observations are labelled with 'O' + LineNumber.
      *
      * Be careful when using a downloaded file : an empty line at the end of the file gives an observation with no attributes
-     * 
+     *
      * @param   context  a context to read
      * @param   file     a file
      *
