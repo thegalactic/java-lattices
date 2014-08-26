@@ -13,9 +13,11 @@ package fr.kbertet.lattice;
 
 import fr.kbertet.dgraph.Node;
 import fr.kbertet.lattice.io.ContextReaderBurmeister;
+import fr.kbertet.lattice.io.ContextReaderFIMI;
 import fr.kbertet.lattice.io.ContextReaderFactory;
 import fr.kbertet.lattice.io.ContextReaderText;
 import fr.kbertet.lattice.io.ContextWriterBurmeister;
+import fr.kbertet.lattice.io.ContextWriterFIMI;
 import fr.kbertet.lattice.io.ContextWriterFactory;
 import fr.kbertet.lattice.io.ContextWriterText;
 import java.io.BufferedReader;
@@ -95,6 +97,12 @@ public class Context extends ClosureSystem {
         }
         if (ContextReaderFactory.get("cxt") == null) {
             ContextReaderBurmeister.register();
+        }
+        if (ContextWriterFactory.get("dat") == null) {
+            ContextWriterFIMI.register();
+        }
+        if (ContextReaderFactory.get("dat") == null) {
+            ContextReaderFIMI.register();
         }
     }
 
@@ -277,6 +285,27 @@ public class Context extends ClosureSystem {
         return ctx;
     }
 
+    /**
+     * Returns subcontext with selected obs and attr.
+     *
+     * @param obs : observations to be keeped
+     * @param attr : attributes to be keeped
+     * @return subcontext with selected obs and attr.
+     */
+    public Context getSubContext(TreeSet<Comparable> obs, TreeSet<Comparable> attr) {
+        Context ctx = new Context();
+        ctx.addAllToAttributes(attr);
+        ctx.addAllToObservations(obs);
+        for (Comparable o : obs) {
+            for (Comparable a : attr) {
+                if (this.getIntent(o).contains(a)) {
+                    ctx.addExtentIntent(o, a);
+                }
+            }
+        }
+        ctx.setBitSets();
+        return ctx;
+    }
     /* --------------- HANDLING METHODS FOR ATTRIBUTES AND OBSERVATIONS ------------ */
 
    /**

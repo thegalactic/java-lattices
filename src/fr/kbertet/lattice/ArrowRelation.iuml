@@ -6,6 +6,8 @@ package fr.kbertet.lattice {
         +void writeLaTex(String filename)
         .. Operations ..
         +Context getDoubleArrowTable()
+        +Context getDoubleUpArrowTable()
+        +Context getDoubleDownArrowTable()
         +Context getDoubleCircArrowTable()
     }
 

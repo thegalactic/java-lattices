@@ -11,8 +11,8 @@ package fr.kbertet.lattice;
  * it under the terms of CeCILL-B license.
  */
 
-import java.util.TreeSet;
 import java.io.File;
+import java.util.TreeSet;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -89,7 +89,7 @@ public class ContextTest {
             e.printStackTrace();
         }
     }
-/**
+    /**
      * Test the constructor from file .cxt of Context.
      */
     @Test
@@ -123,6 +123,36 @@ public class ContextTest {
     }
 
     /**
+     * Test the constructor from file .dat of Context.
+     */
+    @Test
+    public void testFileContextFIMI() {
+        try {
+            File file = File.createTempFile("junit", ".dat");
+            String filename = file.getName();
+            file.delete();
+            Context context = new Context();
+            context.addToAttributes("a");
+            context.addToAttributes("b");
+            context.addToAttributes("c");
+            context.addToObservations("1");
+            context.addToObservations("2");
+            context.addToObservations("3");
+            context.addExtentIntent("1", "a");
+            context.addExtentIntent("1", "b");
+            context.addExtentIntent("2", "a");
+            context.addExtentIntent("3", "b");
+            context.addExtentIntent("3", "c");
+            context.save(filename);
+            Context copy = new Context(filename);
+            assertEquals(context.getAttributes().size(), copy.getAttributes().size());
+            assertEquals(context.getObservations().size(), copy.getObservations().size());
+            new File(filename).delete();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    /**
      * Test random method.
      */
     @Test
@@ -132,6 +162,23 @@ public class ContextTest {
         assertEquals(ctx.getAttributes().size(), 1060);
     }
 
+    /**
+     * Test getSubContext method.
+     */
+    @Test
+    public void testGetSubContext() {
+        Context ctx = new Context();
+        ctx.addToAttributes(1);
+        ctx.addToAttributes(2);
+        ctx.addToObservations("a");
+        ctx.addToObservations("b");
+        ctx.addExtentIntent("a", 1);
+        Context sub = ctx.getSubContext(ctx.getObservations(), ctx.getAttributes());
+        assertTrue(sub.containsAllObservations(ctx.getObservations()));
+        assertTrue(sub.containsAllAttributes(ctx.getAttributes()));
+        assertTrue(sub.containAsExtent(1, "a"));
+        assertTrue(sub.containAsIntent("a", 1));
+    }
     /**
      * Test of containsAttribute.
      */

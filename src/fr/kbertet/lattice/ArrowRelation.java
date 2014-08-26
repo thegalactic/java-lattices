@@ -181,6 +181,60 @@ public class ArrowRelation extends DGraph  {
      * Each attribute of the table is a copy of a join irreducibles node.
      * Each observation of the table is a copy of a meet irreducibles node.
      * An attribute is extent of an observation when its join irreducible node
+     * is in down arrow relation with the meet irreducible node in the lattice.
+     *
+     * @return  the table of the lattice
+     */
+    public Context getDoubleDownArrowTable() {
+        Context context = new Context();
+        // observations are join irreductibles
+        // attributes are meet irreductibles
+        for (Edge e : this.getEdges()) {
+            context.addToObservations(e.getFrom());
+            context.addToAttributes(e.getTo());
+        }
+        // generation of extent-intent
+        for (Edge e : this.getEdges()) {
+            if (e.getContent() == this.down || e.getContent() == this.updown) {
+                context.addExtentIntent(e.getFrom(), e.getTo());
+            }
+        }
+        return context;
+    }
+
+    /**
+     * Returns the table of the lattice, composed of the join and meet irreducibles nodes.
+     *
+     * Each attribute of the table is a copy of a join irreducibles node.
+     * Each observation of the table is a copy of a meet irreducibles node.
+     * An attribute is extent of an observation when its join irreducible node
+     * is in up arrow relation with the meet irreducible node in the lattice.
+     *
+     * @return  the table of the lattice
+     */
+    public Context getDoubleUpArrowTable() {
+        Context context = new Context();
+        // observations are join irreductibles
+        // attributes are meet irreductibles
+        for (Edge e : this.getEdges()) {
+            context.addToObservations(e.getFrom());
+            context.addToAttributes(e.getTo());
+        }
+        // generation of extent-intent
+        for (Edge e : this.getEdges()) {
+            if (e.getContent() == this.up || e.getContent() == this.updown) {
+                context.addExtentIntent(e.getFrom(), e.getTo());
+            }
+        }
+        return context;
+    }
+
+    /**
+     * Returns the table of the lattice, composed of the join and meet irreducibles nodes.
+     *
+     * Each attribute of the table is a copy of a join irreducibles node.
+     * Each observation of the table is a copy of a meet irreducibles node.
+     * An attribute is extent of an observation when its join irreducible node
      * is in double arrow relation or circ relation with the meet irreducible node in the lattice.
      *
      * @return  the table of the lattice
