@@ -69,6 +69,46 @@ public class ArrowRelationTest {
     } catch (IOException e) { System.out.println("IOException : " + e.getMessage()); }
 }
     /**
+     * Test the getDoubleUpArrowTable method.
+     */
+    @Test
+    public void testGetDoubleUpArrowTable() {
+        Lattice l = new Lattice();
+        Node a = new Node("a"); l.addNode(a);
+        Node b = new Node("b"); l.addNode(b);
+        Node c = new Node("c"); l.addNode(c);
+        Node d = new Node("d"); l.addNode(d);
+        Node e = new Node("e"); l.addNode(e);
+        l.addEdge(a, b);
+        l.addEdge(b, c);
+        l.addEdge(c, e);
+        l.addEdge(a, d);
+        l.addEdge(d, e);
+        ArrowRelation ar = new ArrowRelation(l);
+        Context ctx = ar.getDoubleUpArrowTable();
+        assertTrue(ctx.getIntent(c).contains(d));
+    }
+    /**
+     * Test the getDownArrowTable method.
+     */
+    @Test
+    public void testGetDoubleDownArrowTable() {
+        Lattice l = new Lattice();
+        Node a = new Node("a"); l.addNode(a);
+        Node b = new Node("b"); l.addNode(b);
+        Node c = new Node("c"); l.addNode(c);
+        Node d = new Node("d"); l.addNode(d);
+        Node e = new Node("e"); l.addNode(e);
+        l.addEdge(a, b);
+        l.addEdge(b, c);
+        l.addEdge(c, e);
+        l.addEdge(a, d);
+        l.addEdge(d, e);
+        ArrowRelation ar = new ArrowRelation(l);
+        Context ctx = ar.getDoubleDownArrowTable();
+        assertTrue(ctx.getIntent(d).contains(b));
+    }
+    /**
      * Test getDoubleArrowTable method.
      */
     @Test

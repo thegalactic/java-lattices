@@ -11,8 +11,8 @@ package fr.kbertet.lattice;
  * it under the terms of CeCILL-B license.
  */
 
-import java.util.TreeSet;
 import java.io.File;
+import java.util.TreeSet;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -162,6 +162,23 @@ public class ContextTest {
         assertEquals(ctx.getAttributes().size(), 1060);
     }
 
+    /**
+     * Test getSubContext method.
+     */
+    @Test
+    public void testGetSubContext() {
+        Context ctx = new Context();
+        ctx.addToAttributes(1);
+        ctx.addToAttributes(2);
+        ctx.addToObservations("a");
+        ctx.addToObservations("b");
+        ctx.addExtentIntent("a", 1);
+        Context sub = ctx.getSubContext(ctx.getObservations(), ctx.getAttributes());
+        assertTrue(sub.containsAllObservations(ctx.getObservations()));
+        assertTrue(sub.containsAllAttributes(ctx.getAttributes()));
+        assertTrue(sub.containAsExtent(1, "a"));
+        assertTrue(sub.containAsIntent("a", 1));
+    }
     /**
      * Test of containsAttribute.
      */

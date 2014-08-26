@@ -25,6 +25,14 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-08-26 Jean-François Viaud <jviaud@univ-lr.fr>
+	* src/fr/kbertet/lattice/ArrowRelation.java
+	* src/fr/kbertet/lattice/ArrowRelation.iuml
+	* test/fr/kbertet/lattice/ArrowRelationTest.java
+	* src/fr/kbertet/lattice/Context.java
+	* src/fr/kbertet/lattice/Context.iuml
+	* test/fr/kbertet/lattice/ContextTest.java
+
 2014-08-25 Jean-François Viaud <jviaud@univ-lr.fr>
 	+ src/fr/kbertet/lattice/io/ContextReaderFIMI.java
 	+ src/fr/kbertet/lattice/io/ContextReaderFIMI.iuml

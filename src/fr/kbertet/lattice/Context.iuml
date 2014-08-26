@@ -19,6 +19,7 @@ package fr.kbertet.lattice {
         +Context(TreeSet<String> linkFilesName, int thresholdBinary)
         .. Generators ..
         {static}+Context random(int nbObs, int nbGrp, int nbAttrPerGrp)
+        +Context getSubContext(TreeSet<Comparable> obs, TreeSet<Comparable> attr)
         .. Accessors ..
         +TreeSet<Comparable> getAttributes()
         +TreeSet<Comparable> getObservations()

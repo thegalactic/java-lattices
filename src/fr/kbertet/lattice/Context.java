@@ -285,6 +285,27 @@ public class Context extends ClosureSystem {
         return ctx;
     }
 
+    /**
+     * Returns subcontext with selected obs and attr.
+     *
+     * @param obs : observations to be keeped
+     * @param attr : attributes to be keeped
+     * @return subcontext with selected obs and attr.
+     */
+    public Context getSubContext(TreeSet<Comparable> obs, TreeSet<Comparable> attr) {
+        Context ctx = new Context();
+        ctx.addAllToAttributes(attr);
+        ctx.addAllToObservations(obs);
+        for (Comparable o : obs) {
+            for (Comparable a : attr) {
+                if (this.getIntent(o).contains(a)) {
+                    ctx.addExtentIntent(o, a);
+                }
+            }
+        }
+        ctx.setBitSets();
+        return ctx;
+    }
     /* --------------- HANDLING METHODS FOR ATTRIBUTES AND OBSERVATIONS ------------ */
 
    /**
