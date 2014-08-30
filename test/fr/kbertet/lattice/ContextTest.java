@@ -458,7 +458,7 @@ public class ContextTest {
         int count = 0;
         for (Node n : l.getNodes()) {
             Couple c = (Couple) n.getContent();
-            if ((boolean) c.getRight()) {
+            if (c.getRight().toString() == "true") {
                 count++;
             }
         }
