@@ -25,6 +25,19 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-08-30 Jean-François Viaud <jviaud@univ-lr.fr>
+	+ examples/cxt/subdirectdecomp.cxt
+	+ src/fr/kbertet/lattice/ConceptLattice.iuml
+	+ src/fr/kbertet/lattice/ConceptLattice.java
+		^ added getConcept method
+	+ src/fr/kbertet/lattice/Context.iuml
+	+ src/fr/kbertet/lattice/Context.java
+		^ added arrowClosedA method
+		^ added arrowClosedO method
+		^ added subDirectDecomposition method
+	+ test/fr/kbertet/lattice/ConceptLatticeTest.java
+	+ test/fr/kbertet/lattice/ContextTest.java
+
 2014-08-26 Jean-François Viaud <jviaud@univ-lr.fr>
 	* src/fr/kbertet/lattice/ArrowRelation.java
 	* src/fr/kbertet/lattice/ArrowRelation.iuml

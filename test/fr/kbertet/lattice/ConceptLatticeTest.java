@@ -19,6 +19,7 @@ import java.util.Scanner;
 import java.io.File;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -148,6 +149,16 @@ public class ConceptLatticeTest {
         assertEquals(1, result.getEdges().size());
     }
 
+    /**
+     * Test of getConcept method.
+     */
+    @Test
+    public void testGetConcept() {
+        Lattice l = new Lattice();
+        Concept a = new Concept(true, true); l.addNode(a);
+        ConceptLattice cl = new ConceptLattice(l);
+        assertFalse(cl.getConcept(new ComparableSet(), new ComparableSet()) == null);
+    }
     /**
      * Test of removeAllSetA method, of class ConceptLattice.
      */
