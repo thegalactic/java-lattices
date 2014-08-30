@@ -1121,14 +1121,14 @@ public class Context extends ClosureSystem {
     private ArrayList<Couple> reccursiveGenProd(Couple c, LinkedList<ConceptLattice> clParts) {
         LinkedList<ConceptLattice> copy = (LinkedList<ConceptLattice>) clParts.clone();
         if (copy.isEmpty()) {
-            ArrayList<Couple> result = new ArrayList<>();
+            ArrayList<Couple> result = new ArrayList<Couple>();
             result.add(c);
             return result;
         } else {
             ConceptLattice cl = (ConceptLattice) copy.poll();
-            ArrayList<Couple> nodes = new ArrayList<>();
+            ArrayList<Couple> nodes = new ArrayList<Couple>();
             for (Node n : cl.getNodes()) {
-                ArrayList<Concept> listCopy = new ArrayList<>();
+                ArrayList<Concept> listCopy = new ArrayList<Concept>();
                 for (Concept cpt : (ArrayList<Concept>) c.getLeft()) {
                     listCopy.add(cpt);
                 }
@@ -1148,15 +1148,15 @@ public class Context extends ClosureSystem {
      */
     public Lattice subDirectDecomposition() {
         // First, compute 1-generated arrow-closed subcontextes
-        ArrayList<Context> parts = new ArrayList<>();
+        ArrayList<Context> parts = new ArrayList<Context>();
         for (Comparable o : this.getObservations()) {
-            TreeSet<Comparable> setO = new TreeSet<>();
+            TreeSet<Comparable> setO = new TreeSet<Comparable>();
             setO.add(o);
             parts.add(this.arrowClosureO(setO));
         }
         // Second, remove contexts contained in other. They are dispendable.
         // Remove first all contexts that appeared at least twice.
-        ArrayList<Context> single = new ArrayList<>();
+        ArrayList<Context> single = new ArrayList<Context>();
         for (int i = 0; i < parts.size(); i++) {
             boolean containedNext = false;
             for (int j = i + 1; j < parts.size(); j++) {
@@ -1170,7 +1170,7 @@ public class Context extends ClosureSystem {
             }
         }
         parts = single;
-        ArrayList<Context> toBeRemoved = new ArrayList<>();
+        ArrayList<Context> toBeRemoved = new ArrayList<Context>();
         for (Context remove : parts) {
             for (Context test : parts) {
                 if ((parts.indexOf(test) != parts.indexOf(remove))
@@ -1190,18 +1190,18 @@ public class Context extends ClosureSystem {
         Thus we have : the full product, and nodes of the subproduct marked
         */
         // First compute all nodes of the product
-        LinkedList<ConceptLattice> clParts = new LinkedList<>();
+        LinkedList<ConceptLattice> clParts = new LinkedList<ConceptLattice>();
         for (Context ctx : parts) {
             clParts.add(ctx.conceptLattice(true));
         }
         Lattice prod = new Lattice();
         // Computes nodes
-        ArrayList<Couple> nodes = new ArrayList<>();
+        ArrayList<Couple> nodes = new ArrayList<Couple>();
         LinkedList<ConceptLattice> copy = (LinkedList<ConceptLattice>) clParts.clone();
         ConceptLattice firstCL = (ConceptLattice) copy.poll();
         for (Node n : firstCL.getNodes()) {
             Couple c = new Couple(new ArrayList<Concept>(), false);
-            ArrayList<Concept> prodCPT = new ArrayList<>();
+            ArrayList<Concept> prodCPT = new ArrayList<Concept>();
             prodCPT.add((Concept) n);
             c.setLeft(prodCPT);
             nodes.addAll(reccursiveGenProd(c, copy));
@@ -1234,7 +1234,7 @@ public class Context extends ClosureSystem {
         ConceptLattice cl = this.conceptLattice(true);
         for (Node cpt : cl.getNodes()) {
             // Compute cpt representation in prod
-            ArrayList<Concept> subCpt = new ArrayList<>();
+            ArrayList<Concept> subCpt = new ArrayList<Concept>();
             for (int i = 0; i < parts.size(); i++) {
                 Context ctx = parts.get(i);
                 ConceptLattice term = clParts.get(i);
