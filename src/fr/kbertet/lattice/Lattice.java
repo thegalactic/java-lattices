@@ -18,6 +18,8 @@ import fr.kbertet.dgraph.DGraph;
 import fr.kbertet.dgraph.Edge;
 import fr.kbertet.dgraph.Node;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 /**
  * This class extends class {@link fr.kbertet.dgraph.DAGraph} to provide specific methods to manipulate a lattice.
@@ -551,6 +553,129 @@ public class Lattice extends DAGraph {
         return conceptLatice;
     }
 
+    /**
+     * Returns the smallest set of nodes of this component containing S such that if a,b in JS then join(a,b) in JS.
+     *
+     * @param s set of nodes to be closed
+     * @return (JS) join-closure of s
+     */
+    public ComparableSet joinClosure(ComparableSet s) {
+        // Algorithm is true because join is idempotent & commutative
+        ComparableSet stack = new ComparableSet();
+        stack.addAll(s); // Nodes to be explored
+        ComparableSet result = new ComparableSet();
+        while (!stack.isEmpty()) {
+            Node c = (Node) stack.first();
+            stack.remove(c);
+            result.add(c);
+            Iterator<Node> it = stack.iterator();
+            ComparableSet newNodes = new ComparableSet(); // Node to be added. Must be done AFTER while
+            while (it.hasNext()) {
+                Node n = this.join(it.next(), c);
+                if (!result.contains(n) && !stack.contains(n)) {
+                    newNodes.add(n);
+                }
+            }
+            stack.addAll(newNodes);
+        }
+        return result;
+    }
+    /**
+     * Returns the smallest set of nodes of this component containing S such that if a,b in MS then meet(a,b) in MS.
+     *
+     * @param s set of nodes to be closed
+     * @return (MS) meet-closure of s
+     */
+    public ComparableSet meetClosure(ComparableSet s) {
+        // Algorithm is true because meet is idempotent & commutative
+        ComparableSet stack = new ComparableSet();
+        stack.addAll(s); // Nodes to be explored
+        ComparableSet result = new ComparableSet();
+        while (!stack.isEmpty()) {
+            Node c = (Node) stack.first();
+            stack.remove(c);
+            result.add(c);
+            Iterator<Node> it = stack.iterator();
+            ComparableSet newNodes = new ComparableSet(); // Node to be added. Must be done AFTER while
+            while (it.hasNext()) {
+                Node n = this.meet(it.next(), c);
+                if (!result.contains(n) && !stack.contains(n)) {
+                    newNodes.add(n);
+                }
+            }
+            stack.addAll(newNodes);
+        }
+        return result;
+    }
+    /**
+     * Returns the smallest sublattice of this component containing s.
+     *
+     * @param s set of nodes to be closed.
+     * @return the smallest sublattice of this component containing s.
+     */
+    public ComparableSet fullClosure(ComparableSet s) {
+        ComparableSet result = new ComparableSet();
+        result.addAll(s);
+        int present = result.size();
+        int previous = 0;
+        while (previous != present) {
+            previous = present;
+            result = this.joinClosure(result);
+            result = this.meetClosure(result);
+            present = result.size();
+        }
+        return result;
+    }
+    /**
+     * Returns the list of all sets of nodes that generates all nodes.
+     * Both join and meet operations are allowed and
+     * the sets are minimal for inclusion.
+     *
+     * @return : List of all hybridGenerators families.
+     */
+    public TreeSet<ComparableSet> hybridGenerators() {
+        TreeSet<Node> joinIrr = this.joinIrreducibles();
+        TreeSet<Node> meetIrr = this.meetIrreducibles();
+        ComparableSet bothIrr = new ComparableSet();
+        for (Node n : joinIrr) {
+            if (meetIrr.contains(n)) {
+                bothIrr.add(n);
+            }
+        } // bothIrr contains nodes that are join and meet irreductibles.
+
+        TreeSet<ComparableSet> generators = new TreeSet<>();
+        // First point is that all minimal families have the same number of nodes.
+        LinkedList<ComparableSet> list = new LinkedList<>(); // Family of sets to be examined
+        list.add(bothIrr);
+        while (!list.isEmpty()) {
+            int test;
+            if (generators.isEmpty()) {
+                test = this.sizeNodes();
+            } else {
+                test = generators.first().size();
+            }
+            if (test < list.peek().size()) {
+                // Elements are sorted by size, thus if the first is to large, all are.
+                list.clear();
+            } else {
+                ComparableSet family = list.poll(); // Retrieve and remove head.
+                if (this.fullClosure(family).size() == this.sizeNodes()) {
+                    // This family generates l
+                    generators.add(family);
+                } else {
+                    for (Node n : this.getNodes()) {
+                        ComparableSet newFamily = new ComparableSet();
+                        newFamily.addAll(family);
+                        newFamily.add(n);
+                        if (!list.contains(newFamily)) {
+                            list.add(newFamily); // add at the end, bigger families
+                        }
+                    }
+                }
+            }
+        }
+        return generators;
+    }
     /**
      * Returns the table of the lattice, composed of the join and meet irreducibles nodes.
      *
