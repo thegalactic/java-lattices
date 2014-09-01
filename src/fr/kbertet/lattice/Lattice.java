@@ -643,9 +643,9 @@ public class Lattice extends DAGraph {
             }
         } // bothIrr contains nodes that are join and meet irreductibles.
 
-        TreeSet<ComparableSet> generators = new TreeSet<>();
+        TreeSet<ComparableSet> generators = new TreeSet<ComparableSet>();
         // First point is that all minimal families have the same number of nodes.
-        LinkedList<ComparableSet> list = new LinkedList<>(); // Family of sets to be examined
+        LinkedList<ComparableSet> list = new LinkedList<ComparableSet>(); // Family of sets to be examined
         list.add(bothIrr);
         while (!list.isEmpty()) {
             int test;
