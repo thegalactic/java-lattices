@@ -31,8 +31,8 @@ package fr.kbertet.lattice {
         +TreeMap<Comparable, TreeSet<Comparable>> attributesReduction()
         +TreeMap<Comparable, TreeSet<Comparable>> observationsReduction()
         +Context getReverseContext()
-        +Context arrowClosureO(TreeSet<Comparable> obs)
-        +Context arrowClosureA(TreeSet<Comparable> attr)
+        +Context arrowClosureObject(TreeSet<Comparable> obs)
+        +Context arrowClosureAttribute(TreeSet<Comparable> attr)
         +TreeSet<Comparable> getSet()
         +TreeSet<Comparable> getExtentUnion(TreeSet<Comparable> set)
         .. Predicates ..

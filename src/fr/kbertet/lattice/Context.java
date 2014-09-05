@@ -905,7 +905,7 @@ public class Context extends ClosureSystem {
      * @param obs set of observations to keep
      * @return the arrow-closed subcontext of this component containing obs.
      */
-    public Context arrowClosureO(TreeSet<Comparable> obs) {
+    public Context arrowClosureObject(TreeSet<Comparable> obs) {
         ConceptLattice cl = this.getReverseContext().conceptLattice(true); // Where is bug with it ^^
         ArrowRelation ar = cl.getArrowRelation();
         /*
@@ -970,7 +970,7 @@ public class Context extends ClosureSystem {
      * @param attr set of attributes to keep
      * @return the arrow-closed subcontext of this component containing attr.
      */
-    public Context arrowClosureA(TreeSet<Comparable> attr) {
+    public Context arrowClosureAttribute(TreeSet<Comparable> attr) {
         ConceptLattice cl = this.getReverseContext().conceptLattice(true); // Where is bug with it ^^
         ArrowRelation ar = cl.getArrowRelation();
         Context down = ar.getDoubleDownArrowTable();
@@ -1152,7 +1152,7 @@ public class Context extends ClosureSystem {
         for (Comparable o : this.getObservations()) {
             TreeSet<Comparable> setO = new TreeSet<Comparable>();
             setO.add(o);
-            parts.add(this.arrowClosureO(setO));
+            parts.add(this.arrowClosureObject(setO));
         }
         // Second, remove contexts contained in other. They are dispendable.
         // Remove first all contexts that appeared at least twice.

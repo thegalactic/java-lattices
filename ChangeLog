@@ -25,6 +25,10 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-09-05 Jean-François Viaud <jviaud@univ-lr.fr>
+	+ scr.fr/kberte/lattice/Context.java
+		^change names : arrowClosedObject, arrowClosedAttribute
+
 2014-09-01 Jean-François Viaud <jviaud@univ-lr.fr>
 	+ src/fr/kbertet/lattice/Lattice.iuml
 	+ src/fr/kbertet/lattice/Lattice.java

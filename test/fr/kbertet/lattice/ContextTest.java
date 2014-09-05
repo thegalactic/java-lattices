@@ -439,12 +439,12 @@ public class ContextTest {
         ctx.addExtentIntent(3, 'b');
         TreeSet<Comparable> obs = new TreeSet<Comparable>();
         obs.add(1);
-        assertTrue(ctx.arrowClosureO(obs).getAttributes().size() == 3);
-        assertTrue(ctx.arrowClosureO(obs).getObservations().size() == 3);
+        assertTrue(ctx.arrowClosureObject(obs).getAttributes().size() == 3);
+        assertTrue(ctx.arrowClosureObject(obs).getObservations().size() == 3);
         TreeSet<Comparable> attr = new TreeSet<Comparable>();
         attr.add('c');
-        assertTrue(ctx.arrowClosureA(attr).getAttributes().size() == 3);
-        assertTrue(ctx.arrowClosureA(attr).getObservations().size() == 3);
+        assertTrue(ctx.arrowClosureAttribute(attr).getAttributes().size() == 3);
+        assertTrue(ctx.arrowClosureAttribute(attr).getObservations().size() == 3);
     }
     /**
      * Test subDirectDecomposition method.
