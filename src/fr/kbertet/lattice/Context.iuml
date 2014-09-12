@@ -31,6 +31,8 @@ package fr.kbertet.lattice {
         +TreeMap<Comparable, TreeSet<Comparable>> attributesReduction()
         +TreeMap<Comparable, TreeSet<Comparable>> observationsReduction()
         +Context getReverseContext()
+        +Context arrowClosureObject(TreeSet<Comparable> obs)
+        +Context arrowClosureAttribute(TreeSet<Comparable> attr)
         +TreeSet<Comparable> getSet()
         +TreeSet<Comparable> getExtentUnion(TreeSet<Comparable> set)
         .. Predicates ..
@@ -57,6 +59,8 @@ package fr.kbertet.lattice {
         +TreeSet<Comparable> closure(TreeSet<Comparable> set)
         +ComparableSet inverseClosure(ComparableSet set)
         +ConceptLattice conceptLattice(boolean  diagram)
+        -ArrayList<Couple> reccursiveGenProd(Couple c, LinkedList<ConceptLattice> clParts)
+        +Lattice subDirectDecomposition()
         +ConceptLattice lattice()
         .. Transformers ..
         String toString()

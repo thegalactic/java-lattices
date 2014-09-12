@@ -11,20 +11,21 @@ package fr.kbertet.lattice;
  * it under the terms of CeCILL-B license.
  */
 
-import fr.kbertet.lattice.io.ConceptLatticeWriterFactory;
-import fr.kbertet.lattice.io.ConceptLatticeWriter;
-import fr.kbertet.lattice.io.ConceptLatticeWriterDot;
 import fr.kbertet.dgraph.DAGraph;
 import fr.kbertet.dgraph.DGraph;
 import fr.kbertet.dgraph.Edge;
 import fr.kbertet.dgraph.Node;
-import java.util.ArrayList;
-import java.util.TreeMap;
-import java.util.TreeSet;
-import java.util.Vector;
+import fr.kbertet.lattice.io.ConceptLatticeWriter;
+import fr.kbertet.lattice.io.ConceptLatticeWriterDot;
+import fr.kbertet.lattice.io.ConceptLatticeWriterFactory;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
+import java.util.Vector;
 
 /**
  * This class extends class {@link Lattice} to provide specific methods
@@ -250,6 +251,23 @@ public class ConceptLattice extends Lattice {
 
     /* ------------- SET A AND SET B HANDLING METHOD ------------------ */
 
+    /**
+     * Returns concept defined by setA and setB; null if not found.
+     *
+     * @param setA intent of the concept to find
+     * @param setB extent of the concept to find
+     * @return concept defined by setA and setB; null if not found.
+     */
+    public Concept getConcept(ComparableSet setA, ComparableSet setB) {
+        SortedSet<Node> setNodes = this.getNodes();
+        Concept cpt = null;
+        for (Node n : setNodes) {
+            if ((setA.equals(((Concept) n).getSetA())) && (setB.equals(((Concept) n).getSetB()))) {
+                cpt = (Concept) n;
+            }
+        }
+        return cpt;
+    }
     /**
      * Replace set A in each concept of the lattice with the null value.
      *

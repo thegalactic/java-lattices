@@ -9,6 +9,7 @@ package fr.kbertet.lattice {
         +boolean addEdge(Node from, Node to)
         +boolean removeAllSetA()
         +boolean removeAllSetB()
+        +Concept getConcept(ComparableSet setA, ComparableSet setB)
         +boolean initialiseSetAForJoin()
         +boolean initialiseSetBForMeet()
         +boolean makeInclusionReduction()

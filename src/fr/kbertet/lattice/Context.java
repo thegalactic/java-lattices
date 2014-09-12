@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
@@ -894,6 +895,132 @@ public class Context extends ClosureSystem {
         return context;
     }
 
+    /**
+     * Returns the arrow-closed subcontext of this component containing obs.
+     *
+     * A sub-context (H,N) of (G,M) is arrow-closed if :
+     * 1. For all h in H, h uparrow m implies m in N and
+     * 2. For all n in N, g downarrow n implies g in H
+     *
+     * @param obs set of observations to keep
+     * @return the arrow-closed subcontext of this component containing obs.
+     */
+    public Context arrowClosureObject(TreeSet<Comparable> obs) {
+        ConceptLattice cl = this.getReverseContext().conceptLattice(true); // Where is bug with it ^^
+        ArrowRelation ar = cl.getArrowRelation();
+        /*
+        WARNING : this component contains "observations" and "attributes"
+        whereas following contexts, down and up, are made of concept.
+        */
+        Context down = ar.getDoubleDownArrowTable();
+        Context up = ar.getDoubleUpArrowTable();
+        Context ctx = new Context();
+        ctx.addAllToObservations(obs);
+        int sizeObs = ctx.getObservations().size();
+        int sizeAttr = ctx.getAttributes().size();
+        int prevObs = 0;
+        int prevAttr = 0;
+        while ((prevObs < sizeObs) || (prevAttr < sizeAttr)) {
+            for (Comparable o : ctx.getObservations()) {
+                // Concept corresponding to observation o
+                TreeSet<Comparable> setBo = this.getIntent(o);
+                TreeSet<Comparable> setAo = this.getExtent(setBo);
+                Concept cptO = new Concept(setAo, setBo);
+                TreeSet<Comparable> attrUp = up.getIntent(cl.getNode(cptO)); // Doesn't work with up.getIntent(cptO) ...
+                for (Comparable a : this.getAttributes()) { // NOT GOOD for complexity :-(
+                    // Try to find attributes in up-arrow relation
+                    TreeSet<Comparable> setAa = this.getExtent(a);
+                    TreeSet<Comparable> setBa = this.getIntent(setAa);
+                    Concept cptA = new Concept(setAa, setBa); // Concept corresponding to attribute a
+                    if (attrUp.contains(cl.getNode(cptA))) {
+                        ctx.addToAttributes(a);
+                    }
+                }
+            }
+            for (Comparable a : ctx.getAttributes()) {
+                // Concept corresponding to observation a
+                TreeSet<Comparable> setAa = this.getExtent(a);
+                TreeSet<Comparable> setBa = this.getIntent(setAa);
+                Concept cptA = new Concept(setAa, setBa);
+                TreeSet<Comparable> obsDown = down.getExtent(cl.getNode(cptA));
+                for (Comparable o : this.getObservations()) {
+                    // Try to find attributes in down-arrow relation
+                    TreeSet<Comparable> setBo = this.getIntent(o);
+                    TreeSet<Comparable> setAo = this.getExtent(setBo);
+                    Concept cptO = new Concept(setAo, setBo); // Concept corresponding to attribute o
+                    if (obsDown.contains(cl.getNode(cptO))) {
+                        ctx.addToObservations(o);
+                    }
+                }
+            }
+            prevObs = sizeObs;
+            prevAttr = sizeAttr;
+            sizeObs = ctx.getObservations().size();
+            sizeAttr = ctx.getAttributes().size();
+        }
+        return this.getSubContext(ctx.getObservations(), ctx.getAttributes());
+    }
+    /**
+     * Returns the arrow-closed subcontext of this component containing attr.
+     *
+     * A sub-context (H,N) of (G,M) is arrow-closed if :
+     * 1. For all h in H, h uparrow m implies m in N and
+     * 2. For all n in N, g downarrow n implies g in H
+     *
+     * @param attr set of attributes to keep
+     * @return the arrow-closed subcontext of this component containing attr.
+     */
+    public Context arrowClosureAttribute(TreeSet<Comparable> attr) {
+        ConceptLattice cl = this.getReverseContext().conceptLattice(true); // Where is bug with it ^^
+        ArrowRelation ar = cl.getArrowRelation();
+        Context down = ar.getDoubleDownArrowTable();
+        Context up = ar.getDoubleUpArrowTable();
+        Context ctx = new Context();
+        ctx.addAllToAttributes(attr);
+        int sizeObs = ctx.getObservations().size();
+        int sizeAttr = ctx.getAttributes().size();
+        int prevObs = 0;
+        int prevAttr = 0;
+        while ((prevObs < sizeObs) || (prevAttr < sizeAttr)) {
+            for (Comparable a : ctx.getAttributes()) {
+                // Concept corresponding to observation a
+                TreeSet<Comparable> setAa = this.getExtent(a);
+                TreeSet<Comparable> setBa = this.getIntent(setAa);
+                Concept cptA = new Concept(setAa, setBa);
+                TreeSet<Comparable> obsDown = down.getExtent(cl.getNode(cptA));
+                for (Comparable o : this.getObservations()) {
+                    // Try to find attributes in down-arrow relation
+                    TreeSet<Comparable> setBo = this.getIntent(o);
+                    TreeSet<Comparable> setAo = this.getExtent(setBo);
+                    Concept cptO = new Concept(setAo, setBo); // Concept corresponding to attribute o
+                    if (obsDown.contains(cl.getNode(cptO))) {
+                        ctx.addToObservations(o);
+                    }
+                }
+            }
+            for (Comparable o : ctx.getObservations()) {
+                // Concept corresponding to observation o
+                TreeSet<Comparable> setBo = this.getIntent(o);
+                TreeSet<Comparable> setAo = this.getExtent(setBo);
+                Concept cptO = new Concept(setAo, setBo);
+                TreeSet<Comparable> attrUp = up.getIntent(cl.getNode(cptO)); // Doesn't work with up.getIntent(cptO) ...
+                for (Comparable a : this.getAttributes()) { // NOT GOOD for complexity :-(
+                    // Try to find attributes in up-arrow relation
+                    TreeSet<Comparable> setAa = this.getExtent(a);
+                    TreeSet<Comparable> setBa = this.getIntent(setAa);
+                    Concept cptA = new Concept(setAa, setBa); // Concept corresponding to attribute a
+                    if (attrUp.contains(cl.getNode(cptA))) {
+                        ctx.addToAttributes(a);
+                    }
+                }
+            }
+            prevObs = sizeObs;
+            prevAttr = sizeAttr;
+            sizeObs = ctx.getObservations().size();
+            sizeAttr = ctx.getAttributes().size();
+        }
+        return this.getSubContext(ctx.getObservations(), ctx.getAttributes());
+    }
     /* --------------- IMPLEMENTATION OF CLOSURE SYSTEM ABSTRACT METHODS ------------ */
     /* --------------- AND CONCEPT LATTICE GENERATION------------ */
 
@@ -984,7 +1111,150 @@ public class Context extends ClosureSystem {
         }
         return csl;
     }
-
+    /**
+     * Reccursively generates nodes of the product lattice.
+     *
+     * @param c couple to be completed
+     * @param clParts list of last context to deal with
+     * @return a list of nodes to add to the product.
+     */
+    private ArrayList<Couple> reccursiveGenProd(Couple c, LinkedList<ConceptLattice> clParts) {
+        LinkedList<ConceptLattice> copy = (LinkedList<ConceptLattice>) clParts.clone();
+        if (copy.isEmpty()) {
+            ArrayList<Couple> result = new ArrayList<Couple>();
+            result.add(c);
+            return result;
+        } else {
+            ConceptLattice cl = (ConceptLattice) copy.poll();
+            ArrayList<Couple> nodes = new ArrayList<Couple>();
+            for (Node n : cl.getNodes()) {
+                ArrayList<Concept> listCopy = new ArrayList<Concept>();
+                for (Concept cpt : (ArrayList<Concept>) c.getLeft()) {
+                    listCopy.add(cpt);
+                }
+                Couple coupleCopy = new Couple(listCopy, c.getRight());
+                ((ArrayList<Concept>) coupleCopy.getLeft()).add((Concept) n);
+                nodes.addAll(reccursiveGenProd(coupleCopy, copy));
+            }
+            return nodes;
+        }
+    }
+    /**
+     * Returns the concept lattice of this component represented as a subdirect product of its irreductibles components.
+     *
+     * WARNING : Context MUST BE REDUCED !
+     *
+     * @return concept Lattice of this component represented as a subdirect product of its irreductibles components.
+     */
+    public Lattice subDirectDecomposition() {
+        // First, compute 1-generated arrow-closed subcontextes
+        ArrayList<Context> parts = new ArrayList<Context>();
+        for (Comparable o : this.getObservations()) {
+            TreeSet<Comparable> setO = new TreeSet<Comparable>();
+            setO.add(o);
+            parts.add(this.arrowClosureObject(setO));
+        }
+        // Second, remove contexts contained in other. They are dispendable.
+        // Remove first all contexts that appeared at least twice.
+        ArrayList<Context> single = new ArrayList<Context>();
+        for (int i = 0; i < parts.size(); i++) {
+            boolean containedNext = false;
+            for (int j = i + 1; j < parts.size(); j++) {
+                containedNext = containedNext || (parts.get(i).containsAllObservations(parts.get(j).getObservations())
+                        && parts.get(j).containsAllObservations(parts.get(i).getObservations())
+                        && parts.get(i).containsAllAttributes(parts.get(j).getAttributes())
+                        && parts.get(j).containsAllAttributes(parts.get(i).getAttributes()));
+            }
+            if (!containedNext) {
+                single.add(parts.get(i));
+            }
+        }
+        parts = single;
+        ArrayList<Context> toBeRemoved = new ArrayList<Context>();
+        for (Context remove : parts) {
+            for (Context test : parts) {
+                if ((parts.indexOf(test) != parts.indexOf(remove))
+                        && (test.containsAllObservations(remove.getObservations()))
+                        && (test.containsAllAttributes(remove.getAttributes()))) {
+                    toBeRemoved.add(remove);
+                }
+            }
+        }
+        parts.removeAll(toBeRemoved);
+        // Third, compute the product but can't use LatticeFactory.product :-(
+        /*
+        Content of each node is of the following form :
+        1. They are Couple
+        2. Left part is an ArrayList corresponding to the terms of the product
+        3. Right part is a boolean, true if the node is inside the sub-product.
+        Thus we have : the full product, and nodes of the subproduct marked
+        */
+        // First compute all nodes of the product
+        LinkedList<ConceptLattice> clParts = new LinkedList<ConceptLattice>();
+        for (Context ctx : parts) {
+            clParts.add(ctx.conceptLattice(true));
+        }
+        Lattice prod = new Lattice();
+        // Computes nodes
+        ArrayList<Couple> nodes = new ArrayList<Couple>();
+        LinkedList<ConceptLattice> copy = (LinkedList<ConceptLattice>) clParts.clone();
+        ConceptLattice firstCL = (ConceptLattice) copy.poll();
+        for (Node n : firstCL.getNodes()) {
+            Couple c = new Couple(new ArrayList<Concept>(), false);
+            ArrayList<Concept> prodCPT = new ArrayList<Concept>();
+            prodCPT.add((Concept) n);
+            c.setLeft(prodCPT);
+            nodes.addAll(reccursiveGenProd(c, copy));
+        }
+        for (Couple c : nodes) {
+            prod.addNode(new Node(c));
+        }
+        // Add edges
+        for (Node from : prod.getNodes()) {
+            for (Node to : prod.getNodes()) {
+                Couple contentFrom = (Couple) from.getContent();
+                Couple contentTo = (Couple) to.getContent();
+                boolean haveEdge = true;
+                boolean equals = true;
+                for (int i = 0; i < clParts.size(); i++) { // clParts.size() is the number of factor
+                    Concept cptFrom = ((ArrayList<Concept>) contentFrom.getLeft()).get(i);
+                    Concept cptTo = ((ArrayList<Concept>) contentTo.getLeft()).get(i);
+                    equals = equals && cptFrom.equals(cptTo);
+                    haveEdge = haveEdge && (clParts.get(i).containsEdge(cptFrom, cptTo) || cptFrom.equals(cptTo));
+                }
+                if (haveEdge && !equals) {
+                    prod.addEdge(from, to);
+                }
+            }
+        }
+        prod.transitiveReduction();
+        // Last, identify the sub-product, e.g. nodes of this component in the product.
+        // In the subdirect decomposition, if (A,B) is a concept then (A \cap H,B \cap N) also.
+        // Transform nodes of the original lattice into nodes of the subproduct lattice and mark them
+        ConceptLattice cl = this.conceptLattice(true);
+        for (Node cpt : cl.getNodes()) {
+            // Compute cpt representation in prod
+            ArrayList<Concept> subCpt = new ArrayList<Concept>();
+            for (int i = 0; i < parts.size(); i++) {
+                Context ctx = parts.get(i);
+                ConceptLattice term = clParts.get(i);
+                ComparableSet setA = new ComparableSet();
+                setA.addAll(((Concept) cpt).getSetA());
+                ComparableSet setB = new ComparableSet();
+                setB.addAll(((Concept) cpt).getSetB());
+                setA.retainAll(ctx.getAttributes());
+                setB.retainAll(ctx.getObservations());
+                subCpt.add(term.getConcept((ComparableSet) setA, (ComparableSet) setB));
+            }
+            // Check if cpt is in prod
+            for (Node nodeProd : prod.getNodes()) {
+                if (((Couple) nodeProd.getContent()).getLeft().equals(subCpt)) {
+                    ((Couple) nodeProd.getContent()).setRight(true);
+                }
+            }
+        }
+        return prod;
+    }
     /**
      * Returns the lattice of this component.
      *

@@ -11,6 +11,7 @@ package fr.kbertet.lattice;
  * it under the terms of CeCILL-B license.
  */
 
+import fr.kbertet.dgraph.Node;
 import java.io.File;
 import java.util.TreeSet;
 import static org.junit.Assert.assertEquals;
@@ -418,5 +419,49 @@ public class ContextTest {
         assertFalse(context.getAttributes().equals(context.getObservations()));
         assertTrue(context.getAttributes().equals(iContext.getObservations()));
         assertTrue(iContext.getAttributes().equals(context.getObservations()));
+    }
+
+    /**
+     * Test of arrowClosure methods.
+     */
+    @Test
+    public void testArrowClosure() {
+        Context ctx = new Context();
+        ctx.addToAttributes('a');
+        ctx.addToAttributes('b');
+        ctx.addToAttributes('c');
+        ctx.addToObservations(1);
+        ctx.addToObservations(2);
+        ctx.addToObservations(3);
+        ctx.addExtentIntent(1, 'a');
+        ctx.addExtentIntent(2, 'a');
+        ctx.addExtentIntent(2, 'c');
+        ctx.addExtentIntent(3, 'b');
+        TreeSet<Comparable> obs = new TreeSet<Comparable>();
+        obs.add(1);
+        assertTrue(ctx.arrowClosureObject(obs).getAttributes().size() == 3);
+        assertTrue(ctx.arrowClosureObject(obs).getObservations().size() == 3);
+        TreeSet<Comparable> attr = new TreeSet<Comparable>();
+        attr.add('c');
+        assertTrue(ctx.arrowClosureAttribute(attr).getAttributes().size() == 3);
+        assertTrue(ctx.arrowClosureAttribute(attr).getObservations().size() == 3);
+    }
+    /**
+     * Test subDirectDecomposition method.
+     */
+    @Test
+    public void testSubDirectDecomposition() {
+        Context ctx = Context.random(20, 3, 4);
+        ctx.reduction();
+        ConceptLattice cl = ctx.conceptLattice(true);
+        Lattice l = ctx.subDirectDecomposition();
+        int count = 0;
+        for (Node n : l.getNodes()) {
+            Couple c = (Couple) n.getContent();
+            if (c.getRight().toString() == "true") {
+                count++;
+            }
+        }
+        assertEquals(count, cl.getNodes().size());
     }
 }

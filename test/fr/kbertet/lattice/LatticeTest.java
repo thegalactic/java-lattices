@@ -210,6 +210,45 @@ public class LatticeTest {
         assertEquals(cl.getEdges().size(), 4);
     }
     /**
+     * test joinClosure.
+     */
+    @Test
+    public void testJoinClosure() {
+        Lattice l = LatticeFactory.booleanAlgebra(2);
+        ComparableSet join = new ComparableSet();
+        join.addAll(l.joinIrreducibles());
+        assertEquals(l.joinClosure(join).size(), 3);
+    }
+    /**
+     * test meetClosure.
+     */
+    @Test
+    public void testMeetClosure() {
+        Lattice l = LatticeFactory.booleanAlgebra(2);
+        ComparableSet meet = new ComparableSet();
+        meet.addAll(l.meetIrreducibles());
+        assertEquals(l.meetClosure(meet).size(), 3);
+    }
+    /**
+     * test fullClosure.
+     */
+    @Test
+    public void testFullClosure() {
+        Lattice l = LatticeFactory.booleanAlgebra(2);
+        ComparableSet meet = new ComparableSet();
+        meet.addAll(l.meetIrreducibles());
+        assertEquals(l.fullClosure(meet).size(), 4);
+    }
+    /**
+     * test HybridGenerators.
+     */
+    @Test
+    public void testHybridGenerators() {
+        Lattice l = LatticeFactory.booleanAlgebra(2);
+        TreeSet<ComparableSet> gen = l.hybridGenerators();
+        assertEquals(gen.first().size(), 2);
+    }
+    /**
      * Test irreductiblesSubgraph.
      */
     @Test

@@ -26,6 +26,10 @@ package fr.kbertet.lattice {
         +ConceptLattice joinClosure()
         +ConceptLattice meetClosure()
         +ConceptLattice irreducibleClosure()
+        +ComparableSet joinClosure(ComparableSet s)
+        +ComparableSet meetClosure(ComparableSet s)
+        +ComparableSet fullClosure(ComparableSet s)
+        +TreeSet<ComparableSet> hybridGenerators()
         +Context getTable()
         +ImplicationalSystem getImplicationalSystem()
 
