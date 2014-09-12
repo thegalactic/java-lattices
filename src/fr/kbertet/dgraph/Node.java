@@ -11,8 +11,6 @@
 
 package fr.kbertet.dgraph;
 
-import java.util.StringTokenizer;
-
 /**
  * This class gives a standard representation for a node of a graph.
  *
@@ -120,23 +118,13 @@ public class Node implements Comparable<Object> {
      * Returns a string representation of this node without spaces.
      *
      * @return  the string representation
-     *
-     * @todo  Why do we need to remove spaces?
-     *        Should be linked to import/export methods
      */
      public String toString() {
-        String string = "";
         if (this.content == null) {
-            string = this.identifier + "";
+            return this.identifier + "";
         } else {
-            string = this.content.toString();
+            return this.content.toString();
         }
-        StringTokenizer tokenizer = new StringTokenizer(string);
-        string = "";
-        while (tokenizer.hasMoreTokens()) {
-            string += tokenizer.nextToken();
-        }
-        return string;
     }
 
     /* --------------- OVERLAPPING METHODS ------------ */

@@ -49,7 +49,7 @@ public class NodeTest {
     public void testToString() {
         String content = new String("Hello World");
         Node node = new Node(content);
-        assertEquals(node.toString(), "HelloWorld");
+        assertEquals(node.toString(), "Hello World");
     }
 
     /**

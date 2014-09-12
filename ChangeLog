@@ -25,8 +25,13 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-09-12 Christophe Demko <chdemko@gmail.com>
+	* src/fr/kbertet/dgraph/Node.java
+	* test/fr/kbertet/dgraph/NodeTest.java
+		^ Remove tokenizer for Node.toString
+
 2014-09-05 Jean-François Viaud <jviaud@univ-lr.fr>
-	* scr/fr/kberte/lattice/Context.java
+	* src/fr/kberte/lattice/Context.java
 		^ change names : arrowClosedObject, arrowClosedAttribute
 
 2014-09-01 Jean-François Viaud <jviaud@univ-lr.fr>
