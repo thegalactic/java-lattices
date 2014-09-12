@@ -27,6 +27,10 @@ $ -> Language fix or change
 
 2014-09-12 Christophe Demko <chdemko@gmail.com>
 	* src/fr/kbertet/dgraph/DGraph.java
+		^ Removing some warnings when compile with -Xlint
+
+2014-09-12 Christophe Demko <chdemko@gmail.com>
+	* src/fr/kbertet/dgraph/DGraph.java
 		^ Simplify copy method
 
 2014-09-12 Christophe Demko <chdemko@gmail.com>

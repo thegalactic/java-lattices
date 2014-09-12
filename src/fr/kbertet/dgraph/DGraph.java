@@ -927,15 +927,15 @@ public class DGraph {
     public ArrayList<Node>[] depthFirstSearch() {
         TreeSet<Node> visited = new TreeSet<Node>();
         ArrayList<Node>[] arrayVisited = new ArrayList[2];
-        ArrayList first = new ArrayList();
-        ArrayList last = new ArrayList();
+        ArrayList<Node> first = new ArrayList<Node>();
+        ArrayList<Node> last = new ArrayList<Node>();
         for (Node node : this.nodes) {
             if (!visited.contains(node)) {
                 arrayVisited = this.depthFirstSearch(node, visited, null);
                 visited.addAll(arrayVisited[0]);
                 first.addAll(arrayVisited[0]);
                 last.addAll(arrayVisited[1]);
-             }
+            }
         }
         arrayVisited[0] = first;
         arrayVisited[1] = last;
@@ -974,18 +974,18 @@ public class DGraph {
         DGraph transposedGraph = new DGraph(this);
         transposedGraph.transpose();
         // sort nodes according to the reverse last sort
-        ArrayList<Node> sort = new ArrayList();
+        ArrayList<Node> sort = new ArrayList<Node>();
         Object [] array = last.toArray();
         for (int i = array.length - 1; i >= 0; i--) {
             sort.add((Node) array[i]);
         }
         // second depth first search according to sort
-        TreeSet<Node> visited = new TreeSet();
+        TreeSet<Node> visited = new TreeSet<Node>();
         for (Node n : sort) {
             if (!visited.contains(n)) {
                 last = transposedGraph.depthFirstSearch(n, visited, sort)[1];
                 visited.addAll(last);
-                TreeSet sCC = new TreeSet(last);
+                TreeSet<Node> sCC = new TreeSet<Node>(last);
                 // a strongly connected component is generated
                 cc.addNode(new Node(sCC));    // addition of
             }
@@ -994,7 +994,7 @@ public class DGraph {
         for (Node ccFrom : cc.getNodes()) {
             for (Node ccTo : cc.getNodes()) {
                 for (Node from : (TreeSet<Node>) ccFrom.getContent()) {
-                    for (Node to : ((TreeSet<Node>) ccTo.getContent())) {
+                    for (Node to : (TreeSet<Node>) ccTo.getContent()) {
                         if (tmp.getSuccessorNodes(from).contains(to)) {
                             cc.addEdge(ccFrom, ccTo);
                         }
