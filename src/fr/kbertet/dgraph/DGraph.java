@@ -177,17 +177,7 @@ public class DGraph {
      * @return  the copy of this
      */
     public DGraph copy() {
-        DGraph copy = new DGraph();
-        TreeMap<Node, Node> map = new TreeMap<Node, Node>();
-        for (Node node : this.nodes) {
-            Node nodeCopy = node.copy();
-            map.put(node, nodeCopy);
-            copy.addNode(nodeCopy);
-        }
-        for (Edge edge : this.getEdges()) {
-            copy.addEdge(new Edge(map.get(edge.getFrom()), map.get(edge.getTo()), edge.getContent()));
-        }
-        return copy;
+        return new DGraph(this);
     }
 
     /**

@@ -26,6 +26,10 @@ $ -> Language fix or change
 ! -> Note
 
 2014-09-12 Christophe Demko <chdemko@gmail.com>
+	* src/fr/kbertet/dgraph/DGraph.java
+		^ Simplify copy method
+
+2014-09-12 Christophe Demko <chdemko@gmail.com>
 	* src/fr/kbertet/dgraph/Node.java
 	* test/fr/kbertet/dgraph/NodeTest.java
 		^ Remove tokenizer for Node.toString
