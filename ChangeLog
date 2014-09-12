@@ -61,6 +61,31 @@ $ -> Language fix or change
 	* test/fr/kbertet/lattice/ConceptLatticeTest.java
 	* test/fr/kbertet/lattice/ContextTest.java
 
+2014-08-26 Jean-François Viaud <jviaud@univ-lr.fr>
+	* src/fr/kbertet/lattice/ArrowRelation.java
+	* src/fr/kbertet/lattice/ArrowRelation.iuml
+	* test/fr/kbertet/lattice/ArrowRelationTest.java
+	* src/fr/kbertet/lattice/Context.java
+	* src/fr/kbertet/lattice/Context.iuml
+	* test/fr/kbertet/lattice/ContextTest.java
+
+2014-08-25 Jean-François Viaud <jviaud@univ-lr.fr>
+	+ src/fr/kbertet/lattice/io/ContextReaderFIMI.java
+	+ src/fr/kbertet/lattice/io/ContextReaderFIMI.iuml
+	+ src/fr/kbertet/lattice/io/ContextWriterFIMI.java
+	+ src/fr/kbertet/lattice/io/ContextWriterFIMI.iuml
+	* src/fr/kbertet/lattice/Context.java
+	* test/fr/kbertet/lattice/ContextText.java
+
+2014-08-21 Jean-François Viaud <jviaud@univ-lr.fr>
+	+ src/fr/kbertet/lattice/io/ContextReaderBurmeister.java
+	+ src/fr/kbertet/lattice/io/ContextReaderBurmeister.iuml
+	+ src/fr/kbertet/lattice/io/ContextWriterBurmeister.java
+	+ src/fr/kbertet/lattice/io/ContextWriterBurmeister.iuml
+	* src/fr/kbertet/lattice/Context.java
+	* test/fr/kbertet/lattice/ContextText.java
+	+ examples/cxt
+
 -------------------- 1.0.0 Release [2014-07-10] ------------------
 
 2014-07-08 Christophe Demko <chdemko@gmail.com>
