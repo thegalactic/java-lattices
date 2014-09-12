@@ -26,28 +26,35 @@ $ -> Language fix or change
 ! -> Note
 
 2014-09-05 Jean-François Viaud <jviaud@univ-lr.fr>
-	+ scr.fr/kberte/lattice/Context.java
+	* scr.fr/kberte/lattice/Context.java
 		^change names : arrowClosedObject, arrowClosedAttribute
 
 2014-09-01 Jean-François Viaud <jviaud@univ-lr.fr>
-	+ src/fr/kbertet/lattice/Lattice.iuml
-	+ src/fr/kbertet/lattice/Lattice.java
-		^added joinClosure, meetClosure, fullClosure and
-		hybridGenerators methods
-	+ test/fr/kbertet/lattice/LatticeTest.java
+	* src/fr/kbertet/lattice/Lattice.iuml
+	* src/fr/kbertet/lattice/Lattice.java
+		^ added joinClosure, meetClosure, fullClosure and hybridGenerators methods
+	* test/fr/kbertet/lattice/LatticeTest.java
 
 2014-08-30 Jean-François Viaud <jviaud@univ-lr.fr>
-	+ examples/cxt/subdirectdecomp.cxt
-	+ src/fr/kbertet/lattice/ConceptLattice.iuml
-	+ src/fr/kbertet/lattice/ConceptLattice.java
+	* examples/cxt/subdirectdecomp.cxt
+	* src/fr/kbertet/lattice/ConceptLattice.iuml
+	* src/fr/kbertet/lattice/ConceptLattice.java
 		^ added getConcept method
-	+ src/fr/kbertet/lattice/Context.iuml
-	+ src/fr/kbertet/lattice/Context.java
+	* src/fr/kbertet/lattice/Context.iuml
+	* src/fr/kbertet/lattice/Context.java
 		^ added arrowClosedA method
 		^ added arrowClosedO method
 		^ added subDirectDecomposition method
-	+ test/fr/kbertet/lattice/ConceptLatticeTest.java
-	+ test/fr/kbertet/lattice/ContextTest.java
+	* test/fr/kbertet/lattice/ConceptLatticeTest.java
+	* test/fr/kbertet/lattice/ContextTest.java
+
+-------------------- 1.0.0 Release [2014-07-10] ------------------
+
+2014-07-08 Christophe Demko <chdemko@gmail.com>
+	* src/fr/kbertet/lattice/BijectiveComponents.java
+	* test/fr/kbertet/lattice/BijectiveComponentsTest.java
+		^ Use getReducedLattice method
+		^ Use setClosureSystem and getClosureSystem instead of setInit and getInit in BijectiveComponents
 
 2014-08-26 Jean-François Viaud <jviaud@univ-lr.fr>
 	* src/fr/kbertet/lattice/ArrowRelation.java
