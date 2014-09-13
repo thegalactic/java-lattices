@@ -64,6 +64,17 @@ public class NodeTest {
     }
 
     /**
+     * Test the setContent() method.
+     */
+    @Test
+    public void testSetContent() {
+        Object content = new Object();
+        Node node = new Node();
+        assertEquals(node.setContent(content), node);
+        assertEquals(node.getContent(), content);
+    }
+
+    /**
      * Test the equals() method.
      */
     @Test
@@ -92,6 +103,7 @@ public class NodeTest {
         assertEquals(node1.compareTo(node1), 0);
         assertTrue(node1.compareTo(node2) < 0);
         assertTrue(node2.compareTo(node1) > 0);
+        assertTrue(node1.compareTo(new Object()) < 0);
     }
 }
 

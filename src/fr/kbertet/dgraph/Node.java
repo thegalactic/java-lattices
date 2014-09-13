@@ -165,7 +165,7 @@ public class Node implements Comparable<Object> {
    /**
     * Compares this node with those in parameter, based on their identifiers.
     *
-    * The result is zero if the identifiers are equal; 1 if this node's identifier is greater, and -1 otherwise.
+    * The result is zero if the identifiers are equal; positive if this node's identifier is greater, and negative otherwise.
     * This comparison method is needed to define a natural ordering.
     * It allows to use objects of this class in a sorted collection.
     *
@@ -174,14 +174,8 @@ public class Node implements Comparable<Object> {
     * @return  a negative integer, zero, or a positive integer as this node is less than, equal to, or greater than the specified object.
     */
     public int compareTo(final Object object) {
-        if (!(object instanceof Node)) {
-            return -1;
-        }
-        int id = ((Node) object).identifier;
-        if (this.identifier > id) {
-            return 1;
-        } else if (this.identifier == id) {
-            return 0;
+        if (object instanceof Node) {
+            return this.identifier - ((Node) object).identifier;
         } else {
             return -1;
         }

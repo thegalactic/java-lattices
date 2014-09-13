@@ -80,9 +80,7 @@ public class Edge implements Comparable<Object> {
      * @param   to       the destination node
      */
     public Edge(final Node from, final Node to) {
-        this.from = from;
-        this.to = to;
-        this.content = null;
+        this(from, to, null);
     }
 
     /* -------------- ACCESSORS ------------------- */
@@ -140,8 +138,8 @@ public class Edge implements Comparable<Object> {
     /**
      * Compares this edge with those in parameter, based on their identifiers.
      *
-     * The result is zero if the identifiers are equal; 1 if this edge's identifier is greater,
-     * and -1 otherwise.
+     * The result is zero if the identifiers are equal; positive if this edge's identifier is greater,
+     * and negative otherwise.
      *
      * This comparison method is needed to define a natural ordering.
      * It allows to use objects of this class in a sorted collection
@@ -151,18 +149,17 @@ public class Edge implements Comparable<Object> {
      * @return  a negative integer, zero, or a positive integer as this edge is less than, equal to, or greater than the specified object.
      */
     public int compareTo(final Object object)  {
-        if (!(object instanceof Edge)) {
+        if (object instanceof Edge) {
+            Edge edge = (Edge) object;
+            int cmp = this.from.compareTo(edge.from);
+            if (cmp == 0) {
+                return this.to.compareTo(edge.to);
+            } else {
+                return cmp;
+            }
+        } else {
             return -1;
         }
-        Edge edge = (Edge) object;
-        if (this.from.getIdentifier() == edge.getFrom().getIdentifier() && this.to.getIdentifier() == edge.getTo().getIdentifier()) {
-            return 0;
-        }
-        if (this.from.getIdentifier() < edge.getFrom().getIdentifier()
-            || this.from.getIdentifier() == edge.getFrom().getIdentifier() && this.to.getIdentifier() < edge.getTo().getIdentifier()) {
-            return -1;
-        }
-        return 1;
     }
 
     /**
@@ -171,9 +168,9 @@ public class Edge implements Comparable<Object> {
      * @return  The string representation of this edge
      */
     public String toString() {
-        String string = this.from.toString() + "->" + this.to.toString();
+        String string = this.from + "->" + this.to;
         if (this.hasContent()) {
-            string = string + "(" + this.content + ")";
+            string += "(" + this.content + ")";
         }
         return string;
     }
