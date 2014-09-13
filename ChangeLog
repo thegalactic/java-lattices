@@ -25,6 +25,10 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-09-13 Christophe Demko <chdemko@gmail.com>
+	* All .java files
+		^ Changing copyright
+
 2014-09-12 Christophe Demko <chdemko@gmail.com>
 	* src/fr/kbertet/dgraph/DGraph.java
 		^ Removing some warnings when compile with -Xlint

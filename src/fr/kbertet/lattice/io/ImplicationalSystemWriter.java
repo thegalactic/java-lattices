@@ -3,7 +3,7 @@ package fr.kbertet.lattice.io;
 /*
  * ImplicationalSystemWriter.java
  *
- * Copyright: 2013-2014 Karell Bertet, France
+ * Copyright: 2010-2014 Karell Bertet, France
  *
  * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
  *
