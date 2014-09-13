@@ -89,7 +89,7 @@
 	<target name="junit" depends="build-test">
 		<mkdir dir="${build.reports-xml.dir}" />
 		<jacoco:coverage destfile="${build.dir}/${coverage.file}">
-			<junit fork="yes" forkmode="once" haltonfailure="no" showoutput="no" printsummary="true">
+			<junit fork="yes" haltonfailure="no" showoutput="no" printsummary="true">
 
 				<!--formatter type="plain" usefile="false" /-->
 				<formatter type="xml" />

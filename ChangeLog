@@ -26,6 +26,13 @@ $ -> Language fix or change
 ! -> Note
 
 2014-09-13 Christophe Demko <chdemko@gmail.com>
+	* build.xml
+	* src/fr/kbertet/dgraph/io/DGraphWriterDot.java
+	* test/fr/kbertet/dgraph/io/DGraphWriterFactoryTest.java
+	* test/fr/kbertet/dgraph/io/package-info.java
+		+ Add unit tests
+
+2014-09-13 Christophe Demko <chdemko@gmail.com>
 	* src/fr/kbertet/dgraph/Edge.java
 	* src/fr/kbertet/dgraph/Node.java
 	* test/fr/kbertet/dgraph/NodeTest.java

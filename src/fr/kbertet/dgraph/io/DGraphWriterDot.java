@@ -58,9 +58,11 @@ public final class DGraphWriterDot implements DGraphWriter {
 
     /**
      * Register this class for writing .dot files.
+     *
+     * @return  old writer
      */
-    public static void register() {
-        DGraphWriterFactory.register(DGraphWriterDot.getInstance(), "dot");
+    public static DGraphWriter register() {
+        return DGraphWriterFactory.register(DGraphWriterDot.getInstance(), "dot");
     }
 
     /**
