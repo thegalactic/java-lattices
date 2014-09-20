@@ -38,7 +38,6 @@ import java.util.Set;
  * - sinks
  * - wells
  * - subgraph
- * - depth first search
  * - reflexive closure and reduction
  * - transitive closure
  * - strongly connected components
@@ -885,7 +884,7 @@ public class DGraph {
       * @todo  Do we change that to iterators?
       *        Change to private and add a method that return an iterator
       */
-     public ArrayList<Node>[] depthFirstSearch(Node source, TreeSet<Node> visited, ArrayList<Node> sort) {
+     private ArrayList<Node>[] depthFirstSearch(Node source, TreeSet<Node> visited, ArrayList<Node> sort) {
         ArrayList<Node> first = new ArrayList<Node>();
         ArrayList<Node> last = new ArrayList<Node>();
         first.add(source);
@@ -924,7 +923,7 @@ public class DGraph {
       *
       * @return  The array
       */
-    public ArrayList<Node>[] depthFirstSearch() {
+    private ArrayList<Node>[] depthFirstSearch() {
         TreeSet<Node> visited = new TreeSet<Node>();
         ArrayList<Node>[] arrayVisited = new ArrayList[2];
         ArrayList<Node> first = new ArrayList<Node>();

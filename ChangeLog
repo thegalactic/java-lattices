@@ -26,8 +26,13 @@ $ -> Language fix or change
 ! -> Note
 
 2014-09-20 Christophe Demko <chdemko@gmail.com>
+	* src/kbertet/dgraph/DGraph.java
+	* src/kbertet/dgraph/DGraph.iuml
+		^ Change methods to private
+
+2014-09-20 Christophe Demko <chdemko@gmail.com>
 	* build.xml
-		+ Add -Xlint for tests 
+		+ Add -Xlint for tests
 
 2014-09-20 Christophe Demko <chdemko@gmail.com>
 	* src/fr/kbertet/lattice/ArrowRelation.java
