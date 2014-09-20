@@ -25,6 +25,14 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-09-20 Christophe Demko <chdemko@gmail.com>
+	* src/fr/kbertet/lattice/ArrowRelation.java
+		^ Use static fields 
+
+2014-09-20 Christophe Demko <chdemko@gmail.com>
+	* src/fr/kbertet/lattice/Rule.java
+		- Remove useless parenthesis
+
 2014-09-13 Christophe Demko <chdemko@gmail.com>
 	* build.xml
 	* src/fr/kbertet/dgraph/io/DGraphWriterDot.java
