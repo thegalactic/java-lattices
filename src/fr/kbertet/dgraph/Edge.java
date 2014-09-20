@@ -136,6 +136,26 @@ public class Edge implements Comparable<Object> {
     /* ------------- METHODS ------------------ */
 
     /**
+     * Compares this edge with the specified one.
+     *
+     * @param  object  The object to be tested with
+     *
+     * @return  true or false as this node is equal to the specified object.
+     */
+    public boolean equals(final Object object) {
+        return this.compareTo(object) == 0;
+    }
+
+    /**
+     * Compute the hash code.
+     *
+     * @return  an integer representing the object
+     */
+    public int hashCode() {
+        return 1013 * (from.hashCode()) ^ 1009 * (to.hashCode());
+    }
+
+    /**
      * Compares this edge with those in parameter, based on their identifiers.
      *
      * The result is zero if the identifiers are equal; positive if this edge's identifier is greater,

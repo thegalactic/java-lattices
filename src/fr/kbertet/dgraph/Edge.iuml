@@ -17,6 +17,8 @@ package fr.kbertet.dgraph {
         .. Transformers ..
         +String toString()
         .. Comparators ..
+        +boolean equals(final Object object);
+        +int hashCode()
         +int compareTo(final Object object)
     }
 
