@@ -753,7 +753,7 @@ public class Lattice extends DAGraph {
                     for (ComparableSet c : family) {
                         //System.out.println("min: "+min.getClass()+" -C:"+C.getClass());
                         if (c.containsAll(p) && !p.containsAll(c) && min.containsAll(c)) {
-                            min = c.copy();
+                            min = c.clone();
                         }
                     }
                     Rule r = new Rule();

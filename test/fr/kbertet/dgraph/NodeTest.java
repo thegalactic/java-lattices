@@ -53,13 +53,13 @@ public class NodeTest {
     }
 
     /**
-     * Test the copy() method.
+     * Test the clone() method.
      */
     @Test
-    public void testCopy() {
+    public void testClone() {
         Object content = new Object();
         Node node = new Node(content);
-        Node copy = node.copy();
+        Node copy = node.clone();
         assertEquals(copy.getContent(), content);
     }
 

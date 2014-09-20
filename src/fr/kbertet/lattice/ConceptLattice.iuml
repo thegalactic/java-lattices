@@ -21,7 +21,7 @@ package fr.kbertet.lattice {
         +boolean containsAllSetA()
         +boolean containsAllSetB()
         .. Generators ..
-        +ConceptLattice copy()
+        +ConceptLattice clone()
         .. Lattices generators ..
         +Lattice getJoinReduction()
         +Lattice getMeetReduction()

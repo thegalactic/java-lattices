@@ -6,7 +6,7 @@ package fr.kbertet.lattice {
         .. Transformers ..
         +String toString()
         .. Generators ..
-        +ComparableSet copy()
+        +ComparableSet clone()
         .. Comparators ..
         +boolean equals(Object object)
         +int hashCode()

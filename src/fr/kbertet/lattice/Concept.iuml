@@ -9,7 +9,7 @@ package fr.kbertet.lattice {
         +Concept(boolean setA, TreeSet<Comparable> setB)
         +Concept(Concept c)
         .. Generators ..
-        +Concept copy()
+        +Concept clone()
         .. Predicates ..
         +boolean hasSetB()
         +boolean hasSetA()

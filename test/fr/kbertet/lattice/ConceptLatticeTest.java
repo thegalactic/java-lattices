@@ -134,16 +134,16 @@ public class ConceptLatticeTest {
     }
 
     /**
-     * Test of copy method, of class ConceptLattice.
+     * Test of clone method, of class ConceptLattice.
      */
     @Test
-    public void testCopy() {
+    public void testClone() {
         Lattice l = new Lattice();
         Concept a = new Concept(true, true); l.addNode(a);
         Concept b = new Concept(true, true); l.addNode(b);
         l.addEdge(a, b);
         ConceptLattice cl = new ConceptLattice(l);
-        ConceptLattice result = cl.copy();
+        ConceptLattice result = cl.clone();
         assertEquals(a, result.getNode(a));
         assertEquals(b, result.getNode(b));
         assertEquals(1, result.getEdges().size());

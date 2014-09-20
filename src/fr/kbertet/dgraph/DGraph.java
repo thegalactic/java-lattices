@@ -57,7 +57,7 @@ import java.util.Set;
  * class DGraph #LightCyan
  * title DGraph UML graph
  */
-public class DGraph {
+public class DGraph implements Cloneable {
     /*
      * Register dot writer
      */
@@ -171,11 +171,11 @@ public class DGraph {
     /* --------------- ACCESSOR AND OVERLAPPING METHODS ------------ */
 
     /**
-     * Returns a copy of this component composed of a copy of each node and each edge.
+     * Returns a clone of this component composed of a clone of each node and each edge.
      *
-     * @return  the copy of this
+     * @return  the clone of this
      */
-    public DGraph copy() {
+    public DGraph clone() {
         return new DGraph(this);
     }
 

@@ -78,11 +78,11 @@ public class ComparableSet extends TreeSet implements Comparable, Cloneable {
     }
 
     /**
-     * Returns a copy of this component.
+     * Returns a clone of this component.
      *
-     * @return  a copy of this component.
+     * @return  a clone of this component.
      */
-    public ComparableSet copy() {
+    public ComparableSet clone() {
         return new ComparableSet((TreeSet) super.clone());
     }
 

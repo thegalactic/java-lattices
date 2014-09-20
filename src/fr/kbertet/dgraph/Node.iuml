@@ -7,7 +7,7 @@ package fr.kbertet.dgraph {
         +Node(final Object content)
         +Node()
         .. Creators ..
-        +Node copy()
+        +Node clone()
         .. Accessors ..
         +int getIdentifier()
         +Object getContent()

@@ -228,17 +228,17 @@ public class ConceptLattice extends Lattice {
     }
 
     /**
-     * Returns a copy of this component composed of a copy of each concept and each edge.
+     * Returns a clone of this component composed of a clone of each concept and each edge.
      *
      * @return  a concept lattice
      */
     @Override
-    public ConceptLattice copy() {
+    public ConceptLattice clone() {
         ConceptLattice conceptLattice = new ConceptLattice();
         TreeMap<Concept, Concept> copy = new TreeMap<Concept, Concept>();
         for (Node n : this.getNodes()) {
             Concept c = (Concept) n;
-            Concept c2 = c.copy();
+            Concept c2 = c.clone();
             copy.put(c, c2);
             conceptLattice.addNode(c2);
         }
@@ -477,7 +477,7 @@ public class ConceptLattice extends Lattice {
         }
         Lattice lattice = new Lattice();
         //ConceptLattice csl = new ConceptLattice (this);
-        ConceptLattice csl = this.copy();
+        ConceptLattice csl = this.clone();
         csl.makeIrreduciblesReduction();
         TreeSet<Node> joinIrr = csl.joinIrreducibles();
         // addition to lattice of a comparable issued from each reduced closed set
@@ -525,7 +525,7 @@ public class ConceptLattice extends Lattice {
             return lattice;
         }
         //ConceptLattice csl = new ConceptLattice (this);
-        ConceptLattice csl = this.copy();
+        ConceptLattice csl = this.clone();
         csl.makeIrreduciblesReduction();
         TreeSet<Node> meetIrr = csl.meetIrreducibles();
         // addition to lattice of a comparable issued from each reduced closed set
@@ -569,7 +569,7 @@ public class ConceptLattice extends Lattice {
             return lattice;
         }
         //ConceptLattice csl = new ConceptLattice (this);
-        ConceptLattice csl = this.copy();
+        ConceptLattice csl = this.clone();
         csl.makeIrreduciblesReduction();
         TreeSet<Node> joinIrr = csl.joinIrreducibles();
         TreeSet<Node> meetIrr = csl.meetIrreducibles();

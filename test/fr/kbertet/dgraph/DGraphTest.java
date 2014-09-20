@@ -92,10 +92,10 @@ public class DGraphTest {
     }
 
     /**
-     * Test the copy method.
+     * Test the clone method.
      */
     @Test
-    public void testCopy() {
+    public void testClone() {
         TreeSet<Node> set = new TreeSet<Node>();
         Node node1 = new Node("1");
         Node node2 = new Node("2");
@@ -103,7 +103,7 @@ public class DGraphTest {
         set.add(node2);
         DGraph graph = new DGraph(set);
         graph.addEdge(node1, node2);
-        DGraph copy = graph.copy();
+        DGraph copy = graph.clone();
         assertEquals(copy.sizeNodes(), 2);
         node1 = copy.getNodeByContent("1");
         node2 = copy.getNodeByContent("2");

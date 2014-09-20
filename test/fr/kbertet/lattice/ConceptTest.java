@@ -133,21 +133,21 @@ public class ConceptTest {
         assertTrue(copyff.getSetB() == null);
     }
     /**
-     * Test the copy method.
+     * Test the clone method.
      */
     @Test
-    public void testCopy() {
+    public void testClone() {
         Concept tt = new Concept(true, true);
-        Concept copytt = tt.copy();
+        Concept copytt = tt.clone();
         assertEquals(tt, copytt);
         Concept tf = new Concept(true, false);
-        Concept copytf = tf.copy();
+        Concept copytf = tf.clone();
         assertEquals(tf, copytf);
         Concept ft = new Concept(false, true);
-        Concept copyft = ft.copy();
+        Concept copyft = ft.clone();
         assertEquals(ft, copyft);
         Concept ff = new Concept(false, false);
-        Concept copyff = ff.copy();
+        Concept copyff = ff.clone();
         assertFalse(copyff.hasSetA());
         assertFalse(copyff.hasSetB());
     }

@@ -54,15 +54,15 @@ public class ComparableSetTest {
     }
 
     /**
-     * Test the copy method.
+     * Test the clone method.
      */
     @Test
-    public void testCopy() {
+    public void testClone() {
         ComparableSet set = new ComparableSet();
         set.add(new Integer(1));
         set.add(new Integer(2));
         set.add(new Integer(3));
-        ComparableSet copy = set.copy();
+        ComparableSet copy = set.clone();
         assertEquals(set, copy);
     }
 

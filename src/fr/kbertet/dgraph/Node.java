@@ -34,7 +34,7 @@ package fr.kbertet.dgraph;
  * class Node #LightCyan
  * title Node UML graph
  */
-public class Node implements Comparable<Object> {
+public class Node implements Comparable<Object>, Cloneable {
     /* ------------- FIELDS --------------------- */
 
     /**
@@ -130,11 +130,11 @@ public class Node implements Comparable<Object> {
     /* --------------- OVERLAPPING METHODS ------------ */
 
     /**
-     * Returns a copy of this node.
+     * Returns a clone of this node.
      *
      * @return  a clone of this node
      */
-    public Node copy() {
+    public Node clone() {
         return new Node(this.content);
     }
 

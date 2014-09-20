@@ -26,6 +26,24 @@ $ -> Language fix or change
 ! -> Note
 
 2014-09-20 Christophe Demko <chdemko@gmail.com>
+	* src/fr/kbertet/dgraph/DGraph.java
+	* src/fr/kbertet/dgraph/Node.iuml
+	* src/fr/kbertet/dgraph/Node.java
+	* src/fr/kbertet/lattice/ComparableSet.iuml
+	* src/fr/kbertet/lattice/ComparableSet.java
+	* src/fr/kbertet/lattice/Concept.iuml
+	* src/fr/kbertet/lattice/Concept.java
+	* src/fr/kbertet/lattice/ConceptLattice.iuml
+	* src/fr/kbertet/lattice/ConceptLattice.java
+	* src/fr/kbertet/lattice/Lattice.java
+	* test/fr/kbertet/dgraph/DGraphTest.java
+	* test/fr/kbertet/dgraph/NodeTest.java
+	* test/fr/kbertet/lattice/ComparableSetTest.java
+	* test/fr/kbertet/lattice/ConceptLatticeTest.java
+	* test/fr/kbertet/lattice/ConceptTest.java
+		^ Use clone method and Cloneable interface instead of copy method
+
+2014-09-20 Christophe Demko <chdemko@gmail.com>
 	* src/kbertet/dgraph/DGraph.java
 	* src/kbertet/dgraph/DGraph.iuml
 	* test/kbertet/dgraph/DGraphTest.java

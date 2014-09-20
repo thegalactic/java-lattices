@@ -146,11 +146,11 @@ public class Concept extends Node {
     /* --------------- ACCESSOR AND OVERLAPPING METHODS ------------ */
 
     /**
-     * Returns a copy of this component.
+     * Returns a clone of this component.
      *
-     * @return  a copy of this component
+     * @return  a clone of this component
      */
-    public Concept copy() {
+    public Concept clone() {
         if (this.hasSetA() && this.hasSetB()) {
             TreeSet setA = (TreeSet) this.getSetA().clone();
             TreeSet setB = (TreeSet) this.getSetB().clone();
