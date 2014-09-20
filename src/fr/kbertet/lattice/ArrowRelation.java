@@ -110,18 +110,18 @@ public class ArrowRelation extends DGraph  {
                 mplus = transitiveReduction.getSuccessorNodes(m).first();
                 jminus = transitiveReduction.getPredecessorNodes(j).first();
                 if (transitiveClosure.getSuccessorNodes(j).contains(m) || j.equals(m)) {
-                    arrow = this.cross;
+                    arrow = ArrowRelation.cross;
                 } else {
                     if (transitiveClosure.getSuccessorNodes(jminus).contains(m) || jminus.equals(m)) {
-                        arrow = this.down;
+                        arrow = ArrowRelation.down;
                         if (transitiveClosure.getPredecessorNodes(mplus).contains(j) || mplus.equals(j)) {
-                            arrow = this.updown;
+                            arrow = ArrowRelation.updown;
                         }
                     } else {
                         if (transitiveClosure.getPredecessorNodes(mplus).contains(j)) {
-                            arrow = this.up;
+                            arrow = ArrowRelation.up;
                         } else {
-                            arrow = this.circ;
+                            arrow = ArrowRelation.circ;
                         }
                     }
                 }
@@ -168,7 +168,7 @@ public class ArrowRelation extends DGraph  {
         }
         // generation of extent-intent
         for (Edge e : this.getEdges()) {
-            if (e.getContent() == this.updown) {
+            if (e.getContent() == ArrowRelation.updown) {
                 context.addExtentIntent(e.getFrom(), e.getTo());
             }
         }
@@ -195,7 +195,7 @@ public class ArrowRelation extends DGraph  {
         }
         // generation of extent-intent
         for (Edge e : this.getEdges()) {
-            if (e.getContent() == this.down || e.getContent() == this.updown) {
+            if (e.getContent() == ArrowRelation.down || e.getContent() == ArrowRelation.updown) {
                 context.addExtentIntent(e.getFrom(), e.getTo());
             }
         }
@@ -222,7 +222,7 @@ public class ArrowRelation extends DGraph  {
         }
         // generation of extent-intent
         for (Edge e : this.getEdges()) {
-            if (e.getContent() == this.up || e.getContent() == this.updown) {
+            if (e.getContent() == ArrowRelation.up || e.getContent() == ArrowRelation.updown) {
                 context.addExtentIntent(e.getFrom(), e.getTo());
             }
         }
@@ -249,7 +249,7 @@ public class ArrowRelation extends DGraph  {
         }
         // generation of extent-intent
         for (Edge e : this.getEdges()) {
-            if (e.getContent() == this.updown || e.getContent() == this.circ) {
+            if (e.getContent() == ArrowRelation.updown || e.getContent() == ArrowRelation.circ) {
                 context.addExtentIntent(e.getFrom(), e.getTo());
             }
         }
@@ -262,7 +262,7 @@ public class ArrowRelation extends DGraph  {
      * @return true if and only if there is an up arrow between from and to of edge e
      */
     public boolean isUp(Edge e) {
-        return (e.getContent() == this.up);
+        return (e.getContent() == ArrowRelation.up);
     }
     /**
      * Returns true if and only if there is an down arrow between from and to of edge e.
@@ -271,7 +271,7 @@ public class ArrowRelation extends DGraph  {
      * @return true if and only if there is an down arrow between from and to of edge e
      */
     public boolean isDown(Edge e) {
-        return (e.getContent() == this.down);
+        return (e.getContent() == ArrowRelation.down);
     }
     /**
      * Returns true if and only if there is an up-down arrow between from and to of edge e.
@@ -280,7 +280,7 @@ public class ArrowRelation extends DGraph  {
      * @return true if and only if there is an up-down arrow between from and to of edge e
      */
     public boolean isUpDown(Edge e) {
-        return (e.getContent() == this.updown);
+        return (e.getContent() == ArrowRelation.updown);
     }
     /**
      * Returns true if and only if there is an cross arrow between from and to of edge e.
@@ -289,7 +289,7 @@ public class ArrowRelation extends DGraph  {
      * @return true if and only if there is an cross arrow between from and to of edge e
      */
     public boolean isCross(Edge e) {
-        return (e.getContent() == this.cross);
+        return (e.getContent() == ArrowRelation.cross);
     }
     /**
      * Returns true if and only if there is an circ arrow between from and to of edge e.
@@ -298,6 +298,6 @@ public class ArrowRelation extends DGraph  {
      * @return true if and only if there is an circ arrow between from and to of edge e
      */
     public boolean isCirc(Edge e) {
-        return (e.getContent() == this.circ);
+        return (e.getContent() == ArrowRelation.circ);
     }
 }
