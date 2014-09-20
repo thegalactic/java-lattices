@@ -259,9 +259,9 @@ public class Rule implements Comparable {
         ComparableSet thisPremise = (ComparableSet) this.getPremise();
         ComparableSet thisConclusion = (ComparableSet) this.getConclusion();
         if (thisPremise.compareTo(r.getPremise()) == 0) {
-            return (thisConclusion.compareTo(r.getConclusion()));
+            return thisConclusion.compareTo(r.getConclusion());
         } else {
-            return (thisPremise.compareTo(r.getPremise()));
+            return thisPremise.compareTo(r.getPremise());
         }
     }
 }
