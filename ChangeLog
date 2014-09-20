@@ -28,6 +28,7 @@ $ -> Language fix or change
 2014-09-20 Christophe Demko <chdemko@gmail.com>
 	* src/kbertet/dgraph/DGraph.java
 	* src/kbertet/dgraph/DGraph.iuml
+	* test/kbertet/dgraph/DGraphTest.java
 		^ Change methods to private
 
 2014-09-20 Christophe Demko <chdemko@gmail.com>

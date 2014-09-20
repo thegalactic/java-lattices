@@ -764,7 +764,7 @@ public class DGraphTest {
     /**
      * Test the depthFirstSearch method.
      */
-    @Test
+/*    @Test
     public void testDepthFirstSearch() {
         DGraph graph = new DGraph();
         Node node1 = new Node();
@@ -812,7 +812,7 @@ public class DGraphTest {
         assertEquals(result[1].get(6), node2);
         assertEquals(result[1].get(7), node3);
     }
-
+*/
     /**
      * Test the transpose method.
      */
