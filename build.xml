@@ -67,7 +67,8 @@
 
 	<target name="build-test" depends="jar-debug">
 		<mkdir dir="${build.test.dir}" />
-		<javac includeantruntime="false" srcdir="${test.dir}" destdir="${build.test.dir}">
+		<javac debug="on" includeantruntime="false" srcdir="${test.dir}" destdir="${build.test.dir}">
+			<!--compilerarg value="-Xlint" /-->
 			<classpath>
 				<pathelement location="lib/junit/junit-4.11.jar" />
 				<pathelement location="lib/junit/hamcrest-core-1.3.jar" />
