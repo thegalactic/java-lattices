@@ -461,8 +461,10 @@ public class ImplicationalSystem extends ClosureSystem {
      */
     public boolean isProper() {
         for (Rule r : this.sigma) {
-            if (r.getPremise().contains(r.getConclusion())) {
-                return false;
+            for (Object c : r.getConclusion()) {
+                if (r.getPremise().contains(c)) {
+                    return false;
+                }
             }
         }
         return true;
@@ -919,7 +921,7 @@ public class ImplicationalSystem extends ClosureSystem {
         }
         // an edge is added from b to a when there exists a rule X+a -> b or a -> b
         for (Rule r : tmp.getRules()) {
-            for (Comparable a : r.getPremise()) {
+            for (Object a : r.getPremise()) {
                 ComparableSet diff = new ComparableSet(r.getPremise());
                 diff.remove(a);
                 Node from = nodeCreated.get(r.getConclusion().first());

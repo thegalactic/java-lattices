@@ -25,6 +25,10 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-09-21 Christophe Demko <chdemko@gmail.com>
+	* src/fr/kbertet/lattice/ImplicationalSystem.java
+		# Fix issue
+
 2014-09-20 Christophe Demko <chdemko@gmail.com>
 	* src/fr/kbertet/dgraph/Edge.iuml
 	* src/fr/kbertet/dgraph/Edge.java
