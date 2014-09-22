@@ -26,6 +26,15 @@ $ -> Language fix or change
 ! -> Note
 
 2014-09-22 Christophe Demko <chdemko@gmail.com>
+	* src/fr/kbertet/dgraph/DGraph.java
+	* src/fr/kbertet/lattice/ClosureSystem.java
+	* src/fr/kbertet/lattice/Concept.java
+	* src/fr/kbertet/lattice/ConceptLattice.java
+	* src/fr/kbertet/lattice/Lattice.java
+	* test/fr/kbertet/dgraph/DGraphTest.java
+		^ Implement getSinks and getWells using iterators
+
+2014-09-22 Christophe Demko <chdemko@gmail.com>
 	* build.xml
 	* src/fr/kbertet/dgraph/DAGraph.java
 	* src/fr/kbertet/dgraph/DGraph.iuml

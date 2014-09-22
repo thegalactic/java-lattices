@@ -271,7 +271,7 @@ public abstract class ClosureSystem {
         }
         // Next, check if an attribute is equivalent to emptyset
         // i.e. its closure is equal to emptyset closure
-        TreeSet<Node> sinks = graph.getSinks();
+        TreeSet<Node> sinks = new TreeSet<Node>(graph.getSinks());
         sinks.removeAll(rubbishBin);
         if (sinks.size() == 1) {
             Node s = sinks.first();

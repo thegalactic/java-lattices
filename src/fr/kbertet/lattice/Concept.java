@@ -683,7 +683,7 @@ public class Concept extends Node {
         // computes the sources of the CFC of the dependance subgraph
         // that corresponds to successors of the closed set F
         DAGraph cfc = delta.getStronglyConnectedComponent();
-        TreeSet<Node> sccmin = cfc.getSinks();
+        SortedSet<Node> sccmin = cfc.getSinks();
         System.out.println(System.currentTimeMillis() - start + "ms");
         ArrayList<TreeSet<Comparable>> immSucc = new ArrayList<TreeSet<Comparable>>();
         for (Node n1 : sccmin) {

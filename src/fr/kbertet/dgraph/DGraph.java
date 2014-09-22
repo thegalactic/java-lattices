@@ -184,7 +184,7 @@ public class DGraph implements Cloneable {
         }
 
         /**
-         * Constructs an sorted set of the edges from a graph.
+         * Constructs a sorted set of the edges from a graph.
          *
          * @param   graph  A DGraph
          */
@@ -275,6 +275,396 @@ public class DGraph implements Cloneable {
          */
         public EdgesIterator iterator() {
             return new EdgesIterator(this);
+        }
+    }
+
+    /**
+     * This class implements a sorted set of the sinks.
+     */
+    private class Sinks extends AbstractSet<Node> implements SortedSet<Node> {
+        /**
+         * The underlying graph.
+         */
+        private DGraph graph;
+
+        /**
+         * Get the underlying graph.
+         *
+         * @return  the graph
+         */
+        protected DGraph getGraph() {
+            return graph;
+        }
+
+        /**
+         * This class implements an iterator over the edges of a graph.
+         */
+        private class SinksIterator implements Iterator<Node> {
+            /**
+             * The nodes iterator.
+             */
+            private Iterator<Node> nodesIterator;
+
+            /**
+             * The sinks object.
+             */
+            private Sinks sinks;
+
+            /**
+             * The next sink.
+             */
+            private Node next;
+
+            /**
+             * The hasNext flag.
+             */
+            private boolean hasNext;
+
+            /**
+             * Constructs the iterator from a set of sinks.
+             *
+             * @param   sinks  The sinks.
+             */
+            public SinksIterator(Sinks sinks) {
+                this.sinks = sinks;
+                this.nodesIterator = sinks.graph.nodes.iterator();
+                this.prepareNext();
+            }
+
+            /**
+             * Prepare the next sink and the hasNext flag.
+             */
+            private void prepareNext() {
+                hasNext = false;
+                while (!hasNext && nodesIterator.hasNext()) {
+                    next = nodesIterator.next();
+                    hasNext = sinks.graph.predecessors.get(next).isEmpty();
+                }
+            }
+
+            /**
+             * The remove operation is not supported.
+             *
+             * @throws  UnsupportedOperationException
+             */
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+
+            /**
+             * The next method returns the next sink.
+             *
+             * @return  The next sink
+             */
+            public Node next() {
+                Node sink = next;
+                this.prepareNext();
+                return sink;
+            }
+
+            /**
+             * The hasNext method return true if the iterator has a next edge.
+             *
+             * @return  true if the iterator has a next edge
+             */
+            public boolean hasNext() {
+                return hasNext;
+            }
+        }
+
+        /**
+         * Constructs a sorted set of the edges from a graph.
+         *
+         * @param   graph  A DGraph
+         */
+        public Sinks(DGraph graph) {
+            this.graph = graph;
+        }
+
+        /**
+         * Implements the SortedSet interface.
+         *
+         * @return  the first edge
+         */
+        public Node first() {
+            throw new UnsupportedOperationException();
+        }
+
+        /**
+         * Implements the SortedSet interface.
+         *
+         * @return  the last edge
+         */
+        public Node last() {
+            throw new UnsupportedOperationException();
+        }
+
+        /**
+         * Implements the SortedSet interface.
+         *
+         * @param   node  the to node
+         *
+         * @return  The head set
+         *
+         * @throws  UnsupportedOperationException
+         */
+        public SortedSet<Node> headSet(Node node) {
+            throw new UnsupportedOperationException();
+        }
+
+        /**
+         * Implements the SortedSet interface.
+         *
+         * @param   node  the from node
+         *
+         * @return  The tail set
+         *
+         * @throws  UnsupportedOperationException
+         */
+        public SortedSet<Node> tailSet(Node node) {
+            throw new UnsupportedOperationException();
+        }
+
+        /**
+         * Implements the SortedSet interface.
+         *
+         * @param   fromNode  the from node
+         * @param   toNode    the to node
+         *
+         * @return  The sub set
+         *
+         * @throws  UnsupportedOperationException
+         */
+        public SortedSet<Node> subSet(Node fromNode, Node toNode) {
+            throw new UnsupportedOperationException();
+        }
+
+        /**
+         * Implements the SortedSet interface.
+         *
+         * @return  null
+         */
+        public Comparator<? super Node> comparator() {
+            return null;
+        }
+
+        /**
+         * Implements the AbstractCollection class.
+         *
+         * @return  the size of the collection
+         */
+        public int size() {
+            int size = 0;
+            SinksIterator iterator = this.iterator();
+            while (iterator.hasNext()) {
+                size++;
+                iterator.next();
+            }
+            return size;
+        }
+
+        /**
+         * Implements the AbstractCollection class.
+         *
+         * @return  a new sinks iterator
+         */
+        public SinksIterator iterator() {
+            return new SinksIterator(this);
+        }
+    }
+
+    /**
+     * This class implements a sorted set of the wells.
+     */
+    private class Wells extends AbstractSet<Node> implements SortedSet<Node> {
+        /**
+         * The underlying graph.
+         */
+        private DGraph graph;
+
+        /**
+         * Get the underlying graph.
+         *
+         * @return  the graph
+         */
+        protected DGraph getGraph() {
+            return graph;
+        }
+
+        /**
+         * This class implements an iterator over the edges of a graph.
+         */
+        private class WellsIterator implements Iterator<Node> {
+            /**
+             * The nodes iterator.
+             */
+            private Iterator<Node> nodesIterator;
+
+            /**
+             * The wells object.
+             */
+            private Wells wells;
+
+            /**
+             * The next well.
+             */
+            private Node next;
+
+            /**
+             * The hasNext flag.
+             */
+            private boolean hasNext;
+
+            /**
+             * Constructs the iterator from a set of wells.
+             *
+             * @param   wells  The wells.
+             */
+            public WellsIterator(Wells wells) {
+                this.wells = wells;
+                this.nodesIterator = wells.graph.nodes.iterator();
+                this.prepareNext();
+            }
+
+            /**
+             * Prepare the next well and the hasNext flag.
+             */
+            private void prepareNext() {
+                hasNext = false;
+                while (!hasNext && nodesIterator.hasNext()) {
+                    next = nodesIterator.next();
+                    hasNext = wells.graph.successors.get(next).isEmpty();
+                }
+            }
+
+            /**
+             * The remove operation is not supported.
+             *
+             * @throws  UnsupportedOperationException
+             */
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+
+            /**
+             * The next method returns the next well.
+             *
+             * @return  The next well
+             */
+            public Node next() {
+                Node well = next;
+                this.prepareNext();
+                return well;
+            }
+
+            /**
+             * The hasNext method return true if the iterator has a next edge.
+             *
+             * @return  true if the iterator has a next edge
+             */
+            public boolean hasNext() {
+                return hasNext;
+            }
+        }
+
+        /**
+         * Constructs a sorted set of the edges from a graph.
+         *
+         * @param   graph  A DGraph
+         */
+        public Wells(DGraph graph) {
+            this.graph = graph;
+        }
+
+        /**
+         * Implements the SortedSet interface.
+         *
+         * @return  the first edge
+         */
+        public Node first() {
+            throw new UnsupportedOperationException();
+        }
+
+        /**
+         * Implements the SortedSet interface.
+         *
+         * @return  the last edge
+         */
+        public Node last() {
+            throw new UnsupportedOperationException();
+        }
+
+        /**
+         * Implements the SortedSet interface.
+         *
+         * @param   node  the to node
+         *
+         * @return  The head set
+         *
+         * @throws  UnsupportedOperationException
+         */
+        public SortedSet<Node> headSet(Node node) {
+            throw new UnsupportedOperationException();
+        }
+
+        /**
+         * Implements the SortedSet interface.
+         *
+         * @param   node  the from node
+         *
+         * @return  The tail set
+         *
+         * @throws  UnsupportedOperationException
+         */
+        public SortedSet<Node> tailSet(Node node) {
+            throw new UnsupportedOperationException();
+        }
+
+        /**
+         * Implements the SortedSet interface.
+         *
+         * @param   fromNode  the from node
+         * @param   toNode    the to node
+         *
+         * @return  The sub set
+         *
+         * @throws  UnsupportedOperationException
+         */
+        public SortedSet<Node> subSet(Node fromNode, Node toNode) {
+            throw new UnsupportedOperationException();
+        }
+
+        /**
+         * Implements the SortedSet interface.
+         *
+         * @return  null
+         */
+        public Comparator<? super Node> comparator() {
+            return null;
+        }
+
+        /**
+         * Implements the AbstractCollection class.
+         *
+         * @return  the size of the collection
+         */
+        public int size() {
+            int size = 0;
+            WellsIterator iterator = this.iterator();
+            while (iterator.hasNext()) {
+                size++;
+                iterator.next();
+            }
+            return size;
+        }
+
+        /**
+         * Implements the AbstractCollection class.
+         *
+         * @return  a new Wells iterator
+         */
+        public WellsIterator iterator() {
+            return new WellsIterator(this);
         }
     }
 
@@ -876,7 +1266,7 @@ public class DGraph implements Cloneable {
      * @return  the nodes
      */
     public ArrayList<Node> topologicalSort() {
-        TreeSet<Node> sinks = this.getSinks();
+        TreeSet<Node> sinks = new TreeSet<Node>(this.getSinks());
         // initialise a map with the number of predecessors (value) for each node (key);
         TreeMap<Node, Integer> size = new TreeMap<Node, Integer>();
         for (Node node : this.nodes) {
@@ -904,34 +1294,18 @@ public class DGraph implements Cloneable {
     * Returns the sinks of this component.
     *
     * @return  the sinks
-    *
-    * @todo  use iterator pattern
     */
-    public TreeSet<Node> getSinks() {
-        TreeSet<Node> sinks = new TreeSet<Node>();
-        for (Node node : this.nodes) {
-            if (this.predecessors.get(node).isEmpty()) {
-                sinks.add(node);
-            }
-        }
-        return sinks;
+    public SortedSet<Node> getSinks() {
+        return new Sinks(this);
     }
 
    /**
     * Returns the wells of this component.
     *
     * @return  the wells
-    *
-    * @todo  use iterator pattern
     */
-    public TreeSet<Node> getWells() {
-        TreeSet<Node> wells = new TreeSet<Node>();
-        for (Node node : this.nodes) {
-            if (this.successors.get(node).isEmpty()) {
-                wells.add(node);
-            }
-        }
-        return wells;
+    public SortedSet<Node> getWells() {
+        return new Wells(this);
     }
 
     /**

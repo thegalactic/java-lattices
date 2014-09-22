@@ -264,7 +264,7 @@ public class Lattice extends DAGraph {
      * @return  the node which is at the top of the lattice or null if it is not unique
      */
     public Node top() {
-        SortedSet<Node> max = this.max();
+        TreeSet<Node> max = new TreeSet<Node>(this.max());
         if (max.size() == 1) {
             return max.first();
         }
@@ -277,7 +277,7 @@ public class Lattice extends DAGraph {
      * @return  the node which is at the bottom of the lattice or null if it is not unique
      */
     public Node bottom() {
-        SortedSet<Node> min = this.min();
+        TreeSet<Node> min = new TreeSet<Node>(this.min());
         if (min.size() == 1) {
             return min.first();
         }
@@ -301,7 +301,7 @@ public class Lattice extends DAGraph {
 
         xMinorants.retainAll(yMinorants);
         DAGraph graph = this.getSubgraphByNodes(xMinorants);
-        SortedSet<Node> meet = graph.max();
+        TreeSet<Node> meet = new TreeSet<Node>(graph.max());
         if (meet.size() == 1) {
             return meet.first();
         }
@@ -325,7 +325,7 @@ public class Lattice extends DAGraph {
 
         xMajorants.retainAll(yMajorants);
         DAGraph graph = this.getSubgraphByNodes(xMajorants);
-        SortedSet<Node> join = graph.min();
+        TreeSet<Node> join = new TreeSet<Node>(graph.min());
         if (join.size() == 1) {
             return join.first();
         }

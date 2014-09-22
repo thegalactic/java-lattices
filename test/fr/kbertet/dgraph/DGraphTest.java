@@ -17,6 +17,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 
 import java.util.TreeSet;
+import java.util.SortedSet;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
@@ -519,9 +520,11 @@ public class DGraphTest {
         graph.addNode(from);
         graph.addNode(to);
         graph.addEdge(edge);
-        TreeSet<Node> getSinks = graph.getSinks();
-        assertEquals(getSinks.size(), 1);
-        assertTrue(getSinks.contains(from));
+        SortedSet<Node> sinks = graph.getSinks();
+        assertEquals(sinks.size(), 1);
+        for (Node sink : sinks) {
+            assertEquals(sink, from);
+        }
     }
 
     /**
@@ -536,9 +539,11 @@ public class DGraphTest {
         graph.addNode(from);
         graph.addNode(to);
         graph.addEdge(edge);
-        TreeSet<Node> getWells = graph.getWells();
-        assertEquals(getWells.size(), 1);
-        assertTrue(getWells.contains(to));
+        SortedSet<Node> wells = graph.getWells();
+        assertEquals(wells.size(), 1);
+        for (Node well : wells) {
+            assertEquals(well, to);
+        }
     }
 
     /**

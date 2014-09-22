@@ -890,7 +890,7 @@ public class ConceptLattice extends Lattice {
         // computes the sources of the CFC of the dependance subgraph
         // that corresponds to successors of the closed set F
         DAGraph cfc = delta.getStronglyConnectedComponent();
-        TreeSet<Node> sccMin = cfc.getSinks();
+        SortedSet<Node> sccMin = cfc.getSinks();
         Vector<TreeSet<Comparable>> immSucc = new Vector<TreeSet<Comparable>>();
         for (Node n1 : sccMin) {
             TreeSet s = new TreeSet(setF);
