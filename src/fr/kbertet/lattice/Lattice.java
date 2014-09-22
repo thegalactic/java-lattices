@@ -13,13 +13,14 @@ package fr.kbertet.lattice;
 
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.SortedSet;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
 import fr.kbertet.dgraph.DAGraph;
 import fr.kbertet.dgraph.DGraph;
 import fr.kbertet.dgraph.Edge;
 import fr.kbertet.dgraph.Node;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 
 /**
  * This class extends class {@link fr.kbertet.dgraph.DAGraph} to provide specific methods to manipulate a lattice.
@@ -240,7 +241,7 @@ public class Lattice extends DAGraph {
     */
    public boolean isAtomistic() {
        TreeSet<Node> join = this.joinIrreducibles();
-       TreeSet<Node> atoms = this.getSuccessorNodes(this.bottom());
+       TreeSet<Node> atoms = new TreeSet<Node>(this.getSuccessorNodes(this.bottom()));
        return join.containsAll(atoms) && atoms.containsAll(join);
    }
    /**
@@ -263,7 +264,7 @@ public class Lattice extends DAGraph {
      * @return  the node which is at the top of the lattice or null if it is not unique
      */
     public Node top() {
-        TreeSet<Node> max = this.max();
+        SortedSet<Node> max = this.max();
         if (max.size() == 1) {
             return max.first();
         }
@@ -276,7 +277,7 @@ public class Lattice extends DAGraph {
      * @return  the node which is at the bottom of the lattice or null if it is not unique
      */
     public Node bottom() {
-        TreeSet<Node> min = this.min();
+        SortedSet<Node> min = this.min();
         if (min.size() == 1) {
             return min.first();
         }
@@ -292,15 +293,15 @@ public class Lattice extends DAGraph {
      * @return  the node which is at the meet of the nodes or null if it does not exist
      */
     public Node meet(Node x, Node y) {
-        TreeSet<Node> xMinorants = this.minorants(x);
+        SortedSet<Node> xMinorants = this.minorants(x);
         xMinorants.add(x);
 
-        TreeSet<Node> yMinorants = this.minorants(y);
+        SortedSet<Node> yMinorants = this.minorants(y);
         yMinorants.add(y);
 
         xMinorants.retainAll(yMinorants);
         DAGraph graph = this.getSubgraphByNodes(xMinorants);
-        TreeSet<Node> meet = graph.max();
+        SortedSet<Node> meet = graph.max();
         if (meet.size() == 1) {
             return meet.first();
         }
@@ -316,15 +317,15 @@ public class Lattice extends DAGraph {
      * @return  the node which is at the join of the nodes or null if it does not exist
      */
     public Node join(Node x, Node y) {
-        TreeSet<Node> xMajorants = this.majorants(x);
+        SortedSet<Node> xMajorants = this.majorants(x);
         xMajorants.add(x);
 
-        TreeSet<Node> yMajorants = this.majorants(y);
+        SortedSet<Node> yMajorants = this.majorants(y);
         yMajorants.add(y);
 
         xMajorants.retainAll(yMajorants);
         DAGraph graph = this.getSubgraphByNodes(xMajorants);
-        TreeSet<Node> join = graph.min();
+        SortedSet<Node> join = graph.min();
         if (join.size() == 1) {
             return join.first();
         }
@@ -817,7 +818,7 @@ public class Lattice extends DAGraph {
         // edges of the dependency graph are dependency relation between join-irreducibles
         // they are first valuated by nodes of the lattice
         for (Node j1 : joins) {
-            TreeSet<Node> majj1 = this.majorants(j1);
+            SortedSet<Node> majj1 = this.majorants(j1);
             for (Node j2 : joins) {
                 if (!j1.equals(j2)) {
                     // computes the set S of nodes not greather than j1 and j2

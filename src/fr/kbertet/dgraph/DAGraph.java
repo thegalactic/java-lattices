@@ -13,6 +13,7 @@ package fr.kbertet.dgraph;
 
 import java.util.ArrayList;
 import java.util.TreeMap;
+import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.Set;
 
@@ -100,7 +101,7 @@ public class DAGraph extends DGraph {
      *
      * @return  the minimal element
      */
-    public TreeSet<Node> min() {
+    public SortedSet<Node> min() {
         return this.getSinks();
     }
 
@@ -109,7 +110,7 @@ public class DAGraph extends DGraph {
      *
      * @return  the maximal element
      */
-    public TreeSet<Node> max() {
+    public SortedSet<Node> max() {
         return this.getWells();
     }
 
@@ -122,7 +123,7 @@ public class DAGraph extends DGraph {
      *
      * @return  the set of majorants
      */
-    public TreeSet<Node> majorants(final Node node) {
+    public SortedSet<Node> majorants(final Node node) {
         DAGraph graph = new DAGraph(this);
         graph.transitiveClosure();
         return graph.getSuccessorNodes(node);
@@ -137,7 +138,7 @@ public class DAGraph extends DGraph {
      *
      * @return  the set of minorants
      */
-    public TreeSet<Node> minorants(final Node node) {
+    public SortedSet<Node> minorants(final Node node) {
         DAGraph graph = new DAGraph(this);
         graph.transitiveClosure();
         return graph.getPredecessorNodes(node);
@@ -152,7 +153,7 @@ public class DAGraph extends DGraph {
      * @return  the subgraph
      */
     public DAGraph filter(final Node node) {
-        TreeSet<Node> set = this.majorants(node);
+        TreeSet<Node> set = new TreeSet<Node>(this.majorants(node));
         set.add(node);
         return this.getSubgraphByNodes(set);
     }
@@ -166,7 +167,7 @@ public class DAGraph extends DGraph {
      * @return  the subgraph
      */
     public DAGraph ideal(final Node node) {
-        TreeSet<Node> set = this.minorants(node);
+        TreeSet<Node> set = new TreeSet<Node>(this.minorants(node));
         set.add(node);
         return this.getSubgraphByNodes(set);
     }

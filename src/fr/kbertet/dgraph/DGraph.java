@@ -21,7 +21,10 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.SortedSet;
+import java.util.AbstractSet;
 import java.util.Set;
+import java.util.Iterator;
+import java.util.Comparator;
 
 /**
  * This class gives a standard representation for a directed graph
@@ -83,6 +86,197 @@ public class DGraph implements Cloneable {
      * A map to associate a set of predecessors to each node.
      */
     private TreeMap<Node, TreeSet<Edge>> predecessors;
+
+    /**
+     * This class implements a sorted set of the edges.
+     */
+    private class Edges extends AbstractSet<Edge> implements SortedSet<Edge> {
+        /**
+         * The underlying graph.
+         */
+        private DGraph graph;
+
+        /**
+         * Get the underlying graph.
+         *
+         * @return  the graph
+         */
+        protected DGraph getGraph() {
+            return graph;
+        }
+
+        /**
+         * This class implements an iterator over the edges of a graph.
+         */
+        private class EdgesIterator implements Iterator<Edge> {
+            /**
+             * The nodes iterator.
+             */
+            private Iterator<Node> nodesIterator;
+
+            /**
+             * The edges iterator for the current node.
+             */
+            private Iterator<Edge> edgesIterator;
+
+            /**
+             * The edges object.
+             */
+            private Edges edges;
+
+            /**
+             * The hasNext flag.
+             */
+            private boolean hasNext;
+
+            /**
+             * Constructs the iterator from a set of edges.
+             *
+             * @param   edges  The edges.
+             */
+            public EdgesIterator(Edges edges) {
+                this.edges = edges;
+                this.nodesIterator = edges.graph.nodes.iterator();
+                this.prepareNext();
+            }
+
+            /**
+             * Prepare the next edge and the hasNext flag.
+             */
+            private void prepareNext() {
+                hasNext = false;
+                while (!hasNext && nodesIterator.hasNext()) {
+                    edgesIterator = edges.getGraph().successors.get(nodesIterator.next()).iterator();
+                    hasNext = edgesIterator.hasNext();
+                }
+            }
+
+            /**
+             * The remove operation is not supported.
+             *
+             * @throws  UnsupportedOperationException
+             */
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+
+            /**
+             * The next method returns the next edge.
+             *
+             * @return  The next edge
+             */
+            public Edge next() {
+                Edge edge = this.edgesIterator.next();
+                if (!this.edgesIterator.hasNext()) {
+                    this.prepareNext();
+                }
+                return edge;
+            }
+
+            /**
+             * The hasNext method return true if the iterator has a next edge.
+             *
+             * @return  true if the iterator has a next edge
+             */
+            public boolean hasNext() {
+                return hasNext;
+            }
+        }
+
+        /**
+         * Constructs an sorted set of the edges from a graph.
+         *
+         * @param   graph  A DGraph
+         */
+        public Edges(DGraph graph) {
+            this.graph = graph;
+        }
+
+        /**
+         * Implements the SortedSet interface.
+         *
+         * @return  the first edge
+         */
+        public Edge first() {
+            throw new UnsupportedOperationException();
+        }
+
+        /**
+         * Implements the SortedSet interface.
+         *
+         * @return  the last edge
+         */
+        public Edge last() {
+            throw new UnsupportedOperationException();
+        }
+
+        /**
+         * Implements the SortedSet interface.
+         *
+         * @param   edge  the to edge
+         *
+         * @return  The head set
+         *
+         * @throws  UnsupportedOperationException
+         */
+        public SortedSet<Edge> headSet(Edge edge) {
+            throw new UnsupportedOperationException();
+        }
+
+        /**
+         * Implements the SortedSet interface.
+         *
+         * @param   edge  the from edge
+         *
+         * @return  The tail set
+         *
+         * @throws  UnsupportedOperationException
+         */
+        public SortedSet<Edge> tailSet(Edge edge) {
+            throw new UnsupportedOperationException();
+        }
+
+        /**
+         * Implements the SortedSet interface.
+         *
+         * @param   fromEdge  the from edge
+         * @param   toEdge    the to edge
+         *
+         * @return  The sub set
+         *
+         * @throws  UnsupportedOperationException
+         */
+        public SortedSet<Edge> subSet(Edge fromEdge, Edge toEdge) {
+            throw new UnsupportedOperationException();
+        }
+
+        /**
+         * Implements the SortedSet interface.
+         *
+         * @return  null
+         */
+        public Comparator<? super Edge> comparator() {
+            return null;
+        }
+
+        /**
+         * Implements the AbstractCollection class.
+         *
+         * @return  the size of the collection
+         */
+        public int size() {
+            return graph.sizeEdges();
+        }
+
+        /**
+         * Implements the AbstractCollection class.
+         *
+         * @return  a new edges iterator
+         */
+        public EdgesIterator iterator() {
+            return new EdgesIterator(this);
+        }
+    }
 
     /* ------------- CONSTRUCTORS ------------------ */
 
@@ -248,11 +442,7 @@ public class DGraph implements Cloneable {
      * @return  the set of edges
      */
     public SortedSet<Edge> getEdges() {
-        TreeSet<Edge> edges = new TreeSet<Edge>();
-        for (Node node : this.nodes) {
-            edges.addAll(this.successors.get(node));
-        }
-        return edges;
+        return new Edges(this);
     }
 
     /**
@@ -283,13 +473,15 @@ public class DGraph implements Cloneable {
      * @param   node  the node to search for
      *
      * @return  the set of nodes
+     *
+     * @todo  use iterator pattern (some changes in ArrowRelation.java and Lattice.java)
      */
-    public TreeSet<Node> getSuccessorNodes(final Node node) {
-       TreeSet<Node> successors = new TreeSet<Node>();
-       for (Edge edge : this.successors.get(node)) {
-           successors.add(edge.getTo());
-       }
-       return successors;
+    public SortedSet<Node> getSuccessorNodes(final Node node) {
+        TreeSet<Node> successors = new TreeSet<Node>();
+        for (Edge edge : this.successors.get(node)) {
+            successors.add(edge.getTo());
+        }
+        return successors;
     }
 
     /**
@@ -298,6 +490,8 @@ public class DGraph implements Cloneable {
      * @param   node  the node to search for
      *
      * @return  the set of nodes
+     *
+     * @todo  use iterator pattern (some changes in ArrowRelation.java and Lattice.java)
      */
     public TreeSet<Node> getPredecessorNodes(final Node node) {
         TreeSet<Node> predecessors = new TreeSet<Node>();
@@ -314,8 +508,14 @@ public class DGraph implements Cloneable {
      * @param   to    The destination node
      *
      * @return  the found edge or null
+     *
+     * @todo  see getNode
      */
     public Edge getEdge(final Node from, final Node to) {
+        TreeSet<Edge> node = successors.get(from);
+        if (node == null) {
+            return null;
+        }
         if (this.containsEdge(from, to)) {
             for (Edge edge : this.successors.get(from)) {
                 if (edge.getTo().equals(to)) {
@@ -332,8 +532,16 @@ public class DGraph implements Cloneable {
      * @param   search  The node to search for
      *
      * @return  the found node or null
+     *
+     * @todo  maybe use
+     *    try {
+              return this.nodes.subSet(search, true, search, true).first();
+          } catch (NoSuchElementException e) {
+            return null;
+          }
+     *
      */
-     public Node getNode(final Object search) {
+     public Node getNode(Node search) {
         for (Node node : this.nodes) {
             if (node.equals(search)) {
                 return node;
@@ -393,8 +601,8 @@ public class DGraph implements Cloneable {
      */
     public int sizeEdges() {
         int size = 0;
-        for (Node node : this.nodes) {
-            size += this.successors.get(node).size();
+        for (Node node : nodes) {
+            size += successors.get(node).size();
         }
         return size;
     }
@@ -619,12 +827,12 @@ public class DGraph implements Cloneable {
      * @return  true if the edge was removed
      */
     public boolean removeEdge(final Node from, final Node to) {
-         if (this.containsEdge(from, to)) {
+        if (this.containsEdge(from, to)) {
             Edge edge = new Edge(from, to);
             this.successors.get(from).remove(edge);
             this.predecessors.get(to).remove(edge);
             return true;
-            }
+        }
         return false;
     }
 
@@ -637,7 +845,7 @@ public class DGraph implements Cloneable {
      * @return  true if the edge was removed
      */
     public boolean removeEdge(final Edge edge) {
-         if (this.containsEdge(edge)) {
+        if (this.containsEdge(edge)) {
             this.successors.get(edge.getFrom()).remove(edge);
             this.predecessors.get(edge.getTo()).remove(edge);
             return true;
@@ -696,6 +904,8 @@ public class DGraph implements Cloneable {
     * Returns the sinks of this component.
     *
     * @return  the sinks
+    *
+    * @todo  use iterator pattern
     */
     public TreeSet<Node> getSinks() {
         TreeSet<Node> sinks = new TreeSet<Node>();
@@ -711,6 +921,8 @@ public class DGraph implements Cloneable {
     * Returns the wells of this component.
     *
     * @return  the wells
+    *
+    * @todo  use iterator pattern
     */
     public TreeSet<Node> getWells() {
         TreeSet<Node> wells = new TreeSet<Node>();
@@ -730,6 +942,8 @@ public class DGraph implements Cloneable {
      * @param   nodes  The set of nodes
      *
      * @return  The subgraph
+     *
+     * @todo  implement a SubGraph class?
      */
     public DGraph getSubgraphByNodes(final Set<Node> nodes) {
         DGraph graph = new DGraph();
@@ -757,6 +971,8 @@ public class DGraph implements Cloneable {
      * @param   edges  The set of edges
      *
      * @return  The subgraph
+     *
+     * @todo  implement a SubGraph class?
      */
     public DGraph getSubgraphByEdges(final Set<Edge> edges) {
         DGraph graph = new DGraph();

@@ -146,11 +146,7 @@ public class Node implements Comparable<Object>, Cloneable {
      * @return  true or false as this node is equal to the specified object.
      */
     public boolean equals(final Object object) {
-        if (!(object instanceof Node)) {
-            return false;
-        }
-        Node node = (Node) object;
-        return this.identifier == node.identifier;
+        return this.compareTo(object) == 0;
     }
 
     /**

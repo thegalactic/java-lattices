@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
+import java.util.SortedSet;
 import fr.kbertet.dgraph.Node;
 import fr.kbertet.dgraph.DGraph;
 import fr.kbertet.dgraph.DAGraph;
@@ -619,7 +620,7 @@ public class Concept extends Node {
                 }
             }
             // computes the minorants of nx in the acyclic graph
-            TreeSet<Node> ccMinNx = acyclPrec.minorants(nx);
+            SortedSet<Node> ccMinNx = acyclPrec.minorants(nx);
             // removes from newVal every minorants of nx
             for (Node cc : ccMinNx) {
                 TreeSet<Node> cC = (TreeSet<Node>) cc.getContent();

@@ -16,6 +16,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 import java.util.TreeSet;
+import java.util.SortedSet;
 
 /**
  * Test the dgraph.DAGraph class.
@@ -128,7 +129,7 @@ public class DAGraphTest {
         DAGraph dag = new DAGraph(set);
         dag.addEdge(node1, node2);
         dag.addEdge(node2, node3);
-        TreeSet<Node> majorants = dag.majorants(node1);
+        SortedSet<Node> majorants = dag.majorants(node1);
         assertEquals(majorants.size(), 2);
         assertTrue(majorants.contains(node2));
         assertTrue(majorants.contains(node3));
@@ -149,7 +150,7 @@ public class DAGraphTest {
         DAGraph dag = new DAGraph(set);
         dag.addEdge(node1, node2);
         dag.addEdge(node2, node3);
-        TreeSet<Node> minorants = dag.minorants(node3);
+        SortedSet<Node> minorants = dag.minorants(node3);
         assertEquals(minorants.size(), 2);
         assertTrue(minorants.contains(node1));
         assertTrue(minorants.contains(node2));

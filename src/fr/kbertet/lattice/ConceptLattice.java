@@ -832,7 +832,7 @@ public class ConceptLattice extends Lattice {
                 }
             }
             // computes the minorants of nx in the acyclic graph
-            TreeSet<Node> ccMinNx = acyclPrec.minorants(nx);
+            SortedSet<Node> ccMinNx = acyclPrec.minorants(nx);
             // removes from newVal every minorants of nx
             for (Node cc : ccMinNx) {
                 TreeSet<Node> setCC = (TreeSet<Node>) cc.getContent();

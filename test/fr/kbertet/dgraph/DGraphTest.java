@@ -132,14 +132,26 @@ public class DGraphTest {
      */
     @Test
     public void testGetEdges() {
+        DGraph graph = new DGraph();
         Node node1 = new Node();
         Node node2 = new Node();
-        DGraph graph = new DGraph();
+        Node node3 = new Node();
         graph.addNode(node1);
         graph.addNode(node2);
-        graph.addEdge(node1, node2);
-        assertEquals(graph.sizeEdges(), 1);
-        assertEquals(graph.getEdges().first().compareTo(new Edge(node1, node2)), 0);
+        graph.addNode(node3);
+        Edge[] edges = new Edge[4];
+        edges[0] = new Edge(node1, node1);
+        edges[1] = new Edge(node1, node2);
+        edges[2] = new Edge(node1, node3);
+        edges[3] = new Edge(node2, node3);
+        for (int i = 0; i < 4; i++) {
+            graph.addEdge(edges[i]);
+        }
+        assertEquals(graph.getEdges().size(), 4);
+        int i = 0;
+        for (Edge edge : graph.getEdges()) {
+            assertEquals(edge, edges[i++]);
+        }
     }
 
     /**
