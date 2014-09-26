@@ -25,6 +25,20 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-09-26 Christophe Demko <chdemko@gmail.com>
+	* README.md
+	* build.xml
+	* doc/api/README.md
+	* lib/commons-csv/commons-csv-1.0.jar
+	* src/fr/kbertet/lattice/Context.java
+	* src/fr/kbertet/lattice/io/ContextReaderCsv.iuml
+	* src/fr/kbertet/lattice/io/ContextReaderCsv.java
+	* src/fr/kbertet/lattice/io/ContextWriterCsv.iuml
+	* src/fr/kbertet/lattice/io/ContextWriterCsv.java
+	* test/fr/kbertet/lattice/io/package-info.java
+	* test/fr/kbertet/lattice/io/ContextReaderCsvTest.java
+		+ Add csv reader and writer for Context
+
 2014-09-22 Christophe Demko <chdemko@gmail.com>
 	* src/fr/kbertet/dgraph/DGraph.java
 	* src/fr/kbertet/lattice/ClosureSystem.java

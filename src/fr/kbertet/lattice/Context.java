@@ -12,14 +12,16 @@ package fr.kbertet.lattice;
  */
 
 import fr.kbertet.dgraph.Node;
-import fr.kbertet.lattice.io.ContextReaderBurmeister;
-import fr.kbertet.lattice.io.ContextReaderFIMI;
 import fr.kbertet.lattice.io.ContextReaderFactory;
 import fr.kbertet.lattice.io.ContextReaderText;
-import fr.kbertet.lattice.io.ContextWriterBurmeister;
-import fr.kbertet.lattice.io.ContextWriterFIMI;
+import fr.kbertet.lattice.io.ContextReaderBurmeister;
+import fr.kbertet.lattice.io.ContextReaderFIMI;
+import fr.kbertet.lattice.io.ContextReaderCsv;
 import fr.kbertet.lattice.io.ContextWriterFactory;
 import fr.kbertet.lattice.io.ContextWriterText;
+import fr.kbertet.lattice.io.ContextWriterBurmeister;
+import fr.kbertet.lattice.io.ContextWriterFIMI;
+import fr.kbertet.lattice.io.ContextWriterCsv;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -104,6 +106,12 @@ public class Context extends ClosureSystem {
         }
         if (ContextReaderFactory.get("dat") == null) {
             ContextReaderFIMI.register();
+        }
+        if (ContextReaderFactory.get("csv") == null) {
+            ContextReaderCsv.register();
+        }
+        if (ContextWriterFactory.get("csv") == null) {
+            ContextWriterCsv.register();
         }
     }
 

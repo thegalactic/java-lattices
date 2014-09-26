@@ -1,0 +1,10 @@
+package fr.kbertet.lattice.io {
+    class ContextWriterCsv {
+    	-{static}ContextWriterCsv instance
+        +void write(Context context, BufferedWriter file)
+        +{static}ContextWriterCsv getInstance()
+        +{static}void register()
+    }
+
+    ContextWriter <|-- ContextWriterCsv
+}

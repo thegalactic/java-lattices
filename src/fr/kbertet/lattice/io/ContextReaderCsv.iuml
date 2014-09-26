@@ -1,0 +1,10 @@
+package fr.kbertet.lattice.io {
+    class ContextReaderCsv {
+    	-{static}ContextReaderCsv instance
+        +void read(Context context, BufferedReader file)
+        +{static}ContextReaderCsv getInstance()
+        +{static}void register()
+    }
+
+    ContextReader <|-- ContextReaderCsv
+}

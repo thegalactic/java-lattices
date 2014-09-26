@@ -8,6 +8,7 @@ This project uses:
 * [jacoco 0.7.1](http://www.eclemma.org/jacoco) for code coverage
 * [pegdown doclet 1.1.1](https://github.com/Abnaxos/pegdown-doclet) for generating javadoc
 * [graphviz](http://www.graphviz.org/) for generating uml graphics
+* [commons-csv 1.0](http://commons.apache.org/proper/commons-csv/) for parsing and generating csv files
 * [pandoc](http://johnmacfarlane.net/pandoc/), [gpp](http://en.nothingisreal.com/wiki/GPP/) and LaTex for the tutorials
 
 Documentation

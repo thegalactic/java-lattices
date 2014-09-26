@@ -45,6 +45,9 @@
 		<mkdir dir="${build.src.dir}" />
 		<javac includeantruntime="false" srcdir="${src.dir}" destdir="${build.src.dir}">
 			<!--compilerarg value="-Xlint" /-->
+			<classpath>
+				<pathelement location="lib/commons-csv/commons-csv-1.0.jar" />
+			</classpath>
 		</javac>
 	</target>
 
@@ -57,6 +60,9 @@
 		<mkdir dir="${build.debug.dir}" />
 		<javac debug="on" includeantruntime="false" srcdir="${src.dir}" destdir="${build.debug.dir}">
 			<!--compilerarg value="-Xlint" /-->
+			<classpath>
+				<pathelement location="lib/commons-csv/commons-csv-1.0.jar" />
+			</classpath>
 		</javac>
 	</target>
 
@@ -73,6 +79,7 @@
 				<pathelement location="lib/junit/junit-4.11.jar" />
 				<pathelement location="lib/junit/hamcrest-core-1.3.jar" />
 				<pathelement location="${build.jar.dir}/${ant.project.name}-debug.jar" />
+				<pathelement location="lib/commons-csv/commons-csv-1.0.jar" />
 			</classpath>
 		</javac>
 	</target>
@@ -83,6 +90,7 @@
 			<include name="**/*.java" />
 			<classpath>
 				<pathelement location="${build.jar.dir}/${ant.project.name}.jar" />
+				<pathelement location="lib/commons-csv/commons-csv-1.0.jar" />
 			</classpath>
 		</javac>
 	</target>
@@ -98,6 +106,7 @@
 					<pathelement location="lib/junit/junit-4.11.jar" />
 					<pathelement location="lib/junit/hamcrest-core-1.3.jar" />
 					<pathelement location="${build.jar.dir}/${ant.project.name}-debug.jar" />
+					<pathelement location="lib/commons-csv/commons-csv-1.0.jar" />
 					<pathelement location="${build.test.dir}" />
 				</classpath>
 
@@ -159,6 +168,9 @@
 			<doclet name="ch.raffael.doclets.pegdown.PegdownDoclet" path="lib/doclet/pegdown-doclet-1.1.1-all.jar" />
 			<arg value="-extensions" />
 			<arg value="fenced_code_blocks,autolinks,definitions,smartypants,tables,wikilinks" />
+			<classpath>
+				<pathelement location="lib/commons-csv/commons-csv-1.0.jar" />
+			</classpath>
 		</javadoc>
 		<copy todir="${build.api.dir}/images">
 			<fileset dir="${api.dir}/images" />
