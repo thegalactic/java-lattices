@@ -67,6 +67,55 @@ public class ContextReaderCsvTest {
     }
 
     /**
+     * Test first line without individual identifiers.
+     */
+    @Test
+    public void testWithoutIndividualIdentifiers() {
+        try {
+            File file;
+            String filename = "";
+            file = File.createTempFile("junit", ".csv");
+            filename = file.getPath();
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
+            writer.write("a,b,c");
+            writer.newLine();
+            writer.write("1,0,0");
+            writer.newLine();
+            writer.write("1,1,0");
+            writer.close();
+            Context context = new Context(filename);
+            assertEquals(context.getExtent("a").toString(), "[1, 2]");
+            assertEquals(context.getExtent("b").toString(), "[2]");
+            assertEquals(context.getExtent("c").toString(), "[]");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Test one attribute.
+     */
+    @Test
+    public void testOneAttribute() {
+        File file;
+        String filename = "";
+        try {
+            file = File.createTempFile("junit", ".csv");
+            filename = file.getPath();
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
+            writer.write("a");
+            writer.newLine();
+            writer.write("1");
+            writer.newLine();
+            writer.close();
+            Context context = new Context(filename);
+            assertEquals(context.getExtent("a").toString(), "[1]");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Test read empty.
      */
     @Test
@@ -79,46 +128,29 @@ public class ContextReaderCsvTest {
             Context context = new Context(filename);
             fail();
         } catch (IOException e) {
+            assertEquals(e.toString(), "java.io.IOException: CSV cannot be empty");
             new File(filename).delete();
         }
     }
 
     /**
-     * Test bad first line.
+     * Test no attribute.
      */
     @Test
-    public void testBadFirstLine() {
+    public void testNoAttribute() {
         File file;
         String filename = "";
         try {
             file = File.createTempFile("junit", ".csv");
             filename = file.getPath();
             BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
-            writer.write("a,b,c");
+            writer.write("");
+            writer.newLine();
             writer.close();
             Context context = new Context(filename);
             fail();
         } catch (IOException e) {
-            new File(filename).delete();
-        }
-    }
-
-    /**
-     * Test bad first line.
-     */
-    @Test
-    public void testBadFirstLine2() {
-        File file;
-        String filename = "";
-        try {
-            file = File.createTempFile("junit", ".csv");
-            filename = file.getPath();
-            BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
-            writer.write("a");
-            writer.close();
-            Context context = new Context(filename);
-            fail();
-        } catch (IOException e) {
+            assertEquals(e.toString(), "java.io.IOException: Attribute size cannot be 0");
             new File(filename).delete();
         }
     }
@@ -141,15 +173,39 @@ public class ContextReaderCsvTest {
             Context context = new Context(filename);
             fail();
         } catch (IOException e) {
+            assertEquals(e.toString(), "java.io.IOException: Line has a different number of attributes");
             new File(filename).delete();
         }
     }
 
     /**
-     * Test attributes.
+     * Test empty attribute.
      */
     @Test
-    public void testAttributes() {
+    public void testEmptyAttribute() {
+        File file;
+        String filename = "";
+        try {
+            file = File.createTempFile("junit", ".csv");
+            filename = file.getPath();
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
+            writer.write(",a,");
+            writer.newLine();
+            writer.write("1,0,1");
+            writer.close();
+            Context context = new Context(filename);
+            fail();
+        } catch (IOException e) {
+            assertEquals(e.toString(), "java.io.IOException: Empty attribute");
+            new File(filename).delete();
+        }
+    }
+
+    /**
+     * Test duplicated attributes.
+     */
+    @Test
+    public void testDuplicatedAttributes() {
         File file;
         String filename = "";
         try {
@@ -161,6 +217,7 @@ public class ContextReaderCsvTest {
             Context context = new Context(filename);
             fail();
         } catch (IOException e) {
+            assertEquals(e.toString(), "java.io.IOException: Duplicated attribute");
             new File(filename).delete();
         }
     }

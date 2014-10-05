@@ -25,6 +25,11 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-10-05 Christophe Demko <chdemko@gmail.com>
+	* src/fr/kbertet/lattice/io/ContextReaderCsv.java
+	* test/fr/kbertet/lattice/io/ContextReaderCsvTest.java
+		+ Add some enhancements to ContextReaderCsv
+
 2014-09-26 Christophe Demko <chdemko@gmail.com>
 	* README.md
 	* build.xml
