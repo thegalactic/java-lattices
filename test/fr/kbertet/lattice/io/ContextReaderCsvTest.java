@@ -221,5 +221,30 @@ public class ContextReaderCsvTest {
             new File(filename).delete();
         }
     }
+
+    /**
+     * Test duplicated identifiers.
+     */
+    @Test
+    public void testDuplicatedIdentifiers() {
+        File file;
+        String filename = "";
+        try {
+            file = File.createTempFile("junit", ".csv");
+            filename = file.getPath();
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
+            writer.write(",a,b,c");
+            writer.newLine();
+            writer.write("1,0,1,1");
+            writer.newLine();
+            writer.write("1,1,1,1");
+            writer.close();
+            Context context = new Context(filename);
+            fail();
+        } catch (IOException e) {
+            assertEquals(e.toString(), "java.io.IOException: Duplicated identifier");
+            new File(filename).delete();
+        }
+    }
 }
 

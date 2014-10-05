@@ -145,7 +145,9 @@ public final class ContextReaderCsv implements ContextReader {
                 identifier = new String(j + "");
             }
 
-            context.addToObservations(identifier);
+            if (!context.addToObservations(identifier)) {
+                throw new IOException("Duplicated identifier");
+            }
 
             for (int i = first; i < size; i++) {
                 if (record.get(i).equals("1")) {
