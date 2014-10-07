@@ -10,6 +10,7 @@ cd $tutorial_dir
 # First run of gpp
 # *.tmp generation
 gpp -x --include macro_code.gpp tutorial_lattice.gpp > tutorial_lattice.gpp1
+gpp -x --include macro_code.gpp tutorial_conceptlattice.gpp > tutorial_conceptlattice.gpp1
 # Replace \" by " in *.gpp1 files
 for file in *.gpp1
 do
@@ -21,7 +22,7 @@ for file in *.tmp
 do
 	echo -e "import java.io.IOException;\n import fr.kbertet.dgraph.*; \n import fr.kbertet.lattice.*; \n public class" > "${file%%.*}".java
 	echo -e "${file%%.*}" >> "${file%%.*}".java
-	echo -e "{\n public static void main(String[] args) {" >> "${file%%.*}".java
+	echo -e "{\n public static void main(String[] args) throws IOException {" >> "${file%%.*}".java
 	cat $file >> "${file%%.*}".java
 	echo -e "} \n } \n" >> "${file%%.*}".java
 done
@@ -34,6 +35,7 @@ done
 
 # Run java class files
 cp *.class $back_dir/$build_dir
+cp tealady.cxt $back_dir/$build_dir
 cd $back_dir/$build_dir
 for file in *.class
 do
@@ -59,6 +61,7 @@ cp *.png $back_dir/
 # second run of gpp
 # .md generation
 gpp -x --include macro_include.gpp tutorial_lattice.gpp2 > tutorial_lattice.md
+gpp -x --include macro_include.gpp tutorial_conceptlattice.gpp2 > tutorial_conceptlattice.md
 
 # MrProper is cleanning
 rm *.tmp

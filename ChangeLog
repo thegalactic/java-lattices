@@ -25,6 +25,11 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+2014-10-06 Jean-Fnraçois Viaud <jviaud@univ-lr.fr>
+	* src/fr/kbertet/lattice/ConceptLattice.java
+		+ Add iceberg method
+	* doc/tutorial/tutorial_conceptlattice.gpp
+
 2014-10-05 Christophe Demko <chdemko@gmail.com>
 	* src/fr/kbertet/lattice/io/ContextReaderCsv.java
 	* test/fr/kbertet/lattice/io/ContextReaderCsvTest.java
