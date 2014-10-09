@@ -29,6 +29,7 @@ package fr.kbertet.lattice {
         +{static} ConceptLattice idealsLattice(DAGraph dag)
         +{static} ConceptLattice completeLattice(ClosureSystem init)
         +{static} ConceptLattice diagramLattice(ClosureSystem init)
+        +ConceptLattice iceberg(float threshold)
         +void recursiveDiagramLattice(Concept n, ClosureSystem init)
         +Vector<TreeSet<Comparable>> immediateSuccessors(Node n, ClosureSystem init)
     }

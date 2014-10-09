@@ -435,4 +435,32 @@ public class ConceptLatticeTest {
             exception.printStackTrace();
         }
     }
+    /**
+     * Test iceberg method.
+     */
+    @Test
+    public void testIceberg() {
+        TreeSet<Comparable> comparablesAtts = new TreeSet<Comparable>();
+        TreeSet<Comparable> comparablesObjs = new TreeSet<Comparable>();
+        comparablesAtts.add((Comparable) "a");
+        comparablesAtts.add((Comparable) "b");
+        comparablesAtts.add((Comparable) "c");
+        comparablesAtts.add((Comparable) "d");
+        comparablesObjs.add((Comparable) "1");
+        comparablesObjs.add((Comparable) "2");
+        comparablesObjs.add((Comparable) "3");
+        Context cs = new Context();
+        cs.addAllToAttributes(comparablesAtts);
+        cs.addAllToObservations(comparablesObjs);
+        cs.addExtentIntent("1", "a");
+        cs.addExtentIntent("1", "c");
+        cs.addExtentIntent("2", "a");
+        cs.addExtentIntent("2", "b");
+        cs.addExtentIntent("2", "c");
+        cs.addExtentIntent("2", "d");
+        cs.addExtentIntent("3", "a");
+        cs.addExtentIntent("3", "b");
+        ConceptLattice l = cs.conceptLattice(true);
+        assertEquals(l.getNodes().size(), l.iceberg((float) 0.0).getNodes().size());
+    }
 }

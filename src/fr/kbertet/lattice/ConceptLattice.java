@@ -663,6 +663,41 @@ public class ConceptLattice extends Lattice {
         return conceptLattice;
     }
 
+    /**
+     * Returns iceberg lattice whose concept contains enough observations.
+     *
+     * Are kept only concept whose number of observation is over threshold.
+     * A top node is added to keep the lattice structure.
+     *
+     * @param threshold used to determine nodes to be kept.
+     * @return iceberg lattice whose concept contains enough observations.
+     */
+    public ConceptLattice iceberg(float threshold) {
+        ConceptLattice l = new ConceptLattice();
+        Concept b = (Concept) this.bottom();
+        int card = b.getSetB().size();
+        for (Node n : this.getNodes()) {
+            Concept cpt = (Concept) n;
+            if ((float) cpt.getSetB().size() / (float) card >= threshold) {
+                l.addNode(n);
+            }
+        }
+        for (Node f : l.getNodes()) {
+            for (Node t : l.getNodes()) {
+                if (this.containsEdge(f, t)) {
+                    l.addEdge(f, t);
+                }
+            }
+        }
+        Node t = this.top();
+        l.addNode(t);
+        for (Node n : l.getWells()) {
+            if (!n.equals(t)) {
+                l.addEdge(n, t);
+            }
+        }
+        return l;
+    }
     /* -------- STATIC CLOSEDSET LATTICE GENERATION FROM AN ImplicationalSystem OR A CONTEXT ------------------ */
 
     /**
