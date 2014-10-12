@@ -13,6 +13,7 @@ package fr.kbertet.lattice;
 
 import fr.kbertet.dgraph.Node;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.TreeSet;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -463,5 +464,41 @@ public class ContextTest {
             }
         }
         assertEquals(count, cl.getNodes().size());
+    }
+    /**
+     * Test getArrowClosedSubContext method.
+     */
+    @Test
+    public void testGetArrowClosedSubContext() {
+        Lattice l = new Lattice();
+        Node n1 = new Node(1);
+        Node n2 = new Node(2);
+        Node n3 = new Node(3);
+        Node n4 = new Node(4);
+        l.addNode(n1);
+        l.addNode(n2);
+        l.addNode(n3);
+        l.addNode(n4);
+        l.addEdge(n1, n2);
+        l.addEdge(n1, n3);
+        l.addEdge(n2, n4);
+        l.addEdge(n3, n4);
+        Context ctx = l.getTable();
+        ctx.reduction();
+        Context arrowCtx = ctx.getArrowClosedSubContext();
+        assertTrue(arrowCtx.getExtent(n3).contains(n2));
+        assertTrue(arrowCtx.getExtent(n2).contains(n3));
+    }
+    /**
+     * Test for getDivisionContext and getDivisionConvex methods.
+     */
+    @Test
+    public void testLatticeDivision() {
+        Lattice l = LatticeFactory.booleanAlgebra(2);
+        Context ctx = l.getTable();
+        ctx.reduction();
+        ArrayList<Context> subContexts = ctx.getDivisionContext();
+        TreeSet<Node> convex = ctx.getDivisionConvex(subContexts.get(0));
+        assertEquals(subContexts.get(0).conceptLattice(true).getNodes().size() + convex.size(), l.getNodes().size());
     }
 }

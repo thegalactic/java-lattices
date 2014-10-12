@@ -20,6 +20,9 @@ package fr.kbertet.lattice {
         .. Generators ..
         {static}+Context random(int nbObs, int nbGrp, int nbAttrPerGrp)
         +Context getSubContext(TreeSet<Comparable> obs, TreeSet<Comparable> attr)
+        +Context getArrowClosedSubContext()
+        +ArrayList<Context> getDivisionContext()
+        +TreeSet<Node> getDivisionConvex(Context ctx)
         .. Accessors ..
         +TreeSet<Comparable> getAttributes()
         +TreeSet<Comparable> getObservations()

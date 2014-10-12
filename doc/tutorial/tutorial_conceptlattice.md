@@ -10,19 +10,19 @@ Using the `ConceptLattice` class, it is easy to create a concept lattice from an
 
 For instance, it is possible to use one of the `cxt` file from examples, in the following manner :
 
-~~~Code(tealady.tmp,
-Context ctx = new Context(\\\"examples/cxt/tealady.cxt\\\");
+~~~Java 
+Context ctx = new Context("tealady.cxt");
 ConceptLattice cl = ConceptLattice.completeLattice(ctx);
-)~~~
+~~~
 
 ### From an implicationnal system
 
 For instance, it is possible to use the `random` method, in the following manner :
 
-~~~Code(randomrule.tmp,
+~~~Java 
 ImplicationalSystem is = ImplicationalSystem.random(5, 10);
 ConceptLattice cl = ConceptLattice.completeLattice(is);
-)~~~
+~~~
 
 Computations from `Lattice` class
 ---------------------------------
