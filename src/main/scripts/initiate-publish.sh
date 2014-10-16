@@ -46,8 +46,8 @@ if [ "$TRAVIS_REPO_SLUG" == "kbertet/java-lattices" ] && [ "$TRAVIS_JDK_VERSION"
 	mvn deploy
 
 	cd $HOME/old-mvn-repo
-	cp $current/target/mvn-repo/* .
 	find . -name `basename \`find $current/target/mvn-repo/ -name "*-SNAPSHOT"\`` -exec git rm -rf {} \;
+	cp $current/target/mvn-repo/* .
 
 	cd $HOME/mvn-repo
 	cp -Rf $HOME/old-mvn-repo/* .
