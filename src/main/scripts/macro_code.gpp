@@ -1,0 +1,1 @@
+#define Code(x,y) Java y#exec printf "y" > target/tutorial/"x"
