@@ -6,11 +6,13 @@ See [license and documentation](http://kbertet.github.io/java-lattices).
 Add
 ~~~xml
 
-<dependency>
-	<groupId>fr.kbertet</groupId>
-	<artifactId>lattices</artifactId>
-	<version>2.0.0-SNAPSHOT</version>
-</dependency>
+<dependencies>
+	<dependency>
+		<groupId>fr.kbertet</groupId>
+		<artifactId>lattices</artifactId>
+		<version>2.0.0-SNAPSHOT</version>
+	</dependency>
+</dependencies>
 
 <repositories>
 	<repository>
