@@ -23,7 +23,7 @@ if [ "$TRAVIS_REPO_SLUG" == "kbertet/java-lattices" ] && [ "$TRAVIS_JDK_VERSION"
 	cp -R $current/target/site/* .
 	git add -f .
 	git commit -m "    Latest doc on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages"
-	git push -fq origin --delete gh-pages
+	git push -fq origin :gh-pages
 	git push -fq origin gh-pages > /dev/null
 	echo -e "Published doc to gh-pages.\n"
 
@@ -45,7 +45,7 @@ if [ "$TRAVIS_REPO_SLUG" == "kbertet/java-lattices" ] && [ "$TRAVIS_JDK_VERSION"
 	cp -R $current/target/mvn-deploy/* .
 	git add -f .
 	git commit -m "    Latest deploy on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to mvn-repo"
-	git push -fq origin --delete mvn-repo
+	git push -fq origin :mvn-repo
 	git push -fq origin mvn-repo > /dev/null
 
 	echo -e "Deployed to mvn-repo.\n"

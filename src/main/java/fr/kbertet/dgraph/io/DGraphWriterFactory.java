@@ -48,6 +48,8 @@ public final class DGraphWriterFactory {
      * @return  The old writer or null
      */
     public static DGraphWriter register(DGraphWriter writer, String extension) {
+    System.out.println(writer);
+    System.out.println(extension);
         DGraphWriter old = writers.get(extension);
         writers.put(extension, writer);
         return old;
