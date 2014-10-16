@@ -88,7 +88,7 @@ public class BijectiveComponentsTest {
             BijectiveComponents bc = new BijectiveComponents(is);
             long time = bc.compute();
             File file = File.createTempFile("junit", ".txt");
-            String filename = file.getName();
+            String filename = file.getPath();
             String directory = file.getParent();
             bc.save(directory, "");
             file.delete();

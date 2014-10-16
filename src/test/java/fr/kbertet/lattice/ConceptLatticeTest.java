@@ -411,7 +411,7 @@ public class ConceptLatticeTest {
     public void testSave() {
         try {
             File file = File.createTempFile("junit", ".dot");
-            String filename = file.getName();
+            String filename = file.getPath();
             file.delete();
             Lattice l = new Lattice();
             Concept a = new Concept(true, true); l.addNode(a);
