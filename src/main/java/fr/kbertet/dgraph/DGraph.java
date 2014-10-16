@@ -65,6 +65,7 @@ public class DGraph implements Cloneable {
      * Register dot writer
      */
     static {
+        System.out.println("DGraph.static");
         if (DGraphWriterFactory.get("dot") == null) {
             DGraphWriterDot.register();
         }

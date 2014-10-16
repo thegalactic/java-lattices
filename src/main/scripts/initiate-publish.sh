@@ -42,7 +42,7 @@ if [ "$TRAVIS_REPO_SLUG" == "kbertet/java-lattices" ] && [ "$TRAVIS_JDK_VERSION"
 
 	cd $HOME/mvn-repo
 	find . -name `basename \`find $current/target/mvn-repo/ -name "*-SNAPSHOT"\`` -exec git rm -rf {} \;
-	cp -R $current/target/mvn-deploy/* .
+	cp -R $current/target/mvn-repo/* .
 	git add -f .
 	git commit -m "    Latest deploy on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to mvn-repo"
 	git push -fq origin :mvn-repo
