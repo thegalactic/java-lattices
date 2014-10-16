@@ -279,8 +279,7 @@ public class DGraphTest {
     public void testSave() {
         try {
             File file = File.createTempFile("junit", ".dot");
-            String filename = file.getName();
-            file.delete();
+            String filename = file.getPath();
             DGraph graph = new DGraph();
             Node node1 = new Node("1");
             Node node2 = new Node("2");

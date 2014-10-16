@@ -87,26 +87,26 @@ public class BijectiveComponentsTest {
             ImplicationalSystem is = new ImplicationalSystem();
             BijectiveComponents bc = new BijectiveComponents(is);
             long time = bc.compute();
-            File file = File.createTempFile("junit", ".txt");
-            String filename = file.getPath();
-            String directory = file.getParent();
+
+            File dir = File.createTempFile("junit", "");
+            String directory = dir.getPath();
+            dir.delete();
+            dir.mkdir();
+
             bc.save(directory, "");
-            file.delete();
-            file = new File(directory + File.separator + "BijectiveComponents" + File.separator + "Readme.txt");
+            File file = new File(directory + File.separator + "BijectiveComponents" + File.separator + "Readme.txt");
             Scanner scanner = new Scanner(file);
             String content = "";
             while (scanner.hasNextLine()) {
                 content += scanner.nextLine() + "\n";
             }
-            File dir = new File(directory, "BijectiveComponents");
-            File[] tabfile = dir.listFiles();
+            File[] tabfile = (new File(directory, "BijectiveComponents")).listFiles();
             for (int i = 0; i < tabfile.length; i++) {
-            System.out.println(tabfile[i]);
-            File tmp = new File(tabfile[i].getPath());
-            tmp.delete();
+                (new File(tabfile[i].getPath())).delete();
             }
+
+            (new File(directory + File.separator + "BijectiveComponents")).delete();
             dir.delete();
-            file.delete();
             String test = "";
             String safeString = file.getParent() + File.separator;
             test += "-> Initial closure system saved in " + safeString + "InitialClosureSystem.txt: \n";

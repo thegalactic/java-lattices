@@ -44,8 +44,7 @@ public class ArrowRelationTest {
         l.addEdge(d, e);
         ArrowRelation ar = new ArrowRelation(l);
         File file = File.createTempFile("junit", ".tex");
-        String filename = file.getName();
-        file.delete();
+        String filename = file.getPath();
         ar.save(filename);
         String content = "";
         file = new File(filename);

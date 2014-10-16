@@ -41,7 +41,6 @@ public class ContextReaderCsvTest {
         try {
             File file = File.createTempFile("junit", ".csv");
             String filename = file.getPath();
-            file.delete();
             Context context = new Context();
             context.addToAttributes("a");
             context.addToAttributes("b");
@@ -60,7 +59,7 @@ public class ContextReaderCsvTest {
             assertEquals(context.getObservations(), copy.getObservations());
             assertEquals(context.getIntent("1"), copy.getIntent("1"));
             assertEquals(context.getExtent("c"), copy.getExtent("c"));
-            new File(filename).delete();
+            file.delete();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -84,6 +83,7 @@ public class ContextReaderCsvTest {
             writer.write("1,1,0");
             writer.close();
             Context context = new Context(filename);
+            file.delete();
             assertEquals(context.getExtent("a").toString(), "[1, 2]");
             assertEquals(context.getExtent("b").toString(), "[2]");
             assertEquals(context.getExtent("c").toString(), "[]");
@@ -109,6 +109,7 @@ public class ContextReaderCsvTest {
             writer.newLine();
             writer.close();
             Context context = new Context(filename);
+            file.delete();
             assertEquals(context.getExtent("a").toString(), "[1]");
         } catch (Exception e) {
             e.printStackTrace();
@@ -126,6 +127,7 @@ public class ContextReaderCsvTest {
             file = File.createTempFile("junit", ".csv");
             filename = file.getPath();
             Context context = new Context(filename);
+            file.delete();
             fail();
         } catch (IOException e) {
             assertEquals(e.toString(), "java.io.IOException: CSV cannot be empty");
@@ -148,6 +150,7 @@ public class ContextReaderCsvTest {
             writer.newLine();
             writer.close();
             Context context = new Context(filename);
+            file.delete();
             fail();
         } catch (IOException e) {
             assertEquals(e.toString(), "java.io.IOException: Attribute size cannot be 0");
@@ -171,6 +174,7 @@ public class ContextReaderCsvTest {
             writer.write("1,2,1");
             writer.close();
             Context context = new Context(filename);
+            file.delete();
             fail();
         } catch (IOException e) {
             assertEquals(e.toString(), "java.io.IOException: Line has a different number of attributes");
@@ -194,6 +198,7 @@ public class ContextReaderCsvTest {
             writer.write("1,0,1");
             writer.close();
             Context context = new Context(filename);
+            file.delete();
             fail();
         } catch (IOException e) {
             assertEquals(e.toString(), "java.io.IOException: Empty attribute");
@@ -215,6 +220,7 @@ public class ContextReaderCsvTest {
             writer.write(",a,a");
             writer.close();
             Context context = new Context(filename);
+            file.delete();
             fail();
         } catch (IOException e) {
             assertEquals(e.toString(), "java.io.IOException: Duplicated attribute");
@@ -240,6 +246,7 @@ public class ContextReaderCsvTest {
             writer.write("1,1,1,1");
             writer.close();
             Context context = new Context(filename);
+            file.delete();
             fail();
         } catch (IOException e) {
             assertEquals(e.toString(), "java.io.IOException: Duplicated identifier");

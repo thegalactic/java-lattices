@@ -78,7 +78,7 @@ public class ImplicationalSystemTest {
     public void testImplicationalSystemFile() {
         try {
             File file = File.createTempFile("junit", ".txt");
-//            String filename = file.getName();
+//            String filename = file.getPath();
 //            File outfile = new File(filename);
             FileWriter out = new FileWriter(file);
             out.write("a b c \n");
@@ -223,8 +223,7 @@ public class ImplicationalSystemTest {
             r.addToConclusion('c');
             is.addRule(r);
             File file = File.createTempFile("junit", ".txt");
-            String filename = file.getName();
-            file.delete();
+            String filename = file.getPath();
             is.save(filename);
             String content = "";
             file = new File(filename);

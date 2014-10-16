@@ -65,8 +65,7 @@ public class ContextTest {
     public void testFileContextText() {
         try {
             File file = File.createTempFile("junit", ".txt");
-            String filename = file.getName();
-            file.delete();
+            String filename = file.getPath();
             Context context = new Context();
             context.addToAttributes("a");
             context.addToAttributes("b");
@@ -97,8 +96,7 @@ public class ContextTest {
     public void testFileContextBurmeister() {
         try {
             File file = File.createTempFile("junit", ".cxt");
-            String filename = file.getName();
-            file.delete();
+            String filename = file.getPath();
             Context context = new Context();
             context.addToAttributes("a");
             context.addToAttributes("b");
@@ -130,8 +128,7 @@ public class ContextTest {
     public void testFileContextFIMI() {
         try {
             File file = File.createTempFile("junit", ".dat");
-            String filename = file.getName();
-            file.delete();
+            String filename = file.getPath();
             Context context = new Context();
             context.addToAttributes("a");
             context.addToAttributes("b");
