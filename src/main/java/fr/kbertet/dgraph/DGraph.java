@@ -65,7 +65,6 @@ public class DGraph implements Cloneable {
      * Register dot writer
      */
     static {
-        System.out.println("DGraph.static");
         if (DGraphWriterFactory.get("dot") == null) {
             DGraphWriterDot.register();
         }
@@ -1032,8 +1031,6 @@ public class DGraph implements Cloneable {
             extension = filename.substring(index + 1);
         }
         BufferedWriter file = new BufferedWriter(new FileWriter(filename));
-        System.out.println(filename);
-        System.out.println(DGraphWriterFactory.get(extension));
         DGraphWriterFactory.get(extension).write(this, file);
         file.close();
     }

@@ -413,7 +413,7 @@ public class ConceptLatticeTest {
             File file = File.createTempFile("junit", ".dot");
             String filename = file.getPath();
             file.delete();
-            Lattice l = new Lattice();
+            ConceptLattice l = new ConceptLattice();
             Concept a = new Concept(true, true); l.addNode(a);
             Concept b = new Concept(true, true); l.addNode(b);
             l.addEdge(a, b);
@@ -425,8 +425,8 @@ public class ConceptLatticeTest {
                 content += scanner.nextLine();
             }
             assertEquals(content, "digraph G {Graph [rankdir=BT]"
-                + a.getIdentifier() + " [label=\"[]-[]\"]"
-                + b.getIdentifier() + " [label=\"[]-[]\"]"
+                + a.getIdentifier() + " [label=\" []\\n[]\"]"
+                + b.getIdentifier() + " [label=\" []\\n[]\"]"
                 + a.getIdentifier() + "->" + b.getIdentifier()
                 + "}"
             );

@@ -68,7 +68,6 @@ public class ConceptLattice extends Lattice {
      * Register dot writer
      */
     static {
-        System.out.println("ConceptLattice.static");
         if (ConceptLatticeWriterFactory.get("dot") == null) {
             ConceptLatticeWriterDot.register();
         }

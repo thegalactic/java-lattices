@@ -22,7 +22,7 @@ if [ "$TRAVIS_REPO_SLUG" == "kbertet/java-lattices" ] && [ "$TRAVIS_JDK_VERSION"
 	touch .nojekyll
 	cp -R $current/target/site/* .
 	git add -f .
-	git commit -m "    Latest doc on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages"
+	git commit -m "    Latest doc on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages [ci skip]"
 	git push -fq origin :gh-pages
 	git push -fq origin gh-pages > /dev/null
 	echo -e "Published doc to gh-pages.\n"
@@ -44,7 +44,7 @@ if [ "$TRAVIS_REPO_SLUG" == "kbertet/java-lattices" ] && [ "$TRAVIS_JDK_VERSION"
 	find . -name `basename \`find $current/target/mvn-repo/ -name "*-SNAPSHOT"\`` -exec git rm -rf {} \;
 	cp -R $current/target/mvn-repo/* .
 	git add -f .
-	git commit -m "    Latest deploy on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to mvn-repo"
+	git commit -m "    Latest deploy on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to mvn-repo [ci skip]"
 	git push -f origin :mvn-repo
 	git push -f origin mvn-repo > /dev/null
 
