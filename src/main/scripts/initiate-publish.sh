@@ -17,10 +17,10 @@ if [ "$TRAVIS_REPO_SLUG" == "kbertet/java-lattices" ] && [ "$TRAVIS_JDK_VERSION"
 	cd $current
 	mvn site
 
-	cd $HOME/gh-pages
-	git rm -rf *
+	cd $current/target/site
 	touch .nojekyll
-	cp -R $current/target/site/* .
+	git init https://${GH_TOKEN}@github.com/kbertet/java-lattices .
+	git checkout --orphan gh-pages
 	git add -f .
 	git commit -m "    [ci skip] Latest doc on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages"
 	git push -fq origin :gh-pages
@@ -40,13 +40,17 @@ if [ "$TRAVIS_REPO_SLUG" == "kbertet/java-lattices" ] && [ "$TRAVIS_JDK_VERSION"
 	test -f $HOME/mvn-repo/fr/kbertet/lattices/maven-metadata.xml && cp -f $HOME/mvn-repo/fr/kbertet/lattices/maven-metadata.* target/mvn-repo/fr/kbertet/lattices
 	mvn deploy
 
-#	cd $HOME/mvn-repo
-#	find . -name `basename \`find $current/target/mvn-repo/ -name "*-SNAPSHOT"\`` -exec git rm -rf {} \;
-#	cp -R $current/target/mvn-repo/* .
-#	git add -f .
-#	git commit -m "    [ci skip] Latest deploy on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to mvn-repo"
-#	git push -f origin :mvn-repo
-#	git push -f origin mvn-repo > /dev/null
+	cd $HOME/mvn-repo
+	find . -name `basename \`find $current/target/mvn-repo/ -name "*-SNAPSHOT"\`` -exec git rm -rf {} \;
+
+	cd $current/target/mvn-repo
+	cp -Rf $HOME/mvn-repo/* .
+	git init https://${GH_TOKEN}@github.com/kbertet/java-lattices .
+	git checkout --orphan mvn-repo
+	git add -f .
+	git commit -m "    [ci skip] Latest deploy on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to mvn-repo"
+	git push -f origin :mvn-repo
+	git push -f origin mvn-repo > /dev/null
 
 	echo -e "Deployed to mvn-repo.\n"
 
