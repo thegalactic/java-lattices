@@ -280,6 +280,7 @@ public class DGraphTest {
         try {
             File file = File.createTempFile("junit", ".dot");
             String filename = file.getPath();
+            file.delete();
             DGraph graph = new DGraph();
             Node node1 = new Node("1");
             Node node2 = new Node("2");
