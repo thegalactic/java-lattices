@@ -19,13 +19,12 @@ if [ "$TRAVIS_REPO_SLUG" == "kbertet/java-lattices" ] && [ "$TRAVIS_JDK_VERSION"
 	git checkout --orphan gh-pages
 	git rm -rf .
 	git push -fq origin :gh-pages > /dev/null
-	cp $current/target/site/* .
+	cp -R $current/target/site/* .
 	touch .nojekyll
 	git add -f .
 	git commit -m "    [ci skip] Latest doc on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages"
 	git push -fq origin gh-pages > /dev/null
 	echo -e "Published doc to gh-pages.\n"
-
 
 
 fi
