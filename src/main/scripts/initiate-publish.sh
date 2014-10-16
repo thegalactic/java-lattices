@@ -36,7 +36,7 @@ if [ "$TRAVIS_REPO_SLUG" == "kbertet/java-lattices" ] && [ "$TRAVIS_JDK_VERSION"
 
 	echo -e "    Deploying locally...\n"
 	cd $current
-	mkdir -fp target/mvn-repo/fr/kbertet/lattices
+	mkdir -p target/mvn-repo/fr/kbertet/lattices
 	test -f $HOME/mvn-repo/fr/kbertet/lattices/maven-metadata.xml && cp -f $HOME/mvn-repo/fr/kbertet/lattices/maven-metadata.* target/mvn-repo/fr/kbertet/lattices
 	mvn deploy
 
@@ -45,8 +45,8 @@ if [ "$TRAVIS_REPO_SLUG" == "kbertet/java-lattices" ] && [ "$TRAVIS_JDK_VERSION"
 	cp -R $current/target/mvn-repo/* .
 	git add -f .
 	git commit -m "    Latest deploy on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to mvn-repo"
-	git push -fq origin :mvn-repo
-	git push -fq origin mvn-repo > /dev/null
+	git push -f origin :mvn-repo
+	git push -f origin mvn-repo > /dev/null
 
 	echo -e "Deployed to mvn-repo.\n"
 
