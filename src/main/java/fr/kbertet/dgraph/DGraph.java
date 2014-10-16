@@ -1031,6 +1031,7 @@ public class DGraph implements Cloneable {
             extension = filename.substring(index + 1);
         }
         BufferedWriter file = new BufferedWriter(new FileWriter(filename));
+        System.out.println(DGraphWriterFactory.get(extension));
         DGraphWriterFactory.get(extension).write(this, file);
         file.close();
     }

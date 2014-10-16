@@ -14,7 +14,6 @@ package fr.kbertet.lattice;
 import java.util.TreeSet;
 import fr.kbertet.dgraph.DGraph;
 import java.io.File;
-import java.io.IOException;
 import java.util.Scanner;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -127,7 +126,9 @@ public class BijectiveComponentsTest {
             test += "-> Dependency Graph  of the reduced lattice saved in " + safeString + "DependencyGraph.dot \n";
             test += "-> Minimal generators  of the reduced lattice are []\n";
             assertEquals(content, test);
-        } catch (IOException e) { System.out.println("IOException : " + e.getMessage()); }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
     /**
      * Test the getClosureSystem method.
