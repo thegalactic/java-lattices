@@ -19,5 +19,4 @@ env:
 
 after_success:
   - src/main/scripts/initiate-publish.sh
-  - mvn coveralls:report
 
