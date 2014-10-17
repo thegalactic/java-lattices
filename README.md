@@ -1,7 +1,7 @@
 java-lattices [![Build Status](https://travis-ci.org/kbertet/java-lattices.png?branch=master)](https://travis-ci.org/kbertet/java-lattices) ![Version](http://img.shields.io/badge/Version-2.0.0-blue.svg) ![License](http://img.shields.io/badge/License-CeCILL--B-red.svg)
 ==============
 
-See [license and documentation](http://kbertet.github.io/java-lattices).
+See [documentation](http://kbertet.github.io/java-lattices).
 
 Add
 ~~~xml
