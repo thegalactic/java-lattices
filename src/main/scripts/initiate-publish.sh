@@ -57,11 +57,4 @@ if [ "$TRAVIS_REPO_SLUG" == "kbertet/java-lattices" ] && [ "$TRAVIS_JDK_VERSION"
 
 	echo -e "Deployed to mvn-repo.\n"
 
-
-	echo -e "Deploying coveralls...\n"
-
-	mvn coveralls:report
-
-	echo -e "Deployed to coveralls.\n"
-
 fi
