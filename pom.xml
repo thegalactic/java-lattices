@@ -294,6 +294,20 @@
 		<plugins>
 
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jxr-plugin</artifactId>
+				<version>2.4</version>
+				<reportSets>
+					<reportSet>
+						<id>default</id>
+						<reports>
+							<report>jxr</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+
+			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.7.2.201409121644</version>
@@ -369,20 +383,6 @@
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jxr-plugin</artifactId>
-				<version>2.4</version>
-				<reportSets>
-					<reportSet>
-						<id>default</id>
-						<reports>
-							<report>jxr</report>
-						</reports>
-					</reportSet>
-				</reportSets>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.10.1</version>
 				<configuration>
@@ -410,13 +410,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-changelog-plugin</artifactId>
 				<version>2.3</version>
-				<configuration>
-					<type>tag</type>
-					<tags>
-						<tag implementation="java.lang.String">${changelog.tag}</tag>
-						<tag implementation="java.lang.String">master</tag>
-					</tags>
-				</configuration>
+				<configuration/>
 			</plugin>
 
 		</plugins>
