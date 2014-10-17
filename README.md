@@ -1,4 +1,4 @@
-java-lattices [![Build Status](https://travis-ci.org/kbertet/java-lattices.png?branch=master)](https://travis-ci.org/kbertet/java-lattices) ![Version](http://img.shields.io/badge/version-2.0.0-blue.svg) ![License](http://img.shields.io/badge/license-CeCILL--B-red.svg)
+java-lattices [![Build Status](https://travis-ci.org/kbertet/java-lattices.png?branch=master)](https://travis-ci.org/kbertet/java-lattices) ![Version](http://img.shields.io/badge/version-2.0.0-blue.svg) [![License](http://img.shields.io/badge/license-CeCILL--B-red.svg)](http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html)
 ==============
 
 See [documentation](http://kbertet.github.io/java-lattices).
