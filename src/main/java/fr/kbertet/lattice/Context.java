@@ -35,6 +35,7 @@ import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.Vector;
 
 /**
  * This class gives a standard representation for a context.
@@ -314,6 +315,88 @@ public class Context extends ClosureSystem {
         }
         ctx.setBitSets();
         return ctx;
+    }
+    /**
+     * Returns the context defining the concept lattice of arrow-closed subcontexts of this component.
+     *
+     * Each observation of the returned context is a $1$-generated arrow-closed subcontext.
+     * The observation used to generate the context is used as a name for the subcontext.
+     * Attributes are the same of this component, and are used to defined the subcontext.
+     *
+     * @return the context defining the concept lattice of arrow-closed subcontexts of this component.
+     */
+    public Context getArrowClosedSubContext() {
+        Context result = new Context();
+        result.addAllToAttributes(this.getAttributes());
+        for (Comparable o : this.getObservations()) {
+            result.addToObservations(o);
+            TreeSet<Comparable> setO = new TreeSet<Comparable>();
+            setO.add(o);
+            Context c = this.arrowClosureObject(setO);
+            for (Comparable a : c.getAttributes()) {
+                result.addExtentIntent(o, a);
+            }
+        }
+        return result;
+    }
+    /**
+     * Returns a list of subcontexts such that the concept lattice of this component is obtained from a subcontext by doubling a convex.
+     *
+     * Each subcontext defines a concept lattice L. With the getDivisionConvex method, a convex C of this concept lattice is obtained.
+     * By doubling the convex set C of L, we get L[C], the concept lattice of this component.
+     *
+     * @return a list of subcontexts such that the concept lattice of this component is obtained from a subcontext by doubling a convex.
+     */
+    public ArrayList<Context> getDivisionContext() {
+        Context arrowCtx = this.getArrowClosedSubContext();
+        arrowCtx.reverse(); // We need co-atoms which are atoms of the reverse context.
+        ConceptLattice clArrowClosed = arrowCtx.conceptLattice(true); // This lattice is fun :-)
+        Vector<TreeSet<Comparable>> coAtoms = clArrowClosed.immediateSuccessors(clArrowClosed.bottom(), arrowCtx);
+        // Check if the complement of coAtoms is "empty".
+        // Only these coAtoms are kept
+        ArrayList<Context> goodCoAtoms = new ArrayList<Context>();
+        // Be careful that the concept has been reversed
+        for (int i = 0; i < coAtoms.size(); i++) {
+            TreeSet<Comparable> attrComp = (TreeSet<Comparable>) this.getAttributes().clone(); // Initial context
+            TreeSet<Comparable> attr = arrowCtx.getExtent(coAtoms.get(i));
+            attrComp.removeAll(attr); // As arrowCtx is reversed, Extent means Intent.
+            TreeSet<Comparable> obsComp = (TreeSet<Comparable>) this.getObservations().clone(); // Initial context
+            TreeSet<Comparable> obs = this.arrowClosureObject(coAtoms.get(i)).getObservations();
+            obsComp.removeAll(obs);
+            boolean cross = false; // If there is a cross, it is not empty.
+            for (Comparable o : obsComp) {
+                for (Comparable a : attrComp) {
+                    cross = cross || this.getIntent(o).contains(a);
+                }
+            }
+            if (!cross) {
+                Context subContext = this.getSubContext(obs, attr);
+                goodCoAtoms.add(subContext);
+            }
+        }
+        return goodCoAtoms;
+    }
+    /**
+     * Returns a convex set of the concept lattice of c which can be doubled to recover the concept lattice of this component.
+     *
+     * This method must be used with contexts returned by the getDivisionContext.
+     * In other cases, it is meaningless.
+     *
+     * @param ctx context from which the convex set is computed.
+     *
+     * @return a convex set of the concept lattice of c which can be doubled to recover the concept lattice of this component.
+     */
+    public TreeSet<Node> getDivisionConvex(Context ctx) {
+        ConceptLattice factor = ctx.conceptLattice(true);
+        TreeSet<Node> convex = new TreeSet<Node>();
+        for (Node n : factor.getNodes()) {
+            Concept c = (Concept) n;
+            if (!c.getSetB().containsAll(this.getExtent(c.getSetA()))
+                    && !c.getSetA().containsAll(this.getIntent(c.getSetB()))) {
+                convex.add(n);
+            }
+        }
+        return convex;
     }
     /* --------------- HANDLING METHODS FOR ATTRIBUTES AND OBSERVATIONS ------------ */
 
