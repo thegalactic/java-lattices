@@ -1,4 +1,7 @@
-[![Build Status](https://travis-ci.org/kbertet/java-lattices.png?branch=master)](https://travis-ci.org/kbertet/java-lattices) ![Version](http://img.shields.io/badge/version-2.0.0--SNAPSHOT-blue.svg) ![License](http://img.shields.io/badge/license-CeCILL--B-red.svg)
+[![Build Status](https://travis-ci.org/kbertet/java-lattices.png?branch=master)](https://travis-ci.org/kbertet/java-lattices)
+![Snapshot](http://img.shields.io/badge/snapshot-2.0.0-orange.svg)
+![Release](http://img.shields.io/badge/release-1.0.0-blue.svg)
+![License](http://img.shields.io/badge/license-CeCILL--B-red.svg)
 
 lattices is a package for handling formal concepts ([Open Hub page](https://www.openhub.net/p/java-lattices))
 
