@@ -16,6 +16,8 @@
 
 	<properties>
 
+		<project.url>http://kbertet.github.io/java-lattices</project.url>
+
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<checkstyle.config.location>config/checkstyle.xml</checkstyle.config.location>
