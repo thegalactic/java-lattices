@@ -17,4 +17,4 @@ If you are using this project in research activities including publication, you 
 * year: 2014
 * how published: http://kbertet.github.io/java-lattices
 
-You are also kindly encouraged to send an email to karell.bertet@univ-lr.fr.
+You are also kindly invited to send an email to karell.bertet@univ-lr.fr.
