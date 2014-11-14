@@ -34,4 +34,4 @@ Add
 </repositories>
 ~~~
 
-to your `pom.xml` file for use with maven (see the [java-lattices command line applications](https://github.com/kbertet/java-lattices-bin) for an example).
+to your `pom.xml` file for use with maven (see the [java-lattices command line applications project](https://github.com/kbertet/java-lattices-bin) for an example).
