@@ -14,6 +14,7 @@ package fr.kbertet.lattice;
 import java.io.IOException;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.SortedSet;
 import java.util.Vector;
 import fr.kbertet.dgraph.DAGraph;
 import fr.kbertet.dgraph.DGraph;
@@ -61,7 +62,7 @@ public abstract class ClosureSystem {
      *
      * @return  the set of elements of the closure system
      */
-    public abstract TreeSet<Comparable> getSet();
+    public abstract SortedSet<Comparable> getSet();
 
     /**
      * Returns the closure of the specified set.

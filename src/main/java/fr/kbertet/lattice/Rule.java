@@ -227,7 +227,7 @@ public class Rule implements Comparable {
      * @return  hash code of this component
      */
     public int hashCode() {
-        return super.hashCode();
+        return 1013 * this.premise.hashCode() ^ 1009 * this.conclusion.hashCode();
     }
 
     /**
@@ -242,7 +242,7 @@ public class Rule implements Comparable {
             return false;
         }
         Rule r = (Rule) o;
-        return (this.getPremise().equals(r.getPremise()) && this.getConclusion().equals(r.getConclusion()));
+        return this.getPremise().equals(r.getPremise()) && this.getConclusion().equals(r.getConclusion());
     }
 
     /**

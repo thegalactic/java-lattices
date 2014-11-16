@@ -23,15 +23,17 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Collection;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**
  * This class gives a representation for an implicational system (ImplicationalSystem), a set of rules.
  *
- * An ImplicationalSystem is composed of a treeset of comparable elements, and a treeset of rules
+ * An ImplicationalSystem is composed of a TreeSet of comparable elements, and a TreeSet of rules
  * defined by class {@link Rule}.
  *
  * This class provides methods implementing classical transformation of an implicational system :
@@ -106,22 +108,22 @@ public class ImplicationalSystem extends ClosureSystem {
     public ImplicationalSystem(Collection<Rule> sigma) {
         this.sigma = new TreeSet<Rule>(sigma);
         this.set = new TreeSet<Comparable>();
-        for (Rule r : this.sigma) {
-            set.addAll(r.getPremise());
-            set.addAll(r.getConclusion());
+        for (Rule rule : this.sigma) {
+            set.addAll(rule.getPremise());
+            set.addAll(rule.getConclusion());
         }
     }
 
     /**
-     * Constructs this component as a copy of the specified IS `s`.
+     * Constructs this component as a copy of the specified ImplicationalSystem `is`.
      *
      * Only structures (conataining reference of indexed elements) are copied.
      *
-     * @param   s  the implicational system to be copied
+     * @param   is  the implicational system to be copied
      */
-    public ImplicationalSystem(ImplicationalSystem s) {
-        this.sigma = new TreeSet<Rule>(s.getRules());
-        this.set = new TreeSet<Comparable>(s.getSet());
+    public ImplicationalSystem(ImplicationalSystem is) {
+        this.sigma = new TreeSet<Rule>(is.getRules());
+        this.set = new TreeSet<Comparable>(is.getSet());
     }
 
     /**
@@ -209,8 +211,8 @@ public class ImplicationalSystem extends ClosureSystem {
      *
      * @return  the set of rules of this component.
      */
-    public TreeSet<Rule> getRules() {
-        return this.sigma;
+    public SortedSet<Rule> getRules() {
+        return Collections.unmodifiableSortedSet((SortedSet<Rule>) this.sigma);
     }
 
     /**
@@ -218,8 +220,8 @@ public class ImplicationalSystem extends ClosureSystem {
      *
      * @return  the elements space of this component.
      */
-    public TreeSet<Comparable> getSet() {
-        return this.set;
+    public SortedSet<Comparable> getSet() {
+        return Collections.unmodifiableSortedSet((SortedSet<Comparable>) this.set);
     }
 
     /**
@@ -280,16 +282,16 @@ public class ImplicationalSystem extends ClosureSystem {
     public boolean deleteElement(Comparable e) {
         if (set.contains(e)) {
             set.remove(e);
-            ImplicationalSystem sauv = new ImplicationalSystem(this);
-            for (Rule r: sauv.sigma) {
-                Rule newR = new Rule(r.getPremise(), r.getConclusion());
+            ImplicationalSystem save = new ImplicationalSystem(this);
+            for (Rule rule: save.sigma) {
+                Rule newR = new Rule(rule.getPremise(), rule.getConclusion());
                 newR.removeFromPremise(e);
                 newR.removeFromConclusion(e);
-                if (!r.equals(newR)) {
+                if (!rule.equals(newR)) {
                     if (newR.getConclusion().size() != 0) {
-                        this.replaceRule(r, newR);
+                        this.replaceRule(rule, newR);
                     } else {
-                        this.removeRule(r);
+                        this.removeRule(rule);
                     }
                 }
             }
@@ -301,17 +303,17 @@ public class ImplicationalSystem extends ClosureSystem {
     /**
      * Checks if the set S of this component contains the elements of the specified rule.
      *
-     * @param   r  the rule to be checked
+     * @param   rule  the rule to be checked
      *
      * @return  true if `S` contains all the elements of the rule
      */
-    public boolean checkRuleElements(Rule r) {
-        for (Object e : r.getPremise()) {
+    public boolean checkRuleElements(Rule rule) {
+        for (Object e : rule.getPremise()) {
             if (!set.contains(e)) {
                 return false;
             }
         }
-        for (Object e : r.getConclusion()) {
+        for (Object e : rule.getConclusion()) {
             if (!set.contains(e)) {
                 return false;
             }
@@ -324,24 +326,24 @@ public class ImplicationalSystem extends ClosureSystem {
      *
      * Rules are compared according to their premise and conclusion
      *
-     * @param   r  the rule to be tested
+     * @param   rule  the rule to be tested
      *
      * @return true if `sigma` contains the rule
      */
-    public boolean containsRule(Rule r) {
-        return this.sigma.contains(r);
+    public boolean containsRule(Rule rule) {
+        return this.sigma.contains(rule);
     }
 
     /**
      * Adds the specified rule to this component.
      *
-     * @param   r  the rule to be added
+     * @param   rule  the rule to be added
      *
      * @return  true the rule has been added to if `sigma`
      */
-    public boolean addRule(Rule r) {
-        if (!this.containsRule(r) && this.checkRuleElements(r)) {
-            return this.sigma.add(r);
+    public boolean addRule(Rule rule) {
+        if (!this.containsRule(rule) && this.checkRuleElements(rule)) {
+            return this.sigma.add(rule);
         }
         return false;
     }
@@ -349,24 +351,24 @@ public class ImplicationalSystem extends ClosureSystem {
     /**
      * Removes the specified rule from the set of rules of this component.
      *
-     * @param   r  the rule to be removed
+     * @param   rule  the rule to be removed
      *
      * @return  true if the rule has been removed
      */
-    public boolean removeRule(Rule r) {
-        return this.sigma.remove(r);
+    public boolean removeRule(Rule rule) {
+        return this.sigma.remove(rule);
     }
 
     /**
      * Replaces the first specified rule by the second one.
      *
-     * @param   r1  the rule to be replaced by `r2`
-     * @param   r2  the replacing rule
+     * @param   rule1  the rule to be replaced by `rule2`
+     * @param   rule2  the replacing rule
      *
      * @return  true the rule has been replaced
      */
-    public boolean replaceRule(Rule r1, Rule r2) {
-        return (this.removeRule(r1) && this.addRule(r2));
+    public boolean replaceRule(Rule rule1, Rule rule2) {
+        return this.removeRule(rule1) && this.addRule(rule2);
     }
 
     /*-----------  SAVING METHODS -------------------- */
@@ -404,8 +406,8 @@ public class ImplicationalSystem extends ClosureSystem {
         s.append("\n");
         // next lines : a rule on each line, described by:
         // [elements of the premise separated by a space] -> [elements of the conclusion separated by a space]
-        for (Rule r : this.sigma) {
-            s.append(r.toString()).append("\n");
+        for (Rule rule : this.sigma) {
+            s.append(rule.toString()).append("\n");
         }
         return s.toString();
     }
@@ -460,9 +462,9 @@ public class ImplicationalSystem extends ClosureSystem {
      * @return  true if and only if this component is a proper implicational system.
      */
     public boolean isProper() {
-        for (Rule r : this.sigma) {
-            for (Object c : r.getConclusion()) {
-                if (r.getPremise().contains(c)) {
+        for (Rule rule : this.sigma) {
+            for (Object c : rule.getConclusion()) {
+                if (rule.getPremise().contains(c)) {
                     return false;
                 }
             }
@@ -478,8 +480,8 @@ public class ImplicationalSystem extends ClosureSystem {
      * @return  true if this component is an unary ImplicationalSystem.
      */
     public boolean isUnary() {
-        for (Rule r : this.sigma) {
-            if (r.getConclusion().size() > 1) {
+        for (Rule rule : this.sigma) {
+            if (rule.getConclusion().size() > 1) {
                 return false;
             }
         }
@@ -494,9 +496,9 @@ public class ImplicationalSystem extends ClosureSystem {
      * @return  true if this component is a compact ImplicationalSystem.
      */
     public boolean isCompact() {
-        for (Rule r1 : this.sigma) {
-            for (Rule r2: this.sigma) {
-                if (!r1.equals(r2) && (r1.getPremise().equals(r2.getPremise()))) {
+        for (Rule rule1 : this.sigma) {
+            for (Rule rule2: this.sigma) {
+                if (!rule1.equals(rule2) && rule1.getPremise().equals(rule2.getPremise())) {
                     return false;
                 }
             }
@@ -512,8 +514,8 @@ public class ImplicationalSystem extends ClosureSystem {
      * @return  true if conclusion of rules of this component are closed.
      */
     public boolean isRightMaximal() {
-        for (Rule r : this.sigma) {
-            if (!r.getConclusion().containsAll(this.closure(r.getConclusion()))) {
+        for (Rule rule : this.sigma) {
+            if (!rule.getConclusion().containsAll(this.closure(rule.getConclusion()))) {
                 return false;
             }
         }
@@ -528,9 +530,11 @@ public class ImplicationalSystem extends ClosureSystem {
      * @return  true if this component is left minimal.
      */
     public boolean isLeftMinimal() {
-        for (Rule r1 : this.sigma) {
-            for (Rule r2 : this.sigma) {
-                if (!r1.equals(r2) && r1.getPremise().containsAll(r2.getPremise()) && r1.getConclusion().equals(r2.getConclusion())) {
+        for (Rule rule1 : this.sigma) {
+            for (Rule rule2 : this.sigma) {
+                if (!rule1.equals(rule2)
+                    && rule1.getPremise().containsAll(rule2.getPremise())
+                    && rule1.getConclusion().equals(rule2.getConclusion())) {
                     return false;
                 }
             }
@@ -548,14 +552,14 @@ public class ImplicationalSystem extends ClosureSystem {
      * @return  true if this component is direct.
      */
     public boolean isDirect() {
-        for (Rule r1 : this.sigma) {
-            TreeSet<Comparable> onePass = new TreeSet(r1.getPremise());
-            for (Rule r2 : this.sigma) {
-                if (r1.getPremise().containsAll(r2.getPremise())) {
-                    onePass.addAll(r2.getConclusion());
+        for (Rule rule1 : this.sigma) {
+            TreeSet<Comparable> onePass = new TreeSet(rule1.getPremise());
+            for (Rule rule2 : this.sigma) {
+                if (rule1.getPremise().containsAll(rule2.getPremise())) {
+                    onePass.addAll(rule2.getConclusion());
                 }
             }
-            if (!onePass.equals(this.closure(r1.getPremise()))) {
+            if (!onePass.equals(this.closure(rule1.getPremise()))) {
                 return false;
             }
         }
@@ -574,11 +578,11 @@ public class ImplicationalSystem extends ClosureSystem {
     public boolean isMinimum() {
         ImplicationalSystem tmp = new ImplicationalSystem(this);
         tmp.makeRightMaximal();
-        for (Rule r : sigma) {
-            ImplicationalSystem epsylon = new ImplicationalSystem(tmp);
-            epsylon.removeRule(r);
-            TreeSet<Comparable> clThis = this.closure(r.getPremise());
-            TreeSet<Comparable> clEpsilon = epsylon.closure(r.getPremise());
+        for (Rule rule : sigma) {
+            ImplicationalSystem epsilon = new ImplicationalSystem(tmp);
+            epsilon.removeRule(rule);
+            TreeSet<Comparable> clThis = this.closure(rule.getPremise());
+            TreeSet<Comparable> clEpsilon = epsilon.closure(rule.getPremise());
             if (clThis.equals(clEpsilon)) {
                 return false;
             }
@@ -599,7 +603,7 @@ public class ImplicationalSystem extends ClosureSystem {
     public boolean isCanonicalDirectBasis() {
         ImplicationalSystem cdb = new ImplicationalSystem(this);
         cdb.makeCanonicalDirectBasis();
-        return (this.isIncludedIn(cdb) && cdb.isIncludedIn(this));
+        return this.isIncludedIn(cdb) && cdb.isIncludedIn(this);
     }
 
     /**
@@ -615,7 +619,7 @@ public class ImplicationalSystem extends ClosureSystem {
     public boolean isCanonicalBasis() {
         ImplicationalSystem cb = new ImplicationalSystem(this);
         cb.makeCanonicalBasis();
-        return (this.isIncludedIn(cb) && cb.isIncludedIn(this));
+        return this.isIncludedIn(cb) && cb.isIncludedIn(this);
     }
 
     /**
@@ -631,8 +635,8 @@ public class ImplicationalSystem extends ClosureSystem {
         tmp.makeUnary();
         is.makeProper();
         is.makeUnary();
-        for (Rule r : tmp.sigma) {
-            if (!is.containsRule(r)) {
+        for (Rule rule : tmp.sigma) {
+            if (!is.containsRule(rule)) {
                 return false;
             }
         }
@@ -652,25 +656,25 @@ public class ImplicationalSystem extends ClosureSystem {
      * @return  the difference between the number of rules of this component before and after this treatment
      */
     public int makeProper() {
-        ImplicationalSystem sauv = new ImplicationalSystem(this);
-        for (Rule r : sauv.sigma) {
+        ImplicationalSystem save = new ImplicationalSystem(this);
+        for (Rule rule : save.sigma) {
             // deletes elements of conclusion which are in the premise
-            Rule newR = new Rule(r.getPremise(), r.getConclusion());
-            for (Object e : r.getConclusion()) {
+            Rule newR = new Rule(rule.getPremise(), rule.getConclusion());
+            for (Object e : rule.getConclusion()) {
                 if (newR.getPremise().contains(e)) {
                     newR.removeFromConclusion(e);
                 }
             }
             // replace the rule by the new rule is it has been modified
-            if (!r.equals(newR)) {
-                this.replaceRule(r, newR);
+            if (!rule.equals(newR)) {
+                this.replaceRule(rule, newR);
             }
             // delete rule with an empty conclusion
             if (newR.getConclusion().isEmpty()) {
                 this.removeRule(newR);
             }
         }
-        return sauv.sizeRules() - this.sizeRules();
+        return save.sizeRules() - this.sizeRules();
     }
 
     /**
@@ -686,21 +690,21 @@ public class ImplicationalSystem extends ClosureSystem {
      * @return  the difference between the number of rules of this component before and after this treatment
      */
     public int makeUnary() {
-        ImplicationalSystem sauv = new ImplicationalSystem(this);
-        for (Rule r : sauv.sigma) {
-            if (r.getConclusion().size() > 1) {
-                this.removeRule(r);
-                TreeSet<Comparable> conclusion = r.getConclusion();
-                TreeSet<Comparable> premise = r.getPremise();
+        ImplicationalSystem save = new ImplicationalSystem(this);
+        for (Rule rule : save.sigma) {
+            if (rule.getConclusion().size() > 1) {
+                this.removeRule(rule);
+                TreeSet<Comparable> conclusion = rule.getConclusion();
+                TreeSet<Comparable> premise = rule.getPremise();
                 for (Comparable e : conclusion) {
                     TreeSet<Comparable> newC = new TreeSet();
                     newC.add(e);
-                    Rule nr = new Rule(premise, newC);
-                    this.addRule(nr);
+                    Rule newRule = new Rule(premise, newC);
+                    this.addRule(newRule);
                 }
             }
         }
-        return sauv.sizeRules() - this.sizeRules();
+        return save.sizeRules() - this.sizeRules();
     }
 
     /**
@@ -711,26 +715,26 @@ public class ImplicationalSystem extends ClosureSystem {
      * @return  the difference between the number of rules of this component before and after this treatment
      */
     public int makeCompact() {
-        ImplicationalSystem sauv = new ImplicationalSystem(this);
-        for (Rule r1 : sauv.sigma) {
-            if (this.containsRule(r1)) {
+        ImplicationalSystem save = new ImplicationalSystem(this);
+        for (Rule rule1 : save.sigma) {
+            if (this.containsRule(rule1)) {
                 ComparableSet newConc = new ComparableSet();
-                for (Rule r2 : sauv.sigma) {
-                    if (this.containsRule(r2) && !r1.equals(r2) && (r1.getPremise().equals(r2.getPremise()))) {
-                        newConc.addAll(r2.getConclusion());
-                        boolean res = this.sigma.remove(r2);
+                for (Rule rule2 : save.sigma) {
+                    if (this.containsRule(rule2) && !rule1.equals(rule2) && rule1.getPremise().equals(rule2.getPremise())) {
+                        newConc.addAll(rule2.getConclusion());
+                        boolean res = this.sigma.remove(rule2);
                     }
                 }
                 if (newConc.size() > 0) {
-                    newConc.addAll(r1.getConclusion());
-                    Rule newR = new Rule(r1.getPremise(), newConc);
-                    if (!r1.equals(newR)) {
-                        this.replaceRule(r1, newR);
+                    newConc.addAll(rule1.getConclusion());
+                    Rule newR = new Rule(rule1.getPremise(), newConc);
+                    if (!rule1.equals(newR)) {
+                        this.replaceRule(rule1, newR);
                     }
                 }
             }
         }
-        return sauv.sizeRules() - this.sizeRules();
+        return save.sizeRules() - this.sizeRules();
     }
 
     /**
@@ -744,11 +748,11 @@ public class ImplicationalSystem extends ClosureSystem {
     public int makeRightMaximal() {
         int s = this.sizeRules();
         this.makeCompact();
-        ImplicationalSystem sauv = new ImplicationalSystem(this);
-        for (Rule r : sauv.sigma) {
-            Rule newR = new Rule(r.getPremise(), this.closure(r.getPremise()));
-            if (!r.equals(newR)) {
-                this.replaceRule(r, newR);
+        ImplicationalSystem save = new ImplicationalSystem(this);
+        for (Rule rule : save.sigma) {
+            Rule newR = new Rule(rule.getPremise(), this.closure(rule.getPremise()));
+            if (!rule.equals(newR)) {
+                this.replaceRule(rule, newR);
             }
         }
         return s - this.sizeRules();
@@ -766,27 +770,27 @@ public class ImplicationalSystem extends ClosureSystem {
      */
     public int makeLeftMinimal() {
         this.makeUnary();
-        ImplicationalSystem sauv = new ImplicationalSystem(this);
-        for (Rule r1 : sauv.sigma) {
-            for (Rule r2 : sauv.sigma) {
-                if (!r1.equals(r2)) {
-                    if ((r2.getPremise().containsAll(r1.getPremise())) && (r1.getConclusion().equals(r2.getConclusion()))) {
-                        this.sigma.remove(r2);
-                    }
+        ImplicationalSystem save = new ImplicationalSystem(this);
+        for (Rule rule1 : save.sigma) {
+            for (Rule rule2 : save.sigma) {
+                if (!rule1.equals(rule2)
+                    && rule2.getPremise().containsAll(rule1.getPremise())
+                    && rule1.getConclusion().equals(rule2.getConclusion())) {
+                    this.sigma.remove(rule2);
                 }
             }
         }
         this.makeCompact();
-        return sauv.sizeRules() - this.sizeRules();
+        return save.sizeRules() - this.sizeRules();
     }
 
     /**
      * Makes this component a compact and direct ImplicationalSystem.
      *
      * The unary and proper form of this componant is first computed.
-     * For two given rules r1 and r2, if the conclusion of r1 contains the premise of r1,
-     * then a new rule is addes, with r1.premisse + r2.premisse - r1.conclusion as premise, and
-     * r2.conclusion as conlusion. This treatment is performed in a recursive way until no new rule
+     * For two given rules rule1 and rule2, if the conclusion of rule1 contains the premise of rule1,
+     * then a new rule is addes, with rule1.premisse + rule2.premisse - rule1.conclusion as premise, and
+     * rule2.conclusion as conlusion. This treatment is performed in a recursive way until no new rule
      * is added.
      *
      * This treatment is performed in O(d|S|), where d  corresponds to the number of rules
@@ -800,25 +804,25 @@ public class ImplicationalSystem extends ClosureSystem {
         int s = this.sizeRules();
         boolean ok = true;
         while (ok) {
-            ImplicationalSystem sauv = new ImplicationalSystem(this);
-            for (Rule r1 : sauv.sigma) {
-                for (Rule r2 : sauv.sigma) {
-                    if (!r1.equals(r2) && !r1.getPremise().containsAll(r2.getConclusion())) {
-                        ComparableSet  c = new ComparableSet(r2.getPremise());
-                        c.removeAll(r1.getConclusion());
-                        c.addAll(r1.getPremise());
-                        if (!c.containsAll(r2.getPremise())) {
-                            Rule newR  = new Rule(c, r2.getConclusion());
-                            // new_r.addAllToPremise (r1.getPremise());
-                            // new_r.addAllToPremise (r2.getPremise());
-                            // new_r.removeAllFromPremise(r1.getConclusion());
-                            // new_r.addAllToConclusion(r2.getConclusion() );
+            ImplicationalSystem save = new ImplicationalSystem(this);
+            for (Rule rule1 : save.sigma) {
+                for (Rule rule2 : save.sigma) {
+                    if (!rule1.equals(rule2) && !rule1.getPremise().containsAll(rule2.getConclusion())) {
+                        ComparableSet  c = new ComparableSet(rule2.getPremise());
+                        c.removeAll(rule1.getConclusion());
+                        c.addAll(rule1.getPremise());
+                        if (!c.containsAll(rule2.getPremise())) {
+                            Rule newR  = new Rule(c, rule2.getConclusion());
+                            // new_rule.addAllToPremise (rule1.getPremise());
+                            // new_rule.addAllToPremise (rule2.getPremise());
+                            // new_rule.removeAllFromPremise(rule1.getConclusion());
+                            // new_rule.addAllToConclusion(rule2.getConclusion() );
                             this.addRule(newR);
                         }
                     }
                 }
             }
-            if (this.sizeRules() == sauv.sizeRules()) {
+            if (this.sizeRules() == save.sizeRules()) {
                 ok = false;
             }
         }
@@ -839,15 +843,15 @@ public class ImplicationalSystem extends ClosureSystem {
      */
     public int makeMinimum() {
         this.makeRightMaximal();
-        ImplicationalSystem sauv = new ImplicationalSystem(this);
-        for (Rule r : sauv.sigma) {
-            ImplicationalSystem epsylon = new ImplicationalSystem(this);
-            epsylon.removeRule(r);
-            if (epsylon.closure(r.getPremise()).equals(this.closure(r.getPremise()))) {
-                this.removeRule(r);
+        ImplicationalSystem save = new ImplicationalSystem(this);
+        for (Rule rule : save.sigma) {
+            ImplicationalSystem epsilon = new ImplicationalSystem(this);
+            epsilon.removeRule(rule);
+            if (epsilon.closure(rule.getPremise()).equals(this.closure(rule.getPremise()))) {
+                this.removeRule(rule);
             }
         }
-        return sauv.sizeRules() - this.sizeRules();
+        return save.sizeRules() - this.sizeRules();
     }
 
     /**
@@ -875,7 +879,7 @@ public class ImplicationalSystem extends ClosureSystem {
      * Replace this component by the canonical basis.
      *
      * Conclusion of each rule is first replaced by its closure.
-     * Then, premise of each rule r is replaced by its closure in ImplicationalSystem \ r.
+     * Then, premise of each rule r is replaced by its closure in ImplicationalSystem \ rule.
      * This treatment is performed in (|Sigma||S|cl) where O(cl) is the
      * computation of a closure.
      *
@@ -883,17 +887,17 @@ public class ImplicationalSystem extends ClosureSystem {
      */
     public int makeCanonicalBasis() {
         this.makeMinimum();
-        ImplicationalSystem sauv = new ImplicationalSystem(this);
-        for (Rule r : sauv.sigma) {
-            ImplicationalSystem epsylon = new ImplicationalSystem(this);
-            epsylon.removeRule(r);
-            Rule tmp = new Rule(epsylon.closure(r.getPremise()), r.getConclusion());
-            if (!r.equals(tmp)) {
-                this.replaceRule(r, tmp);
+        ImplicationalSystem save = new ImplicationalSystem(this);
+        for (Rule rule : save.sigma) {
+            ImplicationalSystem epsilon = new ImplicationalSystem(this);
+            epsilon.removeRule(rule);
+            Rule tmp = new Rule(epsilon.closure(rule.getPremise()), rule.getConclusion());
+            if (!rule.equals(tmp)) {
+                this.replaceRule(rule, tmp);
             }
         }
         this.makeProper();
-        return sauv.sizeRules() - this.sizeRules();
+        return save.sizeRules() - this.sizeRules();
     }
 
     /* --------------- METHODS BASED ON GRAPH ------------ */
@@ -920,11 +924,11 @@ public class ImplicationalSystem extends ClosureSystem {
             nodeCreated.put(x, n);
         }
         // an edge is added from b to a when there exists a rule X+a -> b or a -> b
-        for (Rule r : tmp.getRules()) {
-            for (Object a : r.getPremise()) {
-                ComparableSet diff = new ComparableSet(r.getPremise());
+        for (Rule rule : tmp.getRules()) {
+            for (Object a : rule.getPremise()) {
+                ComparableSet diff = new ComparableSet(rule.getPremise());
                 diff.remove(a);
-                Node from = nodeCreated.get(r.getConclusion().first());
+                Node from = nodeCreated.get(rule.getConclusion().first());
                 Node to = nodeCreated.get(a);
                 Edge ed;
                 if (pred.containsEdge(from, to)) {
@@ -975,43 +979,43 @@ public class ImplicationalSystem extends ClosureSystem {
         TreeSet<Comparable> truth = this.closure(new TreeSet<Comparable>());
         // modify each rule
         for (Object x : red.keySet()) {
-            TreeSet<Rule> rules = this.getRules();
+            TreeSet<Rule> rules = this.sigma;
             rules = (TreeSet<Rule>) rules.clone();
-            for (Rule r : rules) {
-                Rule r2 = new Rule();
+            for (Rule rule : rules) {
+                Rule rule2 = new Rule();
                 boolean modif = false;
                 // replace the reducible element by its equivalent in the premise
-                TreeSet premise = r.getPremise();
+                TreeSet premise = rule.getPremise();
                 premise = (TreeSet) premise.clone();
                 if (premise.contains(x)) {
                     premise.remove(x);
                     premise.addAll((TreeSet) red.get(x));
-                    r2.addAllToPremise(premise);
+                    rule2.addAllToPremise(premise);
                     modif = true;
                 } else {
-                    r2.addAllToPremise(premise);
+                    rule2.addAllToPremise(premise);
                 }
                 // replace the reducible element by its equivalent in the conclusion
-                TreeSet conclusion = r.getConclusion();
+                TreeSet conclusion = rule.getConclusion();
                 conclusion = (TreeSet) conclusion.clone();
                 if (conclusion.contains(x)) {
                     conclusion.remove(x);
                     conclusion.addAll((TreeSet) red.get(x));
-                    r2.addAllToConclusion(conclusion);
+                    rule2.addAllToConclusion(conclusion);
                     modif = true;
                 } else {
-                    r2.addAllToConclusion(conclusion);
+                    rule2.addAllToConclusion(conclusion);
                 }
                 // replace the rule if modified
                 if (modif) {
-                    if (truth.containsAll(r2.getConclusion())) {
-                        this.removeRule(r); // Conclusions of this rule are always true, thus the rule is useless
+                    if (truth.containsAll(rule2.getConclusion())) {
+                        this.removeRule(rule); // Conclusions of this rule are always true, thus the rule is useless
                     } else {
-                        this.replaceRule(r, r2);
+                        this.replaceRule(rule, rule2);
                     }
                 } else {
-                    if (truth.containsAll(r.getConclusion())) {
-                        this.removeRule(r); // Conclusions of this rule are always true, thus the rule is useless
+                    if (truth.containsAll(rule.getConclusion())) {
+                        this.removeRule(rule); // Conclusions of this rule are always true, thus the rule is useless
                     }
                 }
             }
@@ -1057,12 +1061,12 @@ public class ImplicationalSystem extends ClosureSystem {
         TreeSet<Comparable> newES = new TreeSet<Comparable>(x);
         do {
             oldES.addAll(newES);
-            for (Rule r : this.sigma) {
-                if (newES.containsAll(r.getPremise()) || r.getPremise().isEmpty()) {
-                    newES.addAll(r.getConclusion());
+            for (Rule rule : this.sigma) {
+                if (newES.containsAll(rule.getPremise()) || rule.getPremise().isEmpty()) {
+                    newES.addAll(rule.getConclusion());
                 }
             }
-        } while (!(oldES.equals(newES)));
+        } while (!oldES.equals(newES));
         return newES;
     }
 }
