@@ -141,16 +141,6 @@ public class Context extends ClosureSystem {
     /* ------------- BITSET ADDON ------------------ */
 
     /**
-     * A bit set for attributes.
-     */
-    private BitSet bitsetAttributes;
-
-    /**
-     * A bit set for observations.
-     */
-    private BitSet bitsetObservations;
-
-    /**
      * A bit set for intent.
      */
     private TreeMap<Comparable, BitSet> bitsetIntent;
@@ -236,8 +226,6 @@ public class Context extends ClosureSystem {
         this.attributes = new TreeSet();
         this.intent = new TreeMap();
         this.extent = new TreeMap();
-        this.bitsetAttributes = new BitSet();
-        this.bitsetObservations = new BitSet();
         this.bitsetIntent = new TreeMap();
         this.bitsetExtent = new TreeMap();
         this.arrayObservations = new ArrayList();

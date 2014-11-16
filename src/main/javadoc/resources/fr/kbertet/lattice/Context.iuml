@@ -4,8 +4,6 @@ package fr.kbertet.lattice {
         -TreeSet<Comparable> attributes
         -TreeMap<Comparable, TreeSet<Comparable>> intent
         -TreeMap<Comparable, TreeSet<Comparable>> extent
-        -BitSet bitsetAttributes
-        -BitSet bitsetObservations
         -TreeMap<Comparable, BitSet> bitsetIntent
         -TreeMap<Comparable, BitSet> bitsetExtent
         -ArrayList<Comparable> arrayObservations
