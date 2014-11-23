@@ -11,11 +11,12 @@ package fr.kbertet.lattice.io;
  * it under the terms of CeCILL-B license.
  */
 
-import fr.kbertet.lattice.ImplicationalSystem;
-import fr.kbertet.lattice.Rule;
 import java.util.StringTokenizer;
 import java.io.BufferedReader;
 import java.io.IOException;
+
+import fr.kbertet.lattice.ImplicationalSystem;
+import fr.kbertet.lattice.Rule;
 
 /**
  * This class defines the way for reading an implicational system from a text file.

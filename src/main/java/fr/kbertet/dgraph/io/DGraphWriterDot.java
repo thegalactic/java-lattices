@@ -11,12 +11,13 @@ package fr.kbertet.dgraph.io;
  * it under the terms of CeCILL-B license.
  */
 
+import java.util.StringTokenizer;
+import java.io.BufferedWriter;
+import java.io.IOException;
+
 import fr.kbertet.dgraph.DGraph;
 import fr.kbertet.dgraph.Node;
 import fr.kbertet.dgraph.Edge;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.util.StringTokenizer;
 
 /**
  * This class defines the way for writing a graph as a dot file.

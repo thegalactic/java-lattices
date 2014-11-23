@@ -11,6 +11,20 @@ package fr.kbertet.lattice;
  * it under the terms of CeCILL-B license.
  */
 
+import java.util.Collections;
+import java.util.Collection;
+import java.util.StringTokenizer;
+import java.util.TreeMap;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import fr.kbertet.util.ComparableSet;
 import fr.kbertet.lattice.io.ImplicationalSystemWriterFactory;
 import fr.kbertet.lattice.io.ImplicationalSystemWriterText;
 import fr.kbertet.lattice.io.ImplicationalSystemReaderFactory;
@@ -18,17 +32,6 @@ import fr.kbertet.lattice.io.ImplicationalSystemReaderText;
 import fr.kbertet.dgraph.DGraph;
 import fr.kbertet.dgraph.Edge;
 import fr.kbertet.dgraph.Node;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Collections;
-import java.util.Collection;
-import java.util.StringTokenizer;
-import java.util.TreeMap;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 /**
  * This class gives a representation for an implicational system (ImplicationalSystem), a set of rules.

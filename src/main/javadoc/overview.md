@@ -201,19 +201,18 @@ title Main UML graph
 !include resources/fr/kbertet/dgraph/DAGraph.iuml
 !include resources/fr/kbertet/dgraph/Node.iuml
 
-!include resources/fr/kbertet/lattice/ComparableSet.iuml
+!include resources/fr/kbertet/util/Couple.iuml
+!include resources/fr/kbertet/util/ComparableSet.iuml
+!include resources/fr/kbertet/context/Context.iuml
 !include resources/fr/kbertet/lattice/Concept.iuml
 !include resources/fr/kbertet/lattice/ConceptLattice.iuml
-!include resources/fr/kbertet/lattice/Context.iuml
 !include resources/fr/kbertet/lattice/ArrowRelation.iuml
 !include resources/fr/kbertet/lattice/ClosureSystem.iuml
 !include resources/fr/kbertet/lattice/Lattice.iuml
 !include resources/fr/kbertet/lattice/Rule.iuml
 !include resources/fr/kbertet/lattice/BijectiveComponents.iuml
 !include resources/fr/kbertet/lattice/ImplicationalSystem.iuml
-!include resources/fr/kbertet/lattice/Couple.iuml
 !include resources/fr/kbertet/lattice/LatticeFactory.iuml
-!include resources/fr/kbertet/lattice/Permutation.iuml
 
 
 hide members
@@ -226,25 +225,24 @@ title Input/Output UML graph
 !include resources/fr/kbertet/dgraph/io/DGraphWriter.iuml
 !include resources/fr/kbertet/dgraph/io/DGraphWriterFactory.iuml
 !include resources/fr/kbertet/dgraph/io/DGraphWriterDot.iuml
-
+!include resources/fr/kbertet/context/io/ContextReaderBurmeister.iuml
+!include resources/fr/kbertet/context/io/ContextReaderCsv.iuml
+!include resources/fr/kbertet/context/io/ContextReaderFactory.iuml
+!include resources/fr/kbertet/context/io/ContextReaderFIMI.iuml
+!include resources/fr/kbertet/context/io/ContextReader.iuml
+!include resources/fr/kbertet/context/io/ContextReaderText.iuml
+!include resources/fr/kbertet/context/io/ContextWriterBurmeister.iuml
+!include resources/fr/kbertet/context/io/ContextWriterCsv.iuml
+!include resources/fr/kbertet/context/io/ContextWriterFactory.iuml
+!include resources/fr/kbertet/context/io/ContextWriterFIMI.iuml
+!include resources/fr/kbertet/context/io/ContextWriter.iuml
+!include resources/fr/kbertet/context/io/ContextWriterText.iuml
 !include resources/fr/kbertet/lattice/io/ArrowRelationWriter.iuml
 !include resources/fr/kbertet/lattice/io/ArrowRelationWriterFactory.iuml
 !include resources/fr/kbertet/lattice/io/ArrowRelationWriterTeX.iuml
 !include resources/fr/kbertet/lattice/io/ConceptLatticeWriterDot.iuml
 !include resources/fr/kbertet/lattice/io/ConceptLatticeWriterFactory.iuml
 !include resources/fr/kbertet/lattice/io/ConceptLatticeWriter.iuml
-!include resources/fr/kbertet/lattice/io/ContextReaderBurmeister.iuml
-!include resources/fr/kbertet/lattice/io/ContextReaderCsv.iuml
-!include resources/fr/kbertet/lattice/io/ContextReaderFactory.iuml
-!include resources/fr/kbertet/lattice/io/ContextReaderFIMI.iuml
-!include resources/fr/kbertet/lattice/io/ContextReader.iuml
-!include resources/fr/kbertet/lattice/io/ContextReaderText.iuml
-!include resources/fr/kbertet/lattice/io/ContextWriterBurmeister.iuml
-!include resources/fr/kbertet/lattice/io/ContextWriterCsv.iuml
-!include resources/fr/kbertet/lattice/io/ContextWriterFactory.iuml
-!include resources/fr/kbertet/lattice/io/ContextWriterFIMI.iuml
-!include resources/fr/kbertet/lattice/io/ContextWriter.iuml
-!include resources/fr/kbertet/lattice/io/ContextWriterText.iuml
 !include resources/fr/kbertet/lattice/io/ImplicationalSystemReader.iuml
 !include resources/fr/kbertet/lattice/io/ImplicationalSystemReaderFactory.iuml
 !include resources/fr/kbertet/lattice/io/ImplicationalSystemReaderText.iuml

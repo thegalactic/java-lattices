@@ -11,11 +11,13 @@ package fr.kbertet.lattice;
  * it under the terms of CeCILL-B license.
  */
 
-import java.io.IOException;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.SortedSet;
 import java.util.Vector;
+import java.io.IOException;
+
+import fr.kbertet.util.ComparableSet;
 import fr.kbertet.dgraph.DAGraph;
 import fr.kbertet.dgraph.DGraph;
 import fr.kbertet.dgraph.Node;

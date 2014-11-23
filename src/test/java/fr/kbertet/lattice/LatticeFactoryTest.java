@@ -11,12 +11,14 @@ package fr.kbertet.lattice;
  * it under the terms of CeCILL-B license.
  */
 
-import fr.kbertet.dgraph.DAGraph;
-import fr.kbertet.dgraph.Node;
-import java.util.Random;
+import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import org.junit.Test;
+
+import java.util.Random;
+
+import fr.kbertet.dgraph.DAGraph;
+import fr.kbertet.dgraph.Node;
 
 /**
  *

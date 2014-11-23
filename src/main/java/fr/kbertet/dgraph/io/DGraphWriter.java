@@ -11,9 +11,10 @@ package fr.kbertet.dgraph.io;
  * it under the terms of CeCILL-B license.
  */
 
-import fr.kbertet.dgraph.DGraph;
 import java.io.BufferedWriter;
 import java.io.IOException;
+
+import fr.kbertet.dgraph.DGraph;
 
 /**
  * This interface defines a standard way for writing a graph.

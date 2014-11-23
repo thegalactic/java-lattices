@@ -11,13 +11,14 @@ package fr.kbertet.lattice.io;
  * it under the terms of CeCILL-B license.
  */
 
-import fr.kbertet.lattice.ArrowRelation;
-import fr.kbertet.dgraph.Edge;
-import fr.kbertet.dgraph.Node;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.io.BufferedWriter;
 import java.io.IOException;
+
+import fr.kbertet.lattice.ArrowRelation;
+import fr.kbertet.dgraph.Edge;
+import fr.kbertet.dgraph.Node;
 
 /**
  * This class defines the way for writing an arrow relatin as a tex file.

@@ -1,4 +1,4 @@
-package fr.kbertet.lattice;
+package fr.kbertet.util;
 /*
  * Couple.java
  *
@@ -16,7 +16,7 @@ package fr.kbertet.lattice;
  * ![Couple](Couple.png)
  *
  * @uml Couple.png
- * !include resources/fr/kbertet/lattice/Couple.iuml
+ * !include resources/fr/kbertet/util/Couple.iuml
  *
  * class Couple #LightCyan
  * title Couple UML graph

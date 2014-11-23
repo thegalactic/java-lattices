@@ -1,4 +1,4 @@
-package fr.kbertet.lattice.io;
+package fr.kbertet.context.io;
 
 /*
  * ContextReaderFIMI.java
@@ -11,10 +11,11 @@ package fr.kbertet.lattice.io;
  * it under the terms of CeCILL-B license.
  */
 
-import fr.kbertet.lattice.Context;
+import java.util.StringTokenizer;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.StringTokenizer;
+
+import fr.kbertet.context.Context;
 
 /**
  * This class defines the way for reading a context from a text file.
@@ -22,8 +23,8 @@ import java.util.StringTokenizer;
  * ![ContextReaderFIMI](ContextReaderFIMI.png)
  *
  * @uml ContextReaderFIMI.png
- * !include resources/fr/kbertet/lattice/io/ContextReaderFIMI.iuml
- * !include resources/fr/kbertet/lattice/io/ContextReader.iuml
+ * !include resources/fr/kbertet/context/io/ContextReaderFIMI.iuml
+ * !include resources/fr/kbertet/context/io/ContextReader.iuml
  *
  * hide members
  * show ContextReaderFIMI members

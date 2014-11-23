@@ -10,13 +10,16 @@ package fr.kbertet.lattice;
  * it under the terms of CeCILL-B license.
  */
 
-import fr.kbertet.dgraph.DGraph;
+import java.util.Date;
+import java.util.TreeSet;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Date;
-import java.util.TreeSet;
+
+import fr.kbertet.util.ComparableSet;
+import fr.kbertet.dgraph.DGraph;
+import fr.kbertet.context.Context;
 
 /**
  * This class generates bijective components issued from lattice theory for a specified

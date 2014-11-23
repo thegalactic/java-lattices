@@ -11,13 +11,14 @@ package fr.kbertet.lattice.io;
  * it under the terms of CeCILL-B license.
  */
 
+import java.util.StringTokenizer;
+import java.io.BufferedWriter;
+import java.io.IOException;
+
 import fr.kbertet.lattice.ConceptLattice;
 import fr.kbertet.lattice.Concept;
 import fr.kbertet.dgraph.Edge;
 import fr.kbertet.dgraph.Node;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.util.StringTokenizer;
 
 /**
  * This class defines the way for writing a concept lattice as a dot file.

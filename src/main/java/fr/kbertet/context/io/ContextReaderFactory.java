@@ -1,4 +1,4 @@
-package fr.kbertet.lattice.io;
+package fr.kbertet.context.io;
 
 /*
  * ContextReaderFactory.java
@@ -19,8 +19,8 @@ import java.util.HashMap;
  * ![ContextReaderFactory](ContextReaderFactory.png)
  *
  * @uml ContextReaderFactory.png
- * !include resources/fr/kbertet/lattice/io/ContextReaderFactory.iuml
- * !include resources/fr/kbertet/lattice/io/ContextReader.iuml
+ * !include resources/fr/kbertet/context/io/ContextReaderFactory.iuml
+ * !include resources/fr/kbertet/context/io/ContextReader.iuml
  *
  * hide members
  * show ContextReaderFactory members

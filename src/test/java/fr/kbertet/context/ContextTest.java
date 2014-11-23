@@ -1,4 +1,4 @@
-package fr.kbertet.lattice;
+package fr.kbertet.context;
 
 /*
  * ContextTest.java
@@ -11,14 +11,20 @@ package fr.kbertet.lattice;
  * it under the terms of CeCILL-B license.
  */
 
-import fr.kbertet.dgraph.Node;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.TreeSet;
+import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import org.junit.Test;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.TreeSet;
+
+import fr.kbertet.util.Couple;
+import fr.kbertet.dgraph.Node;
+import fr.kbertet.lattice.Lattice;
+import fr.kbertet.lattice.ConceptLattice;
+import fr.kbertet.lattice.LatticeFactory;
 
 /**
  *

@@ -1,4 +1,4 @@
-package fr.kbertet.lattice.io;
+package fr.kbertet.context.io;
 
 /*
  * ContextWriterText.java
@@ -11,9 +11,10 @@ package fr.kbertet.lattice.io;
  * it under the terms of CeCILL-B license.
  */
 
-import fr.kbertet.lattice.Context;
 import java.io.BufferedWriter;
 import java.io.IOException;
+
+import fr.kbertet.context.Context;
 
 /**
  * This class defines the way for writing a context as a text file.
@@ -21,8 +22,8 @@ import java.io.IOException;
  * ![ContextWriterText](ContextWriterText.png)
  *
  * @uml ContextWriterText.png
- * !include resources/fr/kbertet/lattice/io/ContextWriterText.iuml
- * !include resources/fr/kbertet/lattice/io/ContextWriter.iuml
+ * !include resources/fr/kbertet/context/io/ContextWriterText.iuml
+ * !include resources/fr/kbertet/context/io/ContextWriter.iuml
  *
  * hide members
  * show ContextWriterText members

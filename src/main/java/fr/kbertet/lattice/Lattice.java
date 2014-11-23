@@ -17,6 +17,9 @@ import java.util.SortedSet;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
+
+import fr.kbertet.util.ComparableSet;
+import fr.kbertet.context.Context;
 import fr.kbertet.dgraph.DAGraph;
 import fr.kbertet.dgraph.DGraph;
 import fr.kbertet.dgraph.Edge;

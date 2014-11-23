@@ -1,4 +1,4 @@
-package fr.kbertet.lattice;
+package fr.kbertet.util;
 
 /*
  * ComparableSet.java
@@ -35,7 +35,7 @@ import java.util.TreeSet;
  * ![ComparableSet](ComparableSet.png)
  *
  * @uml ComparableSet.png
- * !include resources/fr/kbertet/lattice/ComparableSet.iuml
+ * !include resources/fr/kbertet/util/ComparableSet.iuml
  *
  * hide members
  * show ComparableSet members

@@ -15,6 +15,8 @@ import java.util.Collection;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
 
+import fr.kbertet.util.ComparableSet;
+
 /**
  * This class gives a representation for an implicational rule.
  *

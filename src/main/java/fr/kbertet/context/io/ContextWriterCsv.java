@@ -1,4 +1,4 @@
-package fr.kbertet.lattice.io;
+package fr.kbertet.context.io;
 
 /*
  * ContextWriterCsv.java
@@ -11,12 +11,14 @@ package fr.kbertet.lattice.io;
  * it under the terms of CeCILL-B license.
  */
 
-import fr.kbertet.lattice.Context;
 import java.util.TreeSet;
 import java.io.BufferedWriter;
 import java.io.IOException;
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+
+import fr.kbertet.context.Context;
 
 /**
  * This class defines the way for writing a context as a text file.
@@ -24,8 +26,8 @@ import org.apache.commons.csv.CSVPrinter;
  * ![ContextWriterCsv](ContextWriterCsv.png)
  *
  * @uml ContextWriterCsv.png
- * !include resources/fr/kbertet/lattice/io/ContextWriterCsv.iuml
- * !include resources/fr/kbertet/lattice/io/ContextWriter.iuml
+ * !include resources/fr/kbertet/context/io/ContextWriterCsv.iuml
+ * !include resources/fr/kbertet/context/io/ContextWriter.iuml
  *
  * hide members
  * show ContextWriterCsv members

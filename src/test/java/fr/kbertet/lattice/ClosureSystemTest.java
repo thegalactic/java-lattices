@@ -11,10 +11,14 @@ package fr.kbertet.lattice;
  * it under the terms of CeCILL-B license.
  */
 
-import java.util.TreeSet;
+import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
-import org.junit.Test;
+
+import java.util.TreeSet;
+
+import fr.kbertet.util.ComparableSet;
+import fr.kbertet.context.Context;
 
 /**
  *
