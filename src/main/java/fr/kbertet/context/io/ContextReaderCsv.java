@@ -1,4 +1,4 @@
-package fr.kbertet.lattice.io;
+package fr.kbertet.context.io;
 
 /*
  * ContextReaderCsv.java
@@ -11,13 +11,15 @@ package fr.kbertet.lattice.io;
  * it under the terms of CeCILL-B license.
  */
 
-import fr.kbertet.lattice.Context;
 import java.util.List;
 import java.io.BufferedReader;
 import java.io.IOException;
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+
+import fr.kbertet.context.Context;
 
 /**
  * This class defines the way for reading a context from a csv file.
@@ -25,8 +27,8 @@ import org.apache.commons.csv.CSVRecord;
  * ![ContextReaderCsv](ContextReaderCsv.png)
  *
  * @uml ContextReaderCsv.png
- * !include resources/fr/kbertet/lattice/io/ContextReaderCsv.iuml
- * !include resources/fr/kbertet/lattice/io/ContextReader.iuml
+ * !include resources/fr/kbertet/context/io/ContextReaderCsv.iuml
+ * !include resources/fr/kbertet/context/io/ContextReader.iuml
  *
  * hide members
  * show ContextReaderCsv members

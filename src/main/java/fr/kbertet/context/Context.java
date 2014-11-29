@@ -1,4 +1,4 @@
-package fr.kbertet.lattice;
+package fr.kbertet.context;
 
 /*
  * Context.java
@@ -11,17 +11,6 @@ package fr.kbertet.lattice;
  * it under the terms of CeCILL-B license.
  */
 
-import fr.kbertet.dgraph.Node;
-import fr.kbertet.lattice.io.ContextReaderFactory;
-import fr.kbertet.lattice.io.ContextReaderText;
-import fr.kbertet.lattice.io.ContextReaderBurmeister;
-import fr.kbertet.lattice.io.ContextReaderFIMI;
-import fr.kbertet.lattice.io.ContextReaderCsv;
-import fr.kbertet.lattice.io.ContextWriterFactory;
-import fr.kbertet.lattice.io.ContextWriterText;
-import fr.kbertet.lattice.io.ContextWriterBurmeister;
-import fr.kbertet.lattice.io.ContextWriterFIMI;
-import fr.kbertet.lattice.io.ContextWriterCsv;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -36,6 +25,25 @@ import java.util.StringTokenizer;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
+
+import fr.kbertet.util.ComparableSet;
+import fr.kbertet.util.Couple;
+import fr.kbertet.dgraph.Node;
+import fr.kbertet.lattice.ClosureSystem;
+import fr.kbertet.lattice.ArrowRelation;
+import fr.kbertet.lattice.ConceptLattice;
+import fr.kbertet.lattice.Concept;
+import fr.kbertet.lattice.Lattice;
+import fr.kbertet.context.io.ContextReaderFactory;
+import fr.kbertet.context.io.ContextReaderText;
+import fr.kbertet.context.io.ContextReaderBurmeister;
+import fr.kbertet.context.io.ContextReaderFIMI;
+import fr.kbertet.context.io.ContextReaderCsv;
+import fr.kbertet.context.io.ContextWriterFactory;
+import fr.kbertet.context.io.ContextWriterText;
+import fr.kbertet.context.io.ContextWriterBurmeister;
+import fr.kbertet.context.io.ContextWriterFIMI;
+import fr.kbertet.context.io.ContextWriterCsv;
 
 /**
  * This class gives a standard representation for a context.
@@ -77,7 +85,7 @@ import java.util.Vector;
  * ![Context](Context.png)
  *
  * @uml Context.png
- * !include resources/fr/kbertet/lattice/Context.iuml
+ * !include resources/fr/kbertet/context/Context.iuml
  * !include resources/fr/kbertet/lattice/ClosureSystem.iuml
  *
  * hide members

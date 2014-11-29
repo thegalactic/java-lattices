@@ -11,16 +11,20 @@ package fr.kbertet.lattice;
  * it under the terms of CeCILL-B license.
  */
 
-import fr.kbertet.dgraph.DAGraph;
-import fr.kbertet.dgraph.Node;
-import java.util.TreeSet;
-import java.util.Vector;
-import java.util.Scanner;
-import java.io.File;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
+
+import java.util.TreeSet;
+import java.util.Vector;
+import java.util.Scanner;
+import java.io.File;
+
+import fr.kbertet.util.ComparableSet;
+import fr.kbertet.dgraph.DAGraph;
+import fr.kbertet.dgraph.Node;
+import fr.kbertet.context.Context;
 
 /**
  * Test of class ConceptLattice.

@@ -28,7 +28,7 @@ done
 # Java source file generation
 for file in $build_dir/*.tmp
 do
-	echo -e "import java.io.IOException;\n import fr.kbertet.dgraph.*; \n import fr.kbertet.lattice.*; \n public class" > "${file%%.*}".java
+	echo -e "import java.io.IOException;\n import fr.kbertet.dgraph.*;\n import fr.kbertet.lattice.*;\n import fr.kbertet.context.*;\n import fr.kbertet.util.*;\n public class" > "${file%%.*}".java
 	echo -e `basename "${file%%.*}"` >> "${file%%.*}".java
 	echo -e "{\n public static void main(String[] args) throws IOException {" >> "${file%%.*}".java
 	cat $file >> "${file%%.*}".java

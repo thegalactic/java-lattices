@@ -1,4 +1,4 @@
-package fr.kbertet.lattice;
+package fr.kbertet.util;
 
 /*
  * ComparableSetTest.java
@@ -15,6 +15,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
+
 import java.util.TreeSet;
 
 /**

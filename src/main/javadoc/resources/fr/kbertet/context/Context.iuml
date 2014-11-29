@@ -1,4 +1,4 @@
-package fr.kbertet.lattice {
+package fr.kbertet.context {
     class Context {
         -TreeSet<Comparable> observations
         -TreeSet<Comparable> attributes
@@ -69,5 +69,5 @@ package fr.kbertet.lattice {
         void parse(String filename)
     }
 
-    ClosureSystem <|-- Context
+    fr.kbertet.lattice.ClosureSystem <|-- Context
 }

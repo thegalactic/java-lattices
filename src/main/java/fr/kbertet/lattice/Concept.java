@@ -17,10 +17,13 @@ import java.util.Iterator;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
 import java.util.SortedSet;
+
+import fr.kbertet.util.ComparableSet;
 import fr.kbertet.dgraph.Node;
 import fr.kbertet.dgraph.DGraph;
 import fr.kbertet.dgraph.DAGraph;
 import fr.kbertet.dgraph.Edge;
+import fr.kbertet.context.Context;
 
 /**
  * This class gives a representation for a concept, i.e. a node of a concept lattice.
@@ -41,7 +44,7 @@ import fr.kbertet.dgraph.Edge;
  * @uml Concept.png
  * !include resources/fr/kbertet/dgraph/Node.iuml
  * !include resources/fr/kbertet/lattice/Concept.iuml
- * !include resources/fr/kbertet/lattice/ComparableSet.iuml
+ * !include resources/fr/kbertet/util/ComparableSet.iuml
  *
  * hide members
  * show Concept members

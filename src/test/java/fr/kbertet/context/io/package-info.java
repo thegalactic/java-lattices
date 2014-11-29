@@ -10,7 +10,7 @@
  */
 
 /**
- * This package is for testing the lattice.io package.
+ * This package is for testing the context.io package.
  */
-package fr.kbertet.lattice.io;
+package fr.kbertet.context.io;
 

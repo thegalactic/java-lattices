@@ -1,4 +1,4 @@
-package fr.kbertet.lattice.io;
+package fr.kbertet.context.io;
 
 /*
  * ContextWriterFactory.java
@@ -19,8 +19,8 @@ import java.util.HashMap;
  * ![ContextWriterFactory](ContextWriterFactory.png)
  *
  * @uml ContextWriterFactory.png
- * !include resources/fr/kbertet/lattice/io/ContextWriterFactory.iuml
- * !include resources/fr/kbertet/lattice/io/ContextWriter.iuml
+ * !include resources/fr/kbertet/context/io/ContextWriterFactory.iuml
+ * !include resources/fr/kbertet/context/io/ContextWriter.iuml
  *
  * hide members
  * show ContextWriterFactory members

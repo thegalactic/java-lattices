@@ -1,4 +1,4 @@
-package fr.kbertet.lattice.io;
+package fr.kbertet.context.io;
 
 /*
  * ContextReaderCsvTest.java
@@ -11,14 +11,16 @@ package fr.kbertet.lattice.io;
  * it under the terms of CeCILL-B license.
  */
 
-import fr.kbertet.lattice.Context;
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
-import org.junit.Test;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+
+import fr.kbertet.context.Context;
 
 /**
  * Test the fr.kbertet.dgraph.io.ContextReaderCsvTest class.

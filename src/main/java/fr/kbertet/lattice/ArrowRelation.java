@@ -11,15 +11,17 @@ package fr.kbertet.lattice;
  * it under the terms of CeCILL-B license.
  */
 
+import java.util.TreeSet;
+import java.io.IOException;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+
+import fr.kbertet.context.Context;
 import fr.kbertet.lattice.io.ArrowRelationWriterFactory;
 import fr.kbertet.lattice.io.ArrowRelationWriterTeX;
 import fr.kbertet.dgraph.Edge;
 import fr.kbertet.dgraph.DGraph;
 import fr.kbertet.dgraph.Node;
-import java.io.IOException;
-import java.io.FileWriter;
-import java.io.BufferedWriter;
-import java.util.TreeSet;
 
 /**
  * The ArrowRelation class encodes arrow relation between meet & join-irreductibles of a lattice.

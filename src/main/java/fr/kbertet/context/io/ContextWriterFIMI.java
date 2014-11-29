@@ -1,4 +1,4 @@
-package fr.kbertet.lattice.io;
+package fr.kbertet.context.io;
 
 /*
  * ContextWriterFIMI.java
@@ -11,10 +11,11 @@ package fr.kbertet.lattice.io;
  * it under the terms of CeCILL-B license.
  */
 
-import fr.kbertet.lattice.Context;
+import java.util.HashMap;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.util.HashMap;
+
+import fr.kbertet.context.Context;
 
 /**
  * This class defines the way for writing a context as a FIMI dat file.
@@ -22,8 +23,8 @@ import java.util.HashMap;
  * ![ContextWriterFIMI](ContextWriterFIMI.png)
  *
  * @uml ContextWriterFIMI.png
- * !include resources/fr/kbertet/lattice/io/ContextWriterFIMI.iuml
- * !include resources/fr/kbertet/lattice/io/ContextWriter.iuml
+ * !include resources/fr/kbertet/context/io/ContextWriterFIMI.iuml
+ * !include resources/fr/kbertet/context/io/ContextWriter.iuml
  *
  * hide members
  * show ContextWriterFIMI members

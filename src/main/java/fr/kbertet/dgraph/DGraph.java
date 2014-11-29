@@ -11,11 +11,6 @@ package fr.kbertet.dgraph;
  * it under the terms of CeCILL-B license.
  */
 
-import fr.kbertet.dgraph.io.DGraphWriterFactory;
-import fr.kbertet.dgraph.io.DGraphWriterDot;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Collections;
 import java.util.ArrayList;
 import java.util.TreeMap;
@@ -25,6 +20,12 @@ import java.util.AbstractSet;
 import java.util.Set;
 import java.util.Iterator;
 import java.util.Comparator;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import fr.kbertet.dgraph.io.DGraphWriterFactory;
+import fr.kbertet.dgraph.io.DGraphWriterDot;
 
 /**
  * This class gives a standard representation for a directed graph

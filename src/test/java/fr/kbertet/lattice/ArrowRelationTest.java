@@ -11,14 +11,17 @@ package fr.kbertet.lattice;
  * it under the terms of CeCILL-B license.
  */
 
-import fr.kbertet.dgraph.Edge;
-import fr.kbertet.dgraph.Node;
-import java.io.File;
-import java.io.IOException;
-import java.util.Scanner;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
+
+import fr.kbertet.dgraph.Edge;
+import fr.kbertet.dgraph.Node;
+import fr.kbertet.context.Context;
 
 /**
  *

@@ -11,9 +11,10 @@ package fr.kbertet.lattice.io;
  * it under the terms of CeCILL-B license.
  */
 
-import fr.kbertet.lattice.ImplicationalSystem;
 import java.io.BufferedWriter;
 import java.io.IOException;
+
+import fr.kbertet.lattice.ImplicationalSystem;
 
 /**
  * This interface defines a standard way for writing an implicational system.

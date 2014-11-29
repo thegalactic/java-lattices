@@ -1,4 +1,4 @@
-package fr.kbertet.lattice.io;
+package fr.kbertet.context.io;
 
 /*
  * ContextReaderBurmeister.java
@@ -11,9 +11,10 @@ package fr.kbertet.lattice.io;
  * it under the terms of CeCILL-B license.
  */
 
-import fr.kbertet.lattice.Context;
 import java.io.BufferedReader;
 import java.io.IOException;
+
+import fr.kbertet.context.Context;
 
 /**
  * This class defines the way for reading a context from a text file.
@@ -21,8 +22,8 @@ import java.io.IOException;
  * ![ContextReaderBurmeister](ContextReaderBurmeister.png)
  *
  * @uml ContextReaderBurmeister.png
- * !include resources/fr/kbertet/lattice/io/ContextReaderBurmeister.iuml
- * !include resources/fr/kbertet/lattice/io/ContextReader.iuml
+ * !include resources/fr/kbertet/context/io/ContextReaderBurmeister.iuml
+ * !include resources/fr/kbertet/context/io/ContextReader.iuml
  *
  * hide members
  * show ContextReaderBurmeister members
