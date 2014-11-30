@@ -81,7 +81,7 @@ public final class ContextReaderFIMI implements ContextReader {
      *
      * For reading convinience, observations are labelled with 'O' + LineNumber.
      *
-     * Be careful when using a downloaded file : an empty line at the end of the file gives an observation with no attributes
+     * Be careful when using a downloaded file: an empty line at the end of the file gives an observation with no attributes
      *
      * @param   context  a context to read
      * @param   file     a file
@@ -89,19 +89,32 @@ public final class ContextReaderFIMI implements ContextReader {
      * @throws  IOException  When an IOException occurs
      */
     public void read(Context context, BufferedReader file) throws IOException {
-        Integer lineNumber = 0;
+        // Initialize the line number
+        int lineNumber = 0;
+
+        // Loop on the file
         while (file.ready()) {
+            // Increment the line number
             lineNumber++;
-            String obs = "O" + lineNumber.toString();
-            context.addToObservations(obs);
+
+            // Get the next identifier
+            String identifier = "O" + lineNumber;
+            context.addToObservations(identifier);
+
+            // Get the current line
             String str = file.readLine();
+
+            // Tokenize the line
             StringTokenizer tok = new StringTokenizer(str);
             while (tok.hasMoreTokens()) {
-                Integer attr = Integer.parseInt(tok.nextToken());
-                if (!context.containsAttribute(attr)) {
-                    context.addToAttributes(attr);
+                // Get the next attribute
+                Integer attribute = Integer.parseInt(tok.nextToken());
+                if (!context.containsAttribute(attribute)) {
+                    context.addToAttributes(attribute);
                 }
-                context.addExtentIntent(obs, attr);
+
+                // Add the extent/intent for the current identifier and current attribute
+                context.addExtentIntent(identifier, attribute);
             }
         }
         context.setBitSets();

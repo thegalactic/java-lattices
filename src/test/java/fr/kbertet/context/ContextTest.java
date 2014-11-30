@@ -96,67 +96,7 @@ public class ContextTest {
             e.printStackTrace();
         }
     }
-    /**
-     * Test the constructor from file .cxt of Context.
-     */
-    @Test
-    public void testFileContextBurmeister() {
-        try {
-            File file = File.createTempFile("junit", ".cxt");
-            String filename = file.getPath();
-            Context context = new Context();
-            context.addToAttributes("a");
-            context.addToAttributes("b");
-            context.addToAttributes("c");
-            context.addToObservations("1");
-            context.addToObservations("2");
-            context.addToObservations("3");
-            context.addExtentIntent("1", "a");
-            context.addExtentIntent("1", "b");
-            context.addExtentIntent("2", "a");
-            context.addExtentIntent("3", "b");
-            context.addExtentIntent("3", "c");
-            context.save(filename);
-            Context copy = new Context(filename);
-            assertEquals(context.getAttributes(), copy.getAttributes());
-            assertEquals(context.getObservations(), copy.getObservations());
-            assertEquals(context.getIntent("1"), copy.getIntent("1"));
-            assertEquals(context.getExtent("c"), copy.getExtent("c"));
-            new File(filename).delete();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
-    /**
-     * Test the constructor from file .dat of Context.
-     */
-    @Test
-    public void testFileContextFIMI() {
-        try {
-            File file = File.createTempFile("junit", ".dat");
-            String filename = file.getPath();
-            Context context = new Context();
-            context.addToAttributes("a");
-            context.addToAttributes("b");
-            context.addToAttributes("c");
-            context.addToObservations("1");
-            context.addToObservations("2");
-            context.addToObservations("3");
-            context.addExtentIntent("1", "a");
-            context.addExtentIntent("1", "b");
-            context.addExtentIntent("2", "a");
-            context.addExtentIntent("3", "b");
-            context.addExtentIntent("3", "c");
-            context.save(filename);
-            Context copy = new Context(filename);
-            assertEquals(context.getAttributes().size(), copy.getAttributes().size());
-            assertEquals(context.getObservations().size(), copy.getObservations().size());
-            new File(filename).delete();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
     /**
      * Test random method.
      */
@@ -184,6 +124,7 @@ public class ContextTest {
         assertTrue(sub.containAsExtent(1, "a"));
         assertTrue(sub.containAsIntent("a", 1));
     }
+
     /**
      * Test of containsAttribute.
      */
@@ -450,6 +391,7 @@ public class ContextTest {
         assertTrue(ctx.arrowClosureAttribute(attr).getAttributes().size() == 3);
         assertTrue(ctx.arrowClosureAttribute(attr).getObservations().size() == 3);
     }
+
     /**
      * Test subDirectDecomposition method.
      */
@@ -468,6 +410,7 @@ public class ContextTest {
         }
         assertEquals(count, cl.getNodes().size());
     }
+
     /**
      * Test getArrowClosedSubContext method.
      */
@@ -492,6 +435,7 @@ public class ContextTest {
         assertTrue(arrowCtx.getExtent(n3).contains(n2));
         assertTrue(arrowCtx.getExtent(n2).contains(n3));
     }
+
     /**
      * Test for getDivisionContext and getDivisionConvex methods.
      */

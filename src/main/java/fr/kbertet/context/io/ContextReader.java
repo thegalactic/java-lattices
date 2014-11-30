@@ -1,7 +1,7 @@
 package fr.kbertet.context.io;
 
 /*
- * ConceptLatticeWriterDot.java
+ * ContextReader.java
  *
  * Copyright: 2010-2014 Karell Bertet, France
  *
@@ -17,7 +17,7 @@ import java.io.IOException;
 import fr.kbertet.context.Context;
 
 /**
- * This interface defines a standard way for writing a context.
+ * This interface defines a standard way for reading a context.
  *
  * ![ContextReader](ContextReader.png)
  *

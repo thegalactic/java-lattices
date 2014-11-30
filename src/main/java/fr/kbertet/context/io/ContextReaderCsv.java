@@ -98,59 +98,72 @@ public final class ContextReaderCsv implements ContextReader {
      * @throws  IOException  When an IOException occurs
      */
     public void read(Context context, BufferedReader file) throws IOException {
+        // Parse the file
         CSVParser parser = CSVFormat.RFC4180.parse(file);
+
+        // Get the records and record size
         List<CSVRecord> records = parser.getRecords();
         int length = records.size();
 
+        // Verify length
         if (length == 0) {
             throw new IOException("CSV cannot be empty");
         }
 
+        // Get the attributes and the attribute size
         CSVRecord attributes = records.get(0);
         int size = attributes.size();
 
+        // Detect invalid attribute size
         if (size == 1 && attributes.get(0).equals("")) {
             throw new IOException("Attribute size cannot be 0");
         }
 
-        int first;
-
+        // Index of the first attribute
+        int first = 0;
         if (attributes.get(0).equals("")) {
             first = 1;
-        } else {
-            first = 0;
         }
 
+        // Get the attributes
         for (int i = first; i < size; i++) {
             String attribute = attributes.get(i);
+
+            // Detect duplicated attribute
             if (!context.addToAttributes(attribute)) {
                 throw new IOException("Duplicated attribute");
             }
 
+            // Detect empty attribute
             if (attribute.equals("")) {
                 throw new IOException("Empty attribute");
             }
         }
 
+        // Get the data
         for (int j = 1; j < length; j++) {
+            // Get the current record
             CSVRecord record = records.get(j);
 
+            // Detect incorrect size
             if (record.size() != size) {
-                throw new IOException("Line has a different number of attributes");
+                throw new IOException("Line does not have the correct number of attributes");
             }
 
+            // Get the observation identifier
             String identifier;
-
             if (first == 1) {
                 identifier = record.get(0);
             } else {
                 identifier = new String(j + "");
             }
 
+            // Detect duplicated identifier
             if (!context.addToObservations(identifier)) {
                 throw new IOException("Duplicated identifier");
             }
 
+            // Add the extent/intent for the current identifier and current attribute
             for (int i = first; i < size; i++) {
                 if (record.get(i).equals("1")) {
                     context.addExtentIntent(identifier, attributes.get(i));
@@ -158,6 +171,7 @@ public final class ContextReaderCsv implements ContextReader {
             }
         }
 
+        // Close the parser
         parser.close();
         context.setBitSets();
     }

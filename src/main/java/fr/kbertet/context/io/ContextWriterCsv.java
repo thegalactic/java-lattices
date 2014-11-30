@@ -87,22 +87,28 @@ public final class ContextWriterCsv implements ContextWriter {
      */
     public void write(Context context, BufferedWriter file) throws IOException {
         CSVPrinter printer = new CSVPrinter(file, CSVFormat.RFC4180);
-        TreeSet<Comparable> attr = context.getAttributes();
-        TreeSet<Comparable> obs = context.getObservations();
 
+        // Get the observations and the attributes
+        TreeSet<Comparable> observations = context.getObservations();
+        TreeSet<Comparable> attributes = context.getAttributes();
+
+        // Prepare the attribute line
         printer.print("");
 
-        for (Comparable a : attr) {
-            printer.print(a);
+        for (Comparable attribute : attributes) {
+            // Write each attribute
+            printer.print(attribute);
         }
 
         printer.println();
 
-        for (Comparable o : obs) {
-            printer.print(o);
+        for (Comparable observation : observations) {
+            // Write the observation
+            printer.print(observation);
 
-            for (Comparable a : attr) {
-                if (context.getIntent(o).contains(a)) {
+            // Write the extent/intents
+            for (Comparable attribute : attributes) {
+                if (context.getIntent(observation).contains(attribute)) {
                     printer.print(1);
                 } else {
                     printer.print(0);

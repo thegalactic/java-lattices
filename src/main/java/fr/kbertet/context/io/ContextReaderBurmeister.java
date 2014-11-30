@@ -55,7 +55,7 @@ public final class ContextReaderBurmeister implements ContextReader {
     }
 
     /**
-     * Register this class for reading .ctx files.
+     * Register this class for reading .cxt files.
      */
     public static void register() {
         ContextReaderFactory.register(ContextReaderBurmeister.getInstance(), "cxt");
@@ -64,7 +64,7 @@ public final class ContextReaderBurmeister implements ContextReader {
     /**
      * Read a context from a file.
      *
-     * The Burmeister ctx format file is respected :
+     * The Burmeister cxt format file is respected :
      *
      * The file format is structured as follows:
      *
@@ -93,12 +93,25 @@ public final class ContextReaderBurmeister implements ContextReader {
      * @throws  IOException  When an IOException occurs
      */
     public void read(Context context, BufferedReader file) throws IOException {
-        String str = file.readLine(); // str corresponds to the string "B". First line (Unused).
-        str = file.readLine(); // str corresponds to the string "Name". Second line (Unused).
-        Integer nbObs = Integer.parseInt(file.readLine()); // number of observations. Third line.
-        Integer nbAtt = Integer.parseInt(file.readLine()); // number of attributes. Fourth line.
-        str = file.readLine(); // str corresponds to an empty line
+        // str corresponds to the string "B". First line (Unused).
+        String str = file.readLine();
+
+        // Detect Burmeister magic header
+        if (!str.equals("B")) {
+            throw new IOException("Burmeister magic header not found");
+        }
+
+        // str corresponds to the string "Name". Second line (Unused).
+        str = file.readLine();
+
+        // number of observations. Third line.
+        Integer nbObs = Integer.parseInt(file.readLine());
+
+        // number of attributes. Fourth line.
+        Integer nbAtt = Integer.parseInt(file.readLine());
+
         // Now reading observations
+
         // Observations names must be recorded for the reading context phase
         String[] obsNames = new String[nbObs];
         for (int i = 0; i < nbObs; i++) {
@@ -106,7 +119,9 @@ public final class ContextReaderBurmeister implements ContextReader {
             context.addToObservations(str);
             obsNames[i] = str;
         }
+
         // Now reading attributes
+
         // Attributes names must be recorded for the reading context phase
         String[] attNames = new String[nbAtt];
         for (int i = 0; i < nbAtt; i++) {
@@ -114,6 +129,7 @@ public final class ContextReaderBurmeister implements ContextReader {
             context.addToAttributes(str);
             attNames[i] = str;
         }
+
         // Now reading context
         for (int i = 0; i < nbObs; i++) {
             str = file.readLine();

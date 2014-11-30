@@ -73,10 +73,10 @@ public final class ContextWriterText implements ContextWriter {
      * ~~~
      * Observations: 1 2 3
      * Attributes: a b c d e
-     * 1 a c
-     * 2 a b
-     * 3 b d e
-     * 4 c e
+     * 1: a c
+     * 2: a b
+     * 3: b d e
+     * 4: c e
      * ~~~
      *
      * @param   context  a context to write

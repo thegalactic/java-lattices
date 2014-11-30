@@ -806,10 +806,10 @@ public class Context extends ClosureSystem {
      * ~~~
      * Observations: 1 2 3
      * Attributes: a b c d e
-     * 1 a c
-     * 2 a b
-     * 3 b d e
-     * 4 c e
+     * 1: a c
+     * 2: a b
+     * 3: b d e
+     * 4: c e
      * ~~~
      *
      * @return  the string representation of this component
@@ -851,7 +851,7 @@ public class Context extends ClosureSystem {
             while (st.hasMoreTokens()) {
                 string.append(st.nextToken());
             }
-            string.append(" : ");
+            string.append(": ");
             for (Comparable a : this.getIntent(o)) {
                 st = new StringTokenizer(a.toString());
                 while (st.hasMoreTokens()) {

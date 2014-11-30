@@ -1,7 +1,7 @@
 package fr.kbertet.context.io;
 
 /*
- * ContextReaderCsvTest.java
+ * ContextCsvTest.java
  *
  * Copyright: 2010-2014 Karell Bertet, France
  *
@@ -23,9 +23,9 @@ import java.io.FileWriter;
 import fr.kbertet.context.Context;
 
 /**
- * Test the fr.kbertet.dgraph.io.ContextReaderCsvTest class.
+ * Test the fr.kbertet.dgraph.io.ContextCsvTest class.
  */
-public class ContextReaderCsvTest {
+public class ContextCsvTest {
     /**
      * Test getInstance.
      */
@@ -179,7 +179,7 @@ public class ContextReaderCsvTest {
             file.delete();
             fail();
         } catch (IOException e) {
-            assertEquals(e.toString(), "java.io.IOException: Line has a different number of attributes");
+            assertEquals(e.toString(), "java.io.IOException: Line does not have the correct number of attributes");
             new File(filename).delete();
         }
     }

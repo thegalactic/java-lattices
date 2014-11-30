@@ -65,7 +65,7 @@ public final class ContextWriterBurmeister implements ContextWriter {
     /**
      * Write a context to a file.
      *
-     * The Burmeister ctx format file is respected :
+     * The Burmeister cxt format file is respected :
      *
      * The file format is structured as follows:
      *
@@ -97,35 +97,46 @@ public final class ContextWriterBurmeister implements ContextWriter {
      */
     @Override
     public void write(Context context, BufferedWriter file) throws IOException {
-        file.write("B\n");
-        file.write("\n"); // Empty name
+        // Magic header
+        file.write("B");
+        file.newLine();
 
-        TreeSet<Comparable> attr = context.getAttributes();
-        TreeSet<Comparable> obs = context.getObservations();
+        // Empty name
+        file.newLine();
 
-        file.write(obs.size() + "\n");
-        file.write(attr.size() + "\n");
-        file.write("\n");
+        TreeSet<Comparable> attributes = context.getAttributes();
+        TreeSet<Comparable> observations = context.getObservations();
 
-        for (Comparable o : obs) {
-            file.write(o.toString() + "\n");
+        // Observation and attributes size
+        file.write(observations.size() + "");
+        file.newLine();
+        file.write(attributes.size() + "");
+        file.newLine();
+
+        // Observations
+        for (Comparable observation : observations) {
+            file.write(observation.toString());
+            file.newLine();
         }
 
-        for (Comparable a : attr) {
-            file.write(a.toString() + "\n");
+        // Attributes
+        for (Comparable attribute : attributes) {
+            file.write(attribute.toString());
+            file.newLine();
         }
 
-        for (Comparable o : obs) {
+        // Extent/Intent
+        for (Comparable observation : observations) {
             String line = "";
-            for (Comparable a : attr) {
-                if (context.getIntent(o).contains(a)) {
+            for (Comparable attribute : attributes) {
+                if (context.getIntent(observation).contains(attribute)) {
                     line = line + "X";
                 } else {
                     line = line + ".";
                 }
             }
-            line = line + "\n";
             file.write(line);
+            file.newLine();
         }
     }
 }
