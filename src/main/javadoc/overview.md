@@ -224,16 +224,11 @@ hide members
 
 title Context Input/Output UML graph
 
-!include resources/fr/kbertet/context/io/ContextReaderBurmeister.iuml
-!include resources/fr/kbertet/context/io/ContextReaderCsv.iuml
-!include resources/fr/kbertet/context/io/ContextReaderFactory.iuml
-!include resources/fr/kbertet/context/io/ContextReaderFIMI.iuml
-!include resources/fr/kbertet/context/io/ContextReaderText.iuml
-!include resources/fr/kbertet/context/io/ContextWriterBurmeister.iuml
-!include resources/fr/kbertet/context/io/ContextWriterCsv.iuml
-!include resources/fr/kbertet/context/io/ContextWriterFactory.iuml
-!include resources/fr/kbertet/context/io/ContextWriterFIMI.iuml
-!include resources/fr/kbertet/context/io/ContextWriterText.iuml
+!include resources/fr/kbertet/context/io/Burmeister.iuml
+!include resources/fr/kbertet/context/io/Csv.iuml
+!include resources/fr/kbertet/context/io/Factory.iuml
+!include resources/fr/kbertet/context/io/FIMI.iuml
+!include resources/fr/kbertet/context/io/Text.iuml
 !include resources/fr/kbertet/io/Reader.iuml
 !include resources/fr/kbertet/io/Writer.iuml
 

@@ -1,7 +1,7 @@
 package fr.kbertet.context.io;
 
 /*
- * ContextCsvTest.java
+ * CsvTest.java
  *
  * Copyright: 2010-2014 Karell Bertet, France
  *
@@ -23,16 +23,16 @@ import java.io.FileWriter;
 import fr.kbertet.context.Context;
 
 /**
- * Test the fr.kbertet.dgraph.io.ContextCsvTest class.
+ * Test the fr.kbertet.dgraph.io.CsvTest class.
  */
-public class ContextCsvTest {
+public class CsvTest {
     /**
      * Test getInstance.
      */
     @Test
     public void testGetInstance() {
-        ContextReaderCsv reader = ContextReaderCsv.getInstance();
-        assertEquals(reader, ContextReaderCsv.getInstance());
+        Csv serializer = Csv.getInstance();
+        assertEquals(serializer, Csv.getInstance());
     }
 
     /**

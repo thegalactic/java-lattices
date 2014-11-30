@@ -1,7 +1,7 @@
 package fr.kbertet.context.io;
 
 /*
- * ContextFIMITest.java
+ * FIMITest.java
  *
  * Copyright: 2010-2014 Karell Bertet, France
  *
@@ -19,16 +19,16 @@ import java.io.File;
 import fr.kbertet.context.Context;
 
 /**
- * Test the fr.kbertet.dgraph.io.ContextFIMITest class.
+ * Test the fr.kbertet.dgraph.io.FIMITest class.
  */
-public class ContextFIMITest {
+public class FIMITest {
     /**
      * Test getInstance.
      */
     @Test
     public void testGetInstance() {
-        ContextReaderFIMI reader = ContextReaderFIMI.getInstance();
-        assertEquals(reader, ContextReaderFIMI.getInstance());
+        FIMI serializer = FIMI.getInstance();
+        assertEquals(serializer, FIMI.getInstance());
     }
 
     /**

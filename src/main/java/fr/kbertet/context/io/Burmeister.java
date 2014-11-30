@@ -1,7 +1,7 @@
 package fr.kbertet.context.io;
 
 /*
- * ContextReaderBurmeister.java
+ * Burmeister.java
  *
  * Copyright: 2010-2014 Karell Bertet, France
  *
@@ -11,46 +11,50 @@ package fr.kbertet.context.io;
  * it under the terms of CeCILL-B license.
  */
 
+import java.util.TreeSet;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 
 import fr.kbertet.io.Reader;
+import fr.kbertet.io.Writer;
 import fr.kbertet.context.Context;
 
 /**
  * This class defines the way for reading a context from a text file.
  *
- * ![ContextReaderBurmeister](ContextReaderBurmeister.png)
+ * ![Burmeister](Burmeister.png)
  *
- * @uml ContextReaderBurmeister.png
- * !include resources/fr/kbertet/context/io/ContextReaderBurmeister.iuml
+ * @uml Burmeister.png
+ * !include resources/fr/kbertet/context/io/Burmeister.iuml
  * !include resources/fr/kbertet/io/Reader.iuml
+ * !include resources/fr/kbertet/io/Writer.iuml
  *
  * hide members
- * show ContextReaderBurmeister members
- * class ContextReaderBurmeister #LightCyan
- * title ContextReaderBurmeister UML graph
+ * show Burmeister members
+ * class Burmeister #LightCyan
+ * title Burmeister UML graph
  */
-public final class ContextReaderBurmeister implements Reader<Context> {
+public final class Burmeister implements Reader<Context>, Writer<Context> {
     /**
      * This class is not designed to be publicly instantiated.
      */
-    private ContextReaderBurmeister() {
+    private Burmeister() {
     }
 
     /**
      * The singleton instance.
      */
-    private static ContextReaderBurmeister instance = null;
+    private static Burmeister instance = null;
 
     /**
      * Return the singleton instance of this class.
      *
      * @return  the singleton instance
      */
-    public static ContextReaderBurmeister getInstance() {
+    public static Burmeister getInstance() {
         if (instance == null) {
-            instance = new ContextReaderBurmeister();
+            instance = new Burmeister();
         }
         return instance;
     }
@@ -59,7 +63,8 @@ public final class ContextReaderBurmeister implements Reader<Context> {
      * Register this class for reading .cxt files.
      */
     public static void register() {
-        ContextReaderFactory.register(ContextReaderBurmeister.getInstance(), "cxt");
+        Factory.getInstance().registerReader(Burmeister.getInstance(), "cxt");
+        Factory.getInstance().registerWriter(Burmeister.getInstance(), "cxt");
     }
 
     /**
@@ -141,5 +146,83 @@ public final class ContextReaderBurmeister implements Reader<Context> {
             }
         }
         context.setBitSets();
+    }
+
+    /**
+     * Write a context to a file.
+     *
+     * The Burmeister cxt format file is respected :
+     *
+     * The file format is structured as follows:
+     *
+     * The first line consists of a single "B"
+     * The second line contains the name of the context (note that this is ignored)
+     * The third and fourth line consist of the object and attribute count, respectively.
+     * The fifth line is empty.
+     * After that, all objects and all attributes are listed, each on a separate line
+     * finally, the context is given as a combination of . and X, each row on a separate line.
+     *
+     * ~~~
+     * B
+     * Example
+     * 2
+     * 2
+     *
+     * a
+     * b
+     * 1
+     * 2
+     * .X
+     * XX
+     * ~~~
+     *
+     * @param   context  a context to write
+     * @param   file     a file
+     *
+     * @throws  IOException  When an IOException occurs
+     */
+    @Override
+    public void write(Context context, BufferedWriter file) throws IOException {
+        // Magic header
+        file.write("B");
+        file.newLine();
+
+        // Empty name
+        file.newLine();
+
+        TreeSet<Comparable> attributes = context.getAttributes();
+        TreeSet<Comparable> observations = context.getObservations();
+
+        // Observation and attributes size
+        file.write(observations.size() + "");
+        file.newLine();
+        file.write(attributes.size() + "");
+        file.newLine();
+
+        // Observations
+        for (Comparable observation : observations) {
+            file.write(observation.toString());
+            file.newLine();
+        }
+
+        // Attributes
+        for (Comparable attribute : attributes) {
+            file.write(attribute.toString());
+            file.newLine();
+        }
+
+        // Extent/Intent
+        for (Comparable observation : observations) {
+            String line = "";
+            for (Comparable attribute : attributes) {
+                if (context.getIntent(observation).contains(attribute)) {
+                    line = line + "X";
+                } else {
+                    line = line + ".";
+                }
+            }
+            file.write(line);
+            file.newLine();
+        }
     }
 }

@@ -1,7 +1,7 @@
 package fr.kbertet.context.io;
 
 /*
- * ContextReaderText.java
+ * Text.java
  *
  * Copyright: 2010-2014 Karell Bertet, France
  *
@@ -13,45 +13,47 @@ package fr.kbertet.context.io;
 
 import java.util.StringTokenizer;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 
 import fr.kbertet.io.Reader;
+import fr.kbertet.io.Writer;
 import fr.kbertet.context.Context;
 
 /**
  * This class defines the way for reading a context from a text file.
  *
- * ![ContextReaderText](ContextReaderText.png)
+ * ![Text](Text.png)
  *
- * @uml ContextReaderText.png
- * !include resources/fr/kbertet/context/io/ContextReaderText.iuml
+ * @uml Text.png
+ * !include resources/fr/kbertet/context/io/Text.iuml
  * !include resources/fr/kbertet/io/Reader.iuml
- *
+ * !include resources/fr/kbertet/io/Writer.iuml
  * hide members
- * show ContextReaderText members
- * class ContextReaderText #LightCyan
- * title ContextReaderText UML graph
+ * show Text members
+ * class Text #LightCyan
+ * title Text UML graph
  */
-public final class ContextReaderText implements Reader<Context> {
+public final class Text implements Reader<Context>, Writer<Context> {
     /**
      * This class is not designed to be publicly instantiated.
      */
-    private ContextReaderText() {
+    private Text() {
     }
 
     /**
      * The singleton instance.
      */
-    private static ContextReaderText instance = null;
+    private static Text instance = null;
 
     /**
      * Return the singleton instance of this class.
      *
      * @return  the singleton instance
      */
-    public static ContextReaderText getInstance() {
+    public static Text getInstance() {
         if (instance == null) {
-            instance = new ContextReaderText();
+            instance = new Text();
         }
         return instance;
     }
@@ -60,7 +62,8 @@ public final class ContextReaderText implements Reader<Context> {
      * Register this class for reading .txt files.
      */
     public static void register() {
-        ContextReaderFactory.register(ContextReaderText.getInstance(), "txt");
+        Factory.getInstance().registerReader(Text.getInstance(), "txt");
+        Factory.getInstance().registerWriter(Text.getInstance(), "txt");
     }
 
     /**
@@ -161,6 +164,33 @@ public final class ContextReaderText implements Reader<Context> {
             line = file.readLine();
         }
         context.setBitSets();
+    }
+
+    /**
+     * Write a context to a file.
+     *
+     * The following format is respected:
+     *
+     * The list of observations separated by a space on the first line ;
+     * the list of attrbutes separated by a space on the second line ;
+     * then, for each observations o, the list of its intent on a line, written like o a1 a2 ...
+     *
+     * ~~~
+     * Observations: 1 2 3
+     * Attributes: a b c d e
+     * 1: a c
+     * 2: a b
+     * 3: b d e
+     * 4: c e
+     * ~~~
+     *
+     * @param   context  a context to write
+     * @param   file     a file
+     *
+     * @throws  IOException  When an IOException occurs
+     */
+    public void write(Context context, BufferedWriter file) throws IOException {
+        file.write(context.toString());
     }
 }
 

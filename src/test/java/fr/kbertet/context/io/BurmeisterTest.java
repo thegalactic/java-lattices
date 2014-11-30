@@ -1,7 +1,7 @@
 package fr.kbertet.context.io;
 
 /*
- * ContextBurmeisterTest.java
+ * BurmeisterTest.java
  *
  * Copyright: 2010-2014 Karell Bertet, France
  *
@@ -23,14 +23,14 @@ import fr.kbertet.context.Context;
 /**
  * Test the fr.kbertet.dgraph.io.ContextBurmeisterTest class.
  */
-public class ContextBurmeisterTest {
+public class BurmeisterTest {
     /**
      * Test getInstance.
      */
     @Test
     public void testGetInstance() {
-        ContextReaderBurmeister reader = ContextReaderBurmeister.getInstance();
-        assertEquals(reader, ContextReaderBurmeister.getInstance());
+        Burmeister serializer = Burmeister.getInstance();
+        assertEquals(serializer, Burmeister.getInstance());
     }
 
     /**

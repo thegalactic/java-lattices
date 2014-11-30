@@ -1,7 +1,7 @@
 package fr.kbertet.context.io;
 
 /*
- * ContextReaderCsv.java
+ * Csv.java
  *
  * Copyright: 2010-2014 Karell Bertet, France
  *
@@ -12,50 +12,55 @@ package fr.kbertet.context.io;
  */
 
 import java.util.List;
+import java.util.TreeSet;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
 
 import fr.kbertet.io.Reader;
+import fr.kbertet.io.Writer;
 import fr.kbertet.context.Context;
 
 /**
  * This class defines the way for reading a context from a csv file.
  *
- * ![ContextReaderCsv](ContextReaderCsv.png)
+ * ![Csv](Csv.png)
  *
- * @uml ContextReaderCsv.png
- * !include resources/fr/kbertet/context/io/ContextReaderCsv.iuml
+ * @uml Csv.png
+ * !include resources/fr/kbertet/context/io/Csv.iuml
  * !include resources/fr/kbertet/io/Reader.iuml
+ * !include resources/fr/kbertet/io/Writer.iuml
  *
  * hide members
- * show ContextReaderCsv members
- * class ContextReaderCsv #LightCyan
+ * show Csv members
+ * class Csv #LightCyan
  * title ContextReaderCdv UML graph
  */
-public final class ContextReaderCsv implements Reader<Context> {
+public final class Csv implements Reader<Context>, Writer<Context> {
     /**
      * This class is not designed to be publicly instantiated.
      */
-    private ContextReaderCsv() {
+    private Csv() {
     }
 
     /**
      * The singleton instance.
      */
-    private static ContextReaderCsv instance = null;
+    private static Csv instance = null;
 
     /**
      * Return the singleton instance of this class.
      *
      * @return  the singleton instance
      */
-    public static ContextReaderCsv getInstance() {
+    public static Csv getInstance() {
         if (instance == null) {
-            instance = new ContextReaderCsv();
+            instance = new Csv();
         }
         return instance;
     }
@@ -64,7 +69,8 @@ public final class ContextReaderCsv implements Reader<Context> {
      * Register this class for reading .csv files.
      */
     public static void register() {
-        ContextReaderFactory.register(ContextReaderCsv.getInstance(), "csv");
+        Factory.getInstance().registerReader(Csv.getInstance(), "csv");
+        Factory.getInstance().registerWriter(Csv.getInstance(), "csv");
     }
 
     /**
@@ -175,6 +181,62 @@ public final class ContextReaderCsv implements Reader<Context> {
         // Close the parser
         parser.close();
         context.setBitSets();
+    }
+
+    /**
+     * Write a context to a csv file.
+     *
+     * The following format is respected:
+     *
+     * The first line contains the attribute names, the other lines contains the observations identifier followed by boolean values
+     *
+     * ~~~
+     * "",a,b,c,d,e
+     * 1,1,0,1,0,0
+     * 2,1,1,0,0,0
+     * 3,0,1,0,1,1
+     * 4,0,0,1,0,1
+     * ~~~
+     *
+     * @param   context  a context to write
+     * @param   file     a file
+     *
+     * @throws  IOException  When an IOException occurs
+     */
+    public void write(Context context, BufferedWriter file) throws IOException {
+        CSVPrinter printer = new CSVPrinter(file, CSVFormat.RFC4180);
+
+        // Get the observations and the attributes
+        TreeSet<Comparable> observations = context.getObservations();
+        TreeSet<Comparable> attributes = context.getAttributes();
+
+        // Prepare the attribute line
+        printer.print("");
+
+        for (Comparable attribute : attributes) {
+            // Write each attribute
+            printer.print(attribute);
+        }
+
+        printer.println();
+
+        for (Comparable observation : observations) {
+            // Write the observation
+            printer.print(observation);
+
+            // Write the extent/intents
+            for (Comparable attribute : attributes) {
+                if (context.getIntent(observation).contains(attribute)) {
+                    printer.print(1);
+                } else {
+                    printer.print(0);
+                }
+            }
+
+            printer.println();
+        }
+
+        printer.close();
     }
 }
 

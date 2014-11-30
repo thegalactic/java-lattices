@@ -1,7 +1,7 @@
 package fr.kbertet.context.io;
 
 /*
- * ContextReaderFIMI.java
+ * FIMI.java
  *
  * Copyright: 2010-2014 Karell Bertet, France
  *
@@ -12,46 +12,50 @@ package fr.kbertet.context.io;
  */
 
 import java.util.StringTokenizer;
+import java.util.HashMap;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 
 import fr.kbertet.io.Reader;
+import fr.kbertet.io.Writer;
 import fr.kbertet.context.Context;
 
 /**
  * This class defines the way for reading a context from a text file.
  *
- * ![ContextReaderFIMI](ContextReaderFIMI.png)
+ * ![FIMI](FIMI.png)
  *
- * @uml ContextReaderFIMI.png
- * !include resources/fr/kbertet/context/io/ContextReaderFIMI.iuml
+ * @uml FIMI.png
+ * !include resources/fr/kbertet/context/io/FIMI.iuml
  * !include resources/fr/kbertet/io/Reader.iuml
+ * !include resources/fr/kbertet/io/Writer.iuml
  *
  * hide members
- * show ContextReaderFIMI members
- * class ContextReaderFIMI #LightCyan
- * title ContextReaderFIMI UML graph
+ * show FIMI members
+ * class FIMI #LightCyan
+ * title FIMI UML graph
  */
-public final class ContextReaderFIMI implements Reader<Context> {
+public final class FIMI implements Reader<Context>, Writer<Context> {
     /**
      * This class is not designed to be publicly instantiated.
      */
-    private ContextReaderFIMI() {
+    private FIMI() {
     }
 
     /**
      * The singleton instance.
      */
-    private static ContextReaderFIMI instance = null;
+    private static FIMI instance = null;
 
     /**
      * Return the singleton instance of this class.
      *
      * @return  the singleton instance
      */
-    public static ContextReaderFIMI getInstance() {
+    public static FIMI getInstance() {
         if (instance == null) {
-            instance = new ContextReaderFIMI();
+            instance = new FIMI();
         }
         return instance;
     }
@@ -60,13 +64,14 @@ public final class ContextReaderFIMI implements Reader<Context> {
      * Register this class for reading .dat files.
      */
     public static void register() {
-        ContextReaderFactory.register(ContextReaderFIMI.getInstance(), "dat");
+        Factory.getInstance().registerReader(FIMI.getInstance(), "dat");
+        Factory.getInstance().registerWriter(FIMI.getInstance(), "dat");
     }
 
     /**
      * Read a context from a file.
      *
-     * The FIMI dat format file is respected :
+     * The FIMI dat format file is respected:
      *
      * The file format is structured as follows:
      *
@@ -119,5 +124,43 @@ public final class ContextReaderFIMI implements Reader<Context> {
             }
         }
         context.setBitSets();
+    }
+
+    /**
+     * Write a context to a file.
+     *
+     * The FIMI dat format file is respected :
+     *
+     * The file format is structured as follows:
+     *
+     * Each line corresponds to an observation
+     * Each line is made of a list of integers corresponding to attributes separated by a space
+     *
+     * ~~~
+     * 1 3
+     * 2 4 5
+     * 1 2
+     * 3 4 5
+     * ~~~
+     *
+     * @param   context  a context to write
+     * @param   file     a file
+     *
+     * @throws  IOException  When an IOException occurs
+     */
+    @Override
+    public void write(Context context, BufferedWriter file) throws IOException {
+        HashMap<Comparable, Integer> map = new HashMap();
+        Integer count = 0;
+        for (Comparable att : context.getAttributes()) {
+            count++;
+            map.put(att, count);
+        }
+        for (Comparable obs : context.getObservations()) {
+            for (Comparable att : context.getIntent(obs)) {
+                file.write(map.get(att) + " ");
+            }
+            file.write("\n");
+        }
     }
 }

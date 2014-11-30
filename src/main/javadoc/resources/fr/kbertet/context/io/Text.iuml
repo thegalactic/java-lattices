@@ -1,0 +1,12 @@
+package fr.kbertet.context.io {
+    class Text {
+    	-{static}Text instance
+        +void read(Context context, BufferedReader file)
+        +void write(Context context, BufferedWriter file)
+        +{static}Text getInstance()
+        +{static}void register()
+    }
+
+    fr.kbertet.io.Reader <|-- Text
+    fr.kbertet.io.Writer <|-- Text
+}

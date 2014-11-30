@@ -34,16 +34,7 @@ import fr.kbertet.lattice.ArrowRelation;
 import fr.kbertet.lattice.ConceptLattice;
 import fr.kbertet.lattice.Concept;
 import fr.kbertet.lattice.Lattice;
-import fr.kbertet.context.io.ContextReaderFactory;
-import fr.kbertet.context.io.ContextReaderText;
-import fr.kbertet.context.io.ContextReaderBurmeister;
-import fr.kbertet.context.io.ContextReaderFIMI;
-import fr.kbertet.context.io.ContextReaderCsv;
-import fr.kbertet.context.io.ContextWriterFactory;
-import fr.kbertet.context.io.ContextWriterText;
-import fr.kbertet.context.io.ContextWriterBurmeister;
-import fr.kbertet.context.io.ContextWriterFIMI;
-import fr.kbertet.context.io.ContextWriterCsv;
+import fr.kbertet.context.io.Factory;
 
 /**
  * This class gives a standard representation for a context.
@@ -94,36 +85,6 @@ import fr.kbertet.context.io.ContextWriterCsv;
  * title Context UML graph
  */
 public class Context extends ClosureSystem {
-    /*
-     * Register txt writer and reader
-     */
-    static {
-        if (ContextWriterFactory.get("txt") == null) {
-            ContextWriterText.register();
-        }
-        if (ContextReaderFactory.get("txt") == null) {
-            ContextReaderText.register();
-        }
-        if (ContextWriterFactory.get("cxt") == null) {
-            ContextWriterBurmeister.register();
-        }
-        if (ContextReaderFactory.get("cxt") == null) {
-            ContextReaderBurmeister.register();
-        }
-        if (ContextWriterFactory.get("dat") == null) {
-            ContextWriterFIMI.register();
-        }
-        if (ContextReaderFactory.get("dat") == null) {
-            ContextReaderFIMI.register();
-        }
-        if (ContextReaderFactory.get("csv") == null) {
-            ContextReaderCsv.register();
-        }
-        if (ContextWriterFactory.get("csv") == null) {
-            ContextWriterCsv.register();
-        }
-    }
-
     /* ------------- FIELD ------------------ */
 
     /**
@@ -878,7 +839,7 @@ public class Context extends ClosureSystem {
             extension = filename.substring(index + 1);
         }
         BufferedWriter file = new BufferedWriter(new FileWriter(filename));
-        ContextWriterFactory.get(extension).write(this, file);
+        Factory.getInstance().getWriter(extension).write(this, file);
         file.close();
     }
 
@@ -899,7 +860,7 @@ public class Context extends ClosureSystem {
             extension = filename.substring(index + 1);
         }
         BufferedReader file = new BufferedReader(new FileReader(filename));
-        ContextReaderFactory.get(extension).read(this, file);
+        Factory.getInstance().getReader(extension).read(this, file);
         file.close();
         return this;
     }
