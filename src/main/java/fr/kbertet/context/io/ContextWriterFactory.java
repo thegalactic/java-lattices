@@ -13,6 +13,9 @@ package fr.kbertet.context.io;
 
 import java.util.HashMap;
 
+import fr.kbertet.io.Writer;
+import fr.kbertet.context.Context;
+
 /**
  * This class register writers for the Context class.
  *
@@ -20,7 +23,7 @@ import java.util.HashMap;
  *
  * @uml ContextWriterFactory.png
  * !include resources/fr/kbertet/context/io/ContextWriterFactory.iuml
- * !include resources/fr/kbertet/context/io/ContextWriter.iuml
+ * !include resources/fr/kbertet/io/Writer.iuml
  *
  * hide members
  * show ContextWriterFactory members
@@ -37,7 +40,7 @@ public final class ContextWriterFactory {
     /**
      * Map of extension/writer.
      */
-    private static HashMap<String, ContextWriter> writers = new HashMap<String, ContextWriter>();
+    private static HashMap<String, Writer<Context>> writers = new HashMap<String, Writer<Context>>();
 
     /**
      * Register a writer with an extension.
@@ -47,8 +50,8 @@ public final class ContextWriterFactory {
      *
      * @return  The old writer or null
      */
-    public static ContextWriter register(ContextWriter writer, String extension) {
-        ContextWriter old = writers.get(extension);
+    public static Writer<Context> register(Writer<Context> writer, String extension) {
+        Writer<Context> old = writers.get(extension);
         writers.put(extension, writer);
         return old;
     }
@@ -60,8 +63,8 @@ public final class ContextWriterFactory {
      *
      * @return  The old writer or null
      */
-    public static ContextWriter unregister(String extension) {
-        ContextWriter old = writers.get(extension);
+    public static Writer<Context> unregister(String extension) {
+        Writer<Context> old = writers.get(extension);
         writers.remove(extension);
         return old;
     }
@@ -73,7 +76,7 @@ public final class ContextWriterFactory {
      *
      * @return  The writer or null
      */
-    public static ContextWriter get(String extension) {
+    public static Writer<Context> get(String extension) {
         return writers.get(extension);
     }
 }

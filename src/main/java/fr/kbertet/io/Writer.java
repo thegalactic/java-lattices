@@ -1,7 +1,7 @@
-package fr.kbertet.context.io;
+package fr.kbertet.io;
 
 /*
- * ContextWriter.java
+ * Writer.java
  *
  * Copyright: 2010-2014 Karell Bertet, France
  *
@@ -14,30 +14,30 @@ package fr.kbertet.context.io;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
-import fr.kbertet.context.Context;
-
 /**
  * This interface defines a standard way for writing a context.
  *
- * ![ContextWriter](ContextWriter.png)
+ * @param  <E>  The class of elements to write
  *
- * @uml ContextWriter.png
- * !include resources/fr/kbertet/context/io/ContextWriter.iuml
+ * ![Writer](Writer.png)
+ *
+ * @uml Writer.png
+ * !include resources/fr/kbertet/io/Writer.iuml
  *
  * hide members
- * show ContextWriter members
- * class ContextWriter #LightCyan
- * title ContextWriter UML graph
+ * show Writer members
+ * class Writer #LightCyan
+ * title Writer UML graph
  */
-public interface ContextWriter {
+public interface Writer<E> {
     /**
      * Write a context to a file.
      *
-     * @param   context  a context to write
-     * @param   file     a file
+     * @param   e     an element to write
+     * @param   file  a file
      *
      * @throws  IOException  When an IOException occurs
      */
-    void write(Context context, BufferedWriter file) throws IOException;
+    void write(E e, BufferedWriter file) throws IOException;
 }
 

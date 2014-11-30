@@ -18,6 +18,7 @@ import java.io.IOException;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
+import fr.kbertet.io.Writer;
 import fr.kbertet.context.Context;
 
 /**
@@ -27,14 +28,14 @@ import fr.kbertet.context.Context;
  *
  * @uml ContextWriterCsv.png
  * !include resources/fr/kbertet/context/io/ContextWriterCsv.iuml
- * !include resources/fr/kbertet/context/io/ContextWriter.iuml
+ * !include resources/fr/kbertet/io/Writer.iuml
  *
  * hide members
  * show ContextWriterCsv members
  * class ContextWriterCsv #LightCyan
  * title ContextWriterCsv UML graph
  */
-public final class ContextWriterCsv implements ContextWriter {
+public final class ContextWriterCsv implements Writer<Context> {
     /**
      * This class is not designed to be publicly instantiated.
      */

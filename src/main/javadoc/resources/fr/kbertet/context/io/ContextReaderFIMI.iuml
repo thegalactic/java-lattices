@@ -6,5 +6,5 @@ package fr.kbertet.lattice.io {
         +{static}void register()
     }
 
-    ContextReader <|-- ContextReaderFIMI
+    fr.kbertet.io.Reader <|-- ContextReaderFIMI
 }

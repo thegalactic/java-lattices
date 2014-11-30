@@ -1,5 +1,0 @@
-package fr.kbertet.lattice.io {
-    interface ContextWriter {
-        +void write(Context context, BufferedWriter file)
-    }
-}

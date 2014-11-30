@@ -15,6 +15,7 @@ import java.util.StringTokenizer;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+import fr.kbertet.io.Reader;
 import fr.kbertet.context.Context;
 
 /**
@@ -24,14 +25,14 @@ import fr.kbertet.context.Context;
  *
  * @uml ContextReaderFIMI.png
  * !include resources/fr/kbertet/context/io/ContextReaderFIMI.iuml
- * !include resources/fr/kbertet/context/io/ContextReader.iuml
+ * !include resources/fr/kbertet/io/Reader.iuml
  *
  * hide members
  * show ContextReaderFIMI members
  * class ContextReaderFIMI #LightCyan
  * title ContextReaderFIMI UML graph
  */
-public final class ContextReaderFIMI implements ContextReader {
+public final class ContextReaderFIMI implements Reader<Context> {
     /**
      * This class is not designed to be publicly instantiated.
      */

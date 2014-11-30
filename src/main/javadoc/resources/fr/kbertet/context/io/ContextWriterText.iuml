@@ -6,5 +6,5 @@ package fr.kbertet.lattice.io {
         +{static}void register()
     }
 
-    ContextWriter <|-- ContextWriterText
+    fr.kbertet.io.Writer <|-- ContextWriterText
 }

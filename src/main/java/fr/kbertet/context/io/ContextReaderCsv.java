@@ -19,6 +19,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
+import fr.kbertet.io.Reader;
 import fr.kbertet.context.Context;
 
 /**
@@ -28,14 +29,14 @@ import fr.kbertet.context.Context;
  *
  * @uml ContextReaderCsv.png
  * !include resources/fr/kbertet/context/io/ContextReaderCsv.iuml
- * !include resources/fr/kbertet/context/io/ContextReader.iuml
+ * !include resources/fr/kbertet/io/Reader.iuml
  *
  * hide members
  * show ContextReaderCsv members
  * class ContextReaderCsv #LightCyan
  * title ContextReaderCdv UML graph
  */
-public final class ContextReaderCsv implements ContextReader {
+public final class ContextReaderCsv implements Reader<Context> {
     /**
      * This class is not designed to be publicly instantiated.
      */

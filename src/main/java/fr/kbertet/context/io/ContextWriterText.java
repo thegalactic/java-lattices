@@ -14,6 +14,7 @@ package fr.kbertet.context.io;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
+import fr.kbertet.io.Writer;
 import fr.kbertet.context.Context;
 
 /**
@@ -23,14 +24,14 @@ import fr.kbertet.context.Context;
  *
  * @uml ContextWriterText.png
  * !include resources/fr/kbertet/context/io/ContextWriterText.iuml
- * !include resources/fr/kbertet/context/io/ContextWriter.iuml
+ * !include resources/fr/kbertet/io/Writer.iuml
  *
  * hide members
  * show ContextWriterText members
  * class ContextWriterText #LightCyan
  * title ContextWriterText UML graph
  */
-public final class ContextWriterText implements ContextWriter {
+public final class ContextWriterText implements Writer<Context> {
     /**
      * This class is not designed to be publicly instantiated.
      */

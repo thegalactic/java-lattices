@@ -14,6 +14,7 @@ package fr.kbertet.context.io;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+import fr.kbertet.io.Reader;
 import fr.kbertet.context.Context;
 
 /**
@@ -23,14 +24,14 @@ import fr.kbertet.context.Context;
  *
  * @uml ContextReaderBurmeister.png
  * !include resources/fr/kbertet/context/io/ContextReaderBurmeister.iuml
- * !include resources/fr/kbertet/context/io/ContextReader.iuml
+ * !include resources/fr/kbertet/io/Reader.iuml
  *
  * hide members
  * show ContextReaderBurmeister members
  * class ContextReaderBurmeister #LightCyan
  * title ContextReaderBurmeister UML graph
  */
-public final class ContextReaderBurmeister implements ContextReader {
+public final class ContextReaderBurmeister implements Reader<Context> {
     /**
      * This class is not designed to be publicly instantiated.
      */

@@ -13,6 +13,9 @@ package fr.kbertet.context.io;
 
 import java.util.HashMap;
 
+import fr.kbertet.io.Reader;
+import fr.kbertet.context.Context;
+
 /**
  * This class register readers for the Context class.
  *
@@ -20,7 +23,7 @@ import java.util.HashMap;
  *
  * @uml ContextReaderFactory.png
  * !include resources/fr/kbertet/context/io/ContextReaderFactory.iuml
- * !include resources/fr/kbertet/context/io/ContextReader.iuml
+ * !include resources/fr/kbertet/io/Reader.iuml
  *
  * hide members
  * show ContextReaderFactory members
@@ -37,7 +40,7 @@ public final class ContextReaderFactory {
     /**
      * Map of extension/reader.
      */
-    private static HashMap<String, ContextReader> readers = new HashMap<String, ContextReader>();
+    private static HashMap<String, Reader<Context>> readers = new HashMap<String, Reader<Context>>();
 
     /**
      * Register a reader with an extension.
@@ -47,8 +50,8 @@ public final class ContextReaderFactory {
      *
      * @return  The old reader or null
      */
-    public static ContextReader register(ContextReader reader, String extension) {
-        ContextReader old = readers.get(extension);
+    public static Reader<Context> register(Reader<Context> reader, String extension) {
+        Reader<Context> old = readers.get(extension);
         readers.put(extension, reader);
         return old;
     }
@@ -60,8 +63,8 @@ public final class ContextReaderFactory {
      *
      * @return  The old reader or null
      */
-    public static ContextReader unregister(String extension) {
-        ContextReader old = readers.get(extension);
+    public static Reader<Context> unregister(String extension) {
+        Reader<Context> old = readers.get(extension);
         readers.remove(extension);
         return old;
     }
@@ -73,7 +76,7 @@ public final class ContextReaderFactory {
      *
      * @return  The reader or null
      */
-    public static ContextReader get(String extension) {
+    public static Reader<Context> get(String extension) {
         return readers.get(extension);
     }
 }

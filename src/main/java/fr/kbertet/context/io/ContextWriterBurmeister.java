@@ -15,6 +15,7 @@ import java.util.TreeSet;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
+import fr.kbertet.io.Writer;
 import fr.kbertet.context.Context;
 
 /**
@@ -24,14 +25,14 @@ import fr.kbertet.context.Context;
  *
  * @uml ContextWriterBurmeister.png
  * !include resources/fr/kbertet/context/io/ContextWriterBurmeister.iuml
- * !include resources/fr/kbertet/context/io/ContextWriter.iuml
+ * !include resources/fr/kbertet/io/Writer.iuml
  *
  * hide members
  * show ContextWriterBurmeister members
  * class ContextWriterBurmeister #LightCyan
  * title ContextWriterBurmeister UML graph
  */
-public final class ContextWriterBurmeister implements ContextWriter {
+public final class ContextWriterBurmeister implements Writer<Context> {
     /**
      * This class is not designed to be publicly instantiated.
      */

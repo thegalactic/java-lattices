@@ -6,7 +6,9 @@ Description
 This package both provides classes to manipulate a binary table (or a context) and its concept lattice; a set of rules (or an implicational system) and its closed set lattice, but also capitalizes on results issued from lattice theory stating that there exists bijective links between lattices, reduced contexts and canonical direct basis of rules (see figure).
 
 ![UML diagram](UML.png)
-![Input/Output diagram](IO.png)
+![Context Input/Output diagram](Context-IO.png)
+![DGraph Input/Output diagram](DGraph-IO.png)
+![Lattice Input/Output diagram](Lattice-IO.png)
 
 A context is defined by class `Context` that provides methods implementing classical operations on a context, as the reduction for example.
 An implicational system, defined by class `IS`, provides methods for classical transformations of an implicational system, and in particular
@@ -218,25 +220,43 @@ title Main UML graph
 hide members
 @enduml
 
-@startuml IO.png
+@startuml Context-IO.png
 
-title Input/Output UML graph
+title Context Input/Output UML graph
 
-!include resources/fr/kbertet/dgraph/io/DGraphWriter.iuml
-!include resources/fr/kbertet/dgraph/io/DGraphWriterFactory.iuml
-!include resources/fr/kbertet/dgraph/io/DGraphWriterDot.iuml
 !include resources/fr/kbertet/context/io/ContextReaderBurmeister.iuml
 !include resources/fr/kbertet/context/io/ContextReaderCsv.iuml
 !include resources/fr/kbertet/context/io/ContextReaderFactory.iuml
 !include resources/fr/kbertet/context/io/ContextReaderFIMI.iuml
-!include resources/fr/kbertet/context/io/ContextReader.iuml
 !include resources/fr/kbertet/context/io/ContextReaderText.iuml
 !include resources/fr/kbertet/context/io/ContextWriterBurmeister.iuml
 !include resources/fr/kbertet/context/io/ContextWriterCsv.iuml
 !include resources/fr/kbertet/context/io/ContextWriterFactory.iuml
 !include resources/fr/kbertet/context/io/ContextWriterFIMI.iuml
-!include resources/fr/kbertet/context/io/ContextWriter.iuml
 !include resources/fr/kbertet/context/io/ContextWriterText.iuml
+!include resources/fr/kbertet/io/Reader.iuml
+!include resources/fr/kbertet/io/Writer.iuml
+
+hide members
+@enduml
+
+@startuml DGraph-IO.png
+
+title DGraph Input/Output UML graph
+
+!include resources/fr/kbertet/dgraph/io/DGraphWriter.iuml
+!include resources/fr/kbertet/dgraph/io/DGraphWriterFactory.iuml
+!include resources/fr/kbertet/dgraph/io/DGraphWriterDot.iuml
+!include resources/fr/kbertet/io/Reader.iuml
+!include resources/fr/kbertet/io/Writer.iuml
+
+hide members
+@enduml
+
+@startuml Lattice-IO.png
+
+title Input/Output UML graph
+
 !include resources/fr/kbertet/lattice/io/ArrowRelationWriter.iuml
 !include resources/fr/kbertet/lattice/io/ArrowRelationWriterFactory.iuml
 !include resources/fr/kbertet/lattice/io/ArrowRelationWriterTeX.iuml
@@ -249,6 +269,8 @@ title Input/Output UML graph
 !include resources/fr/kbertet/lattice/io/ImplicationalSystemWriter.iuml
 !include resources/fr/kbertet/lattice/io/ImplicationalSystemWriterFactory.iuml
 !include resources/fr/kbertet/lattice/io/ImplicationalSystemWriterText.iuml
+!include resources/fr/kbertet/io/Reader.iuml
+!include resources/fr/kbertet/io/Writer.iuml
 
 hide members
 @enduml

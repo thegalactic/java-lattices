@@ -1,5 +1,0 @@
-package fr.kbertet.lattice.io {
-    interface ContextReader {
-        +void read(Context context, BufferedReader file)
-    }
-}

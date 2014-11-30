@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
+import fr.kbertet.io.Writer;
 import fr.kbertet.context.Context;
 
 /**
@@ -24,14 +25,14 @@ import fr.kbertet.context.Context;
  *
  * @uml ContextWriterFIMI.png
  * !include resources/fr/kbertet/context/io/ContextWriterFIMI.iuml
- * !include resources/fr/kbertet/context/io/ContextWriter.iuml
+ * !include resources/fr/kbertet/io/Writer.iuml
  *
  * hide members
  * show ContextWriterFIMI members
  * class ContextWriterFIMI #LightCyan
  * title ContextWriterFIMI UML graph
  */
-public final class ContextWriterFIMI implements ContextWriter {
+public final class ContextWriterFIMI implements Writer<Context> {
     /**
      * This class is not designed to be publicly instantiated.
      */
