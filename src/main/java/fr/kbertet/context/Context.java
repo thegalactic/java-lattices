@@ -67,10 +67,10 @@ import fr.kbertet.context.io.Factory;
  * ~~~
  * Observations: 1 2 3
  * Attributes: a b c d e
- * 1 a c
- * 2 a b
- * 3 b d e
- * 4 c e
+ * 1: a c
+ * 2: a b
+ * 3: b d e
+ * 4: c e
  * ~~~
  *
  * ![Context](Context.png)
@@ -168,10 +168,10 @@ public class Context extends ClosureSystem {
      * ~~~
      * Observations: 1 2 3
      * Attributes: a b c d e
-     * 1 a c
-     * 2 a b
-     * 3 b d e
-     * 4 c e
+     * 1: a c
+     * 2: a b
+     * 3: b d e
+     * 4: c e
      * ~~~
      *
      * Each observation must be declared on the first line, otherwise, it is not added
