@@ -14,8 +14,6 @@ package fr.kbertet.io;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-//import fr.kbertet.context.Context;
-
 /**
  * This interface defines a standard way for reading a context.
  *

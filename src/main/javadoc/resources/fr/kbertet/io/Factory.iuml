@@ -1,0 +1,15 @@
+package fr.kbertet.io {
+    class Factory<E> {
+    	-HashMap<String, fr.kbertet.io.Reader<E>> readers
+    	-HashMap<String, fr.kbertet.io.Writer<E>> writers
+        +fr.kbertet.io.Reader<E> registerReader(fr.kbertet.io.Reader<E> reader, String extension)
+        +fr.kbertet.io.Writer<E> registerWriter(fr.kbertet.io.Writer<E> writer, String extension)
+        +fr.kbertet.io.Reader<E> unregisterReader(String extension)
+        +fr.kbertet.io.Writer<E> unregisterWriter(String extension)
+        +fr.kbertet.io.Reader<E> getReader(String extension)
+        +fr.kbertet.io.Writer<E> getWriter(String extension)
+    }
+
+    Factory o-- fr.kbertet.io.Reader
+    Factory o-- fr.kbertet.io.Writer
+}

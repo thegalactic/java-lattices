@@ -229,6 +229,7 @@ title Context Input/Output UML graph
 !include resources/fr/kbertet/context/io/Factory.iuml
 !include resources/fr/kbertet/context/io/FIMI.iuml
 !include resources/fr/kbertet/context/io/Text.iuml
+!include resources/fr/kbertet/io/Factory.iuml
 !include resources/fr/kbertet/io/Reader.iuml
 !include resources/fr/kbertet/io/Writer.iuml
 
@@ -242,6 +243,7 @@ title DGraph Input/Output UML graph
 !include resources/fr/kbertet/dgraph/io/DGraphWriter.iuml
 !include resources/fr/kbertet/dgraph/io/DGraphWriterFactory.iuml
 !include resources/fr/kbertet/dgraph/io/DGraphWriterDot.iuml
+!include resources/fr/kbertet/io/Factory.iuml
 !include resources/fr/kbertet/io/Reader.iuml
 !include resources/fr/kbertet/io/Writer.iuml
 
@@ -264,6 +266,7 @@ title Input/Output UML graph
 !include resources/fr/kbertet/lattice/io/ImplicationalSystemWriter.iuml
 !include resources/fr/kbertet/lattice/io/ImplicationalSystemWriterFactory.iuml
 !include resources/fr/kbertet/lattice/io/ImplicationalSystemWriterText.iuml
+!include resources/fr/kbertet/io/Factory.iuml
 !include resources/fr/kbertet/io/Reader.iuml
 !include resources/fr/kbertet/io/Writer.iuml
 

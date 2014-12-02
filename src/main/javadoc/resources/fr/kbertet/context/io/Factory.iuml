@@ -1,17 +1,9 @@
 package fr.kbertet.context.io {
     class Factory {
     	-Factory instance
-    	-HashMap<String, fr.kbertet.io.Reader<Context>> readers
-    	-HashMap<String, fr.kbertet.io.Writer<Context>> writers
+        -Factory()
+        #void init()
         +{static}Factory getInstance()
-        +fr.kbertet.io.Reader<Context> registerReader(fr.kbertet.io.Reader<Context> reader, String extension)
-        +fr.kbertet.io.Writer<Context> registerWriter(fr.kbertet.io.Writer<Context> writer, String extension)
-        +fr.kbertet.io.Reader<Context> unregisterReader(String extension)
-        +fr.kbertet.io.Writer<Context> unregisterWriter(String extension)
-        +fr.kbertet.io.Reader<Context> getReader(String extension)
-        +fr.kbertet.io.Writer<Context> getWriter(String extension)
     }
-
-    Factory o-- fr.kbertet.io.Reader
-    Factory o-- fr.kbertet.io.Writer
+    fr.kbertet.io.Factory <|-- Factory
 }
