@@ -11,10 +11,6 @@ package fr.kbertet.context;
  * it under the terms of CeCILL-B license.
  */
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.BitSet;
@@ -35,6 +31,7 @@ import fr.kbertet.lattice.ConceptLattice;
 import fr.kbertet.lattice.Concept;
 import fr.kbertet.lattice.Lattice;
 import fr.kbertet.context.io.Factory;
+import fr.kbertet.io.Serializer;
 
 /**
  * This class gives a standard representation for a context.
@@ -833,14 +830,7 @@ public class Context extends ClosureSystem {
      * @throws  IOException  When an IOException occurs
      */
     public void save(final String filename) throws IOException {
-        String extension = "";
-        int index = filename.lastIndexOf('.');
-        if (index > 0) {
-            extension = filename.substring(index + 1);
-        }
-        BufferedWriter file = new BufferedWriter(new FileWriter(filename));
-        Factory.getInstance().getWriter(extension).write(this, file);
-        file.close();
+        Serializer.getInstance().save(this, Factory.getInstance(), filename);
     }
 
     /**
@@ -854,14 +844,7 @@ public class Context extends ClosureSystem {
      */
     public Context parse(final String filename) throws IOException {
         this.init();
-        String extension = "";
-        int index = filename.lastIndexOf('.');
-        if (index > 0) {
-            extension = filename.substring(index + 1);
-        }
-        BufferedReader file = new BufferedReader(new FileReader(filename));
-        Factory.getInstance().getReader(extension).read(this, file);
-        file.close();
+        Serializer.getInstance().parse(this, Factory.getInstance(), filename);
         return this;
     }
 
