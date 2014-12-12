@@ -23,7 +23,7 @@ import java.io.FileReader;
  * @param  <E>  The element to be saved/parsed
  */
 public final class Serializer<E> {
-   /**
+    /**
      * This class is not designed to be publicly instantiated.
      */
     private Serializer() {
