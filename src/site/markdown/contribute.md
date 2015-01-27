@@ -11,7 +11,7 @@ Step 1: Connect to github
 Step 2: Fork the project
 ------------------------
 
-Fork the [project](https://github.com/kbertet/java-lattices/fork)
+Fork the [project](https://github.com/thegalactic/java-lattices/fork)
 
 Step 3: Clone your fork into your local machine
 -----------------------------------------------
@@ -116,13 +116,13 @@ First you have to add a remote repository.
 If you use ssh:
 
 ~~~
-$ git remote add kbertet git@github.com:kbertet/java-lattices.git
+$ git remote add thegalactic git@github.com:thegalactic/java-lattices.git
 ~~~
 
 If you use https:
 
 ~~~
-$ git remote add kbertet https://github.com/kbertet/java-lattices.git
+$ git remote add thegalactic https://github.com/thegalactic/java-lattices.git
 ~~~
 
 To view all your remote repositories:
@@ -134,6 +134,6 @@ $ git remote -v
 You can now merge the up-to-date code in your master branch
 
 ~~~
-$ git pull kbertet master
+$ git pull thegalactic master
 ~~~
 
