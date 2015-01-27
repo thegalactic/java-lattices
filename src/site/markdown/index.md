@@ -10,7 +10,7 @@ This project uses:
 If you are using this project in research activities including publication, you have to cite it using ([BibTeX format](cite.bib)). 
 
 * authors: Karell Bertet et al
-* title: java-lattices: a Java library for lattices computation
+* title: java-lattices 1.0.0: a Java library for lattices computation
 * year: 2014
 * how published: http://thegalactic.github.io/java-lattices
 
