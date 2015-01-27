@@ -9,7 +9,7 @@
 	<custom>
 		<fluidoSkin>
 			<gitHub>
-				<projectId>kbertet/java-lattices</projectId>
+				<projectId>thegalactic/java-lattices</projectId>
 				<ribbonOrientation>right</ribbonOrientation>
 				<ribbonColor>red</ribbonColor>
 			</gitHub>
