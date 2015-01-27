@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ "$TRAVIS_REPO_SLUG" == "kbertet/java-lattices" ] && [ "$TRAVIS_JDK_VERSION" == "oraclejdk7" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; then
+if [ "$TRAVIS_REPO_SLUG" == "thegalactic/java-lattices" ] && [ "$TRAVIS_JDK_VERSION" == "oraclejdk7" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; then
 
 	git config --global user.email "travis@travis-ci.org"
 	git config --global user.name "travis-ci"
@@ -14,7 +14,7 @@ if [ "$TRAVIS_REPO_SLUG" == "kbertet/java-lattices" ] && [ "$TRAVIS_JDK_VERSION"
 
 	echo -e "    Getting gh-pages...\n"
 	cd $HOME
-	git clone --quiet https://${GH_TOKEN}@github.com/kbertet/java-lattices gh-pages > /dev/null
+	git clone --quiet https://${GH_TOKEN}@github.com/thegalactic/java-lattices gh-pages > /dev/null
 	cd gh-pages
 	git checkout --orphan gh-pages
 	git rm -rf .
@@ -32,8 +32,8 @@ if [ "$TRAVIS_REPO_SLUG" == "kbertet/java-lattices" ] && [ "$TRAVIS_JDK_VERSION"
 
 	echo -e "    Getting mvn-repo...\n"
 	cd $HOME
-	git clone --quiet --branch=mvn-repo https://${GH_TOKEN}@github.com/kbertet/java-lattices old-mvn-repo > /dev/null
-	git clone --quiet https://${GH_TOKEN}@github.com/kbertet/java-lattices mvn-repo > /dev/null
+	git clone --quiet --branch=mvn-repo https://${GH_TOKEN}@github.com/thegalactic/java-lattices old-mvn-repo > /dev/null
+	git clone --quiet https://${GH_TOKEN}@github.com/thegalactic/java-lattices mvn-repo > /dev/null
 	cd mvn-repo
 	git checkout --orphan mvn-repo
 	git rm -rf .
@@ -41,8 +41,8 @@ if [ "$TRAVIS_REPO_SLUG" == "kbertet/java-lattices" ] && [ "$TRAVIS_JDK_VERSION"
 
 	echo -e "    Deploying locally...\n"
 	cd $current
-	mkdir -p target/mvn-repo/fr/kbertet/lattices
-	test -f $HOME/old-mvn-repo/fr/kbertet/lattices/maven-metadata.xml && cp -f $HOME/old-mvn-repo/fr/kbertet/lattices/maven-metadata.* target/mvn-repo/fr/kbertet/lattices
+	mkdir -p target/mvn-repo/fr/thegalactic/lattices
+	test -f $HOME/old-mvn-repo/fr/thegalactic/lattices/maven-metadata.xml && cp -f $HOME/old-mvn-repo/fr/thegalactic/lattices/maven-metadata.* target/mvn-repo/fr/thegalactic/lattices
 	mvn deploy
 
 	cd $HOME/old-mvn-repo
