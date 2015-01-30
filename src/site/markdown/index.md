@@ -9,9 +9,9 @@ This project uses:
 
 If you are using this project in research activities including publication, you have to cite it using ([BibTeX format](cite.bib)). 
 
-* authors: Karell Bertet et al
+* authors: Karell Bertet, Christophe Demko, Jean-François Viaud, Clément Guérin
 * title: java-lattices: a Java library for lattices computation
 * year: 2014
-* how published: http://thegalactic.github.io/java-lattices
+* how published: http://thegalactic.org
 
 You are also kindly invited to send an email to karell.bertet@univ-lr.fr.
