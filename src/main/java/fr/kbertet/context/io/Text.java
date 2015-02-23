@@ -18,7 +18,7 @@ import java.io.IOException;
 
 import fr.kbertet.io.Reader;
 import fr.kbertet.io.Writer;
-import fr.kbertet.context.Context;
+import fr.kbertet.context.TemporaryContext;
 
 /**
  * This class defines the way for reading a context from a text file.
@@ -34,7 +34,7 @@ import fr.kbertet.context.Context;
  * class Text #LightCyan
  * title Text UML graph
  */
-public final class Text implements Reader<Context>, Writer<Context> {
+public final class Text implements Reader<TemporaryContext>, Writer<TemporaryContext> {
     /**
      * This class is not designed to be publicly instantiated.
      */
@@ -62,8 +62,8 @@ public final class Text implements Reader<Context>, Writer<Context> {
      * Register this class for reading .txt files.
      */
     public static void register() {
-        Factory.getInstance().registerReader(Text.getInstance(), "txt");
-        Factory.getInstance().registerWriter(Text.getInstance(), "txt");
+        IOFactory.getInstance().registerReader(Text.getInstance(), "txt");
+        IOFactory.getInstance().registerWriter(Text.getInstance(), "txt");
     }
 
     /**
@@ -89,7 +89,7 @@ public final class Text implements Reader<Context>, Writer<Context> {
      *
      * @throws  IOException  When an IOException occurs
      */
-    public void read(Context context, BufferedReader file) throws IOException {
+    public void read(TemporaryContext context, BufferedReader file) throws IOException {
         /*
          * First line : All observations separated by a space.
          * A StringTokenizer is used to divide the line into different observations considering spaces as separator.
@@ -189,7 +189,7 @@ public final class Text implements Reader<Context>, Writer<Context> {
      *
      * @throws  IOException  When an IOException occurs
      */
-    public void write(Context context, BufferedWriter file) throws IOException {
+    public void write(TemporaryContext context, BufferedWriter file) throws IOException {
         file.write(context.toString());
     }
 }

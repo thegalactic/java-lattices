@@ -19,7 +19,7 @@ import java.io.IOException;
 
 import fr.kbertet.io.Reader;
 import fr.kbertet.io.Writer;
-import fr.kbertet.context.Context;
+import fr.kbertet.context.TemporaryContext;
 
 /**
  * This class defines the way for reading a context from a text file.
@@ -36,7 +36,7 @@ import fr.kbertet.context.Context;
  * class FIMI #LightCyan
  * title FIMI UML graph
  */
-public final class FIMI implements Reader<Context>, Writer<Context> {
+public final class FIMI implements Reader<TemporaryContext>, Writer<TemporaryContext> {
     /**
      * This class is not designed to be publicly instantiated.
      */
@@ -64,8 +64,8 @@ public final class FIMI implements Reader<Context>, Writer<Context> {
      * Register this class for reading .dat files.
      */
     public static void register() {
-        Factory.getInstance().registerReader(FIMI.getInstance(), "dat");
-        Factory.getInstance().registerWriter(FIMI.getInstance(), "dat");
+        IOFactory.getInstance().registerReader(FIMI.getInstance(), "dat");
+        IOFactory.getInstance().registerWriter(FIMI.getInstance(), "dat");
     }
 
     /**
@@ -94,7 +94,7 @@ public final class FIMI implements Reader<Context>, Writer<Context> {
      *
      * @throws  IOException  When an IOException occurs
      */
-    public void read(Context context, BufferedReader file) throws IOException {
+    public void read(TemporaryContext context, BufferedReader file) throws IOException {
         // Initialize the line number
         int lineNumber = 0;
 
@@ -149,7 +149,7 @@ public final class FIMI implements Reader<Context>, Writer<Context> {
      * @throws  IOException  When an IOException occurs
      */
     @Override
-    public void write(Context context, BufferedWriter file) throws IOException {
+    public void write(TemporaryContext context, BufferedWriter file) throws IOException {
         HashMap<Comparable, Integer> map = new HashMap();
         Integer count = 0;
         for (Comparable att : context.getAttributes()) {

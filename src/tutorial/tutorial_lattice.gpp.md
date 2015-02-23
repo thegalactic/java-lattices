@@ -162,7 +162,7 @@ Include(IrreductibleGraph.txt)
 
 in which observations are meet irreductibles, attributes are join irreductibles, and an attribute is extent of an observation when its join irreducible node is greater than the meet irreducible node in the lattice.
 
-That computation is done by `Context ctx = l.getTable();`.
+That computation is done by `TemporaryContext ctx = l.getTable();`.
 
 The whole source code to get these results is the following :
 
@@ -186,7 +186,7 @@ Edge ft = new Edge(f, t); l.addEdge(ft);
 Edge gt = new Edge(g, t); l.addEdge(gt);
 DAGraph dag = l.irreduciblesSubgraph();
 dag.save(\\\"IrreductibleGraph.dot\\\");
-Context ctx = l.getTable();
+TemporaryContext ctx = l.getTable();
 ctx.save(\\\"IrreductibleGraph.txt\\\");
 )~~~
 

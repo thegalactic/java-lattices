@@ -18,7 +18,7 @@ import java.io.IOException;
 
 import fr.kbertet.io.Reader;
 import fr.kbertet.io.Writer;
-import fr.kbertet.context.Context;
+import fr.kbertet.context.TemporaryContext;
 
 /**
  * This class defines the way for reading a context from a text file.
@@ -35,7 +35,7 @@ import fr.kbertet.context.Context;
  * class Burmeister #LightCyan
  * title Burmeister UML graph
  */
-public final class Burmeister implements Reader<Context>, Writer<Context> {
+public final class Burmeister implements Reader<TemporaryContext>, Writer<TemporaryContext> {
     /**
      * This class is not designed to be publicly instantiated.
      */
@@ -63,8 +63,8 @@ public final class Burmeister implements Reader<Context>, Writer<Context> {
      * Register this class for reading .cxt files.
      */
     public static void register() {
-        Factory.getInstance().registerReader(Burmeister.getInstance(), "cxt");
-        Factory.getInstance().registerWriter(Burmeister.getInstance(), "cxt");
+        IOFactory.getInstance().registerReader(Burmeister.getInstance(), "cxt");
+        IOFactory.getInstance().registerWriter(Burmeister.getInstance(), "cxt");
     }
 
     /**
@@ -98,7 +98,7 @@ public final class Burmeister implements Reader<Context>, Writer<Context> {
      *
      * @throws  IOException  When an IOException occurs
      */
-    public void read(Context context, BufferedReader file) throws IOException {
+    public void read(TemporaryContext context, BufferedReader file) throws IOException {
         // str corresponds to the string "B". First line (Unused).
         String str = file.readLine();
 
@@ -182,7 +182,7 @@ public final class Burmeister implements Reader<Context>, Writer<Context> {
      * @throws  IOException  When an IOException occurs
      */
     @Override
-    public void write(Context context, BufferedWriter file) throws IOException {
+    public void write(TemporaryContext context, BufferedWriter file) throws IOException {
         // Magic header
         file.write("B");
         file.newLine();

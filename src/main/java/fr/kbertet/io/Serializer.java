@@ -55,7 +55,7 @@ public final class Serializer<E> {
      *
      * @throws  IOException  When an IOException occurs
      */
-    public void save(E e, Factory factory, final String filename) throws IOException {
+    public void save(E e, IOFactory factory, final String filename) throws IOException {
         BufferedWriter file = new BufferedWriter(new FileWriter(filename));
         factory.getWriter(Serializer.getExtension(filename)).write(e, file);
         file.close();
@@ -70,7 +70,7 @@ public final class Serializer<E> {
      *
      * @throws  IOException  When an IOException occurs
      */
-    public void parse(E e, Factory factory, final String filename) throws IOException {
+    public void parse(E e, IOFactory factory, final String filename) throws IOException {
         BufferedReader file = new BufferedReader(new FileReader(filename));
         factory.getReader(Serializer.getExtension(filename)).read(e, file);
         file.close();

@@ -21,7 +21,7 @@ import java.util.Scanner;
 
 import fr.kbertet.dgraph.Edge;
 import fr.kbertet.dgraph.Node;
-import fr.kbertet.context.Context;
+import fr.kbertet.context.TemporaryContext;
 
 /**
  *
@@ -87,7 +87,7 @@ public class ArrowRelationTest {
         l.addEdge(a, d);
         l.addEdge(d, e);
         ArrowRelation ar = new ArrowRelation(l);
-        Context ctx = ar.getDoubleUpArrowTable();
+        TemporaryContext ctx = ar.getDoubleUpArrowTable();
         assertTrue(ctx.getIntent(c).contains(d));
     }
     /**
@@ -107,7 +107,7 @@ public class ArrowRelationTest {
         l.addEdge(a, d);
         l.addEdge(d, e);
         ArrowRelation ar = new ArrowRelation(l);
-        Context ctx = ar.getDoubleDownArrowTable();
+        TemporaryContext ctx = ar.getDoubleDownArrowTable();
         assertTrue(ctx.getIntent(d).contains(b));
     }
     /**
@@ -133,7 +133,7 @@ public class ArrowRelationTest {
         Edge ft = new Edge(f, t); l.addEdge(ft);
         Edge gt = new Edge(g, t); l.addEdge(gt);
         ArrowRelation ar = new ArrowRelation(l);
-        Context ctx = ar.getDoubleArrowTable();
+        TemporaryContext ctx = ar.getDoubleArrowTable();
         assertTrue(ctx.getExtent(c).contains(d));
         assertTrue(ctx.getExtent(e).contains(d));
         assertTrue(ctx.getExtent(f).contains(e));
@@ -162,7 +162,7 @@ public class ArrowRelationTest {
         Edge gh = new Edge(g, h); l.addEdge(gh);
         Edge he = new Edge(h, e); l.addEdge(he);
         ArrowRelation ar = new ArrowRelation(l);
-        Context ctx = ar.getDoubleCircArrowTable();
+        TemporaryContext ctx = ar.getDoubleCircArrowTable();
         assertTrue(ctx.getExtent(f).contains(c));
         assertTrue(ctx.getExtent(f).contains(d));
     }

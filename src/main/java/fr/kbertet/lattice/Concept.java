@@ -23,7 +23,7 @@ import fr.kbertet.dgraph.Node;
 import fr.kbertet.dgraph.DGraph;
 import fr.kbertet.dgraph.DAGraph;
 import fr.kbertet.dgraph.Edge;
-import fr.kbertet.context.Context;
+import fr.kbertet.context.TemporaryContext;
 
 /**
  * This class gives a representation for a concept, i.e. a node of a concept lattice.
@@ -498,7 +498,7 @@ public class Concept extends Node {
      *
      * @return immediate successors of this component.
      */
-     public ArrayList<TreeSet<Comparable>> immediateSuccessorsLOA(Context init) {
+     public ArrayList<TreeSet<Comparable>> immediateSuccessorsLOA(TemporaryContext init) {
         ArrayList<TreeSet<Comparable>> succB = new ArrayList();
         TreeSet<Comparable> attributes = (TreeSet<Comparable>) init.getSet().clone();
         attributes.removeAll(this.getSetA());
@@ -561,7 +561,7 @@ public class Concept extends Node {
      *
      * @return  number of observations corresponding to the set of attributes in init context.
      */
-    private int count(Context init, TreeSet<Comparable> attributes) {
+    private int count(TemporaryContext init, TreeSet<Comparable> attributes) {
         return init.getExtentNb(attributes);
     }
 

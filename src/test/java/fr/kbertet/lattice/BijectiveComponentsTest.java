@@ -21,7 +21,7 @@ import java.util.Scanner;
 
 import fr.kbertet.util.ComparableSet;
 import fr.kbertet.dgraph.DGraph;
-import fr.kbertet.context.Context;
+import fr.kbertet.context.TemporaryContext;
 
 /**
  *
@@ -67,7 +67,7 @@ public class BijectiveComponentsTest {
      */
     @Test
     public void testinitalizeContext() {
-        Context context = new Context();
+        TemporaryContext context = new TemporaryContext();
         BijectiveComponents bc = new BijectiveComponents(context);
         long time = bc.compute();
         assertTrue(bc.getClosureSystem() != null);
@@ -237,7 +237,7 @@ public class BijectiveComponentsTest {
     public void testgetMinimalGenerators() {
         ImplicationalSystem is = new ImplicationalSystem();
         BijectiveComponents bc = new BijectiveComponents(is);
-        Context table = new Context();
+        TemporaryContext table = new TemporaryContext();
         bc.setTable(table);
         assertEquals(bc.getTable(), table);
     }
@@ -288,7 +288,7 @@ public class BijectiveComponentsTest {
     public void testsetTable() {
         ImplicationalSystem is = new ImplicationalSystem();
         BijectiveComponents bc = new BijectiveComponents(is);
-        Context table = new Context();
+        TemporaryContext table = new TemporaryContext();
         bc.setTable(table);
         assertEquals(bc.getTable(), table);
     }
@@ -299,7 +299,7 @@ public class BijectiveComponentsTest {
     public void testgetTable() {
         ImplicationalSystem is = new ImplicationalSystem();
         BijectiveComponents bc = new BijectiveComponents(is);
-        Context table = new Context();
+        TemporaryContext table = new TemporaryContext();
         bc.setTable(table);
         assertEquals(bc.getTable(), table);
     }

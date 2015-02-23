@@ -19,7 +19,7 @@ import java.io.IOException;
 
 import fr.kbertet.util.ComparableSet;
 import fr.kbertet.dgraph.DGraph;
-import fr.kbertet.context.Context;
+import fr.kbertet.context.TemporaryContext;
 
 /**
  * This class generates bijective components issued from lattice theory for a specified
@@ -32,7 +32,7 @@ import fr.kbertet.context.Context;
  * A closure system is described by the abstract class {@link ClosureSystem}.
  * In this package, a closure system can be instancied by an implicational
  * system described by class {@link ImplicationalSystem}) or a context described by
- * class {@link Context}).
+ * class {@link TemporaryContext}).
  *
  * This class provides a constructor, and only two methods: the method {@link #compute}
  * generates all the bijective components of the specified closure system; and the method
@@ -101,7 +101,7 @@ public class BijectiveComponents {
     /**
      * The table of the reduced lattice.
      */
-    private Context table = null;
+    private TemporaryContext table = null;
 
     /**
      * Constructs this component with the specified Closure System as initial closure system.
@@ -423,7 +423,7 @@ public class BijectiveComponents {
      *
      * @return  table of this component
      */
-    public Context getTable() {
+    public TemporaryContext getTable() {
         if (table == null) {
             // FIXME: do we use getLattice or getReducedLattice ?
             table = this.getReducedLattice().getTable();
@@ -437,7 +437,7 @@ public class BijectiveComponents {
      *
      * @return  this for chaining
      */
-    protected BijectiveComponents setTable(Context table) {
+    protected BijectiveComponents setTable(TemporaryContext table) {
         this.table = table;
         return this;
     }

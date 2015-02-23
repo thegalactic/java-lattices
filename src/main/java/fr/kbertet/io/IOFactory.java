@@ -1,7 +1,7 @@
 package fr.kbertet.io;
 
 /*
- * Factory.java
+ * IOFactory.java
  *
  * Copyright: 2010-2014 Karell Bertet, France
  *
@@ -17,8 +17,8 @@ import java.util.HashMap;
  * This class defines a standard way for getting reader and writer.
  *
  * @param  <E>  Element to be saved and parsed
- *
- * ![Factory](Factory.png)
+
+ ![IOFactory](IOFactory.png)
  *
  * @uml Factory.png
  * !include resources/fr/kbertet/io/Factory.iuml
@@ -30,7 +30,7 @@ import java.util.HashMap;
  * class Factory #LightCyan
  * title Factory UML graph
  */
-public abstract class Factory<E> {
+public abstract class IOFactory<E> {
     /**
      * Map of extension/reader.
      */

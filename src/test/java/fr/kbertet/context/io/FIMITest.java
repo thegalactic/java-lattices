@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 
-import fr.kbertet.context.Context;
+import fr.kbertet.context.TemporaryContext;
 
 /**
  * Test the fr.kbertet.dgraph.io.FIMITest class.
@@ -39,7 +39,7 @@ public class FIMITest {
         try {
             File file = File.createTempFile("junit", ".dat");
             String filename = file.getPath();
-            Context context = new Context();
+            TemporaryContext context = new TemporaryContext();
             context.addToAttributes("a");
             context.addToAttributes("b");
             context.addToAttributes("c");
@@ -52,7 +52,7 @@ public class FIMITest {
             context.addExtentIntent("3", "b");
             context.addExtentIntent("3", "c");
             context.save(filename);
-            Context copy = new Context(filename);
+            TemporaryContext copy = new TemporaryContext(filename);
             assertEquals(context.getAttributes().size(), copy.getAttributes().size());
             assertEquals(context.getObservations().size(), copy.getObservations().size());
             new File(filename).delete();

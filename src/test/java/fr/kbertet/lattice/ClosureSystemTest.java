@@ -18,7 +18,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.TreeSet;
 
 import fr.kbertet.util.ComparableSet;
-import fr.kbertet.context.Context;
+import fr.kbertet.context.TemporaryContext;
 
 /**
  *
@@ -26,11 +26,11 @@ import fr.kbertet.context.Context;
  */
 public class ClosureSystemTest {
     /**
-     * Test for the allClosures method for Context.
+     * Test for the allClosures method for TemporaryContext.
      */
     @Test
     public void testallClosuresCTX() {
-        Context context = new Context();
+        TemporaryContext context = new TemporaryContext();
         context.addToAttributes("a");
         context.addToAttributes("b");
         context.addToAttributes("c");
@@ -69,7 +69,7 @@ public class ClosureSystemTest {
      */
     @Test
     public void testclosedSetLatticeCTX() {
-        Context context = Context.random(10, 3, 5);
+        TemporaryContext context = TemporaryContext.random(10, 3, 5);
         assertEquals(context.closedSetLattice(true).getNodes().size(), ConceptLattice.diagramLattice(context).getNodes().size());
         assertEquals(context.closedSetLattice(false).getNodes().size(), ConceptLattice.completeLattice(context).getNodes().size());
         assertEquals(context.closedSetLattice(true).getEdges().size(), ConceptLattice.diagramLattice(context).getEdges().size());
@@ -111,11 +111,11 @@ public class ClosureSystemTest {
         assertTrue(is.getReducibleElements().get(2).isEmpty());
     }
     /**
-     * Test for the getReductibleElements method for Context.
+     * Test for the getReductibleElements method for TemporaryContext.
      */
     @Test
     public void testgetReducibleElementsCTX() {
-        Context context = new Context();
+        TemporaryContext context = new TemporaryContext();
         context.addToAttributes("a");
         context.addToAttributes("b");
         context.addToAttributes("c");
@@ -125,11 +125,11 @@ public class ClosureSystemTest {
         assertEquals(context.getReducibleElements().size(), 1);
     }
     /**
-     * Test for the nextClosure method for Context.
+     * Test for the nextClosure method for TemporaryContext.
      */
     @Test
     public void testnextClosureCTX() {
-        Context context = new Context();
+        TemporaryContext context = new TemporaryContext();
         context.addToAttributes("a");
         context.addToAttributes("b");
         context.addToAttributes("c");
@@ -178,11 +178,11 @@ public class ClosureSystemTest {
         assertEquals(is.precedenceGraph().getEdges().size(), 1);
     }
     /**
-     * Test for the precedenceGraph method for Context.
+     * Test for the precedenceGraph method for TemporaryContext.
      */
     @Test
     public void testprecedenceGraphCTX() {
-        Context context = new Context();
+        TemporaryContext context = new TemporaryContext();
         context.addToAttributes("a");
         context.addToAttributes("b");
         context.addToAttributes("c");

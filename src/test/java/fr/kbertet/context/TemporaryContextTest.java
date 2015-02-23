@@ -1,7 +1,7 @@
 package fr.kbertet.context;
 
 /*
- * ContextTest.java
+ * TemporaryContextTest.java
  *
  * Copyright: 2010-2014 Karell Bertet, France
  *
@@ -27,26 +27,25 @@ import fr.kbertet.lattice.ConceptLattice;
 import fr.kbertet.lattice.LatticeFactory;
 
 /**
- *
- * @author cguerin
+ * Test TemporaryContext class.
  */
-public class ContextTest {
+public class TemporaryContextTest {
     /**
-     * Test the empty constructor of Context.
+     * Test the empty constructor of TemporaryContext.
      */
     @Test
     public void testEmptyContext() {
-        Context context = new Context();
+        TemporaryContext context = new TemporaryContext();
         assertEquals(context.getAttributes(), new TreeSet<Comparable>());
         assertEquals(context.getObservations(), new TreeSet<Comparable>());
     }
 
     /**
-     * Test the copy constructor of Context.
+     * Test the copy constructor of TemporaryContext.
      */
     @Test
     public void testCopyContext() {
-        Context context = new Context();
+        TemporaryContext context = new TemporaryContext();
         context.addToAttributes("a");
         context.addToAttributes("b");
         context.addToAttributes("c");
@@ -58,7 +57,7 @@ public class ContextTest {
         context.addExtentIntent("2", "a");
         context.addExtentIntent("3", "b");
         context.addExtentIntent("3", "c");
-        Context copy = new Context(context);
+        TemporaryContext copy = new TemporaryContext(context);
         assertEquals(context.getAttributes(), copy.getAttributes());
         assertEquals(context.getObservations(), copy.getObservations());
         assertEquals(context.getIntent("1"), copy.getIntent("1"));
@@ -66,14 +65,14 @@ public class ContextTest {
     }
 
     /**
-     * Test the constructor from file .txt of Context.
+     * Test the constructor from file .txt of TemporaryContext.
      */
     @Test
     public void testFileContextText() {
         try {
             File file = File.createTempFile("junit", ".txt");
             String filename = file.getPath();
-            Context context = new Context();
+            TemporaryContext context = new TemporaryContext();
             context.addToAttributes("a");
             context.addToAttributes("b");
             context.addToAttributes("c");
@@ -86,7 +85,7 @@ public class ContextTest {
             context.addExtentIntent("3", "b");
             context.addExtentIntent("3", "c");
             context.save(filename);
-            Context copy = new Context(filename);
+            TemporaryContext copy = new TemporaryContext(filename);
             assertEquals(context.getAttributes(), copy.getAttributes());
             assertEquals(context.getObservations(), copy.getObservations());
             assertEquals(context.getIntent("1"), copy.getIntent("1"));
@@ -102,7 +101,7 @@ public class ContextTest {
      */
     @Test
     public void testrandom() {
-        Context ctx = Context.random(10, 53, 20);
+        TemporaryContext ctx = TemporaryContext.random(10, 53, 20);
         assertEquals(ctx.getObservations().size(), 10);
         assertEquals(ctx.getAttributes().size(), 1060);
     }
@@ -112,13 +111,13 @@ public class ContextTest {
      */
     @Test
     public void testGetSubContext() {
-        Context ctx = new Context();
+        TemporaryContext ctx = new TemporaryContext();
         ctx.addToAttributes(1);
         ctx.addToAttributes(2);
         ctx.addToObservations("a");
         ctx.addToObservations("b");
         ctx.addExtentIntent("a", 1);
-        Context sub = ctx.getSubContext(ctx.getObservations(), ctx.getAttributes());
+        TemporaryContext sub = ctx.getSubContext(ctx.getObservations(), ctx.getAttributes());
         assertTrue(sub.containsAllObservations(ctx.getObservations()));
         assertTrue(sub.containsAllAttributes(ctx.getAttributes()));
         assertTrue(sub.containAsExtent(1, "a"));
@@ -130,7 +129,7 @@ public class ContextTest {
      */
     @Test
     public void testContainsAttribute() {
-        Context context = new Context();
+        TemporaryContext context = new TemporaryContext();
         context.addToAttributes("a");
         assertTrue(context.containsAttribute("a"));
         assertFalse(context.containsObservation("b"));
@@ -141,7 +140,7 @@ public class ContextTest {
      */
     @Test
     public void testContainsAllAttributes() {
-        Context context = new Context();
+        TemporaryContext context = new TemporaryContext();
         context.addToAttributes("a");
         context.addToAttributes("b");
         TreeSet<Comparable> attributes = new TreeSet();
@@ -159,7 +158,7 @@ public class ContextTest {
      */
     @Test
     public void testContainsObservation() {
-        Context context = new Context();
+        TemporaryContext context = new TemporaryContext();
         context.addToObservations("1");
         assertTrue(context.containsObservation("1"));
         assertFalse(context.containsObservation("2"));
@@ -170,7 +169,7 @@ public class ContextTest {
      */
     @Test
     public void testContainsAllObservations() {
-        Context context = new Context();
+        TemporaryContext context = new TemporaryContext();
         context.addToObservations("1");
         context.addToObservations("2");
         TreeSet<Comparable> observations = new TreeSet();
@@ -188,7 +187,7 @@ public class ContextTest {
      */
     @Test
     public void testAddAttribute() {
-        Context context = new Context();
+        TemporaryContext context = new TemporaryContext();
         assertTrue(context.addToAttributes("a"));
         assertFalse(context.addToAttributes("a"));
     }
@@ -198,7 +197,7 @@ public class ContextTest {
      */
     @Test
     public void testAddAttributes() {
-        Context context = new Context();
+        TemporaryContext context = new TemporaryContext();
         TreeSet<Comparable> attributes = new TreeSet();
         attributes.add("a");
         attributes.add("b");
@@ -214,7 +213,7 @@ public class ContextTest {
      */
     @Test
     public void testAddObservation() {
-        Context context = new Context();
+        TemporaryContext context = new TemporaryContext();
         assertTrue(context.addToObservations("1"));
         assertFalse(context.addToObservations("1"));
     }
@@ -224,7 +223,7 @@ public class ContextTest {
      */
     @Test
     public void testAddObservations() {
-        Context context = new Context();
+        TemporaryContext context = new TemporaryContext();
         TreeSet<Comparable> observations = new TreeSet();
         observations.add("1");
         observations.add("2");
@@ -240,7 +239,7 @@ public class ContextTest {
      */
     @Test
     public void testRemoveAttribute() {
-        Context context = new Context();
+        TemporaryContext context = new TemporaryContext();
         context.addToAttributes("a");
         context.addToAttributes("b");
         context.addToAttributes("c");
@@ -263,7 +262,7 @@ public class ContextTest {
      */
     @Test
     public void testRemoveObservation() {
-        Context context = new Context();
+        TemporaryContext context = new TemporaryContext();
         context.addToAttributes("a");
         context.addToAttributes("b");
         context.addToAttributes("c");
@@ -286,7 +285,7 @@ public class ContextTest {
      */
     @Test
     public void testExtentNb() {
-        Context context = new Context();
+        TemporaryContext context = new TemporaryContext();
         context.addToAttributes("a");
         context.addToAttributes("b");
         context.addToAttributes("c");
@@ -318,7 +317,7 @@ public class ContextTest {
      */
     @Test
     public void testIntentNb() {
-        Context context = new Context();
+        TemporaryContext context = new TemporaryContext();
         context.addToAttributes("a");
         context.addToAttributes("b");
         context.addToAttributes("c");
@@ -348,7 +347,7 @@ public class ContextTest {
      */
     @Test
     public void testGetReverseContext() {
-        Context context = new Context();
+        TemporaryContext context = new TemporaryContext();
         context.addToAttributes("a");
         context.addToAttributes("b");
         context.addToAttributes("c");
@@ -360,7 +359,7 @@ public class ContextTest {
         context.addExtentIntent("2", "a");
         context.addExtentIntent("3", "b");
         context.addExtentIntent("3", "c");
-        Context iContext = context.getReverseContext();
+        TemporaryContext iContext = context.getReverseContext();
         assertFalse(context.getAttributes().equals(context.getObservations()));
         assertTrue(context.getAttributes().equals(iContext.getObservations()));
         assertTrue(iContext.getAttributes().equals(context.getObservations()));
@@ -371,7 +370,7 @@ public class ContextTest {
      */
     @Test
     public void testArrowClosure() {
-        Context ctx = new Context();
+        TemporaryContext ctx = new TemporaryContext();
         ctx.addToAttributes('a');
         ctx.addToAttributes('b');
         ctx.addToAttributes('c');
@@ -397,7 +396,7 @@ public class ContextTest {
      */
     @Test
     public void testSubDirectDecomposition() {
-        Context ctx = Context.random(20, 3, 4);
+        TemporaryContext ctx = TemporaryContext.random(20, 3, 4);
         ctx.reduction();
         ConceptLattice cl = ctx.conceptLattice(true);
         Lattice l = ctx.subDirectDecomposition();
@@ -429,9 +428,9 @@ public class ContextTest {
         l.addEdge(n1, n3);
         l.addEdge(n2, n4);
         l.addEdge(n3, n4);
-        Context ctx = l.getTable();
+        TemporaryContext ctx = l.getTable();
         ctx.reduction();
-        Context arrowCtx = ctx.getArrowClosedSubContext();
+        TemporaryContext arrowCtx = ctx.getArrowClosedSubContext();
         assertTrue(arrowCtx.getExtent(n3).contains(n2));
         assertTrue(arrowCtx.getExtent(n2).contains(n3));
     }
@@ -442,9 +441,9 @@ public class ContextTest {
     @Test
     public void testLatticeDivision() {
         Lattice l = LatticeFactory.booleanAlgebra(2);
-        Context ctx = l.getTable();
+        TemporaryContext ctx = l.getTable();
         ctx.reduction();
-        ArrayList<Context> subContexts = ctx.getDivisionContext();
+        ArrayList<TemporaryContext> subContexts = ctx.getDivisionContext();
         TreeSet<Node> convex = ctx.getDivisionConvex(subContexts.get(0));
         assertEquals(subContexts.get(0).conceptLattice(true).getNodes().size() + convex.size(), l.getNodes().size());
     }

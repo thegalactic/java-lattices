@@ -11,7 +11,7 @@ Using the `ConceptLattice` class, it is easy to create a concept lattice from an
 For instance, it is possible to use one of the `cxt` file from examples, in the following manner :
 
 ~~~Code(tealady.tmp,
-Context ctx = new Context(\\\"tealady.cxt\\\");
+TemporaryContext ctx = new TemporaryContext(\\\"tealady.cxt\\\");
 ConceptLattice cl = ConceptLattice.completeLattice(ctx);
 )~~~
 

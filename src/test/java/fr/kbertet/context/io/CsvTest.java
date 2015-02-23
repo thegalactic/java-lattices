@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 
-import fr.kbertet.context.Context;
+import fr.kbertet.context.TemporaryContext;
 
 /**
  * Test the fr.kbertet.dgraph.io.CsvTest class.
@@ -43,7 +43,7 @@ public class CsvTest {
         try {
             File file = File.createTempFile("junit", ".csv");
             String filename = file.getPath();
-            Context context = new Context();
+            TemporaryContext context = new TemporaryContext();
             context.addToAttributes("a");
             context.addToAttributes("b");
             context.addToAttributes("c");
@@ -56,7 +56,7 @@ public class CsvTest {
             context.addExtentIntent("3", "b");
             context.addExtentIntent("3", "c");
             context.save(filename);
-            Context copy = new Context(filename);
+            TemporaryContext copy = new TemporaryContext(filename);
             assertEquals(context.getAttributes(), copy.getAttributes());
             assertEquals(context.getObservations(), copy.getObservations());
             assertEquals(context.getIntent("1"), copy.getIntent("1"));
@@ -84,7 +84,7 @@ public class CsvTest {
             writer.newLine();
             writer.write("1,1,0");
             writer.close();
-            Context context = new Context(filename);
+            TemporaryContext context = new TemporaryContext(filename);
             file.delete();
             assertEquals(context.getExtent("a").toString(), "[1, 2]");
             assertEquals(context.getExtent("b").toString(), "[2]");
@@ -110,7 +110,7 @@ public class CsvTest {
             writer.write("1");
             writer.newLine();
             writer.close();
-            Context context = new Context(filename);
+            TemporaryContext context = new TemporaryContext(filename);
             file.delete();
             assertEquals(context.getExtent("a").toString(), "[1]");
         } catch (Exception e) {
@@ -128,7 +128,7 @@ public class CsvTest {
         try {
             file = File.createTempFile("junit", ".csv");
             filename = file.getPath();
-            Context context = new Context(filename);
+            TemporaryContext context = new TemporaryContext(filename);
             file.delete();
             fail();
         } catch (IOException e) {
@@ -151,7 +151,7 @@ public class CsvTest {
             writer.write("");
             writer.newLine();
             writer.close();
-            Context context = new Context(filename);
+            TemporaryContext context = new TemporaryContext(filename);
             file.delete();
             fail();
         } catch (IOException e) {
@@ -175,7 +175,7 @@ public class CsvTest {
             writer.newLine();
             writer.write("1,2,1");
             writer.close();
-            Context context = new Context(filename);
+            TemporaryContext context = new TemporaryContext(filename);
             file.delete();
             fail();
         } catch (IOException e) {
@@ -199,7 +199,7 @@ public class CsvTest {
             writer.newLine();
             writer.write("1,0,1");
             writer.close();
-            Context context = new Context(filename);
+            TemporaryContext context = new TemporaryContext(filename);
             file.delete();
             fail();
         } catch (IOException e) {
@@ -221,7 +221,7 @@ public class CsvTest {
             BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
             writer.write(",a,a");
             writer.close();
-            Context context = new Context(filename);
+            TemporaryContext context = new TemporaryContext(filename);
             file.delete();
             fail();
         } catch (IOException e) {
@@ -247,7 +247,7 @@ public class CsvTest {
             writer.newLine();
             writer.write("1,1,1,1");
             writer.close();
-            Context context = new Context(filename);
+            TemporaryContext context = new TemporaryContext(filename);
             file.delete();
             fail();
         } catch (IOException e) {

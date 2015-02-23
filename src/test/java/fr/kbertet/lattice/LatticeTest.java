@@ -22,7 +22,7 @@ import fr.kbertet.util.ComparableSet;
 import fr.kbertet.dgraph.Node;
 import fr.kbertet.dgraph.DGraph;
 import fr.kbertet.dgraph.DAGraph;
-import fr.kbertet.context.Context;
+import fr.kbertet.context.TemporaryContext;
 
 /**
  *
@@ -176,7 +176,7 @@ public class LatticeTest {
         l.addEdge(b, c);
         l.addEdge(a, d);
         l.addEdge(d, c);
-        Context ctx = l.getTable();
+        TemporaryContext ctx = l.getTable();
         assertTrue(ctx.containsAttribute(b));
         assertTrue(ctx.containsAttribute(d));
         assertTrue(ctx.containsObservation(b));

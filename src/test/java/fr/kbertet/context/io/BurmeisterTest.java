@@ -18,7 +18,7 @@ import java.io.File;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 
-import fr.kbertet.context.Context;
+import fr.kbertet.context.TemporaryContext;
 
 /**
  * Test the fr.kbertet.dgraph.io.ContextBurmeisterTest class.
@@ -41,7 +41,7 @@ public class BurmeisterTest {
         try {
             File file = File.createTempFile("junit", ".cxt");
             String filename = file.getPath();
-            Context context = new Context();
+            TemporaryContext context = new TemporaryContext();
             context.addToAttributes("a");
             context.addToAttributes("b");
             context.addToAttributes("c");
@@ -54,7 +54,7 @@ public class BurmeisterTest {
             context.addExtentIntent("3", "b");
             context.addExtentIntent("3", "c");
             context.save(filename);
-            Context copy = new Context(filename);
+            TemporaryContext copy = new TemporaryContext(filename);
             assertEquals(context.getAttributes(), copy.getAttributes());
             assertEquals(context.getObservations(), copy.getObservations());
             assertEquals(context.getIntent("1"), copy.getIntent("1"));
@@ -79,7 +79,7 @@ public class BurmeisterTest {
             writer.write("Example");
             writer.newLine();
             writer.close();
-            Context context = new Context(filename);
+            TemporaryContext context = new TemporaryContext(filename);
             assertEquals(context.getExtent("a").toString(), "[1, 2]");
             assertEquals(context.getExtent("b").toString(), "[2]");
             assertEquals(context.getExtent("c").toString(), "[]");

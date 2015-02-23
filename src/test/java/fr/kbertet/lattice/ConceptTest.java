@@ -21,7 +21,7 @@ import java.util.TreeSet;
 
 import fr.kbertet.util.ComparableSet;
 import fr.kbertet.dgraph.Node;
-import fr.kbertet.context.Context;
+import fr.kbertet.context.TemporaryContext;
 
 /**
  *
@@ -443,7 +443,7 @@ public class ConceptTest {
     @Test
     public void testimmediateSuccessorsLOA() {
         // The following context is present in the paper "An efficient algorithm ..."
-        Context ctx = new Context();
+        TemporaryContext ctx = new TemporaryContext();
         ctx.addToAttributes('b');
         ctx.addToAttributes('h');
         ctx.addToAttributes('m');

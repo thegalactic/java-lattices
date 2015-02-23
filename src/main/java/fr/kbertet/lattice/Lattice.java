@@ -19,7 +19,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import fr.kbertet.util.ComparableSet;
-import fr.kbertet.context.Context;
+import fr.kbertet.context.TemporaryContext;
 import fr.kbertet.dgraph.DAGraph;
 import fr.kbertet.dgraph.DGraph;
 import fr.kbertet.dgraph.Edge;
@@ -171,7 +171,7 @@ public class Lattice extends DAGraph {
        TreeSet<Node> joins = this.joinIrreducibles();
        TreeSet<Node> meats = this.meetIrreducibles();
        ArrowRelation arrows = new ArrowRelation(this);
-       Context dbl = arrows.getDoubleArrowTable();
+       TemporaryContext dbl = arrows.getDoubleArrowTable();
        // steps are connected component of the double arrow table.
        ArrayList<Concept> steps = new ArrayList<Concept>();
        while (!joins.isEmpty()) {
@@ -690,11 +690,11 @@ public class Lattice extends DAGraph {
      *
      * @return  the table of the lattice
      */
-    public Context getTable() {
+    public TemporaryContext getTable() {
         // generation of attributes
         TreeSet<Node> join = this.joinIrreducibles();
         //TreeMap<Node,Node> JoinContent = new TreeMap();
-        Context context = new Context();
+        TemporaryContext context = new TemporaryContext();
         for (Node j : join) {
           //  Node nj = new Node(j);
             //JoinContent.put(j,nj);

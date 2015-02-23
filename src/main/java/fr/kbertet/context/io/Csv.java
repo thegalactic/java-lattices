@@ -24,7 +24,7 @@ import org.apache.commons.csv.CSVRecord;
 
 import fr.kbertet.io.Reader;
 import fr.kbertet.io.Writer;
-import fr.kbertet.context.Context;
+import fr.kbertet.context.TemporaryContext;
 
 /**
  * This class defines the way for reading a context from a csv file.
@@ -41,7 +41,7 @@ import fr.kbertet.context.Context;
  * class Csv #LightCyan
  * title ContextReaderCdv UML graph
  */
-public final class Csv implements Reader<Context>, Writer<Context> {
+public final class Csv implements Reader<TemporaryContext>, Writer<TemporaryContext> {
     /**
      * This class is not designed to be publicly instantiated.
      */
@@ -69,8 +69,8 @@ public final class Csv implements Reader<Context>, Writer<Context> {
      * Register this class for reading .csv files.
      */
     public static void register() {
-        Factory.getInstance().registerReader(Csv.getInstance(), "csv");
-        Factory.getInstance().registerWriter(Csv.getInstance(), "csv");
+        IOFactory.getInstance().registerReader(Csv.getInstance(), "csv");
+        IOFactory.getInstance().registerWriter(Csv.getInstance(), "csv");
     }
 
     /**
@@ -104,7 +104,7 @@ public final class Csv implements Reader<Context>, Writer<Context> {
      *
      * @throws  IOException  When an IOException occurs
      */
-    public void read(Context context, BufferedReader file) throws IOException {
+    public void read(TemporaryContext context, BufferedReader file) throws IOException {
         // Parse the file
         CSVParser parser = CSVFormat.RFC4180.parse(file);
 
@@ -203,7 +203,7 @@ public final class Csv implements Reader<Context>, Writer<Context> {
      *
      * @throws  IOException  When an IOException occurs
      */
-    public void write(Context context, BufferedWriter file) throws IOException {
+    public void write(TemporaryContext context, BufferedWriter file) throws IOException {
         CSVPrinter printer = new CSVPrinter(file, CSVFormat.RFC4180);
 
         // Get the observations and the attributes

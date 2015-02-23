@@ -24,7 +24,7 @@ import java.io.File;
 import fr.kbertet.util.ComparableSet;
 import fr.kbertet.dgraph.DAGraph;
 import fr.kbertet.dgraph.Node;
-import fr.kbertet.context.Context;
+import fr.kbertet.context.TemporaryContext;
 
 /**
  * Test of class ConceptLattice.
@@ -330,7 +330,7 @@ public class ConceptLatticeTest {
         comparablesObjs.add((Comparable) "1");
         comparablesObjs.add((Comparable) "2");
         comparablesObjs.add((Comparable) "3");
-        Context cs = new Context();
+        TemporaryContext cs = new TemporaryContext();
         cs.addAllToAttributes(comparablesAtts);
         cs.addAllToObservations(comparablesObjs);
         cs.addExtentIntent("1", "a");
@@ -354,7 +354,7 @@ public class ConceptLatticeTest {
         comparablesObjs.add((Comparable) "1");
         comparablesObjs.add((Comparable) "2");
         comparablesObjs.add((Comparable) "3");
-        Context cs = new Context();
+        TemporaryContext cs = new TemporaryContext();
         cs.addAllToAttributes(comparablesAtts);
         cs.addAllToObservations(comparablesObjs);
         cs.addExtentIntent("1", "a");
@@ -379,7 +379,7 @@ public class ConceptLatticeTest {
         comparablesObjs.add((Comparable) "1");
         comparablesObjs.add((Comparable) "2");
         comparablesObjs.add((Comparable) "3");
-        Context cs = new Context();
+        TemporaryContext cs = new TemporaryContext();
         cs.addAllToAttributes(comparablesAtts);
         cs.addAllToObservations(comparablesObjs);
         cs.addExtentIntent("1", "a");
@@ -453,7 +453,7 @@ public class ConceptLatticeTest {
         comparablesObjs.add((Comparable) "1");
         comparablesObjs.add((Comparable) "2");
         comparablesObjs.add((Comparable) "3");
-        Context cs = new Context();
+        TemporaryContext cs = new TemporaryContext();
         cs.addAllToAttributes(comparablesAtts);
         cs.addAllToObservations(comparablesObjs);
         cs.addExtentIntent("1", "a");

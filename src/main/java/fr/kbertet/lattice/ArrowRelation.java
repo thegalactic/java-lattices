@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
 
-import fr.kbertet.context.Context;
+import fr.kbertet.context.TemporaryContext;
 import fr.kbertet.lattice.io.ArrowRelationWriterFactory;
 import fr.kbertet.lattice.io.ArrowRelationWriterTeX;
 import fr.kbertet.dgraph.Edge;
@@ -160,8 +160,8 @@ public class ArrowRelation extends DGraph  {
      *
      * @return  the table of the lattice
      */
-    public Context getDoubleArrowTable() {
-        Context context = new Context();
+    public TemporaryContext getDoubleArrowTable() {
+        TemporaryContext context = new TemporaryContext();
         // observations are join irreductibles
         // attributes are meet irreductibles
         for (Edge e : this.getEdges()) {
@@ -187,8 +187,8 @@ public class ArrowRelation extends DGraph  {
      *
      * @return  the table of the lattice
      */
-    public Context getDoubleDownArrowTable() {
-        Context context = new Context();
+    public TemporaryContext getDoubleDownArrowTable() {
+        TemporaryContext context = new TemporaryContext();
         // observations are join irreductibles
         // attributes are meet irreductibles
         for (Edge e : this.getEdges()) {
@@ -214,8 +214,8 @@ public class ArrowRelation extends DGraph  {
      *
      * @return  the table of the lattice
      */
-    public Context getDoubleUpArrowTable() {
-        Context context = new Context();
+    public TemporaryContext getDoubleUpArrowTable() {
+        TemporaryContext context = new TemporaryContext();
         // observations are join irreductibles
         // attributes are meet irreductibles
         for (Edge e : this.getEdges()) {
@@ -241,8 +241,8 @@ public class ArrowRelation extends DGraph  {
      *
      * @return  the table of the lattice
      */
-    public Context getDoubleCircArrowTable() {
-        Context context = new Context();
+    public TemporaryContext getDoubleCircArrowTable() {
+        TemporaryContext context = new TemporaryContext();
         // observations are join irreductibles
         // attributes are meet irreductibles
         for (Edge e : this.getEdges()) {
