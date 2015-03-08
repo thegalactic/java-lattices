@@ -1,0 +1,67 @@
+package org.thegalactic.dgraph {
+    class DGraph {
+        -TreeSet<Node> nodes
+        -TreeMap<Node, TreeSet<Edge>> successors
+        -TreeMap<Node, TreeSet<Edge>> predecessors
+        .. Constructors ..
+        +DGraph()
+        +DGraph(final Set<Node> set)
+        +DGraph(final DGraph graph)
+        .. Generators ..
+        +{static}DGraph random(int size, double threshold)
+        +{static}DGraph random(int size)
+        .. Accessors ..
+        +int sizeNodes()
+        +int sizeEdges()
+        +SortedSet<Node> getNodes()
+        +SortedSet<Edge> getEdges()
+        +SortedSet<Edge> getSuccessorEdges(final Node node)
+        +SortedSet<Edge> getPredecessorEdges(final Node node)
+        +SortedSet<Node> getSuccessorNodes(final Node node)
+        +SortedSet<Node> getPredecessorNodes(final Node node)
+        +Edge getEdge(final Node from, final Node to)
+        +Node getNode(final Object search)
+        +Node getNodeByContent(final Object content)
+        +Node getNodeByIdentifier(int identifier)
+        +SortedSet<Node> getSinks()
+        +SortedSet<Node> getWells()
+        #TreeMap<Node, TreeSet<Edge>> getSuccessors()
+        #TreeMap<Node, TreeSet<Edge>> getPredecessors()
+        .. Mutators ..
+        #DGraph setNodes(final TreeSet<Node> nodes)
+        #DGraph setSuccessors(final TreeMap<Node, TreeSet<Edge>> successors)
+        #DGraph setPredecessors(final TreeMap<Node, TreeSet<Edge>> predecessors)
+        .. Predicates ..
+        +boolean containsNode(final Node node)
+        +boolean containsEdge(final Node from, final Node to)
+        +boolean containsEdge(final Edge edge)
+        +boolean isAcyclic()
+        .. Transformers ..
+        +String toString()
+        .. Persistence ..
+        +void save(final String filename)
+        .. Operations ..
+        +boolean addNode(final Node node)
+        +boolean addEdge(final Node from, final Node to, final Object content)
+        +boolean addEdge(final Node from, final Node to)
+        +boolean addEdge(final Edge edge)
+        +boolean removeNode(final Node node)
+        +boolean removeNodes(final Set<Node> nodes)
+        +boolean removeEdge(final Node from, final Node to)
+        +boolean removeEdge(final Edge edge)
+        +ArrayList<Node> topologicalSort()
+        +DGraph getSubgraphByNodes(final Set<Node> nodes)
+        +DGraph getSubgraphByEdges(final Set<Edge> edges)
+        +void complementary()
+        +int reflexiveReduction()
+        +int reflexiveClosure()
+        +int transitiveClosure()
+        -ArrayList<Node>[] depthFirstSearch(Node source, TreeSet<Node> visited, ArrayList<Node> sort)
+        -ArrayList<Node>[] depthFirstSearch()
+        +void transpose()
+        +DAGraph getStronglyConnectedComponent()
+    }
+
+    DGraph o-- Node
+    DGraph o-- Edge
+}

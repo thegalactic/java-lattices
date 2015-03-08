@@ -1,0 +1,5 @@
+package org.thegalactic.dgraph.io {
+    interface DGraphWriter {
+        +void write(DGraph graph, BufferedWriter file)
+    }
+}

@@ -1,0 +1,10 @@
+package org.thegalactic.lattice.io {
+    class ImplicationalSystemReaderText {
+    	-{static}ImplicationalSystemReaderText instance
+        +void read(ImplicationalSystem system, BufferedReader file)
+        +{static}ImplicationalSystemReaderText getInstance()
+        +{static}void register()
+    }
+
+    ImplicationalSystemReader <|-- ImplicationalSystemReaderText
+}

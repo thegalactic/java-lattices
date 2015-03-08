@@ -1,0 +1,12 @@
+package org.thegalactic.context.io {
+    class FIMI {
+    	-{static}FIMI instance
+        +void read(Context context, BufferedReader file)
+        +void write(Context context, BufferedWriter file)
+        +{static}FIMI getInstance()
+        +{static}void register()
+    }
+
+    org.thegalactic.io.Reader <|-- FIMI
+    org.thegalactic.io.Writer <|-- FIMI
+}

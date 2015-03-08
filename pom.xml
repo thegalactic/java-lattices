@@ -6,8 +6,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<name>lattices</name>
-	<url>https://github.com/kbertet/java-lattices/</url>
-	<groupId>fr.kbertet</groupId>
+	<url>https://github.com/thegalactic/java-lattices/</url>
+	<groupId>org.thegalactic</groupId>
 	<artifactId>lattices</artifactId>
 	<version>2.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
@@ -16,7 +16,7 @@
 
 	<properties>
 
-		<project.url>http://kbertet.github.io/java-lattices</project.url>
+		<project.url>http://thegalactic.github.io/java-lattices/</project.url>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
@@ -45,8 +45,8 @@
 	</licenses>
 
 	<organization>
-		<name>Karell Bertet</name>
-		<url>https://github.com/kbertet/</url>
+		<name>The Galactic Organization</name>
+		<url>http://thegalactic.org</url>
 	</organization>
 
 	<developers>
@@ -115,24 +115,24 @@
 		<repository>
 			<id>github.repo</id>
 			<name>GitHub Repository</name>
-			<url>https://raw.githubusercontent.com/kbertet/java-lattices/mvn-repo/</url>
+			<url>https://raw.githubusercontent.com/thegalactic/java-lattices/mvn-repo/</url>
 		</repository>
 	</distributionManagement>
 
 	<scm>
-		<url>https://github.com/kbertet/java-lattices/tree/master/</url>
-		<connection>scm:git:git://github.com/kbertet/java-lattices.git</connection>
-		<developerConnection>scm:git:git@github.com:kbertet/java-lattices.git</developerConnection>
+		<url>https://github.com/thegalactic/java-lattices/tree/master/</url>
+		<connection>scm:git:git://github.com/thegalactic/java-lattices.git</connection>
+		<developerConnection>scm:git:git@github.com:thegalactic/java-lattices.git</developerConnection>
 	</scm>
 
 	<issueManagement>
 		<system>GitHub</system>
-		<url>https://github.com/kbertet/java-lattices/issues/</url>
+		<url>https://github.com/thegalactic/java-lattices/issues/</url>
 	</issueManagement>
 
 	<ciManagement>
 		<system>Travis</system>
-		<url>https://travis-ci.org/kbertet/java-lattices/</url>
+		<url>https://travis-ci.org/thegalactic/java-lattices/</url>
 	</ciManagement>
 
 	<dependencies>

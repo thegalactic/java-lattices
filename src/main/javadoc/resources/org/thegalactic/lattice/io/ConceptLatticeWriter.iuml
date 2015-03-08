@@ -1,0 +1,5 @@
+package org.thegalactic.lattice.io {
+    interface ConceptLatticeWriter {
+        +void write(ConceptLattice lattice, BufferedWriter file)
+    }
+}

@@ -1,5 +1,0 @@
-package fr.kbertet.io {
-    interface Writer<E> {
-        +void write(E e, BufferedWriter file)
-    }
-}

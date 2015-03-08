@@ -1,0 +1,39 @@
+package org.thegalactic.lattice {
+    class ConceptLattice {
+        .. Constructors ..
+        +ConceptLattice()
+        +ConceptLattice(TreeSet<Concept> set)
+        +ConceptLattice(Lattice lattice)
+        .. Modifiers ..
+        +boolean addNode(Node n)
+        +boolean addEdge(Node from, Node to)
+        +boolean removeAllSetA()
+        +boolean removeAllSetB()
+        +Concept getConcept(ComparableSet setA, ComparableSet setB)
+        +boolean initialiseSetAForJoin()
+        +boolean initialiseSetBForMeet()
+        +boolean makeInclusionReduction()
+        +boolean makeIrreduciblesReduction()
+        +boolean makeEdgeValuation()
+        .. Predicates ..
+        +boolean containsConcepts()
+        +boolean isConceptLattice()
+        +boolean containsAllSetA()
+        +boolean containsAllSetB()
+        .. Generators ..
+        +ConceptLattice clone()
+        .. Lattices generators ..
+        +Lattice getJoinReduction()
+        +Lattice getMeetReduction()
+        +Lattice getIrreduciblesReduction()
+        +{static} ConceptLattice idealsLattice(DAGraph dag)
+        +{static} ConceptLattice completeLattice(ClosureSystem init)
+        +{static} ConceptLattice diagramLattice(ClosureSystem init)
+        +ConceptLattice iceberg(float threshold)
+        +void recursiveDiagramLattice(Concept n, ClosureSystem init)
+        +Vector<TreeSet<Comparable>> immediateSuccessors(Node n, ClosureSystem init)
+    }
+
+    Lattice <|-- ConceptLattice
+    ConceptLattice o-- Concept
+}
