@@ -1,9 +1,7 @@
-package org.thegalactic.context;
-
-import org.thegalactic.context.attribute.Attribute;
+package org.thegalactic.context.observation;
 
 /*
- * Observation.java
+ * AbstractObservation.java
  *
  * Copyright: 2010-2014 Karell Bertet, France
  *
@@ -12,17 +10,13 @@ import org.thegalactic.context.attribute.Attribute;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-/**
- * An observation for a context.
- */
-public interface Observation {
+import org.thegalactic.context.value.Value;
+import org.thegalactic.context.attribute.Attribute;
 
-    /**
-     * Get the context.
-     *
-     * @return The context
-     */
-    Context getContext();
+/**
+ * A named observation for a context.
+ */
+public abstract class AbstractObservation implements Observation {
 
     /**
      * Get the value associated with an attribute.
@@ -31,5 +25,7 @@ public interface Observation {
      *
      * @return The value associated with an attribute
      */
-    Value getValue(Attribute attribute);
+    public Value getValue(Attribute attribute) {
+        return this.getContext().getValue(this, attribute);
+    }
 }

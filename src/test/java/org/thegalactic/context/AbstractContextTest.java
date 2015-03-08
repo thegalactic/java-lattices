@@ -10,6 +10,9 @@ package org.thegalactic.context;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
+import org.thegalactic.context.value.Value;
+import org.thegalactic.context.observation.Observation;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

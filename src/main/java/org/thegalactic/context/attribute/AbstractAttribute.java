@@ -11,8 +11,8 @@ package org.thegalactic.context.attribute;
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
 import org.thegalactic.context.Context;
-import org.thegalactic.context.Observation;
-import org.thegalactic.context.Value;
+import org.thegalactic.context.observation.Observation;
+import org.thegalactic.context.value.Value;
 
 /**
  * A named attribute for a context.

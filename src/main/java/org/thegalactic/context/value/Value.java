@@ -1,7 +1,7 @@
-package org.thegalactic.context.attribute;
+package org.thegalactic.context.value;
 
 /*
- * ValueImpl.java
+ * Value.java
  *
  * Copyright: 2010-2014 Karell Bertet, France
  *
@@ -10,10 +10,8 @@ package org.thegalactic.context.attribute;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-import org.thegalactic.context.value.Value;
-
 /**
- * Basic implementation of Value.
+ * A value for a context.
  */
-class ValueImpl implements Value {
+public interface Value {
 }

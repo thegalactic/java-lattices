@@ -20,8 +20,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.thegalactic.context.Context;
-import org.thegalactic.context.Observation;
-import org.thegalactic.context.Value;
+import org.thegalactic.context.observation.Observation;
+import org.thegalactic.context.value.Value;
 
 /**
  * Test AbstractConstraint class.

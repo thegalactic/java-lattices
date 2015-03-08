@@ -1,7 +1,5 @@
-package org.thegalactic.context;
-
 /*
- * Value.java
+ * package-info.java
  *
  * Copyright: 2010-2014 Karell Bertet, France
  *
@@ -11,7 +9,6 @@ package org.thegalactic.context;
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
 /**
- * A value for a context.
+ * This package is designed to represent values.
  */
-public interface Value {
-}
+package org.thegalactic.context.value;

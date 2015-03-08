@@ -16,8 +16,8 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.thegalactic.context.AbstractContext;
-import org.thegalactic.context.Observation;
-import org.thegalactic.context.Value;
+import org.thegalactic.context.observation.Observation;
+import org.thegalactic.context.value.Value;
 import org.thegalactic.context.attribute.Attribute;
 
 /**

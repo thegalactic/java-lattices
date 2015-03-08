@@ -14,8 +14,8 @@ import java.util.Collections;
 import java.util.Set;
 
 import org.thegalactic.context.AbstractContext;
-import org.thegalactic.context.Observation;
-import org.thegalactic.context.Value;
+import org.thegalactic.context.observation.Observation;
+import org.thegalactic.context.value.Value;
 
 /**
  * Basic implementation of AbstractContext.

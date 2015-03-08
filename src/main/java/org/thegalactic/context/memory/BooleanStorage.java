@@ -13,8 +13,8 @@ package org.thegalactic.context.memory;
 import java.util.BitSet;
 import java.util.HashMap;
 
-import org.thegalactic.context.Observation;
-import org.thegalactic.context.Value;
+import org.thegalactic.context.observation.Observation;
+import org.thegalactic.context.value.Value;
 import org.thegalactic.context.attribute.Attribute;
 
 /**

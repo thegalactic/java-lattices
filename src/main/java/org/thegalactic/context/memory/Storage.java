@@ -10,8 +10,8 @@ package org.thegalactic.context.memory;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-import org.thegalactic.context.Observation;
-import org.thegalactic.context.Value;
+import org.thegalactic.context.observation.Observation;
+import org.thegalactic.context.value.Value;
 import org.thegalactic.context.attribute.Attribute;
 
 /**
