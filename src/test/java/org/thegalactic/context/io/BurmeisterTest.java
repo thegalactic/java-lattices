@@ -10,7 +10,6 @@ package org.thegalactic.context.io;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
@@ -24,6 +23,7 @@ import org.thegalactic.context.TemporaryContext;
  * Test the org.thegalactic.dgraph.io.ContextBurmeisterTest class.
  */
 public class BurmeisterTest {
+
     /**
      * Test getInstance.
      */
@@ -89,4 +89,3 @@ public class BurmeisterTest {
         }
     }
 }
-

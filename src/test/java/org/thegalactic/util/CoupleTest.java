@@ -10,7 +10,6 @@ package org.thegalactic.util;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -20,6 +19,7 @@ import static org.junit.Assert.assertTrue;
  * @author Jean-François
  */
 public class CoupleTest {
+
     /**
      * Test Couple constructor.
      */
@@ -29,6 +29,7 @@ public class CoupleTest {
         assertEquals(c.getLeft(), "A");
         assertEquals(c.getRight(), "B");
     }
+
     /**
      * Test getLeft method.
      */
@@ -37,6 +38,7 @@ public class CoupleTest {
         Couple c = new Couple("A", "B");
         assertEquals(c.getLeft(), "A");
     }
+
     /**
      * Test getRight method.
      */
@@ -45,6 +47,7 @@ public class CoupleTest {
         Couple c = new Couple("A", "B");
         assertEquals(c.getRight(), "B");
     }
+
     /**
      * Test setLeft method.
      */
@@ -54,6 +57,7 @@ public class CoupleTest {
         c.setLeft("C");
         assertEquals(c.getLeft(), "C");
     }
+
     /**
      * Test setRight method.
      */
@@ -63,6 +67,7 @@ public class CoupleTest {
         c.setRight("C");
         assertEquals(c.getRight(), "C");
     }
+
     /**
      * Test equals method.
      */
@@ -72,6 +77,7 @@ public class CoupleTest {
         Couple c2 = new Couple("A", "B");
         assertTrue(c1.equals(c2));
     }
+
     /**
      * Test hashCode method.
      */
@@ -82,6 +88,7 @@ public class CoupleTest {
         cc = (Object) c;
         assertEquals(c.hashCode(), cc.hashCode());
     }
+
     /**
      * Test toString method.
      */

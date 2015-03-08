@@ -10,7 +10,6 @@ package org.thegalactic.lattice.io;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import java.util.StringTokenizer;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -35,27 +34,19 @@ import org.thegalactic.dgraph.Node;
  * title ConceptLatticeWriterDot UML graph
  */
 public final class ConceptLatticeWriterDot implements ConceptLatticeWriter {
-    /**
-     * This class is not designed to be publicly instantiated.
-     */
-    private ConceptLatticeWriterDot() {
-    }
 
     /**
      * The singleton instance.
      */
-    private static ConceptLatticeWriterDot instance = null;
+    private static final ConceptLatticeWriterDot INSTANCE = new ConceptLatticeWriterDot();
 
     /**
      * Return the singleton instance of this class.
      *
-     * @return  the singleton instance
+     * @return the singleton instance
      */
     public static ConceptLatticeWriterDot getInstance() {
-        if (instance == null) {
-            instance = new ConceptLatticeWriterDot();
-        }
-        return instance;
+        return INSTANCE;
     }
 
     /**
@@ -66,18 +57,24 @@ public final class ConceptLatticeWriterDot implements ConceptLatticeWriter {
     }
 
     /**
+     * This class is not designed to be publicly instantiated.
+     */
+    private ConceptLatticeWriterDot() {
+    }
+
+    /**
      * Write a graph to a output stream.
      *
-     * @param   lattice  a concept lattice to write
-     * @param   file     a file
+     * @param lattice a concept lattice to write
+     * @param file    a file
      *
-     * @throws  IOException  When an IOException occurs
+     * @throws IOException When an IOException occurs
      */
     public void write(ConceptLattice lattice, BufferedWriter file) throws IOException {
         file.write("digraph G {\n");
         file.write("Graph [rankdir=BT]\n");
-        StringBuffer nodes  = new StringBuffer();
-        StringBuffer edges = new StringBuffer();
+        StringBuilder nodes = new StringBuilder();
+        StringBuilder edges = new StringBuilder();
         for (Node node : lattice.getNodes()) {
             Concept concept = (Concept) node;
             String dot = concept.getIdentifier() + " [label=\" ";
@@ -115,4 +112,3 @@ public final class ConceptLatticeWriterDot implements ConceptLatticeWriter {
         file.write("}");
     }
 }
-

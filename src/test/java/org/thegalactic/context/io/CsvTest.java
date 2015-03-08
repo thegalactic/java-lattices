@@ -10,7 +10,6 @@ package org.thegalactic.context.io;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -26,6 +25,7 @@ import org.thegalactic.context.TemporaryContext;
  * Test the org.thegalactic.dgraph.io.CsvTest class.
  */
 public class CsvTest {
+
     /**
      * Test getInstance.
      */
@@ -256,4 +256,3 @@ public class CsvTest {
         }
     }
 }
-

@@ -10,7 +10,6 @@ package org.thegalactic.lattice;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import java.util.TreeSet;
 import java.io.IOException;
 import java.io.FileWriter;
@@ -48,23 +47,28 @@ import org.thegalactic.dgraph.Node;
  * class ArrowRelation #LightCyan
  * title ArrowRelation UML graph
  */
-public class ArrowRelation extends DGraph  {
+public class ArrowRelation extends DGraph {
+
     /**
      * Field used to encode up arrow relation.
      */
     private static Object up = "Up";
+
     /**
      * Field used to encode down arrow relation.
      */
     private static Object down = "Down";
+
     /**
      * Field used to encode up-down arrow relation.
      */
     private static Object updown = "UpDown";
+
     /**
      * Field used to encode cross arrow relation.
      */
     private static Object cross = "Cross";
+
     /**
      * Field used to encode circ arrow relation.
      */
@@ -85,11 +89,13 @@ public class ArrowRelation extends DGraph  {
      * Nodes are join or meet irreductibles of the lattice.
      * Edges content encodes arrows as String "Up", "Down", "UpDown", "Cross", "Circ".
      *
-     * @param   lattice  Lattice from which this component is deduced.
+     * @param lattice Lattice from which this component is deduced.
      */
     public ArrowRelation(Lattice lattice) {
 
-        /* Nodes are join or meet irreductibles of the lattice. */
+        /*
+         * Nodes are join or meet irreductibles of the lattice.
+         */
         TreeSet<Node> joins = new TreeSet<Node>(lattice.joinIrreducibles());
         for (Node n : joins) {
             this.addNode(n);
@@ -106,7 +112,9 @@ public class ArrowRelation extends DGraph  {
         Node mplus = new Node();
         Object arrow = new Object();
 
-        /* Content of edges are arrows */
+        /*
+         * Content of edges are arrows
+         */
         for (Node j : joins) {
             for (Node m : meets) {
                 mplus = transitiveReduction.getSuccessorNodes(m).first();
@@ -135,9 +143,9 @@ public class ArrowRelation extends DGraph  {
     /**
      * Save the description of this component in a file whose name is specified.
      *
-     * @param   filename  the name of the file
+     * @param filename the name of the file
      *
-     * @throws  IOException  When an IOException occurs
+     * @throws IOException When an IOException occurs
      */
     public void save(final String filename) throws IOException {
         String extension = "";
@@ -158,7 +166,7 @@ public class ArrowRelation extends DGraph  {
      * An attribute is extent of an observation when its join irreducible node
      * is in double arrow relation with the meet irreducible node in the lattice.
      *
-     * @return  the table of the lattice
+     * @return the table of the lattice
      */
     public TemporaryContext getDoubleArrowTable() {
         TemporaryContext context = new TemporaryContext();
@@ -185,7 +193,7 @@ public class ArrowRelation extends DGraph  {
      * An attribute is extent of an observation when its join irreducible node
      * is in down arrow relation with the meet irreducible node in the lattice.
      *
-     * @return  the table of the lattice
+     * @return the table of the lattice
      */
     public TemporaryContext getDoubleDownArrowTable() {
         TemporaryContext context = new TemporaryContext();
@@ -212,7 +220,7 @@ public class ArrowRelation extends DGraph  {
      * An attribute is extent of an observation when its join irreducible node
      * is in up arrow relation with the meet irreducible node in the lattice.
      *
-     * @return  the table of the lattice
+     * @return the table of the lattice
      */
     public TemporaryContext getDoubleUpArrowTable() {
         TemporaryContext context = new TemporaryContext();
@@ -239,7 +247,7 @@ public class ArrowRelation extends DGraph  {
      * An attribute is extent of an observation when its join irreducible node
      * is in double arrow relation or circ relation with the meet irreducible node in the lattice.
      *
-     * @return  the table of the lattice
+     * @return the table of the lattice
      */
     public TemporaryContext getDoubleCircArrowTable() {
         TemporaryContext context = new TemporaryContext();
@@ -257,46 +265,56 @@ public class ArrowRelation extends DGraph  {
         }
         return context;
     }
+
     /**
      * Returns true if and only if there is an up arrow between from and to of edge e.
      *
      * @param e edge to be tested
+     *
      * @return true if and only if there is an up arrow between from and to of edge e
      */
     public boolean isUp(Edge e) {
         return (e.getContent() == ArrowRelation.up);
     }
+
     /**
      * Returns true if and only if there is an down arrow between from and to of edge e.
      *
      * @param e edge to be tested
+     *
      * @return true if and only if there is an down arrow between from and to of edge e
      */
     public boolean isDown(Edge e) {
         return (e.getContent() == ArrowRelation.down);
     }
+
     /**
      * Returns true if and only if there is an up-down arrow between from and to of edge e.
      *
      * @param e edge to be tested
+     *
      * @return true if and only if there is an up-down arrow between from and to of edge e
      */
     public boolean isUpDown(Edge e) {
         return (e.getContent() == ArrowRelation.updown);
     }
+
     /**
      * Returns true if and only if there is an cross arrow between from and to of edge e.
      *
      * @param e edge to be tested
+     *
      * @return true if and only if there is an cross arrow between from and to of edge e
      */
     public boolean isCross(Edge e) {
         return (e.getContent() == ArrowRelation.cross);
     }
+
     /**
      * Returns true if and only if there is an circ arrow between from and to of edge e.
      *
      * @param e edge to be tested
+     *
      * @return true if and only if there is an circ arrow between from and to of edge e
      */
     public boolean isCirc(Edge e) {

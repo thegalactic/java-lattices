@@ -10,7 +10,6 @@ package org.thegalactic.context.io;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import java.util.StringTokenizer;
 import java.util.HashMap;
 import java.io.BufferedReader;
@@ -37,27 +36,19 @@ import org.thegalactic.context.TemporaryContext;
  * title FIMI UML graph
  */
 public final class FIMI implements Reader<TemporaryContext>, Writer<TemporaryContext> {
-    /**
-     * This class is not designed to be publicly instantiated.
-     */
-    private FIMI() {
-    }
 
     /**
      * The singleton instance.
      */
-    private static FIMI instance = null;
+    private static final FIMI INSTANCE = new FIMI();
 
     /**
      * Return the singleton instance of this class.
      *
-     * @return  the singleton instance
+     * @return the singleton instance
      */
     public static FIMI getInstance() {
-        if (instance == null) {
-            instance = new FIMI();
-        }
-        return instance;
+        return INSTANCE;
     }
 
     /**
@@ -66,6 +57,12 @@ public final class FIMI implements Reader<TemporaryContext>, Writer<TemporaryCon
     public static void register() {
         IOFactory.getInstance().registerReader(FIMI.getInstance(), "dat");
         IOFactory.getInstance().registerWriter(FIMI.getInstance(), "dat");
+    }
+
+    /**
+     * This class is not designed to be publicly instantiated.
+     */
+    private FIMI() {
     }
 
     /**
@@ -87,12 +84,13 @@ public final class FIMI implements Reader<TemporaryContext>, Writer<TemporaryCon
      *
      * For reading convinience, observations are labelled with 'O' + LineNumber.
      *
-     * Be careful when using a downloaded file: an empty line at the end of the file gives an observation with no attributes
+     * Be careful when using a downloaded file: an empty line at the end of the file gives an observation with no
+     * attributes
      *
-     * @param   context  a context to read
-     * @param   file     a file
+     * @param context a context to read
+     * @param file    a file
      *
-     * @throws  IOException  When an IOException occurs
+     * @throws IOException When an IOException occurs
      */
     public void read(TemporaryContext context, BufferedReader file) throws IOException {
         // Initialize the line number
@@ -143,10 +141,10 @@ public final class FIMI implements Reader<TemporaryContext>, Writer<TemporaryCon
      * 3 4 5
      * ~~~
      *
-     * @param   context  a context to write
-     * @param   file     a file
+     * @param context a context to write
+     * @param file    a file
      *
-     * @throws  IOException  When an IOException occurs
+     * @throws IOException When an IOException occurs
      */
     @Override
     public void write(TemporaryContext context, BufferedWriter file) throws IOException {

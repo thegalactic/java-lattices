@@ -16,6 +16,11 @@ package org.thegalactic.context.attribute;
 public abstract class AbstractConstraint implements Constraint {
 
     /**
+     * Attribute linked to this constraint.
+     */
+    private final Attribute attribute;
+
+    /**
      * Constructor.
      *
      * @param attribute The attribute linked to this constraint.
@@ -32,9 +37,4 @@ public abstract class AbstractConstraint implements Constraint {
     public Attribute getAttribute() {
         return this.attribute;
     }
-
-    /**
-     * Attribute linked to this constraint.
-     */
-    private final Attribute attribute;
 }

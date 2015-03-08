@@ -10,7 +10,6 @@ package org.thegalactic.dgraph.io;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
@@ -19,6 +18,7 @@ import static org.junit.Assert.assertEquals;
  * Test the org.thegalactic.dgraph.io.DGraphWriterFactory class.
  */
 public class DGraphWriterFactoryTest {
+
     /**
      * Test unregister.
      */
@@ -30,4 +30,3 @@ public class DGraphWriterFactoryTest {
         assertEquals(DGraphWriterFactory.get("dot"), null);
     }
 }
-

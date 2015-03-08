@@ -10,7 +10,6 @@ package org.thegalactic.dgraph;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
@@ -22,6 +21,7 @@ import java.util.SortedSet;
  * Test the dgraph.DAGraph class.
  */
 public class DAGraphTest {
+
     /**
      * Test the empty constructor.
      */
@@ -221,6 +221,7 @@ public class DAGraphTest {
         assertEquals(dag.sizeNodes(), 19);
         assertEquals(dag.sizeEdges(), 27);
     }
+
     /**
      * Test the transitiveReduction method.
      */
@@ -243,4 +244,3 @@ public class DAGraphTest {
         assertEquals(copy.toString(), dag.toString());
     }
 }
-

@@ -10,7 +10,6 @@ package org.thegalactic.lattice.io;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import java.util.StringTokenizer;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -33,11 +32,6 @@ import org.thegalactic.lattice.Rule;
  * title ImplicationalSystemReaderText UML graph
  */
 public final class ImplicationalSystemReaderText implements ImplicationalSystemReader {
-    /**
-     * This class is not designed to be publicly instantiated.
-     */
-    private ImplicationalSystemReaderText() {
-    }
 
     /**
      * The singleton instance.
@@ -47,7 +41,7 @@ public final class ImplicationalSystemReaderText implements ImplicationalSystemR
     /**
      * Return the singleton instance of this class.
      *
-     * @return  the singleton instance
+     * @return the singleton instance
      */
     public static ImplicationalSystemReaderText getInstance() {
         if (instance == null) {
@@ -61,6 +55,12 @@ public final class ImplicationalSystemReaderText implements ImplicationalSystemR
      */
     public static void register() {
         ImplicationalSystemReaderFactory.register(ImplicationalSystemReaderText.getInstance(), "txt");
+    }
+
+    /**
+     * This class is not designed to be publicly instantiated.
+     */
+    private ImplicationalSystemReaderText() {
     }
 
     /**
@@ -79,16 +79,16 @@ public final class ImplicationalSystemReaderText implements ImplicationalSystemR
      * c d -> e
      * ~~~
      *
-     * @param   system  a system to read
-     * @param   file    a file
+     * @param system a system to read
+     * @param file   a file
      *
-     * @throws  IOException  When an IOException occurs
+     * @throws IOException When an IOException occurs
      */
     public void read(ImplicationalSystem system, BufferedReader file) throws IOException {
         // first line : All elements of S separated by a space
         // a StringTokenizer is used to divide the line into different token,
         // considering spaces as separator.
-        StringTokenizer st =  new StringTokenizer(file.readLine());
+        StringTokenizer st = new StringTokenizer(file.readLine());
         while (st.hasMoreTokens()) {
             String n = new String(st.nextToken());
             system.addElement(n);
@@ -116,7 +116,7 @@ public final class ImplicationalSystemReaderText implements ImplicationalSystemR
                         if (prem) {
                             r.addToPremise(x);
                         } else {
-                        r.addToConclusion(x);
+                            r.addToConclusion(x);
                         }
                     }
                 }
@@ -128,4 +128,3 @@ public final class ImplicationalSystemReaderText implements ImplicationalSystemR
         }
     }
 }
-

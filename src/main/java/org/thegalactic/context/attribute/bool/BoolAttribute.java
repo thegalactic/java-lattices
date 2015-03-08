@@ -18,6 +18,12 @@ import org.thegalactic.context.attribute.Constraint;
  * BoolAttribute.
  */
 public class BoolAttribute extends AbstractAttribute {
+
+    /**
+     * Type for boolean attribute.
+     */
+    public static final String TYPE = "boolean";
+
     /**
      * Constructor.
      *
@@ -45,9 +51,4 @@ public class BoolAttribute extends AbstractAttribute {
     public Constraint getDomain() {
         return BoolConstraint.getDomain(this);
     }
-
-    /**
-     * Type for boolean attribute.
-     */
-    public static final String TYPE = "boolean";
 }

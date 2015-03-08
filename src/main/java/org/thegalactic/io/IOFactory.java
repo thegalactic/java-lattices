@@ -10,15 +10,14 @@ package org.thegalactic.io;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import java.util.HashMap;
 
 /**
  * This class defines a standard way for getting reader and writer.
  *
- * @param  <E>  Element to be saved and parsed
-
- ![IOFactory](IOFactory.png)
+ * @param <E> Element to be saved and parsed
+ *
+ * ![IOFactory](IOFactory.png)
  *
  * @uml Factory.png
  * !include resources/org/thegalactic/io/Factory.iuml
@@ -31,23 +30,24 @@ import java.util.HashMap;
  * title Factory UML graph
  */
 public abstract class IOFactory<E> {
+
     /**
      * Map of extension/reader.
      */
-    private HashMap<String, Reader<E>> readers = new HashMap<String, Reader<E>>();
+    private final HashMap<String, Reader<E>> readers = new HashMap<String, Reader<E>>();
 
     /**
      * Map of extension/writer.
      */
-    private HashMap<String, Writer<E>> writers = new HashMap<String, Writer<E>>();
+    private final HashMap<String, Writer<E>> writers = new HashMap<String, Writer<E>>();
 
     /**
      * Register a reader with an extension.
      *
-     * @param   reader     The reader to register
-     * @param   extension  The extension linked to the reader
+     * @param reader    The reader to register
+     * @param extension The extension linked to the reader
      *
-     * @return  The old reader or null
+     * @return The old reader or null
      */
     public Reader<E> registerReader(Reader<E> reader, String extension) {
         Reader<E> old = readers.get(extension);
@@ -58,10 +58,10 @@ public abstract class IOFactory<E> {
     /**
      * Register a writer with an extension.
      *
-     * @param   writer     The writer to register
-     * @param   extension  The extension linked to the writer
+     * @param writer    The writer to register
+     * @param extension The extension linked to the writer
      *
-     * @return  The old reader or null
+     * @return The old reader or null
      */
     public Writer<E> registerWriter(Writer<E> writer, String extension) {
         Writer<E> old = writers.get(extension);
@@ -72,9 +72,9 @@ public abstract class IOFactory<E> {
     /**
      * Unregister a reader extension.
      *
-     * @param   extension  The extension linked to a reader
+     * @param extension The extension linked to a reader
      *
-     * @return  The old reader or null
+     * @return The old reader or null
      */
     public Reader<E> unregisterReader(String extension) {
         Reader<E> old = readers.get(extension);
@@ -85,9 +85,9 @@ public abstract class IOFactory<E> {
     /**
      * Unregister a writer extension.
      *
-     * @param   extension  The extension linked to a writer
+     * @param extension The extension linked to a writer
      *
-     * @return  The old writer or null
+     * @return The old writer or null
      */
     public Writer<E> unregisterWriter(String extension) {
         Writer<E> old = writers.get(extension);
@@ -98,9 +98,9 @@ public abstract class IOFactory<E> {
     /**
      * Get the reader linked to an extension.
      *
-     * @param   extension  The extension linked to a reader
+     * @param extension The extension linked to a reader
      *
-     * @return  The reader or null
+     * @return The reader or null
      */
     public Reader<E> getReader(String extension) {
         return readers.get(extension);
@@ -109,9 +109,9 @@ public abstract class IOFactory<E> {
     /**
      * Get the writer linked to an extension.
      *
-     * @param   extension  The extension linked to a writer
+     * @param extension The extension linked to a writer
      *
-     * @return  The writer or null
+     * @return The writer or null
      */
     public Writer<E> getWriter(String extension) {
         return writers.get(extension);

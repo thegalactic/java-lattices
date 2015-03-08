@@ -10,12 +10,12 @@ package org.thegalactic.context.attribute.bool;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-import org.thegalactic.context.attribute.AbstractConstraint;
-import org.thegalactic.context.attribute.Constraint;
 import java.util.Set;
 import java.util.HashMap;
 import java.util.Collections;
 
+import org.thegalactic.context.attribute.AbstractConstraint;
+import org.thegalactic.context.attribute.Constraint;
 
 /**
  * BoolConstraint implements boolean constraints.
@@ -23,15 +23,14 @@ import java.util.Collections;
 public final class BoolConstraint extends AbstractConstraint {
 
     /**
-     * This class is not designed to be publicly instantiated.
-     *
-     * @param attribute the attribute linked to this constraint.
-     * @param isSet     is this boolean constraint set?
+     * The set of successors for the domain.
      */
-    private BoolConstraint(BoolAttribute attribute, boolean isSet) {
-        super(attribute);
-        this.isSet = isSet;
-    }
+    private static final HashMap<Constraint, Set<Constraint>> SUCCESSORS = new HashMap<Constraint, Set<Constraint>>();
+
+    /**
+     * Set of domains for boolean attributes.
+     */
+    private static final HashMap<BoolAttribute, BoolConstraint> DOMAINS = new HashMap<BoolAttribute, BoolConstraint>();
 
     /**
      * Get the domain associated with a boolean attribute.
@@ -50,6 +49,22 @@ public final class BoolConstraint extends AbstractConstraint {
             BoolConstraint.SUCCESSORS.put(successor, Collections.EMPTY_SET);
         }
         return domain;
+    }
+
+    /**
+     * Is this constraint set?.
+     */
+    private final boolean isSet;
+
+    /**
+     * This class is not designed to be publicly instantiated.
+     *
+     * @param attribute the attribute linked to this constraint.
+     * @param isSet     is this boolean constraint set?
+     */
+    private BoolConstraint(BoolAttribute attribute, boolean isSet) {
+        super(attribute);
+        this.isSet = isSet;
     }
 
     /**
@@ -91,25 +106,5 @@ public final class BoolConstraint extends AbstractConstraint {
         } else {
             return this.getAttribute().toString() + ":unset";
         }
-    }
-
-    /**
-     * Is this constraint set?.
-     */
-    private final boolean isSet;
-
-    /**
-     * The set of successors for the domain.
-     */
-    private static final HashMap<Constraint, Set<Constraint>> SUCCESSORS;
-
-    /**
-     * Set of domains for boolean attributes.
-     */
-    private static final HashMap<BoolAttribute, BoolConstraint> DOMAINS;
-
-    static {
-        DOMAINS = new HashMap<BoolAttribute, BoolConstraint>();
-        SUCCESSORS = new HashMap<Constraint, Set<Constraint>>();
     }
 }

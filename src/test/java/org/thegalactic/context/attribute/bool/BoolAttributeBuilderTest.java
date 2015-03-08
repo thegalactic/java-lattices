@@ -17,7 +17,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
-
 import org.thegalactic.context.Context;
 import org.thegalactic.context.attribute.Attribute;
 import org.thegalactic.context.attribute.AttributeBuilder;
@@ -27,12 +26,6 @@ import org.thegalactic.context.attribute.ContextImpl;
  * Test the BoolAttributeBuilder class.
  */
 public class BoolAttributeBuilderTest {
-
-    /**
-     * Constructor.
-     */
-    public BoolAttributeBuilderTest() {
-    }
 
     /**
      * Run before class.
@@ -46,6 +39,12 @@ public class BoolAttributeBuilderTest {
      */
     @AfterClass
     public static void tearDownClass() {
+    }
+
+    /**
+     * Constructor.
+     */
+    public BoolAttributeBuilderTest() {
     }
 
     /**

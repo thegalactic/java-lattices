@@ -10,7 +10,6 @@ package org.thegalactic.context.attribute;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import java.util.Set;
 import java.util.Collections;
 
@@ -29,7 +28,7 @@ public class ContextImpl extends AbstractContext {
      * @return the set of attributes
      */
     public Set<Attribute> getAttributes() {
-            return Collections.EMPTY_SET;
+        return Collections.EMPTY_SET;
     }
 
     /**
@@ -38,7 +37,7 @@ public class ContextImpl extends AbstractContext {
      * @return the set of observations
      */
     public Set<Observation> getObservations() {
-            return Collections.EMPTY_SET;
+        return Collections.EMPTY_SET;
     }
 
     /**
@@ -50,7 +49,7 @@ public class ContextImpl extends AbstractContext {
      * @return The value associated with an observation and an attribute
      */
     public Value getValue(Observation observation, Attribute attribute) {
-            return new ValueImpl();
+        return new ValueImpl();
     }
 
     /**

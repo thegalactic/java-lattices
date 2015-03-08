@@ -25,12 +25,6 @@ import static org.junit.Assert.assertTrue;
 public class BoolAttributeTest {
 
     /**
-     * Constructor.
-     */
-    public BoolAttributeTest() {
-    }
-
-    /**
      * Run before class.
      */
     @BeforeClass
@@ -42,6 +36,12 @@ public class BoolAttributeTest {
      */
     @AfterClass
     public static void tearDownClass() {
+    }
+
+    /**
+     * Constructor.
+     */
+    public BoolAttributeTest() {
     }
 
     /**

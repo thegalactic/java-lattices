@@ -10,7 +10,6 @@ package org.thegalactic.context.io;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import java.util.StringTokenizer;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -35,27 +34,19 @@ import org.thegalactic.context.TemporaryContext;
  * title Text UML graph
  */
 public final class Text implements Reader<TemporaryContext>, Writer<TemporaryContext> {
-    /**
-     * This class is not designed to be publicly instantiated.
-     */
-    private Text() {
-    }
 
     /**
      * The singleton instance.
      */
-    private static Text instance = null;
+    private static final Text INSTANCE = new Text();
 
     /**
      * Return the singleton instance of this class.
      *
-     * @return  the singleton instance
+     * @return the singleton instance
      */
     public static Text getInstance() {
-        if (instance == null) {
-            instance = new Text();
-        }
-        return instance;
+        return INSTANCE;
     }
 
     /**
@@ -64,6 +55,12 @@ public final class Text implements Reader<TemporaryContext>, Writer<TemporaryCon
     public static void register() {
         IOFactory.getInstance().registerReader(Text.getInstance(), "txt");
         IOFactory.getInstance().registerWriter(Text.getInstance(), "txt");
+    }
+
+    /**
+     * This class is not designed to be publicly instantiated.
+     */
+    private Text() {
     }
 
     /**
@@ -84,17 +81,17 @@ public final class Text implements Reader<TemporaryContext>, Writer<TemporaryCon
      * 4: c e
      * ~~~
      *
-     * @param   context  a context to read
-     * @param   file     a file
+     * @param context a context to read
+     * @param file    a file
      *
-     * @throws  IOException  When an IOException occurs
+     * @throws IOException When an IOException occurs
      */
     public void read(TemporaryContext context, BufferedReader file) throws IOException {
         /*
          * First line : All observations separated by a space.
          * A StringTokenizer is used to divide the line into different observations considering spaces as separator.
          */
-        StringTokenizer tokenizer =  new StringTokenizer(file.readLine());
+        StringTokenizer tokenizer = new StringTokenizer(file.readLine());
 
         // First token corresponds to the string "Observations:"
         if (!tokenizer.nextToken().equals("Observations:")) {
@@ -103,7 +100,7 @@ public final class Text implements Reader<TemporaryContext>, Writer<TemporaryCon
 
         // Add all the observations
         while (tokenizer.hasMoreTokens()) {
-            if (!context.addToObservations(new String(tokenizer.nextToken()))) {
+            if (!context.addToObservations(tokenizer.nextToken())) {
                 throw new IOException("Duplicated observation");
             }
         }
@@ -112,7 +109,7 @@ public final class Text implements Reader<TemporaryContext>, Writer<TemporaryCon
          * Second line : All attributes separated by a space
          * A StringTokenizer is used to divide the line into different token considering spaces as separator.
          */
-        tokenizer =  new StringTokenizer(file.readLine());
+        tokenizer = new StringTokenizer(file.readLine());
 
         // first token corresponds to the string "Attributes:"
         if (!tokenizer.nextToken().equals("Attributes:")) {
@@ -121,7 +118,7 @@ public final class Text implements Reader<TemporaryContext>, Writer<TemporaryCon
 
         // Add all the attributes
         while (tokenizer.hasMoreTokens()) {
-            if (!context.addToAttributes(new String(tokenizer.nextToken()))) {
+            if (!context.addToAttributes(tokenizer.nextToken())) {
                 throw new IOException("Duplicated attribute");
             }
         }
@@ -184,13 +181,12 @@ public final class Text implements Reader<TemporaryContext>, Writer<TemporaryCon
      * 4: c e
      * ~~~
      *
-     * @param   context  a context to write
-     * @param   file     a file
+     * @param context a context to write
+     * @param file    a file
      *
-     * @throws  IOException  When an IOException occurs
+     * @throws IOException When an IOException occurs
      */
     public void write(TemporaryContext context, BufferedWriter file) throws IOException {
         file.write(context.toString());
     }
 }
-

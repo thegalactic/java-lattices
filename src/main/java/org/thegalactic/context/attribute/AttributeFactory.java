@@ -22,12 +22,9 @@ import org.thegalactic.context.attribute.bool.BoolAttribute;
 public final class AttributeFactory {
 
     /**
-     * This class is not designed to be instantiated.
+     * Unique instance of this class.
      */
-    private AttributeFactory() {
-        builders = new HashMap<String, AttributeBuilder>();
-        builders.put(BoolAttribute.TYPE, (AttributeBuilder) new BoolAttributeBuilder());
-    }
+    private static final AttributeFactory INSTANCE = new AttributeFactory();
 
     /**
      * Get the unique instance of AttributeFactory.
@@ -35,10 +32,20 @@ public final class AttributeFactory {
      * @return the unique instance of AttributeFactory
      */
     public static AttributeFactory getInstance() {
-        if (instance == null) {
-            instance = new AttributeFactory();
-        }
-        return instance;
+        return INSTANCE;
+    }
+
+    /**
+     * Attribute builders.
+     */
+    private final HashMap<String, AttributeBuilder> builders;
+
+    /**
+     * This class is not designed to be instantiated.
+     */
+    private AttributeFactory() {
+        builders = new HashMap<String, AttributeBuilder>();
+        builders.put(BoolAttribute.TYPE, new BoolAttributeBuilder());
     }
 
     /**
@@ -78,14 +85,4 @@ public final class AttributeFactory {
         builders.remove(type);
         return this;
     }
-
-    /**
-     * Unique instance of this class.
-     */
-    private static AttributeFactory instance;
-
-    /**
-     * Attribute builders.
-     */
-    private final HashMap<String, AttributeBuilder> builders;
 }

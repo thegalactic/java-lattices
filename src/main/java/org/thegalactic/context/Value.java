@@ -10,7 +10,6 @@ package org.thegalactic.context;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 /**
  * A value for a context.
  */

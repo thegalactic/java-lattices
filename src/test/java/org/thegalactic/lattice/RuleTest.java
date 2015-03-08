@@ -10,7 +10,6 @@ package org.thegalactic.lattice;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
@@ -27,6 +26,7 @@ import org.thegalactic.dgraph.Node;
  * @author jeff
  */
 public class RuleTest {
+
     /**
      * Test the empty constructor.
      */

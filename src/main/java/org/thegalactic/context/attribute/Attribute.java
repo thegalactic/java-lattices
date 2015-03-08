@@ -10,7 +10,6 @@ package org.thegalactic.context.attribute;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import org.thegalactic.context.Context;
 import org.thegalactic.context.Observation;
 import org.thegalactic.context.Value;
@@ -19,6 +18,7 @@ import org.thegalactic.context.Value;
  * An attribute for a context.
  */
 public interface Attribute {
+
     /**
      * Get the context.
      *

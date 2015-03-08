@@ -23,6 +23,7 @@ package org.thegalactic.util;
  * @author jeff
  */
 public class Couple {
+
     /**
      * Left hand side of this component.
      */
@@ -36,8 +37,8 @@ public class Couple {
     /**
      * Constructor from two objects.
      *
-     * @param   l  left hand side of this component
-     * @param   r  right hand side of this component
+     * @param l left hand side of this component
+     * @param r right hand side of this component
      */
     public Couple(Object l, Object r) {
         this.left = l;
@@ -47,7 +48,7 @@ public class Couple {
     /**
      * Returns left hand side of this component.
      *
-     * @return  left hand side of this component
+     * @return left hand side of this component
      */
     public Object getLeft() {
         return left;
@@ -56,9 +57,9 @@ public class Couple {
     /**
      * Set left hand side of this component.
      *
-     * @param   left  hand side of this component
+     * @param left hand side of this component
      *
-     * @return  this for chaining
+     * @return this for chaining
      */
     public Couple setLeft(Object left) {
         this.left = left;
@@ -68,7 +69,7 @@ public class Couple {
     /**
      * Returns right hand side of this component.
      *
-     * @return  right hand side of this component
+     * @return right hand side of this component
      */
     public Object getRight() {
         return right;
@@ -77,9 +78,9 @@ public class Couple {
     /**
      * Set right hand side of this component.
      *
-     * @param   right  hand side of this component
+     * @param right hand side of this component
      *
-     * @return  this for chaining
+     * @return this for chaining
      */
     public Couple setRight(Object right) {
         this.right = right;
@@ -89,9 +90,9 @@ public class Couple {
     /**
      * Returns true if c is equals to this component.
      *
-     * @param   c  Couple tested with this component
+     * @param c Couple tested with this component
      *
-     * @return  true if c is equals to this component.
+     * @return true if c is equals to this component.
      */
     public boolean equals(Couple c) {
         return (this.left == c.getLeft()) && (this.right == c.getRight());
@@ -100,7 +101,7 @@ public class Couple {
     /**
      * Compute the hash code.
      *
-     * @return  an integer representing the object
+     * @return an integer representing the object
      */
     @Override
     public int hashCode() {
@@ -110,7 +111,7 @@ public class Couple {
     /**
      * Returns a string representations of this component.
      *
-     * @return  a string representations of this component.
+     * @return a string representations of this component.
      */
     @Override
     public String toString() {

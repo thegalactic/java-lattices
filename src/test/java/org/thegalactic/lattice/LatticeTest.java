@@ -10,7 +10,6 @@ package org.thegalactic.lattice;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import org.junit.Test;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
@@ -29,6 +28,7 @@ import org.thegalactic.context.TemporaryContext;
  * @author Jean-François
  */
 public class LatticeTest {
+
     /**
      * Test empty constructor.
      */
@@ -38,6 +38,7 @@ public class LatticeTest {
         assertFalse(l.getNodes() == null);
         assertFalse(l.getEdges() == null);
     }
+
     /**
      * Test constructor from a TreeSet.
      */
@@ -48,6 +49,7 @@ public class LatticeTest {
         Lattice l = new Lattice(ts);
         assertEquals(l.getNodes(), ts);
     }
+
     /**
      * Test constructor from a DAG.
      */
@@ -58,20 +60,29 @@ public class LatticeTest {
         Lattice l = new Lattice(dag);
         assertEquals(l.getNodes(), dag.getNodes());
     }
+
     /**
      * Test the getArrowRelation method.
      */
     @Test
     public void testgetArrowRelation() {
         Lattice l = new Lattice();
-        Node a = new Node("a"); l.addNode(a);
-        Node b = new Node("b"); l.addNode(b);
-        Node c = new Node("c"); l.addNode(c);
-        Node d = new Node("d"); l.addNode(d);
-        Node e = new Node("e"); l.addNode(e);
-        Node f = new Node("f"); l.addNode(f);
-        Node g = new Node("g"); l.addNode(g);
-        Node h = new Node("h"); l.addNode(h);
+        Node a = new Node("a");
+        l.addNode(a);
+        Node b = new Node("b");
+        l.addNode(b);
+        Node c = new Node("c");
+        l.addNode(c);
+        Node d = new Node("d");
+        l.addNode(d);
+        Node e = new Node("e");
+        l.addNode(e);
+        Node f = new Node("f");
+        l.addNode(f);
+        Node g = new Node("g");
+        l.addNode(g);
+        Node h = new Node("h");
+        l.addNode(h);
         l.addEdge(a, b);
         l.addEdge(b, c);
         l.addEdge(b, d);
@@ -87,26 +98,33 @@ public class LatticeTest {
         assertTrue(ar.isDown(ar.getEdge(c, d)));
         assertTrue(ar.isCirc(ar.getEdge(h, a)));
     }
+
     /**
      * Test bottom method.
      */
     @Test
     public void testbottom() {
         Lattice l = new Lattice();
-        Node a = new Node("a"); l.addNode(a);
-        Node b = new Node("b"); l.addNode(b);
+        Node a = new Node("a");
+        l.addNode(a);
+        Node b = new Node("b");
+        l.addNode(b);
         l.addEdge(a, b);
         assertEquals(l.bottom(), a);
     }
+
     /**
      * test getCanonicalDirectBasis.
      */
     @Test
     public void testgetCanonicalDirectBasis() {
         Lattice l = new Lattice();
-        Node a = new Node("a"); l.addNode(a);
-        Node b = new Node("b"); l.addNode(b);
-        Node c = new Node("c"); l.addNode(c);
+        Node a = new Node("a");
+        l.addNode(a);
+        Node b = new Node("b");
+        l.addNode(b);
+        Node c = new Node("c");
+        l.addNode(c);
         l.addEdge(a, b);
         l.addEdge(b, c);
         ImplicationalSystem is = l.getCanonicalDirectBasis();
@@ -115,28 +133,35 @@ public class LatticeTest {
         r.addToConclusion("b");
         assertTrue(is.containsRule(r));
     }
+
     /**
      * Test getDependencyGraph method.
      */
     @Test
     public void testgetDependencyGraph() {
         DGraph dg = new DGraph();
-        Node a = new Node("a"); dg.addNode(a);
-        Node b = new Node("b"); dg.addNode(b);
+        Node a = new Node("a");
+        dg.addNode(a);
+        Node b = new Node("b");
+        dg.addNode(b);
         dg.addEdge(a, b);
         Lattice l = new Lattice();
         l.setDependencyGraph(dg);
         assertEquals(l.getDependencyGraph(), dg);
     }
+
     /**
      * Test getImplicationalSystem method.
      */
     @Test
     public void testgetImplicationalSystem() {
         Lattice l = new Lattice();
-        Node a = new Node("a"); l.addNode(a);
-        Node b = new Node("b"); l.addNode(b);
-        Node c = new Node("c"); l.addNode(c);
+        Node a = new Node("a");
+        l.addNode(a);
+        Node b = new Node("b");
+        l.addNode(b);
+        Node c = new Node("c");
+        l.addNode(c);
         l.addEdge(a, b);
         l.addEdge(b, c);
         ImplicationalSystem is = l.getImplicationalSystem();
@@ -146,15 +171,19 @@ public class LatticeTest {
         r.addToConclusion("b");
         assertTrue(is.containsRule(r));
     }
+
     /**
      * Test getMinimalGenerators method.
      */
     @Test
     public void testgetMinimalGenerators() {
         Lattice l = new Lattice();
-        Node a = new Node("a"); l.addNode(a);
-        Node b = new Node("b"); l.addNode(b);
-        Node c = new Node("c"); l.addNode(c);
+        Node a = new Node("a");
+        l.addNode(a);
+        Node b = new Node("b");
+        l.addNode(b);
+        Node c = new Node("c");
+        l.addNode(c);
         l.addEdge(a, b);
         l.addEdge(b, c);
         TreeSet ts = l.getMinimalGenerators();
@@ -162,16 +191,21 @@ public class LatticeTest {
         prem.add("c");
         assertTrue(ts.contains(prem));
     }
+
     /**
      * test getTable method.
      */
     @Test
     public void testgetTable() {
         Lattice l = new Lattice();
-        Node a = new Node("a"); l.addNode(a);
-        Node b = new Node("b"); l.addNode(b);
-        Node c = new Node("c"); l.addNode(c);
-        Node d = new Node("d"); l.addNode(d);
+        Node a = new Node("a");
+        l.addNode(a);
+        Node b = new Node("b");
+        l.addNode(b);
+        Node c = new Node("c");
+        l.addNode(c);
+        Node d = new Node("d");
+        l.addNode(d);
         l.addEdge(a, b);
         l.addEdge(b, c);
         l.addEdge(a, d);
@@ -182,29 +216,37 @@ public class LatticeTest {
         assertTrue(ctx.containsObservation(b));
         assertTrue(ctx.containsObservation(d));
     }
+
     /**
      * Test hasDependencyGraph method.
      */
     @Test
     public void testhasDependencyGraph() {
         DGraph dg = new DGraph();
-        Node a = new Node("a"); dg.addNode(a);
-        Node b = new Node("b"); dg.addNode(b);
+        Node a = new Node("a");
+        dg.addNode(a);
+        Node b = new Node("b");
+        dg.addNode(b);
         dg.addEdge(a, b);
         Lattice l = new Lattice();
         l.setDependencyGraph(dg);
         assertTrue(l.hasDependencyGraph());
     }
+
     /**
      * test irreductibleClosure.
      */
     @Test
     public void testirreducibleClosure() {
         Lattice l = new Lattice();
-        Node a = new Node("a"); l.addNode(a);
-        Node b = new Node("b"); l.addNode(b);
-        Node c = new Node("c"); l.addNode(c);
-        Node d = new Node("d"); l.addNode(d);
+        Node a = new Node("a");
+        l.addNode(a);
+        Node b = new Node("b");
+        l.addNode(b);
+        Node c = new Node("c");
+        l.addNode(c);
+        Node d = new Node("d");
+        l.addNode(d);
         l.addEdge(a, b);
         l.addEdge(b, c);
         l.addEdge(a, d);
@@ -213,6 +255,7 @@ public class LatticeTest {
         assertEquals(cl.getNodes().size(), 4);
         assertEquals(cl.getEdges().size(), 4);
     }
+
     /**
      * test joinClosure.
      */
@@ -223,6 +266,7 @@ public class LatticeTest {
         join.addAll(l.joinIrreducibles());
         assertEquals(l.joinClosure(join).size(), 3);
     }
+
     /**
      * test meetClosure.
      */
@@ -233,6 +277,7 @@ public class LatticeTest {
         meet.addAll(l.meetIrreducibles());
         assertEquals(l.meetClosure(meet).size(), 3);
     }
+
     /**
      * test fullClosure.
      */
@@ -243,6 +288,7 @@ public class LatticeTest {
         meet.addAll(l.meetIrreducibles());
         assertEquals(l.fullClosure(meet).size(), 4);
     }
+
     /**
      * test HybridGenerators.
      */
@@ -252,16 +298,21 @@ public class LatticeTest {
         TreeSet<ComparableSet> gen = l.hybridGenerators();
         assertEquals(gen.first().size(), 2);
     }
+
     /**
      * Test irreductiblesSubgraph.
      */
     @Test
     public void testirreduciblesSubgraph() {
         Lattice l = new Lattice();
-        Node a = new Node("a"); l.addNode(a);
-        Node b = new Node("b"); l.addNode(b);
-        Node c = new Node("c"); l.addNode(c);
-        Node d = new Node("d"); l.addNode(d);
+        Node a = new Node("a");
+        l.addNode(a);
+        Node b = new Node("b");
+        l.addNode(b);
+        Node c = new Node("c");
+        l.addNode(c);
+        Node d = new Node("d");
+        l.addNode(d);
         l.addEdge(a, b);
         l.addEdge(b, c);
         l.addEdge(a, d);
@@ -270,22 +321,28 @@ public class LatticeTest {
         assertTrue(dag.containsNode(b));
         assertTrue(dag.containsNode(d));
     }
+
     /**
      * Test isLattice.
      */
     @Test
     public void testisLattice() {
         Lattice l = new Lattice();
-        Node a = new Node("a"); l.addNode(a);
-        Node b = new Node("b"); l.addNode(b);
-        Node c = new Node("c"); l.addNode(c);
-        Node d = new Node("d"); l.addNode(d);
+        Node a = new Node("a");
+        l.addNode(a);
+        Node b = new Node("b");
+        l.addNode(b);
+        Node c = new Node("c");
+        l.addNode(c);
+        Node d = new Node("d");
+        l.addNode(d);
         l.addEdge(a, b);
         l.addEdge(b, c);
         l.addEdge(a, d);
         l.addEdge(d, c);
         assertTrue(l.isLattice());
-        Node e = new Node("e"); l.addNode(e);
+        Node e = new Node("e");
+        l.addNode(e);
         l.addEdge(e, b);
         l.addEdge(e, d);
         assertFalse(l.isLattice());
@@ -369,70 +426,92 @@ public class LatticeTest {
 
         assertFalse(notcn.isCN());
     }
+
     /**
      * Test isAtomistic method.
      */
     @Test
     public void testisAtomistic() {
         Lattice l = new Lattice();
-        Node a = new Node("a"); l.addNode(a);
-        Node b = new Node("b"); l.addNode(b);
-        Node c = new Node("c"); l.addNode(c);
-        Node d = new Node("d"); l.addNode(d);
+        Node a = new Node("a");
+        l.addNode(a);
+        Node b = new Node("b");
+        l.addNode(b);
+        Node c = new Node("c");
+        l.addNode(c);
+        Node d = new Node("d");
+        l.addNode(d);
         l.addEdge(a, b);
         l.addEdge(a, c);
         l.addEdge(b, d);
         l.addEdge(c, d);
         assertTrue(l.isAtomistic());
-        Node e = new Node("e"); l.addNode(e);
+        Node e = new Node("e");
+        l.addNode(e);
         l.addEdge(e, a);
         assertFalse(l.isAtomistic());
     }
+
     /**
      * Test isCoAtomistic method.
      */
     @Test
     public void testisCoAtomistic() {
         Lattice l = new Lattice();
-        Node a = new Node("a"); l.addNode(a);
-        Node b = new Node("b"); l.addNode(b);
-        Node c = new Node("c"); l.addNode(c);
-        Node d = new Node("d"); l.addNode(d);
+        Node a = new Node("a");
+        l.addNode(a);
+        Node b = new Node("b");
+        l.addNode(b);
+        Node c = new Node("c");
+        l.addNode(c);
+        Node d = new Node("d");
+        l.addNode(d);
         l.addEdge(b, a);
         l.addEdge(c, a);
         l.addEdge(d, a);
         l.addEdge(d, a);
         assertTrue(l.isCoAtomistic());
-        Node e = new Node("e"); l.addNode(e);
+        Node e = new Node("e");
+        l.addNode(e);
         l.addEdge(a, e);
         assertFalse(l.isCoAtomistic());
     }
+
     /**
      * Test join method.
      */
     @Test
     public void testjoin() {
         Lattice l = new Lattice();
-        Node a = new Node("a"); l.addNode(a);
-        Node b = new Node("b"); l.addNode(b);
-        Node c = new Node("c"); l.addNode(c);
-        Node d = new Node("d"); l.addNode(d);
+        Node a = new Node("a");
+        l.addNode(a);
+        Node b = new Node("b");
+        l.addNode(b);
+        Node c = new Node("c");
+        l.addNode(c);
+        Node d = new Node("d");
+        l.addNode(d);
         l.addEdge(a, b);
         l.addEdge(b, c);
         l.addEdge(a, d);
         l.addEdge(d, c);
         assertEquals(l.join(b, d), c);
     }
+
     /**
      * Test joinClosure method.
      */
     @Test
     public void testjoinClosure() {
         Lattice l = new Lattice();
-        Node a = new Node("a"); l.addNode(a);
-        Node b = new Node("b"); l.addNode(b);
-        Node c = new Node("c"); l.addNode(c);
-        Node d = new Node("d"); l.addNode(d);
+        Node a = new Node("a");
+        l.addNode(a);
+        Node b = new Node("b");
+        l.addNode(b);
+        Node c = new Node("c");
+        l.addNode(c);
+        Node d = new Node("d");
+        l.addNode(d);
         l.addEdge(a, b);
         l.addEdge(b, c);
         l.addEdge(a, d);
@@ -441,16 +520,21 @@ public class LatticeTest {
         assertEquals(cl.getNodes().size(), 4);
         assertEquals(cl.getEdges().size(), 4);
     }
+
     /**
      * test joinIrreductibles method.
      */
     @Test
     public void testjoinIrreduciblesNode() {
         Lattice l = new Lattice();
-        Node a = new Node("a"); l.addNode(a);
-        Node b = new Node("b"); l.addNode(b);
-        Node c = new Node("c"); l.addNode(c);
-        Node d = new Node("d"); l.addNode(d);
+        Node a = new Node("a");
+        l.addNode(a);
+        Node b = new Node("b");
+        l.addNode(b);
+        Node c = new Node("c");
+        l.addNode(c);
+        Node d = new Node("d");
+        l.addNode(d);
         l.addEdge(a, b);
         l.addEdge(b, c);
         l.addEdge(a, d);
@@ -459,16 +543,21 @@ public class LatticeTest {
         assertTrue(j.contains(b));
         assertTrue(j.contains(d));
     }
+
     /**
      * Test joinIrreductibles.
      */
     @Test
     public void testjoinIrreducibles() {
         Lattice l = new Lattice();
-        Node a = new Node("a"); l.addNode(a);
-        Node b = new Node("b"); l.addNode(b);
-        Node c = new Node("c"); l.addNode(c);
-        Node d = new Node("d"); l.addNode(d);
+        Node a = new Node("a");
+        l.addNode(a);
+        Node b = new Node("b");
+        l.addNode(b);
+        Node c = new Node("c");
+        l.addNode(c);
+        Node d = new Node("d");
+        l.addNode(d);
         l.addEdge(a, b);
         l.addEdge(b, c);
         l.addEdge(a, d);
@@ -477,16 +566,21 @@ public class LatticeTest {
         assertTrue(j.contains(b));
         assertTrue(j.contains(d));
     }
+
     /**
      * test joinIrreductiblesSubgraph.
      */
     @Test
     public void testjoinIrreduciblesSubgraph() {
         Lattice l = new Lattice();
-        Node a = new Node("a"); l.addNode(a);
-        Node b = new Node("b"); l.addNode(b);
-        Node c = new Node("c"); l.addNode(c);
-        Node d = new Node("d"); l.addNode(d);
+        Node a = new Node("a");
+        l.addNode(a);
+        Node b = new Node("b");
+        l.addNode(b);
+        Node c = new Node("c");
+        l.addNode(c);
+        Node d = new Node("d");
+        l.addNode(d);
         l.addEdge(a, b);
         l.addEdge(b, c);
         l.addEdge(a, d);
@@ -495,32 +589,42 @@ public class LatticeTest {
         assertTrue(dag.containsNode(b));
         assertTrue(dag.containsNode(d));
     }
+
     /**
      * Test meet method.
      */
     @Test
     public void testmeet() {
         Lattice l = new Lattice();
-        Node a = new Node("a"); l.addNode(a);
-        Node b = new Node("b"); l.addNode(b);
-        Node c = new Node("c"); l.addNode(c);
-        Node d = new Node("d"); l.addNode(d);
+        Node a = new Node("a");
+        l.addNode(a);
+        Node b = new Node("b");
+        l.addNode(b);
+        Node c = new Node("c");
+        l.addNode(c);
+        Node d = new Node("d");
+        l.addNode(d);
         l.addEdge(a, b);
         l.addEdge(b, c);
         l.addEdge(a, d);
         l.addEdge(d, c);
         assertEquals(l.meet(b, d), a);
     }
+
     /**
      * test meetClosure method.
      */
     @Test
     public void testmeetClosure() {
         Lattice l = new Lattice();
-        Node a = new Node("a"); l.addNode(a);
-        Node b = new Node("b"); l.addNode(b);
-        Node c = new Node("c"); l.addNode(c);
-        Node d = new Node("d"); l.addNode(d);
+        Node a = new Node("a");
+        l.addNode(a);
+        Node b = new Node("b");
+        l.addNode(b);
+        Node c = new Node("c");
+        l.addNode(c);
+        Node d = new Node("d");
+        l.addNode(d);
         l.addEdge(a, b);
         l.addEdge(b, c);
         l.addEdge(a, d);
@@ -529,16 +633,21 @@ public class LatticeTest {
         assertEquals(cl.getNodes().size(), 4);
         assertEquals(cl.getEdges().size(), 4);
     }
+
     /**
      * Test meetIrreductibles method.
      */
     @Test
     public void testmeetIrreduciblesNode() {
         Lattice l = new Lattice();
-        Node a = new Node("a"); l.addNode(a);
-        Node b = new Node("b"); l.addNode(b);
-        Node c = new Node("c"); l.addNode(c);
-        Node d = new Node("d"); l.addNode(d);
+        Node a = new Node("a");
+        l.addNode(a);
+        Node b = new Node("b");
+        l.addNode(b);
+        Node c = new Node("c");
+        l.addNode(c);
+        Node d = new Node("d");
+        l.addNode(d);
         l.addEdge(a, b);
         l.addEdge(b, c);
         l.addEdge(a, d);
@@ -547,16 +656,21 @@ public class LatticeTest {
         assertTrue(m.contains(b));
         assertTrue(m.contains(d));
     }
+
     /**
      * Test meetIrreductibles.
      */
     @Test
     public void testmeetIrreducibles() {
         Lattice l = new Lattice();
-        Node a = new Node("a"); l.addNode(a);
-        Node b = new Node("b"); l.addNode(b);
-        Node c = new Node("c"); l.addNode(c);
-        Node d = new Node("d"); l.addNode(d);
+        Node a = new Node("a");
+        l.addNode(a);
+        Node b = new Node("b");
+        l.addNode(b);
+        Node c = new Node("c");
+        l.addNode(c);
+        Node d = new Node("d");
+        l.addNode(d);
         l.addEdge(a, b);
         l.addEdge(b, c);
         l.addEdge(a, d);
@@ -565,16 +679,21 @@ public class LatticeTest {
         assertTrue(m.contains(b));
         assertTrue(m.contains(d));
     }
+
     /**
      * test meetIrreductiblesSubgraph.
      */
     @Test
     public void testmeetIrreduciblesSubgraph() {
         Lattice l = new Lattice();
-        Node a = new Node("a"); l.addNode(a);
-        Node b = new Node("b"); l.addNode(b);
-        Node c = new Node("c"); l.addNode(c);
-        Node d = new Node("d"); l.addNode(d);
+        Node a = new Node("a");
+        l.addNode(a);
+        Node b = new Node("b");
+        l.addNode(b);
+        Node c = new Node("c");
+        l.addNode(c);
+        Node d = new Node("d");
+        l.addNode(d);
         l.addEdge(a, b);
         l.addEdge(b, c);
         l.addEdge(a, d);
@@ -583,27 +702,33 @@ public class LatticeTest {
         assertTrue(dag.containsNode(b));
         assertTrue(dag.containsNode(d));
     }
+
     /**
      * Test setDependencyGraph method.
      */
     @Test
     public void testsetDependencyGraph() {
         DGraph dg = new DGraph();
-        Node a = new Node("a"); dg.addNode(a);
-        Node b = new Node("b"); dg.addNode(b);
+        Node a = new Node("a");
+        dg.addNode(a);
+        Node b = new Node("b");
+        dg.addNode(b);
         dg.addEdge(a, b);
         Lattice l = new Lattice();
         l.setDependencyGraph(dg);
         assertTrue(l.hasDependencyGraph());
     }
+
     /**
      * Test top method.
      */
     @Test
     public void testtop() {
         Lattice l = new Lattice();
-        Node a = new Node("a"); l.addNode(a);
-        Node b = new Node("b"); l.addNode(b);
+        Node a = new Node("a");
+        l.addNode(a);
+        Node b = new Node("b");
+        l.addNode(b);
         l.addEdge(a, b);
         assertEquals(l.top(), b);
     }

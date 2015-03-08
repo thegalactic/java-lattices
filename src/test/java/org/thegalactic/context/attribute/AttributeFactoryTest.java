@@ -26,12 +26,6 @@ import org.thegalactic.context.Context;
 public class AttributeFactoryTest {
 
     /**
-     * Constructor.
-     */
-    public AttributeFactoryTest() {
-    }
-
-    /**
      * Run before class.
      */
     @BeforeClass
@@ -43,6 +37,12 @@ public class AttributeFactoryTest {
      */
     @AfterClass
     public static void tearDownClass() {
+    }
+
+    /**
+     * Constructor.
+     */
+    public AttributeFactoryTest() {
     }
 
     /**

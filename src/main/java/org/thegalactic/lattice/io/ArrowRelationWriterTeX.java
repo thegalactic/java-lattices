@@ -10,7 +10,6 @@ package org.thegalactic.lattice.io;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.io.BufferedWriter;
@@ -35,27 +34,19 @@ import org.thegalactic.dgraph.Node;
  * title ArrowRelationWriterTeX UML graph
  */
 public final class ArrowRelationWriterTeX implements ArrowRelationWriter {
-    /**
-     * This class is not designed to be publicly instantiated.
-     */
-    private ArrowRelationWriterTeX() {
-    }
 
     /**
      * The singleton instance.
      */
-    private static ArrowRelationWriterTeX instance = null;
+    private static final ArrowRelationWriterTeX INSTANCE = new ArrowRelationWriterTeX();
 
     /**
      * Return the singleton instance of this class.
      *
-     * @return  the singleton instance
+     * @return the singleton instance
      */
     public static ArrowRelationWriterTeX getInstance() {
-        if (instance == null) {
-            instance = new ArrowRelationWriterTeX();
-        }
-        return instance;
+        return INSTANCE;
     }
 
     /**
@@ -66,13 +57,19 @@ public final class ArrowRelationWriterTeX implements ArrowRelationWriter {
     }
 
     /**
+     * This class is not designed to be publicly instantiated.
+     */
+    private ArrowRelationWriterTeX() {
+    }
+
+    /**
      * Produces the LaTex source code for the array of arrows of this component.
      * The LaTeX source produced isn't autonomous. It must be included in a document.
      *
-     * @param   arrow  an arrow relation to write
-     * @param   file   a file
+     * @param arrow an arrow relation to write
+     * @param file  a file
      *
-     * @throws  IOException  When an IOException occurs
+     * @throws IOException When an IOException occurs
      */
     public void write(ArrowRelation arrow, BufferedWriter file) throws IOException {
         SortedSet<Edge> edges = arrow.getEdges();
@@ -97,27 +94,28 @@ public final class ArrowRelationWriterTeX implements ArrowRelationWriter {
                     str += " & $\\uparrow$";
                 } else {
                     if (arrow.isDown(e)) {
-                    str += " & $\\downarrow$";
-                } else {
-                    if (arrow.isUpDown(e)) {
-                    str += " & $\\updownarrow$";
-                } else {
-                    if (arrow.isCross(e)) {
-                    str += " & $\\times$";
-                } else {
-                    str += " & $\\circ$";
+                        str += " & $\\downarrow$";
+                    } else {
+                        if (arrow.isUpDown(e)) {
+                            str += " & $\\updownarrow$";
+                        } else {
+                            if (arrow.isCross(e)) {
+                                str += " & $\\times$";
+                            } else {
+                                str += " & $\\circ$";
+                            }
+                        }
                     }
-                    }
-                    }
-                /* Previous code, in a Java7 only way, was :
-                switch ((String)e.getContent()) {
-                    case "Up":str += " & $\\uparrow$";break;
-                    case "Down":str += " & $\\downarrow$";break;
-                    case "UpDown":str += " & $\\updownarrow$";break;
-                    case "Cross":str += " & $\\times$";break;
-                    case "Circ":str += " & $\\circ$";break;
-                    default :break;
-                */
+                    /*
+                     * Previous code, in a Java7 only way, was :
+                     * switch ((String)e.getContent()) {
+                     * case "Up":str += " & $\\uparrow$";break;
+                     * case "Down":str += " & $\\downarrow$";break;
+                     * case "UpDown":str += " & $\\updownarrow$";break;
+                     * case "Cross":str += " & $\\times$";break;
+                     * case "Circ":str += " & $\\circ$";break;
+                     * default :break;
+                     */
                 }
             }
             str += "\\\\ \n";

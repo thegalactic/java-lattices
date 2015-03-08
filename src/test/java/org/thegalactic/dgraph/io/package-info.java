@@ -8,9 +8,7 @@
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 /**
  * This package is for testing the dgraph.io package.
  */
 package org.thegalactic.dgraph.io;
-

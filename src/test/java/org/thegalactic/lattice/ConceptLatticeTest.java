@@ -10,7 +10,6 @@ package org.thegalactic.lattice;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
@@ -30,14 +29,17 @@ import org.thegalactic.context.TemporaryContext;
  * Test of class ConceptLattice.
  */
 public class ConceptLatticeTest {
+
     /**
      * Test of addNode method, of class ConceptLattice.
      */
     @Test
     public void testConstructorFromLattice() {
         Lattice l = new Lattice();
-        Concept a = new Concept(true, true); l.addNode(a);
-        Concept b = new Concept(true, true); l.addNode(b);
+        Concept a = new Concept(true, true);
+        l.addNode(a);
+        Concept b = new Concept(true, true);
+        l.addNode(b);
         l.addEdge(a, b);
         ConceptLattice cl = new ConceptLattice(l);
         assertTrue(cl.isLattice());
@@ -107,8 +109,10 @@ public class ConceptLatticeTest {
     @Test
     public void testContainsAllSetA() {
         Lattice l = new Lattice();
-        Concept a = new Concept(true, true); l.addNode(a);
-        Concept b = new Concept(true, true); l.addNode(b);
+        Concept a = new Concept(true, true);
+        l.addNode(a);
+        Concept b = new Concept(true, true);
+        l.addNode(b);
         l.addEdge(a, b);
         ConceptLattice instance = new ConceptLattice(l);
         boolean expResult = true;
@@ -125,8 +129,10 @@ public class ConceptLatticeTest {
     @Test
     public void testContainsAllSetB() {
         Lattice l = new Lattice();
-        Concept a = new Concept(true, true); l.addNode(a);
-        Concept b = new Concept(true, true); l.addNode(b);
+        Concept a = new Concept(true, true);
+        l.addNode(a);
+        Concept b = new Concept(true, true);
+        l.addNode(b);
         l.addEdge(a, b);
         ConceptLattice instance = new ConceptLattice(l);
         boolean expResult = true;
@@ -143,8 +149,10 @@ public class ConceptLatticeTest {
     @Test
     public void testClone() {
         Lattice l = new Lattice();
-        Concept a = new Concept(true, true); l.addNode(a);
-        Concept b = new Concept(true, true); l.addNode(b);
+        Concept a = new Concept(true, true);
+        l.addNode(a);
+        Concept b = new Concept(true, true);
+        l.addNode(b);
         l.addEdge(a, b);
         ConceptLattice cl = new ConceptLattice(l);
         ConceptLattice result = cl.clone();
@@ -159,10 +167,12 @@ public class ConceptLatticeTest {
     @Test
     public void testGetConcept() {
         Lattice l = new Lattice();
-        Concept a = new Concept(true, true); l.addNode(a);
+        Concept a = new Concept(true, true);
+        l.addNode(a);
         ConceptLattice cl = new ConceptLattice(l);
         assertFalse(cl.getConcept(new ComparableSet(), new ComparableSet()) == null);
     }
+
     /**
      * Test of removeAllSetA method, of class ConceptLattice.
      */
@@ -240,8 +250,10 @@ public class ConceptLatticeTest {
         com3.add((Comparable) "c");
         com4.add((Comparable) "d");
         Lattice l = new Lattice();
-        Concept a = new Concept(com1, com4); l.addNode(a);
-        Concept b = new Concept(com3, com2); l.addNode(b);
+        Concept a = new Concept(com1, com4);
+        l.addNode(a);
+        Concept b = new Concept(com3, com2);
+        l.addNode(b);
         l.addEdge(a, b);
         ConceptLattice instance = new ConceptLattice(l);
         Lattice lat = instance.getJoinReduction();
@@ -264,8 +276,10 @@ public class ConceptLatticeTest {
         com3.add((Comparable) "c");
         com4.add((Comparable) "d");
         Lattice l = new Lattice();
-        Concept a = new Concept(com1, com4); l.addNode(a);
-        Concept b = new Concept(com3, com2); l.addNode(b);
+        Concept a = new Concept(com1, com4);
+        l.addNode(a);
+        Concept b = new Concept(com3, com2);
+        l.addNode(b);
         l.addEdge(a, b);
         ConceptLattice instance = new ConceptLattice(l);
         Lattice lat = instance.getMeetReduction();
@@ -288,8 +302,10 @@ public class ConceptLatticeTest {
         com3.add((Comparable) "c");
         com4.add((Comparable) "d");
         Lattice l = new Lattice();
-        Concept a = new Concept(com1, com4); l.addNode(a);
-        Concept b = new Concept(com3, com2); l.addNode(b);
+        Concept a = new Concept(com1, com4);
+        l.addNode(a);
+        Concept b = new Concept(com3, com2);
+        l.addNode(b);
         l.addEdge(a, b);
         ConceptLattice instance = new ConceptLattice(l);
         Lattice lat = instance.getIrreduciblesReduction();
@@ -418,8 +434,10 @@ public class ConceptLatticeTest {
             String filename = file.getPath();
             file.delete();
             ConceptLattice l = new ConceptLattice();
-            Concept a = new Concept(true, true); l.addNode(a);
-            Concept b = new Concept(true, true); l.addNode(b);
+            Concept a = new Concept(true, true);
+            l.addNode(a);
+            Concept b = new Concept(true, true);
+            l.addNode(b);
             l.addEdge(a, b);
             l.save(filename);
             String content = "";
@@ -429,16 +447,17 @@ public class ConceptLatticeTest {
                 content += scanner.nextLine();
             }
             assertEquals(content, "digraph G {Graph [rankdir=BT]"
-                + a.getIdentifier() + " [label=\" []\\n[]\"]"
-                + b.getIdentifier() + " [label=\" []\\n[]\"]"
-                + a.getIdentifier() + "->" + b.getIdentifier()
-                + "}"
+                    + a.getIdentifier() + " [label=\" []\\n[]\"]"
+                    + b.getIdentifier() + " [label=\" []\\n[]\"]"
+                    + a.getIdentifier() + "->" + b.getIdentifier()
+                    + "}"
             );
             file.delete();
         } catch (Exception exception) {
             exception.printStackTrace();
         }
     }
+
     /**
      * Test iceberg method.
      */

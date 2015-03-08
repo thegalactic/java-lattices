@@ -10,7 +10,6 @@ package org.thegalactic.dgraph;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -20,6 +19,7 @@ import static org.junit.Assert.assertFalse;
  * Test the dgraph.Edge class.
  */
 public class EdgeTest {
+
     /**
      * Test the full constructor.
      */
@@ -104,4 +104,3 @@ public class EdgeTest {
         assertEquals(edge.toString(), "Hello->World(happy new year)");
     }
 }
-

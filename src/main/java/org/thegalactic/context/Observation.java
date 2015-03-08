@@ -12,11 +12,11 @@ import org.thegalactic.context.attribute.Attribute;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 /**
  * An observation for a context.
  */
 public interface Observation {
+
     /**
      * Get the context.
      *

@@ -28,12 +28,6 @@ import org.thegalactic.context.attribute.Attribute;
 public class AbstractContextTest {
 
     /**
-     * Constructor.
-     */
-    public AbstractContextTest() {
-    }
-
-    /**
      * Run before class.
      */
     @BeforeClass
@@ -45,6 +39,12 @@ public class AbstractContextTest {
      */
     @AfterClass
     public static void tearDownClass() {
+    }
+
+    /**
+     * Constructor.
+     */
+    public AbstractContextTest() {
     }
 
     /**

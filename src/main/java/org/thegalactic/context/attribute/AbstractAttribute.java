@@ -10,7 +10,6 @@ package org.thegalactic.context.attribute;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import org.thegalactic.context.Context;
 import org.thegalactic.context.Observation;
 import org.thegalactic.context.Value;
@@ -19,6 +18,16 @@ import org.thegalactic.context.Value;
  * A named attribute for a context.
  */
 public abstract class AbstractAttribute implements Attribute {
+
+    /**
+     * Attribute name.
+     */
+    private final String name;
+
+    /**
+     * Attribute context.
+     */
+    private final Context context;
 
     /**
      * Constructor.
@@ -84,14 +93,4 @@ public abstract class AbstractAttribute implements Attribute {
     public Value getValue(Observation observation) {
         return this.getContext().getValue(observation, this);
     }
-
-    /**
-     * Attribute name.
-     */
-    private final String name;
-
-    /**
-     * Attribute context.
-     */
-    private final Context context;
 }

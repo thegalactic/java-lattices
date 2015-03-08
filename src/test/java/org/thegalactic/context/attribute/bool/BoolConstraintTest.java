@@ -27,12 +27,6 @@ import java.util.Set;
 public class BoolConstraintTest {
 
     /**
-     * Constructor.
-     */
-    public BoolConstraintTest() {
-    }
-
-    /**
      * Run before class.
      */
     @BeforeClass
@@ -44,6 +38,12 @@ public class BoolConstraintTest {
      */
     @AfterClass
     public static void tearDownClass() {
+    }
+
+    /**
+     * Constructor.
+     */
+    public BoolConstraintTest() {
     }
 
     /**

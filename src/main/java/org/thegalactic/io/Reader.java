@@ -10,14 +10,13 @@ package org.thegalactic.io;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import java.io.BufferedReader;
 import java.io.IOException;
 
 /**
  * This interface defines a standard way for reading a context.
  *
- * @param  <E>  The class of elements to read.
+ * @param <E> The class of elements to read.
  *
  * ![Reader](Reader.png)
  *
@@ -30,14 +29,14 @@ import java.io.IOException;
  * title Reader UML graph
  */
 public interface Reader<E> {
+
     /**
      * Read a context to a file.
      *
-     * @param   e     an element to read
-     * @param   file  a file
+     * @param e    an element to read
+     * @param file a file
      *
-     * @throws  IOException  When an IOException occurs
+     * @throws IOException When an IOException occurs
      */
     void read(E e, BufferedReader file) throws IOException;
 }
-

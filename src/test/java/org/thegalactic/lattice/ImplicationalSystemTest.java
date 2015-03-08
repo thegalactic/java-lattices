@@ -10,7 +10,6 @@ package org.thegalactic.lattice;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -32,6 +31,7 @@ import org.thegalactic.dgraph.Node;
  * @author jeff
  */
 public class ImplicationalSystemTest {
+
     /**
      * Test for the empty constructor.
      */
@@ -41,6 +41,7 @@ public class ImplicationalSystemTest {
         assertTrue(is.getRules().isEmpty());
         assertTrue(is.getSet().isEmpty());
     }
+
     /**
      * Test for the constructor from a set of rules.
      */
@@ -57,6 +58,7 @@ public class ImplicationalSystemTest {
         ImplicationalSystem is = new ImplicationalSystem(sigma);
         assertTrue(is.getRules().contains(r));
     }
+
     /**
      * Test for the constructor from a copy.
      */
@@ -74,6 +76,7 @@ public class ImplicationalSystemTest {
         ImplicationalSystem isCopy = new ImplicationalSystem(is);
         assertTrue(isCopy.getRules().contains(r));
     }
+
     /**
      * Test for the constructor from a file & the toString method.
      */
@@ -95,6 +98,7 @@ public class ImplicationalSystemTest {
             System.out.println("IOException : " + e.getMessage());
         }
     }
+
     /**
      * Test the random method.
      */
@@ -104,6 +108,7 @@ public class ImplicationalSystemTest {
         assertEquals(is.getRules().size(), 7);
         assertEquals(is.getSet().size(), 13);
     }
+
     /**
      * Test for the accessors methods.
      */
@@ -115,6 +120,7 @@ public class ImplicationalSystemTest {
         assertEquals(is.sizeRules(), 7);
         assertEquals(is.getSet().size(), is.sizeElements());
     }
+
     /**
      * Test for the addElement method.
      */
@@ -124,6 +130,7 @@ public class ImplicationalSystemTest {
         is.addElement('e');
         assertTrue(is.getSet().contains('e'));
     }
+
     /**
      * Test for the addAllElements method.
      */
@@ -136,6 +143,7 @@ public class ImplicationalSystemTest {
         is.addAllElements(elements);
         assertEquals(is.sizeElements(), 2);
     }
+
     /**
      * Test for the addRule, containsRule and deleteElement methods.
      */
@@ -153,6 +161,7 @@ public class ImplicationalSystemTest {
         is.deleteElement('e');
         assertFalse(is.containsRule(r));
     }
+
     /**
      * Test for the checkRuleElements method.
      */
@@ -169,6 +178,7 @@ public class ImplicationalSystemTest {
         is.addRule(r);
         assertTrue(is.checkRuleElements(r));
     }
+
     /**
      * Test for the removeRule method.
      */
@@ -186,6 +196,7 @@ public class ImplicationalSystemTest {
         is.removeRule(r);
         assertFalse(is.containsRule(r));
     }
+
     /**
      * Test for the replaceRule method.
      */
@@ -208,6 +219,7 @@ public class ImplicationalSystemTest {
         assertFalse(is.containsRule(ra));
         assertTrue(is.containsRule(rb));
     }
+
     /**
      * Test for the save method.
      */
@@ -236,8 +248,11 @@ public class ImplicationalSystemTest {
             }
             assertEquals(content, "a b c a  -> b c ");
             file.delete();
-        } catch (IOException e) { System.out.println("IOException : " + e.getMessage()); }
+        } catch (IOException e) {
+            System.out.println("IOException : " + e.getMessage());
+        }
     }
+
     /**
      * Test for the isProper, isUnary, isCompact method.
      */
@@ -256,6 +271,7 @@ public class ImplicationalSystemTest {
         assertTrue(is.isUnary());
         assertTrue(is.isCompact());
     }
+
     /**
      * Test for the isRightMaximal method.
      */
@@ -271,6 +287,7 @@ public class ImplicationalSystemTest {
         is.addRule(r);
         assertTrue(is.isRightMaximal());
     }
+
     /**
      * Test for the isLeftMinimal method.
      */
@@ -286,6 +303,7 @@ public class ImplicationalSystemTest {
         is.addRule(r);
         assertTrue(is.isLeftMinimal());
     }
+
     /**
      * Test for the isDirect method.
      */
@@ -307,6 +325,7 @@ public class ImplicationalSystemTest {
         is.addRule(n);
         assertFalse(is.isDirect());
     }
+
     /**
      * Test for the isMinimum method.
      */
@@ -322,6 +341,7 @@ public class ImplicationalSystemTest {
         is.addRule(r);
         assertTrue(is.isMinimum());
     }
+
     /**
      * Test for the isCanonicalDirectBasis and isCanonicalBasis methods.
      */
@@ -339,6 +359,7 @@ public class ImplicationalSystemTest {
         assertTrue(is.isCanonicalDirectBasis());
         assertTrue(is.isCanonicalBasis());
     }
+
     /**
      * Test for the isIncludedIn methods.
      */
@@ -355,6 +376,7 @@ public class ImplicationalSystemTest {
         is.addRule(r);
         assertTrue(is.isIncludedIn(is));
     }
+
     /**
      * Test for the makeProper methods.
      */
@@ -364,6 +386,7 @@ public class ImplicationalSystemTest {
         is.makeProper();
         assertTrue(is.isProper());
     }
+
     /**
      * Test for the makeUnary methods.
      */
@@ -373,6 +396,7 @@ public class ImplicationalSystemTest {
         is.makeUnary();
         assertTrue(is.isUnary());
     }
+
     /**
      * Test for the makeCompact methods.
      */
@@ -382,6 +406,7 @@ public class ImplicationalSystemTest {
         is.makeCompact();
         assertTrue(is.isCompact());
     }
+
     /**
      * Test for the makeRightMaximal methods.
      */
@@ -391,6 +416,7 @@ public class ImplicationalSystemTest {
         is.makeRightMaximal();
         assertTrue(is.isRightMaximal());
     }
+
     /**
      * Test for the makeLeftMinimal methods.
      */
@@ -400,6 +426,7 @@ public class ImplicationalSystemTest {
         is.makeLeftMinimal();
         assertTrue(is.isLeftMinimal());
     }
+
     /**
      * Test for the makeDirect methods.
      */
@@ -409,6 +436,7 @@ public class ImplicationalSystemTest {
         is.makeDirect();
         assertTrue(is.isDirect());
     }
+
     /**
      * Test for the makeMinimum methods.
      */
@@ -418,6 +446,7 @@ public class ImplicationalSystemTest {
         is.makeMinimum();
         assertTrue(is.isMinimum());
     }
+
     /**
      * Test for the makeCanonicalDirectBasis methods.
      */
@@ -427,6 +456,7 @@ public class ImplicationalSystemTest {
         is.makeCanonicalDirectBasis();
         assertTrue(is.isCanonicalDirectBasis());
     }
+
     /**
      * Test for the makeCanonicalBasis methods.
      */
@@ -436,6 +466,7 @@ public class ImplicationalSystemTest {
         is.makeCanonicalBasis();
         assertTrue(is.isCanonicalBasis());
     }
+
     /**
      * Test for the representativeGraph method.
      */
@@ -464,6 +495,7 @@ public class ImplicationalSystemTest {
         Edge cTob = dg.getEdge(c, b);
         assertEquals(cTob.getContent().toString(), "[[a]]");
     }
+
     /**
      * Test for the dependencyGraph method.
      */
@@ -492,6 +524,7 @@ public class ImplicationalSystemTest {
         Edge cTob = dg.getEdge(c, b);
         assertEquals(cTob.getContent().toString(), "[[a]]");
     }
+
     /**
      * Test for the reduction and isReduced methods.
      */

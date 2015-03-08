@@ -10,14 +10,13 @@ package org.thegalactic.io;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import java.io.BufferedWriter;
 import java.io.IOException;
 
 /**
  * This interface defines a standard way for writing a context.
  *
- * @param  <E>  The class of elements to write
+ * @param <E> The class of elements to write
  *
  * ![Writer](Writer.png)
  *
@@ -30,14 +29,14 @@ import java.io.IOException;
  * title Writer UML graph
  */
 public interface Writer<E> {
+
     /**
      * Write a context to a file.
      *
-     * @param   e     an element to write
-     * @param   file  a file
+     * @param e    an element to write
+     * @param file a file
      *
-     * @throws  IOException  When an IOException occurs
+     * @throws IOException When an IOException occurs
      */
     void write(E e, BufferedWriter file) throws IOException;
 }
-

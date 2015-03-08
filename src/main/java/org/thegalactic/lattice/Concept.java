@@ -11,7 +11,6 @@ package org.thegalactic.lattice;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.StringTokenizer;
@@ -37,7 +36,7 @@ import org.thegalactic.context.TemporaryContext;
  * sorting concepts by providing the {@link #compareTo} method.
  * Comparison between this component and those in parameter is realised by comparing set `A`.
  *
- * @todo  Should not inherit from Node since content is not used. Maybe by using interface.
+ * @todo Should not inherit from Node since content is not used. Maybe by using interface.
  *
  * ![Concept](Concept.png)
  *
@@ -52,7 +51,9 @@ import org.thegalactic.context.TemporaryContext;
  * title Concept UML graph
  */
 public class Concept extends Node {
-    /* ------------- FIELDS ------------------ */
+    /*
+     * ------------- FIELDS ------------------
+     */
 
     /**
      * This first set of comparable elements of the concept.
@@ -64,25 +65,26 @@ public class Concept extends Node {
      */
     private ComparableSet setB;
 
-    /* ------------- CONSTRUCTORS ------------------ */
-
+    /*
+     * ------------- CONSTRUCTORS ------------------
+     */
     /**
      * Constructs a new concept containing the specified comparables set as setA and setB.
      *
-     * @param   setA  set of comparable used to initialise setA.
-     * @param   setB  set of comparable used to initialise setB.
+     * @param setA set of comparable used to initialise setA.
+     * @param setB set of comparable used to initialise setB.
      */
     public Concept(TreeSet<Comparable> setA, TreeSet<Comparable> setB) {
-            this.setA = new ComparableSet(setA);
-            this.setB = new ComparableSet(setB);
+        this.setA = new ComparableSet(setA);
+        this.setB = new ComparableSet(setB);
     }
 
     /**
      * Constructs a new concept with an empty set of comparableset as setA and set B if the two boolean are true.
      * False booleans allow to construct a concept with only one of the two sets.
      *
-     * @param   setA  field setA is empty if true, setA is null if false.
-     * @param   setB  field setB is empty if true, setB is null if false.
+     * @param setA field setA is empty if true, setA is null if false.
+     * @param setB field setB is empty if true, setB is null if false.
      */
     public Concept(boolean setA, boolean setB) {
         if (setA) {
@@ -98,11 +100,12 @@ public class Concept extends Node {
     }
 
     /**
-     * Constructs a new concept containing the specified comparables set as setA, and an empty set of comparableset as setB if the boolean is true.
+     * Constructs a new concept containing the specified comparables set as setA, and an empty set of comparableset as
+     * setB if the boolean is true.
      * A false boolean allows to construct a concept with the only set A.
      *
-     * @param   setA  set of comparable used to initialise setA.
-     * @param   setB  field setB is empty if true, setB is null if false.
+     * @param setA set of comparable used to initialise setA.
+     * @param setB field setB is empty if true, setB is null if false.
      */
     public Concept(TreeSet<Comparable> setA, boolean setB) {
         this.setA = new ComparableSet(setA);
@@ -114,11 +117,12 @@ public class Concept extends Node {
     }
 
     /**
-     * Constructs a new concept containing the specified comparables set as setB, and an empty set of comparableset as setA if the boolean is true.
+     * Constructs a new concept containing the specified comparables set as setB, and an empty set of comparableset as
+     * setA if the boolean is true.
      * A false boolean allows to construct concept with the only set B.
      *
-     * @param   setA  field setA is empty if true, setA is null if false.
-     * @param   setB  set of comparable used to initialise setB.
+     * @param setA field setA is empty if true, setA is null if false.
+     * @param setB set of comparable used to initialise setB.
      */
     public Concept(boolean setA, TreeSet<Comparable> setB) {
         this.setB = new ComparableSet(setB);
@@ -132,7 +136,7 @@ public class Concept extends Node {
     /**
      * Constructs this component as a copy of the specified ClosedSet.
      *
-     * @param   c  the closed set to be copied
+     * @param c the closed set to be copied
      */
     public Concept(Concept c) {
         if (c.hasSetA()) {
@@ -147,12 +151,13 @@ public class Concept extends Node {
         }
     }
 
-    /* --------------- ACCESSOR AND OVERLAPPING METHODS ------------ */
-
+    /*
+     * --------------- ACCESSOR AND OVERLAPPING METHODS ------------
+     */
     /**
      * Returns a clone of this component.
      *
-     * @return  a clone of this component
+     * @return a clone of this component
      */
     public Concept clone() {
         if (this.hasSetA() && this.hasSetB()) {
@@ -176,7 +181,7 @@ public class Concept extends Node {
     /**
      * Checks if the concept has an empty set B.
      *
-     * @return  true if and only if setB is not null
+     * @return true if and only if setB is not null
      */
     public boolean hasSetB() {
         return this.setB != null;
@@ -185,7 +190,7 @@ public class Concept extends Node {
     /**
      * Checks if the concept has an empty set A.
      *
-     * @return  true if and only if setA is not null
+     * @return true if and only if setA is not null
      */
     public boolean hasSetA() {
         return this.setA != null;
@@ -194,7 +199,7 @@ public class Concept extends Node {
     /**
      * Returns the set A of this component.
      *
-     * @return  the set A of this component
+     * @return the set A of this component
      */
     public TreeSet<Comparable> getSetA() {
         return this.setA;
@@ -212,9 +217,9 @@ public class Concept extends Node {
     /**
      * Checks if the set A contains the specified comparable.
      *
-     * @param   x  comparable to find in setA.
+     * @param x comparable to find in setA.
      *
-     * @return  true if and only if setA contains x.
+     * @return true if and only if setA contains x.
      */
     public boolean containsInA(Comparable x) {
         if (this.hasSetA()) {
@@ -227,9 +232,9 @@ public class Concept extends Node {
     /**
      * Checks if the set B contains the specified comparable.
      *
-     * @param   x  comparable to find in setB.
+     * @param x comparable to find in setB.
      *
-     * @return  true if and only if setB contains x.
+     * @return true if and only if setB contains x.
      */
     public boolean containsInB(Comparable x) {
         if (this.hasSetB()) {
@@ -242,9 +247,9 @@ public class Concept extends Node {
     /**
      * Checks if the set A contains the specified set of comparable.
      *
-     * @param   x  set of comparable to find in setA.
+     * @param x set of comparable to find in setA.
      *
-     * @return  true if and only if setA contains all elemens of x.
+     * @return true if and only if setA contains all elemens of x.
      */
     public boolean containsAllInA(TreeSet x) {
         if (this.hasSetA()) {
@@ -257,9 +262,9 @@ public class Concept extends Node {
     /**
      * Checks if the set B contains the specified set of comparable.
      *
-     * @param   x  set of comparable to find in setB.
+     * @param x set of comparable to find in setB.
      *
-     * @return  true if and only if setB contains all elemens of x.
+     * @return true if and only if setB contains all elemens of x.
      */
     public boolean containsAllInB(TreeSet x) {
         if (this.hasSetB()) {
@@ -272,7 +277,7 @@ public class Concept extends Node {
     /**
      * Replaces the set A of this component by the specified one.
      *
-     * @param   x  set of comparable used to replace setB
+     * @param x set of comparable used to replace setB
      */
     public void putSetB(ComparableSet x) {
         if (this.hasSetB()) {
@@ -285,7 +290,7 @@ public class Concept extends Node {
     /**
      * Replaces the set A of this component by the specified one.
      *
-     * @param   x  set of comparable used to replace setA
+     * @param x set of comparable used to replace setA
      */
     public void putSetA(ComparableSet x) {
         if (this.hasSetA()) {
@@ -298,9 +303,9 @@ public class Concept extends Node {
     /**
      * Adds a comparable to the set A.
      *
-     * @param   x  comparable to add to setA
+     * @param x comparable to add to setA
      *
-     * @return  true if and only if addition is successful.
+     * @return true if and only if addition is successful.
      */
     public boolean addToA(Comparable x) {
         if (this.hasSetA()) {
@@ -313,9 +318,9 @@ public class Concept extends Node {
     /**
      * Adds a comparable to the set B.
      *
-     * @param   x  comparable to add to setB
+     * @param x comparable to add to setB
      *
-     * @return  true if and only if addition is successful.
+     * @return true if and only if addition is successful.
      */
     public boolean addToB(Comparable x) {
         if (this.hasSetB()) {
@@ -328,9 +333,9 @@ public class Concept extends Node {
     /**
      * Adds the specified set of comparable to the set A.
      *
-     * @param   x  set of comparable to add to setA
+     * @param x set of comparable to add to setA
      *
-     * @return  true if and only if addition is successful.
+     * @return true if and only if addition is successful.
      */
     public boolean addAllToA(TreeSet x) {
         if (this.hasSetA()) {
@@ -343,9 +348,9 @@ public class Concept extends Node {
     /**
      * Adds the specified set of comparable to the set B.
      *
-     * @param   x  set of comparable to add to setB
+     * @param x set of comparable to add to setB
      *
-     * @return  true if and only if addition is successful.
+     * @return true if and only if addition is successful.
      */
     public boolean addAllToB(TreeSet x) {
         if (this.hasSetB()) {
@@ -358,9 +363,9 @@ public class Concept extends Node {
     /**
      * Remove a comparable from the set A.
      *
-     * @param   x  comparable to remove from setA
+     * @param x comparable to remove from setA
      *
-     * @return  true if and only if removal is successful.
+     * @return true if and only if removal is successful.
      */
     public boolean removeFromA(Comparable x) {
         if (this.hasSetA()) {
@@ -373,9 +378,9 @@ public class Concept extends Node {
     /**
      * Remove a comparable from the set B.
      *
-     * @param   x  comparable to remove from setB
+     * @param x comparable to remove from setB
      *
-     * @return  true if and only if removal is successful.
+     * @return true if and only if removal is successful.
      */
     public boolean removeFromB(Comparable x) {
         if (this.hasSetB()) {
@@ -388,9 +393,9 @@ public class Concept extends Node {
     /**
      * Remove a set of comparable from the set A.
      *
-     * @param   x  set to remove from setA
+     * @param x set to remove from setA
      *
-     * @return  true if and only if removal is successful.
+     * @return true if and only if removal is successful.
      */
     public boolean removeAllFromA(TreeSet x) {
         if (this.hasSetA()) {
@@ -403,9 +408,9 @@ public class Concept extends Node {
     /**
      * Remove a set of comparable from the set B.
      *
-     * @param   x  set to remove from setB
+     * @param x set to remove from setB
      *
-     * @return  true if and only if removal is successful.
+     * @return true if and only if removal is successful.
      */
     public boolean removeAllFromB(TreeSet x) {
         if (this.hasSetB()) {
@@ -415,36 +420,37 @@ public class Concept extends Node {
         }
     }
 
-    /* --------------- OVERLAPPING METHODS ------------ */
-
+    /*
+     * --------------- OVERLAPPING METHODS ------------
+     */
     /**
      * Returns the description of this component in a String without spaces.
      *
-     * @return  the description of this component in a String without spaces.
+     * @return the description of this component in a String without spaces.
      */
     public String toString() {
-       String s = "";
-       if (this.hasSetA()) {
-           s += this.setA;
-       }
-       if (this.hasSetA() && this.hasSetB()) {
-           s += "-";
-       }
-       if (this.hasSetB()) {
-           s += this.setB;
-       }
-       StringTokenizer st = new StringTokenizer(s);
-       s = "";
-       while (st.hasMoreTokens()) {
+        String s = "";
+        if (this.hasSetA()) {
+            s += this.setA;
+        }
+        if (this.hasSetA() && this.hasSetB()) {
+            s += "-";
+        }
+        if (this.hasSetB()) {
+            s += this.setB;
+        }
+        StringTokenizer st = new StringTokenizer(s);
+        s = "";
+        while (st.hasMoreTokens()) {
             s += st.nextToken();
         }
-       return s;
+        return s;
     }
 
     /**
      * Returns the hash code of this component.
      *
-     * @return  hash code of this component
+     * @return hash code of this component
      */
     public int hashCode() {
         return super.hashCode();
@@ -453,9 +459,9 @@ public class Concept extends Node {
     /**
      * Compares this component with the specified one.
      *
-     * @param   o  object compared to this component.
+     * @param o object compared to this component.
      *
-     * @return  true if and only if o is equals to this component.
+     * @return true if and only if o is equals to this component.
      */
     public boolean equals(Object o) {
         if (!(o instanceof Concept)) {
@@ -470,27 +476,30 @@ public class Concept extends Node {
         return this.setA.equals(((Concept) o).setA) && this.setB.equals(((Concept) o).setB);
     }
 
-        /** Compares this component with the specified one sorted by the lectic order.
-         * @return a negative integer, zero, or a positive integer as this component is less than,
-         * equal to, or greater than the specified object.
-         */
-    /*public int compareTo(Object o){
-    if (!(o instanceof lattice.Concept)) return -1;
-    Concept c = (Concept) o;
-    //System.out.println("compareTo : "+this+" "+o);
-    if (!this.hasSetB()) {
-    return this.setA.compareTo(c.setA);
-    }
-    if (!this.hasSetA()) {
-    return this.setB.compareTo(c.setB);
-    }
-    if (this.setA.compareTo(c.setA)!=0) {
-    return this.setB.compareTo(c.setB);
-    } else {
-    return this.setA.compareTo(c.setA);
-    }
-    }*/
-
+    /**
+     * Compares this component with the specified one sorted by the lectic order.
+     *
+     * @return a negative integer, zero, or a positive integer as this component is less than,
+     *         equal to, or greater than the specified object.
+     */
+    /*
+     * public int compareTo(Object o){
+     * if (!(o instanceof lattice.Concept)) return -1;
+     * Concept c = (Concept) o;
+     * //System.out.println("compareTo : "+this+" "+o);
+     * if (!this.hasSetB()) {
+     * return this.setA.compareTo(c.setA);
+     * }
+     * if (!this.hasSetA()) {
+     * return this.setB.compareTo(c.setB);
+     * }
+     * if (this.setA.compareTo(c.setA)!=0) {
+     * return this.setB.compareTo(c.setB);
+     * } else {
+     * return this.setA.compareTo(c.setA);
+     * }
+     * }
+     */
     /**
      * Computes the immediate successors of this component with the LOA algorithm.
      *
@@ -498,7 +507,7 @@ public class Concept extends Node {
      *
      * @return immediate successors of this component.
      */
-     public ArrayList<TreeSet<Comparable>> immediateSuccessorsLOA(TemporaryContext init) {
+    public ArrayList<TreeSet<Comparable>> immediateSuccessorsLOA(TemporaryContext init) {
         ArrayList<TreeSet<Comparable>> succB = new ArrayList();
         TreeSet<Comparable> attributes = (TreeSet<Comparable>) init.getSet().clone();
         attributes.removeAll(this.getSetA());
@@ -554,18 +563,6 @@ public class Concept extends Node {
     }
 
     /**
-     * Returns the number of observations corresponding to the set of attributes in the init context.
-     *
-     * @param   init        initial context from which attributes are count.
-     * @param   attributes  attributes from which observations are counted.
-     *
-     * @return  number of observations corresponding to the set of attributes in init context.
-     */
-    private int count(TemporaryContext init, TreeSet<Comparable> attributes) {
-        return init.getExtentNb(attributes);
-    }
-
-    /**
      * Returns the list of immediate successors of a given node of the lattice.
      *
      * This treatment is an adaptation of Bordat's theorem stating that there is a bijection
@@ -585,9 +582,9 @@ public class Concept extends Node {
      *
      * cguerin - 2013-04-12 - transfer immedateSuccessors method from ConceptLattice to Concept
      *
-     * @param   init  closure system used to compute immediate successors of this component.
+     * @param init closure system used to compute immediate successors of this component.
      *
-     * @return  the list of immediate successors of this component.
+     * @return the list of immediate successors of this component.
      */
     public ArrayList<TreeSet<Comparable>> immediateSuccessors(ClosureSystem init) {
         // Initialisation of the dependance graph when not initialised by method recursiveDiagramLattice
@@ -611,7 +608,7 @@ public class Concept extends Node {
         System.out.println(System.currentTimeMillis() - start + "ms");
         ComparableSet newVal = new ComparableSet();
         newVal.addAll(f);
-        for (Object x : f)  {
+        for (Object x : f) {
             // computes nx, the strongly connected component containing x
             Node nx = null;
             for (Node cc : acyclPrec.getNodes()) {
@@ -646,24 +643,24 @@ public class Concept extends Node {
         TreeSet<Edge> e = new TreeSet<Edge>();
         for (Node from : n) {
             for (Node to : n) {
-               if (!from.equals(to)) {
-                // check if from is in dependance relation with to
-                // i.e. "from" belongs to the closure of "F+to"
-                ComparableSet fPlusTo = new ComparableSet(f);
-                fPlusTo.add(to.getContent());
-                fPlusTo = new ComparableSet(init.closure(fPlusTo));
-                if (fPlusTo.contains(from.getContent())) {
-                    // there is a dependance relation between from and to
-                    // search for an existing edge between from and to
-                    Edge ed = dependanceGraph.getEdge(from, to);
-                    if (ed == null) {
-                        ed = new Edge(from, to, new TreeSet<ComparableSet>());
-                        dependanceGraph.addEdge(ed);
-                    }
-                    e.add(ed);
-                    // check if F is a minimal set closed for dependance relation between from and to
-                    ((TreeSet<ComparableSet>) ed.getContent()).add(newVal);
-                    TreeSet<ComparableSet> valEd = new TreeSet<ComparableSet>((TreeSet<ComparableSet>) ed.getContent());
+                if (!from.equals(to)) {
+                    // check if from is in dependance relation with to
+                    // i.e. "from" belongs to the closure of "F+to"
+                    ComparableSet fPlusTo = new ComparableSet(f);
+                    fPlusTo.add(to.getContent());
+                    fPlusTo = new ComparableSet(init.closure(fPlusTo));
+                    if (fPlusTo.contains(from.getContent())) {
+                        // there is a dependance relation between from and to
+                        // search for an existing edge between from and to
+                        Edge ed = dependanceGraph.getEdge(from, to);
+                        if (ed == null) {
+                            ed = new Edge(from, to, new TreeSet<ComparableSet>());
+                            dependanceGraph.addEdge(ed);
+                        }
+                        e.add(ed);
+                        // check if F is a minimal set closed for dependance relation between from and to
+                        ((TreeSet<ComparableSet>) ed.getContent()).add(newVal);
+                        TreeSet<ComparableSet> valEd = new TreeSet<ComparableSet>((TreeSet<ComparableSet>) ed.getContent());
                         for (ComparableSet x1 : valEd) {
                             if (x1.containsAll(newVal) && !newVal.containsAll(x1)) {
                                 ((TreeSet<ComparableSet>) ed.getContent()).remove(x1);
@@ -699,5 +696,16 @@ public class Concept extends Node {
         }
         return immSucc;
     }
-}
 
+    /**
+     * Returns the number of observations corresponding to the set of attributes in the init context.
+     *
+     * @param init       initial context from which attributes are count.
+     * @param attributes attributes from which observations are counted.
+     *
+     * @return number of observations corresponding to the set of attributes in init context.
+     */
+    private int count(TemporaryContext init, TreeSet<Comparable> attributes) {
+        return init.getExtentNb(attributes);
+    }
+}

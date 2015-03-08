@@ -10,7 +10,6 @@ package org.thegalactic.lattice;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
@@ -28,6 +27,7 @@ import org.thegalactic.context.TemporaryContext;
  * @author jeff
  */
 public class ConceptTest {
+
     /**
      * Test the constructor from SetA and SetB.
      */
@@ -39,6 +39,7 @@ public class ConceptTest {
         assertFalse(c.getSetA() == null);
         assertFalse(c.getSetB() == null);
     }
+
     /**
      * Test the constructor from SetA and SetB=False.
      */
@@ -49,6 +50,7 @@ public class ConceptTest {
         assertFalse(c.getSetA() == null);
         assertTrue(c.getSetB() == null);
     }
+
     /**
      * Test the constructor from SetA and SetB=True.
      */
@@ -59,6 +61,7 @@ public class ConceptTest {
         assertFalse(c.getSetA() == null);
         assertFalse(c.getSetB() == null);
     }
+
     /**
      * Test the constructor from SetA=false and SetB.
      */
@@ -69,6 +72,7 @@ public class ConceptTest {
         assertTrue(c.getSetA() == null);
         assertFalse(c.getSetB() == null);
     }
+
     /**
      * Test the constructor from SetA=true and SetB.
      */
@@ -79,6 +83,7 @@ public class ConceptTest {
         assertFalse(c.getSetA() == null);
         assertFalse(c.getSetB() == null);
     }
+
     /**
      * Test the constructor from SetA=true and SetB=true.
      */
@@ -88,6 +93,7 @@ public class ConceptTest {
         assertFalse(c.getSetA() == null);
         assertFalse(c.getSetB() == null);
     }
+
     /**
      * Test the constructor from SetA=true and SetB=false.
      */
@@ -97,6 +103,7 @@ public class ConceptTest {
         assertFalse(c.getSetA() == null);
         assertTrue(c.getSetB() == null);
     }
+
     /**
      * Test the constructor from SetA=false and SetB=true.
      */
@@ -106,6 +113,7 @@ public class ConceptTest {
         assertTrue(c.getSetA() == null);
         assertFalse(c.getSetB() == null);
     }
+
     /**
      * Test the constructor from SetA=false and SetB=false.
      */
@@ -115,6 +123,7 @@ public class ConceptTest {
         assertTrue(c.getSetA() == null);
         assertTrue(c.getSetB() == null);
     }
+
     /**
      * Test the constructor from a copy.
      */
@@ -136,6 +145,7 @@ public class ConceptTest {
         assertTrue(copyff.getSetA() == null);
         assertTrue(copyff.getSetB() == null);
     }
+
     /**
      * Test the clone method.
      */
@@ -155,6 +165,7 @@ public class ConceptTest {
         assertFalse(copyff.hasSetA());
         assertFalse(copyff.hasSetB());
     }
+
     /**
      * Test the hasSetB method.
      */
@@ -163,6 +174,7 @@ public class ConceptTest {
         Concept c = new Concept(true, true);
         assertTrue(c.hasSetB());
     }
+
     /**
      * Test the hasSetA method.
      */
@@ -171,6 +183,7 @@ public class ConceptTest {
         Concept c = new Concept(true, true);
         assertTrue(c.hasSetA());
     }
+
     /**
      * Test the containsInA method.
      */
@@ -181,6 +194,7 @@ public class ConceptTest {
         c.addToA(n);
         assertTrue(c.containsInA(n));
     }
+
     /**
      * Test the containsInA method.
      * false case
@@ -192,6 +206,7 @@ public class ConceptTest {
         c.addToA(n);
         assertFalse(c.containsInA(n));
     }
+
     /**
      * Test the containsInB method.
      */
@@ -202,6 +217,7 @@ public class ConceptTest {
         c.addToB(n);
         assertTrue(c.containsInB(n));
     }
+
     /**
      * Test the containsInB method.
      * false case
@@ -213,6 +229,7 @@ public class ConceptTest {
         c.addToB(n);
         assertFalse(c.containsInB(n));
     }
+
     /**
      * Test the containsAllInA method.
      */
@@ -227,6 +244,7 @@ public class ConceptTest {
         c.putSetA(tn);
         assertTrue(c.containsAllInA(tn));
     }
+
     /**
      * Test the containsAllInB method.
      */
@@ -241,6 +259,7 @@ public class ConceptTest {
         c.putSetB(tn);
         assertTrue(c.containsAllInB(tn));
     }
+
     /**
      * Test the containsAllInA method.
      * false case
@@ -256,6 +275,7 @@ public class ConceptTest {
         c.addAllToA(tn);
         assertFalse(c.containsAllInA(tn));
     }
+
     /**
      * Test the containsAllInB method.
      * false case
@@ -271,6 +291,7 @@ public class ConceptTest {
         c.addAllToB(tn);
         assertFalse(c.containsAllInB(tn));
     }
+
     /**
      * Test the putSetB method.
      */
@@ -288,6 +309,7 @@ public class ConceptTest {
         cf.putSetB(tn);
         assertTrue(cf.containsAllInB(tn));
     }
+
     /**
      * Test the putSetA method.
      */
@@ -305,6 +327,7 @@ public class ConceptTest {
         cf.putSetA(tn);
         assertTrue(cf.containsAllInA(tn));
     }
+
     /**
      * Test the addToA method.
      */
@@ -315,6 +338,7 @@ public class ConceptTest {
         c.addToA(n);
         assertTrue(c.containsInA(n));
     }
+
     /**
      * Test the addToB method.
      */
@@ -325,6 +349,7 @@ public class ConceptTest {
         c.addToB(n);
         assertTrue(c.containsInB(n));
     }
+
     /**
      * Test the removeFromA method.
      */
@@ -340,6 +365,7 @@ public class ConceptTest {
         cf.removeFromA(n);
         assertFalse(cf.containsInA(n));
     }
+
     /**
      * Test the removeFromB method.
      */
@@ -355,6 +381,7 @@ public class ConceptTest {
         cf.removeFromB(n);
         assertFalse(cf.containsInB(n));
     }
+
     /**
      * Test the addAllToA method.
      */
@@ -369,6 +396,7 @@ public class ConceptTest {
         c.addAllToA(tn);
         assertTrue(c.containsAllInA(tn));
     }
+
     /**
      * Test the addAllToB method.
      */
@@ -383,6 +411,7 @@ public class ConceptTest {
         c.addAllToB(tn);
         assertTrue(c.containsAllInB(tn));
     }
+
     /**
      * Test the removeAllFromA method.
      */
@@ -402,6 +431,7 @@ public class ConceptTest {
         cf.removeAllFromA(tn);
         assertFalse(cf.containsAllInA(tn));
     }
+
     /**
      * Test the removeAllFromB method.
      */
@@ -421,6 +451,7 @@ public class ConceptTest {
         cf.removeAllFromB(tn);
         assertFalse(cf.containsAllInB(tn));
     }
+
     /**
      * Test the hashCode method.
      */
@@ -429,6 +460,7 @@ public class ConceptTest {
         Concept c = new Concept(true, true);
         assertEquals(c.hashCode(), (Object) c.hashCode());
     }
+
     /**
      * Test the Equals method.
      */
@@ -437,6 +469,7 @@ public class ConceptTest {
         Concept c = new Concept(true, true);
         assertTrue(c.equals(c));
     }
+
     /**
      * Test the immediateSuccessorsLOA method.
      */
@@ -485,6 +518,7 @@ public class ConceptTest {
         ArrayList<TreeSet<Comparable>> succ = c.immediateSuccessorsLOA(ctx);
         assertTrue(succ.size() == 3);
     }
+
     /**
      * Test the immediateSuccessors method.
      */
@@ -515,6 +549,7 @@ public class ConceptTest {
         assertTrue(succ.get(0).contains(b));
         assertTrue(succ.get(0).contains(c));
     }
+
     /**
      * Test the toString method.
      */
@@ -523,6 +558,7 @@ public class ConceptTest {
         Concept c = new Concept(true, true);
         assertEquals(c.toString(), "[]-[]");
     }
+
     /**
      * Test the toDot method.
      */

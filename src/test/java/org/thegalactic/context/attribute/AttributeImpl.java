@@ -10,13 +10,17 @@ package org.thegalactic.context.attribute;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import org.thegalactic.context.Context;
 
 /**
  * Basic implementation of AbstractAttribute.
  */
 public class AttributeImpl extends AbstractAttribute {
+
+    /**
+     * The attribute type.
+     */
+    private final String type;
 
     /**
      * Constructor.
@@ -47,9 +51,4 @@ public class AttributeImpl extends AbstractAttribute {
     public String getType() {
         return this.type;
     }
-
-    /**
-     * The attribute type.
-     */
-    private final String type;
 }
