@@ -10,8 +10,8 @@ package org.thegalactic.context.attribute;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-import java.util.Set;
 import java.util.Collections;
+import java.util.Set;
 
 import org.thegalactic.context.AbstractContext;
 import org.thegalactic.context.Observation;

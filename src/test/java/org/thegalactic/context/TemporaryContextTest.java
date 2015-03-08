@@ -11,6 +11,7 @@ package org.thegalactic.context;
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
 import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -19,11 +20,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.TreeSet;
 
-import org.thegalactic.util.Couple;
 import org.thegalactic.dgraph.Node;
-import org.thegalactic.lattice.Lattice;
 import org.thegalactic.lattice.ConceptLattice;
+import org.thegalactic.lattice.Lattice;
 import org.thegalactic.lattice.LatticeFactory;
+import org.thegalactic.util.Couple;
 
 /**
  * Test TemporaryContext class.

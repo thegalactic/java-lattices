@@ -11,19 +11,20 @@ package org.thegalactic.lattice;
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
 import org.junit.Test;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertEquals;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.io.File;
+import java.util.Scanner;
 import java.util.TreeSet;
 import java.util.Vector;
-import java.util.Scanner;
-import java.io.File;
 
-import org.thegalactic.util.ComparableSet;
+import org.thegalactic.context.TemporaryContext;
 import org.thegalactic.dgraph.DAGraph;
 import org.thegalactic.dgraph.Node;
-import org.thegalactic.context.TemporaryContext;
+import org.thegalactic.util.ComparableSet;
 
 /**
  * Test of class ConceptLattice.

@@ -13,9 +13,9 @@ package org.thegalactic.lattice;
 import java.util.BitSet;
 import java.util.Iterator;
 
-import org.thegalactic.util.Couple;
 import org.thegalactic.dgraph.DAGraph;
 import org.thegalactic.dgraph.Node;
+import org.thegalactic.util.Couple;
 
 /**
  * This class provides a few methods to constructs lattice examples.

@@ -18,14 +18,14 @@ import org.thegalactic.context.Context;
 public abstract class AbstractAttributeBuilder implements AttributeBuilder {
 
     /**
-     * The context used for constructing boolean attribute.
-     */
-    private Context context;
-
-    /**
      * The boolean attribute name.
      */
     private String name;
+
+    /**
+     * The context used for constructing boolean attribute.
+     */
+    private Context context;
 
     /**
      * Set the context for the new boolean attribute.
@@ -68,4 +68,5 @@ public abstract class AbstractAttributeBuilder implements AttributeBuilder {
     protected String getName() {
         return name;
     }
+
 }

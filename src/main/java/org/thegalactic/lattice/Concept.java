@@ -13,16 +13,16 @@ package org.thegalactic.lattice;
  */
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.SortedSet;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
-import java.util.SortedSet;
 
-import org.thegalactic.util.ComparableSet;
-import org.thegalactic.dgraph.Node;
-import org.thegalactic.dgraph.DGraph;
-import org.thegalactic.dgraph.DAGraph;
-import org.thegalactic.dgraph.Edge;
 import org.thegalactic.context.TemporaryContext;
+import org.thegalactic.dgraph.DAGraph;
+import org.thegalactic.dgraph.DGraph;
+import org.thegalactic.dgraph.Edge;
+import org.thegalactic.dgraph.Node;
+import org.thegalactic.util.ComparableSet;
 
 /**
  * This class gives a representation for a concept, i.e. a node of a concept lattice.

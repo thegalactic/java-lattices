@@ -10,9 +10,9 @@ package org.thegalactic.lattice.io;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-import java.util.StringTokenizer;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.StringTokenizer;
 
 import org.thegalactic.lattice.ImplicationalSystem;
 import org.thegalactic.lattice.Rule;

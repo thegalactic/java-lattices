@@ -10,20 +10,20 @@ package org.thegalactic.context.io;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-import java.util.List;
-import java.util.TreeSet;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.List;
+import java.util.TreeSet;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
 
+import org.thegalactic.context.TemporaryContext;
 import org.thegalactic.io.Reader;
 import org.thegalactic.io.Writer;
-import org.thegalactic.context.TemporaryContext;
 
 /**
  * This class defines the way for reading a context from a csv file.

@@ -10,13 +10,13 @@ package org.thegalactic.dgraph.io;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-import java.util.StringTokenizer;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.StringTokenizer;
 
 import org.thegalactic.dgraph.DGraph;
-import org.thegalactic.dgraph.Node;
 import org.thegalactic.dgraph.Edge;
+import org.thegalactic.dgraph.Node;
 
 /**
  * This class defines the way for writing a graph as a dot file.

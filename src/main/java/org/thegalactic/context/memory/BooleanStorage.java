@@ -10,11 +10,12 @@ package org.thegalactic.context.memory;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-import org.thegalactic.context.attribute.Attribute;
-import org.thegalactic.context.Observation;
-import org.thegalactic.context.Value;
 import java.util.BitSet;
 import java.util.HashMap;
+
+import org.thegalactic.context.Observation;
+import org.thegalactic.context.Value;
+import org.thegalactic.context.attribute.Attribute;
 
 /**
  * A boolean attribute for a context.

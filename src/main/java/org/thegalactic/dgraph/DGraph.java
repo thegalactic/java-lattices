@@ -10,21 +10,21 @@ package org.thegalactic.dgraph;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-import java.util.Collections;
-import java.util.ArrayList;
-import java.util.TreeMap;
-import java.util.TreeSet;
-import java.util.SortedSet;
-import java.util.AbstractSet;
-import java.util.Set;
-import java.util.Iterator;
-import java.util.Comparator;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.AbstractSet;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
-import org.thegalactic.dgraph.io.DGraphWriterFactory;
 import org.thegalactic.dgraph.io.DGraphWriterDot;
+import org.thegalactic.dgraph.io.DGraphWriterFactory;
 
 /**
  * This class gives a standard representation for a directed graph

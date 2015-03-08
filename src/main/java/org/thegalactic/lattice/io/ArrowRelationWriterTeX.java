@@ -10,14 +10,14 @@ package org.thegalactic.lattice.io;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-import java.util.SortedSet;
-import java.util.TreeSet;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
-import org.thegalactic.lattice.ArrowRelation;
 import org.thegalactic.dgraph.Edge;
 import org.thegalactic.dgraph.Node;
+import org.thegalactic.lattice.ArrowRelation;
 
 /**
  * This class defines the way for writing an arrow relatin as a tex file.

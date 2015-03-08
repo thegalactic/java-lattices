@@ -10,11 +10,11 @@ package org.thegalactic.io;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-import java.io.IOException;
-import java.io.BufferedWriter;
 import java.io.BufferedReader;
-import java.io.FileWriter;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * This class is used to provide a generic way for serializing objects using the extension file.

@@ -9,16 +9,16 @@ package org.thegalactic.lattice;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-import java.util.Date;
-import java.util.TreeSet;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Date;
+import java.util.TreeSet;
 
-import org.thegalactic.util.ComparableSet;
-import org.thegalactic.dgraph.DGraph;
 import org.thegalactic.context.TemporaryContext;
+import org.thegalactic.dgraph.DGraph;
+import org.thegalactic.util.ComparableSet;
 
 /**
  * This class generates bijective components issued from lattice theory for a specified

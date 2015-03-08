@@ -10,16 +10,16 @@ package org.thegalactic.lattice;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
+import java.io.IOException;
+import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
-import java.util.SortedSet;
 import java.util.Vector;
-import java.io.IOException;
 
-import org.thegalactic.util.ComparableSet;
 import org.thegalactic.dgraph.DAGraph;
 import org.thegalactic.dgraph.DGraph;
 import org.thegalactic.dgraph.Node;
+import org.thegalactic.util.ComparableSet;
 
 /**
  * This class is an abstract class defining the common behavior of closure systems,

@@ -11,13 +11,14 @@ package org.thegalactic.lattice;
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
 import org.junit.Test;
-import static org.junit.Assert.assertTrue;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.TreeSet;
 
-import org.thegalactic.util.ComparableSet;
 import org.thegalactic.context.TemporaryContext;
+import org.thegalactic.util.ComparableSet;
 
 /**
  *

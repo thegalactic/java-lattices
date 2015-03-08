@@ -10,16 +10,15 @@ package org.thegalactic.lattice;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 
-import org.thegalactic.util.ComparableSet;
 import org.thegalactic.dgraph.DAGraph;
 import org.thegalactic.dgraph.DGraph;
 import org.thegalactic.dgraph.Edge;
@@ -27,6 +26,7 @@ import org.thegalactic.dgraph.Node;
 import org.thegalactic.lattice.io.ConceptLatticeWriter;
 import org.thegalactic.lattice.io.ConceptLatticeWriterDot;
 import org.thegalactic.lattice.io.ConceptLatticeWriterFactory;
+import org.thegalactic.util.ComparableSet;
 
 /**
  * This class extends class {@link Lattice} to provide specific methods

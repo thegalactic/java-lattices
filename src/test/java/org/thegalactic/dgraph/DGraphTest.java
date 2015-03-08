@@ -11,15 +11,16 @@ package org.thegalactic.dgraph;
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
 import org.junit.Test;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertEquals;
 
-import java.util.TreeSet;
-import java.util.SortedSet;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.io.File;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  * Test the dgraph.DGraph class.

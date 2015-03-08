@@ -10,19 +10,19 @@ package org.thegalactic.lattice;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-import java.util.TreeMap;
-import java.util.TreeSet;
-import java.util.SortedSet;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
-import org.thegalactic.util.ComparableSet;
 import org.thegalactic.context.TemporaryContext;
 import org.thegalactic.dgraph.DAGraph;
 import org.thegalactic.dgraph.DGraph;
 import org.thegalactic.dgraph.Edge;
 import org.thegalactic.dgraph.Node;
+import org.thegalactic.util.ComparableSet;
 
 /**
  * This class extends class {@link org.thegalactic.dgraph.DAGraph} to provide specific methods to manipulate a lattice.

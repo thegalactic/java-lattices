@@ -16,9 +16,9 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.thegalactic.context.AbstractContext;
-import org.thegalactic.context.attribute.Attribute;
 import org.thegalactic.context.Observation;
 import org.thegalactic.context.Value;
+import org.thegalactic.context.attribute.Attribute;
 
 /**
  * The class InMemoryContext implements contexts in memory.

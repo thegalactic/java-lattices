@@ -10,9 +10,9 @@ package org.thegalactic.context.attribute.bool;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-import java.util.Set;
-import java.util.HashMap;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Set;
 
 import org.thegalactic.context.attribute.AbstractConstraint;
 import org.thegalactic.context.attribute.Constraint;

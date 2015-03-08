@@ -10,17 +10,17 @@ package org.thegalactic.lattice;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-import java.util.TreeSet;
-import java.io.IOException;
-import java.io.FileWriter;
 import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.TreeSet;
 
 import org.thegalactic.context.TemporaryContext;
+import org.thegalactic.dgraph.DGraph;
+import org.thegalactic.dgraph.Edge;
+import org.thegalactic.dgraph.Node;
 import org.thegalactic.lattice.io.ArrowRelationWriterFactory;
 import org.thegalactic.lattice.io.ArrowRelationWriterTeX;
-import org.thegalactic.dgraph.Edge;
-import org.thegalactic.dgraph.DGraph;
-import org.thegalactic.dgraph.Node;
 
 /**
  * The ArrowRelation class encodes arrow relation between meet & join-irreductibles of a lattice.

@@ -11,10 +11,10 @@ package org.thegalactic.dgraph;
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
 import java.util.ArrayList;
-import java.util.TreeMap;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 /**
  * This class extends the representation of a directed graph given by class

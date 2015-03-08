@@ -10,27 +10,26 @@ package org.thegalactic.lattice;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-import java.util.Collections;
-import java.util.Collection;
-import java.util.StringTokenizer;
-import java.util.TreeMap;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.SortedSet;
+import java.util.StringTokenizer;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
-import org.thegalactic.util.ComparableSet;
-import org.thegalactic.lattice.io.ImplicationalSystemWriterFactory;
-import org.thegalactic.lattice.io.ImplicationalSystemWriterText;
-import org.thegalactic.lattice.io.ImplicationalSystemReaderFactory;
-import org.thegalactic.lattice.io.ImplicationalSystemReaderText;
 import org.thegalactic.dgraph.DGraph;
 import org.thegalactic.dgraph.Edge;
 import org.thegalactic.dgraph.Node;
+import org.thegalactic.lattice.io.ImplicationalSystemReaderFactory;
+import org.thegalactic.lattice.io.ImplicationalSystemReaderText;
+import org.thegalactic.lattice.io.ImplicationalSystemWriterFactory;
+import org.thegalactic.lattice.io.ImplicationalSystemWriterText;
+import org.thegalactic.util.ComparableSet;
 
 /**
  * This class gives a representation for an implicational system (ImplicationalSystem), a set of rules.

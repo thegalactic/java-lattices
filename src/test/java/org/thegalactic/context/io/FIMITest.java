@@ -11,6 +11,7 @@ package org.thegalactic.context.io;
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
 import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;

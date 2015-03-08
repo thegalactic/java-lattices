@@ -13,8 +13,8 @@ package org.thegalactic.context.attribute;
 import java.util.HashMap;
 
 import org.thegalactic.context.Context;
-import org.thegalactic.context.attribute.bool.BoolAttributeBuilder;
 import org.thegalactic.context.attribute.bool.BoolAttribute;
+import org.thegalactic.context.attribute.bool.BoolAttributeBuilder;
 
 /**
  * The attribute factory.

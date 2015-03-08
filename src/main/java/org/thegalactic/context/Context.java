@@ -10,8 +10,9 @@ package org.thegalactic.context;
  * This file is part of java-thegalactic.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-import org.thegalactic.context.attribute.Attribute;
 import java.util.Set;
+
+import org.thegalactic.context.attribute.Attribute;
 
 /**
  * The interface Context deals with contexts.
