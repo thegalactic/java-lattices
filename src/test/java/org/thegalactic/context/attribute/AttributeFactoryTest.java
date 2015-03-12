@@ -65,11 +65,11 @@ public class AttributeFactoryTest {
      */
     @Test
     public void testCreate() {
-        String type = "boolean";
+        String type = "bool";
         Context context = null;
         String name = "test";
-        String expResult = "test(boolean)";
-        String result = AttributeFactory.getInstance().create(type, name, context).toString();
+        String expResult = "test(bool)";
+        String result = AttributeFactory.getInstance().initialise().create(type, name, context).toString();
         assertEquals(expResult, result);
     }
 

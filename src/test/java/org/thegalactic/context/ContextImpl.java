@@ -1,4 +1,4 @@
-package org.thegalactic.context.attribute;
+package org.thegalactic.context;
 
 /*
  * ContextImpl.java
@@ -13,7 +13,9 @@ package org.thegalactic.context.attribute;
 import java.util.Collections;
 import java.util.Set;
 
-import org.thegalactic.context.AbstractContext;
+import org.thegalactic.context.attribute.Attribute;
+import org.thegalactic.context.attribute.Constraint;
+import org.thegalactic.context.attribute.ValueImpl;
 import org.thegalactic.context.observation.Observation;
 import org.thegalactic.context.value.Value;
 
@@ -61,5 +63,14 @@ public class ContextImpl extends AbstractContext {
      */
     public Attribute getAttribute(String name) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    /**
+     * Get the set of closed constraints for this context.
+     *
+     * @return The set of closed constraints for this context.
+     */
+    public Set<Constraint> getDomain() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

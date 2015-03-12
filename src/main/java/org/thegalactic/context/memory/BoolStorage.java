@@ -1,7 +1,7 @@
 package org.thegalactic.context.memory;
 
 /*
- * BooleanStorage.java
+ * BoolStorage.java
  *
  * Copyright: 2010-2014 Karell Bertet, France
  *
@@ -20,24 +20,24 @@ import org.thegalactic.context.attribute.Attribute;
 /**
  * A boolean attribute for a context.
  */
-public class BooleanStorage implements Storage {
+public class BoolStorage implements Storage {
 
     /**
      * instances of this class.
      */
-    private static final HashMap<InMemoryContext, BooleanStorage> INSTANCES = new HashMap<InMemoryContext, BooleanStorage>();
+    private static final HashMap<InMemoryContext, BoolStorage> INSTANCES = new HashMap<InMemoryContext, BoolStorage>();
 
     /**
-     * BooleanStorage factory.
+     * BoolStorage factory.
      *
      * @param context A context
      *
      * @return An instance of boolean storage for the context
      */
-    public static BooleanStorage getInstance(InMemoryContext context) {
-        BooleanStorage storage = INSTANCES.get(context);
+    public static BoolStorage getInstance(InMemoryContext context) {
+        BoolStorage storage = INSTANCES.get(context);
         if (storage == null) {
-            storage = new BooleanStorage();
+            storage = new BoolStorage();
             INSTANCES.put(context, storage);
         }
         return storage;
@@ -57,18 +57,24 @@ public class BooleanStorage implements Storage {
      * @return The value
      */
     public Value getValue(Observation observation, Attribute attribute) {
-        return new BooleanValue();
+        return new BoolValue();
     }
 
     /**
      * Boolean Value.
      */
-    private class BooleanValue implements Value {
+    private class BoolValue implements Value {
 
         /**
          * Basic constructor.
          */
-        public BooleanValue() {
+        public BoolValue() {
+            /**
+             * Get the set of closed constraints for this context.
+             *
+             * @return The set of closed constraints for this context.
+             */
+
         }
 
         /**

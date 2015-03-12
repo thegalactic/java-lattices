@@ -22,7 +22,7 @@ public class BoolAttribute extends AbstractAttribute {
     /**
      * Type for boolean attribute.
      */
-    public static final String TYPE = "boolean";
+    public static final String TYPE = "bool";
 
     /**
      * Constructor.

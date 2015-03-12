@@ -15,5 +15,5 @@ import org.thegalactic.context.value.Value;
 /**
  * Basic implementation of Value.
  */
-class ValueImpl implements Value {
+public class ValueImpl implements Value {
 }

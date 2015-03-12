@@ -18,7 +18,7 @@ import org.thegalactic.context.Context;
 public interface AttributeBuilder {
 
     /**
-     * Create the attribute.
+     * Create an attribute.
      *
      * @return the a new attribute
      */

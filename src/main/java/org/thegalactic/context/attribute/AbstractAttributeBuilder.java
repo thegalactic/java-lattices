@@ -68,5 +68,4 @@ public abstract class AbstractAttributeBuilder implements AttributeBuilder {
     protected String getName() {
         return name;
     }
-
 }

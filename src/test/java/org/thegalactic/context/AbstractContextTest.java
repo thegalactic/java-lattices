@@ -10,9 +10,6 @@ package org.thegalactic.context;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-import org.thegalactic.context.value.Value;
-import org.thegalactic.context.observation.Observation;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -20,11 +17,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-
-import java.util.Collections;
-import java.util.Set;
-
-import org.thegalactic.context.attribute.Attribute;
 
 /**
  * Test AbstractContext class.
@@ -70,7 +62,7 @@ public class AbstractContextTest {
      */
     @Test
     public void testSizeAttributes() {
-        AbstractContext instance = new AbstractContextImpl();
+        AbstractContext instance = new ContextImpl();
         int expResult = 0;
         int result = instance.sizeAttributes();
         assertEquals(expResult, result);
@@ -81,56 +73,9 @@ public class AbstractContextTest {
      */
     @Test
     public void testSizeObservations() {
-        AbstractContext instance = new AbstractContextImpl();
+        AbstractContext instance = new ContextImpl();
         int expResult = 0;
         int result = instance.sizeObservations();
         assertEquals(expResult, result);
-    }
-
-    /**
-     * Basic implementation of AbstractContext.
-     */
-    public class AbstractContextImpl extends AbstractContext {
-
-        /**
-         * Get an attribute given its name.
-         *
-         * @param name the attribute name
-         *
-         * @return the attribute
-         */
-        public Attribute getAttribute(String name) {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
-
-        /**
-         * Get the set of attributes.
-         *
-         * @return the set of attributes
-         */
-        public Set<Attribute> getAttributes() {
-            return Collections.EMPTY_SET;
-        }
-
-        /**
-         * Get the set of observations.
-         *
-         * @return the set of observations
-         */
-        public Set<Observation> getObservations() {
-            return Collections.EMPTY_SET;
-        }
-
-        /**
-         * Get the value associated with an observation and an attribute.
-         *
-         * @param observation the observation
-         * @param attribute   the attribute
-         *
-         * @return The value associated with an observation and an attribute
-         */
-        public Value getValue(Observation observation, Attribute attribute) {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
     }
 }

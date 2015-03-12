@@ -10,6 +10,8 @@ package org.thegalactic.context.attribute;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
+import org.thegalactic.context.ContextImpl;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

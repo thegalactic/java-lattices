@@ -19,9 +19,9 @@ import org.thegalactic.context.attribute.Attribute;
 public class BoolAttributeBuilder extends AbstractAttributeBuilder {
 
     /**
-     * Create a new boolean attribute using the context and name set.
+     * Create a boolean attribute using the context and name.
      *
-     * @return a new boolean attribute
+     * @return a boolean attribute
      */
     public Attribute create() {
         return new BoolAttribute(this.getName(), this.getContext());

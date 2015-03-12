@@ -16,9 +16,11 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.thegalactic.context.AbstractContext;
+import org.thegalactic.context.attribute.Attribute;
+import org.thegalactic.context.attribute.AttributeFactory;
+import org.thegalactic.context.attribute.Constraint;
 import org.thegalactic.context.observation.Observation;
 import org.thegalactic.context.value.Value;
-import org.thegalactic.context.attribute.Attribute;
 
 /**
  * The class InMemoryContext implements contexts in memory.
@@ -28,26 +30,17 @@ public class InMemoryContext extends AbstractContext {
     /**
      * The set of attributes.
      */
-    private final LinkedHashSet<Attribute> attributes;
+    private final LinkedHashSet<Attribute> attributes = new LinkedHashSet<Attribute>();
 
     /**
      * The set of observations.
      */
-    private final LinkedHashSet<Observation> observations;
+    private final LinkedHashSet<Observation> observations = new LinkedHashSet<Observation>();
 
     /**
      * The storages.
      */
-    private final HashMap<Attribute, Storage> storages;
-
-    /**
-     * Initialization of fields.
-     */
-    {
-        attributes = new LinkedHashSet<Attribute>();
-        observations = new LinkedHashSet<Observation>();
-        storages = new HashMap<Attribute, Storage>();
-    }
+    private final HashMap<Attribute, Storage> storages = new HashMap<Attribute, Storage>();
 
     /**
      * Get the set of attributes.
@@ -88,5 +81,28 @@ public class InMemoryContext extends AbstractContext {
      */
     public Attribute getAttribute(String name) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    /**
+     * Get the set of closed constraints for this context.
+     *
+     * @return The set of closed constraints for this context.
+     */
+    public Set<Constraint> getDomain() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    /**
+     * Add an attribute to this in-memory context.
+     *
+     * @param type the attribute type identifer
+     * @param name the attribute name
+     *
+     * @return the attribute
+     */
+    public Attribute addAttribute(String type, String name) {
+        Attribute attribute = AttributeFactory.getInstance().create(type, name, this);
+        attributes.add(attribute);
+        return attribute;
     }
 }

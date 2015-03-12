@@ -38,18 +38,35 @@ public final class AttributeFactory {
     /**
      * Attribute builders.
      */
-    private final HashMap<String, AttributeBuilder> builders;
+    private final HashMap<String, AttributeBuilder> builders = new HashMap<String, AttributeBuilder>();
 
     /**
      * This class is not designed to be instantiated.
      */
     private AttributeFactory() {
-        builders = new HashMap<String, AttributeBuilder>();
-        builders.put(BoolAttribute.TYPE, new BoolAttributeBuilder());
     }
 
     /**
-     * Create a new attribute.
+     * Initialise the attribute factory to the attribute type defined by the project.
+     *
+     * @return this for chaining
+     */
+    public AttributeFactory initialise() {
+        return register(BoolAttribute.TYPE, new BoolAttributeBuilder());
+    }
+
+    /**
+     * Clear the attribute factory to the empty set.
+     *
+     * @return this for chaining
+     */
+    public AttributeFactory clear() {
+        builders.clear();
+        return this;
+    }
+
+    /**
+     * Create an attribute.
      *
      * @param type    the attribute type
      * @param context the context the attribute belongs to

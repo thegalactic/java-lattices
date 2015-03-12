@@ -10,11 +10,11 @@ package org.thegalactic.context.attribute;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 /**
  * Basic AttributeBuilder implementation.
  */
 class AttributeBuilderImpl extends AbstractAttributeBuilder {
+
     /**
      * Create the attribute.
      *

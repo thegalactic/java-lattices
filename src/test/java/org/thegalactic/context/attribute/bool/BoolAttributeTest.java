@@ -66,7 +66,7 @@ public class BoolAttributeTest {
     @Test
     public void testGetType() {
         BoolAttribute instance = new BoolAttribute("", null);
-        String expResult = "boolean";
+        String expResult = "bool";
         String result = instance.getType();
         assertEquals(expResult, result);
     }

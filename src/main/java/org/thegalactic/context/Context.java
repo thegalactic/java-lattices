@@ -16,6 +16,7 @@ import org.thegalactic.context.observation.Observation;
 import java.util.Set;
 
 import org.thegalactic.context.attribute.Attribute;
+import org.thegalactic.context.attribute.Constraint;
 
 /**
  * The interface Context deals with contexts.
@@ -68,4 +69,11 @@ public interface Context {
      * @return The value associated with an observation and an attribute
      */
     Value getValue(Observation observation, Attribute attribute);
+
+    /**
+     * Get the set of closed constraints for this context.
+     *
+     * @return The set of closed constraints for this context.
+     */
+    Set<Constraint> getDomain();
 }

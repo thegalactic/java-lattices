@@ -132,11 +132,11 @@ public class BoolConstraintTest {
         BoolAttribute attribute = new BoolAttribute("AttributeName", null);
         BoolConstraint instance = (BoolConstraint) attribute.getDomain();
 
-        String expResult = "AttributeName(boolean):unset";
+        String expResult = "AttributeName(bool):unset";
         String result = instance.toString();
         assertEquals(expResult, result);
 
-        expResult = "AttributeName(boolean):set";
+        expResult = "AttributeName(bool):set";
         for (Constraint successor : instance.getSuccessors()) {
             result = successor.toString();
             assertEquals(expResult, result);

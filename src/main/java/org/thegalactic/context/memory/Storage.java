@@ -10,9 +10,9 @@ package org.thegalactic.context.memory;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
+import org.thegalactic.context.attribute.Attribute;
 import org.thegalactic.context.observation.Observation;
 import org.thegalactic.context.value.Value;
-import org.thegalactic.context.attribute.Attribute;
 
 /**
  * The interface Storage implements generic storage.
