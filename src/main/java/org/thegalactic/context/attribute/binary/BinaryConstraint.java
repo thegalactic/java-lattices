@@ -1,7 +1,7 @@
-package org.thegalactic.context.attribute.bool;
+package org.thegalactic.context.attribute.binary;
 
 /*
- * BoolConstraint.java
+ * BinaryConstraint.java
  *
  * Copyright: 2010-2014 Karell Bertet, France
  *
@@ -18,9 +18,9 @@ import org.thegalactic.context.attribute.AbstractConstraint;
 import org.thegalactic.context.attribute.Constraint;
 
 /**
- * BoolConstraint implements boolean constraints.
+ * BinaryConstraint implements boolean constraints.
  */
-public final class BoolConstraint extends AbstractConstraint {
+public final class BinaryConstraint extends AbstractConstraint {
 
     /**
      * The set of successors for the domain.
@@ -30,7 +30,7 @@ public final class BoolConstraint extends AbstractConstraint {
     /**
      * Set of domains for boolean attributes.
      */
-    private static final HashMap<BoolAttribute, BoolConstraint> DOMAINS = new HashMap<BoolAttribute, BoolConstraint>();
+    private static final HashMap<BinaryAttribute, BinaryConstraint> DOMAINS = new HashMap<BinaryAttribute, BinaryConstraint>();
 
     /**
      * Get the domain associated with a boolean attribute.
@@ -39,14 +39,14 @@ public final class BoolConstraint extends AbstractConstraint {
      *
      * @return The domain
      */
-    public static BoolConstraint getDomain(BoolAttribute attribute) {
-        BoolConstraint domain = BoolConstraint.DOMAINS.get(attribute);
+    public static BinaryConstraint getDomain(BinaryAttribute attribute) {
+        BinaryConstraint domain = BinaryConstraint.DOMAINS.get(attribute);
         if (domain == null) {
-            domain = new BoolConstraint(attribute, false);
-            BoolConstraint successor = new BoolConstraint(attribute, true);
-            BoolConstraint.DOMAINS.put(attribute, domain);
-            BoolConstraint.SUCCESSORS.put(domain, Collections.singleton((Constraint) successor));
-            BoolConstraint.SUCCESSORS.put(successor, Collections.EMPTY_SET);
+            domain = new BinaryConstraint(attribute, false);
+            BinaryConstraint successor = new BinaryConstraint(attribute, true);
+            BinaryConstraint.DOMAINS.put(attribute, domain);
+            BinaryConstraint.SUCCESSORS.put(domain, Collections.singleton((Constraint) successor));
+            BinaryConstraint.SUCCESSORS.put(successor, Collections.EMPTY_SET);
         }
         return domain;
     }
@@ -62,7 +62,7 @@ public final class BoolConstraint extends AbstractConstraint {
      * @param attribute the attribute linked to this constraint.
      * @param isSet     is this boolean constraint set?
      */
-    private BoolConstraint(BoolAttribute attribute, boolean isSet) {
+    private BinaryConstraint(BinaryAttribute attribute, boolean isSet) {
         super(attribute);
         this.isSet = isSet;
     }
@@ -73,7 +73,7 @@ public final class BoolConstraint extends AbstractConstraint {
      * @return the successors of this.
      */
     public Set<Constraint> getSuccessors() {
-        return BoolConstraint.SUCCESSORS.get(this);
+        return BinaryConstraint.SUCCESSORS.get(this);
     }
 
     /**

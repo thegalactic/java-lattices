@@ -1,7 +1,7 @@
-package org.thegalactic.context.attribute.bool;
+package org.thegalactic.context.attribute.binary;
 
 /*
- * BoolAttribute.java
+ * BinaryAttribute.java
  *
  * Copyright: 2010-2014 Karell Bertet, France
  *
@@ -15,9 +15,9 @@ import org.thegalactic.context.attribute.AbstractAttribute;
 import org.thegalactic.context.attribute.Constraint;
 
 /**
- * BoolAttribute.
+ * BinaryAttribute.
  */
-public class BoolAttribute extends AbstractAttribute {
+public class BinaryAttribute extends AbstractAttribute {
 
     /**
      * Type for boolean attribute.
@@ -30,7 +30,7 @@ public class BoolAttribute extends AbstractAttribute {
      * @param context the context the attribute belongs to
      * @param name    the attribute name
      */
-    BoolAttribute(String name, Context context) {
+    BinaryAttribute(String name, Context context) {
         super(name, context);
     }
 
@@ -49,6 +49,6 @@ public class BoolAttribute extends AbstractAttribute {
      * @return The domain
      */
     public Constraint getDomain() {
-        return BoolConstraint.getDomain(this);
+        return BinaryConstraint.getDomain(this);
     }
 }

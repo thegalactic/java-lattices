@@ -1,7 +1,7 @@
-package org.thegalactic.context.attribute.bool;
+package org.thegalactic.context.attribute.binary;
 
 /*
- * BoolAttributeTest.java
+ * BinaryAttributeTest.java
  *
  * Copyright: 2010-2014 Karell Bertet, France
  *
@@ -22,9 +22,9 @@ import static org.junit.Assert.assertTrue;
 import org.thegalactic.context.attribute.Constraint;
 
 /**
- * Test BoolAttribute class.
+ * Test BinaryAttribute class.
  */
-public class BoolAttributeTest {
+public class BinaryAttributeTest {
 
     /**
      * Run before class.
@@ -43,7 +43,7 @@ public class BoolAttributeTest {
     /**
      * Constructor.
      */
-    public BoolAttributeTest() {
+    public BinaryAttributeTest() {
     }
 
     /**
@@ -61,22 +61,22 @@ public class BoolAttributeTest {
     }
 
     /**
-     * Test of getType method, of class BoolAttribute.
+     * Test of getType method, of class BinaryAttribute.
      */
     @Test
     public void testGetType() {
-        BoolAttribute instance = new BoolAttribute("", null);
+        BinaryAttribute instance = new BinaryAttribute("", null);
         String expResult = "bool";
         String result = instance.getType();
         assertEquals(expResult, result);
     }
 
     /**
-     * Test of getDomain method, of class BoolAttribute.
+     * Test of getDomain method, of class BinaryAttribute.
      */
     @Test
     public void testGetDomain() {
-        BoolAttribute instance = new BoolAttribute("", null);
+        BinaryAttribute instance = new BinaryAttribute("", null);
         Constraint result = instance.getDomain();
         assertTrue(result instanceof Constraint);
     }

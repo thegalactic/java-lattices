@@ -13,8 +13,8 @@ package org.thegalactic.context.attribute;
 import java.util.HashMap;
 
 import org.thegalactic.context.Context;
-import org.thegalactic.context.attribute.bool.BoolAttribute;
-import org.thegalactic.context.attribute.bool.BoolAttributeBuilder;
+import org.thegalactic.context.attribute.binary.BinaryAttribute;
+import org.thegalactic.context.attribute.binary.BinaryAttributeBuilder;
 
 /**
  * The attribute factory.
@@ -52,7 +52,7 @@ public final class AttributeFactory {
      * @return this for chaining
      */
     public AttributeFactory initialise() {
-        return register(BoolAttribute.TYPE, new BoolAttributeBuilder());
+        return register(BinaryAttribute.TYPE, new BinaryAttributeBuilder());
     }
 
     /**

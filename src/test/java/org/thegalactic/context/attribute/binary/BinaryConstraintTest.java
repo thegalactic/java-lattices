@@ -1,7 +1,7 @@
-package org.thegalactic.context.attribute.bool;
+package org.thegalactic.context.attribute.binary;
 
 /*
- * BoolConstraintTest.java
+ * BinaryConstraintTest.java
  *
  * Copyright: 2010-2014 Karell Bertet, France
  *
@@ -24,9 +24,9 @@ import java.util.Set;
 import org.thegalactic.context.attribute.Constraint;
 
 /**
- * Test BoolConstraint class.
+ * Test BinaryConstraint class.
  */
-public class BoolConstraintTest {
+public class BinaryConstraintTest {
 
     /**
      * Run before class.
@@ -45,7 +45,7 @@ public class BoolConstraintTest {
     /**
      * Constructor.
      */
-    public BoolConstraintTest() {
+    public BinaryConstraintTest() {
     }
 
     /**
@@ -63,24 +63,24 @@ public class BoolConstraintTest {
     }
 
     /**
-     * Test of getDomain method, of class BoolConstraint.
+     * Test of getDomain method, of class BinaryConstraint.
      */
     @Test
     public void testGetDomain() {
-        BoolAttribute attribute = new BoolAttribute("", null);
+        BinaryAttribute attribute = new BinaryAttribute("", null);
         Constraint expResult = attribute.getDomain();
         Constraint result = attribute.getDomain();
-        assertTrue(result instanceof BoolConstraint);
+        assertTrue(result instanceof BinaryConstraint);
         assertEquals(expResult, result);
     }
 
     /**
-     * Test of getSuccessors method, of class BoolConstraint.
+     * Test of getSuccessors method, of class BinaryConstraint.
      */
     @Test
     public void testGetSuccessors() {
-        BoolAttribute attribute = new BoolAttribute("", null);
-        BoolConstraint instance = (BoolConstraint) attribute.getDomain();
+        BinaryAttribute attribute = new BinaryAttribute("", null);
+        BinaryConstraint instance = (BinaryConstraint) attribute.getDomain();
         Set<Constraint> successors = instance.getSuccessors();
 
         int expResult = 1;
@@ -88,17 +88,17 @@ public class BoolConstraintTest {
         assertEquals(expResult, result);
 
         for (Constraint successor : successors) {
-            assertTrue(successor instanceof BoolConstraint);
+            assertTrue(successor instanceof BinaryConstraint);
         }
     }
 
     /**
-     * Test of isSet method, of class BoolConstraint.
+     * Test of isSet method, of class BinaryConstraint.
      */
     @Test
     public void testIsSet() {
-        BoolAttribute attribute = new BoolAttribute("", null);
-        BoolConstraint instance = (BoolConstraint) attribute.getDomain();
+        BinaryAttribute attribute = new BinaryAttribute("", null);
+        BinaryConstraint instance = (BinaryConstraint) attribute.getDomain();
 
         Boolean expResult = false;
         Boolean result = instance.isSet();
@@ -106,12 +106,12 @@ public class BoolConstraintTest {
     }
 
     /**
-     * Test of isUnset method, of class BoolConstraint.
+     * Test of isUnset method, of class BinaryConstraint.
      */
     @Test
     public void testIsUnset() {
-        BoolAttribute attribute = new BoolAttribute("", null);
-        BoolConstraint instance = (BoolConstraint) attribute.getDomain();
+        BinaryAttribute attribute = new BinaryAttribute("", null);
+        BinaryConstraint instance = (BinaryConstraint) attribute.getDomain();
 
         Boolean expResult = true;
         Boolean result = instance.isUnset();
@@ -119,18 +119,18 @@ public class BoolConstraintTest {
 
         expResult = false;
         for (Constraint successor : instance.getSuccessors()) {
-            result = ((BoolConstraint) successor).isUnset();
+            result = ((BinaryConstraint) successor).isUnset();
             assertEquals(expResult, result);
         }
     }
 
     /**
-     * Test of toString method, of class BoolConstraint.
+     * Test of toString method, of class BinaryConstraint.
      */
     @Test
     public void testToString() {
-        BoolAttribute attribute = new BoolAttribute("AttributeName", null);
-        BoolConstraint instance = (BoolConstraint) attribute.getDomain();
+        BinaryAttribute attribute = new BinaryAttribute("AttributeName", null);
+        BinaryConstraint instance = (BinaryConstraint) attribute.getDomain();
 
         String expResult = "AttributeName(bool):unset";
         String result = instance.toString();

@@ -1,7 +1,7 @@
 package org.thegalactic.context.memory;
 
 /*
- * BoolStorage.java
+ * BinaryStorage.java
  *
  * Copyright: 2010-2014 Karell Bertet, France
  *
@@ -20,24 +20,24 @@ import org.thegalactic.context.attribute.Attribute;
 /**
  * A boolean attribute for a context.
  */
-public class BoolStorage implements Storage {
+public class BinaryStorage implements Storage {
 
     /**
      * instances of this class.
      */
-    private static final HashMap<InMemoryContext, BoolStorage> INSTANCES = new HashMap<InMemoryContext, BoolStorage>();
+    private static final HashMap<InMemoryContext, BinaryStorage> INSTANCES = new HashMap<InMemoryContext, BinaryStorage>();
 
     /**
-     * BoolStorage factory.
+     * BinaryStorage factory.
      *
      * @param context A context
      *
      * @return An instance of boolean storage for the context
      */
-    public static BoolStorage getInstance(InMemoryContext context) {
-        BoolStorage storage = INSTANCES.get(context);
+    public static BinaryStorage getInstance(InMemoryContext context) {
+        BinaryStorage storage = INSTANCES.get(context);
         if (storage == null) {
-            storage = new BoolStorage();
+            storage = new BinaryStorage();
             INSTANCES.put(context, storage);
         }
         return storage;

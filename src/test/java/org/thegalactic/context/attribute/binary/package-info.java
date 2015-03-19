@@ -9,7 +9,6 @@
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
 /**
- * This package is designed to represent the boolean attributes (the bool name has been chosen to avoid issue with
- * the "boolean" reserved word.
+ * This package is for testing the bool package.
  */
-package org.thegalactic.context.attribute.bool;
+package org.thegalactic.context.attribute.binary;

@@ -1,7 +1,7 @@
-package org.thegalactic.context.attribute.bool;
+package org.thegalactic.context.attribute.binary;
 
 /*
- * BoolAttributeBuilderTest.java
+ * BinaryAttributeBuilderTest.java
  *
  * Copyright: 2010-2014 Karell Bertet, France
  *
@@ -24,9 +24,9 @@ import org.thegalactic.context.attribute.AttributeBuilder;
 import org.thegalactic.context.ContextImpl;
 
 /**
- * Test the BoolAttributeBuilder class.
+ * Test the BinaryAttributeBuilder class.
  */
-public class BoolAttributeBuilderTest {
+public class BinaryAttributeBuilderTest {
 
     /**
      * Run before class.
@@ -45,7 +45,7 @@ public class BoolAttributeBuilderTest {
     /**
      * Constructor.
      */
-    public BoolAttributeBuilderTest() {
+    public BinaryAttributeBuilderTest() {
     }
 
     /**
@@ -63,34 +63,34 @@ public class BoolAttributeBuilderTest {
     }
 
     /**
-     * Test of create method, of class BoolAttributeBuilder.
+     * Test of create method, of class BinaryAttributeBuilder.
      */
     @Test
     public void testCreate() {
-        BoolAttributeBuilder instance = new BoolAttributeBuilder();
+        BinaryAttributeBuilder instance = new BinaryAttributeBuilder();
         Attribute result = instance.create();
         assertEquals(null, result.getContext());
         assertEquals(null, result.getName());
     }
 
     /**
-     * Test of setContext method, of class BoolAttributeBuilder.
+     * Test of setContext method, of class BinaryAttributeBuilder.
      */
     @Test
     public void testSetContext() {
         Context context = new ContextImpl();
-        BoolAttributeBuilder instance = new BoolAttributeBuilder();
+        BinaryAttributeBuilder instance = new BinaryAttributeBuilder();
         AttributeBuilder result = instance.setContext(context);
         assertEquals(context, result.create().getContext());
     }
 
     /**
-     * Test of setName method, of class BoolAttributeBuilder.
+     * Test of setName method, of class BinaryAttributeBuilder.
      */
     @Test
     public void testSetName() {
         String name = "test";
-        BoolAttributeBuilder instance = new BoolAttributeBuilder();
+        BinaryAttributeBuilder instance = new BinaryAttributeBuilder();
         AttributeBuilder result = instance.setName(name);
         assertEquals(name, result.create().getName());
     }
