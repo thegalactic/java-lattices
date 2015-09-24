@@ -11,6 +11,7 @@ package fr.kbertet.lattice;
  * it under the terms of CeCILL-B license.
  */
 
+import java.util.StringTokenizer;
 import java.util.TreeSet;
 
 /**
@@ -108,5 +109,43 @@ public class AssociationRule extends Rule {
      */
     public void setSupport(double support) {
         this.support = support;
+    }
+
+    /* ------------- OVERLAPING METHODS ------------------ */
+
+    /**
+     * Returns a String representation of this component.
+     *
+     * The following format is used:
+     *
+     * ~~~
+     * [elements of the premise separated by a space] -> [elements of the conclusion separated by a space] : [confidence] / [support]
+     * ~~~
+     *
+     * a StringTokenizer is used to delete spaces in the
+     * string description of each element of premise and conclusion
+     *
+     * @return  a string made of premises followed by -> and the conclusions.
+     */
+    public String toString() {
+        String s = "";
+        for (Object e : this.getPremise()) {
+            StringTokenizer st = new StringTokenizer(e.toString());
+            while (st.hasMoreTokens()) {
+                s += st.nextToken();
+            }
+            s += " ";
+            }
+        s += " -> ";
+        for (Object e : this.getConclusion()) {
+            StringTokenizer st = new StringTokenizer(e.toString());
+            while (st.hasMoreTokens()) {
+                s += st.nextToken();
+            }
+            s += " ";
+            }
+        s += " : ";
+        s += confidence + "/" + support;
+        return s;
     }
 }
