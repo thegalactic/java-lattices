@@ -59,5 +59,6 @@ public final class Factory extends fr.kbertet.io.Factory<Context> {
         Burmeister.register();
         FIMI.register();
         Csv.register();
+        SLF.register();
     }
 }
