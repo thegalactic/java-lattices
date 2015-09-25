@@ -32,6 +32,7 @@ import fr.kbertet.lattice.io.ImplicationalSystemReaderText;
 import fr.kbertet.dgraph.DGraph;
 import fr.kbertet.dgraph.Edge;
 import fr.kbertet.dgraph.Node;
+import java.util.Iterator;
 
 /**
  * This class gives a representation for an implicational system (ImplicationalSystem), a set of rules.
@@ -719,25 +720,30 @@ public class ImplicationalSystem extends ClosureSystem {
      */
     public int makeCompact() {
         ImplicationalSystem save = new ImplicationalSystem(this);
-        for (Rule rule1 : save.sigma) {
-            if (this.containsRule(rule1)) {
-                ComparableSet newConc = new ComparableSet();
-                for (Rule rule2 : save.sigma) {
-                    if (this.containsRule(rule2) && !rule1.equals(rule2) && rule1.getPremise().equals(rule2.getPremise())) {
-                        newConc.addAll(rule2.getConclusion());
-                        boolean res = this.sigma.remove(rule2);
-                    }
-                }
-                if (newConc.size() > 0) {
-                    newConc.addAll(rule1.getConclusion());
-                    Rule newR = new Rule(rule1.getPremise(), newConc);
-                    if (!rule1.equals(newR)) {
-                        this.replaceRule(rule1, newR);
-                    }
+        int before = this.sigma.size();
+        this.sigma = new TreeSet();
+
+        while (save.sigma.size() > 0) {
+            Rule rule1 = save.sigma.first();
+            ComparableSet newConc = new ComparableSet();
+            Iterator<Rule> it2 = save.sigma.iterator();
+            while (it2.hasNext()) {
+                Rule rule2 = it2.next();
+                if (!rule1.equals(rule2) && rule1.getPremise().equals(rule2.getPremise())) {
+                    newConc.addAll(rule2.getConclusion());
+                    it2.remove();
                 }
             }
+            if (newConc.size() > 0) {
+                newConc.addAll(rule1.getConclusion());
+                Rule newR = new Rule(rule1.getPremise(), newConc);
+                this.addRule(newR);
+            } else {
+                this.addRule(rule1);
+            }
+            save.removeRule(rule1);
         }
-        return save.sizeRules() - this.sizeRules();
+        return before - this.sigma.size();
     }
 
     /**
