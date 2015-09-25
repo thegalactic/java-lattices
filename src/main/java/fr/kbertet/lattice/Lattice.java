@@ -947,10 +947,11 @@ public class Lattice extends DAGraph {
      * is generated.
      *
      * @param context       a context
+     * @param support       a support threshold, between 0 and 1
      * @param confidence    a confidence threshold, between 0 and 1
      * @return  a set of approximative rules
      */
-    public ImplicationalSystem getAssociationBasis(Context context, double confidence) {
+    public ImplicationalSystem getAssociationBasis(Context context, double support, double confidence) {
 
         //nb of observations in current context
         int nbObs = context.getObservations().size();
@@ -973,25 +974,28 @@ public class Lattice extends DAGraph {
 
             //we get the cardinality of its extent to compute confidence later
             double supportClosedSet = context.getExtentNb(closedSet);
+            if (supportClosedSet / nbObs > support) {
+                //we get the immediate successors of the concept made of the set
+                ArrayList<TreeSet<Comparable>> succs = new Concept(closedSet, new TreeSet()).immediateSuccessorsLOA(context);
+                for (TreeSet<Comparable> succ : succs) {
+                    //we compute the support of the rule as the ratio between closed set and successor extent
+                    double ex = context.getExtentNb(succ);
+                    double supportSucc = ex / supportClosedSet;
 
-            //we get the immediate successors of the concept made of the set
-            ArrayList<TreeSet<Comparable>> succs = new Concept(closedSet, new TreeSet()).immediateSuccessorsLOA(context);
-            for (TreeSet<Comparable> succ : succs) {
-                //we compute the support of the rule as the ratio between closed set and successor extent
-                double supportSucc = context.getExtentNb(succ) / supportClosedSet;
+                    //the rule conclusion is made of the successors minus the minimal generator
+                    TreeSet<Comparable> conclusions = new TreeSet(succ);
+                    conclusions.removeAll(gm);
 
-                //the rule conclusion is made of the successors minus the minimal generator
-                TreeSet<Comparable> conclusions = new TreeSet(succ);
-                conclusions.removeAll(gm);
-
-                //if the ratio support exceed the confidence threshold, the rule is created
-                if (supportSucc >= confidence) {
-                    appRules.addRule(new AssociationRule(gm, conclusions, supportSucc, supportClosedSet / nbObs));
+                    //if the ratio support exceed the confidence threshold, the rule is created
+                    if (supportSucc > confidence) {
+                        appRules.addRule(new AssociationRule(gm, conclusions, ex / nbObs, supportSucc));
+                    }
                 }
+                //the exact rule is copied in the output rule set
+                appRules.addRule(new AssociationRule(rule.getPremise(), rule.getConclusion(), supportClosedSet / nbObs, 1));
             }
-            //the exact rule is copied in the output rule set
-            appRules.addRule(new AssociationRule(rule.getPremise(), rule.getConclusion(), 1, supportClosedSet / nbObs));
         }
+        appRules.makeCompactAssociation();
         return appRules;
     }
 
