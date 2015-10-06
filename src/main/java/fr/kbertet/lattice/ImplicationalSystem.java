@@ -747,6 +747,42 @@ public class ImplicationalSystem extends ClosureSystem {
     }
 
     /**
+     * Replaces association rules of same premise, same support and same confidence by only one rule.
+     *
+     * This treatment is performed in O(|sigma|^2|S|)
+     *
+     * @return  the difference between the number of rules of this component before and after this treatment
+     */
+    public int makeCompactAssociation() {
+        ImplicationalSystem save = new ImplicationalSystem(this);
+        int before = this.sigma.size();
+        this.sigma = new TreeSet();
+
+        while (save.sigma.size() > 0) {
+            AssociationRule rule1 = (AssociationRule) save.sigma.first();
+            ComparableSet newConc = new ComparableSet();
+            Iterator<Rule> it2 = save.sigma.iterator();
+            while (it2.hasNext()) {
+                AssociationRule rule2 = (AssociationRule) it2.next();
+                if (!rule1.equals(rule2) && rule1.getPremise().equals(rule2.getPremise())
+                        && rule1.getConfidence() == rule2.getConfidence() && rule1.getSupport() == rule2.getSupport()) {
+                    newConc.addAll(rule2.getConclusion());
+                    it2.remove();
+                }
+            }
+            if (newConc.size() > 0) {
+                newConc.addAll(rule1.getConclusion());
+                AssociationRule newR = new AssociationRule(rule1.getPremise(), newConc, rule1.getSupport(), rule1.getConfidence());
+                this.addRule(newR);
+            } else {
+                this.addRule(rule1);
+            }
+            save.removeRule(rule1);
+        }
+        return before - this.sigma.size();
+    }
+
+    /**
      * Replaces conclusion of each rule with their closure without the premise.
      *
      * This treatment is performed in O(|sigma||S|cl), where O(cl) is the
