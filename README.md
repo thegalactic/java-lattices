@@ -8,7 +8,7 @@ Add
 
 <dependencies>
 	<dependency>
-		<groupId>fr.kbertet</groupId>
+		<groupId>org.thegalactic</groupId>
 		<artifactId>lattices</artifactId>
 		<version>2.0.0-SNAPSHOT</version>
 	</dependency>

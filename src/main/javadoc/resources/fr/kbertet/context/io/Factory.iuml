@@ -1,9 +1,0 @@
-package fr.kbertet.context.io {
-    class Factory {
-    	-Factory instance
-        -Factory()
-        #void init()
-        +{static}Factory getInstance()
-    }
-    fr.kbertet.io.Factory <|-- Factory
-}

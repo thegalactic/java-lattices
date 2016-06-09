@@ -1,5 +1,0 @@
-package fr.kbertet.lattice.io {
-    interface ArrowRelationWriter {
-        +void write(ArrowRelation arrow, BufferedWriter file)
-    }
-}

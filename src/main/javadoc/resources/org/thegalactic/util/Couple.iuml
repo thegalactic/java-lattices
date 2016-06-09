@@ -1,0 +1,19 @@
+package org.thegalactic.lattice {
+    class Couple {
+        -Object left
+        -Object right
+        .. Constructors ..
+        +Couple(Object l, Object r)
+        .. Accessors ..
+        +Object getLeft()
+        +Object getRight()
+        .. Mutators ..
+        +Couple setLeft(Object left)
+        +Couple setRight(Object right)
+        .. Transformers ..
+        +String toString()
+        .. Predicates ..
+        +boolean equals(Couple c)
+        +int hashCode()
+    }
+}

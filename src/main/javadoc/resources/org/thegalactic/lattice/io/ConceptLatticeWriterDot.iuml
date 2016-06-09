@@ -1,0 +1,10 @@
+package org.thegalactic.lattice.io {
+    class ConceptLatticeWriterDot {
+    	-{static}ConceptLatticeWriterDot instance
+        +void write(ConceptLattice lattice, BufferedWriter file)
+        +{static}ConceptLatticeWriterDot getInstance()
+        +{static}void register()
+    }
+
+    ConceptLatticeWriter <|-- ConceptLatticeWriterDot
+}

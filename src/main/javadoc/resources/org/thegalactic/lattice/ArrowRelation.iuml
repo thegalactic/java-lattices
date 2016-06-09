@@ -1,0 +1,15 @@
+package org.thegalactic.lattice {
+    class ArrowRelation {
+        .. Constructors ..
+        +ArrowRelation(Lattice lattice)
+        .. Transformers ..
+        +void writeLaTex(String filename)
+        .. Operations ..
+        +Context getDoubleArrowTable()
+        +Context getDoubleUpArrowTable()
+        +Context getDoubleDownArrowTable()
+        +Context getDoubleCircArrowTable()
+    }
+
+    DGraph <|-- ArrowRelation
+}

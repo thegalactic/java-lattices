@@ -7,7 +7,7 @@
  * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
  *
  * This file is part of lattice, free package. You can redistribute it and/or modify
- * it under the terms of CeCILL-B license.
+ * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
 
 import java.io.BufferedWriter;
@@ -16,10 +16,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.TreeSet;
-import fr.kbertet.dgraph.DAGraph;
-import fr.kbertet.dgraph.DGraph;
-import fr.kbertet.dgraph.Node;
-import fr.kbertet.lattice.*;
+import org.thegalactic.dgraph.DAGraph;
+import org.thegalactic.dgraph.DGraph;
+import org.thegalactic.dgraph.Node;
+import org.thegalactic.lattice.*;
 
 /**
  * This class provides some use examples of main classes of this lattice package.

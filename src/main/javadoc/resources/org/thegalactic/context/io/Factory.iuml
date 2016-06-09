@@ -1,0 +1,9 @@
+package org.thegalactic.context.io {
+    class Factory {
+    	-Factory instance
+        -Factory()
+        #void init()
+        +{static}Factory getInstance()
+    }
+    org.thegalactic.io.Factory <|-- Factory
+}
