@@ -941,6 +941,66 @@ public class Lattice extends DAGraph {
     }
 
     /**
+     * Returns a set of association rules based on a confidence threshold.
+     *
+     * The canonical direct basis is computed.
+     * For each generated rule, a set of approximative rules (above the confidence threshold)
+     * is generated.
+     *
+     * @param context       a context
+     * @param support       a support threshold, between 0 and 1
+     * @param confidence    a confidence threshold, between 0 and 1
+     * @return  a set of approximative rules
+     */
+    public ImplicationalSystem getAssociationBasis(Context context, double support, double confidence) {
+
+        //nb of observations in current context
+        int nbObs = context.getObservations().size();
+
+        //start by getting exact rules
+        ImplicationalSystem exactRules = this.getCanonicalDirectBasis();
+        ImplicationalSystem appRules = new ImplicationalSystem();
+
+        //copy elements from exact rules to approximate rules
+        for (Comparable e : exactRules.getSet()) {
+            appRules.addElement(e);
+        }
+
+        for (Rule rule : exactRules.getRules()) {
+
+            //we get the premisse of the rule, aka the closed set minimal generator
+            TreeSet<Comparable> gm = rule.getPremise();
+            //then we retrieve the closed set from the minimal generator
+            TreeSet<Comparable> closedSet = context.closure(gm);
+
+            //we get the cardinality of its extent to compute confidence later
+            double supportClosedSet = context.getExtentNb(closedSet);
+            if (supportClosedSet / nbObs > support) {
+                //we get the immediate successors of the concept made of the set
+                ArrayList<TreeSet<Comparable>> succs = new Concept(closedSet, new TreeSet()).immediateSuccessorsLOA(context);
+                for (TreeSet<Comparable> succ : succs) {
+                    //we compute the support of the rule as the ratio between closed set and successor extent
+                    double ex = context.getExtentNb(succ);
+                    double supportSucc = ex / supportClosedSet;
+
+                    //the rule conclusion is made of the successors minus the minimal generator
+                    TreeSet<Comparable> conclusions = new TreeSet(succ);
+                    conclusions.removeAll(gm);
+
+                    //if the ratio support exceed the confidence threshold, the rule is created
+                    if (supportSucc > confidence) {
+                        appRules.addRule(new AssociationRule(gm, conclusions, ex / nbObs, supportSucc));
+                    }
+                }
+                //the exact rule is copied in the output rule set
+                appRules.addRule(new AssociationRule(rule.getPremise(), rule.getConclusion(), supportClosedSet / nbObs, 1));
+            }
+        }
+        appRules.makeCompactAssociation();
+        return appRules;
+    }
+
+    /**
      * Returns the minimal generators of the lattice.
      *
      * Minimal generators a condensed representation of a lattice encoding

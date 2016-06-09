@@ -758,6 +758,7 @@ public class ConceptLattice extends Lattice {
     /**
      * Returns iceberg lattice whose concept contains enough observations.
      *
+     * Deprecated: use getConceptIceberg method from ClosureSystem class instead.
      * Are kept only concept whose number of observation is over threshold.
      * A top node is added to keep the lattice structure.
      *
@@ -765,6 +766,7 @@ public class ConceptLattice extends Lattice {
      *
      * @return iceberg lattice whose concept contains enough observations.
      */
+    @Deprecated
     public ConceptLattice iceberg(float threshold) {
         ConceptLattice l = new ConceptLattice();
         Concept b = (Concept) this.bottom();
@@ -828,6 +830,82 @@ public class ConceptLattice extends Lattice {
         }
     }
 
+    /**
+     * Generates and returns the Hasse diagram of the closed set iceberg of the
+     * specified context.
+     *
+     * The Hasse diagram of the closed set iceberg is
+     * obtained by a recursively generation of immediate successors of a given closed set,
+     * starting from the bottom closed set. Implemented algorithm is an adaptation of Bordat's
+     * algorithm where the dependence graph is computed while the lattice is generated.
+     * This treatment is performed in O(cCl|S|^3log g) where S is the initial set of elements,
+     * c is the number of closed sets that could be exponential in the worst case,
+     * Cl is the closure computation complexity
+     * and g is the number of minimal generators of the lattice.
+     * The iceberg stops when the immediate successors support is inferior to the support value.
+     *
+     * The dependence graph of the lattice is also computed while the lattice generation.
+     * The dependence graph of a lattice encodes at once the minimal generators
+     * and the canonical direct basis of the lattice .
+     *
+     * @param   init  a closure system (an ImplicationalSystem or a Context)
+     * @param support a support value, between 0 and 1.
+     *
+     * @return  a concept iceberg
+     */
+    public static ConceptLattice diagramIceberg(Context init, double support) {
+        ConceptLattice lattice = new ConceptLattice();
+        // computes the dependance graph of the closure system
+        // addition of nodes in the precedence graph
+        DGraph graph = new DGraph();
+        for (Comparable c : init.getSet()) {
+            graph.addNode(new Node(c));
+        }
+        lattice.setDependencyGraph(graph);
+        // intialize the close set lattice with bottom element
+        Concept bot = new Concept(init.closure(new ComparableSet()), false);
+        lattice.addNode(bot);
+        int threshold = (int) (support * init.getExtent(bot.getSetA()).size());
+        // recursive genaration from the botom element with diagramLattice
+        lattice.recursiveDiagramIceberg(bot, init, threshold);
+        return lattice;
+    }
+
+    /**
+     * Returns the Hasse diagramme of the closed set iceberg of the specified closure system
+     * issued from the specified concept.
+     *
+     * Immediate successors generation is an adaptation of Bordat's theorem
+     * stating that there is a bijection
+     * between minimal strongly connected component of the precedence subgraph issued
+     * from the specified node, and its immediate successors.
+     *
+     * This treatment is performed in O(cCl|S|^3log g) where S is the initial set of elements,
+     * c is the number of closed sets that could be exponential in the worst case,
+     * Cl is the closure computation complexity
+     * and g is the number of minimal generators of the lattice.
+     *
+     * @param   n     a concept
+     * @param   init  a closure system
+     * @param threshold a support threshold, as a number of observations
+     */
+    private void recursiveDiagramIceberg(Concept n, ClosureSystem init, int threshold) {
+        Context context = (Context) init;
+        Vector<TreeSet<Comparable>> immSucc = this.immediateSuccessors(n, init);
+        for (TreeSet<Comparable> setX : immSucc) {
+            if (context.getExtentNb(setX) >= threshold) {
+                Concept c = new Concept(new TreeSet(setX), false);
+                Concept ns = (Concept) this.getNode(c);
+                if (ns != null)  {
+                    this.addEdge(n, ns);
+                } else {
+                    this.addNode(c);
+                    this.addEdge(n, c);
+                    this.recursiveDiagramIceberg(c, init, threshold);
+                }
+            }
+        }
+    }
     /**
      * Returns the list of immediate successors of a given node of the lattice.
      *

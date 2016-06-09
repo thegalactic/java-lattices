@@ -1317,6 +1317,19 @@ public class TemporaryContext extends ClosureSystem {
     }
 
     /**
+     * Returns the closed set iceberg of this component.
+     *
+     * The Hasse diagramm of the iceberg is computed (i.e. it is transitively reduced)
+     * until the support of the closed set is less than the support value.
+     *
+     * @param   support  a threshold, between 0 and 1, for a closed set to be part of the iceberg.
+     *
+     * @return  The concept iceberg
+     */
+    public ConceptLattice closedSetIceberg(double support) {
+        return ConceptLattice.diagramIceberg(this, support);
+    }
+    /**
      * Returns the lattice of this component.
      *
      * @return The lattice induced by this component

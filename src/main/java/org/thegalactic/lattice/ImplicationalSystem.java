@@ -727,25 +727,66 @@ public class ImplicationalSystem extends ClosureSystem {
      */
     public int makeCompact() {
         ImplicationalSystem save = new ImplicationalSystem(this);
-        for (Rule rule1 : save.sigma) {
-            if (this.containsRule(rule1)) {
-                ComparableSet newConc = new ComparableSet();
-                for (Rule rule2 : save.sigma) {
-                    if (this.containsRule(rule2) && !rule1.equals(rule2) && rule1.getPremise().equals(rule2.getPremise())) {
-                        newConc.addAll(rule2.getConclusion());
-                        boolean res = this.sigma.remove(rule2);
-                    }
-                }
-                if (newConc.size() > 0) {
-                    newConc.addAll(rule1.getConclusion());
-                    Rule newR = new Rule(rule1.getPremise(), newConc);
-                    if (!rule1.equals(newR)) {
-                        this.replaceRule(rule1, newR);
-                    }
+        int before = this.sigma.size();
+        this.sigma = new TreeSet();
+
+        while (save.sigma.size() > 0) {
+            Rule rule1 = save.sigma.first();
+            ComparableSet newConc = new ComparableSet();
+            Iterator<Rule> it2 = save.sigma.iterator();
+            while (it2.hasNext()) {
+                Rule rule2 = it2.next();
+                if (!rule1.equals(rule2) && rule1.getPremise().equals(rule2.getPremise())) {
+                    newConc.addAll(rule2.getConclusion());
+                    it2.remove();
                 }
             }
+            if (newConc.size() > 0) {
+                newConc.addAll(rule1.getConclusion());
+                Rule newR = new Rule(rule1.getPremise(), newConc);
+                this.addRule(newR);
+            } else {
+                this.addRule(rule1);
+            }
+            save.removeRule(rule1);
         }
-        return save.sizeRules() - this.sizeRules();
+        return before - this.sigma.size();
+    }
+
+    /**
+     * Replaces association rules of same premise, same support and same confidence by only one rule.
+     *
+     * This treatment is performed in O(|sigma|^2|S|)
+     *
+     * @return  the difference between the number of rules of this component before and after this treatment
+     */
+    public int makeCompactAssociation() {
+        ImplicationalSystem save = new ImplicationalSystem(this);
+        int before = this.sigma.size();
+        this.sigma = new TreeSet();
+
+        while (save.sigma.size() > 0) {
+            AssociationRule rule1 = (AssociationRule) save.sigma.first();
+            ComparableSet newConc = new ComparableSet();
+            Iterator<Rule> it2 = save.sigma.iterator();
+            while (it2.hasNext()) {
+                AssociationRule rule2 = (AssociationRule) it2.next();
+                if (!rule1.equals(rule2) && rule1.getPremise().equals(rule2.getPremise())
+                        && rule1.getConfidence() == rule2.getConfidence() && rule1.getSupport() == rule2.getSupport()) {
+                    newConc.addAll(rule2.getConclusion());
+                    it2.remove();
+                }
+            }
+            if (newConc.size() > 0) {
+                newConc.addAll(rule1.getConclusion());
+                AssociationRule newR = new AssociationRule(rule1.getPremise(), newConc, rule1.getSupport(), rule1.getConfidence());
+                this.addRule(newR);
+            } else {
+                this.addRule(rule1);
+            }
+            save.removeRule(rule1);
+        }
+        return before - this.sigma.size();
     }
 
     /**
