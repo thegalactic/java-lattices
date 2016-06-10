@@ -83,13 +83,14 @@ public final class ArrowRelationWriterTeX implements ArrowRelationWriter {
             m.add(e.getFrom());
             j.add(e.getTo());
         }
-        String str = "\\begin{tabular}{|c|*{" + Integer.toString(j.size()) + "}{c|}}\n";
-        str += "\\hline\n";
+        String newLine = System.getProperty("line.separator");
+        String str = "\\begin{tabular}{|c|*{" + Integer.toString(j.size()) + "}{c|}}" + newLine;
+        str += "\\hline" + newLine;
         for (Node nj : j) {
             str += " & " + nj.getContent();
         }
-        str += "\\\\ \n";
-        str += "\\hline\n";
+        str += "\\\\ " + newLine;
+        str += "\\hline" + newLine;
         for (Node nm : m) {
             str += nm.getContent();
             for (Node nj : j) {
@@ -121,10 +122,10 @@ public final class ArrowRelationWriterTeX implements ArrowRelationWriter {
                 */
                 }
             }
-            str += "\\\\ \n";
-            str += "\\hline\n";
+            str += "\\\\ " + newLine;
+            str += "\\hline" + newLine;
         }
-        str += "\\end{tabular}\n";
+        str += "\\end{tabular}" + newLine;
         file.write(str);
     }
 }

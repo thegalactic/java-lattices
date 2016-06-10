@@ -788,7 +788,8 @@ public class Context extends ClosureSystem {
             string.append(" ");
         }
 
-        string.append("\nAttributes: ");
+        String newLine = System.getProperty("line.separator");
+        string.append(newLine + "Attributes: ");
         for (Comparable a : this.attributes) {
             // second line : All attributes separated by a space
             // a StringTokenizer is used to delete spaces in the
@@ -804,7 +805,7 @@ public class Context extends ClosureSystem {
         // observation : list of attributes
         // a StringTokenizer is used to delete spaces in the
         // string description of each observation and attributes
-        string.append("\n");
+        string.append(newLine);
         for (Comparable o : this.observations) {
             StringTokenizer st = new StringTokenizer(o.toString());
             while (st.hasMoreTokens()) {
@@ -818,7 +819,7 @@ public class Context extends ClosureSystem {
                 }
                 string.append(" ");
             }
-            string.append("\n");
+            string.append(newLine);
         }
         return string.toString();
     }

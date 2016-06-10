@@ -85,11 +85,12 @@ public class ImplicationalSystemTest {
 //            String filename = file.getPath();
 //            File outfile = new File(filename);
             FileWriter out = new FileWriter(file);
-            out.write("a b c \n");
-            out.write("a -> b c \n");
+            String newLine = System.getProperty("line.separator");
+            out.write("a b c " + newLine);
+            out.write("a -> b c " + newLine);
             out.close();
             ImplicationalSystem is = new ImplicationalSystem(file.getAbsolutePath());
-            assertEquals(is.toString(), "a b c \n" + "a  -> b c \n");
+            assertEquals(is.toString(), "a b c " + newLine + "a  -> b c " + newLine);
             assertEquals(is.getRules().size(), 1);
             file.delete();
         } catch (IOException e) {

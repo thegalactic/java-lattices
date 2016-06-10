@@ -408,11 +408,12 @@ public class ImplicationalSystem extends ClosureSystem {
             }
             s.append(" ");
         }
-        s.append("\n");
+        String newLine = System.getProperty("line.separator");
+        s.append(newLine);
         // next lines : a rule on each line, described by:
         // [elements of the premise separated by a space] -> [elements of the conclusion separated by a space]
         for (Rule rule : this.sigma) {
-            s.append(rule.toString()).append("\n");
+            s.append(rule.toString()).append(newLine);
         }
         return s.toString();
     }

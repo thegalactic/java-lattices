@@ -101,8 +101,9 @@ public class BijectiveComponentsTest {
             File file = new File(directory + File.separator + "BijectiveComponents" + File.separator + "Readme.txt");
             Scanner scanner = new Scanner(file);
             String content = "";
+            String newLine = System.getProperty("line.separator");
             while (scanner.hasNextLine()) {
-                content += scanner.nextLine() + "\n";
+                content += scanner.nextLine() + newLine;
             }
             File[] tabfile = (new File(directory, "BijectiveComponents")).listFiles();
             for (int i = 0; i < tabfile.length; i++) {
@@ -113,23 +114,23 @@ public class BijectiveComponentsTest {
             dir.delete();
             String test = "";
             String safeString = file.getParent() + File.separator;
-            test += "-> Initial closure system saved in " + safeString + "InitialClosureSystem.txt: \n";
-            test += "\n";
-            test += "\n";
-            test += "-> Closed set or concept lattice saved in " + safeString + "Lattice.dot\n";
-            test += "-> Reduced lattice saved in " + safeString + "ReducedLattice.dot\n";
-            test += "-> Table of the reduced lattice saved in " + safeString + "Table.txt\n";
-            test += "Observations: \n";
-            test += "Attributes: \n";
-            test += "\n";
-            test += "-> Canonical basis saved in " + safeString + "CanonicalBasis.txt: \n";
-            test += "\n";
-            test += "\n";
-            test += "-> Canonical direct basis of the reduced lattice saved in " + safeString + "CanonicalDirectBasis.txt: \n";
-            test += "\n";
-            test += "\n";
-            test += "-> Dependency Graph  of the reduced lattice saved in " + safeString + "DependencyGraph.dot \n";
-            test += "-> Minimal generators  of the reduced lattice are []\n";
+            test += "-> Initial closure system saved in " + safeString + "InitialClosureSystem.txt: " + newLine;
+            test += newLine;
+            test += newLine;
+            test += "-> Closed set or concept lattice saved in " + safeString + "Lattice.dot" + newLine;
+            test += "-> Reduced lattice saved in " + safeString + "ReducedLattice.dot" + newLine;
+            test += "-> Table of the reduced lattice saved in " + safeString + "Table.txt" + newLine;
+            test += "Observations: " + newLine;
+            test += "Attributes: " + newLine;
+            test += newLine;
+            test += "-> Canonical basis saved in " + safeString + "CanonicalBasis.txt: " + newLine;
+            test += newLine;
+            test += newLine;
+            test += "-> Canonical direct basis of the reduced lattice saved in " + safeString + "CanonicalDirectBasis.txt: " + newLine;
+            test += newLine;
+            test += newLine;
+            test += "-> Dependency Graph  of the reduced lattice saved in " + safeString + "DependencyGraph.dot " + newLine;
+            test += "-> Minimal generators  of the reduced lattice are []" + newLine;
             assertEquals(content, test);
         } catch (Exception exception) {
             exception.printStackTrace();

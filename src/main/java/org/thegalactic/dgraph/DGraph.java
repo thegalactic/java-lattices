@@ -384,7 +384,8 @@ public class DGraph implements Cloneable {
         for (Edge ed : this.getEdges()) {
             edges.append(ed.toString() + ",");
         }
-        nodes.append("}\n").append(edges).append("}\n");
+        String newLine = System.getProperty("line.separator");
+        nodes.append("}").append(newLine).append(edges).append("}").append(newLine);
         return nodes.toString();
     }
 

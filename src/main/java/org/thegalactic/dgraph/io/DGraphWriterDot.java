@@ -73,8 +73,9 @@ public final class DGraphWriterDot implements DGraphWriter {
      * @throws IOException When an IOException occurs
      */
     public void write(DGraph graph, BufferedWriter file) throws IOException {
-        file.write("digraph G {\n");
-        file.write("Graph [rankdir=BT]\n");
+        String newLine = System.getProperty("line.separator");
+        file.write("digraph G {" + newLine);
+        file.write("Graph [rankdir=BT]" + newLine);
         StringBuilder nodes = new StringBuilder();
         StringBuilder edges = new StringBuilder();
         for (Node node : graph.getNodes()) {
@@ -84,7 +85,7 @@ public final class DGraphWriterDot implements DGraphWriter {
                 dot += tokenizer.nextToken();
             }
             dot += "\"]";
-            nodes.append(dot).append("\n");
+            nodes.append(dot).append(newLine);
         }
         for (Edge edge : graph.getEdges()) {
             String dot = edge.getFrom().getIdentifier() + "->" + edge.getTo().getIdentifier();
@@ -96,7 +97,7 @@ public final class DGraphWriterDot implements DGraphWriter {
                 }
                 dot = dot + "\"]";
             }
-            edges.append(dot).append("\n");
+            edges.append(dot).append(newLine);
         }
         file.write(nodes.toString());
         file.write(edges.toString());

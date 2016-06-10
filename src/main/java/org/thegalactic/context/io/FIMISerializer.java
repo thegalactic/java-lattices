@@ -159,7 +159,7 @@ public final class FIMISerializer implements Reader<Context>, Writer<Context> {
             for (Comparable att : context.getIntent(obs)) {
                 file.write(map.get(att) + " ");
             }
-            file.write("\n");
+            file.write(System.getProperty("line.separator"));
         }
     }
 }

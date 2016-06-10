@@ -75,8 +75,9 @@ public final class ConceptLatticeWriterDot implements ConceptLatticeWriter {
      * @throws  IOException  When an IOException occurs
      */
     public void write(ConceptLattice lattice, BufferedWriter file) throws IOException {
-        file.write("digraph G {\n");
-        file.write("Graph [rankdir=BT]\n");
+        String newLine = System.getProperty("line.separator");
+        file.write("digraph G {" + newLine);
+        file.write("Graph [rankdir=BT]" + newLine);
         StringBuffer nodes  = new StringBuffer();
         StringBuffer edges = new StringBuffer();
         for (Node node : lattice.getNodes()) {
@@ -97,7 +98,7 @@ public final class ConceptLatticeWriterDot implements ConceptLatticeWriter {
                 dot += st.nextToken();
             }
             dot += "\"]";
-            nodes.append(dot).append("\n");
+            nodes.append(dot).append(newLine);
         }
         for (Edge edge : lattice.getEdges()) {
             String dot = edge.getFrom().getIdentifier() + "->" + edge.getTo().getIdentifier();
@@ -109,7 +110,7 @@ public final class ConceptLatticeWriterDot implements ConceptLatticeWriter {
                 }
                 dot = dot + "\"]";
             }
-            edges.append(dot).append("\n");
+            edges.append(dot).append(newLine);
         }
         file.write(nodes.toString());
         file.write(edges.toString());

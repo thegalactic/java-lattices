@@ -216,37 +216,38 @@ public class BijectiveComponents {
         // saves the inital closure system
         String nameInit = directory + "InitialClosureSystem.txt";
         this.closureSystem.save(nameInit);
-        file.write("-> Initial closure system saved in " + nameInit + ": \n");
-        file.write(this.closureSystem.toString() + "\n");
+        String newLine = System.getProperty("line.separator");
+        file.write("-> Initial closure system saved in " + nameInit + ": " + newLine);
+        file.write(this.closureSystem.toString() + newLine);
         // saves the closed set lattice
         String nameLattice = directory + "Lattice.dot";
         this.getLattice().save(nameLattice);
-        file.write("-> Closed set or concept lattice saved in " + nameLattice + "\n");
+        file.write("-> Closed set or concept lattice saved in " + nameLattice + newLine);
         // saves the reduced lattice
         String nameReducedLattice = directory + "ReducedLattice.dot";
         this.getReducedLattice().save(nameReducedLattice);
-        file.write("-> Reduced lattice saved in " + nameReducedLattice + "\n");
+        file.write("-> Reduced lattice saved in " + nameReducedLattice + newLine);
         // saves the reduced table
         String nameTable = directory + "Table.txt";
         this.getTable().save(nameTable);
-        file.write("-> Table of the reduced lattice saved in " + nameTable + "\n");
-        file.write(this.table.toString() + "\n");
+        file.write("-> Table of the reduced lattice saved in " + nameTable + newLine);
+        file.write(this.table.toString() + newLine);
         // saves the canonical basis
         String nameCB = directory + "CanonicalBasis.txt";
         this.getCanonicalBasis().save(nameCB);
-        file.write("-> Canonical basis saved in " + nameCB + ": \n");
-        file.write(this.canonicalBasis.toString() + "\n");
+        file.write("-> Canonical basis saved in " + nameCB + ": " + newLine);
+        file.write(this.canonicalBasis.toString() + newLine);
         // saves the canonical direct basis
         String nameCDB = directory + "CanonicalDirectBasis.txt";
         this.getCanonicalDirectBasis().save(nameCDB);
-        file.write("-> Canonical direct basis of the reduced lattice saved in " + nameCDB + ": \n");
-        file.write(this.canonicalDirectBasis.toString() + "\n");
+        file.write("-> Canonical direct basis of the reduced lattice saved in " + nameCDB + ": " + newLine);
+        file.write(this.canonicalDirectBasis.toString() + newLine);
         // saves the dependency graph
         String nameODGraph = directory + "DependencyGraph.dot";
         this.getDependencyGraph().save(nameODGraph);
-        file.write("-> Dependency Graph  of the reduced lattice saved in " + nameODGraph + " \n");
+        file.write("-> Dependency Graph  of the reduced lattice saved in " + nameODGraph + " " + newLine);
         // saves the minimal generators
-        file.write("-> Minimal generators  of the reduced lattice are " + this.minimalGenerators + "\n");
+        file.write("-> Minimal generators  of the reduced lattice are " + this.minimalGenerators + newLine);
         file.close();
     }
 

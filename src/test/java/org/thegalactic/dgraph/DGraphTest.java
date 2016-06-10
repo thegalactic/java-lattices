@@ -324,7 +324,8 @@ public class DGraphTest {
         graph.addNode(node1);
         graph.addNode(node2);
         graph.addEdge(node1, node2, "happy");
-        assertEquals(graph.toString(), "2 Nodes: {Hello,World,}\n1 Edges: {Hello->World(happy),}\n");
+        String newLine = System.getProperty("line.separator");
+        assertEquals(graph.toString(), "2 Nodes: {Hello,World,}" + newLine + "1 Edges: {Hello->World(happy),}" + newLine);
     }
 
     /**
