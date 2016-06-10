@@ -198,23 +198,23 @@ The following table illustrates the generated bijective components when the init
 
 title Main UML graph
 
-!include resources/fr/kbertet/dgraph/DGraph.iuml
-!include resources/fr/kbertet/dgraph/Edge.iuml
-!include resources/fr/kbertet/dgraph/DAGraph.iuml
-!include resources/fr/kbertet/dgraph/Node.iuml
+!include resources/org/thegalactic/dgraph/DGraph.iuml
+!include resources/org/thegalactic/dgraph/Edge.iuml
+!include resources/org/thegalactic/dgraph/DAGraph.iuml
+!include resources/org/thegalactic/dgraph/Node.iuml
 
-!include resources/fr/kbertet/util/Couple.iuml
-!include resources/fr/kbertet/util/ComparableSet.iuml
-!include resources/fr/kbertet/context/Context.iuml
-!include resources/fr/kbertet/lattice/Concept.iuml
-!include resources/fr/kbertet/lattice/ConceptLattice.iuml
-!include resources/fr/kbertet/lattice/ArrowRelation.iuml
-!include resources/fr/kbertet/lattice/ClosureSystem.iuml
-!include resources/fr/kbertet/lattice/Lattice.iuml
-!include resources/fr/kbertet/lattice/Rule.iuml
-!include resources/fr/kbertet/lattice/BijectiveComponents.iuml
-!include resources/fr/kbertet/lattice/ImplicationalSystem.iuml
-!include resources/fr/kbertet/lattice/LatticeFactory.iuml
+!include resources/org/thegalactic/util/Couple.iuml
+!include resources/org/thegalactic/util/ComparableSet.iuml
+!include resources/org/thegalactic/context/Context.iuml
+!include resources/org/thegalactic/lattice/Concept.iuml
+!include resources/org/thegalactic/lattice/ConceptLattice.iuml
+!include resources/org/thegalactic/lattice/ArrowRelation.iuml
+!include resources/org/thegalactic/lattice/ClosureSystem.iuml
+!include resources/org/thegalactic/lattice/Lattice.iuml
+!include resources/org/thegalactic/lattice/Rule.iuml
+!include resources/org/thegalactic/lattice/BijectiveComponents.iuml
+!include resources/org/thegalactic/lattice/ImplicationalSystem.iuml
+!include resources/org/thegalactic/lattice/LatticeFactory.iuml
 
 
 hide members
@@ -224,14 +224,14 @@ hide members
 
 title Context Input/Output UML graph
 
-!include resources/fr/kbertet/context/io/Burmeister.iuml
-!include resources/fr/kbertet/context/io/Csv.iuml
-!include resources/fr/kbertet/context/io/Factory.iuml
-!include resources/fr/kbertet/context/io/FIMI.iuml
-!include resources/fr/kbertet/context/io/Text.iuml
-!include resources/fr/kbertet/io/Factory.iuml
-!include resources/fr/kbertet/io/Reader.iuml
-!include resources/fr/kbertet/io/Writer.iuml
+!include resources/org/thegalactic/context/io/Burmeister.iuml
+!include resources/org/thegalactic/context/io/Csv.iuml
+!include resources/org/thegalactic/context/io/Factory.iuml
+!include resources/org/thegalactic/context/io/FIMI.iuml
+!include resources/org/thegalactic/context/io/Text.iuml
+!include resources/org/thegalactic/io/Factory.iuml
+!include resources/org/thegalactic/io/Reader.iuml
+!include resources/org/thegalactic/io/Writer.iuml
 
 hide members
 @enduml
@@ -240,12 +240,12 @@ hide members
 
 title DGraph Input/Output UML graph
 
-!include resources/fr/kbertet/dgraph/io/DGraphWriter.iuml
-!include resources/fr/kbertet/dgraph/io/DGraphWriterFactory.iuml
-!include resources/fr/kbertet/dgraph/io/DGraphWriterDot.iuml
-!include resources/fr/kbertet/io/Factory.iuml
-!include resources/fr/kbertet/io/Reader.iuml
-!include resources/fr/kbertet/io/Writer.iuml
+!include resources/org/thegalactic/dgraph/io/DGraphWriter.iuml
+!include resources/org/thegalactic/dgraph/io/DGraphWriterFactory.iuml
+!include resources/org/thegalactic/dgraph/io/DGraphWriterDot.iuml
+!include resources/org/thegalactic/io/Factory.iuml
+!include resources/org/thegalactic/io/Reader.iuml
+!include resources/org/thegalactic/io/Writer.iuml
 
 hide members
 @enduml
@@ -254,21 +254,21 @@ hide members
 
 title Input/Output UML graph
 
-!include resources/fr/kbertet/lattice/io/ArrowRelationWriter.iuml
-!include resources/fr/kbertet/lattice/io/ArrowRelationWriterFactory.iuml
-!include resources/fr/kbertet/lattice/io/ArrowRelationWriterTeX.iuml
-!include resources/fr/kbertet/lattice/io/ConceptLatticeWriterDot.iuml
-!include resources/fr/kbertet/lattice/io/ConceptLatticeWriterFactory.iuml
-!include resources/fr/kbertet/lattice/io/ConceptLatticeWriter.iuml
-!include resources/fr/kbertet/lattice/io/ImplicationalSystemReader.iuml
-!include resources/fr/kbertet/lattice/io/ImplicationalSystemReaderFactory.iuml
-!include resources/fr/kbertet/lattice/io/ImplicationalSystemReaderText.iuml
-!include resources/fr/kbertet/lattice/io/ImplicationalSystemWriter.iuml
-!include resources/fr/kbertet/lattice/io/ImplicationalSystemWriterFactory.iuml
-!include resources/fr/kbertet/lattice/io/ImplicationalSystemWriterText.iuml
-!include resources/fr/kbertet/io/Factory.iuml
-!include resources/fr/kbertet/io/Reader.iuml
-!include resources/fr/kbertet/io/Writer.iuml
+!include resources/org/thegalactic/lattice/io/ArrowRelationWriter.iuml
+!include resources/org/thegalactic/lattice/io/ArrowRelationWriterFactory.iuml
+!include resources/org/thegalactic/lattice/io/ArrowRelationWriterTeX.iuml
+!include resources/org/thegalactic/lattice/io/ConceptLatticeWriterDot.iuml
+!include resources/org/thegalactic/lattice/io/ConceptLatticeWriterFactory.iuml
+!include resources/org/thegalactic/lattice/io/ConceptLatticeWriter.iuml
+!include resources/org/thegalactic/lattice/io/ImplicationalSystemReader.iuml
+!include resources/org/thegalactic/lattice/io/ImplicationalSystemReaderFactory.iuml
+!include resources/org/thegalactic/lattice/io/ImplicationalSystemReaderText.iuml
+!include resources/org/thegalactic/lattice/io/ImplicationalSystemWriter.iuml
+!include resources/org/thegalactic/lattice/io/ImplicationalSystemWriterFactory.iuml
+!include resources/org/thegalactic/lattice/io/ImplicationalSystemWriterText.iuml
+!include resources/org/thegalactic/io/Factory.iuml
+!include resources/org/thegalactic/io/Reader.iuml
+!include resources/org/thegalactic/io/Writer.iuml
 
 hide members
 @enduml
