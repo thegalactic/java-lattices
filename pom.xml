@@ -29,7 +29,7 @@
 		<tutorial.script>${project.build.scriptSourceDirectory}/generate-tutorial.sh</tutorial.script>
 		<tutorial.filename>tutorial-${project.build.finalName}.pdf</tutorial.filename>
 
-		<jacoco.line.coveredratio>0.80</jacoco.line.coveredratio>
+		<jacoco.line.coveredratio>0.70</jacoco.line.coveredratio>
 		<jacoco.class.missedcount>0</jacoco.class.missedcount>
 
 		<changelog.tag>1.0.0</changelog.tag>
