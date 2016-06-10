@@ -1,4 +1,4 @@
-package fr.kbertet.lattice {
+package org.thegalactic.lattice {
     class ClosureSystem {
         +{abstract} TreeSet<Comparable> getSet()
         +{abstract} TreeSet<Comparable> closure(TreeSet<Comparable> set)

@@ -1,4 +1,4 @@
-package fr.kbertet.context {
+package org.thegalactic.context {
     class Context {
         -TreeSet<Comparable> observations
         -TreeSet<Comparable> attributes
@@ -69,5 +69,5 @@ package fr.kbertet.context {
         void parse(String filename)
     }
 
-    fr.kbertet.lattice.ClosureSystem <|-- Context
+    org.thegalactic.lattice.ClosureSystem <|-- Context
 }

@@ -1,4 +1,4 @@
-package fr.kbertet.lattice.io {
+package org.thegalactic.lattice.io {
     class ArrowRelationWriterTeX {
     	-{static}ArrowRelationWriterTeX instance
         +void write(ArrowRelation arrow, BufferedWriter file)

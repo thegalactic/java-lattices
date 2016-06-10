@@ -1,4 +1,4 @@
-package fr.kbertet.io {
+package org.thegalactic.io {
     interface Reader<E> {
         +void read(E e, BufferedReader file)
     }

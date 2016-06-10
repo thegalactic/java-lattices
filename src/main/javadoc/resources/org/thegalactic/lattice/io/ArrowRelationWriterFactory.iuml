@@ -1,4 +1,4 @@
-package fr.kbertet.lattice.io {
+package org.thegalactic.lattice.io {
     class ArrowRelationWriterFactory {
     	-{static}HashMap<String, ArrowRelationWriter> writers
         +{static}ArrowRelationWriter register(ArrowRelationWriter writer, String extension)

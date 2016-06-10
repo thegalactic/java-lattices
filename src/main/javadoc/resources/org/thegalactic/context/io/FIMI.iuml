@@ -1,4 +1,4 @@
-package fr.kbertet.context.io {
+package org.thegalactic.context.io {
     class FIMI {
     	-{static}FIMI instance
         +void read(Context context, BufferedReader file)
@@ -7,6 +7,6 @@ package fr.kbertet.context.io {
         +{static}void register()
     }
 
-    fr.kbertet.io.Reader <|-- FIMI
-    fr.kbertet.io.Writer <|-- FIMI
+    org.thegalactic.io.Reader <|-- FIMI
+    org.thegalactic.io.Writer <|-- FIMI
 }

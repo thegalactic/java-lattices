@@ -1,4 +1,4 @@
-package fr.kbertet.lattice {
+package org.thegalactic.lattice {
     class BijectiveComponents {
         -ClosureSystem init
         -ConceptLattice lattice

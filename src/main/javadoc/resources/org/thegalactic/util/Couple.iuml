@@ -1,4 +1,4 @@
-package fr.kbertet.lattice {
+package org.thegalactic.lattice {
     class Couple {
         -Object left
         -Object right

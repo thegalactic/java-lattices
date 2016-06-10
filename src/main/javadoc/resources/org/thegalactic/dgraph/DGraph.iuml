@@ -1,4 +1,4 @@
-package fr.kbertet.dgraph {
+package org.thegalactic.dgraph {
     class DGraph {
         -TreeSet<Node> nodes
         -TreeMap<Node, TreeSet<Edge>> successors

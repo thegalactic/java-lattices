@@ -1,4 +1,4 @@
-package fr.kbertet.lattice.io {
+package org.thegalactic.lattice.io {
     class ImplicationalSystemWriterFactory {
     	-{static}HashMap<String, ImplicationalSystemWriter> writers
         +{static}ImplicationalSystemWriter register(ImplicationalSystemWriter writer, String extension)

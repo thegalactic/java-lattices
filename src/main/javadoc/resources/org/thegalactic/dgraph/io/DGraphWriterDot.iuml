@@ -1,4 +1,4 @@
-package fr.kbertet.dgraph.io {
+package org.thegalactic.dgraph.io {
     class DGraphWriterDot {
     	-{static}DGraphWriterDot instance
         +void write(DGraph graph, BufferedWriter file)

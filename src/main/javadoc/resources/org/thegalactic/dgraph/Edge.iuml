@@ -1,4 +1,4 @@
-package fr.kbertet.dgraph {
+package org.thegalactic.dgraph {
     class Edge {
         -Node from
         -Node to

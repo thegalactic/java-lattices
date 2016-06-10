@@ -1,4 +1,4 @@
-package fr.kbertet.io {
+package org.thegalactic.io {
     interface Writer<E> {
         +void write(E e, BufferedWriter file)
     }

@@ -1,4 +1,4 @@
-package fr.kbertet.lattice.io {
+package org.thegalactic.lattice.io {
     class ImplicationalSystemWriterText {
     	-{static}ImplicationalSystemWriterText instance
         +void write(ImplicationalSystem system, BufferedWriter file)

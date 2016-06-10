@@ -1,4 +1,4 @@
-package fr.kbertet.context.io {
+package org.thegalactic.context.io {
     class Csv {
     	-{static}Csv instance
         +void read(Context context, BufferedReader file)
@@ -7,6 +7,6 @@ package fr.kbertet.context.io {
         +{static}void register()
     }
 
-    fr.kbertet.io.Reader <|-- Csv
-    fr.kbertet.io.Writer <|-- Csv
+    org.thegalactic.io.Reader <|-- Csv
+    org.thegalactic.io.Writer <|-- Csv
 }

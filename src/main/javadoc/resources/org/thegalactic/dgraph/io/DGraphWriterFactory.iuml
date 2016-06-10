@@ -1,4 +1,4 @@
-package fr.kbertet.dgraph.io {
+package org.thegalactic.dgraph.io {
     class DGraphWriterFactory {
     	-{static}HashMap<String, DGraphWriter> writers
         +{static}DGraphWriter register(DGraphWriter writer, String extension)
