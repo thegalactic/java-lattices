@@ -41,8 +41,8 @@ if [ "$TRAVIS_REPO_SLUG" == "thegalactic/java-lattices" ] && [ "$TRAVIS_JDK_VERS
 
 	echo -e "    Deploying locally...\n"
 	cd $current
-	mkdir -p target/mvn-repo/fr/thegalactic/lattices
-	test -f $HOME/old-mvn-repo/fr/thegalactic/lattices/maven-metadata.xml && cp -f $HOME/old-mvn-repo/fr/thegalactic/lattices/maven-metadata.* target/mvn-repo/fr/thegalactic/lattices
+	mkdir -p target/mvn-repo/org/thegalactic/lattices
+	test -f $HOME/old-mvn-repo/org/thegalactic/lattices/maven-metadata.xml && cp -f $HOME/old-mvn-repo/org/thegalactic/lattices/maven-metadata.* target/mvn-repo/org/thegalactic/lattices
 	mvn deploy
 
 	cd $HOME/old-mvn-repo
