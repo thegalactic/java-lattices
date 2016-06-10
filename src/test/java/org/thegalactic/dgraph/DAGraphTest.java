@@ -9,20 +9,21 @@ package org.thegalactic.dgraph;
  * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
  *
  * This file is part of java-lattices.
- * You can redistribute it and/or modify it under the terms of CeCILL-B license.
+ * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import org.junit.Test;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
 
-import java.util.TreeSet;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  * Test the dgraph.DAGraph class.
  */
 public class DAGraphTest {
+
     /**
      * Test the empty constructor.
      */
@@ -222,6 +223,7 @@ public class DAGraphTest {
         assertEquals(dag.sizeNodes(), 19);
         assertEquals(dag.sizeEdges(), 27);
     }
+
     /**
      * Test the transitiveReduction method.
      */
@@ -244,4 +246,3 @@ public class DAGraphTest {
         assertEquals(copy.toString(), dag.toString());
     }
 }
-

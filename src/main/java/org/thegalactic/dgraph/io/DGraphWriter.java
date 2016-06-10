@@ -9,9 +9,8 @@ package org.thegalactic.dgraph.io;
  * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
  *
  * This file is part of java-lattices.
- * You can redistribute it and/or modify it under the terms of CeCILL-B license.
+ * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import java.io.BufferedWriter;
 import java.io.IOException;
 
@@ -31,14 +30,14 @@ import org.thegalactic.dgraph.DGraph;
  * title DGraphWriter UML graph
  */
 public interface DGraphWriter {
+
     /**
      * Write a graph to a output stream.
      *
-     * @param   graph  a graph to write
-     * @param   file   a file
+     * @param graph a graph to write
+     * @param file  a file
      *
-     * @throws  IOException  When an IOException occurs
+     * @throws IOException When an IOException occurs
      */
     void write(DGraph graph, BufferedWriter file) throws IOException;
 }
-

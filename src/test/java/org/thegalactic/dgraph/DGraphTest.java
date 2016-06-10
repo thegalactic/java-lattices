@@ -9,24 +9,25 @@ package org.thegalactic.dgraph;
  * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
  *
  * This file is part of java-lattices.
- * You can redistribute it and/or modify it under the terms of CeCILL-B license.
+ * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import org.junit.Test;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertEquals;
 
-import java.util.TreeSet;
-import java.util.SortedSet;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.io.File;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  * Test the dgraph.DGraph class.
  */
 public class DGraphTest {
+
     /**
      * Test the empty constructor.
      */
@@ -299,12 +300,12 @@ public class DGraphTest {
                 content += scanner.nextLine();
             }
             assertEquals(content, "digraph G {Graph [rankdir=BT]"
-                + node1.getIdentifier() + " [label=\"1\"]"
-                + node2.getIdentifier() + " [label=\"2\"]"
-                + node3.getIdentifier() + " [label=\"3\"]"
-                + node1.getIdentifier() + "->" + node2.getIdentifier() + " [label=\"R1\"]"
-                + node2.getIdentifier() + "->" + node3.getIdentifier() + " [label=\"R2\"]"
-                + "}"
+                    + node1.getIdentifier() + " [label=\"1\"]"
+                    + node2.getIdentifier() + " [label=\"2\"]"
+                    + node3.getIdentifier() + " [label=\"3\"]"
+                    + node1.getIdentifier() + "->" + node2.getIdentifier() + " [label=\"R1\"]"
+                    + node2.getIdentifier() + "->" + node3.getIdentifier() + " [label=\"R2\"]"
+                    + "}"
             );
             file.delete();
         } catch (Exception exception) {
@@ -782,55 +783,56 @@ public class DGraphTest {
     /**
      * Test the depthFirstSearch method.
      */
-/*    @Test
-    public void testDepthFirstSearch() {
-        DGraph graph = new DGraph();
-        Node node1 = new Node();
-        Node node2 = new Node();
-        Node node3 = new Node();
-        Node node4 = new Node();
-        Node node5 = new Node();
-        Node node6 = new Node();
-        Node node7 = new Node();
-        Node node8 = new Node();
-        graph.addNode(node1);
-        graph.addNode(node2);
-        graph.addNode(node3);
-        graph.addNode(node4);
-        graph.addNode(node5);
-        graph.addNode(node6);
-        graph.addNode(node7);
-        graph.addNode(node8);
-        graph.addEdge(node1, node4);
-        graph.addEdge(node1, node5);
-        graph.addEdge(node2, node4);
-        graph.addEdge(node3, node5);
-        graph.addEdge(node3, node8);
-        graph.addEdge(node4, node6);
-        graph.addEdge(node4, node7);
-        graph.addEdge(node4, node8);
-        graph.addEdge(node5, node7);
-        ArrayList<Node>[] result = graph.depthFirstSearch();
-        assertEquals(result[0].size(), 8);
-        assertEquals(result[1].size(), 8);
-        assertEquals(result[0].get(0), node1);
-        assertEquals(result[0].get(1), node4);
-        assertEquals(result[0].get(2), node6);
-        assertEquals(result[0].get(3), node7);
-        assertEquals(result[0].get(4), node8);
-        assertEquals(result[0].get(5), node5);
-        assertEquals(result[0].get(6), node2);
-        assertEquals(result[0].get(7), node3);
-        assertEquals(result[1].get(0), node6);
-        assertEquals(result[1].get(1), node7);
-        assertEquals(result[1].get(2), node8);
-        assertEquals(result[1].get(3), node4);
-        assertEquals(result[1].get(4), node5);
-        assertEquals(result[1].get(5), node1);
-        assertEquals(result[1].get(6), node2);
-        assertEquals(result[1].get(7), node3);
-    }
-*/
+    /*
+     * @Test
+     * public void testDepthFirstSearch() {
+     * DGraph graph = new DGraph();
+     * Node node1 = new Node();
+     * Node node2 = new Node();
+     * Node node3 = new Node();
+     * Node node4 = new Node();
+     * Node node5 = new Node();
+     * Node node6 = new Node();
+     * Node node7 = new Node();
+     * Node node8 = new Node();
+     * graph.addNode(node1);
+     * graph.addNode(node2);
+     * graph.addNode(node3);
+     * graph.addNode(node4);
+     * graph.addNode(node5);
+     * graph.addNode(node6);
+     * graph.addNode(node7);
+     * graph.addNode(node8);
+     * graph.addEdge(node1, node4);
+     * graph.addEdge(node1, node5);
+     * graph.addEdge(node2, node4);
+     * graph.addEdge(node3, node5);
+     * graph.addEdge(node3, node8);
+     * graph.addEdge(node4, node6);
+     * graph.addEdge(node4, node7);
+     * graph.addEdge(node4, node8);
+     * graph.addEdge(node5, node7);
+     * ArrayList<Node>[] result = graph.depthFirstSearch();
+     * assertEquals(result[0].size(), 8);
+     * assertEquals(result[1].size(), 8);
+     * assertEquals(result[0].get(0), node1);
+     * assertEquals(result[0].get(1), node4);
+     * assertEquals(result[0].get(2), node6);
+     * assertEquals(result[0].get(3), node7);
+     * assertEquals(result[0].get(4), node8);
+     * assertEquals(result[0].get(5), node5);
+     * assertEquals(result[0].get(6), node2);
+     * assertEquals(result[0].get(7), node3);
+     * assertEquals(result[1].get(0), node6);
+     * assertEquals(result[1].get(1), node7);
+     * assertEquals(result[1].get(2), node8);
+     * assertEquals(result[1].get(3), node4);
+     * assertEquals(result[1].get(4), node5);
+     * assertEquals(result[1].get(5), node1);
+     * assertEquals(result[1].get(6), node2);
+     * assertEquals(result[1].get(7), node3);
+     * }
+     */
     /**
      * Test the transpose method.
      */
@@ -931,4 +933,3 @@ public class DGraphTest {
         assertTrue(dag.containsEdge(set2, set3));
     }
 }
-

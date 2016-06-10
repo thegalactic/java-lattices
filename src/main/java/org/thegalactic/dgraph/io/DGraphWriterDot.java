@@ -9,16 +9,15 @@ package org.thegalactic.dgraph.io;
  * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
  *
  * This file is part of java-lattices.
- * You can redistribute it and/or modify it under the terms of CeCILL-B license.
+ * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
-import java.util.StringTokenizer;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.StringTokenizer;
 
 import org.thegalactic.dgraph.DGraph;
-import org.thegalactic.dgraph.Node;
 import org.thegalactic.dgraph.Edge;
+import org.thegalactic.dgraph.Node;
 
 /**
  * This class defines the way for writing a graph as a dot file.
@@ -35,6 +34,30 @@ import org.thegalactic.dgraph.Edge;
  * title DGraphWriterDot UML graph
  */
 public final class DGraphWriterDot implements DGraphWriter {
+
+    /**
+     * The singleton instance.
+     */
+    private static final DGraphWriterDot INSTANCE = new DGraphWriterDot();
+
+    /**
+     * Return the singleton instance of this class.
+     *
+     * @return the singleton instance
+     */
+    public static DGraphWriterDot getInstance() {
+        return INSTANCE;
+    }
+
+    /**
+     * Register this class for writing .dot files.
+     *
+     * @return old writer
+     */
+    public static DGraphWriter register() {
+        return DGraphWriterFactory.register(DGraphWriterDot.getInstance(), "dot");
+    }
+
     /**
      * This class is not designed to be publicly instantiated.
      */
@@ -42,44 +65,18 @@ public final class DGraphWriterDot implements DGraphWriter {
     }
 
     /**
-     * The singleton instance.
-     */
-    private static DGraphWriterDot instance = null;
-
-    /**
-     * Return the singleton instance of this class.
-     *
-     * @return  the singleton instance
-     */
-    public static DGraphWriterDot getInstance() {
-        if (instance == null) {
-            instance = new DGraphWriterDot();
-        }
-        return instance;
-    }
-
-    /**
-     * Register this class for writing .dot files.
-     *
-     * @return  old writer
-     */
-    public static DGraphWriter register() {
-        return DGraphWriterFactory.register(DGraphWriterDot.getInstance(), "dot");
-    }
-
-    /**
      * Write a graph to a output stream.
      *
-     * @param   graph  a graph to write
-     * @param   file   a file
+     * @param graph a graph to write
+     * @param file  a file
      *
-     * @throws  IOException  When an IOException occurs
+     * @throws IOException When an IOException occurs
      */
     public void write(DGraph graph, BufferedWriter file) throws IOException {
         file.write("digraph G {\n");
         file.write("Graph [rankdir=BT]\n");
-        StringBuffer nodes  = new StringBuffer();
-        StringBuffer edges = new StringBuffer();
+        StringBuilder nodes = new StringBuilder();
+        StringBuilder edges = new StringBuilder();
         for (Node node : graph.getNodes()) {
             String dot = node.getIdentifier() + " [label=\"";
             StringTokenizer tokenizer = new StringTokenizer(node.toString(), "\"");
@@ -106,4 +103,3 @@ public final class DGraphWriterDot implements DGraphWriter {
         file.write("}");
     }
 }
-

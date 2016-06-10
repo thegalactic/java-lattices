@@ -9,14 +9,13 @@ package org.thegalactic.dgraph;
  * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
  *
  * This file is part of java-lattices.
- * You can redistribute it and/or modify it under the terms of CeCILL-B license.
+ * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import java.util.ArrayList;
-import java.util.TreeMap;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 /**
  * This class extends the representation of a directed graph given by class
@@ -38,8 +37,9 @@ import java.util.Set;
  *
  * ![DAGraph](DAGraph.png)
  *
- * @todo  Do we forbid to add an edge that breaks acyclic property by verifying that the destination node has no successors?
- *        May be a DAGraph could contain a DGraph and export only interesting method by proxy
+ * @todo Do we forbid to add an edge that breaks acyclic property by verifying that the destination node has no
+ * successors?
+ * May be a DAGraph could contain a DGraph and export only interesting method by proxy
  *
  * @uml DAGraph.png
  * !include resources/org/thegalactic/dgraph/DAGraph.iuml
@@ -54,6 +54,79 @@ import java.util.Set;
  */
 public class DAGraph extends DGraph {
 
+    /*
+     * ----------- STATIC GENERATION METHODS -------------
+     */
+    /**
+     * Generates the directed asyclic graph (DAG) of divisors for integers
+     * included betwwen 2 and the specified value.
+     *
+     * In this DAG, nodes corresponds to the integers,
+     * and there is an edge between two integers if and only if the second one
+     * is divisible by the first one.
+     *
+     * @param number the maximal integer
+     *
+     * @return the acyclic graph
+     */
+    public static DAGraph divisors(int number) {
+        DAGraph graph = new DAGraph();
+        // addition of nodes
+        for (int i = 2; i <= number; i++) {
+            graph.addNode(new Node(new Integer(i)));
+        }
+        // addition of edges
+        for (Node from : graph.getNodes()) {
+            for (Node to : graph.getNodes()) {
+                int v1 = ((Integer) from.getContent()).intValue();
+                int v2 = ((Integer) to.getContent()).intValue();
+                if (v1 < v2 && v2 % v1 == 0) {
+                    graph.addEdge(from, to);
+                }
+            }
+        }
+        return graph;
+    }
+
+    /**
+     * Generates a random directed and acyclic graph (DAG) of size nodes.
+     *
+     * @param size      the number of nodes of the generated graph
+     * @param threshold the threshold to generate an edge
+     *
+     * @return a random acyclic graph
+     */
+    public static DAGraph random(int size, double threshold) {
+        DAGraph graph = new DAGraph();
+        // addition of Nodes
+        for (int i = 1; i <= size; i++) {
+            graph.addNode(new Node(new Integer(i)));
+        }
+        // addition of edges
+        for (Node from : graph.getNodes()) {
+            for (Node to : graph.getNodes()) {
+                // Test to avoid cycles
+                if (from.compareTo(to) > 0) {
+                    if (Math.random() < threshold) {
+                        graph.addEdge(from, to);
+                    }
+                }
+            }
+        }
+        return graph;
+    }
+
+    /**
+     * Generates a random directed graph of size nodes.
+     *
+     * @param size the number of nodes of the generated graph
+     *
+     * @return a random acyclic graph
+     */
+    public static DAGraph random(int size) {
+        return random(size, 0.5);
+    }
+
     /**
      * Constructs a new DAG with an empty set of node.
      */
@@ -65,7 +138,7 @@ public class DAGraph extends DGraph {
      * Constructs this component with the specified set of nodes,
      * and empty treemap of successors and predecessors.
      *
-     * @param   set  the set of nodes
+     * @param set the set of nodes
      */
     public DAGraph(final Set<Node> set) {
         super(set);
@@ -77,7 +150,7 @@ public class DAGraph extends DGraph {
      * Acyclic property is checked for the specified DAG.
      * When not verified, this component is construct with the same set of nodes but with no edges.
      *
-     * @param   graph  the DGraph to be copied
+     * @param graph the DGraph to be copied
      */
     public DAGraph(final DGraph graph) {
         super(graph);
@@ -95,12 +168,13 @@ public class DAGraph extends DGraph {
         }
     }
 
-    /* --------------- DAG HANDLING METHODS ------------ */
-
+    /*
+     * --------------- DAG HANDLING METHODS ------------
+     */
     /**
      * Returns the minimal element of this component.
      *
-     * @return  the minimal element
+     * @return the minimal element
      */
     public SortedSet<Node> min() {
         return this.getSinks();
@@ -109,7 +183,7 @@ public class DAGraph extends DGraph {
     /**
      * Returns the maximal element of this component.
      *
-     * @return  the maximal element
+     * @return the maximal element
      */
     public SortedSet<Node> max() {
         return this.getWells();
@@ -120,9 +194,9 @@ public class DAGraph extends DGraph {
      *
      * Majorants of a node are its successors in the transitive closure
      *
-     * @param   node  the specified node
+     * @param node the specified node
      *
-     * @return  the set of majorants
+     * @return the set of majorants
      */
     public SortedSet<Node> majorants(final Node node) {
         DAGraph graph = new DAGraph(this);
@@ -135,9 +209,9 @@ public class DAGraph extends DGraph {
      *
      * Minorants of a node are its predecessors in the transitive closure
      *
-     * @param   node  the specified node
+     * @param node the specified node
      *
-     * @return  the set of minorants
+     * @return the set of minorants
      */
     public SortedSet<Node> minorants(final Node node) {
         DAGraph graph = new DAGraph(this);
@@ -149,9 +223,9 @@ public class DAGraph extends DGraph {
      * Returns the subgraph induced by the specified node and its successors
      * in the transitive closure.
      *
-     * @param   node  the specified node
+     * @param node the specified node
      *
-     * @return  the subgraph
+     * @return the subgraph
      */
     public DAGraph filter(final Node node) {
         TreeSet<Node> set = new TreeSet<Node>(this.majorants(node));
@@ -163,9 +237,9 @@ public class DAGraph extends DGraph {
      * Returns the subgraph induced by the specified node and its predecessors
      * in the transitive closure.
      *
-     * @param   node the specified node
+     * @param node the specified node
      *
-     * @return  the subgraph
+     * @return the subgraph
      */
     public DAGraph ideal(final Node node) {
         TreeSet<Node> set = new TreeSet<Node>(this.minorants(node));
@@ -178,9 +252,9 @@ public class DAGraph extends DGraph {
      *
      * The subgraph only contains nodes of the specified set that also are in this component.
      *
-     * @param   nodes  The set of nodes
+     * @param nodes The set of nodes
      *
-     * @return  The subgraph
+     * @return The subgraph
      */
     public DAGraph getSubgraphByNodes(final Set<Node> nodes) {
         DGraph tmp = new DGraph(this);
@@ -191,8 +265,9 @@ public class DAGraph extends DGraph {
         return sub2;
     }
 
-    /* --------------- DAG TREATMENT METHODS ------------ */
-
+    /*
+     * --------------- DAG TREATMENT METHODS ------------
+     */
     /**
      * Computes the transitive reduction of this component.
      *
@@ -206,7 +281,7 @@ public class DAGraph extends DGraph {
      * m_r to the numer of edges in the transitive closure,
      * and m_r the number of edges in the transitive reduction.
      *
-     * @return  the number of added edges
+     * @return the number of added edges
      */
     public int transitiveReduction() {
 
@@ -262,21 +337,21 @@ public class DAGraph extends DGraph {
         return number;
     }
 
-   /**
-    * Computes the transitive closure of this component.
-    *
-    * This method overlaps the computation of the transitive closure for directed graph
-    * in class {@link DGraph} with an implementation of the Goralcikova-Koubeck
-    * algorithm dedicated to acyclic directed graph. This algorithm can also compute the
-    * transitive reduction of a directed acyclic graph.
-    *
-    * This treatment is performed in O(n+nm_r+nm_c), where n corresponds to the number of nodes,
-    * m_r to the numer of edges in the transitive closure,
-    * and m_r the number of edges in the transitive reduction.
-    *
-    * @return  the number of added edges
-    */
-   public int transitiveClosure() {
+    /**
+     * Computes the transitive closure of this component.
+     *
+     * This method overlaps the computation of the transitive closure for directed graph
+     * in class {@link DGraph} with an implementation of the Goralcikova-Koubeck
+     * algorithm dedicated to acyclic directed graph. This algorithm can also compute the
+     * transitive reduction of a directed acyclic graph.
+     *
+     * This treatment is performed in O(n+nm_r+nm_c), where n corresponds to the number of nodes,
+     * m_r to the numer of edges in the transitive closure,
+     * and m_r the number of edges in the transitive reduction.
+     *
+     * @return the number of added edges
+     */
+    public int transitiveClosure() {
         int number = 0;
         // mark each node to false
         TreeMap<Node, Boolean> mark = new TreeMap<Node, Boolean>();
@@ -311,77 +386,4 @@ public class DAGraph extends DGraph {
         }
         return number;
     }
-
-    /* ----------- STATIC GENERATION METHODS ------------- */
-
-    /**
-     * Generates the directed asyclic graph (DAG) of divisors for integers
-     * included betwwen 2 and the specified value.
-     *
-     * In this DAG, nodes corresponds to the integers,
-     * and there is an edge between two integers if and only if the second one
-     * is divisible by the first one.
-     *
-     * @param   number  the maximal integer
-     *
-     * @return  the acyclic graph
-     */
-    public static DAGraph divisors(int number) {
-        DAGraph graph = new DAGraph();
-        // addition of nodes
-        for (int i = 2; i <= number; i++) {
-            graph.addNode(new Node(new Integer(i)));
-        }
-        // addition of edges
-        for (Node from : graph.getNodes()) {
-            for (Node to : graph.getNodes()) {
-               int v1 = ((Integer) from.getContent()).intValue();
-               int v2 = ((Integer) to.getContent()).intValue();
-               if (v1 < v2 && v2 % v1 == 0) {
-                   graph.addEdge(from, to);
-               }
-            }
-        }
-        return graph;
-    }
-
-    /**
-     * Generates a random directed and acyclic graph (DAG) of size nodes.
-     *
-     * @param   size       the number of nodes of the generated graph
-     * @param   threshold  the threshold to generate an edge
-     *
-     * @return  a random acyclic graph
-     */
-    public static DAGraph random(int size, double threshold) {
-        DAGraph graph = new DAGraph();
-        // addition of Nodes
-        for (int i = 1; i <= size; i++) {
-            graph.addNode(new Node(new Integer(i)));
-        }
-        // addition of edges
-        for (Node from : graph.getNodes()) {
-            for (Node to : graph.getNodes()) {
-                // Test to avoid cycles
-                if (from.compareTo(to) > 0) {
-                    if (Math.random() < threshold) {
-                        graph.addEdge(from, to);
-                    }
-                }
-            }
-        }
-        return graph;
-    }
-
-    /**
-     * Generates a random directed graph of size nodes.
-     *
-     * @param   size  the number of nodes of the generated graph
-     *
-     * @return  a random acyclic graph
-     */
-    public static DAGraph random(int size) {
-        return random(size, 0.5);
-    }
 }
-

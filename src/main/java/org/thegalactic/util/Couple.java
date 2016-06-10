@@ -9,7 +9,7 @@ package org.thegalactic.util;
  *
  * This file is part of java-lattices.
  * You can redistribute it and/or modify
- * it under the terms of CeCILL-B license.
+ * it under the terms of the CeCILL-B license.
  */
 
 /**
