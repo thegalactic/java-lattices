@@ -6,7 +6,6 @@ if [ "$TRAVIS_REPO_SLUG" == "thegalactic/java-lattices" ] && [ "$TRAVIS_JDK_VERS
 	git config --global user.name "travis-ci"
 	current=`pwd`
 
-
 	echo -e "Publishing doc...\n"
 
 	echo -e "    Generating doc...\n"
