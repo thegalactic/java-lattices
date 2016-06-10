@@ -1,7 +1,7 @@
 package org.thegalactic.io;
 
 /*
- * Serializer.java
+ * Filer.java
  *
  * Copyright: 2010-2015 Karell Bertet, France
  * Copyright: 2015-2016 The Galactic Organization, France
@@ -18,23 +18,23 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- * This class is used to provide a generic way for serializing objects using the extension file.
+ * This class is used to provide a generic way for saving and parsing objects using the extension file.
  *
  * @param <E> The element to be saved/parsed
  */
-public final class Serializer<E> {
+public final class Filer<E> {
 
     /**
      * The singleton instance.
      */
-    private static final Serializer INSTANCE = new Serializer();
+    private static final Filer INSTANCE = new Filer();
 
     /**
      * Return the singleton instance of this class.
      *
      * @return the singleton instance
      */
-    public static Serializer getInstance() {
+    public static Filer getInstance() {
         return INSTANCE;
     }
 
@@ -57,7 +57,7 @@ public final class Serializer<E> {
     /**
      * This class is not designed to be publicly instantiated.
      */
-    private Serializer() {
+    private Filer() {
     }
 
     /**
@@ -71,7 +71,7 @@ public final class Serializer<E> {
      */
     public void save(E e, IOFactory factory, final String filename) throws IOException {
         BufferedWriter file = new BufferedWriter(new FileWriter(filename));
-        factory.getWriter(Serializer.getExtension(filename)).write(e, file);
+        factory.getWriter(Filer.getExtension(filename)).write(e, file);
         file.close();
     }
 
@@ -86,7 +86,7 @@ public final class Serializer<E> {
      */
     public void parse(E e, IOFactory factory, final String filename) throws IOException {
         BufferedReader file = new BufferedReader(new FileReader(filename));
-        factory.getReader(Serializer.getExtension(filename)).read(e, file);
+        factory.getReader(Filer.getExtension(filename)).read(e, file);
         file.close();
     }
 }

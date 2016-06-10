@@ -1,7 +1,7 @@
 package org.thegalactic.context.io;
 
 /*
- * FIMITest.java
+ * FIMISerializerTest.java
  *
  * Copyright: 2010-2015 Karell Bertet, France
  * Copyright: 2015-2016 The Galactic Organization, France
@@ -20,16 +20,16 @@ import java.io.File;
 import org.thegalactic.context.Context;
 
 /**
- * Test the org.thegalactic.dgraph.io.FIMITest class.
+ * Test the org.thegalactic.dgraph.io.FIMISerializerTest class.
  */
-public class FIMITest {
+public class FIMISerializerTest {
     /**
      * Test getInstance.
      */
     @Test
     public void testGetInstance() {
-        FIMI serializer = FIMI.getInstance();
-        assertEquals(serializer, FIMI.getInstance());
+        FIMISerializer serializer = FIMISerializer.getInstance();
+        assertEquals(serializer, FIMISerializer.getInstance());
     }
 
     /**

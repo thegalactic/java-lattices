@@ -1,7 +1,7 @@
 package org.thegalactic.context.io;
 
 /*
- * IOFactory.java
+ * ContextIOFactory.java
  *
  * Copyright: 2010-2015 Karell Bertet, France
  * Copyright: 2015-2016 The Galactic Organization, France
@@ -16,28 +16,28 @@ import org.thegalactic.context.Context;
 /**
  * This class register readers and writers for the Context class.
  *
- * ![IOFactory](IOFactory.png)
+ * ![ContextIOFactory](ContextIOFactory.png)
  *
- * @uml IOFactory.png
- * !include resources/org/thegalactic/context/io/IOFactory.iuml
+ * @uml ContextIOFactory.png
+ * !include resources/org/thegalactic/context/io/ContextIOFactory.iuml
  *
  * hide members
- * show IOFactory members
- * class IOFactory #LightCyan
- * title IOFactory UML graph
+ * show ContextIOFactory members
+ * class ContextIOFactory #LightCyan
+ * title ContextIOFactory UML graph
  */
-public final class IOFactory extends org.thegalactic.io.IOFactory<Context> {
+public final class ContextIOFactory extends org.thegalactic.io.IOFactory<Context> {
 
     /**
      * The singleton instance.
      */
-    private static final IOFactory INSTANCE = new IOFactory();
+    private static final ContextIOFactory INSTANCE = new ContextIOFactory();
 
     /**
      * Initialise the unique instance of this class.
      */
     static {
-        IOFactory.init();
+        ContextIOFactory.init();
     }
 
     /**
@@ -45,24 +45,24 @@ public final class IOFactory extends org.thegalactic.io.IOFactory<Context> {
      *
      * @return the singleton instance
      */
-    public static IOFactory getInstance() {
+    public static ContextIOFactory getInstance() {
         return INSTANCE;
     }
 
     /**
      * This class is not designed to be publicly instantiated.
      */
-    private IOFactory() {
+    private ContextIOFactory() {
     }
 
     /**
      * Initialse the factory.
      */
     protected static void init() {
-        Text.register();
-        Burmeister.register();
-        FIMI.register();
-        Csv.register();
-        SLF.register();
+        TextSerializer.register();
+        BurmeisterSerializer.register();
+        FIMISerializer.register();
+        CsvSerializer.register();
+        SLFSerializer.register();
     }
 }

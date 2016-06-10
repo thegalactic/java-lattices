@@ -1,7 +1,7 @@
 package org.thegalactic.context.io;
 
 /*
- * Text.java
+ * TextSerializer.java
  *
  * Copyright: 2010-2015 Karell Bertet, France
  * Copyright: 2015-2016 The Galactic Organization, France
@@ -23,30 +23,30 @@ import org.thegalactic.io.Writer;
 /**
  * This class defines the way for reading a context from a text file.
  *
- * ![Text](Text.png)
+ * ![TextSerializer](TextSerializer.png)
  *
- * @uml Text.png
- * !include resources/org/thegalactic/context/io/Text.iuml
+ * @uml TextSerializer.png
+ * !include resources/org/thegalactic/context/io/TextSerializer.iuml
  * !include resources/org/thegalactic/io/Reader.iuml
  * !include resources/org/thegalactic/io/Writer.iuml
  * hide members
- * show Text members
- * class Text #LightCyan
- * title Text UML graph
+ * show TextSerializer members
+ * class TextSerializer #LightCyan
+ * title TextSerializer UML graph
  */
-public final class Text implements Reader<Context>, Writer<Context> {
+public final class TextSerializer implements Reader<Context>, Writer<Context> {
 
     /**
      * The singleton instance.
      */
-    private static final Text INSTANCE = new Text();
+    private static final TextSerializer INSTANCE = new TextSerializer();
 
     /**
      * Return the singleton instance of this class.
      *
      * @return the singleton instance
      */
-    public static Text getInstance() {
+    public static TextSerializer getInstance() {
         return INSTANCE;
     }
 
@@ -54,14 +54,14 @@ public final class Text implements Reader<Context>, Writer<Context> {
      * Register this class for reading .txt files.
      */
     public static void register() {
-        IOFactory.getInstance().registerReader(Text.getInstance(), "txt");
-        IOFactory.getInstance().registerWriter(Text.getInstance(), "txt");
+        ContextIOFactory.getInstance().registerReader(TextSerializer.getInstance(), "txt");
+        ContextIOFactory.getInstance().registerWriter(TextSerializer.getInstance(), "txt");
     }
 
     /**
      * This class is not designed to be publicly instantiated.
      */
-    private Text() {
+    private TextSerializer() {
     }
 
     /**

@@ -224,11 +224,12 @@ hide members
 
 title Context Input/Output UML graph
 
-!include resources/org/thegalactic/context/io/Burmeister.iuml
-!include resources/org/thegalactic/context/io/Csv.iuml
-!include resources/org/thegalactic/context/io/IOFactory.iuml
-!include resources/org/thegalactic/context/io/FIMI.iuml
-!include resources/org/thegalactic/context/io/Text.iuml
+!include resources/org/thegalactic/context/io/BurmeisterSerializer.iuml
+!include resources/org/thegalactic/context/io/CsvSerializer.iuml
+!include resources/org/thegalactic/context/io/ContextIOFactory.iuml
+!include resources/org/thegalactic/context/io/FIMISerializer.iuml
+!include resources/org/thegalactic/context/io/SLFSerializer.iuml
+!include resources/org/thegalactic/context/io/TextSerializer.iuml
 !include resources/org/thegalactic/io/IOFactory.iuml
 !include resources/org/thegalactic/io/Reader.iuml
 !include resources/org/thegalactic/io/Writer.iuml

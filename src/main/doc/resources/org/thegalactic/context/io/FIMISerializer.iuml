@@ -1,0 +1,12 @@
+package org.thegalactic.context.io {
+    class FIMISerializer {
+    	-{static}FIMISerializer instance
+        +void read(Context context, BufferedReader file)
+        +void write(Context context, BufferedWriter file)
+        +{static}FIMISerializer getInstance()
+        +{static}void register()
+    }
+
+    org.thegalactic.io.Reader <|-- FIMISerializer
+    org.thegalactic.io.Writer <|-- FIMISerializer
+}

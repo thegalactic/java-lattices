@@ -1,7 +1,7 @@
 package org.thegalactic.context.io;
 
 /*
- * Csv.java
+ * CsvSerializer.java
  *
  * Copyright: 2010-2015 Karell Bertet, France
  * Copyright: 2015-2016 The Galactic Organization, France
@@ -29,31 +29,31 @@ import org.thegalactic.io.Writer;
 /**
  * This class defines the way for reading a context from a csv file.
  *
- * ![Csv](Csv.png)
+ * ![CsvSerializer](CsvSerializer.png)
  *
- * @uml Csv.png
- * !include resources/org/thegalactic/context/io/Csv.iuml
+ * @uml CsvSerializer.png
+ * !include resources/org/thegalactic/context/io/CsvSerializer.iuml
  * !include resources/org/thegalactic/io/Reader.iuml
  * !include resources/org/thegalactic/io/Writer.iuml
  *
  * hide members
- * show Csv members
- * class Csv #LightCyan
- * title ContextReaderCdv UML graph
+ * show CsvSerializer members
+ * class CsvSerializer #LightCyan
+ * title CsvSerializer UML graph
  */
-public final class Csv implements Reader<Context>, Writer<Context> {
+public final class CsvSerializer implements Reader<Context>, Writer<Context> {
 
     /**
      * The singleton instance.
      */
-    private static final Csv INSTANCE = new Csv();
+    private static final CsvSerializer INSTANCE = new CsvSerializer();
 
     /**
      * Return the singleton instance of this class.
      *
      * @return the singleton instance
      */
-    public static Csv getInstance() {
+    public static CsvSerializer getInstance() {
         return INSTANCE;
     }
 
@@ -61,14 +61,14 @@ public final class Csv implements Reader<Context>, Writer<Context> {
      * Register this class for reading .csv files.
      */
     public static void register() {
-        IOFactory.getInstance().registerReader(Csv.getInstance(), "csv");
-        IOFactory.getInstance().registerWriter(Csv.getInstance(), "csv");
+        ContextIOFactory.getInstance().registerReader(CsvSerializer.getInstance(), "csv");
+        ContextIOFactory.getInstance().registerWriter(CsvSerializer.getInstance(), "csv");
     }
 
     /**
      * This class is not designed to be publicly instantiated.
      */
-    private Csv() {
+    private CsvSerializer() {
     }
 
     /**

@@ -1,7 +1,7 @@
 package org.thegalactic.context.io;
 
 /*
- * BurmeisterTest.java
+ * SLFSerializerTest.java
  *
  * Copyright: 2010-2015 Karell Bertet, France
  * Copyright: 2015-2016 The Galactic Organization, France
@@ -16,22 +16,20 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 
 import org.thegalactic.context.Context;
 
 /**
- * Test the org.thegalactic.dgraph.io.ContextBurmeisterTest class.
+ * Test the org.thegalactic.dgraph.io.SLFSerializerTest class.
  */
-public class BurmeisterTest {
+public class SLFSerializerTest {
     /**
      * Test getInstance.
      */
     @Test
     public void testGetInstance() {
-        Burmeister serializer = Burmeister.getInstance();
-        assertEquals(serializer, Burmeister.getInstance());
+        SLFSerializer serializer = SLFSerializer.getInstance();
+        assertEquals(serializer, SLFSerializer.getInstance());
     }
 
     /**
@@ -40,7 +38,7 @@ public class BurmeisterTest {
     @Test
     public void testRead() {
         try {
-            File file = File.createTempFile("junit", ".cxt");
+            File file = File.createTempFile("junit", ".slf");
             String filename = file.getPath();
             Context context = new Context();
             context.addToAttributes("a");
@@ -63,30 +61,6 @@ public class BurmeisterTest {
             file.delete();
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    /**
-     * Test first line without magic header.
-     */
-    @Test
-    public void testWithoutMagicHeader() {
-        File file;
-        String filename = "";
-        try {
-            file = File.createTempFile("junit", ".cxt");
-            filename = file.getPath();
-            BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
-            writer.write("Example");
-            writer.newLine();
-            writer.close();
-            Context context = new Context(filename);
-            assertEquals(context.getExtent("a").toString(), "[1, 2]");
-            assertEquals(context.getExtent("b").toString(), "[2]");
-            assertEquals(context.getExtent("c").toString(), "[]");
-        } catch (Exception e) {
-            assertEquals(e.toString(), "java.io.IOException: Burmeister magic header not found");
-            new File(filename).delete();
         }
     }
 }

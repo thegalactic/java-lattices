@@ -1,7 +1,7 @@
 package org.thegalactic.context.io;
 
 /*
- * CsvTest.java
+ * CsvSerializerTest.java
  *
  * Copyright: 2010-2015 Karell Bertet, France
  * Copyright: 2015-2016 The Galactic Organization, France
@@ -24,16 +24,16 @@ import java.io.FileWriter;
 import org.thegalactic.context.Context;
 
 /**
- * Test the org.thegalactic.dgraph.io.CsvTest class.
+ * Test the org.thegalactic.dgraph.io.CsvSerializerTest class.
  */
-public class CsvTest {
+public class CsvSerializerTest {
     /**
      * Test getInstance.
      */
     @Test
     public void testGetInstance() {
-        Csv serializer = Csv.getInstance();
-        assertEquals(serializer, Csv.getInstance());
+        CsvSerializer serializer = CsvSerializer.getInstance();
+        assertEquals(serializer, CsvSerializer.getInstance());
     }
 
     /**
@@ -176,6 +176,7 @@ public class CsvTest {
             writer.newLine();
             writer.write("1,2,1");
             writer.close();
+            System.out.println(filename);
             Context context = new Context(filename);
             file.delete();
             fail();

@@ -1,7 +1,7 @@
 package org.thegalactic.context.io;
 
 /*
- * SLF.java
+ * SLFSerializer.java
  *
  * Copyright: 2010-2015 Karell Bertet, France
  * Copyright: 2015-2016 The Galactic Organization, France
@@ -27,26 +27,26 @@ import org.thegalactic.io.Writer;
  * This class defines the way for reading a context from a slf file.
  *
  */
-public final class SLF implements Reader<Context>, Writer<Context> {
+public final class SLFSerializer implements Reader<Context>, Writer<Context> {
     /**
      * This class is not designed to be publicly instantiated.
      */
-    private SLF() {
+    private SLFSerializer() {
     }
 
     /**
      * The singleton instance.
      */
-    private static SLF instance = null;
+    private static SLFSerializer instance = null;
 
     /**
      * Return the singleton instance of this class.
      *
      * @return  the singleton instance
      */
-    public static SLF getInstance() {
+    public static SLFSerializer getInstance() {
         if (instance == null) {
-            instance = new SLF();
+            instance = new SLFSerializer();
         }
         return instance;
     }
@@ -55,8 +55,8 @@ public final class SLF implements Reader<Context>, Writer<Context> {
      * Register this class for reading .cxt files.
      */
     public static void register() {
-        IOFactory.getInstance().registerReader(SLF.getInstance(), "slf");
-        IOFactory.getInstance().registerWriter(SLF.getInstance(), "slf");
+        ContextIOFactory.getInstance().registerReader(SLFSerializer.getInstance(), "slf");
+        ContextIOFactory.getInstance().registerWriter(SLFSerializer.getInstance(), "slf");
     }
 
     /**

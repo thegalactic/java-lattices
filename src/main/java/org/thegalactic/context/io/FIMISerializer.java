@@ -1,7 +1,7 @@
 package org.thegalactic.context.io;
 
 /*
- * FIMI.java
+ * FIMISerializer.java
  *
  * Copyright: 2010-2015 Karell Bertet, France
  * Copyright: 2015-2016 The Galactic Organization, France
@@ -24,31 +24,31 @@ import org.thegalactic.io.Writer;
 /**
  * This class defines the way for reading a context from a text file.
  *
- * ![FIMI](FIMI.png)
+ * ![FIMISerializer](FIMISerializer.png)
  *
- * @uml FIMI.png
- * !include resources/org/thegalactic/context/io/FIMI.iuml
+ * @uml FIMISerializer.png
+ * !include resources/org/thegalactic/context/io/FIMISerializer.iuml
  * !include resources/org/thegalactic/io/Reader.iuml
  * !include resources/org/thegalactic/io/Writer.iuml
  *
  * hide members
- * show FIMI members
- * class FIMI #LightCyan
- * title FIMI UML graph
+ * show FIMISerializer members
+ * class FIMISerializer #LightCyan
+ * title FIMISerializer UML graph
  */
-public final class FIMI implements Reader<Context>, Writer<Context> {
+public final class FIMISerializer implements Reader<Context>, Writer<Context> {
 
     /**
      * The singleton instance.
      */
-    private static final FIMI INSTANCE = new FIMI();
+    private static final FIMISerializer INSTANCE = new FIMISerializer();
 
     /**
      * Return the singleton instance of this class.
      *
      * @return the singleton instance
      */
-    public static FIMI getInstance() {
+    public static FIMISerializer getInstance() {
         return INSTANCE;
     }
 
@@ -56,14 +56,14 @@ public final class FIMI implements Reader<Context>, Writer<Context> {
      * Register this class for reading .dat files.
      */
     public static void register() {
-        IOFactory.getInstance().registerReader(FIMI.getInstance(), "dat");
-        IOFactory.getInstance().registerWriter(FIMI.getInstance(), "dat");
+        ContextIOFactory.getInstance().registerReader(FIMISerializer.getInstance(), "dat");
+        ContextIOFactory.getInstance().registerWriter(FIMISerializer.getInstance(), "dat");
     }
 
     /**
      * This class is not designed to be publicly instantiated.
      */
-    private FIMI() {
+    private FIMISerializer() {
     }
 
     /**
