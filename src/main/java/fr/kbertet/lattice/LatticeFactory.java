@@ -69,7 +69,7 @@ public class LatticeFactory {
          *
          * @param   n  permutation of the set 0..n-1.
          */
-        public Permutation(int n) {
+        Permutation(int n) {
             this.length = n;
             this.content = new int[n];
             for (int i = 0; i < n; i++) {

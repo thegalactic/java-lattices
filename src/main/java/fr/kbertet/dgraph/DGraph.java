@@ -135,7 +135,7 @@ public class DGraph implements Cloneable {
              *
              * @param   edges  The edges.
              */
-            public EdgesIterator(Edges edges) {
+            EdgesIterator(Edges edges) {
                 this.edges = edges;
                 this.nodesIterator = edges.graph.nodes.iterator();
                 this.prepareNext();
@@ -189,7 +189,7 @@ public class DGraph implements Cloneable {
          *
          * @param   graph  A DGraph
          */
-        public Edges(DGraph graph) {
+        Edges(DGraph graph) {
             this.graph = graph;
         }
 
@@ -326,7 +326,7 @@ public class DGraph implements Cloneable {
              *
              * @param   sinks  The sinks.
              */
-            public SinksIterator(Sinks sinks) {
+            SinksIterator(Sinks sinks) {
                 this.sinks = sinks;
                 this.nodesIterator = sinks.graph.nodes.iterator();
                 this.prepareNext();
@@ -378,7 +378,7 @@ public class DGraph implements Cloneable {
          *
          * @param   graph  A DGraph
          */
-        public Sinks(DGraph graph) {
+        Sinks(DGraph graph) {
             this.graph = graph;
         }
 
@@ -521,7 +521,7 @@ public class DGraph implements Cloneable {
              *
              * @param   wells  The wells.
              */
-            public WellsIterator(Wells wells) {
+            WellsIterator(Wells wells) {
                 this.wells = wells;
                 this.nodesIterator = wells.graph.nodes.iterator();
                 this.prepareNext();
@@ -573,7 +573,7 @@ public class DGraph implements Cloneable {
          *
          * @param   graph  A DGraph
          */
-        public Wells(DGraph graph) {
+        Wells(DGraph graph) {
             this.graph = graph;
         }
 
@@ -1565,7 +1565,7 @@ public class DGraph implements Cloneable {
         transposedGraph.transpose();
         // sort nodes according to the reverse last sort
         ArrayList<Node> sort = new ArrayList<Node>();
-        Object [] array = last.toArray();
+        Object[] array = last.toArray();
         for (int i = array.length - 1; i >= 0; i--) {
             sort.add((Node) array[i]);
         }

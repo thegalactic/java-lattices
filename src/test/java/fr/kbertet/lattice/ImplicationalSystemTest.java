@@ -236,7 +236,9 @@ public class ImplicationalSystemTest {
             }
             assertEquals(content, "a b c a  -> b c ");
             file.delete();
-        } catch (IOException e) { System.out.println("IOException : " + e.getMessage()); }
+        } catch (IOException e) {
+            System.out.println("IOException : " + e.getMessage());
+        }
     }
     /**
      * Test for the isProper, isUnary, isCompact method.

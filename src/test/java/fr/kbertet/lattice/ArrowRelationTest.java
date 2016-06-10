@@ -68,7 +68,9 @@ public class ArrowRelationTest {
                 + "\\end{tabular}"
         );
         file.delete();
-    } catch (IOException e) { System.out.println("IOException : " + e.getMessage()); }
+    } catch (IOException e) {
+        System.out.println("IOException : " + e.getMessage());
+    }
 }
     /**
      * Test the getDoubleUpArrowTable method.

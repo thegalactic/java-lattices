@@ -6,8 +6,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<name>lattices</name>
-	<url>https://github.com/kbertet/java-lattices/</url>
-	<groupId>fr.kbertet</groupId>
+	<url>https://github.com/thegalactic/java-lattices/</url>
+	<groupId>org.thegalactic</groupId>
 	<artifactId>lattices</artifactId>
 	<version>2.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
@@ -16,7 +16,7 @@
 
 	<properties>
 
-		<project.url>http://kbertet.github.io/java-lattices</project.url>
+		<project.url>http://thegalactic.github.io/java-lattices/</project.url>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
@@ -45,8 +45,8 @@
 	</licenses>
 
 	<organization>
-		<name>Karell Bertet</name>
-		<url>https://github.com/kbertet/</url>
+		<name>The Galactic Organization</name>
+		<url>http://thegalactic.org</url>
 	</organization>
 
 	<developers>
@@ -115,24 +115,24 @@
 		<repository>
 			<id>github.repo</id>
 			<name>GitHub Repository</name>
-			<url>https://raw.githubusercontent.com/kbertet/java-lattices/mvn-repo/</url>
+			<url>https://raw.githubusercontent.com/thegalactic/java-lattices/mvn-repo/</url>
 		</repository>
 	</distributionManagement>
 
 	<scm>
-		<url>https://github.com/kbertet/java-lattices/tree/master/</url>
-		<connection>scm:git:git://github.com/kbertet/java-lattices.git</connection>
-		<developerConnection>scm:git:git@github.com:kbertet/java-lattices.git</developerConnection>
+		<url>https://github.com/thegalactic/java-lattices/tree/master/</url>
+		<connection>scm:git:git://github.com/thegalactic/java-lattices.git</connection>
+		<developerConnection>scm:git:git@github.com:thegalactic/java-lattices.git</developerConnection>
 	</scm>
 
 	<issueManagement>
 		<system>GitHub</system>
-		<url>https://github.com/kbertet/java-lattices/issues/</url>
+		<url>https://github.com/thegalactic/java-lattices/issues/</url>
 	</issueManagement>
 
 	<ciManagement>
 		<system>Travis</system>
-		<url>https://travis-ci.org/kbertet/java-lattices/</url>
+		<url>https://travis-ci.org/thegalactic/java-lattices/</url>
 	</ciManagement>
 
 	<dependencies>
@@ -140,14 +140,14 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.11</version>
+			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-csv</artifactId>
-			<version>1.0</version>
+			<version>1.4</version>
 		</dependency>
 
 	</dependencies>
@@ -158,7 +158,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.2</version>
+				<version>3.5.1</version>
 				<configuration>
 					<!--compilerArgument>-Xlint</compilerArgument-->
 				</configuration>
@@ -175,7 +175,7 @@
    			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>2.13</version>
+				<version>2.17</version>
 				<executions>
 					<execution>
 						<id>validate</id>
@@ -195,7 +195,7 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.7.2.201409121644</version>
+				<version>0.7.7.201606060606</version>
 				<executions>
 					<execution>
 						<id>default-prepare-agent</id>
@@ -241,18 +241,18 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-project-info-reports-plugin</artifactId>
-				<version>2.7</version>
+				<version>2.9</version>
 			</plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
-				<version>3.4</version>
+				<version>3.5.1</version>
 				<dependencies>
 					<dependency>
 						<groupId>org.apache.maven.doxia</groupId>
 						<artifactId>doxia-module-markdown</artifactId>
-						<version>1.6</version>
+						<version>1.7</version>
 					</dependency>
 				</dependencies>
 			</plugin>
@@ -307,7 +307,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jxr-plugin</artifactId>
-				<version>2.4</version>
+				<version>2.5</version>
 				<reportSets>
 					<reportSet>
 						<id>default</id>
@@ -321,19 +321,19 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.7.2.201409121644</version>
+				<version>0.7.7.201606060606</version>
 			</plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-report-plugin</artifactId>
-				<version>2.17</version>
+				<version>2.19.1</version>
 			</plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>2.13</version>
+				<version>2.17</version>
 				<configuration>
 					<includeTestSourceDirectory>true</includeTestSourceDirectory>
 				</configuration>
@@ -342,7 +342,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-pmd-plugin</artifactId>
-				<version>3.2</version>
+				<version>3.6</version>
 				<configuration>
 					<linkXref>true</linkXref>
 					<sourceEncoding>utf-8</sourceEncoding>
@@ -360,7 +360,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>findbugs-maven-plugin</artifactId>
-				<version>3.0.0</version>
+				<version>3.0.3</version>
 				<configuration>
 					<excludeFilterFile>${findBugs.excludeFilterFile}</excludeFilterFile>
 				</configuration>
@@ -401,13 +401,13 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.10.1</version>
+				<version>2.10.3</version>
 				<configuration>
 					<doclet>ch.raffael.doclets.pegdown.PegdownDoclet</doclet>
 					<docletArtifact>
 						<groupId>ch.raffael.pegdown-doclet</groupId>
 						<artifactId>pegdown-doclet</artifactId>
-						<version>1.1.1</version>
+						<version>1.3</version>
 					</docletArtifact>
 					<useStandardDocletOptions>true</useStandardDocletOptions>
 					<docfilessubdirs>true</docfilessubdirs>
@@ -426,7 +426,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>versions-maven-plugin</artifactId>
-				<version>2.1</version>
+				<version>2.2</version>
 				<reportSets>
 					<reportSet>
 						<reports>
@@ -438,12 +438,18 @@
 				</reportSets>
 			</plugin>
 
-			<plugin>
+			<!--plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-changelog-plugin</artifactId>
 				<version>2.3</version>
-				<configuration/>
-			</plugin>
+				<configuration>
+					<type>tag</type>
+					<tags>
+						<tag implementation="java.lang.String">1.0.0</tag>
+						<tag implementation="java.lang.String">2.0.0</tag>
+					</tags>
+				</configuration>
+			</plugin-->
 
 		</plugins>
 	</reporting>
