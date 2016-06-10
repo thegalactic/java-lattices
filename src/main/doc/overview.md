@@ -226,10 +226,10 @@ title Context Input/Output UML graph
 
 !include resources/org/thegalactic/context/io/Burmeister.iuml
 !include resources/org/thegalactic/context/io/Csv.iuml
-!include resources/org/thegalactic/context/io/Factory.iuml
+!include resources/org/thegalactic/context/io/IOFactory.iuml
 !include resources/org/thegalactic/context/io/FIMI.iuml
 !include resources/org/thegalactic/context/io/Text.iuml
-!include resources/org/thegalactic/io/Factory.iuml
+!include resources/org/thegalactic/io/IOFactory.iuml
 !include resources/org/thegalactic/io/Reader.iuml
 !include resources/org/thegalactic/io/Writer.iuml
 
@@ -243,7 +243,7 @@ title DGraph Input/Output UML graph
 !include resources/org/thegalactic/dgraph/io/DGraphWriter.iuml
 !include resources/org/thegalactic/dgraph/io/DGraphWriterFactory.iuml
 !include resources/org/thegalactic/dgraph/io/DGraphWriterDot.iuml
-!include resources/org/thegalactic/io/Factory.iuml
+!include resources/org/thegalactic/io/IOFactory.iuml
 !include resources/org/thegalactic/io/Reader.iuml
 !include resources/org/thegalactic/io/Writer.iuml
 
@@ -266,7 +266,7 @@ title Input/Output UML graph
 !include resources/org/thegalactic/lattice/io/ImplicationalSystemWriter.iuml
 !include resources/org/thegalactic/lattice/io/ImplicationalSystemWriterFactory.iuml
 !include resources/org/thegalactic/lattice/io/ImplicationalSystemWriterText.iuml
-!include resources/org/thegalactic/io/Factory.iuml
+!include resources/org/thegalactic/io/IOFactory.iuml
 !include resources/org/thegalactic/io/Reader.iuml
 !include resources/org/thegalactic/io/Writer.iuml
 

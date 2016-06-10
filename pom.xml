@@ -411,7 +411,8 @@
 					</docletArtifact>
 					<useStandardDocletOptions>true</useStandardDocletOptions>
 					<docfilessubdirs>true</docfilessubdirs>
-					<overview>${basedir}/src/main/javadoc/overview.md</overview>
+					<overview>${basedir}/src/main/doc/overview.md</overview>
+					<javadocDirectory>${basedir}/src/main/doc</javadocDirectory>
 				</configuration>
 				<reportSets>
 					<reportSet>
