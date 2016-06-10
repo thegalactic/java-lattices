@@ -1,7 +1,7 @@
 package org.thegalactic.context.io;
 
 /*
- * Burmeister.java
+ * SLF.java
  *
  * Copyright: 2010-2015 Karell Bertet, France
  * Copyright: 2015-2016 The Galactic Organization, France
@@ -9,20 +9,19 @@ package org.thegalactic.context.io;
  * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
  *
  * This file is part of java-lattices.
- * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
+ * You can redistribute it and/or modify it under the terms of CeCILL-B license.
  */
-
-import java.util.TreeSet;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-
-import org.thegalactic.io.Reader;
-import org.thegalactic.io.Writer;
-import org.thegalactic.context.Context;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
+import java.util.TreeSet;
+
+import org.thegalactic.context.Context;
+import org.thegalactic.io.Reader;
+import org.thegalactic.io.Writer;
 
 /**
  * This class defines the way for reading a context from a slf file.
@@ -56,8 +55,8 @@ public final class SLF implements Reader<Context>, Writer<Context> {
      * Register this class for reading .cxt files.
      */
     public static void register() {
-        Factory.getInstance().registerReader(SLF.getInstance(), "slf");
-        Factory.getInstance().registerWriter(SLF.getInstance(), "slf");
+        IOFactory.getInstance().registerReader(SLF.getInstance(), "slf");
+        IOFactory.getInstance().registerWriter(SLF.getInstance(), "slf");
     }
 
     /**

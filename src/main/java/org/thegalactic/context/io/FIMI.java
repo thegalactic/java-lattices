@@ -11,16 +11,15 @@ package org.thegalactic.context.io;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
-import java.util.StringTokenizer;
-import java.util.HashMap;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.StringTokenizer;
 
+import org.thegalactic.context.Context;
 import org.thegalactic.io.Reader;
 import org.thegalactic.io.Writer;
-import org.thegalactic.context.Context;
 
 /**
  * This class defines the way for reading a context from a text file.
@@ -38,35 +37,33 @@ import org.thegalactic.context.Context;
  * title FIMI UML graph
  */
 public final class FIMI implements Reader<Context>, Writer<Context> {
-    /**
-     * This class is not designed to be publicly instantiated.
-     */
-    private FIMI() {
-    }
 
     /**
      * The singleton instance.
      */
-    private static FIMI instance = null;
+    private static final FIMI INSTANCE = new FIMI();
 
     /**
      * Return the singleton instance of this class.
      *
-     * @return  the singleton instance
+     * @return the singleton instance
      */
     public static FIMI getInstance() {
-        if (instance == null) {
-            instance = new FIMI();
-        }
-        return instance;
+        return INSTANCE;
     }
 
     /**
      * Register this class for reading .dat files.
      */
     public static void register() {
-        Factory.getInstance().registerReader(FIMI.getInstance(), "dat");
-        Factory.getInstance().registerWriter(FIMI.getInstance(), "dat");
+        IOFactory.getInstance().registerReader(FIMI.getInstance(), "dat");
+        IOFactory.getInstance().registerWriter(FIMI.getInstance(), "dat");
+    }
+
+    /**
+     * This class is not designed to be publicly instantiated.
+     */
+    private FIMI() {
     }
 
     /**
@@ -88,12 +85,13 @@ public final class FIMI implements Reader<Context>, Writer<Context> {
      *
      * For reading convinience, observations are labelled with 'O' + LineNumber.
      *
-     * Be careful when using a downloaded file: an empty line at the end of the file gives an observation with no attributes
+     * Be careful when using a downloaded file: an empty line at the end of the file gives an observation with no
+     * attributes
      *
-     * @param   context  a context to read
-     * @param   file     a file
+     * @param context a context to read
+     * @param file    a file
      *
-     * @throws  IOException  When an IOException occurs
+     * @throws IOException When an IOException occurs
      */
     public void read(Context context, BufferedReader file) throws IOException {
         // Initialize the line number
@@ -144,10 +142,10 @@ public final class FIMI implements Reader<Context>, Writer<Context> {
      * 3 4 5
      * ~~~
      *
-     * @param   context  a context to write
-     * @param   file     a file
+     * @param context a context to write
+     * @param file    a file
      *
-     * @throws  IOException  When an IOException occurs
+     * @throws IOException When an IOException occurs
      */
     @Override
     public void write(Context context, BufferedWriter file) throws IOException {

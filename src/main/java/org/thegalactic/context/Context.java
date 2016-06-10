@@ -31,7 +31,7 @@ import org.thegalactic.lattice.ArrowRelation;
 import org.thegalactic.lattice.ConceptLattice;
 import org.thegalactic.lattice.Concept;
 import org.thegalactic.lattice.Lattice;
-import org.thegalactic.context.io.Factory;
+import org.thegalactic.context.io.IOFactory;
 import org.thegalactic.io.Serializer;
 
 /**
@@ -831,7 +831,7 @@ public class Context extends ClosureSystem {
      * @throws  IOException  When an IOException occurs
      */
     public void save(final String filename) throws IOException {
-        Serializer.getInstance().save(this, Factory.getInstance(), filename);
+        Serializer.getInstance().save(this, IOFactory.getInstance(), filename);
     }
 
     /**
@@ -845,7 +845,7 @@ public class Context extends ClosureSystem {
      */
     public Context parse(final String filename) throws IOException {
         this.init();
-        Serializer.getInstance().parse(this, Factory.getInstance(), filename);
+        Serializer.getInstance().parse(this, IOFactory.getInstance(), filename);
         return this;
     }
 

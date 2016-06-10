@@ -1,5 +1,5 @@
 package org.thegalactic.io {
-    class Factory<E> {
+    class IOFactory<E> {
     	-HashMap<String, org.thegalactic.io.Reader<E>> readers
     	-HashMap<String, org.thegalactic.io.Writer<E>> writers
         +org.thegalactic.io.Reader<E> registerReader(org.thegalactic.io.Reader<E> reader, String extension)
@@ -10,6 +10,6 @@ package org.thegalactic.io {
         +org.thegalactic.io.Writer<E> getWriter(String extension)
     }
 
-    Factory o-- org.thegalactic.io.Reader
-    Factory o-- org.thegalactic.io.Writer
+    IOFactory o-- org.thegalactic.io.Reader
+    IOFactory o-- org.thegalactic.io.Writer
 }

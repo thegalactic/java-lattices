@@ -1,7 +1,7 @@
 package org.thegalactic.context.io;
 
 /*
- * Factory.java
+ * IOFactory.java
  *
  * Copyright: 2010-2015 Karell Bertet, France
  * Copyright: 2015-2016 The Galactic Organization, France
@@ -11,51 +11,54 @@ package org.thegalactic.context.io;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import org.thegalactic.context.Context;
 
 /**
  * This class register readers and writers for the Context class.
  *
- * ![Factory](Factory.png)
+ * ![IOFactory](IOFactory.png)
  *
- * @uml Factory.png
- * !include resources/org/thegalactic/context/io/Factory.iuml
+ * @uml IOFactory.png
+ * !include resources/org/thegalactic/context/io/IOFactory.iuml
  *
  * hide members
- * show Factory members
- * class Factory #LightCyan
- * title Factory UML graph
+ * show IOFactory members
+ * class IOFactory #LightCyan
+ * title IOFactory UML graph
  */
-public final class Factory extends org.thegalactic.io.Factory<Context> {
-   /**
-     * This class is not designed to be publicly instantiated.
-     */
-    private Factory() {
-    }
+public final class IOFactory extends org.thegalactic.io.IOFactory<Context> {
 
     /**
      * The singleton instance.
      */
-    private static Factory instance = null;
+    private static final IOFactory INSTANCE = new IOFactory();
+
+    /**
+     * Initialise the unique instance of this class.
+     */
+    static {
+        IOFactory.init();
+    }
 
     /**
      * Return the singleton instance of this class.
      *
-     * @return  the singleton instance
+     * @return the singleton instance
      */
-    public static Factory getInstance() {
-        if (instance == null) {
-            instance = new Factory();
-            instance.init();
-        }
-        return instance;
+    public static IOFactory getInstance() {
+        return INSTANCE;
+    }
+
+    /**
+     * This class is not designed to be publicly instantiated.
+     */
+    private IOFactory() {
     }
 
     /**
      * Initialse the factory.
      */
-    protected void init() {
+    protected static void init() {
         Text.register();
         Burmeister.register();
         FIMI.register();
