@@ -1,0 +1,10 @@
+package org.thegalactic.dgraph.io {
+    class DGraphSerializerDot {
+        -{static}DGraphSerializerDot instance
+        +void write(DGraph graph, BufferedWriter file)
+        +{static}DGraphSerializerDot getInstance()
+        +{static}void register()
+    }
+
+    org.thegalactic.io.Writer <|-- DGraphSerializerDot
+}

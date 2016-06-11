@@ -1,7 +1,7 @@
 package org.thegalactic.dgraph.io;
 
 /*
- * DGraphWriterDot.java
+ * DGraphSerializerDot.java
  *
  * Copyright: 2010-2015 Karell Bertet, France
  * Copyright: 2015-2016 The Galactic Organization, France
@@ -18,50 +18,52 @@ import java.util.StringTokenizer;
 import org.thegalactic.dgraph.DGraph;
 import org.thegalactic.dgraph.Edge;
 import org.thegalactic.dgraph.Node;
+import org.thegalactic.io.Writer;
 
 /**
- * This class defines the way for writing a graph as a dot file.
+ * This class defines the way for writing a graph to a text file.
  *
- * ![DGraphWriterDot](DGraphWriterDot.png)
+ * ![DGraphSerializerDot](DGraphSerializerDot.png)
  *
- * @uml DGraphWriterDot.png
- * !include resources/org/thegalactic/dgraph/io/DGraphWriterDot.iuml
- * !include resources/org/thegalactic/dgraph/io/DGraphWriter.iuml
+ * @uml
+ *
+ * DGraphSerializerDot.png
+ *
+ * !include resources/org/thegalactic/dgraph/io/DGraphSerializerDot.iuml
+ * !include resources/org/thegalactic/io/Writer.iuml
  *
  * hide members
- * show DGraphWriterDot members
- * class DGraphWriterDot #LightCyan
- * title DGraphWriterDot UML graph
+ * show DGraphSerializerDot members
+ * class DGraphSerializerDot #LightCyan
+ * title DGraphSerializerDot UML graph
  */
-public final class DGraphWriterDot implements DGraphWriter {
+public final class DGraphSerializerDot implements Writer<DGraph> {
 
     /**
      * The singleton instance.
      */
-    private static final DGraphWriterDot INSTANCE = new DGraphWriterDot();
+    private static final DGraphSerializerDot INSTANCE = new DGraphSerializerDot();
 
     /**
      * Return the singleton instance of this class.
      *
      * @return the singleton instance
      */
-    public static DGraphWriterDot getInstance() {
+    public static DGraphSerializerDot getInstance() {
         return INSTANCE;
     }
 
     /**
-     * Register this class for writing .dot files.
-     *
-     * @return old writer
+     * Register this class for reading .cxt files.
      */
-    public static DGraphWriter register() {
-        return DGraphWriterFactory.register(DGraphWriterDot.getInstance(), "dot");
+    public static void register() {
+        DGraphIOFactory.getInstance().registerWriter(DGraphSerializerDot.getInstance(), "dot");
     }
 
     /**
      * This class is not designed to be publicly instantiated.
      */
-    private DGraphWriterDot() {
+    private DGraphSerializerDot() {
     }
 
     /**
@@ -72,6 +74,7 @@ public final class DGraphWriterDot implements DGraphWriter {
      *
      * @throws IOException When an IOException occurs
      */
+    @Override
     public void write(DGraph graph, BufferedWriter file) throws IOException {
         String newLine = System.getProperty("line.separator");
         file.write("digraph G {" + newLine);

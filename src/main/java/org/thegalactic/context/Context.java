@@ -794,7 +794,7 @@ public class Context extends ClosureSystem {
      */
     @Override
     public String toString() {
-        StringBuffer string = new StringBuffer();
+        StringBuilder string = new StringBuilder();
         string.append("Observations: ");
         for (Comparable o : this.observations) {
             // first line : All observations separated by a space

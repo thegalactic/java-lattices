@@ -37,9 +37,16 @@ import org.thegalactic.util.ComparableSet;
  *
  * ![Rule](Rule.png)
  *
- * @uml Rule.png !include resources/org/thegalactic/lattice/Rule.iuml
+ * @uml
  *
- * hide members show Rule members class Rule #LightCyan title Rule UML graph
+ * Rule.png
+ *
+ * !include resources/org/thegalactic/lattice/Rule.iuml
+ *
+ * hide members
+ * show Rule members
+ * class Rule #LightCyan
+ * title Rule UML graph
  */
 public class Rule implements Comparable {
 

@@ -10,8 +10,6 @@ package org.thegalactic.dgraph;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.AbstractSet;
 import java.util.ArrayList;
@@ -23,8 +21,8 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import org.thegalactic.dgraph.io.DGraphWriterDot;
-import org.thegalactic.dgraph.io.DGraphWriterFactory;
+import org.thegalactic.dgraph.io.DGraphIOFactory;
+import org.thegalactic.io.Filer;
 
 /**
  * This class gives a standard representation for a directed graph by sets of
@@ -59,15 +57,6 @@ import org.thegalactic.dgraph.io.DGraphWriterFactory;
  * title DGraph UML graph
  */
 public class DGraph implements Cloneable {
-
-    /*
-     * Register dot writer
-     */
-    static {
-        if (DGraphWriterFactory.get("dot") == null) {
-            DGraphWriterDot.register();
-        }
-    }
 
     /*
      * ----------- STATIC GENERATION METHODS -------------
@@ -397,14 +386,7 @@ public class DGraph implements Cloneable {
      * @throws IOException When an IOException occurs
      */
     public void save(final String filename) throws IOException {
-        String extension = "";
-        int index = filename.lastIndexOf('.');
-        if (index > 0) {
-            extension = filename.substring(index + 1);
-        }
-        BufferedWriter file = new BufferedWriter(new FileWriter(filename));
-        DGraphWriterFactory.get(extension).write(this, file);
-        file.close();
+        Filer.getInstance().save(this, DGraphIOFactory.getInstance(), filename);
     }
 
     /*

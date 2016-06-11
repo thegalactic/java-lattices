@@ -240,9 +240,8 @@ hide members
 
 title DGraph Input/Output UML graph
 
-!include resources/org/thegalactic/dgraph/io/DGraphWriter.iuml
-!include resources/org/thegalactic/dgraph/io/DGraphWriterFactory.iuml
-!include resources/org/thegalactic/dgraph/io/DGraphWriterDot.iuml
+!include resources/org/thegalactic/dgraph/io/DGraphIOFactory.iuml
+!include resources/org/thegalactic/dgraph/io/DGraphSerializerDot.iuml
 !include resources/org/thegalactic/io/IOFactory.iuml
 !include resources/org/thegalactic/io/Reader.iuml
 !include resources/org/thegalactic/io/Writer.iuml
