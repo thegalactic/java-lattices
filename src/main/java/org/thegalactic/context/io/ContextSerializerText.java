@@ -1,7 +1,7 @@
 package org.thegalactic.context.io;
 
 /*
- * TextSerializer.java
+ * ContextSerializerText.java
  *
  * Copyright: 2010-2015 Karell Bertet, France
  * Copyright: 2015-2016 The Galactic Organization, France
@@ -23,7 +23,7 @@ import org.thegalactic.io.Writer;
 /**
  * This class defines the way for reading a context from a text file.
  *
- * ![TextSerializer](TextSerializer.png)
+ * ![ContextSerializerText](ContextSerializerText.png)
  *
  * @uml TextSerializer.png
  * !include resources/org/thegalactic/context/io/TextSerializer.iuml
@@ -34,19 +34,19 @@ import org.thegalactic.io.Writer;
  * class TextSerializer #LightCyan
  * title TextSerializer UML graph
  */
-public final class TextSerializer implements Reader<Context>, Writer<Context> {
+public final class ContextSerializerText implements Reader<Context>, Writer<Context> {
 
     /**
      * The singleton instance.
      */
-    private static final TextSerializer INSTANCE = new TextSerializer();
+    private static final ContextSerializerText INSTANCE = new ContextSerializerText();
 
     /**
      * Return the singleton instance of this class.
      *
      * @return the singleton instance
      */
-    public static TextSerializer getInstance() {
+    public static ContextSerializerText getInstance() {
         return INSTANCE;
     }
 
@@ -54,14 +54,14 @@ public final class TextSerializer implements Reader<Context>, Writer<Context> {
      * Register this class for reading .txt files.
      */
     public static void register() {
-        ContextIOFactory.getInstance().registerReader(TextSerializer.getInstance(), "txt");
-        ContextIOFactory.getInstance().registerWriter(TextSerializer.getInstance(), "txt");
+        ContextIOFactory.getInstance().registerReader(ContextSerializerText.getInstance(), "txt");
+        ContextIOFactory.getInstance().registerWriter(ContextSerializerText.getInstance(), "txt");
     }
 
     /**
      * This class is not designed to be publicly instantiated.
      */
-    private TextSerializer() {
+    private ContextSerializerText() {
     }
 
     /**

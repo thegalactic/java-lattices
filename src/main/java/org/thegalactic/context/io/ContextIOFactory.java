@@ -53,11 +53,11 @@ public final class ContextIOFactory extends org.thegalactic.io.IOFactory<Context
      * Initialse the factory.
      */
     protected static void init() {
-        TextSerializer.register();
-        BurmeisterSerializer.register();
-        FIMISerializer.register();
-        CsvSerializer.register();
-        SLFSerializer.register();
+        ContextSerializerText.register();
+        ContextSerializerBurmeister.register();
+        ContextSerializerFIMI.register();
+        ContextSerializerCsv.register();
+        ContextSerializerSLF.register();
     }
 
     /**

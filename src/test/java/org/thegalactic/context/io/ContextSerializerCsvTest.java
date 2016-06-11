@@ -1,7 +1,7 @@
 package org.thegalactic.context.io;
 
 /*
- * CsvSerializerTest.java
+ * ContextSerializerCsvTest.java
  *
  * Copyright: 2010-2015 Karell Bertet, France
  * Copyright: 2015-2016 The Galactic Organization, France
@@ -24,16 +24,16 @@ import java.io.FileWriter;
 import org.thegalactic.context.Context;
 
 /**
- * Test the org.thegalactic.dgraph.io.CsvSerializerTest class.
+ * Test the org.thegalactic.dgraph.io.ContextSerializerCsvTest class.
  */
-public class CsvSerializerTest {
+public class ContextSerializerCsvTest {
     /**
      * Test getInstance.
      */
     @Test
     public void testGetInstance() {
-        CsvSerializer serializer = CsvSerializer.getInstance();
-        assertEquals(serializer, CsvSerializer.getInstance());
+        ContextSerializerCsv serializer = ContextSerializerCsv.getInstance();
+        assertEquals(serializer, ContextSerializerCsv.getInstance());
     }
 
     /**

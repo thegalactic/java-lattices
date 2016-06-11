@@ -1,7 +1,7 @@
 package org.thegalactic.context.io;
 
 /*
- * FIMISerializer.java
+ * ContextSerializerFIMI.java
  *
  * Copyright: 2010-2015 Karell Bertet, France
  * Copyright: 2015-2016 The Galactic Organization, France
@@ -23,31 +23,31 @@ import org.thegalactic.io.Writer;
 /**
  * This class defines the way for reading a context from a text file.
  *
- * ![FIMISerializer](FIMISerializer.png)
+ * ![ContextSerializerFIMI](ContextSerializerFIMI.png)
  *
- * @uml FIMISerializer.png
- * !include resources/org/thegalactic/context/io/FIMISerializer.iuml
+ * @uml ContextSerializerFIMI.png
+ * !include resources/org/thegalactic/context/io/ContextSerializerFIMI.iuml
  * !include resources/org/thegalactic/io/Reader.iuml
  * !include resources/org/thegalactic/io/Writer.iuml
  *
  * hide members
- * show FIMISerializer members
- * class FIMISerializer #LightCyan
- * title FIMISerializer UML graph
+ * show ContextSerializerFIMI members
+ * class ContextSerializerFIMI #LightCyan
+ * title ContextSerializerFIMI UML graph
  */
-public final class FIMISerializer implements Reader<Context>, Writer<Context> {
+public final class ContextSerializerFIMI implements Reader<Context>, Writer<Context> {
 
     /**
      * The singleton instance.
      */
-    private static final FIMISerializer INSTANCE = new FIMISerializer();
+    private static final ContextSerializerFIMI INSTANCE = new ContextSerializerFIMI();
 
     /**
      * Return the singleton instance of this class.
      *
      * @return the singleton instance
      */
-    public static FIMISerializer getInstance() {
+    public static ContextSerializerFIMI getInstance() {
         return INSTANCE;
     }
 
@@ -55,14 +55,14 @@ public final class FIMISerializer implements Reader<Context>, Writer<Context> {
      * Register this class for reading .dat files.
      */
     public static void register() {
-        ContextIOFactory.getInstance().registerReader(FIMISerializer.getInstance(), "dat");
-        ContextIOFactory.getInstance().registerWriter(FIMISerializer.getInstance(), "dat");
+        ContextIOFactory.getInstance().registerReader(ContextSerializerFIMI.getInstance(), "dat");
+        ContextIOFactory.getInstance().registerWriter(ContextSerializerFIMI.getInstance(), "dat");
     }
 
     /**
      * This class is not designed to be publicly instantiated.
      */
-    private FIMISerializer() {
+    private ContextSerializerFIMI() {
     }
 
     /**

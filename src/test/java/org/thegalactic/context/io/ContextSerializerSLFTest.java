@@ -1,7 +1,7 @@
 package org.thegalactic.context.io;
 
 /*
- * FIMISerializerTest.java
+ * ContextSerializerSLFTest.java
  *
  * Copyright: 2010-2015 Karell Bertet, France
  * Copyright: 2015-2016 The Galactic Organization, France
@@ -20,16 +20,16 @@ import java.io.File;
 import org.thegalactic.context.Context;
 
 /**
- * Test the org.thegalactic.dgraph.io.FIMISerializerTest class.
+ * Test the org.thegalactic.dgraph.io.ContextSerializerSLFTest class.
  */
-public class FIMISerializerTest {
+public class ContextSerializerSLFTest {
     /**
      * Test getInstance.
      */
     @Test
     public void testGetInstance() {
-        FIMISerializer serializer = FIMISerializer.getInstance();
-        assertEquals(serializer, FIMISerializer.getInstance());
+        ContextSerializerSLF serializer = ContextSerializerSLF.getInstance();
+        assertEquals(serializer, ContextSerializerSLF.getInstance());
     }
 
     /**
@@ -38,7 +38,7 @@ public class FIMISerializerTest {
     @Test
     public void testRead() {
         try {
-            File file = File.createTempFile("junit", ".dat");
+            File file = File.createTempFile("junit", ".slf");
             String filename = file.getPath();
             Context context = new Context();
             context.addToAttributes("a");
@@ -54,9 +54,11 @@ public class FIMISerializerTest {
             context.addExtentIntent("3", "c");
             context.save(filename);
             Context copy = new Context(filename);
-            assertEquals(context.getAttributes().size(), copy.getAttributes().size());
-            assertEquals(context.getObservations().size(), copy.getObservations().size());
-            new File(filename).delete();
+            assertEquals(context.getAttributes(), copy.getAttributes());
+            assertEquals(context.getObservations(), copy.getObservations());
+            assertEquals(context.getIntent("1"), copy.getIntent("1"));
+            assertEquals(context.getExtent("c"), copy.getExtent("c"));
+            file.delete();
         } catch (Exception e) {
             e.printStackTrace();
         }

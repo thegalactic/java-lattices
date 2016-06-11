@@ -1,7 +1,7 @@
 package org.thegalactic.context.io;
 
 /*
- * CsvSerializer.java
+ * ContextSerializerCsv.java
  *
  * Copyright: 2010-2015 Karell Bertet, France
  * Copyright: 2015-2016 The Galactic Organization, France
@@ -29,31 +29,31 @@ import org.thegalactic.io.Writer;
 /**
  * This class defines the way for reading a context from a csv file.
  *
- * ![CsvSerializer](CsvSerializer.png)
+ * ![ContextSerializerCsv](ContextSerializerCsv.png)
  *
- * @uml CsvSerializer.png
- * !include resources/org/thegalactic/context/io/CsvSerializer.iuml
+ * @uml ContextSerializerCsv.png
+ * !include resources/org/thegalactic/context/io/ContextSerializerCsv.iuml
  * !include resources/org/thegalactic/io/Reader.iuml
  * !include resources/org/thegalactic/io/Writer.iuml
  *
  * hide members
- * show CsvSerializer members
- * class CsvSerializer #LightCyan
- * title CsvSerializer UML graph
+ * show ContextSerializerCsv members
+ * class ContextSerializerCsv #LightCyan
+ * title ContextSerializerCsv UML graph
  */
-public final class CsvSerializer implements Reader<Context>, Writer<Context> {
+public final class ContextSerializerCsv implements Reader<Context>, Writer<Context> {
 
     /**
      * The singleton instance.
      */
-    private static final CsvSerializer INSTANCE = new CsvSerializer();
+    private static final ContextSerializerCsv INSTANCE = new ContextSerializerCsv();
 
     /**
      * Return the singleton instance of this class.
      *
      * @return the singleton instance
      */
-    public static CsvSerializer getInstance() {
+    public static ContextSerializerCsv getInstance() {
         return INSTANCE;
     }
 
@@ -61,14 +61,14 @@ public final class CsvSerializer implements Reader<Context>, Writer<Context> {
      * Register this class for reading .csv files.
      */
     public static void register() {
-        ContextIOFactory.getInstance().registerReader(CsvSerializer.getInstance(), "csv");
-        ContextIOFactory.getInstance().registerWriter(CsvSerializer.getInstance(), "csv");
+        ContextIOFactory.getInstance().registerReader(ContextSerializerCsv.getInstance(), "csv");
+        ContextIOFactory.getInstance().registerWriter(ContextSerializerCsv.getInstance(), "csv");
     }
 
     /**
      * This class is not designed to be publicly instantiated.
      */
-    private CsvSerializer() {
+    private ContextSerializerCsv() {
     }
 
     /**

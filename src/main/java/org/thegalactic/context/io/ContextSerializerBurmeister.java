@@ -1,7 +1,7 @@
 package org.thegalactic.context.io;
 
 /*
- * BurmeisterSerializer.java
+ * ContextSerializerBurmeister.java
  *
  * Copyright: 2010-2015 Karell Bertet, France
  * Copyright: 2015-2016 The Galactic Organization, France
@@ -23,31 +23,31 @@ import org.thegalactic.io.Writer;
 /**
  * This class defines the way for reading a context from a text file.
  *
- * ![BurmeisterSerializer](BurmeisterSerializer.png)
+ * ![ContextSerializerBurmeister](ContextSerializerBurmeister.png)
  *
- * @uml BurmeisterSerializer.png
- * !include resources/org/thegalactic/context/io/BurmeisterSerializer.iuml
+ * @uml ContextSerializerBurmeister.png
+ * !include resources/org/thegalactic/context/io/ContextSerializerBurmeister.iuml
  * !include resources/org/thegalactic/io/Reader.iuml
  * !include resources/org/thegalactic/io/Writer.iuml
  *
  * hide members
- * show BurmeisterSerializer members
- * class BurmeisterSerializer #LightCyan
- * title BurmeisterSerializer UML graph
+ * show ContextSerializerBurmeister members
+ * class ContextSerializerBurmeister #LightCyan
+ * title ContextSerializerBurmeister UML graph
  */
-public final class BurmeisterSerializer implements Reader<Context>, Writer<Context> {
+public final class ContextSerializerBurmeister implements Reader<Context>, Writer<Context> {
 
     /**
      * The singleton instance.
      */
-    private static final BurmeisterSerializer INSTANCE = new BurmeisterSerializer();
+    private static final ContextSerializerBurmeister INSTANCE = new ContextSerializerBurmeister();
 
     /**
      * Return the singleton instance of this class.
      *
      * @return the singleton instance
      */
-    public static BurmeisterSerializer getInstance() {
+    public static ContextSerializerBurmeister getInstance() {
         return INSTANCE;
     }
 
@@ -55,20 +55,20 @@ public final class BurmeisterSerializer implements Reader<Context>, Writer<Conte
      * Register this class for reading .cxt files.
      */
     public static void register() {
-        ContextIOFactory.getInstance().registerReader(BurmeisterSerializer.getInstance(), "cxt");
-        ContextIOFactory.getInstance().registerWriter(BurmeisterSerializer.getInstance(), "cxt");
+        ContextIOFactory.getInstance().registerReader(ContextSerializerBurmeister.getInstance(), "cxt");
+        ContextIOFactory.getInstance().registerWriter(ContextSerializerBurmeister.getInstance(), "cxt");
     }
 
     /**
      * This class is not designed to be publicly instantiated.
      */
-    private BurmeisterSerializer() {
+    private ContextSerializerBurmeister() {
     }
 
     /**
      * Read a context from a file.
      *
-     * The BurmeisterSerializer cxt format file is respected :
+     * The Burmeister cxt format file is respected :
      *
      * The file format is structured as follows:
      *

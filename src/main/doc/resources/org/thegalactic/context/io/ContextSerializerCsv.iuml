@@ -1,0 +1,12 @@
+package org.thegalactic.context.io {
+    class ContextSerializerCsv {
+    	-{static}ContextSerializerCsv instance
+        +void read(Context context, BufferedReader file)
+        +void write(Context context, BufferedWriter file)
+        +{static}ContextSerializerCsv getInstance()
+        +{static}void register()
+    }
+
+    org.thegalactic.io.Reader <|-- ContextSerializerCsv
+    org.thegalactic.io.Writer <|-- ContextSerializerCsv
+}
