@@ -16,6 +16,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -45,7 +46,7 @@ public class DGraphSerializerDotTest {
             String filename = file.getPath();
             DGraph graph = new DGraph();
             graph.save(filename);
-            List<String> list = Files.readAllLines(Paths.get(filename));
+            List<String> list = Files.readAllLines(Paths.get(filename), Charset.forName("UTF-8"));
             assertEquals(list.get(0), "digraph G {");
             assertEquals(list.get(1), "Graph [rankdir=BT]");
             assertEquals(list.get(2), "}");
