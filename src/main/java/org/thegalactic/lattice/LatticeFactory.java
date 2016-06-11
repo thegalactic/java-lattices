@@ -1,4 +1,5 @@
 package org.thegalactic.lattice;
+
 /*
  * LatticeFactory.java
  *
@@ -92,13 +93,15 @@ public class LatticeFactory {
     /**
      * Returns the lattice of permutations of 1..n.
      *
-     * Permutation are ordered as follows :
-     * A permutation s2 is a succesor of a permutation s1, if s2 is obtained from s1 by inverting two consecutive
+     * Permutation are ordered as follows : A permutation s2 is a succesor of a
+     * permutation s1, if s2 is obtained from s1 by inverting two consecutive
      * elements i and j such that before inversion j > i.
      *
-     * Example : 124356 has following successors 214356, 142356, 124536 and 124365.
+     * Example : 124356 has following successors 214356, 142356, 124536 and
+     * 124365.
      *
-     * The bottom of this lattice is identity (for exemple 123456) and the top is for instance 654321.
+     * The bottom of this lattice is identity (for exemple 123456) and the top
+     * is for instance 654321.
      *
      * @param n the lattice of permutations of the set 1..n
      *
@@ -133,7 +136,8 @@ public class LatticeFactory {
      *
      * A node in the product is a cartesian product of two nodes
      *
-     * There is an edge (n1, m1) -> (n2, m2) if and only if there are edges n1 -> n2 and m1 -> m2
+     * There is an edge (n1, m1) -> (n2, m2) if and only if there are edges n1
+     * -> n2 and m1 -> m2
      *
      * @param l Lattice of the left hand side of the product
      * @param r Lattice of the right hand side of the product
@@ -197,42 +201,38 @@ public class LatticeFactory {
                         // x & y were in convex c
                         Couple cX = (Couple) x.getContent();
                         Couple cY = (Couple) y.getContent();
-                        if ((cX.getLeft() == cY.getLeft()) && (((Integer) cX.getRight()).intValue() == 0)
-                                && (((Integer) cY.getRight()).intValue() == 1)) {
+                        if ((cX.getLeft() == cY.getLeft()) && (((Integer) cX.getRight()) == 0)
+                                && (((Integer) cY.getRight()) == 1)) {
                             // Same content means same node. x is of the form (cX, 0) and y is of the for (cX, 1) so x < y in doubled.
                             doubled.addEdge(x, y);
-                        } else {
-                            if (l.majorants(l.getNodeByContent(cX.getLeft())).contains(l.getNodeByContent(cY.getLeft()))
-                                    && (cX.getRight() == cY.getRight())) {
-                                // x < y in l and x & y have the same second component si x < y in doubled.
-                                doubled.addEdge(x, y);
-                            }
+                        } else if (l.majorants(l.getNodeByContent(cX.getLeft())).contains(l.getNodeByContent(cY.getLeft()))
+                                && (cX.getRight() == cY.getRight())) {
+                            // x < y in l and x & y have the same second component si x < y in doubled.
+                            doubled.addEdge(x, y);
                         }
                     } else { // y wasn't in convex c
                         // x was in c & y wasn't
                         Couple cX = (Couple) x.getContent();
                         if (l.majorants(l.getNodeByContent(cX.getLeft())).contains(l.getNodeByContent(y.getContent()))
-                                && (((Integer) cX.getRight()).intValue() == 1)) {
+                                && (((Integer) cX.getRight()) == 1)) {
                             // x < y in l and second component of x is 1.
                             doubled.addEdge(x, y);
                         }
                     }
-                } else { // x wasn't in convex c
-                    if (y.getContent().getClass() == test.getClass()) { // y was in convex c
-                        // x wasn't in c but y was
-                        Couple cY = (Couple) y.getContent();
-                        if (l.majorants(l.getNodeByContent(x.getContent())).contains(l.getNodeByContent(cY.getLeft()))
-                                && (((Integer) cY.getRight()).intValue() == 0)) {
-                            // x < y in l and x & second component of y is 0.
-                            doubled.addEdge(x, y);
-                        }
-                    } else { // y wasn't in convex c
-                        // x wasn't in c nor y
-                        if (l.majorants(l.getNodeByContent(x.getContent())).contains(l.getNodeByContent(y.getContent()))) {
-                            // x < y in l and x & second component of y is 0.
-                            doubled.addEdge(x, y);
-                        }
+                } else // x wasn't in convex c
+                if (y.getContent().getClass() == test.getClass()) { // y was in convex c
+                    // x wasn't in c but y was
+                    Couple cY = (Couple) y.getContent();
+                    if (l.majorants(l.getNodeByContent(x.getContent())).contains(l.getNodeByContent(cY.getLeft()))
+                            && (((Integer) cY.getRight()) == 0)) {
+                        // x < y in l and x & second component of y is 0.
+                        doubled.addEdge(x, y);
                     }
+                } else // y wasn't in convex c
+                // x wasn't in c nor y
+                if (l.majorants(l.getNodeByContent(x.getContent())).contains(l.getNodeByContent(y.getContent()))) {
+                    // x < y in l and x & second component of y is 0.
+                    doubled.addEdge(x, y);
                 }
             }
         }
@@ -244,8 +244,8 @@ public class LatticeFactory {
      * Computes successors of node n in the boolean algebra currently generated.
      *
      * @param node this method compute successors of this node
-     * @param l    boolean algebra currently generated
-     * @param n    the number of node of l will be 2^n at the end of computation
+     * @param l boolean algebra currently generated
+     * @param n the number of node of l will be 2^n at the end of computation
      */
     private static void recursiveBooleanAlgebra(Node node, Lattice l, int n) {
         for (int i = 0; i < n; i++) {
@@ -269,8 +269,8 @@ public class LatticeFactory {
      * Computes successors of node n in the lattice l.
      *
      * @param node successors of this node are computed by this method
-     * @param l    lattice of permutations currently generated
-     * @param n    lattice of permutation of the set 1..n is currently generated
+     * @param l lattice of permutations currently generated
+     * @param n lattice of permutation of the set 1..n is currently generated
      */
     private static void recursivePermutationLattice(Node node, Lattice l, int n) {
         Permutation s = (Permutation) node.getContent();
@@ -313,16 +313,12 @@ public class LatticeFactory {
     /**
      * This class provides a representation of permutations.
      *
-     * If this component transforms : 0 -> 1, 1 -> 0 & 2 -> 2.
-     * Then its length is 3 and
+     * If this component transforms : 0 -> 1, 1 -> 0 & 2 -> 2. Then its length
+     * is 3 and
      *
      * The content contains :
      *
-     * ~~~
-     * content[0]=1
-     * content[1]=0
-     * content[2]=2
-     * ~~~
+     * ~~~ content[0]=1 content[1]=0 content[2]=2 ~~~
      */
     private static class Permutation {
 
@@ -334,14 +330,10 @@ public class LatticeFactory {
         /**
          * The transformation represented by this component.
          *
-         * If this component transforms : 0 -> 1, 1 -> 0 & 2 -> 2.
-         * The field content contains :
+         * If this component transforms : 0 -> 1, 1 -> 0 & 2 -> 2. The field
+         * content contains :
          *
-         * ~~~
-         * content[0]=1
-         * content[1]=0
-         * content[2]=2
-         * ~~~
+         * ~~~ content[0]=1 content[1]=0 content[2]=2 ~~~
          */
         private int[] content;
 

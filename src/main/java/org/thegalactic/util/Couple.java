@@ -1,4 +1,5 @@
 package org.thegalactic.util;
+
 /*
  * Couple.java
  *

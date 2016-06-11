@@ -11,7 +11,6 @@ package org.thegalactic.lattice;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.SortedSet;
@@ -27,23 +26,25 @@ import org.thegalactic.dgraph.Edge;
 import org.thegalactic.dgraph.Node;
 
 /**
- * This class extends class {@link org.thegalactic.dgraph.DAGraph} to provide specific methods to manipulate a lattice.
+ * This class extends class {@link org.thegalactic.dgraph.DAGraph} to provide
+ * specific methods to manipulate a lattice.
  *
- * A lattice is a directed acyclic graph ({@link org.thegalactic.dgraph.DAGraph}) containing particular nodes denoted
- * join and meet\
- * (a dag is a lattice if and only if each pair of nodes admits a join and a meet).
+ * A lattice is a directed acyclic graph
+ * ({@link org.thegalactic.dgraph.DAGraph}) containing particular nodes denoted
+ * join and meet\ (a dag is a lattice if and only if each pair of nodes admits a
+ * join and a meet).
  *
- * Since checking the lattice property is very time-expensive, this property is not ensured
- * for components of this class. However, it can be explicitely ckecked using
- * method {@link #isLattice}.
+ * Since checking the lattice property is very time-expensive, this property is
+ * not ensured for components of this class. However, it can be explicitely
+ * ckecked using method {@link #isLattice}.
  *
  * This class provides methods implementing classical operation on a lattice
- * issued from join and meet operation and irreducibles elements,
- * and methods that returns a condensed representation of a lattice.
+ * issued from join and meet operation and irreducibles elements, and methods
+ * that returns a condensed representation of a lattice.
  *
- * A well-known condensed representation of a lattice is its table, obtained by method
- * {@link #getTable},
- * where join-irreducibles are in column and meet-irreducibles are in rown.
+ * A well-known condensed representation of a lattice is its table, obtained by
+ * method {@link #getTable}, where join-irreducibles are in column and
+ * meet-irreducibles are in rown.
  *
  * Another condensed representation is its dependency graph obtained by method
  * {@link #getDependencyGraph}.
@@ -53,9 +54,9 @@ import org.thegalactic.dgraph.Node;
  * and are valuated by a family of subsets of irreducibles.
  *
  * The dependency graph encodes two other condensed representation of a lattice
- * that are its minimal generators and its canonical direct basis
- * that can be obtained from the dependency graph by methods
- * {@link #getMinimalGenerators} and {@link #getCanonicalDirectBasis}.
+ * that are its minimal generators and its canonical direct basis that can be
+ * obtained from the dependency graph by methods {@link #getMinimalGenerators}
+ * and {@link #getCanonicalDirectBasis}.
  *
  * ![Lattice](Lattice.png)
  *
@@ -81,12 +82,12 @@ public class Lattice extends DAGraph {
     /**
      * The dependency graph of a lattice.
      *
-     * Nodes are join irreducibles elements,
-     * and edges correspond to the dependency relation of the lattice
-     * (j -> j' if and only if there exists a node x in the lattice such that
-     * x not greather than j and j', and x v j' > j),
-     * and edges are labeled with the smallest subsets X of join-irreducibles such that
-     * the join of elements of X corresponds to the node x of the lattice.
+     * Nodes are join irreducibles elements, and edges correspond to the
+     * dependency relation of the lattice (j -> j' if and only if there exists a
+     * node x in the lattice such that x not greather than j and j', and x v j'
+     * > j), and edges are labeled with the smallest subsets X of
+     * join-irreducibles such that the join of elements of X corresponds to the
+     * node x of the lattice.
      */
     private DGraph dependencyGraph = null;
 
@@ -101,7 +102,8 @@ public class Lattice extends DAGraph {
     }
 
     /**
-     * Constructs this component with the specified set of nodes, and empty treemap of successors and predecessors.
+     * Constructs this component with the specified set of nodes, and empty
+     * treemap of successors and predecessors.
      *
      * @param set the set of nodes
      */
@@ -114,7 +116,8 @@ public class Lattice extends DAGraph {
      *
      * Lattice property is checked for the specified lattice.
      *
-     * When not verified, this component is construct with an empty set of nodes.
+     * When not verified, this component is construct with an empty set of
+     * nodes.
      *
      * @param graph the Lattice to be copied
      */
@@ -133,10 +136,9 @@ public class Lattice extends DAGraph {
     /**
      * Check if this component is a lattice.
      *
-     * There exists several caracterizations of a lattice.
-     * The characterization implemented is the following:
-     * A lattice is a DAG if there exists a meet for each pair of node,
-     * and a unique maximal node.
+     * There exists several caracterizations of a lattice. The characterization
+     * implemented is the following: A lattice is a DAG if there exists a meet
+     * for each pair of node, and a unique maximal node.
      *
      * This treatment is performed in O(n^3), where n is the number of nodes.
      *
@@ -159,17 +161,20 @@ public class Lattice extends DAGraph {
     /**
      * Return true if this component is congruence normal.
      *
-     * A lattice $L$ is in class CN (Congruence Normal) is there exists a sequence $L_1,\ldots,L_p$ of lattices with
-     * $L_p=L$,
-     * together with a sequence $C_1,\ldots,C_{p-1}$ such that $C_i$ is a convex of $L_i$ and $L_{i+1}$ is obtained
-     * by doubling the convex $C_i$ in $L_i$.
+     * A lattice $L$ is in class CN (Congruence Normal) is there exists a
+     * sequence $L_1,\ldots,L_p$ of lattices with $L_p=L$, together with a
+     * sequence $C_1,\ldots,C_{p-1}$ such that $C_i$ is a convex of $L_i$ and
+     * $L_{i+1}$ is obtained by doubling the convex $C_i$ in $L_i$.
      *
-     * See {@link org.thegalactic.lattice.LatticeFactory} for the doubling convex method which is not used here.
+     * See {@link org.thegalactic.lattice.LatticeFactory} for the doubling
+     * convex method which is not used here.
      *
-     * This computation is done in O((|J|+|M|)^2|X|) from the transitive reduction of L.
+     * This computation is done in O((|J|+|M|)^2|X|) from the transitive
+     * reduction of L.
      *
-     * This recognition algorithm was first written in :
-     * "Doubling convex serts in lattices : characterizations and recognition algorithm", Bertet K., Caspard N. 2002.
+     * This recognition algorithm was first written in : "Doubling convex serts
+     * in lattices : characterizations and recognition algorithm", Bertet K.,
+     * Caspard N. 2002.
      *
      * @return true if this component is congruence normal.
      */
@@ -245,7 +250,8 @@ public class Lattice extends DAGraph {
     /**
      * Returns true if this component is an atomistic lattice.
      *
-     * A lattice is atomistic if its join irreductibles are atoms (e.g. successors of bottom)
+     * A lattice is atomistic if its join irreductibles are atoms (e.g.
+     * successors of bottom)
      *
      * @return true if this component is atomistic.
      */
@@ -258,7 +264,8 @@ public class Lattice extends DAGraph {
     /**
      * Returns true if this component is an coatomistic lattice.
      *
-     * A lattice is coatomistic if its mett irreductibles are coatoms (e.g. predecessors of top)
+     * A lattice is coatomistic if its mett irreductibles are coatoms (e.g.
+     * predecessors of top)
      *
      * @return true if this component is coatomistic.
      */
@@ -267,6 +274,7 @@ public class Lattice extends DAGraph {
         TreeSet<Node> coatoms = this.getPredecessorNodes(this.top());
         return meet.containsAll(coatoms) && coatoms.containsAll(meet);
     }
+
     /*
      * --------------- LATTICE HANDLING METHODS ------------
      */
@@ -274,7 +282,8 @@ public class Lattice extends DAGraph {
     /**
      * Returns the top of the lattice.
      *
-     * @return the node which is at the top of the lattice or null if it is not unique
+     * @return the node which is at the top of the lattice or null if it is not
+     * unique
      */
     public Node top() {
         TreeSet<Node> max = new TreeSet<Node>(this.max());
@@ -287,7 +296,8 @@ public class Lattice extends DAGraph {
     /**
      * Returns the bottom of the lattice.
      *
-     * @return the node which is at the bottom of the lattice or null if it is not unique
+     * @return the node which is at the bottom of the lattice or null if it is
+     * not unique
      */
     public Node bottom() {
         TreeSet<Node> min = new TreeSet<Node>(this.min());
@@ -303,7 +313,8 @@ public class Lattice extends DAGraph {
      * @param x the first node
      * @param y the second node
      *
-     * @return the node which is at the meet of the nodes or null if it does not exist
+     * @return the node which is at the meet of the nodes or null if it does not
+     * exist
      */
     public Node meet(Node x, Node y) {
         SortedSet<Node> xMinorants = this.minorants(x);
@@ -327,7 +338,8 @@ public class Lattice extends DAGraph {
      * @param x the first node
      * @param y the second node
      *
-     * @return the node which is at the join of the nodes or null if it does not exist
+     * @return the node which is at the join of the nodes or null if it does not
+     * exist
      */
     public Node join(Node x, Node y) {
         SortedSet<Node> xMajorants = this.majorants(x);
@@ -351,9 +363,9 @@ public class Lattice extends DAGraph {
     /**
      * Returns the set of join irreducibles of this component.
      *
-     * Join irreducibles are nodes with an unique immediate predecessor
-     * in the transitive and reflexive reduction.
-     * This component is first reduced reflexively and transitively.
+     * Join irreducibles are nodes with an unique immediate predecessor in the
+     * transitive and reflexive reduction. This component is first reduced
+     * reflexively and transitively.
      *
      * @return the set of join irreducibles of this component
      */
@@ -373,9 +385,9 @@ public class Lattice extends DAGraph {
     /**
      * Returns the set of meet irreducibles of this component.
      *
-     * Meet irreducibles are nodes with an unique immediate successor
-     * in the transitiv and reflexiv reduction.
-     * This component is first reduced reflexively and transitively.
+     * Meet irreducibles are nodes with an unique immediate successor in the
+     * transitive and reflexiv reduction. This component is first reduced
+     * reflexively and transitively.
      *
      * @return the set of meet irreducibles of this component.
      */
@@ -393,11 +405,13 @@ public class Lattice extends DAGraph {
     }
 
     /**
-     * Returns the set of join-irreducibles that are minorants of the specified node.
+     * Returns the set of join-irreducibles that are minorants of the specified
+     * node.
      *
      * @param n a specified node
      *
-     * @return the set of join-irreducibles thar are minorants of the specified node
+     * @return the set of join-irreducibles thar are minorants of the specified
+     * node
      */
     public TreeSet<Comparable> joinIrreducibles(Node n) {
         TreeSet<Comparable> join = new TreeSet<Comparable>(this.joinIrreducibles());
@@ -408,11 +422,13 @@ public class Lattice extends DAGraph {
     }
 
     /**
-     * Returns the set of meet-irreducibles thar are majorants of the specified node.
+     * Returns the set of meet-irreducibles thar are majorants of the specified
+     * node.
      *
      * @param n a specified node
      *
-     * @return the set of meet-irreducibles thar are majorants of the specified node
+     * @return the set of meet-irreducibles thar are majorants of the specified
+     * node
      */
     public TreeSet<Comparable> meetIrreducibles(Node n) {
         TreeSet<Comparable> meet = new TreeSet<Comparable>(this.meetIrreducibles());
@@ -422,9 +438,11 @@ public class Lattice extends DAGraph {
     }
 
     /**
-     * Returns the subgraph induced by the join irreducibles nodes of this component.
+     * Returns the subgraph induced by the join irreducibles nodes of this
+     * component.
      *
-     * @return the subgraph induced by the join irreducibles nodes of this component
+     * @return the subgraph induced by the join irreducibles nodes of this
+     * component
      */
     public DAGraph joinIrreduciblesSubgraph() {
         TreeSet<Node> irr = this.joinIrreducibles();
@@ -432,9 +450,11 @@ public class Lattice extends DAGraph {
     }
 
     /**
-     * Returns the subgraph induced by the meet irreducibles nodes of this component.
+     * Returns the subgraph induced by the meet irreducibles nodes of this
+     * component.
      *
-     * @return the subgraph induced by the meet irreducibles nodes of this component
+     * @return the subgraph induced by the meet irreducibles nodes of this
+     * component
      */
     public DAGraph meetIrreduciblesSubgraph() {
         TreeSet<Node> irr = this.meetIrreducibles();
@@ -453,12 +473,14 @@ public class Lattice extends DAGraph {
     }
 
     /**
-     * Generates and returns the isomorphic closed set lattice defined on the join irreducibles set.
+     * Generates and returns the isomorphic closed set lattice defined on the
+     * join irreducibles set.
      *
-     * Each node of this component is replaced by a node containing its join irreducibles
-     * predecessors stored in a closed set.
+     * Each node of this component is replaced by a node containing its join
+     * irreducibles predecessors stored in a closed set.
      *
-     * @return the isomorphic closed set lattice defined on the join irreducibles set
+     * @return the isomorphic closed set lattice defined on the join
+     * irreducibles set
      */
     public ConceptLattice joinClosure() {
         ConceptLattice csl = new ConceptLattice();
@@ -489,12 +511,14 @@ public class Lattice extends DAGraph {
     }
 
     /**
-     * Generates and returns the isomorphic closed set lattice defined on the meet irreducibles set.
+     * Generates and returns the isomorphic closed set lattice defined on the
+     * meet irreducibles set.
      *
-     * Each node of this component is replaced by a node containing its meet irreducibles
-     * successors stored in a closed set.
+     * Each node of this component is replaced by a node containing its meet
+     * irreducibles successors stored in a closed set.
      *
-     * @return the isomorphic closed set lattice defined on the meet irreducibles set
+     * @return the isomorphic closed set lattice defined on the meet
+     * irreducibles set
      */
     public ConceptLattice meetClosure() {
         ConceptLattice csl = new ConceptLattice();
@@ -525,11 +549,12 @@ public class Lattice extends DAGraph {
     }
 
     /**
-     * Generates and returns the isomorphic concept lattice defined on the join and meet
-     * irreducibles sets.
+     * Generates and returns the isomorphic concept lattice defined on the join
+     * and meet irreducibles sets.
      *
-     * Each node of this component is replaced by a node containing its meet irreducibles
-     * successors and its join irreducibles predecessors stored in a concept.
+     * Each node of this component is replaced by a node containing its meet
+     * irreducibles successors and its join irreducibles predecessors stored in
+     * a concept.
      *
      * @return the irreducible closure
      */
@@ -569,7 +594,8 @@ public class Lattice extends DAGraph {
     }
 
     /**
-     * Returns the smallest set of nodes of this component containing S such that if a,b in JS then join(a,b) in JS.
+     * Returns the smallest set of nodes of this component containing S such
+     * that if a,b in JS then join(a,b) in JS.
      *
      * @param s set of nodes to be closed
      *
@@ -598,7 +624,8 @@ public class Lattice extends DAGraph {
     }
 
     /**
-     * Returns the smallest set of nodes of this component containing S such that if a,b in MS then meet(a,b) in MS.
+     * Returns the smallest set of nodes of this component containing S such
+     * that if a,b in MS then meet(a,b) in MS.
      *
      * @param s set of nodes to be closed
      *
@@ -648,9 +675,8 @@ public class Lattice extends DAGraph {
     }
 
     /**
-     * Returns the list of all sets of nodes that generates all nodes.
-     * Both join and meet operations are allowed and
-     * the sets are minimal for inclusion.
+     * Returns the list of all sets of nodes that generates all nodes. Both join
+     * and meet operations are allowed and the sets are minimal for inclusion.
      *
      * @return : List of all hybridGenerators families.
      */
@@ -699,12 +725,13 @@ public class Lattice extends DAGraph {
     }
 
     /**
-     * Returns the table of the lattice, composed of the join and meet irreducibles nodes.
+     * Returns the table of the lattice, composed of the join and meet
+     * irreducibles nodes.
      *
-     * Each attribute of the table is a copy of a join irreducibles node.
-     * Each observation of the table is a copy of a meet irreducibles node.
-     * An attribute is extent of an observation when its join irreducible node
-     * is greater than the meet irreducible node in the lattice.
+     * Each attribute of the table is a copy of a join irreducibles node. Each
+     * observation of the table is a copy of a meet irreducibles node. An
+     * attribute is extent of an observation when its join irreducible node is
+     * greater than the meet irreducible node in the lattice.
      *
      * @return the table of the lattice
      */
@@ -741,9 +768,11 @@ public class Lattice extends DAGraph {
     }
 
     /**
-     * Returns an ImplicationalSystem of the lattice defined on the join irreducibles nodes.
+     * Returns an ImplicationalSystem of the lattice defined on the join
+     * irreducibles nodes.
      *
-     * Each element of the ImplicationalSystem is a copy of a join irreducible node.
+     * Each element of the ImplicationalSystem is a copy of a join irreducible
+     * node.
      *
      * @return an implicational system
      */
@@ -788,16 +817,15 @@ public class Lattice extends DAGraph {
         }
 
         /**
-         * for (Node j : join)
-         * for (Node m : meet)
-         * if (j.equals(m) || tmp.getSuccessorNodes(j).contains(m))
-         * T.addExtentIntent (m,j);
-         * //T.addExtentIntent (MeetContent.get(m),JoinContent.get(j));
-         * return T;*
+         * for (Node j : join) for (Node m : meet) if (j.equals(m) ||
+         * tmp.getSuccessorNodes(j).contains(m)) T.addExtentIntent (m,j);
+         * //T.addExtentIntent (MeetContent.get(m),JoinContent.get(j)); return
+         * T;*
          */
         sigma.makeRightMaximal();
         return sigma;
     }
+
     /*
      * ------------- dependency GRAPH RELATIVE METHODS ------------------
      */
@@ -805,25 +833,25 @@ public class Lattice extends DAGraph {
     /**
      * Returns the dependency graph of this component.
      *
-     * The dependency graph is a condensed representation of a lattice that encodes
-     * its minimal generators, and its canonical direct basis.
+     * The dependency graph is a condensed representation of a lattice that
+     * encodes its minimal generators, and its canonical direct basis.
      *
-     * In the dependency graph, nodes are join irreducibles,
-     * egdes correspond to the dependency relation between join-irreducibles
-     * (j -> j' if and only if there exists a node x in the lattice such that
-     * x not greather than j and j', and x v j' > j),
-     * and edges are labeled with the smallest subsets X of join-irreducibles such that
-     * the join of elements of X corresponds to the node x of the lattice.
+     * In the dependency graph, nodes are join irreducibles, egdes correspond to
+     * the dependency relation between join-irreducibles (j -> j' if and only if
+     * there exists a node x in the lattice such that x not greather than j and
+     * j', and x v j' > j), and edges are labeled with the smallest subsets X of
+     * join-irreducibles such that the join of elements of X corresponds to the
+     * node x of the lattice.
      *
-     * The dependency graph could has been already computed in the case where this component
-     * has been instancied as the diagramm of the closed set lattice of a closure system
-     * using the static method
-     * {@link ConceptLattice#diagramLattice}
-     * This method implements an adaptation adaptation of Bordat's
-     * where the dependency graph is computed while the lattice is generated.
+     * The dependency graph could has been already computed in the case where
+     * this component has been instancied as the diagramm of the closed set
+     * lattice of a closure system using the static method
+     * {@link ConceptLattice#diagramLattice} This method implements an
+     * adaptation adaptation of Bordat's where the dependency graph is computed
+     * while the lattice is generated.
      *
-     * However, it is generated in O(nj^3) where n is the number of nodes of the lattice, and
-     * j is the number of join-irreducibles of the lattice.
+     * However, it is generated in O(nj^3) where n is the number of nodes of the
+     * lattice, and j is the number of join-irreducibles of the lattice.
      *
      * @return the dependency graph
      */
@@ -892,12 +920,11 @@ public class Lattice extends DAGraph {
         // minimalisation of edge's content to get only inclusion-minimal valuation for each edge
         /**
          * for (Edge ed : this.dependencyGraph.getEdges()) {
-         * TreeSet<ComparableSet> valEd = new TreeSet<ComparableSet>(((TreeSet<ComparableSet>)ed.getContent()));
-         * for (ComparableSet X1 : valEd)
-         * for (ComparableSet X2 : valEd)
-         * if (X1.containsAll(X2) && !X2.containsAll(X1))
-         * ((TreeSet<ComparableSet>)ed.getContent()).remove(X1);
-         * }*
+         * TreeSet<ComparableSet> valEd = new
+         * TreeSet<ComparableSet>(((TreeSet<ComparableSet>)ed.getContent()));
+         * for (ComparableSet X1 : valEd) for (ComparableSet X2 : valEd) if
+         * (X1.containsAll(X2) && !X2.containsAll(X1))
+         * ((TreeSet<ComparableSet>)ed.getContent()).remove(X1); }*
          */
         return this.dependencyGraph;
     }
@@ -905,9 +932,9 @@ public class Lattice extends DAGraph {
     /**
      * Set the dependency graph.
      *
-     * @param   graph  the dependency graph
+     * @param graph the dependency graph
      *
-     * @return  this for chaining
+     * @return this for chaining
      */
     protected Lattice setDependencyGraph(DGraph graph) {
         this.dependencyGraph = graph;
@@ -917,7 +944,7 @@ public class Lattice extends DAGraph {
     /**
      * Test if this component has a dependency graph.
      *
-    * @return  the truth value for this property
+     * @return the truth value for this property
      */
     protected boolean hasDependencyGraph() {
         return this.dependencyGraph != null;
@@ -926,15 +953,15 @@ public class Lattice extends DAGraph {
     /**
      * Returns the canonical direct basis of the lattice.
      *
-     * The canonical direct basis is a condensed representation of a lattice encoding
-     * by the dependency graph.
+     * The canonical direct basis is a condensed representation of a lattice
+     * encoding by the dependency graph.
      *
-     * This canonical direct basis is deduced from the dependency graph of the lattice:
-     * for each edge b -> a valuated by a subset X, the rule a+X->b is a rule of the
-     * canonical direct basis.
+     * This canonical direct basis is deduced from the dependency graph of the
+     * lattice: for each edge b -> a valuated by a subset X, the rule a+X->b is
+     * a rule of the canonical direct basis.
      *
-     * If not yet exists, the dependency graph of this component has to be generated
-     * by method {@link #getDependencyGraph}.
+     * If not yet exists, the dependency graph of this component has to be
+     * generated by method {@link #getDependencyGraph}.
      *
      * @return the canonical direct basis of the lattice
      */
@@ -966,14 +993,14 @@ public class Lattice extends DAGraph {
     /**
      * Returns a set of association rules based on a confidence threshold.
      *
-     * The canonical direct basis is computed.
-     * For each generated rule, a set of approximative rules (above the confidence threshold)
-     * is generated.
+     * The canonical direct basis is computed. For each generated rule, a set of
+     * approximative rules (above the confidence threshold) is generated.
      *
-     * @param context       a context
-     * @param support       a support threshold, between 0 and 1
-     * @param confidence    a confidence threshold, between 0 and 1
-     * @return  a set of approximative rules
+     * @param context a context
+     * @param support a support threshold, between 0 and 1
+     * @param confidence a confidence threshold, between 0 and 1
+     *
+     * @return a set of approximative rules
      */
     public ImplicationalSystem getAssociationBasis(Context context, double support, double confidence) {
 
@@ -1026,14 +1053,14 @@ public class Lattice extends DAGraph {
     /**
      * Returns the minimal generators of the lattice.
      *
-     * Minimal generators a condensed representation of a lattice encoding
-     * by the dependency graph.
+     * Minimal generators a condensed representation of a lattice encoding by
+     * the dependency graph.
      *
-     * Minimal generators are premises of the canonical direct basis.
-     * that is deduced from the dependency graph of the lattice.
+     * Minimal generators are premises of the canonical direct basis. that is
+     * deduced from the dependency graph of the lattice.
      *
-     * If not yet exists, the dependency graph of this component has to be generated
-     * by method {@link #getDependencyGraph}.
+     * If not yet exists, the dependency graph of this component has to be
+     * generated by method {@link #getDependencyGraph}.
      *
      * @return a TreeSet of the minimal generators
      */
@@ -1047,21 +1074,24 @@ public class Lattice extends DAGraph {
     }
 
     /**
-     * The arrowRelation method encodes arrow relations between meet & join-irreductibles of this component.
+     * The arrowRelation method encodes arrow relations between meet &
+     * join-irreductibles of this component.
      *
      * Let m and j be respectively meet and join irreductibles of a lattice.
-     * Recall that m has a unique successor say m+ and j has a unique predecessor say j-, then :
+     * Recall that m has a unique successor say m+ and j has a unique
+     * predecessor say j-, then :
      *
-     * - j "Up Arrow" m (stored has "Up") iff j is not less or equal than m and j is less than m+
-     * - j "Down Arrow" m (stored has "Down") iff j is not less or equal than m and j- is less than m
-     * - j "Up Down Arrow" m (stored has "UpDown") iff j "Up" m and j "Down" m
-     * - j "Cross" m (stored has "Cross") iff j is less or equal than m
-     * - j "Circ" m (stored has "Circ") iff neither j "Up" m nor j "Down" m nor j "Cross" m
+     * - j "Up Arrow" m (stored has "Up") iff j is not less or equal than m and
+     * j is less than m+ - j "Down Arrow" m (stored has "Down") iff j is not
+     * less or equal than m and j- is less than m - j "Up Down Arrow" m (stored
+     * has "UpDown") iff j "Up" m and j "Down" m - j "Cross" m (stored has
+     * "Cross") iff j is less or equal than m - j "Circ" m (stored has "Circ")
+     * iff neither j "Up" m nor j "Down" m nor j "Cross" m
      *
      * @return DGraph whose :
      *
-     * - Nodes are join or meet irreductibles of the lattice.
-     * - Edges content encodes arrows as String "Up", "Down", "UpDown", "Cross", "Circ".
+     * - Nodes are join or meet irreductibles of the lattice. - Edges content
+     * encodes arrows as String "Up", "Down", "UpDown", "Cross", "Circ".
      *
      */
     public ArrowRelation getArrowRelation() {

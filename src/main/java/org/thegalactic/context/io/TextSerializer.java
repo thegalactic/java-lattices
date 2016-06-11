@@ -69,9 +69,10 @@ public final class TextSerializer implements Reader<Context>, Writer<Context> {
      *
      * The following format is respected:
      *
-     * The list of observations separated by a space on the first line ;
-     * the list of attrbutes separated by a space on the second line ;
-     * then, for each observations o, the list of its intent on a line, written like o a1 a2 ...
+     * The list of observations separated by a space on the first line ; the
+     * list of attrbutes separated by a space on the second line ; then, for
+     * each observations o, the list of its intent on a line, written like o a1
+     * a2 ...
      *
      * ~~~
      * Observations: 1 2 3
@@ -83,7 +84,7 @@ public final class TextSerializer implements Reader<Context>, Writer<Context> {
      * ~~~
      *
      * @param context a context to read
-     * @param file    a file
+     * @param file a file
      *
      * @throws IOException When an IOException occurs
      */
@@ -169,9 +170,10 @@ public final class TextSerializer implements Reader<Context>, Writer<Context> {
      *
      * The following format is respected:
      *
-     * The list of observations separated by a space on the first line ;
-     * the list of attrbutes separated by a space on the second line ;
-     * then, for each observations o, the list of its intent on a line, written like o a1 a2 ...
+     * The list of observations separated by a space on the first line ; the
+     * list of attrbutes separated by a space on the second line ; then, for
+     * each observations o, the list of its intent on a line, written like o a1
+     * a2 ...
      *
      * ~~~
      * Observations: 1 2 3
@@ -183,7 +185,7 @@ public final class TextSerializer implements Reader<Context>, Writer<Context> {
      * ~~~
      *
      * @param context a context to write
-     * @param file    a file
+     * @param file a file
      *
      * @throws IOException When an IOException occurs
      */

@@ -68,7 +68,7 @@ public final class DGraphWriterDot implements DGraphWriter {
      * Write a graph to a output stream.
      *
      * @param graph a graph to write
-     * @param file  a file
+     * @param file a file
      *
      * @throws IOException When an IOException occurs
      */

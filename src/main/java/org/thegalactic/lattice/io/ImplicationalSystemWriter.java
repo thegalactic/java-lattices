@@ -30,11 +30,12 @@ import org.thegalactic.lattice.ImplicationalSystem;
  * title ImplicationalSystemWriter UML graph
  */
 public interface ImplicationalSystemWriter {
+
     /**
      * Write an implicational system to a file.
      *
      * @param system an implicational system to write
-     * @param file   a file
+     * @param file a file
      *
      * @throws IOException When an IOException occurs
      */

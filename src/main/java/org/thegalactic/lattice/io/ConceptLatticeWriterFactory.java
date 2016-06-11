@@ -11,7 +11,6 @@ package org.thegalactic.lattice.io;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import java.util.HashMap;
 
 /**
@@ -29,6 +28,7 @@ import java.util.HashMap;
  * title ConceptLatticeWriterFactory UML graph
  */
 public final class ConceptLatticeWriterFactory {
+
     /**
      * Map of extension/writer.
      */
@@ -37,7 +37,7 @@ public final class ConceptLatticeWriterFactory {
     /**
      * Register a writer with an extension.
      *
-     * @param writer    The writer to register
+     * @param writer The writer to register
      * @param extension The extension linked to the writer
      *
      * @return The old writer or null

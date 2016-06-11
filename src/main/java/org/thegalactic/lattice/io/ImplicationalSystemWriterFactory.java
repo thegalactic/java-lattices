@@ -37,7 +37,7 @@ public final class ImplicationalSystemWriterFactory {
     /**
      * Register a writer with an extension.
      *
-     * @param writer    The writer to register
+     * @param writer The writer to register
      * @param extension The extension linked to the writer
      *
      * @return The old writer or null

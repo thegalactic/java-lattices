@@ -11,7 +11,6 @@ package org.thegalactic.lattice.io;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import java.util.HashMap;
 
 /**
@@ -38,7 +37,7 @@ public final class ImplicationalSystemReaderFactory {
     /**
      * Register a reader with an extension.
      *
-     * @param reader    The reader to register
+     * @param reader The reader to register
      * @param extension The extension linked to the reader
      *
      * @return The old reader or null

@@ -27,26 +27,24 @@ import org.thegalactic.dgraph.io.DGraphWriterDot;
 import org.thegalactic.dgraph.io.DGraphWriterFactory;
 
 /**
- * This class gives a standard representation for a directed graph
- * by sets of successors and predecessors.
+ * This class gives a standard representation for a directed graph by sets of
+ * successors and predecessors.
  *
  * A directed graph is composed of
  *
- * - a treeset of node, defined by class {@link Node};
- * - a treemap of successors that associates to each node a treeset of successors, defined by class {@link Edge};
- * - a treemap of predecessors that associates to each node a treeset of predecessors, defined by class {@link Edge}.
+ * - a treeset of node, defined by class {@link Node}; - a treemap of successors
+ * that associates to each node a treeset of successors, defined by class
+ * {@link Edge}; - a treemap of predecessors that associates to each node a
+ * treeset of predecessors, defined by class {@link Edge}.
  *
- * This class provides methods implementing classical operation on a directed graph:
+ * This class provides methods implementing classical operation on a directed
+ * graph:
  *
- * - sinks
- * - wells
- * - subgraph
- * - reflexive closure and reduction
- * - transitive closure
- * - strongly connected components
- * - ...
+ * - sinks - wells - subgraph - reflexive closure and reduction - transitive
+ * closure - strongly connected components - ...
  *
- * This class also provides a static method randomly generating a directed graph.
+ * This class also provides a static method randomly generating a directed
+ * graph.
  *
  * ![DGraph](DGraph.png)
  *
@@ -61,10 +59,10 @@ import org.thegalactic.dgraph.io.DGraphWriterFactory;
  * title DGraph UML graph
  */
 public class DGraph implements Cloneable {
+
     /*
      * Register dot writer
      */
-
     static {
         if (DGraphWriterFactory.get("dot") == null) {
             DGraphWriterDot.register();
@@ -77,7 +75,7 @@ public class DGraph implements Cloneable {
     /**
      * Generates a random directed graph of size nodes.
      *
-     * @param size      the number of nodes of the generated graph
+     * @param size the number of nodes of the generated graph
      * @param threshold the threshold to generate an edge
      *
      * @return a random graph
@@ -145,7 +143,8 @@ public class DGraph implements Cloneable {
     /**
      * Constructs a new directed graph from the specified set of nodes.
      *
-     * Successors and predecessors of each nodes are initialised by an empty set.
+     * Successors and predecessors of each nodes are initialised by an empty
+     * set.
      *
      * @param set the set of nodes
      */
@@ -180,7 +179,8 @@ public class DGraph implements Cloneable {
      * --------------- ACCESSOR AND OVERLAPPING METHODS ------------
      */
     /**
-     * Returns a clone of this component composed of a clone of each node and each edge.
+     * Returns a clone of this component composed of a clone of each node and
+     * each edge.
      *
      * @return the clone of this
      */
@@ -235,14 +235,15 @@ public class DGraph implements Cloneable {
      *
      * @return the set of nodes
      *
-     * @todo use iterator pattern (some changes in ArrowRelation.java and Lattice.java)
+     * @todo use iterator pattern (some changes in ArrowRelation.java and
+     * Lattice.java)
      */
     public SortedSet<Node> getSuccessorNodes(final Node node) {
-        TreeSet<Node> successors = new TreeSet<Node>();
+        TreeSet<Node> successorsFromNode = new TreeSet<Node>();
         for (Edge edge : this.successors.get(node)) {
-            successors.add(edge.getTo());
+            successorsFromNode.add(edge.getTo());
         }
-        return successors;
+        return successorsFromNode;
     }
 
     /**
@@ -252,21 +253,22 @@ public class DGraph implements Cloneable {
      *
      * @return the set of nodes
      *
-     * @todo use iterator pattern (some changes in ArrowRelation.java and Lattice.java)
+     * @todo use iterator pattern (some changes in ArrowRelation.java and
+     * Lattice.java)
      */
     public TreeSet<Node> getPredecessorNodes(final Node node) {
-        TreeSet<Node> predecessors = new TreeSet<Node>();
+        TreeSet<Node> predecessorsFromNode = new TreeSet<Node>();
         for (Edge edge : this.predecessors.get(node)) {
-            predecessors.add(edge.getFrom());
+            predecessorsFromNode.add(edge.getFrom());
         }
-        return predecessors;
+        return predecessorsFromNode;
     }
 
     /**
      * Returns, if it exists, the edge between node from and node to.
      *
      * @param from The origin node
-     * @param to   The destination node
+     * @param to The destination node
      *
      * @return the found edge or null
      *
@@ -294,12 +296,8 @@ public class DGraph implements Cloneable {
      *
      * @return the found node or null
      *
-     * @todo maybe use
-     * try {
-     * return this.nodes.subSet(search, true, search, true).first();
-     * } catch (NoSuchElementException e) {
-     * return null;
-     * }
+     * @todo maybe use try { return this.nodes.subSet(search, true, search,
+     * true).first(); } catch (NoSuchElementException e) { return null; }
      *
      */
     public Node getNode(Node search) {
@@ -318,8 +316,9 @@ public class DGraph implements Cloneable {
      *
      * @return the found node or null
      *
-     * @todo this method is not efficient. Do we remove it or add an index on Dgraph using content field?
-     * Verify where it is called for migrating it if necessary.
+     * @todo this method is not efficient. Do we remove it or add an index on
+     * Dgraph using content field? Verify where it is called for migrating it if
+     * necessary.
      */
     public Node getNodeByContent(final Object content) {
         for (Node node : this.nodes) {
@@ -373,16 +372,17 @@ public class DGraph implements Cloneable {
      *
      * @return the string representation
      */
+    @Override
     public String toString() {
-        StringBuffer nodes = new StringBuffer();
+        StringBuilder nodes = new StringBuilder();
         nodes.append(this.sizeNodes()).append(" Nodes: {");
         StringBuffer edges = new StringBuffer();
         edges.append(this.sizeEdges()).append(" Edges: {");
         for (Node from : this.nodes) {
-            nodes.append(from.toString() + ",");
+            nodes.append(from.toString()).append(",");
         }
         for (Edge ed : this.getEdges()) {
-            edges.append(ed.toString() + ",");
+            edges.append(ed.toString()).append(",");
         }
         String newLine = System.getProperty("line.separator");
         nodes.append("}").append(newLine).append(edges).append("}").append(newLine);
@@ -497,7 +497,7 @@ public class DGraph implements Cloneable {
      * Checks if there exists an edge between the two specified nodes.
      *
      * @param from the node origine of the edge
-     * @param to   the node destination of the edge
+     * @param to the node destination of the edge
      *
      * @return true if the edge is contained by this component
      */
@@ -520,14 +520,14 @@ public class DGraph implements Cloneable {
     }
 
     /**
-     * Adds an edge between the specified nodes to this component:
-     * `to` is added as a successor of `from`.
+     * Adds an edge between the specified nodes to this component: `to` is added
+     * as a successor of `from`.
      *
-     * If the case where specified nodes don't belongs to the node set,
-     * then the edge will not be added.
+     * If the case where specified nodes don't belongs to the node set, then the
+     * edge will not be added.
      *
-     * @param from    the node origin of the edge
-     * @param to      the node destination of the edge
+     * @param from the node origin of the edge
+     * @param to the node destination of the edge
      * @param content the edge content
      *
      * @return true if the edge was successfully added
@@ -543,14 +543,14 @@ public class DGraph implements Cloneable {
     }
 
     /**
-     * Adds an edge between the specified nodes to this component:
-     * `to` is added as a successor of `from`.
+     * Adds an edge between the specified nodes to this component: `to` is added
+     * as a successor of `from`.
      *
-     * If the case where specified nodes don't belongs to the node set,
-     * then the edge will not be added.
+     * If the case where specified nodes don't belongs to the node set, then the
+     * edge will not be added.
      *
      * @param from the node origin of the edge
-     * @param to   the node destination of the edge
+     * @param to the node destination of the edge
      *
      * @return true if the edge was successfully added
      */
@@ -559,11 +559,11 @@ public class DGraph implements Cloneable {
     }
 
     /**
-     * Adds the specified edge to this component in the successors of edge.getFrom() and in the
-     * predecessors of edge.getTo().
+     * Adds the specified edge to this component in the successors of
+     * edge.getFrom() and in the predecessors of edge.getTo().
      *
-     * If the case where nodes to and from of this edges don't belongs to the node set,
-     * then the edge will not be added.
+     * If the case where nodes to and from of this edges don't belongs to the
+     * node set, then the edge will not be added.
      *
      * @param edge the edge to be added
      *
@@ -581,11 +581,11 @@ public class DGraph implements Cloneable {
     /**
      * Removes from this component the edge between the specified node.
      *
-     * `to` is removed from the successors of `from`
-     * and `to` is removed from the predecessors of `from`.
+     * `to` is removed from the successors of `from` and `to` is removed from
+     * the predecessors of `from`.
      *
      * @param from the node origine of the edge
-     * @param to   the node destination of the edge
+     * @param to the node destination of the edge
      *
      * @return true if the edge was removed
      */
@@ -600,8 +600,8 @@ public class DGraph implements Cloneable {
     }
 
     /**
-     * Removes from this component the specified edge from the successors of edge.getFrom()
-     * and from the predecessors of edge.getTo().
+     * Removes from this component the specified edge from the successors of
+     * edge.getFrom() and from the predecessors of edge.getTo().
      *
      * @param edge the edge to be removed.
      *
@@ -632,10 +632,10 @@ public class DGraph implements Cloneable {
     /**
      * Returns a topological sort of the node of this component.
      *
-     * This topological sort is a sort on all the nodes according to their successors.
-     * If the graph is not acyclic, some nodes don't belong to the sort.
-     * This treatment is performed in O(n+m), where n corresponds to the number of nodes,
-     * and m corresponds to the number of edges.
+     * This topological sort is a sort on all the nodes according to their
+     * successors. If the graph is not acyclic, some nodes don't belong to the
+     * sort. This treatment is performed in O(n+m), where n corresponds to the
+     * number of nodes, and m corresponds to the number of edges.
      *
      * @return the nodes
      */
@@ -684,9 +684,11 @@ public class DGraph implements Cloneable {
     }
 
     /**
-     * Returns the subgraph of this component induced by the specified set of nodes.
+     * Returns the subgraph of this component induced by the specified set of
+     * nodes.
      *
-     * The subgraph only contains nodes of the specified set that also are in this component.
+     * The subgraph only contains nodes of the specified set that also are in
+     * this component.
      *
      * @param nodes The set of nodes
      *
@@ -712,10 +714,11 @@ public class DGraph implements Cloneable {
     }
 
     /**
-     * Returns the subgraph of this component induced by the specified set of edges.
+     * Returns the subgraph of this component induced by the specified set of
+     * edges.
      *
-     * The subgraph contains all nodes of this components, and
-     * only edges of the specified set that also are in this component.
+     * The subgraph contains all nodes of this components, and only edges of the
+     * specified set that also are in this component.
      *
      * @param edges The set of edges
      *
@@ -741,8 +744,8 @@ public class DGraph implements Cloneable {
     /**
      * Replaces this component by its complementary graph.
      *
-     * There is an edge between to nodes in the complementary graph when
-     * there is no edges between the nodes in this component.
+     * There is an edge between to nodes in the complementary graph when there
+     * is no edges between the nodes in this component.
      */
     public void complementary() {
         for (Node from : this.nodes) {
@@ -796,13 +799,13 @@ public class DGraph implements Cloneable {
     /**
      * Computes the transitive closure of this component.
      *
-     * This treatment is performed in O(nm+m_c), where n corresponds to the number of nodes,
-     * m to the number of edges, and m_c to the number of edges in the closure.
-     * This treatment improves the Roy-Warshall algorithm that directly implements
-     * the definition in O(logm n^3).
+     * This treatment is performed in O(nm+m_c), where n corresponds to the
+     * number of nodes, m to the number of edges, and m_c to the number of edges
+     * in the closure. This treatment improves the Roy-Warshall algorithm that
+     * directly implements the definition in O(logm n^3).
      *
-     * This treatment is overlapped in class {@link DAGraph}
-     * with a more efficient algorithm dedicated to directed acyclic graph.
+     * This treatment is overlapped in class {@link DAGraph} with a more
+     * efficient algorithm dedicated to directed acyclic graph.
      *
      * @return the number of added edges
      */
@@ -821,7 +824,7 @@ public class DGraph implements Cloneable {
                 Node y = list.remove(0);
                 for (Node z : this.getSuccessorNodes(y)) {
                     // treatment of y when not marked
-                    if (!mark.get(z).booleanValue()) {
+                    if (!mark.get(z)) {
                         mark.put(z, new Boolean(true));
                         this.addEdge(x, z);
                         size++;
@@ -837,9 +840,8 @@ public class DGraph implements Cloneable {
     }
 
     /**
-     * Transposes this component by replacing for each node
-     * its successor set by its predecessor set, and its predecessor set
-     * by its successor set.
+     * Transposes this component by replacing for each node its successor set by
+     * its predecessor set, and its predecessor set by its successor set.
      */
     public void transpose() {
         DGraph tmp = new DGraph(this);
@@ -851,10 +853,11 @@ public class DGraph implements Cloneable {
 
     /**
      * Returns the directed acyclic graph where each node corresponds to a
-     * strongly connected component (SCC) of this component stored in a TreeSet of nodes.
+     * strongly connected component (SCC) of this component stored in a TreeSet
+     * of nodes.
      *
-     * When two nodes in two different SCC are in relation, the same is for the SCC
-     * they belongs to.
+     * When two nodes in two different SCC are in relation, the same is for the
+     * SCC they belongs to.
      *
      * @return The directed acyclic graph
      */
@@ -956,17 +959,17 @@ public class DGraph implements Cloneable {
 
     /**
      * Returns a two cells array containing the first visited sort on the nodes,
-     * and the last visited sort on the nodes, by a depth first traverse issued from
-     * the specified node.
+     * and the last visited sort on the nodes, by a depth first traverse issued
+     * from the specified node.
      *
-     * @param source  The source node
+     * @param source The source node
      * @param visited The visited nodes
-     * @param sort    The sort parameter
+     * @param sort The sort parameter
      *
      * @return The array
      *
-     * @todo Do we change that to iterators?
-     * Change to private and add a method that return an iterator
+     * @todo Do we change that to iterators? Change to private and add a method
+     * that return an iterator
      */
     private ArrayList<Node>[] depthFirstSearch(Node source, TreeSet<Node> visited, ArrayList<Node> sort) {
         ArrayList<Node> first = new ArrayList<Node>();
@@ -1096,6 +1099,7 @@ public class DGraph implements Cloneable {
              *
              * @throws UnsupportedOperationException
              */
+            @Override
             public void remove() {
                 throw new UnsupportedOperationException();
             }
@@ -1180,7 +1184,7 @@ public class DGraph implements Cloneable {
          * Implements the SortedSet interface.
          *
          * @param fromEdge the from edge
-         * @param toEdge   the to edge
+         * @param toEdge the to edge
          *
          * @return The sub set
          *
@@ -1289,6 +1293,7 @@ public class DGraph implements Cloneable {
              *
              * @throws UnsupportedOperationException
              */
+            @Override
             public void remove() {
                 throw new UnsupportedOperationException();
             }
@@ -1371,7 +1376,7 @@ public class DGraph implements Cloneable {
          * Implements the SortedSet interface.
          *
          * @param fromNode the from node
-         * @param toNode   the to node
+         * @param toNode the to node
          *
          * @return The sub set
          *
@@ -1568,7 +1573,7 @@ public class DGraph implements Cloneable {
          * Implements the SortedSet interface.
          *
          * @param fromNode the from node
-         * @param toNode   the to node
+         * @param toNode the to node
          *
          * @return The sub set
          *

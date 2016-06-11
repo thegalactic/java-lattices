@@ -16,7 +16,6 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.StringTokenizer;
-
 import org.thegalactic.context.Context;
 import org.thegalactic.io.Reader;
 import org.thegalactic.io.Writer;
@@ -73,8 +72,8 @@ public final class FIMISerializer implements Reader<Context>, Writer<Context> {
      *
      * The file format is structured as follows:
      *
-     * Each line corresponds to an observation
-     * Each line is made of a list of integers corresponding to attributes separated by a space
+     * Each line corresponds to an observation Each line is made of a list of
+     * integers corresponding to attributes separated by a space
      *
      * ~~~
      * 1 3
@@ -85,11 +84,11 @@ public final class FIMISerializer implements Reader<Context>, Writer<Context> {
      *
      * For reading convinience, observations are labelled with 'O' + LineNumber.
      *
-     * Be careful when using a downloaded file: an empty line at the end of the file gives an observation with no
-     * attributes
+     * Be careful when using a downloaded file: an empty line at the end of the
+     * file gives an observation with no attributes
      *
      * @param context a context to read
-     * @param file    a file
+     * @param file a file
      *
      * @throws IOException When an IOException occurs
      */
@@ -132,8 +131,8 @@ public final class FIMISerializer implements Reader<Context>, Writer<Context> {
      *
      * The file format is structured as follows:
      *
-     * Each line corresponds to an observation
-     * Each line is made of a list of integers corresponding to attributes separated by a space
+     * Each line corresponds to an observation Each line is made of a list of
+     * integers corresponding to attributes separated by a space
      *
      * ~~~
      * 1 3
@@ -143,7 +142,7 @@ public final class FIMISerializer implements Reader<Context>, Writer<Context> {
      * ~~~
      *
      * @param context a context to write
-     * @param file    a file
+     * @param file a file
      *
      * @throws IOException When an IOException occurs
      */

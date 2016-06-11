@@ -15,23 +15,24 @@ import java.util.StringTokenizer;
 import java.util.TreeSet;
 
 /**
- * This class gives a minimal representation of a comparable set where sets
- * are compared using the lectic order.
+ * This class gives a minimal representation of a comparable set where sets are
+ * compared using the lectic order.
  *
- * This class extends class `TreeSet`, implements class `Comparable` and provides
- * a {@link #compareTo} method that implements the lectic order between two sets.
+ * This class extends class `TreeSet`, implements class `Comparable` and
+ * provides a {@link #compareTo} method that implements the lectic order between
+ * two sets.
  *
- * Therefore, a comparable set can be stored in a sorted collection, and in particular in a sorted set where
- * set operations are provided.
+ * Therefore, a comparable set can be stored in a sorted collection, and in
+ * particular in a sorted set where set operations are provided.
  *
- * The lectic order extends the inclusion, and is defined only for comparable elements,
- * i.e. elements that can be sorted, as follows:
+ * The lectic order extends the inclusion, and is defined only for comparable
+ * elements, i.e. elements that can be sorted, as follows:
  *
  * "a set `A` is smaller than a set `B` iff there exists an element in `B\A`
  * such that any smaller element belonging to `A` also belongs to `B`."
  *
- * @todo Check if this class is correctly used (performance). Overload modification method to compute the hashCode only
- * once.
+ * @todo Check if this class is correctly used (performance). Overload
+ * modification method to compute the hashCode only once.
  *
  * ![ComparableSet](ComparableSet.png)
  *
@@ -44,6 +45,7 @@ import java.util.TreeSet;
  * title ComparableSet UML graph
  */
 public class ComparableSet extends TreeSet implements Comparable, Cloneable {
+
     /*
      * ------------- CONSTRUCTORS ------------------
      */
@@ -114,26 +116,27 @@ public class ComparableSet extends TreeSet implements Comparable, Cloneable {
     }
 
     /**
-     * Compares this component with those in parameter according to the lectic order.
+     * Compares this component with those in parameter according to the lectic
+     * order.
      *
-     * The lectic order defines a sort on sets of elements extending the inclusion order
-     * as follows:
+     * The lectic order defines a sort on sets of elements extending the
+     * inclusion order as follows:
      *
      * A set `A` is smaller than a set `B` iff there exists an element in `B\A`
-     * such that any smaller element belonging to A also belongs to B.
-     * The result is
-     * - zero if the identifiers are equal;
-     * - 1 if this component's identifier is greater,
-     * - -1 otherwise.
+     * such that any smaller element belonging to A also belongs to B. The
+     * result is - zero if the identifiers are equal; - 1 if this component's
+     * identifier is greater, - -1 otherwise.
      *
-     * This comparison method is needed to define a natural and total sort on a sets.
+     * This comparison method is needed to define a natural and total sort on a
+     * sets.
      *
      * It allows to use sets of this class in a sorted collection
      *
      * @param object the specified element to be compared with this component
      *
-     * @return a negative integer, zero, or a positive integer as this component is less than,
-     *         equal to, or greater than the specified object according to the lectic order.
+     * @return a negative integer, zero, or a positive integer as this component
+     * is less than, equal to, or greater than the specified object according to
+     * the lectic order.
      *
      * @todo Is this correct? (see test)
      */

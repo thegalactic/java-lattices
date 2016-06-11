@@ -21,25 +21,27 @@ import java.util.TreeSet;
  * This class extends the representation of a directed graph given by class
  * {@link DGraph} for directed acyclic graph (DAG).
  *
- * The main property of a directed acyclic graph is to be a partially ordered set (poset) when
- * transitively closed, and a Hasse diagram when transitively reduced.
+ * The main property of a directed acyclic graph is to be a partially ordered
+ * set (poset) when transitively closed, and a Hasse diagram when transitively
+ * reduced.
  *
- * This property is not ensured for components of this class because it would require a
- * checking treatment over the graph whenever a new edge or node is added.
- * However, this property can be explicitely ckecked using method
+ * This property is not ensured for components of this class because it would
+ * require a checking treatment over the graph whenever a new edge or node is
+ * added. However, this property can be explicitely ckecked using method
  * {@link #isAcyclic}.
  *
- * This class provides methods implementing classical operation on a directed acyclic graph:
- * minorants and majorants, filter and ideal, transitive reduction, ideal lattice, ...
+ * This class provides methods implementing classical operation on a directed
+ * acyclic graph: minorants and majorants, filter and ideal, transitive
+ * reduction, ideal lattice, ...
  *
- * This class also provides a static method randomly generating a directed acyclic graph,
- * and a static method generating the graph of divisors.
+ * This class also provides a static method randomly generating a directed
+ * acyclic graph, and a static method generating the graph of divisors.
  *
  * ![DAGraph](DAGraph.png)
  *
- * @todo Do we forbid to add an edge that breaks acyclic property by verifying that the destination node has no
- * successors?
- * May be a DAGraph could contain a DGraph and export only interesting method by proxy
+ * @todo Do we forbid to add an edge that breaks acyclic property by verifying
+ * that the destination node has no successors? May be a DAGraph could contain a
+ * DGraph and export only interesting method by proxy
  *
  * @uml DAGraph.png
  * !include resources/org/thegalactic/dgraph/DAGraph.iuml
@@ -57,13 +59,14 @@ public class DAGraph extends DGraph {
     /*
      * ----------- STATIC GENERATION METHODS -------------
      */
+
     /**
      * Generates the directed asyclic graph (DAG) of divisors for integers
      * included betwwen 2 and the specified value.
      *
-     * In this DAG, nodes corresponds to the integers,
-     * and there is an edge between two integers if and only if the second one
-     * is divisible by the first one.
+     * In this DAG, nodes corresponds to the integers, and there is an edge
+     * between two integers if and only if the second one is divisible by the
+     * first one.
      *
      * @param number the maximal integer
      *
@@ -91,7 +94,7 @@ public class DAGraph extends DGraph {
     /**
      * Generates a random directed and acyclic graph (DAG) of size nodes.
      *
-     * @param size      the number of nodes of the generated graph
+     * @param size the number of nodes of the generated graph
      * @param threshold the threshold to generate an edge
      *
      * @return a random acyclic graph
@@ -135,8 +138,8 @@ public class DAGraph extends DGraph {
     }
 
     /**
-     * Constructs this component with the specified set of nodes,
-     * and empty treemap of successors and predecessors.
+     * Constructs this component with the specified set of nodes, and empty
+     * treemap of successors and predecessors.
      *
      * @param set the set of nodes
      */
@@ -147,8 +150,8 @@ public class DAGraph extends DGraph {
     /**
      * Constructs this component as a copy of the specified directed graph.
      *
-     * Acyclic property is checked for the specified DAG.
-     * When not verified, this component is construct with the same set of nodes but with no edges.
+     * Acyclic property is checked for the specified DAG. When not verified,
+     * this component is construct with the same set of nodes but with no edges.
      *
      * @param graph the DGraph to be copied
      */
@@ -220,8 +223,8 @@ public class DAGraph extends DGraph {
     }
 
     /**
-     * Returns the subgraph induced by the specified node and its successors
-     * in the transitive closure.
+     * Returns the subgraph induced by the specified node and its successors in
+     * the transitive closure.
      *
      * @param node the specified node
      *
@@ -248,14 +251,17 @@ public class DAGraph extends DGraph {
     }
 
     /**
-     * Returns the subgraph of this component induced by the specified set of nodes.
+     * Returns the subgraph of this component induced by the specified set of
+     * nodes.
      *
-     * The subgraph only contains nodes of the specified set that also are in this component.
+     * The subgraph only contains nodes of the specified set that also are in
+     * this component.
      *
      * @param nodes The set of nodes
      *
      * @return The subgraph
      */
+    @Override
     public DAGraph getSubgraphByNodes(final Set<Node> nodes) {
         DGraph tmp = new DGraph(this);
         tmp.transitiveClosure();
@@ -271,15 +277,15 @@ public class DAGraph extends DGraph {
     /**
      * Computes the transitive reduction of this component.
      *
-     * The transitive reduction is not uniquely defined only when the acyclic property
-     * is verified. In this case, it corresponds to the Hasse diagram of the DAG.
+     * The transitive reduction is not uniquely defined only when the acyclic
+     * property is verified. In this case, it corresponds to the Hasse diagram
+     * of the DAG.
      *
-     * This method is an implementation of the Goralcikova-Koubeck
-     * algorithm that can also compute the transitive closure.
-     * This tratment is performed in O(n+nm_r+nm_c),
-     * where n corresponds to the number of nodes,
-     * m_r to the numer of edges in the transitive closure,
-     * and m_r the number of edges in the transitive reduction.
+     * This method is an implementation of the Goralcikova-Koubeck algorithm
+     * that can also compute the transitive closure. This tratment is performed
+     * in O(n+nm_r+nm_c), where n corresponds to the number of nodes, m_r to the
+     * numer of edges in the transitive closure, and m_r the number of edges in
+     * the transitive reduction.
      *
      * @return the number of added edges
      */
@@ -315,13 +321,13 @@ public class DAGraph extends DGraph {
                 }
                 Node y = sort.get(i);
                 // when y is not not marked, x->y is a reduced edge
-                if (y != null && !mark.get(y).booleanValue()) {
+                if (y != null && !mark.get(y)) {
                     this.addEdge(x, y);
                     graph.addEdge(x, y);
                 }
                 for (Node z : graph.getSuccessorNodes(y)) {
                     // treatment of z when not marked
-                    if (!mark.get(z).booleanValue()) {
+                    if (!mark.get(z)) {
                         mark.put(z, new Boolean(true));
                         graph.addEdge(x, z);
                         number++;
@@ -340,14 +346,15 @@ public class DAGraph extends DGraph {
     /**
      * Computes the transitive closure of this component.
      *
-     * This method overlaps the computation of the transitive closure for directed graph
-     * in class {@link DGraph} with an implementation of the Goralcikova-Koubeck
-     * algorithm dedicated to acyclic directed graph. This algorithm can also compute the
-     * transitive reduction of a directed acyclic graph.
+     * This method overlaps the computation of the transitive closure for
+     * directed graph in class {@link DGraph} with an implementation of the
+     * Goralcikova-Koubeck algorithm dedicated to acyclic directed graph. This
+     * algorithm can also compute the transitive reduction of a directed acyclic
+     * graph.
      *
-     * This treatment is performed in O(n+nm_r+nm_c), where n corresponds to the number of nodes,
-     * m_r to the numer of edges in the transitive closure,
-     * and m_r the number of edges in the transitive reduction.
+     * This treatment is performed in O(n+nm_r+nm_c), where n corresponds to the
+     * number of nodes, m_r to the numer of edges in the transitive closure, and
+     * m_r the number of edges in the transitive reduction.
      *
      * @return the number of added edges
      */
@@ -371,7 +378,7 @@ public class DAGraph extends DGraph {
                 Node y = sort.get(i);
                 for (Node z : this.getSuccessorNodes(y)) {
                     // treatment of z when not marked
-                    if (!mark.get(z).booleanValue()) {
+                    if (!mark.get(z)) {
                         mark.put(z, new Boolean(true));
                         this.addEdge(x, z);
                         number++;

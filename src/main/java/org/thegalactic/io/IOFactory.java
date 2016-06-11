@@ -45,7 +45,7 @@ public abstract class IOFactory<E> {
     /**
      * Register a reader with an extension.
      *
-     * @param reader    The reader to register
+     * @param reader The reader to register
      * @param extension The extension linked to the reader
      *
      * @return The old reader or null
@@ -59,7 +59,7 @@ public abstract class IOFactory<E> {
     /**
      * Register a writer with an extension.
      *
-     * @param writer    The writer to register
+     * @param writer The writer to register
      * @param extension The extension linked to the writer
      *
      * @return The old reader or null

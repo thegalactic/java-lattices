@@ -11,7 +11,6 @@ package org.thegalactic.lattice;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import java.util.StringTokenizer;
 import java.util.TreeSet;
 
@@ -19,14 +18,15 @@ import java.util.TreeSet;
  * This class gives a representation for an association rule.
  *
  * A rule is composed of a premise and a conclusion that are comparable sets,
- * i.e. sets of elements that can be sorted by the lectic order defined
- * by class `ComparableSet`.
- * An association rule extends regular rule with the notion of support and confidence.
- * The confidence represents the number of observations for which the rule is true.
- * The support represents the minimum number of observations for the rule to be relevant.
+ * i.e. sets of elements that can be sorted by the lectic order defined by class
+ * `ComparableSet`. An association rule extends regular rule with the notion of
+ * support and confidence. The confidence represents the number of observations
+ * for which the rule is true. The support represents the minimum number of
+ * observations for the rule to be relevant.
  *
  */
 public class AssociationRule extends Rule {
+
     /* ------------- FIELDS ------------------ */
 
     /**
@@ -40,7 +40,6 @@ public class AssociationRule extends Rule {
     private double support;
 
     /* ------------- CONSTRUCTORS ------------------ */
-
     /**
      * Constructs a new empty Rule with a empty premise and an empty conclusion.
      */
@@ -49,22 +48,24 @@ public class AssociationRule extends Rule {
     }
 
     /**
-     * Constructs a new Rule with the premise and the conclusion given in parameters.
+     * Constructs a new Rule with the premise and the conclusion given in
+     * parameters.
      *
-     * @param   premise     a set of indexed elements
-     * @param   conclusion  a set of indexed elements
+     * @param premise a set of indexed elements
+     * @param conclusion a set of indexed elements
      */
     public AssociationRule(TreeSet<Comparable> premise, TreeSet<Comparable> conclusion) {
         super(premise, conclusion);
     }
 
     /**
-     * Constructs a new Rule with the premise, the conclusion, the confidence and the support given in parameters.
+     * Constructs a new Rule with the premise, the conclusion, the confidence
+     * and the support given in parameters.
      *
-     * @param   premise     a set of indexed elements
-     * @param   conclusion  a set of indexed elements
-     * @param support       a support value
-     * @param confidence    a confidence value
+     * @param premise a set of indexed elements
+     * @param conclusion a set of indexed elements
+     * @param support a support value
+     * @param confidence a confidence value
      */
     public AssociationRule(TreeSet<Comparable> premise, TreeSet<Comparable> conclusion, double support, double confidence) {
         super(premise, conclusion);
@@ -73,11 +74,10 @@ public class AssociationRule extends Rule {
     }
 
     /* ------------- ACCESSORS METHODS ------------------ */
-
     /**
      * Returns the confidence value of the rule.
      *
-     * @return  confidence value
+     * @return confidence value
      */
     public double getConfidence() {
         return confidence;
@@ -86,14 +86,13 @@ public class AssociationRule extends Rule {
     /**
      * Returns the support value of the rule.
      *
-     * @return  support value
+     * @return support value
      */
     public double getSupport() {
         return support;
     }
 
     /* ------------- MODIFICATION METHODS ------------------ */
-
     /**
      * Set the confidence value of the rule.
      *
@@ -113,7 +112,6 @@ public class AssociationRule extends Rule {
     }
 
     /* ------------- OVERLAPING METHODS ------------------ */
-
     /**
      * Returns a String representation of this component.
      *
@@ -123,10 +121,10 @@ public class AssociationRule extends Rule {
      * [elements of the premise separated by a space] -> [elements of the conclusion separated by a space] : s:support/c:confidence
      * ~~~
      *
-     * a StringTokenizer is used to delete spaces in the
-     * string description of each element of premise and conclusion
+     * a StringTokenizer is used to delete spaces in the string description of
+     * each element of premise and conclusion
      *
-     * @return  a string made of premises followed by -> and the conclusions.
+     * @return a string made of premises followed by -> and the conclusions.
      */
     @Override
     public String toString() {
@@ -137,7 +135,7 @@ public class AssociationRule extends Rule {
                 s += st.nextToken();
             }
             s += " ";
-            }
+        }
         s += " -> ";
         for (Object e : this.getConclusion()) {
             StringTokenizer st = new StringTokenizer(e.toString());
@@ -145,7 +143,7 @@ public class AssociationRule extends Rule {
                 s += st.nextToken();
             }
             s += " ";
-            }
+        }
         s += " : ";
         s += "s:" + support + "/c:" + confidence;
         return s;

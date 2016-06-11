@@ -35,7 +35,7 @@ public interface ConceptLatticeWriter {
      * Write a concept lattice to a file.
      *
      * @param lattice a concept lattice to write
-     * @param file    a file
+     * @param file a file
      *
      * @throws IOException When an IOException occurs
      */

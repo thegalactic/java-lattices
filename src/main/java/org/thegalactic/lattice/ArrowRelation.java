@@ -12,7 +12,6 @@ package org.thegalactic.lattice;
  * You can redistribute it and/or modify
  * it under the terms of the CeCILL-B license.
  */
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -26,16 +25,21 @@ import org.thegalactic.lattice.io.ArrowRelationWriterFactory;
 import org.thegalactic.lattice.io.ArrowRelationWriterTeX;
 
 /**
- * The ArrowRelation class encodes arrow relation between meet & join-irreductibles of a lattice.
+ * The ArrowRelation class encodes arrow relation between meet &
+ * join-irreductibles of a lattice.
  *
  * Let m and b be respectively meet and join irreductibles of a lattice.
- * Recall that m has a unique successor say m+ and j has a unique predecessor say j-, then :
+ * Recall that m has a unique successor say m+ and j has a unique predecessor
+ * say j-, then :
  *
- * - j "Up Arrow" m (stored as "Up") iff j is not less or equal than m and j is less than m+
- * - j "Down Arrow" m (stored as "Down") iff j is not less or equal than m and j- is less than m
+ * - j "Up Arrow" m (stored as "Up") iff j is not less or equal than m and
+ *   j is less than m+
+ * - j "Down Arrow" m (stored as "Down") iff j is not less or equal than m and
+ *   j- is less than m
  * - j "Up Down Arrow" m (stored as "UpDown") iff j "Up" m and j "Down" m
  * - j "Cross" m (stored as "Cross") iff j is less or equal than m
- * - j "Circ" m (stored as "Circ") iff neither j "Up" m nor j "Down" m nor j "Cross" m
+ * - j "Circ" m (stored as "Circ") iff neither j "Up" m nor j "Down" m nor
+ *     j "Cross" m
  *
  * ![ArrowRelation](ArrowRelation.png)
  *
@@ -89,8 +93,8 @@ public class ArrowRelation extends DGraph {
     /**
      * Unique constructor of this component from a lattice.
      *
-     * Nodes are join or meet irreductibles of the lattice.
-     * Edges content encodes arrows as String "Up", "Down", "UpDown", "Cross", "Circ".
+     * Nodes are join or meet irreductibles of the lattice. Edges content
+     * encodes arrows as String "Up", "Down", "UpDown", "Cross", "Circ".
      *
      * @param lattice Lattice from which this component is deduced.
      */
@@ -124,19 +128,15 @@ public class ArrowRelation extends DGraph {
                 jminus = transitiveReduction.getPredecessorNodes(j).first();
                 if (transitiveClosure.getSuccessorNodes(j).contains(m) || j.equals(m)) {
                     arrow = ArrowRelation.cross;
-                } else {
-                    if (transitiveClosure.getSuccessorNodes(jminus).contains(m) || jminus.equals(m)) {
-                        arrow = ArrowRelation.down;
-                        if (transitiveClosure.getPredecessorNodes(mplus).contains(j) || mplus.equals(j)) {
-                            arrow = ArrowRelation.updown;
-                        }
-                    } else {
-                        if (transitiveClosure.getPredecessorNodes(mplus).contains(j)) {
-                            arrow = ArrowRelation.up;
-                        } else {
-                            arrow = ArrowRelation.circ;
-                        }
+                } else if (transitiveClosure.getSuccessorNodes(jminus).contains(m) || jminus.equals(m)) {
+                    arrow = ArrowRelation.down;
+                    if (transitiveClosure.getPredecessorNodes(mplus).contains(j) || mplus.equals(j)) {
+                        arrow = ArrowRelation.updown;
                     }
+                } else if (transitiveClosure.getPredecessorNodes(mplus).contains(j)) {
+                    arrow = ArrowRelation.up;
+                } else {
+                    arrow = ArrowRelation.circ;
                 }
                 this.addEdge(j, m, arrow);
             }
@@ -150,6 +150,7 @@ public class ArrowRelation extends DGraph {
      *
      * @throws IOException When an IOException occurs
      */
+    @Override
     public void save(final String filename) throws IOException {
         String extension = "";
         int index = filename.lastIndexOf('.');
@@ -162,12 +163,13 @@ public class ArrowRelation extends DGraph {
     }
 
     /**
-     * Returns the table of the lattice, composed of the join and meet irreducibles nodes.
+     * Returns the table of the lattice, composed of the join and meet
+     * irreducibles nodes.
      *
-     * Each attribute of the table is a copy of a join irreducibles node.
-     * Each observation of the table is a copy of a meet irreducibles node.
-     * An attribute is extent of an observation when its join irreducible node
-     * is in double arrow relation with the meet irreducible node in the lattice.
+     * Each attribute of the table is a copy of a join irreducibles node. Each
+     * observation of the table is a copy of a meet irreducibles node. An
+     * attribute is extent of an observation when its join irreducible node is
+     * in double arrow relation with the meet irreducible node in the lattice.
      *
      * @return the table of the lattice
      */
@@ -189,12 +191,13 @@ public class ArrowRelation extends DGraph {
     }
 
     /**
-     * Returns the table of the lattice, composed of the join and meet irreducibles nodes.
+     * Returns the table of the lattice, composed of the join and meet
+     * irreducibles nodes.
      *
-     * Each attribute of the table is a copy of a join irreducibles node.
-     * Each observation of the table is a copy of a meet irreducibles node.
-     * An attribute is extent of an observation when its join irreducible node
-     * is in down arrow relation with the meet irreducible node in the lattice.
+     * Each attribute of the table is a copy of a join irreducibles node. Each
+     * observation of the table is a copy of a meet irreducibles node. An
+     * attribute is extent of an observation when its join irreducible node is
+     * in down arrow relation with the meet irreducible node in the lattice.
      *
      * @return the table of the lattice
      */
@@ -216,12 +219,13 @@ public class ArrowRelation extends DGraph {
     }
 
     /**
-     * Returns the table of the lattice, composed of the join and meet irreducibles nodes.
+     * Returns the table of the lattice, composed of the join and meet
+     * irreducibles nodes.
      *
-     * Each attribute of the table is a copy of a join irreducibles node.
-     * Each observation of the table is a copy of a meet irreducibles node.
-     * An attribute is extent of an observation when its join irreducible node
-     * is in up arrow relation with the meet irreducible node in the lattice.
+     * Each attribute of the table is a copy of a join irreducibles node. Each
+     * observation of the table is a copy of a meet irreducibles node. An
+     * attribute is extent of an observation when its join irreducible node is
+     * in up arrow relation with the meet irreducible node in the lattice.
      *
      * @return the table of the lattice
      */
@@ -243,12 +247,14 @@ public class ArrowRelation extends DGraph {
     }
 
     /**
-     * Returns the table of the lattice, composed of the join and meet irreducibles nodes.
+     * Returns the table of the lattice, composed of the join and meet
+     * irreducibles nodes.
      *
-     * Each attribute of the table is a copy of a join irreducibles node.
-     * Each observation of the table is a copy of a meet irreducibles node.
-     * An attribute is extent of an observation when its join irreducible node
-     * is in double arrow relation or circ relation with the meet irreducible node in the lattice.
+     * Each attribute of the table is a copy of a join irreducibles node. Each
+     * observation of the table is a copy of a meet irreducibles node. An
+     * attribute is extent of an observation when its join irreducible node is
+     * in double arrow relation or circ relation with the meet irreducible node
+     * in the lattice.
      *
      * @return the table of the lattice
      */
@@ -270,55 +276,65 @@ public class ArrowRelation extends DGraph {
     }
 
     /**
-     * Returns true if and only if there is an up arrow between from and to of edge e.
+     * Returns true if and only if there is an up arrow between from and to of
+     * edge e.
      *
      * @param e edge to be tested
      *
-     * @return true if and only if there is an up arrow between from and to of edge e
+     * @return true if and only if there is an up arrow between from and to of
+     * edge e
      */
     public boolean isUp(Edge e) {
         return (e.getContent() == ArrowRelation.up);
     }
 
     /**
-     * Returns true if and only if there is an down arrow between from and to of edge e.
+     * Returns true if and only if there is an down arrow between from and to of
+     * edge e.
      *
      * @param e edge to be tested
      *
-     * @return true if and only if there is an down arrow between from and to of edge e
+     * @return true if and only if there is an down arrow between from and to of
+     * edge e
      */
     public boolean isDown(Edge e) {
         return (e.getContent() == ArrowRelation.down);
     }
 
     /**
-     * Returns true if and only if there is an up-down arrow between from and to of edge e.
+     * Returns true if and only if there is an up-down arrow between from and to
+     * of edge e.
      *
      * @param e edge to be tested
      *
-     * @return true if and only if there is an up-down arrow between from and to of edge e
+     * @return true if and only if there is an up-down arrow between from and to
+     * of edge e
      */
     public boolean isUpDown(Edge e) {
         return (e.getContent() == ArrowRelation.updown);
     }
 
     /**
-     * Returns true if and only if there is an cross arrow between from and to of edge e.
+     * Returns true if and only if there is an cross arrow between from and to
+     * of edge e.
      *
      * @param e edge to be tested
      *
-     * @return true if and only if there is an cross arrow between from and to of edge e
+     * @return true if and only if there is an cross arrow between from and to
+     * of edge e
      */
     public boolean isCross(Edge e) {
         return (e.getContent() == ArrowRelation.cross);
     }
 
     /**
-     * Returns true if and only if there is an circ arrow between from and to of edge e.
+     * Returns true if and only if there is an circ arrow between from and to of
+     * edge e.
      *
      * @param e edge to be tested
      *
-     * @return true if and only if there is an circ arrow between from and to of edge e
+     * @return true if and only if there is an circ arrow between from and to of
+     * edge e
      */
     public boolean isCirc(Edge e) {
         return (e.getContent() == ArrowRelation.circ);

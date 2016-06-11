@@ -11,7 +11,6 @@ package org.thegalactic.lattice.io;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import java.util.StringTokenizer;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -36,6 +35,7 @@ import org.thegalactic.lattice.ConceptLattice;
  * title ConceptLatticeWriterDot UML graph
  */
 public final class ConceptLatticeWriterDot implements ConceptLatticeWriter {
+
     /**
      * The singleton instance.
      */
@@ -67,7 +67,7 @@ public final class ConceptLatticeWriterDot implements ConceptLatticeWriter {
      * Write a graph to a output stream.
      *
      * @param lattice a concept lattice to write
-     * @param file    a file
+     * @param file a file
      *
      * @throws IOException When an IOException occurs
      */
@@ -75,7 +75,7 @@ public final class ConceptLatticeWriterDot implements ConceptLatticeWriter {
         String newLine = System.getProperty("line.separator");
         file.write("digraph G {" + newLine);
         file.write("Graph [rankdir=BT]" + newLine);
-        StringBuilder nodes  = new StringBuilder();
+        StringBuilder nodes = new StringBuilder();
         StringBuilder edges = new StringBuilder();
         for (Node node : lattice.getNodes()) {
             Concept concept = (Concept) node;
@@ -114,4 +114,3 @@ public final class ConceptLatticeWriterDot implements ConceptLatticeWriter {
         file.write("}");
     }
 }
-

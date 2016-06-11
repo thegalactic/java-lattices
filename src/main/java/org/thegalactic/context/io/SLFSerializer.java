@@ -28,11 +28,6 @@ import org.thegalactic.io.Writer;
  *
  */
 public final class SLFSerializer implements Reader<Context>, Writer<Context> {
-    /**
-     * This class is not designed to be publicly instantiated.
-     */
-    private SLFSerializer() {
-    }
 
     /**
      * The singleton instance.
@@ -42,7 +37,7 @@ public final class SLFSerializer implements Reader<Context>, Writer<Context> {
     /**
      * Return the singleton instance of this class.
      *
-     * @return  the singleton instance
+     * @return the singleton instance
      */
     public static SLFSerializer getInstance() {
         if (instance == null) {
@@ -60,36 +55,39 @@ public final class SLFSerializer implements Reader<Context>, Writer<Context> {
     }
 
     /**
+     * This class is not designed to be publicly instantiated.
+     */
+    private SLFSerializer() {
+    }
+
+    /**
      * Read a context from a file.
      *
      * The following format is respected:
      *
-     * The number of objects and observation on two separated lines
-     * The list of objects on seprated lines
-     * The list of attributes on separated lines
+     * The number of objects and observation on two separated lines The list of
+     * objects on seprated lines The list of attributes on separated lines
      *
-     * then, for each observations, the list of its intent on a line, written like 0 1 0
+     * then, for each observations, the list of its intent on a line, written
+     * like 0 1 0
      *
      * ~~~
      * [Lattice]
      * 2
      * 3
      * [Objects]
-     * 1
-     * 2
+     * 1 2
      * [Attributes]
-     * a
-     * b
-     * c
+     * a b c
      * [relation]
      * 0 1 0
      * 1 1 0
      * ~~~
      *
-     * @param   context  a context to read
-     * @param   file     a file
+     * @param context a context to read
+     * @param file a file
      *
-     * @throws  IOException  When an IOException occurs
+     * @throws IOException When an IOException occurs
      */
     public void read(Context context, BufferedReader file) throws IOException {
 
@@ -126,7 +124,7 @@ public final class SLFSerializer implements Reader<Context>, Writer<Context> {
 
         for (int i = 0; i < nbObs; i++) {
             line = file.readLine();
-            StringTokenizer st =  new StringTokenizer(line);
+            StringTokenizer st = new StringTokenizer(line);
             int cpt = 0;
             while (st.hasMoreTokens()) {
                 String n = st.nextToken();
@@ -146,11 +144,11 @@ public final class SLFSerializer implements Reader<Context>, Writer<Context> {
      *
      * The following format is respected:
      *
-     * The number of objects and observation on two separated lines
-     * The list of objects on seprated lines
-     * The list of attributes on separated lines
+     * The number of objects and observation on two separated lines The list of
+     * objects on seprated lines The list of attributes on separated lines
      *
-     * then, for each observations, the list of its intent on a line, written like 0 1 0
+     * then, for each observations, the list of its intent on a line, written
+     * like 0 1 0
      *
      * ~~~
      * [Lattice]
@@ -168,10 +166,10 @@ public final class SLFSerializer implements Reader<Context>, Writer<Context> {
      * 1 1 0
      * ~~~
      *
-     * @param   context  a context to write
-     * @param   file     a file
+     * @param context a context to write
+     * @param file a file
      *
-     * @throws  IOException  When an IOException occurs
+     * @throws IOException When an IOException occurs
      */
     public void write(Context context, BufferedWriter file) throws IOException {
         ArrayList<Comparable> obs = new ArrayList(context.getObservations());

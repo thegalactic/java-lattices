@@ -21,29 +21,28 @@ import org.thegalactic.util.ComparableSet;
  * This class gives a representation for an implicational rule.
  *
  * A rule is composed of a premise and a conclusion that are comparable sets,
- * i.e. sets of elements that can be sorted by the lectic order defined
- * by class `ComparableSet`.
+ * i.e. sets of elements that can be sorted by the lectic order defined by class
+ * `ComparableSet`.
  *
- * This class implements class `Comparable` aiming at
- * sorting rules by providing the {@link #compareTo} method.
+ * This class implements class `Comparable` aiming at sorting rules by providing
+ * the {@link #compareTo} method.
  *
- * Comparison between this component and those in parameter is realised by sorting their premises (lecticaly order),
- * or their conclusion in case of equality of the premises.
+ * Comparison between this component and those in parameter is realised by
+ * sorting their premises (lecticaly order), or their conclusion in case of
+ * equality of the premises.
  *
- * The coherence of the lectically sort between rules isn't ensured in case of modification
- * of the rule. Therefore, it is strongly advised to replace each modified rule by a new one.
+ * The coherence of the lectically sort between rules isn't ensured in case of
+ * modification of the rule. Therefore, it is strongly advised to replace each
+ * modified rule by a new one.
  *
  * ![Rule](Rule.png)
  *
- * @uml Rule.png
- * !include resources/org/thegalactic/lattice/Rule.iuml
+ * @uml Rule.png !include resources/org/thegalactic/lattice/Rule.iuml
  *
- * hide members
- * show Rule members
- * class Rule #LightCyan
- * title Rule UML graph
+ * hide members show Rule members class Rule #LightCyan title Rule UML graph
  */
 public class Rule implements Comparable {
+
     /*
      * ------------- FIELDS ------------------
      */
@@ -59,7 +58,6 @@ public class Rule implements Comparable {
     private ComparableSet conclusion;
 
     /* ------------- CONSTRUCTORS ------------------ */
-
     /**
      * Constructs a new empty Rule with a empty premise and an empty conclusion.
      */
@@ -69,9 +67,10 @@ public class Rule implements Comparable {
     }
 
     /**
-     * Constructs a new Rule with the premise and the conclusion given in parameters.
+     * Constructs a new Rule with the premise and the conclusion given in
+     * parameters.
      *
-     * @param premise    a set of indexed elements
+     * @param premise a set of indexed elements
      * @param conclusion a set of indexed elements
      */
     public Rule(TreeSet<Comparable> premise, TreeSet<Comparable> conclusion) {
@@ -148,7 +147,8 @@ public class Rule implements Comparable {
     }
 
     /**
-     * Adds the specified collection of indexed elements to the premise of this component.
+     * Adds the specified collection of indexed elements to the premise of this
+     * component.
      *
      * @param a Collection of comparables to add to this component's premises.
      *
@@ -159,9 +159,11 @@ public class Rule implements Comparable {
     }
 
     /**
-     * Removes the specified collection of indexed elements from the premise of this component.
+     * Removes the specified collection of indexed elements from the premise of
+     * this component.
      *
-     * @param a Collection of comparables to remove to this component's premises.
+     * @param a Collection of comparables to remove to this component's
+     * premises.
      *
      * @return true if addition is successfull.
      */
@@ -170,9 +172,11 @@ public class Rule implements Comparable {
     }
 
     /**
-     * Adds the specified collection of indexed elements to the conclusion of this component.
+     * Adds the specified collection of indexed elements to the conclusion of
+     * this component.
      *
-     * @param a Collection of comparables to add to this component's conclusions.
+     * @param a Collection of comparables to add to this component's
+     * conclusions.
      *
      * @return true if addition is successfull.
      */
@@ -181,9 +185,11 @@ public class Rule implements Comparable {
     }
 
     /**
-     * Removes the specified collection of indexed elements from the conclusion of this component.
+     * Removes the specified collection of indexed elements from the conclusion
+     * of this component.
      *
-     * @param a Collection of comparables to remove to this component's conclusions.
+     * @param a Collection of comparables to remove to this component's
+     * conclusions.
      *
      * @return true if addition is successfull.
      */
@@ -199,15 +205,15 @@ public class Rule implements Comparable {
      *
      * The following format is used:
      *
-     * ~~~
-     * [elements of the premise separated by a space] -> [elements of the conclusion separated by a space]
-     * ~~~
+     * ~~~ [elements of the premise separated by a space] -> [elements of the
+     * conclusion separated by a space] ~~~
      *
-     * a StringTokenizer is used to delete spaces in the
-     * string description of each element of premise and conclusion
+     * a StringTokenizer is used to delete spaces in the string description of
+     * each element of premise and conclusion
      *
      * @return a string made of premises followed by -> and the conclusions.
      */
+    @Override
     public String toString() {
         String s = "";
         for (Object e : this.getPremise()) {
@@ -233,6 +239,7 @@ public class Rule implements Comparable {
      *
      * @return hash code of this component
      */
+    @Override
     public int hashCode() {
         return 1013 * this.premise.hashCode() ^ 1009 * this.conclusion.hashCode();
     }
@@ -242,8 +249,10 @@ public class Rule implements Comparable {
      *
      * @param o object to compare to this component.
      *
-     * @return true or false as this componant is equals to the specified object.
+     * @return true or false as this componant is equals to the specified
+     * object.
      */
+    @Override
     public boolean equals(Object o) {
         if (!(o instanceof Rule)) {
             return false;
@@ -253,13 +262,13 @@ public class Rule implements Comparable {
     }
 
     /**
-     * Compares this component with the specified one by comparing their premises,
-     * or their conclusion in case of equality of the premises.
+     * Compares this component with the specified one by comparing their
+     * premises, or their conclusion in case of equality of the premises.
      *
      * @param o object to compare to this component.
      *
-     * @return a negative integer, zero, or a positive integer as this component is less than,
-     *         equal to, or greater than the specified object.
+     * @return a negative integer, zero, or a positive integer as this component
+     * is less than, equal to, or greater than the specified object.
      */
     public int compareTo(Object o) {
         Rule r = (Rule) o;

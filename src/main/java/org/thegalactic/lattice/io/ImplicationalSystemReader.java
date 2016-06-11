@@ -30,11 +30,12 @@ import org.thegalactic.lattice.ImplicationalSystem;
  * title ImplicationalSystemReader UML graph
  */
 public interface ImplicationalSystemReader {
+
     /**
      * Read an implicational system from a file.
      *
      * @param system an implicational system to read
-     * @param file   a file
+     * @param file a file
      *
      * @throws IOException When an IOException occurs
      */

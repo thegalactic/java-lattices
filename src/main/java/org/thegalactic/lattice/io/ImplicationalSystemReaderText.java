@@ -11,7 +11,6 @@ package org.thegalactic.lattice.io;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
@@ -20,7 +19,8 @@ import org.thegalactic.lattice.ImplicationalSystem;
 import org.thegalactic.lattice.Rule;
 
 /**
- * This class defines the way for reading an implicational system from a text file.
+ * This class defines the way for reading an implicational system from a text
+ * file.
  *
  * ![ImplicationalSystemReaderText](ImplicationalSystemReaderText.png)
  *
@@ -34,6 +34,7 @@ import org.thegalactic.lattice.Rule;
  * title ImplicationalSystemReaderText UML graph
  */
 public final class ImplicationalSystemReaderText implements ImplicationalSystemReader {
+
     /**
      * The singleton instance.
      */
@@ -69,10 +70,10 @@ public final class ImplicationalSystemReaderText implements ImplicationalSystemR
      *
      * The following format is used:
      *
-     * An implicational system can be instancied from and save to a text file in the following format:
-     * A list of elements separated by a space in the first line ;
-     * then, each rule on a line, written like [premise] -> [conclusion]
-     * where elements are separated by a space.
+     * An implicational system can be instancied from and save to a text file in
+     * the following format: A list of elements separated by a space in the
+     * first line ; then, each rule on a line, written like [premise] ->
+     * [conclusion] where elements are separated by a space.
      *
      * ~~~
      * a b c d e
@@ -81,7 +82,7 @@ public final class ImplicationalSystemReaderText implements ImplicationalSystemR
      * ~~~
      *
      * @param system a system to read
-     * @param file   a file
+     * @param file a file
      *
      * @throws IOException When an IOException occurs
      */

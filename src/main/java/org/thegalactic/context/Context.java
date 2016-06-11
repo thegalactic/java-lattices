@@ -84,6 +84,55 @@ import org.thegalactic.util.Couple;
  * title Context UML graph
  */
 public class Context extends ClosureSystem {
+    /**
+     * Generates a partially random context.
+     *
+     * @param nbObs        number of observations
+     * @param nbGrp        number of groups of attributes . Attributes are grouped such that each observation has one
+     *                     attribute per group.
+     * @param nbAttrPerGrp number of attributes per group.
+     *
+     * @return randomly generated context
+     */
+    public static Context random(int nbObs, int nbGrp, int nbAttrPerGrp) {
+        Context ctx = new Context();
+        // Generates Observations.
+        for (int i = 1; i <= nbObs; i++) {
+            ctx.addToObservations(Integer.toString(i));
+        }
+        // Generates Attributes.
+        for (int i = 1; i <= nbGrp; i++) {
+            for (int j = 1; j <= nbAttrPerGrp; j++) {
+                int q = i;
+                String name = "";
+                do {
+                    int rem = q % 26;
+                    q = q / 26;
+                    name = name + (char) (rem + 65);
+                } while (q != 0);
+                ctx.addToAttributes(name + Integer.toString(j)); // These names are cool ...
+            }
+        }
+        // Generates all requested observations.
+        Random r = new Random();
+        int attr = r.nextInt(nbAttrPerGrp) + 1;
+        for (int i = 1; i <= nbObs; i++) { // i : Observation
+            for (int j = 1; j <= nbGrp; j++) { // j : Familly
+                int q = j;
+                String name = "";
+                do {
+                    int rem = q % 26;
+                    q = q / 26;
+                    name = name + (char) (rem + 65);
+                } while (q != 0);
+                name = name + Integer.toString(attr); // These names are really cool, aren't they ?
+                ctx.addExtentIntent(Integer.toString(i), name);
+                attr = r.nextInt(nbAttrPerGrp) + 1;
+            }
+        }
+        ctx.setBitSets();
+        return ctx;
+    }
     /*
      * ------------- FIELD ------------------
      */
@@ -111,6 +160,7 @@ public class Context extends ClosureSystem {
     /*
      * ------------- BITSET ADDON ------------------
      */
+
     /**
      * A bit set for intent.
      */
@@ -134,6 +184,7 @@ public class Context extends ClosureSystem {
     /*
      * ------------- CONSTRUCTORS ------------------
      */
+
     /**
      * Constructs a new empty context.
      */
@@ -203,58 +254,6 @@ public class Context extends ClosureSystem {
         this.arrayObservations = new ArrayList();
         this.arrayAttributes = new ArrayList();
         return this;
-    }
-
-    /**
-     * Generates a partially random context.
-     *
-     * @param nbObs        number of observations
-     * @param nbGrp        number of groups of attributes . Attributes are grouped such that each observation has one
-     *                     attribute per group.
-     * @param nbAttrPerGrp number of attributes per group.
-     *
-     * @return randomly generated context
-     */
-    public static Context random(int nbObs, int nbGrp, int nbAttrPerGrp) {
-        Context ctx = new Context();
-        // Generates Observations.
-        for (int i = 1; i <= nbObs; i++) {
-            ctx.addToObservations(Integer.toString(i));
-        }
-        // Generates Attributes.
-        for (int i = 1; i <= nbGrp; i++) {
-            for (int j = 1; j <= nbAttrPerGrp; j++) {
-                int q = i;
-                int rem = 0;
-                String name = "";
-                do {
-                    rem = q % 26;
-                    q = q / 26;
-                    name = name + (char) (rem + 65);
-                } while (q != 0);
-                ctx.addToAttributes(name + Integer.toString(j)); // These names are cool ...
-            }
-        }
-        // Generates all requested observations.
-        Random r = new Random();
-        int attr = r.nextInt(nbAttrPerGrp) + 1;
-        for (int i = 1; i <= nbObs; i++) { // i : Observation
-            for (int j = 1; j <= nbGrp; j++) { // j : Familly
-                int q = j;
-                int rem = 0;
-                String name = "";
-                do {
-                    rem = q % 26;
-                    q = q / 26;
-                    name = name + (char) (rem + 65);
-                } while (q != 0);
-                name = name + Integer.toString(attr); // These names are really cool, aren't they ?
-                ctx.addExtentIntent(Integer.toString(i), name);
-                attr = r.nextInt(nbAttrPerGrp) + 1;
-            }
-        }
-        ctx.setBitSets();
-        return ctx;
     }
 
     /**
@@ -809,7 +808,7 @@ public class Context extends ClosureSystem {
         }
 
         String newLine = System.getProperty("line.separator");
-        string.append(newLine + "Attributes: ");
+        string.append(newLine).append("Attributes: ");
         for (Comparable a : this.attributes) {
             // second line : All attributes separated by a space
             // a StringTokenizer is used to delete spaces in the
@@ -1332,11 +1331,13 @@ public class Context extends ClosureSystem {
     public ConceptLattice closedSetIceberg(double support) {
         return ConceptLattice.diagramIceberg(this, support);
     }
+
     /**
      * Returns the lattice of this component.
      *
      * @return The lattice induced by this component
      */
+    @Override
     public ConceptLattice lattice() {
         return this.conceptLattice(true);
     }

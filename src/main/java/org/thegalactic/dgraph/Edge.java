@@ -20,13 +20,13 @@ package org.thegalactic.dgraph;
  *
  * of class {@link Node}.
  *
- * This class implements class `Comparable` and provides
- * the {@link #compareTo} method that compares the edge with
- * those in parameter by sorting indexes of the nodes that compose it.
+ * This class implements class `Comparable` and provides the {@link #compareTo}
+ * method that compares the edge with those in parameter by sorting indexes of
+ * the nodes that compose it.
  *
  * Therefore, edges can be stored in a sorted collection since they are
- * comparable, and in particular in a sorted set where
- * set operations are provided.
+ * comparable, and in particular in a sorted set where set operations are
+ * provided.
  *
  * ![Edge](Edge.png)
  *
@@ -40,6 +40,7 @@ package org.thegalactic.dgraph;
  * title Edge UML graph
  */
 public class Edge implements Comparable<Object> {
+
     /*
      * ------------- FIELDS ---------------------
      */
@@ -63,10 +64,11 @@ public class Edge implements Comparable<Object> {
      * ------------- CONSTRUCTORS ----------------
      */
     /**
-     * Constructs a new edge with the specified node as origin and destination node, with the specified content.
+     * Constructs a new edge with the specified node as origin and destination
+     * node, with the specified content.
      *
-     * @param from    the origin node
-     * @param to      the destination node
+     * @param from the origin node
+     * @param to the destination node
      * @param content the edge content
      */
     public Edge(final Node from, final Node to, final Object content) {
@@ -76,10 +78,11 @@ public class Edge implements Comparable<Object> {
     }
 
     /**
-     * Constructs a new edge with the specified node as origin and destination node, and a null value as content.
+     * Constructs a new edge with the specified node as origin and destination
+     * node, and a null value as content.
      *
      * @param from the origin node
-     * @param to   the destination node
+     * @param to the destination node
      */
     public Edge(final Node from, final Node to) {
         this(from, to, null);
@@ -164,16 +167,16 @@ public class Edge implements Comparable<Object> {
     /**
      * Compares this edge with those in parameter, based on their identifiers.
      *
-     * The result is zero if the identifiers are equal; positive if this edge's identifier is greater,
-     * and negative otherwise.
+     * The result is zero if the identifiers are equal; positive if this edge's
+     * identifier is greater, and negative otherwise.
      *
-     * This comparison method is needed to define a natural ordering.
-     * It allows to use objects of this class in a sorted collection
+     * This comparison method is needed to define a natural ordering. It allows
+     * to use objects of this class in a sorted collection
      *
      * @param object the specified element to be compared with this edge
      *
-     * @return a negative integer, zero, or a positive integer as this edge is less than, equal to, or greater than the
-     *         specified object.
+     * @return a negative integer, zero, or a positive integer as this edge is
+     * less than, equal to, or greater than the specified object.
      */
     public int compareTo(final Object object) {
         if (object instanceof Edge) {

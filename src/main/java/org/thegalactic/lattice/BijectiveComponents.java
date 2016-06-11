@@ -23,21 +23,22 @@ import org.thegalactic.dgraph.DGraph;
 import org.thegalactic.util.ComparableSet;
 
 /**
- * This class generates bijective components issued from lattice theory for a specified
- * closure system.
+ * This class generates bijective components issued from lattice theory for a
+ * specified closure system.
  *
- * Bijective components are:
- * closed set lattice or concept lattice, reduced lattice, reduced context, canonical direct basis, minimal generators
- * and canonical basis, dependency graph.
+ * Bijective components are: closed set lattice or concept lattice, reduced
+ * lattice, reduced context, canonical direct basis, minimal generators and
+ * canonical basis, dependency graph.
  *
- * A closure system is described by the abstract class {@link ClosureSystem}.
- * In this package, a closure system can be instancied by an implicational
- * system described by class {@link ImplicationalSystem}) or a context described by
+ * A closure system is described by the abstract class {@link ClosureSystem}. In
+ * this package, a closure system can be instancied by an implicational system
+ * described by class {@link ImplicationalSystem}) or a context described by
  * class {@link Context}).
  *
- * This class provides a constructor, and only two methods: the method {@link #compute}
- * generates all the bijective components of the specified closure system; and the method
- * {@link #save} saves theses components in files.
+ * This class provides a constructor, and only two methods: the method
+ * {@link #compute} generates all the bijective components of the specified
+ * closure system; and the method {@link #save} saves theses components in
+ * files.
  *
  * This class can be used as follows:
  *
@@ -59,6 +60,7 @@ import org.thegalactic.util.ComparableSet;
  * title BijectiveComponents UML graph
  */
 public class BijectiveComponents {
+
     /*
      * ------------- FIELDS ------------------
      */
@@ -69,9 +71,11 @@ public class BijectiveComponents {
     private ClosureSystem closureSystem;
 
     /**
-     * The closed set lattice of the closure system when closure system is an implicational system.
+     * The closed set lattice of the closure system when closure system is an
+     * implicational system.
      *
-     * The concept lattice of the closure system when closure system is a context
+     * The concept lattice of the closure system when closure system is a
+     * context
      */
     private ConceptLattice lattice = null;
 
@@ -106,7 +110,8 @@ public class BijectiveComponents {
     private Context table = null;
 
     /**
-     * Constructs this component with the specified Closure System as initial closure system.
+     * Constructs this component with the specified Closure System as initial
+     * closure system.
      *
      * @param closureSystem initial closure system
      */
@@ -134,8 +139,8 @@ public class BijectiveComponents {
     }
 
     /**
-     * Generates all the bijective components included in this component
-     * issued from the initial closure system `closureSystem`.
+     * Generates all the bijective components included in this component issued
+     * from the initial closure system `closureSystem`.
      *
      * The closed set lattice is generated and obtained by
      *
@@ -197,13 +202,13 @@ public class BijectiveComponents {
 
     /**
      * Saves all the bijective components included in this component in files
-     * saved in the specified directory.
-     * A global description is saved in file `name+"Readme.txt"`.
+     * saved in the specified directory. A global description is saved in file
+     * `name+"Readme.txt"`.
      *
      * The specified name is used to defined a name for each file.
      *
      * @param directory location to save file
-     * @param name      name of the files
+     * @param name name of the files
      *
      * @throws IOException When an IOException occurs
      */
@@ -264,9 +269,9 @@ public class BijectiveComponents {
     /**
      * Set the closure system of this component.
      *
-     * @param   closureSystem  used to define field of this component
+     * @param closureSystem used to define field of this component
      *
-     * @return  this for chaining
+     * @return this for chaining
      */
     protected BijectiveComponents setClosureSystem(ClosureSystem closureSystem) {
         this.closureSystem = closureSystem;
@@ -288,9 +293,9 @@ public class BijectiveComponents {
     /**
      * Set the lattice of this component.
      *
-     * @param   lattice  used to define field of this component
+     * @param lattice used to define field of this component
      *
-     * @return  this for chaining
+     * @return this for chaining
      */
     protected BijectiveComponents setLattice(ConceptLattice lattice) {
         this.lattice = lattice;
@@ -312,9 +317,9 @@ public class BijectiveComponents {
     /**
      * Set the reduced lattice of this component.
      *
-     * @param   reducedLattice  used to define field of this component
+     * @param reducedLattice used to define field of this component
      *
-     * @return  this for chaining
+     * @return this for chaining
      */
     protected BijectiveComponents setReducedLattice(Lattice reducedLattice) {
         this.reducedLattice = reducedLattice;
@@ -337,9 +342,9 @@ public class BijectiveComponents {
     /**
      * Set the dependency graph of this component.
      *
-     * @param   dependencyGraph  used to define field of this component
+     * @param dependencyGraph used to define field of this component
      *
-     * @return  this for chaining
+     * @return this for chaining
      */
     protected BijectiveComponents setDependencyGraph(DGraph dependencyGraph) {
         this.dependencyGraph = dependencyGraph;
@@ -447,21 +452,14 @@ public class BijectiveComponents {
     }
 
     /**
-     * Returns the informativ generic basis
-     * public IS getApproximativBasis () {
-     * IS IGB = new IS(this.canonicalDirectBasis);
-     * IS tmp = new IS(this.canonicalDirectBasis);
-     * for (Rule r : tmp.getRules()) {
-     * TreeSet premise = new TreeSet(r.getPremise());
-     * Concept c = new Concept(this.closure(premise),false);
-     * for (TreeSet conclusion : this.immediateSuccessors(c)) {
-     * TreeSet concl = new TreeSet(conclusion);
-     * conclusion.removeAll(premise);
-     * IGB.addRule(new Rule(premise,concl));
-     * }
-     * }
-     * return IGB;
-     * }
+     * Returns the informativ generic basis public IS getApproximativBasis () {
+     * IS IGB = new IS(this.canonicalDirectBasis); IS tmp = new
+     * IS(this.canonicalDirectBasis); for (Rule r : tmp.getRules()) { TreeSet
+     * premise = new TreeSet(r.getPremise()); Concept c = new
+     * Concept(this.closure(premise),false); for (TreeSet conclusion :
+     * this.immediateSuccessors(c)) { TreeSet concl = new TreeSet(conclusion);
+     * conclusion.removeAll(premise); IGB.addRule(new Rule(premise,concl)); } }
+     * return IGB; }
      *
      */
 } // end of BijectiveComponents

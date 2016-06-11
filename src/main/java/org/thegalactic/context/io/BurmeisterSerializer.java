@@ -105,8 +105,8 @@ public final class BurmeisterSerializer implements Reader<Context>, Writer<Conte
             throw new IOException("Burmeister magic header not found");
         }
 
-        // str corresponds to the string "Name". Second line (Unused).
-        str = file.readLine();
+        // Second line (Unused).
+        file.readLine();
 
         // number of observations. Third line.
         Integer nbObs = Integer.parseInt(file.readLine());

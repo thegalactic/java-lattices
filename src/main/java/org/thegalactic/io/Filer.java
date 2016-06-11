@@ -18,7 +18,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- * This class is used to provide a generic way for saving and parsing objects using the extension file.
+ * This class is used to provide a generic way for saving and parsing objects
+ * using the extension file.
  *
  * @param <E> The element to be saved/parsed
  */
@@ -63,8 +64,8 @@ public final class Filer<E> {
     /**
      * Save the description of this component in a file whose name is specified.
      *
-     * @param e        the element to save
-     * @param factory  the reader/writer factory
+     * @param e the element to save
+     * @param factory the reader/writer factory
      * @param filename the name of the file
      *
      * @throws IOException When an IOException occurs
@@ -76,10 +77,11 @@ public final class Filer<E> {
     }
 
     /**
-     * Parse the description of this component from a file whose name is specified.
+     * Parse the description of this component from a file whose name is
+     * specified.
      *
-     * @param e        the element to parse
-     * @param factory  the reader/writer factory
+     * @param e the element to parse
+     * @param factory the reader/writer factory
      * @param filename the name of the file
      *
      * @throws IOException When an IOException occurs

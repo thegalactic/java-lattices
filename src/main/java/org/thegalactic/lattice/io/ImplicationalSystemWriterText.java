@@ -17,7 +17,8 @@ import java.io.IOException;
 import org.thegalactic.lattice.ImplicationalSystem;
 
 /**
- * This class defines the way for writing an implicational system as a text file.
+ * This class defines the way for writing an implicational system as a text
+ * file.
  *
  * ![ImplicationalSystemWriterText](ImplicationalSystemWriterText.png)
  *
@@ -64,10 +65,10 @@ public final class ImplicationalSystemWriterText implements ImplicationalSystemW
      *
      * The following format is used:
      *
-     * An implicational system can be instancied from and save to a text file in the following format:
-     * A list of elements separated by a space in the first line ;
-     * then, each rule on a line, written like [premise] -> [conclusion]
-     * where elements are separated by a space.
+     * An implicational system can be instancied from and save to a text file in
+     * the following format: A list of elements separated by a space in the
+     * first line ; then, each rule on a line, written like [premise] ->
+     * [conclusion] where elements are separated by a space.
      *
      * ~~~
      * a b c d e
@@ -76,7 +77,7 @@ public final class ImplicationalSystemWriterText implements ImplicationalSystemW
      * ~~~
      *
      * @param system a system to write
-     * @param file   a file
+     * @param file a file
      *
      * @throws IOException When an IOException occurs
      */

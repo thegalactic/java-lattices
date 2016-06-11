@@ -11,7 +11,6 @@ package org.thegalactic.lattice.io;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.SortedSet;
@@ -36,6 +35,7 @@ import org.thegalactic.lattice.ArrowRelation;
  * title ArrowRelationWriterTeX UML graph
  */
 public final class ArrowRelationWriterTeX implements ArrowRelationWriter {
+
     /**
      * The singleton instance.
      */
@@ -65,10 +65,11 @@ public final class ArrowRelationWriterTeX implements ArrowRelationWriter {
 
     /**
      * Produces the LaTex source code for the array of arrows of this component.
-     * The LaTeX source produced isn't autonomous. It must be included in a document.
+     * The LaTeX source produced isn't autonomous. It must be included in a
+     * document.
      *
      * @param arrow an arrow relation to write
-     * @param file  a file
+     * @param file a file
      *
      * @throws IOException When an IOException occurs
      */
@@ -94,21 +95,15 @@ public final class ArrowRelationWriterTeX implements ArrowRelationWriter {
                 Edge e = arrow.getEdge(nm, nj);
                 if (arrow.isUp(e)) {
                     str += " & $\\uparrow$";
+                } else if (arrow.isDown(e)) {
+                    str += " & $\\downarrow$";
+                } else if (arrow.isUpDown(e)) {
+                    str += " & $\\updownarrow$";
+                } else if (arrow.isCross(e)) {
+                    str += " & $\\times$";
                 } else {
-                    if (arrow.isDown(e)) {
-                        str += " & $\\downarrow$";
-                    } else {
-                        if (arrow.isUpDown(e)) {
-                            str += " & $\\updownarrow$";
-                        } else {
-                            if (arrow.isCross(e)) {
-                            str += " & $\\times$";
-                            } else {
-                                str += " & $\\circ$";
-                            }
-                        }
-                    }
-                /* Previous code, in a Java7 only way, was :
+                    str += " & $\\circ$";
+                } /* Previous code, in a Java7 only way, was :
                 switch ((String)e.getContent()) {
                     case "Up":str += " & $\\uparrow$";break;
                     case "Down":str += " & $\\downarrow$";break;
@@ -116,8 +111,7 @@ public final class ArrowRelationWriterTeX implements ArrowRelationWriter {
                     case "Cross":str += " & $\\times$";break;
                     case "Circ":str += " & $\\circ$";break;
                     default :break;
-                */
-                }
+                 */
             }
             str += "\\\\ " + newLine;
             str += "\\hline" + newLine;

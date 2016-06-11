@@ -15,12 +15,8 @@ import java.util.HashMap;
 
 /**
  * This class register WRITERS for the DGraph class.
-
- ![DGraphWriterFactory](DGraphWriterFactory.png)
  *
- * @uml DGraphWriterFactory.png
- * !include resources/org/thegalactic/dgraph/io/DGraphWriterFactory.iuml
- * !include resources/org/thegalactic/dgraph/io/DGraphWriter.iuml
+ * ![DGraphWriterFactory](DGraphWriterFactory.png)
  *
  * hide members
  * show DGraphWriterFactory members
@@ -37,7 +33,7 @@ public final class DGraphWriterFactory {
     /**
      * Register a writer with an extension.
      *
-     * @param writer    The writer to register
+     * @param writer The writer to register
      * @param extension The extension linked to the writer
      *
      * @return The old writer or null

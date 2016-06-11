@@ -26,18 +26,21 @@ import org.thegalactic.dgraph.Node;
 import org.thegalactic.util.ComparableSet;
 
 /**
- * This class gives a representation for a concept, i.e. a node of a concept lattice.
+ * This class gives a representation for a concept, i.e. a node of a concept
+ * lattice.
  *
  * A concept extends class {@link Node} by providing two comparable sets defined
- * by {@link ComparableSet}, namely `setA` and `setB`, aiming at storing set of a concepts.
+ * by {@link ComparableSet}, namely `setA` and `setB`, aiming at storing set of
+ * a concepts.
  *
  * This component can also be used to store a closed set by using only set `A`.
  *
- * This class implements class `Comparable` aiming at
- * sorting concepts by providing the {@link #compareTo} method.
- * Comparison between this component and those in parameter is realised by comparing set `A`.
+ * This class implements class `Comparable` aiming at sorting concepts by
+ * providing the {@link #compareTo} method. Comparison between this component
+ * and those in parameter is realised by comparing set `A`.
  *
- * @todo Should not inherit from Node since content is not used. Maybe by using interface.
+ * @todo Should not inherit from Node since content is not used. Maybe by using
+ * interface.
  *
  * ![Concept](Concept.png)
  *
@@ -52,6 +55,7 @@ import org.thegalactic.util.ComparableSet;
  * title Concept UML graph
  */
 public class Concept extends Node {
+
     /*
      * ------------- FIELDS ------------------
      */
@@ -70,7 +74,8 @@ public class Concept extends Node {
      * ------------- CONSTRUCTORS ------------------
      */
     /**
-     * Constructs a new concept containing the specified comparables set as setA and setB.
+     * Constructs a new concept containing the specified comparables set as setA
+     * and setB.
      *
      * @param setA set of comparable used to initialise setA.
      * @param setB set of comparable used to initialise setB.
@@ -81,8 +86,9 @@ public class Concept extends Node {
     }
 
     /**
-     * Constructs a new concept with an empty set of comparableset as setA and set B if the two boolean are true.
-     * False booleans allow to construct a concept with only one of the two sets.
+     * Constructs a new concept with an empty set of comparableset as setA and
+     * set B if the two boolean are true. False booleans allow to construct a
+     * concept with only one of the two sets.
      *
      * @param setA field setA is empty if true, setA is null if false.
      * @param setB field setB is empty if true, setB is null if false.
@@ -101,9 +107,9 @@ public class Concept extends Node {
     }
 
     /**
-     * Constructs a new concept containing the specified comparables set as setA, and an empty set of comparableset as
-     * setB if the boolean is true.
-     * A false boolean allows to construct a concept with the only set A.
+     * Constructs a new concept containing the specified comparables set as
+     * setA, and an empty set of comparableset as setB if the boolean is true. A
+     * false boolean allows to construct a concept with the only set A.
      *
      * @param setA set of comparable used to initialise setA.
      * @param setB field setB is empty if true, setB is null if false.
@@ -118,9 +124,9 @@ public class Concept extends Node {
     }
 
     /**
-     * Constructs a new concept containing the specified comparables set as setB, and an empty set of comparableset as
-     * setA if the boolean is true.
-     * A false boolean allows to construct concept with the only set B.
+     * Constructs a new concept containing the specified comparables set as
+     * setB, and an empty set of comparableset as setA if the boolean is true. A
+     * false boolean allows to construct concept with the only set B.
      *
      * @param setA field setA is empty if true, setA is null if false.
      * @param setB set of comparable used to initialise setB.
@@ -160,6 +166,7 @@ public class Concept extends Node {
      *
      * @return a clone of this component
      */
+    @Override
     public Concept clone() {
         if (this.hasSetA() && this.hasSetB()) {
             TreeSet setA = (TreeSet) this.getSetA().clone();
@@ -169,13 +176,11 @@ public class Concept extends Node {
         if (this.hasSetA() && !this.hasSetB()) {
             TreeSet setA = (TreeSet) this.getSetA().clone();
             return new Concept(setA, false);
+        } else if (this.hasSetB()) {
+            TreeSet setB = (TreeSet) this.getSetB().clone();
+            return new Concept(false, setB);
         } else {
-            if (this.hasSetB()) {
-                TreeSet setB = (TreeSet) this.getSetB().clone();
-                return new Concept(false, setB);
-            } else {
-                return new Concept(false, false);
-            }
+            return new Concept(false, false);
         }
     }
 
@@ -429,6 +434,7 @@ public class Concept extends Node {
      *
      * @return the description of this component in a String without spaces.
      */
+    @Override
     public String toString() {
         String s = "";
         if (this.hasSetA()) {
@@ -453,6 +459,7 @@ public class Concept extends Node {
      *
      * @return hash code of this component
      */
+    @Override
     public int hashCode() {
         return super.hashCode();
     }
@@ -464,6 +471,7 @@ public class Concept extends Node {
      *
      * @return true if and only if o is equals to this component.
      */
+    @Override
     public boolean equals(Object o) {
         if (!(o instanceof Concept)) {
             return false;
@@ -478,10 +486,11 @@ public class Concept extends Node {
     }
 
     /**
-     * Compares this component with the specified one sorted by the lectic order.
+     * Compares this component with the specified one sorted by the lectic
+     * order.
      *
-     * @return a negative integer, zero, or a positive integer as this component is less than,
-     *         equal to, or greater than the specified object.
+     * @return a negative integer, zero, or a positive integer as this component
+     * is less than, equal to, or greater than the specified object.
      */
     /*
      * public int compareTo(Object o){
@@ -502,7 +511,8 @@ public class Concept extends Node {
      * }
      */
     /**
-     * Computes the immediate successors of this component with the LOA algorithm.
+     * Computes the immediate successors of this component with the LOA
+     * algorithm.
      *
      * @param init context from which successor of this component are computed.
      *
@@ -564,12 +574,14 @@ public class Concept extends Node {
     }
 
     /**
-     * Returns the number of observations corresponding to the set of attributes in the init context.
+     * Returns the number of observations corresponding to the set of attributes
+     * in the init context.
      *
-     * @param init       initial context from which attributes are count.
+     * @param init initial context from which attributes are count.
      * @param attributes attributes from which observations are counted.
      *
-     * @return number of observations corresponding to the set of attributes in init context.
+     * @return number of observations corresponding to the set of attributes in
+     * init context.
      */
     private int count(Context init, TreeSet<Comparable> attributes) {
         return init.getExtentNb(attributes);
@@ -578,31 +590,34 @@ public class Concept extends Node {
     /**
      * Returns the list of immediate successors of a given node of the lattice.
      *
-     * This treatment is an adaptation of Bordat's theorem stating that there is a bijection
-     * between minimal strongly connected component of the precedence subgraph issued
-     * from the specified node, and its immediate successors.
+     * This treatment is an adaptation of Bordat's theorem stating that there is
+     * a bijection between minimal strongly connected component of the
+     * precedence subgraph issued from the specified node, and its immediate
+     * successors.
      *
-     * This treatment is performed in O(Cl|S|^3log g) where S is the initial set of elements,
-     * Cl is the closure computation complexity
-     * and g is the number of minimal generators of the lattice.
+     * This treatment is performed in O(Cl|S|^3log g) where S is the initial set
+     * of elements, Cl is the closure computation complexity and g is the number
+     * of minimal generators of the lattice.
      *
-     * This treatment is recursively invoked by method recursiveDiagramlattice. In this case, the dependance graph
-     * is initialised by method recursiveDiagramMethod, and updated by this method,
-     * with addition some news edges and/or new valuations on existing edges.
-     * When this treatment is not invoked by method recursiveDiagramLattice, then the dependance graph
-     * is initialised, but it may be not complete. It is the case for example for on-line generation of the
-     * concept lattice.
+     * This treatment is recursively invoked by method recursiveDiagramlattice.
+     * In this case, the dependance graph is initialised by method
+     * recursiveDiagramMethod, and updated by this method, with addition some
+     * news edges and/or new valuations on existing edges. When this treatment
+     * is not invoked by method recursiveDiagramLattice, then the dependance
+     * graph is initialised, but it may be not complete. It is the case for
+     * example for on-line generation of the concept lattice.
      *
-     * cguerin - 2013-04-12 - transfer immedateSuccessors method from ConceptLattice to Concept
+     * cguerin - 2013-04-12 - transfer immedateSuccessors method from
+     * ConceptLattice to Concept
      *
-     * @param init closure system used to compute immediate successors of this component.
+     * @param init closure system used to compute immediate successors of this
+     * component.
      *
      * @return the list of immediate successors of this component.
      */
     public ArrayList<TreeSet<Comparable>> immediateSuccessors(ClosureSystem init) {
         // Initialisation of the dependance graph when not initialised by method recursiveDiagramLattice
-        DGraph dependanceGraph = null;
-        dependanceGraph = new DGraph();
+        DGraph dependanceGraph = new DGraph();
         for (Comparable c : init.getSet()) {
             dependanceGraph.addNode(new Node(c));
         }

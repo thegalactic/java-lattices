@@ -50,12 +50,6 @@ public final class ContextIOFactory extends org.thegalactic.io.IOFactory<Context
     }
 
     /**
-     * This class is not designed to be publicly instantiated.
-     */
-    private ContextIOFactory() {
-    }
-
-    /**
      * Initialse the factory.
      */
     protected static void init() {
@@ -64,5 +58,11 @@ public final class ContextIOFactory extends org.thegalactic.io.IOFactory<Context
         FIMISerializer.register();
         CsvSerializer.register();
         SLFSerializer.register();
+    }
+
+    /**
+     * This class is not designed to be publicly instantiated.
+     */
+    private ContextIOFactory() {
     }
 }
