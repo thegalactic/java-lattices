@@ -11,7 +11,6 @@ package org.thegalactic.lattice.io;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import java.util.HashMap;
 
 /**
@@ -29,53 +28,53 @@ import java.util.HashMap;
  * title ImplicationalSystemWriterFactory UML graph
  */
 public final class ImplicationalSystemWriterFactory {
-    /**
-     * This class is not designed to be instantiated.
-     */
-    private ImplicationalSystemWriterFactory() {
-    }
 
     /**
      * Map of extension/writer.
      */
-    private static HashMap<String, ImplicationalSystemWriter> writers = new HashMap<String, ImplicationalSystemWriter>();
+    private static final HashMap<String, ImplicationalSystemWriter> WRITERS = new HashMap<String, ImplicationalSystemWriter>();
 
     /**
      * Register a writer with an extension.
      *
-     * @param   writer     The writer to register
-     * @param   extension  The extension linked to the writer
+     * @param writer    The writer to register
+     * @param extension The extension linked to the writer
      *
-     * @return  The old writer or null
+     * @return The old writer or null
      */
     public static ImplicationalSystemWriter register(ImplicationalSystemWriter writer, String extension) {
-        ImplicationalSystemWriter old = writers.get(extension);
-        writers.put(extension, writer);
+        ImplicationalSystemWriter old = WRITERS.get(extension);
+        WRITERS.put(extension, writer);
         return old;
     }
 
     /**
      * Unregister an extension.
      *
-     * @param   extension  The extension linked to a writer
+     * @param extension The extension linked to a writer
      *
-     * @return  The old writer or null
+     * @return The old writer or null
      */
     public static ImplicationalSystemWriter unregister(String extension) {
-        ImplicationalSystemWriter old = writers.get(extension);
-        writers.remove(extension);
+        ImplicationalSystemWriter old = WRITERS.get(extension);
+        WRITERS.remove(extension);
         return old;
     }
 
     /**
      * Get the writer linked to an extension.
      *
-     * @param   extension  The extension linked to a writer
+     * @param extension The extension linked to a writer
      *
-     * @return  The writer or null
+     * @return The writer or null
      */
     public static ImplicationalSystemWriter get(String extension) {
-        return writers.get(extension);
+        return WRITERS.get(extension);
+    }
+
+    /**
+     * This class is not designed to be instantiated.
+     */
+    private ImplicationalSystemWriterFactory() {
     }
 }
-

@@ -11,7 +11,6 @@ package org.thegalactic.lattice;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import java.util.Collection;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
@@ -45,7 +44,9 @@ import org.thegalactic.util.ComparableSet;
  * title Rule UML graph
  */
 public class Rule implements Comparable {
-    /* ------------- FIELDS ------------------ */
+    /*
+     * ------------- FIELDS ------------------
+     */
 
     /**
      * The premise of the rule.
@@ -70,20 +71,21 @@ public class Rule implements Comparable {
     /**
      * Constructs a new Rule with the premise and the conclusion given in parameters.
      *
-     * @param   premise     a set of indexed elements
-     * @param   conclusion  a set of indexed elements
+     * @param premise    a set of indexed elements
+     * @param conclusion a set of indexed elements
      */
     public Rule(TreeSet<Comparable> premise, TreeSet<Comparable> conclusion) {
         this.premise = new ComparableSet(premise);
         this.conclusion = new ComparableSet(conclusion);
     }
 
-    /* ------------- ACCESSORS METHODS ------------------ */
-
+    /*
+     * ------------- ACCESSORS METHODS ------------------
+     */
     /**
      * Returns a copy of the premise of the Rule.
      *
-     * @return  premises of this component
+     * @return premises of this component
      */
     public TreeSet<Comparable> getPremise() {
         return this.premise;
@@ -92,20 +94,21 @@ public class Rule implements Comparable {
     /**
      * Returns a copy of the conclusion of the Rule.
      *
-     * @return  conclusions of this component
+     * @return conclusions of this component
      */
     public TreeSet<Comparable> getConclusion() {
         return this.conclusion;
     }
 
-    /* ------------- MODIFICATION METHODS ------------------ */
-
+    /*
+     * ------------- MODIFICATION METHODS ------------------
+     */
     /**
      * Adds the specified comparable to the premise of this component.
      *
-     * @param   a  Comparable to add to this component's premises.
+     * @param a Comparable to add to this component's premises.
      *
-     * @return  true if addition is successfull.
+     * @return true if addition is successfull.
      */
     public boolean addToPremise(Comparable a) {
         return this.premise.add(a);
@@ -114,9 +117,9 @@ public class Rule implements Comparable {
     /**
      * Removes the specified comparable from the premise of this component.
      *
-     * @param   a  Comparable to remove to this component's premises.
+     * @param a Comparable to remove to this component's premises.
      *
-     * @return  true if addition is successfull.
+     * @return true if addition is successfull.
      */
     public boolean removeFromPremise(Comparable a) {
         return this.premise.remove(a);
@@ -125,9 +128,9 @@ public class Rule implements Comparable {
     /**
      * Adds the specified element to the conclusion of this component.
      *
-     * @param   a  Comparable to add to this component's conclusions.
+     * @param a Comparable to add to this component's conclusions.
      *
-     * @return  true if addition is successfull.
+     * @return true if addition is successfull.
      */
     public boolean addToConclusion(Comparable a) {
         return this.conclusion.add(a);
@@ -136,9 +139,9 @@ public class Rule implements Comparable {
     /**
      * Removes the specified comparable from the conclusion of this component.
      *
-     * @param   a  Comparable to remove to this component's conclusions.
+     * @param a Comparable to remove to this component's conclusions.
      *
-     * @return  true if addition is successfull.
+     * @return true if addition is successfull.
      */
     public boolean removeFromConclusion(Object a) {
         return this.conclusion.remove(a);
@@ -147,9 +150,9 @@ public class Rule implements Comparable {
     /**
      * Adds the specified collection of indexed elements to the premise of this component.
      *
-     * @param   a  Collection of comparables to add to this component's premises.
+     * @param a Collection of comparables to add to this component's premises.
      *
-     * @return  true if addition is successfull.
+     * @return true if addition is successfull.
      */
     public boolean addAllToPremise(Collection<Comparable> a) {
         return this.premise.addAll(a);
@@ -158,9 +161,9 @@ public class Rule implements Comparable {
     /**
      * Removes the specified collection of indexed elements from the premise of this component.
      *
-     * @param   a  Collection of comparables to remove to this component's premises.
+     * @param a Collection of comparables to remove to this component's premises.
      *
-     * @return  true if addition is successfull.
+     * @return true if addition is successfull.
      */
     public boolean removeAllFromPremise(Collection<Comparable> a) {
         return premise.removeAll(a);
@@ -169,9 +172,9 @@ public class Rule implements Comparable {
     /**
      * Adds the specified collection of indexed elements to the conclusion of this component.
      *
-     * @param   a  Collection of comparables to add to this component's conclusions.
+     * @param a Collection of comparables to add to this component's conclusions.
      *
-     * @return  true if addition is successfull.
+     * @return true if addition is successfull.
      */
     public boolean addAllToConclusion(Collection<Comparable> a) {
         return conclusion.addAll(a);
@@ -180,16 +183,17 @@ public class Rule implements Comparable {
     /**
      * Removes the specified collection of indexed elements from the conclusion of this component.
      *
-     * @param   a  Collection of comparables to remove to this component's conclusions.
+     * @param a Collection of comparables to remove to this component's conclusions.
      *
-     * @return  true if addition is successfull.
+     * @return true if addition is successfull.
      */
     public boolean removeAllFromConclusion(Collection<Comparable> a) {
         return conclusion.removeAll(a);
     }
 
-    /* ------------- OVERLAPING METHODS ------------------ */
-
+    /*
+     * ------------- OVERLAPING METHODS ------------------
+     */
     /**
      * Returns a String representation of this component.
      *
@@ -202,7 +206,7 @@ public class Rule implements Comparable {
      * a StringTokenizer is used to delete spaces in the
      * string description of each element of premise and conclusion
      *
-     * @return  a string made of premises followed by -> and the conclusions.
+     * @return a string made of premises followed by -> and the conclusions.
      */
     public String toString() {
         String s = "";
@@ -212,7 +216,7 @@ public class Rule implements Comparable {
                 s += st.nextToken();
             }
             s += " ";
-            }
+        }
         s += " -> ";
         for (Object e : this.getConclusion()) {
             StringTokenizer st = new StringTokenizer(e.toString());
@@ -220,14 +224,14 @@ public class Rule implements Comparable {
                 s += st.nextToken();
             }
             s += " ";
-            }
+        }
         return s;
     }
 
     /**
      * Returns the hash code of this component.
      *
-     * @return  hash code of this component
+     * @return hash code of this component
      */
     public int hashCode() {
         return 1013 * this.premise.hashCode() ^ 1009 * this.conclusion.hashCode();
@@ -236,9 +240,9 @@ public class Rule implements Comparable {
     /**
      * Compares this component with the specified one.
      *
-     * @param   o  object to compare to this component.
+     * @param o object to compare to this component.
      *
-     * @return  true or false as this componant is equals to the specified object.
+     * @return true or false as this componant is equals to the specified object.
      */
     public boolean equals(Object o) {
         if (!(o instanceof Rule)) {
@@ -252,10 +256,10 @@ public class Rule implements Comparable {
      * Compares this component with the specified one by comparing their premises,
      * or their conclusion in case of equality of the premises.
      *
-     * @param   o  object to compare to this component.
+     * @param o object to compare to this component.
      *
-     * @return  a negative integer, zero, or a positive integer as this component is less than,
-     * equal to, or greater than the specified object.
+     * @return a negative integer, zero, or a positive integer as this component is less than,
+     *         equal to, or greater than the specified object.
      */
     public int compareTo(Object o) {
         Rule r = (Rule) o;

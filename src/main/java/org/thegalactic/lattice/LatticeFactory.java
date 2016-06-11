@@ -10,13 +10,12 @@ package org.thegalactic.lattice;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import java.util.BitSet;
 import java.util.Iterator;
 
-import org.thegalactic.util.Couple;
 import org.thegalactic.dgraph.DAGraph;
 import org.thegalactic.dgraph.Node;
+import org.thegalactic.util.Couple;
 
 /**
  * This class provides a few methods to constructs lattice examples.
@@ -31,159 +30,13 @@ import org.thegalactic.dgraph.Node;
  * @author jeff
  */
 public class LatticeFactory {
-    /**
-     * This class provides a representation of permutations.
-     *
-     * If this component transforms : 0 -> 1, 1 -> 0 & 2 -> 2.
-     * Then its length is 3 and
-     *
-     * The content contains :
-     *
-     * ~~~
-     * content[0]=1
-     * content[1]=0
-     * content[2]=2
-     * ~~~
-     */
-    private static class Permutation {
-        /**
-         * This component is a permutation of 0..length-1.
-         */
-        private int length;
-
-        /**
-         * The transformation represented by this component.
-         *
-         * If this component transforms : 0 -> 1, 1 -> 0 & 2 -> 2.
-         * The field content contains :
-         *
-         * ~~~
-         * content[0]=1
-         * content[1]=0
-         * content[2]=2
-         * ~~~
-         */
-        private int[] content;
-
-        /**
-         * Constructs identity of the set 0..n-1.
-         *
-         * @param   n  permutation of the set 0..n-1.
-         */
-        Permutation(int n) {
-            this.length = n;
-            this.content = new int[n];
-            for (int i = 0; i < n; i++) {
-                this.content[i] = i;
-            }
-        }
-
-        /**
-         * Returns the transformation coded by this component.
-         *
-         * @return  the transformation coded by this component.
-         */
-        public int[] getContent() {
-            return this.content;
-        }
-
-        /**
-         * Set the transformation coded by this component.
-         *
-         * Length of this component is update by this method.
-         *
-         * @param   c  the transformation coded in this component.
-         *
-         * @return  this for chaining
-         */
-        public Permutation setContent(int[] c) {
-            this.content = c;
-            this.length = c.length;
-            return this;
-        }
-
-        /**
-         * Return length of this component.
-         *
-         * @return  length of this component.
-         */
-        public int getLength() {
-            return this.length;
-        }
-
-        /**
-         * Set length of this componenet.
-         *
-         * @param   l  length of this component.
-         *
-         * @return  true if update is successful.
-         */
-        public boolean setLength(int l) {
-            if ((this.content.length == l) && (l <= this.getLength())) {
-                this.length = l;
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        /**
-         * Returns a string representation of this component.
-         *
-         * @return  a string representation of this component.
-         */
-        @Override
-        public String toString() {
-            String str = "";
-            for (int i = 0; i < this.length; i++) {
-                str = str + this.content[i];
-            }
-            return str;
-        }
-
-        /**
-         * Returns true if this component is equal to s.
-         *
-         * @param   s  test if this component is equal to s
-         *
-         * @return  true if this component is equal to s
-         */
-        public boolean equals(Permutation s) {
-            if (!(s.getLength() == this.length)) {
-                return false;
-            } else {
-                boolean tmp = true;
-                for (int i = 0; i < this.length; i++) {
-                    tmp = tmp && (this.content[i] == s.getContent()[i]);
-                }
-                return tmp;
-            }
-        }
-
-        /**
-         * Compute the hash code.
-         *
-         * @return  an integer representing the object
-         */
-        @Override
-        public int hashCode() {
-            return super.hashCode();
-        }
-    }
-
-    /**
-     * Empty constructor.
-     */
-    protected LatticeFactory() {
-        super();
-    }
 
     /**
      * Returns a randomly generated lattice with nb nodes.
      *
-     * @param   nb  Number of nodes in the randomly generated lattice
+     * @param nb Number of nodes in the randomly generated lattice
      *
-     * @return  a randomly generated lattice with nb nodes
+     * @return a randomly generated lattice with nb nodes
      */
     public static Lattice random(int nb) {
         boolean done = false;
@@ -216,9 +69,9 @@ public class LatticeFactory {
     /**
      * Returns the boolean algebra of cardinal 2^n.
      *
-     * @param   n  cardinal of the boolean algebra return by this method is 2^n
+     * @param n cardinal of the boolean algebra return by this method is 2^n
      *
-     * @return  the boolean algebra of cardinal 2^n
+     * @return the boolean algebra of cardinal 2^n
      */
     public static Lattice booleanAlgebra(int n) {
         Lattice l = new Lattice();
@@ -237,31 +90,6 @@ public class LatticeFactory {
     }
 
     /**
-     * Computes successors of node n in the boolean algebra currently generated.
-     *
-     * @param   node  this method compute successors of this node
-     * @param   l     boolean algebra currently generated
-     * @param   n     the number of node of l will be 2^n at the end of computation
-     */
-    private static void recursiveBooleanAlgebra(Node node, Lattice l, int n) {
-        for (int i = 0; i < n; i++) {
-            BitSet b = (BitSet) node.getContent();
-            if (!b.get(i)) {
-                BitSet bs = (BitSet) b.clone();
-                bs.set(i, true);
-                if (l.getNodeByContent(bs) == null) {
-                    Node next = new Node(bs);
-                    l.addNode(next);
-                    l.addEdge(node, next);
-                    recursiveBooleanAlgebra(next, l, n);
-                } else {
-                    l.addEdge(node, l.getNodeByContent(bs));
-                }
-            }
-        }
-    }
-
-    /**
      * Returns the lattice of permutations of 1..n.
      *
      * Permutation are ordered as follows :
@@ -272,9 +100,9 @@ public class LatticeFactory {
      *
      * The bottom of this lattice is identity (for exemple 123456) and the top is for instance 654321.
      *
-     * @param   n  the lattice of permutations of the set 1..n
+     * @param n the lattice of permutations of the set 1..n
      *
-     * @return  the lattice of permutations of 1..n.
+     * @return the lattice of permutations of 1..n.
      */
     public static Lattice permutationLattice(int n) {
         Lattice l = new Lattice();
@@ -301,54 +129,16 @@ public class LatticeFactory {
     }
 
     /**
-     * Computes successors of node n in the lattice l.
-     *
-     * @param   node  successors of this node are computed by this method
-     * @param   l     lattice of permutations currently generated
-     * @param   n     lattice of permutation of the set 1..n is currently generated
-     */
-    private static void recursivePermutationLattice(Node node, Lattice l, int n) {
-        Permutation s = (Permutation) node.getContent();
-        for (int i = 0; i < s.getLength() - 1; i++) {
-            if (s.getContent()[i] < s.getContent()[i + 1]) {
-                int[] newC = s.getContent().clone();
-                Node currentNode = new Node();
-                newC[i] = s.getContent()[i + 1];
-                newC[i + 1] = s.getContent()[i];
-                Permutation newP = new Permutation(n);
-                newP.setContent(newC);
-                boolean newNode = true;
-                Iterator<Node> it = l.getNodes().iterator();
-                while (it.hasNext() && newNode) {
-                    currentNode = it.next();
-                    Permutation currentContent = (Permutation) currentNode.getContent();
-                    newNode = !(currentContent.equals(newP));
-                }
-                if (newNode) {
-                    Permutation newS = new Permutation(n);
-                    newS.setContent(newC);
-                    Node next = new Node(newS);
-                    l.addNode(next);
-                    l.addEdge(node, next);
-                    recursivePermutationLattice(next, l, n);
-                } else {
-                    l.addEdge(node, currentNode);
-                }
-            }
-        }
-    }
-
-    /**
      * Returns the lattice cartesian product of l and r.
      *
      * A node in the product is a cartesian product of two nodes
      *
      * There is an edge (n1, m1) -> (n2, m2) if and only if there are edges n1 -> n2 and m1 -> m2
      *
-     * @param   l  Lattice of the left hand side of the product
-     * @param   r  Lattice of the right hand side of the product
+     * @param l Lattice of the left hand side of the product
+     * @param r Lattice of the right hand side of the product
      *
-     * @return  the lattice cartesian product of l and r
+     * @return the lattice cartesian product of l and r
      */
     public static Lattice product(Lattice l, Lattice r) {
         Lattice prod = new Lattice();
@@ -371,13 +161,14 @@ public class LatticeFactory {
         }
         return prod;
     }
+
     /**
      * Returns lattice l in which convex c has been doubled.
      *
-     * @param   l  a lattice
-     * @param   c  a convex subset of l, to be doubled.
+     * @param l a lattice
+     * @param c a convex subset of l, to be doubled.
      *
-     * @return  a lattice construct from l by doubling the convex subset c.
+     * @return a lattice construct from l by doubling the convex subset c.
      */
     public static Lattice doublingConvex(Lattice l, DAGraph c) {
         Lattice doubled = new Lattice();
@@ -432,20 +223,231 @@ public class LatticeFactory {
                         Couple cY = (Couple) y.getContent();
                         if (l.majorants(l.getNodeByContent(x.getContent())).contains(l.getNodeByContent(cY.getLeft()))
                                 && (((Integer) cY.getRight()).intValue() == 0)) {
-                                // x < y in l and x & second component of y is 0.
-                                doubled.addEdge(x, y);
-                            }
+                            // x < y in l and x & second component of y is 0.
+                            doubled.addEdge(x, y);
+                        }
                     } else { // y wasn't in convex c
                         // x wasn't in c nor y
                         if (l.majorants(l.getNodeByContent(x.getContent())).contains(l.getNodeByContent(y.getContent()))) {
-                                // x < y in l and x & second component of y is 0.
-                                doubled.addEdge(x, y);
-                            }
+                            // x < y in l and x & second component of y is 0.
+                            doubled.addEdge(x, y);
+                        }
                     }
                 }
             }
         }
         doubled.transitiveReduction();
         return doubled;
+    }
+
+    /**
+     * Computes successors of node n in the boolean algebra currently generated.
+     *
+     * @param node this method compute successors of this node
+     * @param l    boolean algebra currently generated
+     * @param n    the number of node of l will be 2^n at the end of computation
+     */
+    private static void recursiveBooleanAlgebra(Node node, Lattice l, int n) {
+        for (int i = 0; i < n; i++) {
+            BitSet b = (BitSet) node.getContent();
+            if (!b.get(i)) {
+                BitSet bs = (BitSet) b.clone();
+                bs.set(i, true);
+                if (l.getNodeByContent(bs) == null) {
+                    Node next = new Node(bs);
+                    l.addNode(next);
+                    l.addEdge(node, next);
+                    recursiveBooleanAlgebra(next, l, n);
+                } else {
+                    l.addEdge(node, l.getNodeByContent(bs));
+                }
+            }
+        }
+    }
+
+    /**
+     * Computes successors of node n in the lattice l.
+     *
+     * @param node successors of this node are computed by this method
+     * @param l    lattice of permutations currently generated
+     * @param n    lattice of permutation of the set 1..n is currently generated
+     */
+    private static void recursivePermutationLattice(Node node, Lattice l, int n) {
+        Permutation s = (Permutation) node.getContent();
+        for (int i = 0; i < s.getLength() - 1; i++) {
+            if (s.getContent()[i] < s.getContent()[i + 1]) {
+                int[] newC = s.getContent().clone();
+                Node currentNode = new Node();
+                newC[i] = s.getContent()[i + 1];
+                newC[i + 1] = s.getContent()[i];
+                Permutation newP = new Permutation(n);
+                newP.setContent(newC);
+                boolean newNode = true;
+                Iterator<Node> it = l.getNodes().iterator();
+                while (it.hasNext() && newNode) {
+                    currentNode = it.next();
+                    Permutation currentContent = (Permutation) currentNode.getContent();
+                    newNode = !(currentContent.equals(newP));
+                }
+                if (newNode) {
+                    Permutation newS = new Permutation(n);
+                    newS.setContent(newC);
+                    Node next = new Node(newS);
+                    l.addNode(next);
+                    l.addEdge(node, next);
+                    recursivePermutationLattice(next, l, n);
+                } else {
+                    l.addEdge(node, currentNode);
+                }
+            }
+        }
+    }
+
+    /**
+     * Empty constructor.
+     */
+    protected LatticeFactory() {
+        super();
+    }
+
+    /**
+     * This class provides a representation of permutations.
+     *
+     * If this component transforms : 0 -> 1, 1 -> 0 & 2 -> 2.
+     * Then its length is 3 and
+     *
+     * The content contains :
+     *
+     * ~~~
+     * content[0]=1
+     * content[1]=0
+     * content[2]=2
+     * ~~~
+     */
+    private static class Permutation {
+
+        /**
+         * This component is a permutation of 0..length-1.
+         */
+        private int length;
+
+        /**
+         * The transformation represented by this component.
+         *
+         * If this component transforms : 0 -> 1, 1 -> 0 & 2 -> 2.
+         * The field content contains :
+         *
+         * ~~~
+         * content[0]=1
+         * content[1]=0
+         * content[2]=2
+         * ~~~
+         */
+        private int[] content;
+
+        /**
+         * Constructs identity of the set 0..n-1.
+         *
+         * @param n permutation of the set 0..n-1.
+         */
+        Permutation(int n) {
+            this.length = n;
+            this.content = new int[n];
+            for (int i = 0; i < n; i++) {
+                this.content[i] = i;
+            }
+        }
+
+        /**
+         * Returns the transformation coded by this component.
+         *
+         * @return the transformation coded by this component.
+         */
+        public int[] getContent() {
+            return this.content;
+        }
+
+        /**
+         * Set the transformation coded by this component.
+         *
+         * Length of this component is update by this method.
+         *
+         * @param c the transformation coded in this component.
+         *
+         * @return this for chaining
+         */
+        public Permutation setContent(int[] c) {
+            this.content = c;
+            this.length = c.length;
+            return this;
+        }
+
+        /**
+         * Return length of this component.
+         *
+         * @return length of this component.
+         */
+        public int getLength() {
+            return this.length;
+        }
+
+        /**
+         * Set length of this componenet.
+         *
+         * @param l length of this component.
+         *
+         * @return true if update is successful.
+         */
+        public boolean setLength(int l) {
+            if ((this.content.length == l) && (l <= this.getLength())) {
+                this.length = l;
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        /**
+         * Returns a string representation of this component.
+         *
+         * @return a string representation of this component.
+         */
+        @Override
+        public String toString() {
+            String str = "";
+            for (int i = 0; i < this.length; i++) {
+                str = str + this.content[i];
+            }
+            return str;
+        }
+
+        /**
+         * Returns true if this component is equal to s.
+         *
+         * @param s test if this component is equal to s
+         *
+         * @return true if this component is equal to s
+         */
+        public boolean equals(Permutation s) {
+            if (!(s.getLength() == this.length)) {
+                return false;
+            } else {
+                boolean tmp = true;
+                for (int i = 0; i < this.length; i++) {
+                    tmp = tmp && (this.content[i] == s.getContent()[i]);
+                }
+                return tmp;
+            }
+        }
+
+        /**
+         * Compute the hash code.
+         *
+         * @return an integer representing the object
+         */
+        @Override
+        public int hashCode() {
+            return super.hashCode();
+        }
     }
 }

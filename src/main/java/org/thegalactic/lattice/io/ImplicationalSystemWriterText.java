@@ -11,7 +11,6 @@ package org.thegalactic.lattice.io;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import java.io.BufferedWriter;
 import java.io.IOException;
 
@@ -32,27 +31,19 @@ import org.thegalactic.lattice.ImplicationalSystem;
  * title ImplicationalSystemWriterText UML graph
  */
 public final class ImplicationalSystemWriterText implements ImplicationalSystemWriter {
-    /**
-     * This class is not designed to be publicly instantiated.
-     */
-    private ImplicationalSystemWriterText() {
-    }
 
     /**
-     * The singleton instance.
+     * The singleton INSTANCE.
      */
-    private static ImplicationalSystemWriterText instance = null;
+    private static final ImplicationalSystemWriterText INSTANCE = new ImplicationalSystemWriterText();
 
     /**
-     * Return the singleton instance of this class.
+     * Return the singleton INSTANCE of this class.
      *
-     * @return  the singleton instance
+     * @return the singleton INSTANCE
      */
     public static ImplicationalSystemWriterText getInstance() {
-        if (instance == null) {
-            instance = new ImplicationalSystemWriterText();
-        }
-        return instance;
+        return INSTANCE;
     }
 
     /**
@@ -60,6 +51,12 @@ public final class ImplicationalSystemWriterText implements ImplicationalSystemW
      */
     public static void register() {
         ImplicationalSystemWriterFactory.register(ImplicationalSystemWriterText.getInstance(), "txt");
+    }
+
+    /**
+     * This class is not designed to be publicly instantiated.
+     */
+    private ImplicationalSystemWriterText() {
     }
 
     /**
@@ -78,13 +75,12 @@ public final class ImplicationalSystemWriterText implements ImplicationalSystemW
      * c d -> e
      * ~~~
      *
-     * @param   system  a system to write
-     * @param   file    a file
+     * @param system a system to write
+     * @param file   a file
      *
-     * @throws  IOException  When an IOException occurs
+     * @throws IOException When an IOException occurs
      */
     public void write(ImplicationalSystem system, BufferedWriter file) throws IOException {
         file.write(system.toString());
     }
 }
-

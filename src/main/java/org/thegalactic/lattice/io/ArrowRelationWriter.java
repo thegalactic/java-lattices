@@ -34,10 +34,10 @@ public interface ArrowRelationWriter {
     /**
      * Write an arrow relation to a file.
      *
-     * @param   arrow  an arrow relation to write
-     * @param   file   a file
+     * @param arrow an arrow relation to write
+     * @param file  a file
      *
-     * @throws  IOException  When an IOException occurs
+     * @throws IOException When an IOException occurs
      */
     void write(ArrowRelation arrow, BufferedWriter file) throws IOException;
 }

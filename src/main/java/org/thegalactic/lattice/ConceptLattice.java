@@ -42,7 +42,7 @@ import org.thegalactic.lattice.io.ConceptLatticeWriterFactory;
  * methods {@link #diagramLattice} and {@link #completeLattice} both computes
  * the closed set lattice of a given closure system.
  * The firt one computes the hasse diagram of the closed set lattice
- * by invoking  method {@link #immediateSuccessors}. This method implements  an
+ * by invoking method {@link #immediateSuccessors}. This method implements an
  * adaptation of the well-known Bordat algorithm that also
  * computes the dependance graph of the lattice where at once the minimal generators and the canonical
  * direct basis of the lattice are encoded.
@@ -71,14 +71,157 @@ public class ConceptLattice extends Lattice {
     /*
      * Register dot writer
      */
+
     static {
         if (ConceptLatticeWriterFactory.get("dot") == null) {
             ConceptLatticeWriterDot.register();
         }
     }
 
-    /* ------------- CONSTRUCTORS ------------------ */
+    /**
+     * Generate the lattice composed of all the antichains of this component
+     * ordered with the inclusion relation.
+     *
+     * This treatment is performed in O(??) by implementation of Nourine algorithm
+     * that consists in a sequence of doubling intervals of nodes.
+     *
+     * @param dag a directed acyclic graph
+     *
+     * @return the concept lattice
+     */
+    public static ConceptLattice idealLattice(DAGraph dag) {
+        if (!dag.isAcyclic()) {
+            return null;
+        }
+        // initialise the poset of ideals with the emptyset
+        ConceptLattice conceptLattice = new ConceptLattice();
+        int id = 1;
+        conceptLattice.addNode(new Concept(true, false));
+        // travel on graph according to a topological sort
+        DAGraph graph = new DAGraph(dag);
+        graph.transitiveClosure();
+        // treatment of nodes according to a topological sort
+        ArrayList<Node> sort = graph.topologicalSort();
+        for (Node x : sort) {
+            // computation of Jx
+            TreeSet<Node> jxmoins = new TreeSet<Node>(graph.getPredecessorNodes(x));
+            // storage of new ideals in a set
+            TreeSet<Concept> toAdd = new TreeSet<Concept>();
+            for (Node j1 : conceptLattice.getNodes()) {
+                if (((Concept) j1).containsAllInA(jxmoins)) {
+                    Concept newJ = new Concept(true, false);
+                    newJ.addAllToA(((TreeSet) ((Concept) j1).getSetA()));
+                    newJ.addToA(x);
+                    toAdd.add(newJ);
+                }
+            }
+            // addition of the new ideals in conceptLattice
+            for (Concept newJ : toAdd) {
+                conceptLattice.addNode(newJ);
+            }
+        }
+        // computation of the inclusion relaton
+        for (Node node1 : conceptLattice.getNodes()) {
+            for (Node node2 : conceptLattice.getNodes()) {
+                if (((Concept) node1).containsAllInA(((Concept) node2).getSetA())) {
+                    conceptLattice.addEdge(node2, node1);
+                }
+            }
+        }
+        conceptLattice.transitiveReduction();
+        return conceptLattice;
+    }
 
+    /*
+     * -------- STATIC CLOSEDSET LATTICE GENERATION FROM AN ImplicationalSystem OR A CONTEXT ------------------
+     */
+
+    /**
+     * Generates and returns the complete (i.e. transitively closed) closed set lattice of the
+     * specified closure system, that can be an implicational system (ImplicationalSystem) or a context.
+     *
+     * The lattice is generated using the well-known Next Closure algorithm.
+     * All closures are first generated using the method:
+     * {@link ClosureSystem#allClosures}
+     * that implements the well-known Next Closure algorithm.
+     * Then, all concepts are ordered by inclusion.
+     *
+     * @param init a closure system (an ImplicationalSystem or a Context)
+     *
+     * @return a concept lattice
+     */
+    public static ConceptLattice completeLattice(ClosureSystem init) {
+        ConceptLattice lattice = new ConceptLattice();
+        // compute all the closed set with allClosures
+        Vector<Concept> allclosure = init.allClosures();
+        for (Concept cl : allclosure) {
+            lattice.addNode(cl);
+        }
+
+        // an edge corresponds to an inclusion between two closed sets
+        for (Node from : lattice.getNodes()) {
+            for (Node to : lattice.getNodes()) {
+                if (((Concept) to).containsAllInA(((Concept) from).getSetA())) {
+                    lattice.addEdge(from, to);
+                }
+            }
+        }
+        // Hasse diagram is computed
+        return lattice;
+    }
+
+    /**
+     * Generates and returns the Hasse diagram of the closed set lattice of the
+     * specified closure system, that can be an implicational system (ImplicationalSystem) or a context.
+     *
+     * The Hasse diagramm of the closed set lattice is
+     * obtained by a recursively generation of immediate successors of a given closed set,
+     * starting from the botom closed set. Implemented algorithm is an adaptation of Bordat's
+     * algorithm where the dependance graph is computed while the lattice is generated.
+     * This treatment is performed in O(cCl|S|^3log g) where S is the initial set of elements,
+     * c is the number of closed sets that could be exponential in the worst case,
+     * Cl is the closure computation complexity
+     * and g is the number of minimal generators of the lattice.
+     *
+     * The dependance graph of the lattice is also computed while the lattice generation.
+     * The dependance graph of a lattice encodes at once the minimal generators
+     * and the canonical direct basis of the lattice .
+     *
+     * @param init a closure system (an ImplicationalSystem or a Context)
+     *
+     * @return a concept lattice
+     */
+    public static ConceptLattice diagramLattice(ClosureSystem init) {
+        ConceptLattice lattice = new ConceptLattice();
+        //if (Diagram) {
+        // computes the dependance graph of the closure system
+        // addition of nodes in the precedence graph
+        DGraph graph = new DGraph();
+        for (Comparable c : init.getSet()) {
+            graph.addNode(new Node(c));
+        }
+        lattice.setDependencyGraph(graph);
+        // intialize the close set lattice with botom element
+        Concept bot = new Concept(init.closure(new ComparableSet()), false);
+        lattice.addNode(bot);
+        // recursive genaration from the botom element with diagramLattice
+        lattice.recursiveDiagramLattice(bot, init);
+        // minimalisation of edge's content to get only inclusion-minimal valuation for each edge
+        /**
+         * for (Edge ed : lattice.dependanceGraph.getEdges()) {
+         * TreeSet<ComparableSet> valEd = new TreeSet<ComparableSet>(((TreeSet<ComparableSet>)ed.getContent()));
+         * for (ComparableSet X1 : valEd)
+         * for (ComparableSet X2 : valEd)
+         * if (X1.containsAll(X2) && !X2.containsAll(X1))
+         * ((TreeSet<ComparableSet>)ed.getContent()).remove(X1);
+         * }*
+         */
+        return lattice;
+    }
+
+    /*
+     * ------------- CONSTRUCTORS ------------------
+     */
     /**
      * Constructs this component with an empty set of nodes.
      */
@@ -90,7 +233,7 @@ public class ConceptLattice extends Lattice {
      * Constructs this component with the specified set of concepts,
      * and empty treemap of successors and predecessors.
      *
-     * @param   set  the set of nodes
+     * @param set the set of nodes
      */
     public ConceptLattice(TreeSet<Concept> set) {
         super((TreeSet) set);
@@ -102,7 +245,7 @@ public class ConceptLattice extends Lattice {
      * Concept lattice property is checked for the specified lattice.
      * When not verified, this component is constructed with an empty set of nodes.
      *
-     * @param   lattice  the lattice to be copied
+     * @param lattice the lattice to be copied
      */
     public ConceptLattice(Lattice lattice) {
         super(lattice);
@@ -113,19 +256,20 @@ public class ConceptLattice extends Lattice {
         }
     }
 
-    /* ------------- OVERLAPPING METHODS ------------------ */
-
+    /*
+     * ------------- OVERLAPPING METHODS ------------------
+     */
     /**
      * Adds the specified node to the set of node of this component.
      *
      * In the case where content of this node is not a concept,
      * the node will not be added
      *
-     * @param   n  a node
+     * @param n a node
      *
-     * @return  a boolean
+     * @return a boolean
      *
-     * @todo  Comment the return
+     * @todo Comment the return
      */
     public boolean addNode(Node n) {
         if (n instanceof Concept) {
@@ -143,12 +287,12 @@ public class ConceptLattice extends Lattice {
      * and where nodes don't contains concept as content,
      * then the edge will not be added.
      *
-     * @param   from  the node origine of the edge
-     * @param   to    the node destination of the edge
+     * @param from the node origine of the edge
+     * @param to   the node destination of the edge
      *
-     * @return  a boolean
+     * @return a boolean
      *
-     * @todo  Comment the return
+     * @todo Comment the return
      */
     public boolean addEdge(Node from, Node to) {
         if ((to instanceof Concept) && (from instanceof Concept)) {
@@ -158,14 +302,15 @@ public class ConceptLattice extends Lattice {
         }
     }
 
-    /* ------------- CONCEPT LATTICE CHEKING METHOD ------------------ */
-
+    /*
+     * ------------- CONCEPT LATTICE CHEKING METHOD ------------------
+     */
     /**
      * Check if nodes of this component are concepts.
      *
-     * @return  a boolean
+     * @return a boolean
      *
-     * @todo  Comment the return
+     * @todo Comment the return
      */
     public boolean containsConcepts() {
         for (Node n : this.getNodes()) {
@@ -179,9 +324,9 @@ public class ConceptLattice extends Lattice {
     /**
      * Check if this component is a lattice whose nodes are concepts.
      *
-     * @return  a boolean
+     * @return a boolean
      *
-     * @todo  Comment the return
+     * @todo Comment the return
      */
     public boolean isConceptLattice() {
         if (!this.isLattice()) {
@@ -196,9 +341,9 @@ public class ConceptLattice extends Lattice {
     /**
      * Check if this component is a lattice whose nodes are concepts with non null set A.
      *
-     * @return  a boolean
+     * @return a boolean
      *
-     * @todo  Comment the return: conception
+     * @todo Comment the return: conception
      */
     public boolean containsAllSetA() {
         if (!this.containsConcepts()) {
@@ -215,9 +360,9 @@ public class ConceptLattice extends Lattice {
     /**
      * Check if this component is a lattice whose nodes are concepts with non null set A.
      *
-     * @return  a boolean
+     * @return a boolean
      *
-     * @todo  Comment the return
+     * @todo Comment the return
      */
     public boolean containsAllSetB() {
         if (!this.containsConcepts()) {
@@ -234,7 +379,7 @@ public class ConceptLattice extends Lattice {
     /**
      * Returns a clone of this component composed of a clone of each concept and each edge.
      *
-     * @return  a concept lattice
+     * @return a concept lattice
      */
     @Override
     public ConceptLattice clone() {
@@ -252,14 +397,15 @@ public class ConceptLattice extends Lattice {
         return conceptLattice;
     }
 
-
-    /* ------------- SET A AND SET B HANDLING METHOD ------------------ */
-
+    /*
+     * ------------- SET A AND SET B HANDLING METHOD ------------------
+     */
     /**
      * Returns concept defined by setA and setB; null if not found.
      *
      * @param setA intent of the concept to find
      * @param setB extent of the concept to find
+     *
      * @return concept defined by setA and setB; null if not found.
      */
     public Concept getConcept(ComparableSet setA, ComparableSet setB) {
@@ -272,20 +418,21 @@ public class ConceptLattice extends Lattice {
         }
         return cpt;
     }
+
     /**
      * Replace set A in each concept of the lattice with the null value.
      *
-     * @return  a boolean
+     * @return a boolean
      *
-     * @todo  Comment the return
+     * @todo Comment the return
      */
     public boolean removeAllSetA() {
         if (!this.containsConcepts()) {
             return false;
         }
         for (Node n : this.getNodes()) {
-             Concept c = (Concept) n;
-             c.putSetA(null);
+            Concept c = (Concept) n;
+            c.putSetA(null);
         }
         return true;
     }
@@ -293,17 +440,17 @@ public class ConceptLattice extends Lattice {
     /**
      * Replace set B in each concept of the lattice with the null value.
      *
-     * @return  a boolean
+     * @return a boolean
      *
-     * @todo  Comment the return
+     * @todo Comment the return
      */
     public boolean removeAllSetB() {
         if (!this.containsConcepts()) {
             return false;
         }
         for (Node n : this.getNodes()) {
-             Concept c = (Concept) n;
-             c.putSetB(null);
+            Concept c = (Concept) n;
+            c.putSetB(null);
         }
         return true;
     }
@@ -311,9 +458,9 @@ public class ConceptLattice extends Lattice {
     /**
      * Replace null set A in each join irreducible concept with a set containing node ident.
      *
-     * @return  a boolean
+     * @return a boolean
      *
-     * @todo  Comment the return
+     * @todo Comment the return
      */
     public boolean initialiseSetAForJoin() {
         if (!this.containsConcepts()) {
@@ -329,14 +476,14 @@ public class ConceptLattice extends Lattice {
             }
         }
         return true;
-   }
+    }
 
     /**
      * Replace null set B in each meet irreducible concept with a set containing node ident.
      *
-     * @return  a boolean
+     * @return a boolean
      *
-     * @todo  Comment the return
+     * @todo Comment the return
      */
     public boolean initialiseSetBForMeet() {
         if (!this.containsConcepts()) {
@@ -344,27 +491,28 @@ public class ConceptLattice extends Lattice {
         }
         TreeSet<Node> meetIrr = this.meetIrreducibles();
         for (Node n : this.getNodes()) {
-             Concept c = (Concept) n;
-             if (!c.hasSetB() && meetIrr.contains(c)) {
+            Concept c = (Concept) n;
+            if (!c.hasSetB() && meetIrr.contains(c)) {
                 ComparableSet setX = new ComparableSet();
                 setX.add(new Integer(c.getIdentifier()));
                 c.putSetB(setX);
-             }
-         }
+            }
+        }
         return true;
     }
 
-    /* --------------- INCLUSION REDUCTION METHODS ------------ */
-
+    /*
+     * --------------- INCLUSION REDUCTION METHODS ------------
+     */
     /**
      * Replaces, if not empty, set A of each concept with the difference between itself
      * and set A of its predecessors;
      * Then replaces, if not empty, set B of each concept by
      * the difference between itself and set B of its successors.
      *
-     * @return  a boolean
+     * @return a boolean
      *
-     * @todo  Comment the return
+     * @todo Comment the return
      */
     public boolean makeInclusionReduction() {
         if (!this.containsConcepts()) {
@@ -384,7 +532,7 @@ public class ConceptLattice extends Lattice {
             // reduction of set A
             for (Node to : sort) {
                 Concept cto = (Concept) to;
-                for (Node from : this.getPredecessorNodes(to))  {
+                for (Node from : this.getPredecessorNodes(to)) {
                     Concept cfrom = (Concept) from;
                     cto.getSetA().removeAll(cfrom.getSetA());
                 }
@@ -396,8 +544,8 @@ public class ConceptLattice extends Lattice {
             ArrayList<Node> sort = this.topologicalSort();
             // reduction of set B
             for (Node to : sort) {
-                Concept cto  = (Concept) to;
-                for (Node from : this.getSuccessorNodes(to))  {
+                Concept cto = (Concept) to;
+                for (Node from : this.getSuccessorNodes(to)) {
                     Concept cfrom = (Concept) from;
                     cto.getSetB().removeAll(cfrom.getSetB());
                 }
@@ -412,9 +560,9 @@ public class ConceptLattice extends Lattice {
      *
      * Others closed sets are replaced by an emptyset.
      *
-     * @return  a boolean
+     * @return a boolean
      *
-     * @todo  Comment the return
+     * @todo Comment the return
      */
     public boolean makeIrreduciblesReduction() {
         // make inclusion reduction
@@ -440,9 +588,9 @@ public class ConceptLattice extends Lattice {
      * Returns a lattice where edges are valuated by the difference between
      * set A of two adjacent concepts.
      *
-     * @return  a boolean
+     * @return a boolean
      *
-     * @todo  Change comment
+     * @todo Change comment
      */
     public boolean makeEdgeValuation() {
         if (!this.containsConcepts()) {
@@ -462,15 +610,16 @@ public class ConceptLattice extends Lattice {
         return true;
     }
 
-    /* --------------- LATTICE GENERATION METHODS ------------ */
-
+    /*
+     * --------------- LATTICE GENERATION METHODS ------------
+     */
     /**
      * Returns a lattice where join irreducibles node's content
      * is replaced by the first element of set A.
      *
      * Other nodes are replaced by a new comparable.
      *
-     * @return  a lattice
+     * @return a lattice
      */
     public Lattice getJoinReduction() {
         if (!this.containsConcepts()) {
@@ -515,7 +664,7 @@ public class ConceptLattice extends Lattice {
      *
      * Other nodes are replaced by a new comparable.
      *
-     * @return  a lattice
+     * @return a lattice
      */
     public Lattice getMeetReduction() {
         if (!this.containsConcepts()) {
@@ -565,7 +714,7 @@ public class ConceptLattice extends Lattice {
      * a node containing the first element of set A and the first element of set B in a set.
      * Other nodes are replaced by an empty node.
      *
-     * @return  a lattice
+     * @return a lattice
      */
     public Lattice getIrreduciblesReduction() {
         Lattice lattice = new Lattice();
@@ -614,60 +763,6 @@ public class ConceptLattice extends Lattice {
     }
 
     /**
-     * Generate the lattice composed of all the antichains of this component
-     * ordered with the inclusion relation.
-     *
-     * This treatment is performed in O(??) by implementation of Nourine algorithm
-     * that consists in a sequence of doubling intervals of nodes.
-     *
-     * @param   dag  a directed acyclic graph
-     *
-     * @return  the concept lattice
-     */
-    public static ConceptLattice idealLattice(DAGraph dag) {
-        if (!dag.isAcyclic()) {
-            return null;
-        }
-        // initialise the poset of ideals with the emptyset
-        ConceptLattice conceptLattice = new ConceptLattice();
-        int id = 1;
-        conceptLattice.addNode(new Concept(true, false));
-        // travel on graph according to a topological sort
-        DAGraph graph = new DAGraph(dag);
-        graph.transitiveClosure();
-        // treatment of nodes according to a topological sort
-        ArrayList<Node> sort = graph.topologicalSort();
-        for (Node x : sort) {
-            // computation of Jx
-            TreeSet<Node> jxmoins = new TreeSet<Node>(graph.getPredecessorNodes(x));
-            // storage of new ideals in a set
-            TreeSet<Concept> toAdd = new TreeSet<Concept>();
-            for (Node j1 : conceptLattice.getNodes()) {
-                if (((Concept) j1).containsAllInA(jxmoins)) {
-                     Concept newJ = new Concept(true, false);
-                     newJ.addAllToA(((TreeSet) ((Concept) j1).getSetA()));
-                     newJ.addToA(x);
-                     toAdd.add(newJ);
-                }
-            }
-            // addition of the new ideals in conceptLattice
-            for (Concept newJ : toAdd) {
-                conceptLattice.addNode(newJ);
-            }
-        }
-        // computation of the inclusion relaton
-        for (Node node1 : conceptLattice.getNodes()) {
-            for (Node node2 : conceptLattice.getNodes()) {
-                if (((Concept) node1).containsAllInA(((Concept) node2).getSetA())) {
-                    conceptLattice.addEdge(node2, node1);
-                }
-            }
-        }
-        conceptLattice.transitiveReduction();
-        return conceptLattice;
-    }
-
-    /**
      * Returns iceberg lattice whose concept contains enough observations.
      *
      * Deprecated: use getConceptIceberg method from ClosureSystem class instead.
@@ -675,6 +770,7 @@ public class ConceptLattice extends Lattice {
      * A top node is added to keep the lattice structure.
      *
      * @param threshold used to determine nodes to be kept.
+     *
      * @return iceberg lattice whose concept contains enough observations.
      */
     @Deprecated
@@ -704,88 +800,6 @@ public class ConceptLattice extends Lattice {
         }
         return l;
     }
-    /* -------- STATIC CLOSEDSET LATTICE GENERATION FROM AN ImplicationalSystem OR A CONTEXT ------------------ */
-
-    /**
-     * Generates and returns the complete (i.e. transitively closed) closed set lattice of the
-     * specified closure system, that can be an implicational system (ImplicationalSystem) or a context.
-     *
-     * The lattice is generated using the well-known Next Closure algorithm.
-     * All closures are first generated using the method:
-     * {@link ClosureSystem#allClosures}
-     * that implements the well-known Next Closure algorithm.
-     * Then, all concepts are ordered by inclusion.
-     *
-     * @param   init  a closure system (an ImplicationalSystem or a Context)
-     *
-     * @return  a concept lattice
-     */
-    public static ConceptLattice completeLattice(ClosureSystem init) {
-        ConceptLattice lattice = new ConceptLattice();
-        // compute all the closed set with allClosures
-        Vector<Concept> allclosure = init.allClosures();
-        for (Concept cl : allclosure) {
-            lattice.addNode(cl);
-        }
-
-        // an edge corresponds to an inclusion between two closed sets
-        for (Node from : lattice.getNodes()) {
-            for (Node to : lattice.getNodes()) {
-                if (((Concept) to).containsAllInA(((Concept) from).getSetA())) {
-                   lattice.addEdge(from, to);
-                }
-            }
-        }
-        // Hasse diagram is computed
-        return lattice;
-    }
-
-    /**
-     * Generates and returns the Hasse diagram of the closed set lattice of the
-     * specified closure system, that can be an implicational system (ImplicationalSystem) or a context.
-     *
-     * The Hasse diagramm of the closed set lattice is
-     * obtained by a recursively generation of immediate successors of a given closed set,
-     * starting from the botom closed set. Implemented algorithm is an adaptation of Bordat's
-     * algorithm where the dependance graph is computed while the lattice is generated.
-     * This treatment is performed in O(cCl|S|^3log g) where S is the initial set of elements,
-     * c is the number of closed sets that could be exponential in the worst case,
-     * Cl is the closure computation complexity
-     * and g is the number of minimal generators of the lattice.
-     *
-     * The dependance graph of the lattice is also computed while the lattice generation.
-     * The dependance graph of a lattice encodes at once the minimal generators
-     * and the canonical direct basis of the lattice .
-     *
-     * @param   init  a closure system (an ImplicationalSystem or a Context)
-     *
-     * @return  a concept lattice
-     */
-    public static ConceptLattice diagramLattice(ClosureSystem init) {
-        ConceptLattice lattice = new ConceptLattice();
-        //if (Diagram) {
-            // computes the dependance graph of the closure system
-            // addition of nodes in the precedence graph
-            DGraph graph = new DGraph();
-            for (Comparable c : init.getSet()) {
-                graph.addNode(new Node(c));
-            }
-            lattice.setDependencyGraph(graph);
-            // intialize the close set lattice with botom element
-            Concept bot = new Concept(init.closure(new ComparableSet()), false);
-            lattice.addNode(bot);
-            // recursive genaration from the botom element with diagramLattice
-            lattice.recursiveDiagramLattice(bot, init);
-            // minimalisation of edge's content to get only inclusion-minimal valuation for each edge
-            /**for (Edge ed : lattice.dependanceGraph.getEdges()) {
-                TreeSet<ComparableSet> valEd = new TreeSet<ComparableSet>(((TreeSet<ComparableSet>)ed.getContent()));
-                for (ComparableSet X1 : valEd)
-                    for (ComparableSet X2 : valEd)
-                        if (X1.containsAll(X2) && !X2.containsAll(X1))
-                            ((TreeSet<ComparableSet>)ed.getContent()).remove(X1);
-            }**/
-        return lattice;
-    }
 
     /**
      * Returns the Hasse diagramme of the closed set lattice of the specified closure system
@@ -801,15 +815,15 @@ public class ConceptLattice extends Lattice {
      * Cl is the closure computation complexity
      * and g is the number of minimal generators of the lattice.
      *
-     * @param   n     a concept
-     * @param   init  a closure system
+     * @param n    a concept
+     * @param init a closure system
      */
     public void recursiveDiagramLattice(Concept n, ClosureSystem init) {
         Vector<TreeSet<Comparable>> immSucc = this.immediateSuccessors(n, init);
         for (TreeSet<Comparable> setX : immSucc) {
             Concept c = new Concept(new TreeSet(setX), false);
             Concept ns = (Concept) this.getNode(c);
-            if (ns != null)  {
+            if (ns != null) {
                 // when ns already exists, addition of a new edge
                 this.addEdge(n, ns);
             } else { // when ns don't already exists, addition of a new node and recursive treatment
@@ -914,10 +928,10 @@ public class ConceptLattice extends Lattice {
      * is initialised, but it may be not complete. It is the case for example for on-line generation of the
      * concept lattice.
      *
-     * @param   n     a node
-     * @param   init  a closure system
+     * @param n    a node
+     * @param init a closure system
      *
-     * @return  a set of immediate successors
+     * @return a set of immediate successors
      */
     public Vector<TreeSet<Comparable>> immediateSuccessors(Node n, ClosureSystem init) {
         // Initialisation of the dependance graph when not initialised by method recursiveDiagramLattice
@@ -937,7 +951,7 @@ public class ConceptLattice extends Lattice {
         DAGraph acyclPrec = prec.getStronglyConnectedComponent();
         ComparableSet newVal = new ComparableSet();
         newVal.addAll(setF);
-        for (Object x : setF)  {
+        for (Object x : setF) {
             // computes nx, the strongly connected component containing x
             Node nx = null;
             for (Node cc : acyclPrec.getNodes()) {
@@ -1017,15 +1031,15 @@ public class ConceptLattice extends Lattice {
             }
             immSucc.add(s);
         }
-       return immSucc;
+        return immSucc;
     }
 
     /**
      * Save the description of this component in a file whose name is specified.
      *
-     * @param   filename  the name of the file
+     * @param filename the name of the file
      *
-     * @throws  IOException  When an IOException occurs
+     * @throws IOException When an IOException occurs
      */
     public void save(final String filename) throws IOException {
         String extension = "";

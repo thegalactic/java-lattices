@@ -11,7 +11,6 @@ package org.thegalactic.lattice.io;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import java.io.BufferedReader;
 import java.io.IOException;
 
@@ -34,11 +33,10 @@ public interface ImplicationalSystemReader {
     /**
      * Read an implicational system from a file.
      *
-     * @param   system  an implicational system to read
-     * @param   file    a file
+     * @param system an implicational system to read
+     * @param file   a file
      *
-     * @throws  IOException  When an IOException occurs
+     * @throws IOException When an IOException occurs
      */
     void read(ImplicationalSystem system, BufferedReader file) throws IOException;
 }
-

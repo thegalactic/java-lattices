@@ -176,7 +176,6 @@ public class CsvSerializerTest {
             writer.newLine();
             writer.write("1,2,1");
             writer.close();
-            System.out.println(filename);
             Context context = new Context(filename);
             file.delete();
             fail();

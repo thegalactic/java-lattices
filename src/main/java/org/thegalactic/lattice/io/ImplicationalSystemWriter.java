@@ -11,7 +11,6 @@ package org.thegalactic.lattice.io;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import java.io.BufferedWriter;
 import java.io.IOException;
 
@@ -34,11 +33,10 @@ public interface ImplicationalSystemWriter {
     /**
      * Write an implicational system to a file.
      *
-     * @param   system  an implicational system to write
-     * @param   file    a file
+     * @param system an implicational system to write
+     * @param file   a file
      *
-     * @throws  IOException  When an IOException occurs
+     * @throws IOException When an IOException occurs
      */
     void write(ImplicationalSystem system, BufferedWriter file) throws IOException;
 }
-

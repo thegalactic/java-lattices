@@ -30,52 +30,51 @@ import java.util.HashMap;
  */
 public final class ArrowRelationWriterFactory {
     /**
-     * This class is not designed to be instantiated.
-     */
-    private ArrowRelationWriterFactory() {
-    }
-
-    /**
      * Map of extension/writer.
      */
-    private static HashMap<String, ArrowRelationWriter> writers = new HashMap<String, ArrowRelationWriter>();
+    private static final HashMap<String, ArrowRelationWriter> WRITERS = new HashMap<String, ArrowRelationWriter>();
 
     /**
      * Register a writer with an extension.
      *
-     * @param   writer     The writer to register
-     * @param   extension  The extension linked to the writer
+     * @param writer    The writer to register
+     * @param extension The extension linked to the writer
      *
-     * @return  The old writer or null
+     * @return The old writer or null
      */
     public static ArrowRelationWriter register(ArrowRelationWriter writer, String extension) {
-        ArrowRelationWriter old = writers.get(extension);
-        writers.put(extension, writer);
+        ArrowRelationWriter old = WRITERS.get(extension);
+        WRITERS.put(extension, writer);
         return old;
     }
 
     /**
      * Unregister an extension.
      *
-     * @param   extension  The extension linked to a writer
+     * @param extension The extension linked to a writer
      *
-     * @return  The old writer or null
+     * @return The old writer or null
      */
     public static ArrowRelationWriter unregister(String extension) {
-        ArrowRelationWriter old = writers.get(extension);
-        writers.remove(extension);
+        ArrowRelationWriter old = WRITERS.get(extension);
+        WRITERS.remove(extension);
         return old;
     }
 
     /**
      * Get the writer linked to an extension.
      *
-     * @param   extension  The extension linked to a writer
+     * @param extension The extension linked to a writer
      *
-     * @return  The writer or null
+     * @return The writer or null
      */
     public static ArrowRelationWriter get(String extension) {
-        return writers.get(extension);
+        return WRITERS.get(extension);
+    }
+
+    /**
+     * This class is not designed to be instantiated.
+     */
+    private ArrowRelationWriterFactory() {
     }
 }
-

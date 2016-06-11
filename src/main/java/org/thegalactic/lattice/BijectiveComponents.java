@@ -5,22 +5,22 @@ package org.thegalactic.lattice;
  *
  * Copyright: 2010-2015 Karell Bertet, France
  * Copyright: 2015-2016 The Galactic Organization, France
+ *
  * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
  *
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
-import java.util.Date;
-import java.util.TreeSet;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Date;
+import java.util.TreeSet;
 
-import org.thegalactic.util.ComparableSet;
-import org.thegalactic.dgraph.DGraph;
 import org.thegalactic.context.Context;
+import org.thegalactic.dgraph.DGraph;
+import org.thegalactic.util.ComparableSet;
 
 /**
  * This class generates bijective components issued from lattice theory for a specified
@@ -59,12 +59,13 @@ import org.thegalactic.context.Context;
  * title BijectiveComponents UML graph
  */
 public class BijectiveComponents {
-    /* ------------- FIELDS ------------------ */
+    /*
+     * ------------- FIELDS ------------------
+     */
 
     /**
      * The initial closure system.
      */
-
     private ClosureSystem closureSystem;
 
     /**
@@ -107,7 +108,7 @@ public class BijectiveComponents {
     /**
      * Constructs this component with the specified Closure System as initial closure system.
      *
-     * @param   closureSystem  initial closure system
+     * @param closureSystem initial closure system
      */
     public BijectiveComponents(ClosureSystem closureSystem) {
         this.initialise(closureSystem);
@@ -116,9 +117,9 @@ public class BijectiveComponents {
     /**
      * Initialise the closure system.
      *
-     * @param   closureSystem  initial closure system
+     * @param closureSystem initial closure system
      *
-     * @return  this for chaining
+     * @return this for chaining
      */
     public BijectiveComponents initialise(ClosureSystem closureSystem) {
         this.closureSystem = closureSystem;
@@ -178,7 +179,7 @@ public class BijectiveComponents {
      * (new ImplicationalSystem(this.canonicalDirectBasis)).makeCanonicalBasis();
      * ~~~
      *
-     * @return  time of computation
+     * @return time of computation
      */
     public long compute() {
         this.initialise(closureSystem);
@@ -201,10 +202,10 @@ public class BijectiveComponents {
      *
      * The specified name is used to defined a name for each file.
      *
-     * @param   directory  location to save file
-     * @param   name       name of the files
+     * @param directory location to save file
+     * @param name      name of the files
      *
-     * @throws  IOException  When an IOException occurs
+     * @throws IOException When an IOException occurs
      */
     public void save(String directory, String name) throws IOException {
         // create the directory
@@ -254,7 +255,7 @@ public class BijectiveComponents {
     /**
      * Returns the closure system of this component.
      *
-     * @return  closure system of this component
+     * @return closure system of this component
      */
     public ClosureSystem getClosureSystem() {
         return closureSystem;
@@ -275,7 +276,7 @@ public class BijectiveComponents {
     /**
      * Returns the lattice of this component.
      *
-     * @return  lattice of this component
+     * @return lattice of this component
      */
     public ConceptLattice getLattice() {
         if (lattice == null) {
@@ -299,7 +300,7 @@ public class BijectiveComponents {
     /**
      * Returns the reduced lattice of this component.
      *
-     * @return  reduced lattice of this component
+     * @return reduced lattice of this component
      */
     public Lattice getReducedLattice() {
         if (reducedLattice == null) {
@@ -323,7 +324,7 @@ public class BijectiveComponents {
     /**
      * Returns the dependency graph of this component.
      *
-     * @return  dependencyGraph  dependency graph of this component
+     * @return dependencyGraph dependency graph of this component
      */
     public DGraph getDependencyGraph() {
         if (dependencyGraph == null) {
@@ -348,7 +349,7 @@ public class BijectiveComponents {
     /**
      * Returns the minimal generators of this component.
      *
-     * @return  minimal generators of this component
+     * @return minimal generators of this component
      */
     public TreeSet<ComparableSet> getMinimalGenerators() {
         if (minimalGenerators == null) {
@@ -359,21 +360,9 @@ public class BijectiveComponents {
     }
 
     /**
-     * Set the minimal generators of this component.
-     *
-     * @param   minimalGenerators  used to define field of this component
-     *
-     * @return  this for chaining
-     */
-    protected BijectiveComponents setMinimalGenerators(TreeSet<ComparableSet> minimalGenerators) {
-        this.minimalGenerators = minimalGenerators;
-        return this;
-    }
-
-    /**
      * Returns the canonical direct basis of this component.
      *
-     * @return  the canonical direct basis of this component
+     * @return the canonical direct basis of this component
      */
     public ImplicationalSystem getCanonicalDirectBasis() {
         if (canonicalDirectBasis == null) {
@@ -384,21 +373,9 @@ public class BijectiveComponents {
     }
 
     /**
-     * Set the canonical direct basis of this component.
-     *
-     * @param   canonicalDirectBasis  used to define field of this component
-     *
-     * @return  return this for chaining
-     */
-    protected BijectiveComponents setCanonicalDirectBasis(ImplicationalSystem canonicalDirectBasis) {
-        this.canonicalDirectBasis = canonicalDirectBasis;
-        return this;
-    }
-
-    /**
      * Returns the canonical basis of this component.
      *
-     * @return  the canonical basis of this component
+     * @return the canonical basis of this component
      */
     public ImplicationalSystem getCanonicalBasis() {
         if (canonicalBasis == null) {
@@ -409,21 +386,9 @@ public class BijectiveComponents {
     }
 
     /**
-     * Set the canonical basis of this component.
-     *
-     * @param   canonicalBasis  used to define field of this component
-     *
-     * @return  this for chaining
-     */
-    protected BijectiveComponents setCanonicalBasis(ImplicationalSystem canonicalBasis) {
-        this.canonicalBasis = canonicalBasis;
-        return this;
-    }
-
-    /**
      * Returns the Table of this component.
      *
-     * @return  table of this component
+     * @return table of this component
      */
     public Context getTable() {
         if (table == null) {
@@ -432,32 +397,71 @@ public class BijectiveComponents {
         }
         return table;
     }
+
+    /**
+     * Set the minimal generators of this component.
+     *
+     * @param minimalGenerators used to define field of this component
+     *
+     * @return this for chaining
+     */
+    protected BijectiveComponents setMinimalGenerators(TreeSet<ComparableSet> minimalGenerators) {
+        this.minimalGenerators = minimalGenerators;
+        return this;
+    }
+
+    /**
+     * Set the canonical direct basis of this component.
+     *
+     * @param canonicalDirectBasis used to define field of this component
+     *
+     * @return return this for chaining
+     */
+    protected BijectiveComponents setCanonicalDirectBasis(ImplicationalSystem canonicalDirectBasis) {
+        this.canonicalDirectBasis = canonicalDirectBasis;
+        return this;
+    }
+
+    /**
+     * Set the canonical basis of this component.
+     *
+     * @param canonicalBasis used to define field of this component
+     *
+     * @return this for chaining
+     */
+    protected BijectiveComponents setCanonicalBasis(ImplicationalSystem canonicalBasis) {
+        this.canonicalBasis = canonicalBasis;
+        return this;
+    }
+
     /**
      * Set the Table of this component.
      *
-     * @param   table  used to define field of this component
+     * @param table used to define field of this component
      *
-     * @return  this for chaining
+     * @return this for chaining
      */
     protected BijectiveComponents setTable(Context table) {
         this.table = table;
         return this;
     }
 
-/** Returns the informativ generic basis
- * public IS getApproximativBasis () {
- * IS IGB = new IS(this.canonicalDirectBasis);
- * IS tmp = new IS(this.canonicalDirectBasis);
- * for (Rule r : tmp.getRules()) {
- *  TreeSet premise = new TreeSet(r.getPremise());
- *  Concept c = new Concept(this.closure(premise),false);
- *  for (TreeSet conclusion : this.immediateSuccessors(c)) {
- *      TreeSet concl = new TreeSet(conclusion);
- *      conclusion.removeAll(premise);
- *      IGB.addRule(new Rule(premise,concl));
- *  }
- * }
- * return IGB;
- * }
- **/
+    /**
+     * Returns the informativ generic basis
+     * public IS getApproximativBasis () {
+     * IS IGB = new IS(this.canonicalDirectBasis);
+     * IS tmp = new IS(this.canonicalDirectBasis);
+     * for (Rule r : tmp.getRules()) {
+     * TreeSet premise = new TreeSet(r.getPremise());
+     * Concept c = new Concept(this.closure(premise),false);
+     * for (TreeSet conclusion : this.immediateSuccessors(c)) {
+     * TreeSet concl = new TreeSet(conclusion);
+     * conclusion.removeAll(premise);
+     * IGB.addRule(new Rule(premise,concl));
+     * }
+     * }
+     * return IGB;
+     * }
+     *
+     */
 } // end of BijectiveComponents
