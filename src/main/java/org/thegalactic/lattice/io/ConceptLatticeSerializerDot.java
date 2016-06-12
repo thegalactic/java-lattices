@@ -1,7 +1,7 @@
 package org.thegalactic.lattice.io;
 
 /*
- * ConceptLatticeWriterDot.java
+ * ConceptLatticeSerializerDot.java
  *
  * Copyright: 2010-2015 Karell Bertet, France
  * Copyright: 2015-2016 The Galactic Organization, France
@@ -17,36 +17,41 @@ import java.io.IOException;
 
 import org.thegalactic.dgraph.Edge;
 import org.thegalactic.dgraph.Node;
+import org.thegalactic.io.Writer;
 import org.thegalactic.lattice.Concept;
 import org.thegalactic.lattice.ConceptLattice;
 
 /**
  * This class defines the way for writing a concept lattice as a dot file.
  *
- * ![ConceptLatticeWriterDot](ConceptLatticeWriterDot.png)
+ * ![ConceptLatticeSerializerDot](ConceptLatticeSerializerDot.png)
  *
- * @uml ConceptLatticeWriterDot.png
- * !include resources/org/thegalactic/lattice/io/ConceptLatticeWriterDot.iuml
- * !include resources/org/thegalactic/lattice/io/ConceptLatticeWriter.iuml
+ * @uml
+ *
+ * ConceptLatticeSerializerDot.png
+ *
+ * !include resources/org/thegalactic/lattice/io/ConceptLatticeSerializerDot.iuml
+ * !include resources/org/thegalactic/io/Reader.iuml
+ * !include resources/org/thegalactic/io/Writer.iuml
  *
  * hide members
- * show ConceptLatticeWriterDot members
- * class ConceptLatticeWriterDot #LightCyan
- * title ConceptLatticeWriterDot UML graph
+ * show ConceptLatticeSerializerDot members
+ * class ConceptLatticeSerializerDot #LightCyan
+ * title ConceptLatticeSerializerDot UML graph
  */
-public final class ConceptLatticeWriterDot implements ConceptLatticeWriter {
+public final class ConceptLatticeSerializerDot implements Writer<ConceptLattice> {
 
     /**
      * The singleton instance.
      */
-    private static final ConceptLatticeWriterDot INSTANCE = new ConceptLatticeWriterDot();
+    private static final ConceptLatticeSerializerDot INSTANCE = new ConceptLatticeSerializerDot();
 
     /**
      * Return the singleton instance of this class.
      *
      * @return the singleton instance
      */
-    public static ConceptLatticeWriterDot getInstance() {
+    public static ConceptLatticeSerializerDot getInstance() {
         return INSTANCE;
     }
 
@@ -54,13 +59,13 @@ public final class ConceptLatticeWriterDot implements ConceptLatticeWriter {
      * Register this class for writing .dot files.
      */
     public static void register() {
-        ConceptLatticeWriterFactory.register(ConceptLatticeWriterDot.getInstance(), "dot");
+        ConceptLatticeIOFactory.getInstance().registerWriter(ConceptLatticeSerializerDot.getInstance(), "dot");
     }
 
     /**
      * This class is not designed to be publicly instantiated.
      */
-    private ConceptLatticeWriterDot() {
+    private ConceptLatticeSerializerDot() {
     }
 
     /**

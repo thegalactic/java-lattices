@@ -17,8 +17,6 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 
 import org.thegalactic.util.ComparableSet;
@@ -26,9 +24,8 @@ import org.thegalactic.dgraph.DAGraph;
 import org.thegalactic.dgraph.DGraph;
 import org.thegalactic.dgraph.Edge;
 import org.thegalactic.dgraph.Node;
-import org.thegalactic.lattice.io.ConceptLatticeWriter;
-import org.thegalactic.lattice.io.ConceptLatticeWriterDot;
-import org.thegalactic.lattice.io.ConceptLatticeWriterFactory;
+import org.thegalactic.io.Filer;
+import org.thegalactic.lattice.io.ConceptLatticeIOFactory;
 
 /**
  * This class extends class {@link Lattice} to provide specific methods to
@@ -66,16 +63,6 @@ import org.thegalactic.lattice.io.ConceptLatticeWriterFactory;
  * title ConceptLattice UML graph
  */
 public class ConceptLattice extends Lattice {
-
-    /*
-     * Register dot writer
-     */
-
-    static {
-        if (ConceptLatticeWriterFactory.get("dot") == null) {
-            ConceptLatticeWriterDot.register();
-        }
-    }
 
     /**
      * Generate the lattice composed of all the antichains of this component
@@ -1046,18 +1033,6 @@ public class ConceptLattice extends Lattice {
      */
     @Override
     public void save(final String filename) throws IOException {
-        String extension = "";
-        int index = filename.lastIndexOf('.');
-        if (index > 0) {
-            extension = filename.substring(index + 1);
-        }
-        ConceptLatticeWriter writer = ConceptLatticeWriterFactory.get(extension);
-        if (writer == null) {
-            super.save(filename);
-        } else {
-            BufferedWriter file = new BufferedWriter(new FileWriter(filename));
-            writer.write(this, file);
-            file.close();
-        }
+        Filer.getInstance().save(this, ConceptLatticeIOFactory.getInstance(), filename);
     }
 }

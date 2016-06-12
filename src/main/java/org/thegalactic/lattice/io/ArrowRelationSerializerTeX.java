@@ -28,7 +28,8 @@ import org.thegalactic.lattice.ArrowRelation;
  *
  * @uml ArrowRelationSerializerTeX.png
  * !include resources/org/thegalactic/lattice/io/ArrowRelationSerializerTeX.iuml
- * !include resources/org/thegalactic/lattice/io/ArrowRelationWriter.iuml
+ * !include resources/org/thegalactic/io/Reader.iuml
+ * !include resources/org/thegalactic/io/Writer.iuml
  *
  * hide members
  * show ArrowRelationSerializerTeX members

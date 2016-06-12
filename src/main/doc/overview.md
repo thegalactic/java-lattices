@@ -253,12 +253,10 @@ hide members
 
 title Input/Output UML graph
 
-!include resources/org/thegalactic/lattice/io/ArrowRelationWriter.iuml
-!include resources/org/thegalactic/lattice/io/ArrowRelationWriterFactory.iuml
-!include resources/org/thegalactic/lattice/io/ArrowRelationWriterTeX.iuml
-!include resources/org/thegalactic/lattice/io/ConceptLatticeWriterDot.iuml
-!include resources/org/thegalactic/lattice/io/ConceptLatticeWriterFactory.iuml
-!include resources/org/thegalactic/lattice/io/ConceptLatticeWriter.iuml
+!include resources/org/thegalactic/lattice/io/ArrowRelationIOFactory.iuml
+!include resources/org/thegalactic/lattice/io/ArrowRelationSerializerDot.iuml
+!include resources/org/thegalactic/lattice/io/ConceptLatticeIOFactory.iuml
+!include resources/org/thegalactic/lattice/io/ConceptLatticeSerializerDot.iuml
 !include resources/org/thegalactic/lattice/io/ImplicationalSystemReader.iuml
 !include resources/org/thegalactic/lattice/io/ImplicationalSystemReaderFactory.iuml
 !include resources/org/thegalactic/lattice/io/ImplicationalSystemReaderText.iuml

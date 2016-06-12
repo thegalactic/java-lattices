@@ -1,0 +1,10 @@
+package org.thegalactic.lattice.io {
+    class ConceptLatticeSerializerDot {
+    	-{static}ConceptLatticeSerializerDot instance
+        +void write(ConceptLattice lattice, BufferedWriter file)
+        +{static}ConceptLatticeSerializerDot getInstance()
+        +{static}void register()
+    }
+
+    org.thegalactic.io.Writer <|-- ConceptLatticeSerializerDot
+}
