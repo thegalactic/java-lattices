@@ -54,7 +54,7 @@ public final class DGraphSerializerDot implements Writer<DGraph> {
     }
 
     /**
-     * Register this class for reading .cxt files.
+     * Register this class for writing .dot files.
      */
     public static void register() {
         DGraphIOFactory.getInstance().registerWriter(DGraphSerializerDot.getInstance(), "dot");

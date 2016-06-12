@@ -52,7 +52,7 @@ public final class ContextSerializerFIMI implements Reader<Context>, Writer<Cont
     }
 
     /**
-     * Register this class for reading .dat files.
+     * Register this class for reading and writing .dat files.
      */
     public static void register() {
         ContextIOFactory.getInstance().registerReader(ContextSerializerFIMI.getInstance(), "dat");

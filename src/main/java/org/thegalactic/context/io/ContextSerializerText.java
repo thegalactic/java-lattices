@@ -51,7 +51,7 @@ public final class ContextSerializerText implements Reader<Context>, Writer<Cont
     }
 
     /**
-     * Register this class for reading .txt files.
+     * Register this class for reading and writing .txt files.
      */
     public static void register() {
         ContextIOFactory.getInstance().registerReader(ContextSerializerText.getInstance(), "txt");

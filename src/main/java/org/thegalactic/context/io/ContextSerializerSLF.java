@@ -47,7 +47,7 @@ public final class ContextSerializerSLF implements Reader<Context>, Writer<Conte
     }
 
     /**
-     * Register this class for reading .cxt files.
+     * Register this class for reading  and writing .slf files.
      */
     public static void register() {
         ContextIOFactory.getInstance().registerReader(ContextSerializerSLF.getInstance(), "slf");

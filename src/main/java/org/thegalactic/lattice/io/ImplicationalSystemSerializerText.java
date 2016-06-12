@@ -60,7 +60,7 @@ public final class ImplicationalSystemSerializerText implements Reader<Implicati
     }
 
     /**
-     * Register this class for reading .txt files.
+     * Register this class for reading and writing .txt files.
      */
     public static void register() {
         ImplicationalSystemIOFactory.getInstance().registerReader(ImplicationalSystemSerializerText.getInstance(), "txt");
