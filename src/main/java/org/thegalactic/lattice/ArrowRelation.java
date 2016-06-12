@@ -12,8 +12,6 @@ package org.thegalactic.lattice;
  * You can redistribute it and/or modify
  * it under the terms of the CeCILL-B license.
  */
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.TreeSet;
 
@@ -21,8 +19,8 @@ import org.thegalactic.context.Context;
 import org.thegalactic.dgraph.DGraph;
 import org.thegalactic.dgraph.Edge;
 import org.thegalactic.dgraph.Node;
-import org.thegalactic.lattice.io.ArrowRelationWriterFactory;
-import org.thegalactic.lattice.io.ArrowRelationWriterTeX;
+import org.thegalactic.io.Filer;
+import org.thegalactic.lattice.io.ArrowRelationIOFactory;
 
 /**
  * The ArrowRelation class encodes arrow relation between meet &
@@ -80,15 +78,6 @@ public class ArrowRelation extends DGraph {
      * Field used to encode circ arrow relation.
      */
     private static Object circ = "Circ";
-
-    /*
-     * Register tex writer
-     */
-    static {
-        if (ArrowRelationWriterFactory.get("tex") == null) {
-            ArrowRelationWriterTeX.register();
-        }
-    }
 
     /**
      * Unique constructor of this component from a lattice.
@@ -152,14 +141,7 @@ public class ArrowRelation extends DGraph {
      */
     @Override
     public void save(final String filename) throws IOException {
-        String extension = "";
-        int index = filename.lastIndexOf('.');
-        if (index > 0) {
-            extension = filename.substring(index + 1);
-        }
-        BufferedWriter file = new BufferedWriter(new FileWriter(filename));
-        ArrowRelationWriterFactory.get(extension).write(this, file);
-        file.close();
+        Filer.getInstance().save(this, ArrowRelationIOFactory.getInstance(), filename);
     }
 
     /**

@@ -1,7 +1,7 @@
 package org.thegalactic.lattice.io;
 
 /*
- * ArrowRelationWriterTeX.java
+ * ArrowRelationSerializerTeX.java
  *
  * Copyright: 2010-2015 Karell Bertet, France
  * Copyright: 2015-2016 The Galactic Organization, France
@@ -18,49 +18,50 @@ import java.util.TreeSet;
 
 import org.thegalactic.dgraph.Edge;
 import org.thegalactic.dgraph.Node;
+import org.thegalactic.io.Writer;
 import org.thegalactic.lattice.ArrowRelation;
 
 /**
  * This class defines the way for writing an arrow relatin as a tex file.
  *
- * ![ArrowRelationWriterTex](ArrowRelationWriterTex.png)
+ * ![ArrowRelationSerializerTeX](ArrowRelationSerializerTeX.png)
  *
- * @uml ArrowRelationWriterTeX.png
- * !include resources/org/thegalactic/lattice/io/ArrowRelationWriterTeX.iuml
+ * @uml ArrowRelationSerializerTeX.png
+ * !include resources/org/thegalactic/lattice/io/ArrowRelationSerializerTeX.iuml
  * !include resources/org/thegalactic/lattice/io/ArrowRelationWriter.iuml
  *
  * hide members
- * show ArrowRelationWriterTeX members
- * class ArrowRelationWriterTeX #LightCyan
- * title ArrowRelationWriterTeX UML graph
+ * show ArrowRelationSerializerTeX members
+ * class ArrowRelationSerializerTeX #LightCyan
+ * title ArrowRelationSerializerTeX UML graph
  */
-public final class ArrowRelationWriterTeX implements ArrowRelationWriter {
+public final class ArrowRelationSerializerTeX implements Writer<ArrowRelation> {
 
     /**
      * The singleton instance.
      */
-    private static final ArrowRelationWriterTeX INSTANCE = new ArrowRelationWriterTeX();
+    private static final ArrowRelationSerializerTeX INSTANCE = new ArrowRelationSerializerTeX();
 
     /**
      * Return the singleton instance of this class.
      *
      * @return the singleton instance
      */
-    public static ArrowRelationWriterTeX getInstance() {
+    public static ArrowRelationSerializerTeX getInstance() {
         return INSTANCE;
     }
 
     /**
-     * Register this class for writing .txt files.
+     * Register this class for writing .tex files.
      */
     public static void register() {
-        ArrowRelationWriterFactory.register(ArrowRelationWriterTeX.getInstance(), "tex");
+        ArrowRelationIOFactory.getInstance().registerWriter(ArrowRelationSerializerTeX.getInstance(), "tex");
     }
 
     /**
      * This class is not designed to be publicly instantiated.
      */
-    private ArrowRelationWriterTeX() {
+    private ArrowRelationSerializerTeX() {
     }
 
     /**
