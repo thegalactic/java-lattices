@@ -1,7 +1,7 @@
 package org.thegalactic.lattice.io;
 
 /*
- * ImplicationalSystemReaderText.java
+ * ImplicationalSystemSerializerText.java
  *
  * Copyright: 2010-2015 Karell Bertet, France
  * Copyright: 2015-2016 The Galactic Organization, France
@@ -12,9 +12,12 @@ package org.thegalactic.lattice.io;
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
+import org.thegalactic.io.Reader;
+import org.thegalactic.io.Writer;
 import org.thegalactic.lattice.ImplicationalSystem;
 import org.thegalactic.lattice.Rule;
 
@@ -22,32 +25,36 @@ import org.thegalactic.lattice.Rule;
  * This class defines the way for reading an implicational system from a text
  * file.
  *
- * ![ImplicationalSystemReaderText](ImplicationalSystemReaderText.png)
+ * ![ImplicationalSystemSerializerText](ImplicationalSystemSerializerText.png)
  *
- * @uml ImplicationalSystemReaderText.png
- * !include resources/org/thegalactic/lattice/io/ImplicationalSystemReaderText.iuml
- * !include resources/org/thegalactic/lattice/io/ImplicationalSystemReader.iuml
+ * @uml
+ *
+ * ImplicationalSystemSerializerText.png
+ *
+ * !include resources/org/thegalactic/lattice/io/ImplicationalSystemSerializerText.iuml
+ * !include resources/org/thegalactic/io/Reader.iuml
+ * !include resources/org/thegalactic/io/Writer.iuml
  *
  * hide members
- * show ImplicationalSystemReaderText members
- * class ImplicationalSystemReaderText #LightCyan
- * title ImplicationalSystemReaderText UML graph
+ * show ImplicationalSystemSerializerText members
+ * class ImplicationalSystemSerializerText #LightCyan
+ * title ImplicationalSystemSerializerText UML graph
  */
-public final class ImplicationalSystemReaderText implements ImplicationalSystemReader {
+public final class ImplicationalSystemSerializerText implements Reader<ImplicationalSystem>, Writer<ImplicationalSystem> {
 
     /**
      * The singleton instance.
      */
-    private static ImplicationalSystemReaderText instance = null;
+    private static ImplicationalSystemSerializerText instance = null;
 
     /**
      * Return the singleton instance of this class.
      *
      * @return the singleton instance
      */
-    public static ImplicationalSystemReaderText getInstance() {
+    public static ImplicationalSystemSerializerText getInstance() {
         if (instance == null) {
-            instance = new ImplicationalSystemReaderText();
+            instance = new ImplicationalSystemSerializerText();
         }
         return instance;
     }
@@ -56,13 +63,14 @@ public final class ImplicationalSystemReaderText implements ImplicationalSystemR
      * Register this class for reading .txt files.
      */
     public static void register() {
-        ImplicationalSystemReaderFactory.register(ImplicationalSystemReaderText.getInstance(), "txt");
+        ImplicationalSystemIOFactory.getInstance().registerReader(ImplicationalSystemSerializerText.getInstance(), "txt");
+        ImplicationalSystemIOFactory.getInstance().registerWriter(ImplicationalSystemSerializerText.getInstance(), "txt");
     }
 
     /**
      * This class is not designed to be publicly instantiated.
      */
-    private ImplicationalSystemReaderText() {
+    private ImplicationalSystemSerializerText() {
     }
 
     /**
@@ -128,5 +136,30 @@ public final class ImplicationalSystemReaderText implements ImplicationalSystemR
             }
             line = file.readLine();
         }
+    }
+
+    /**
+     * Saves this component in a file.
+     *
+     * The following format is used:
+     *
+     * An implicational system can be instancied from and save to a text file in
+     * the following format: A list of elements separated by a space in the
+     * first line ; then, each rule on a line, written like [premise] ->
+     * [conclusion] where elements are separated by a space.
+     *
+     * ~~~
+     * a b c d e
+     * a b -> c d
+     * c d -> e
+     * ~~~
+     *
+     * @param system a system to write
+     * @param file a file
+     *
+     * @throws IOException When an IOException occurs
+     */
+    public void write(ImplicationalSystem system, BufferedWriter file) throws IOException {
+        file.write(system.toString());
     }
 }

@@ -11,10 +11,6 @@ package org.thegalactic.lattice;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
@@ -27,10 +23,8 @@ import java.util.TreeSet;
 import org.thegalactic.dgraph.DGraph;
 import org.thegalactic.dgraph.Edge;
 import org.thegalactic.dgraph.Node;
-import org.thegalactic.lattice.io.ImplicationalSystemReaderFactory;
-import org.thegalactic.lattice.io.ImplicationalSystemReaderText;
-import org.thegalactic.lattice.io.ImplicationalSystemWriterFactory;
-import org.thegalactic.lattice.io.ImplicationalSystemWriterText;
+import org.thegalactic.io.Filer;
+import org.thegalactic.lattice.io.ImplicationalSystemIOFactory;
 import org.thegalactic.util.ComparableSet;
 
 /**
@@ -75,18 +69,6 @@ import org.thegalactic.util.ComparableSet;
  * title ImplicationalSystem UML graph
  */
 public class ImplicationalSystem extends ClosureSystem {
-
-    /*
-     * Register txt writer
-     */
-    static {
-        if (ImplicationalSystemWriterFactory.get("txt") == null) {
-            ImplicationalSystemWriterText.register();
-        }
-        if (ImplicationalSystemReaderFactory.get("txt") == null) {
-            ImplicationalSystemReaderText.register();
-        }
-    }
 
     /*
      * --------------- FIELDS -----------------
@@ -434,14 +416,7 @@ public class ImplicationalSystem extends ClosureSystem {
      * @throws IOException When an IOException occurs
      */
     public void save(final String filename) throws IOException {
-        String extension = "";
-        int index = filename.lastIndexOf('.');
-        if (index > 0) {
-            extension = filename.substring(index + 1);
-        }
-        BufferedWriter file = new BufferedWriter(new FileWriter(filename));
-        ImplicationalSystemWriterFactory.get(extension).write(this, file);
-        file.close();
+        Filer.getInstance().save(this, ImplicationalSystemIOFactory.getInstance(), filename);
     }
 
     /**
@@ -456,14 +431,7 @@ public class ImplicationalSystem extends ClosureSystem {
      */
     public ImplicationalSystem parse(final String filename) throws IOException {
         this.init();
-        String extension = "";
-        int index = filename.lastIndexOf('.');
-        if (index > 0) {
-            extension = filename.substring(index + 1);
-        }
-        BufferedReader file = new BufferedReader(new FileReader(filename));
-        ImplicationalSystemReaderFactory.get(extension).read(this, file);
-        file.close();
+        Filer.getInstance().parse(this, ImplicationalSystemIOFactory.getInstance(), filename);
         return this;
     }
 

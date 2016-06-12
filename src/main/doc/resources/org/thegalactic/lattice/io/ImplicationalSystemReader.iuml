@@ -1,5 +1,0 @@
-package org.thegalactic.lattice.io {
-    interface ImplicationalSystemReader {
-        +void read(ImplicationalSystem system, BufferedReader file)
-    }
-}
