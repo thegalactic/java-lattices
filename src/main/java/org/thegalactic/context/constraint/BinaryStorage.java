@@ -34,14 +34,9 @@ public final class BinaryStorage {
     private final int length;
 
     /**
-     * Truth values.
+     * Truth and Falsity values.
      */
-    private final BitSet truth;
-
-    /**
-     * Falsity values.
-     */
-    private final BitSet falsity;
+    private final BitSet values;
 
     /**
      * This class is not designed to be publicly instantiated.
@@ -50,55 +45,54 @@ public final class BinaryStorage {
      */
     private BinaryStorage(int length) {
         this.length = length;
-        truth = new BitSet(length);
-        falsity = new BitSet(length);
+        values = new BitSet(length);
     }
 
     /**
      * Get truth value.
      *
-     * @param index truth value to be set
+     * @param index truth value to be values
      *
      * @return truth value
      */
     public boolean getTruth(int index) {
-        return truth.get(index);
+        return values.get(2 * index);
     }
 
     /**
      * Get falsity value.
      *
-     * @param index truth value to be set
+     * @param index truth value to be values
      *
      * @return truth value
      */
     public boolean getFalsity(int index) {
-        return falsity.get(index);
+        return values.get(2 * index + 1);
     }
 
     /**
      * Set truth value.
      *
-     * @param index truth value to be set
+     * @param index truth value to be values
      * @param value new truth value
      *
      * @return this for chaining.
      */
     public BinaryStorage setTruth(int index, boolean value) {
-        truth.set(index, value);
+        values.set(2 * index, value);
         return this;
     }
 
     /**
      * Set falsity value.
      *
-     * @param index truth value to be set
+     * @param index truth value to be values
      * @param value new truth value
      *
      * @return this for chaining.
      */
     public BinaryStorage setFalsity(int index, boolean value) {
-        falsity.set(index, value);
+        values.set(2 * index + 1, value);
         return this;
     }
 
@@ -111,23 +105,19 @@ public final class BinaryStorage {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
 
-        stringBuilder.append("[");
-
-        for (int i = 0; i < length; i++) {
-            if (truth.get(i)) {
-                if (falsity.get(i)) {
-                    stringBuilder.append("c");
+        for (int index = 0; index < length; index++) {
+            if (values.get(2 * index)) {
+                if (values.get(2 * index + 1)) {
+                    stringBuilder.append("!");
                 } else {
-                    stringBuilder.append("t");
+                    stringBuilder.append("1");
                 }
-            } else if (falsity.get(i)) {
-                stringBuilder.append("f");
+            } else if (values.get(2 * index + 1)) {
+                stringBuilder.append("0");
             } else {
-                stringBuilder.append("i");
+                stringBuilder.append("?");
             }
         }
-
-        stringBuilder.append("]");
 
         return stringBuilder.toString();
     }

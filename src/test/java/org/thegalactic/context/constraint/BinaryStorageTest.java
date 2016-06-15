@@ -23,11 +23,6 @@ import static org.junit.Assert.assertEquals;
  */
 public class BinaryStorageTest {
 
-    /**
-     * Constructor.
-     */
-    public BinaryStorageTest() {
-    }
 
     /**
      * BeforeClass.
@@ -41,6 +36,11 @@ public class BinaryStorageTest {
      */
     @AfterClass
     public static void tearDownClass() {
+    }
+    /**
+     * Constructor.
+     */
+    public BinaryStorageTest() {
     }
 
     /**
@@ -62,9 +62,8 @@ public class BinaryStorageTest {
      */
     @Test
     public void testCreate() {
-        BinaryStorage expResult = null;
         BinaryStorage result = BinaryStorage.create(10);
-        assertEquals("[iiiiiiiiii]", result.toString());
+        assertEquals("??????????", result.toString());
     }
 
     /**
@@ -73,9 +72,8 @@ public class BinaryStorageTest {
     @Test
     public void testSetTruth() {
         BinaryStorage instance = BinaryStorage.create(10);
-        BinaryStorage expResult = instance;
-        assertEquals(expResult, instance.setTruth(0, true));
-        assertEquals("[tiiiiiiiii]", instance.toString());
+        assertEquals(instance, instance.setTruth(0, true));
+        assertEquals("1?????????", instance.toString());
     }
 
     /**
@@ -84,9 +82,8 @@ public class BinaryStorageTest {
     @Test
     public void testSetFalsity() {
         BinaryStorage instance = BinaryStorage.create(10);
-        BinaryStorage expResult = instance;
-        assertEquals(expResult, instance.setFalsity(0, true));
-        assertEquals("[fiiiiiiiii]", instance.toString());
+        assertEquals(instance, instance.setFalsity(0, true));
+        assertEquals("0?????????", instance.toString());
     }
 
     /**
@@ -95,10 +92,8 @@ public class BinaryStorageTest {
     @Test
     public void testGetTruth() {
         BinaryStorage instance = BinaryStorage.create(10);
-        boolean expResult = false;
-        assertEquals(expResult, instance.getTruth(0));
-        expResult = true;
-        assertEquals(expResult, instance.setTruth(0, true).getTruth(0));
+        assertEquals(false, instance.getTruth(0));
+        assertEquals(true, instance.setTruth(0, true).getTruth(0));
     }
 
     /**
@@ -107,10 +102,8 @@ public class BinaryStorageTest {
     @Test
     public void testGetFalsity() {
         BinaryStorage instance = BinaryStorage.create(10);
-        boolean expResult = false;
-        assertEquals(expResult, instance.getFalsity(0));
-        expResult = true;
-        assertEquals(expResult, instance.setFalsity(0, true).getFalsity(0));
+        assertEquals(false, instance.getFalsity(0));
+        assertEquals(true, instance.setFalsity(0, true).getFalsity(0));
     }
 
     /**
@@ -122,6 +115,6 @@ public class BinaryStorageTest {
         instance.setTruth(0, true);
         instance.setFalsity(1, true);
         instance.setTruth(2, true).setFalsity(2, true);
-        assertEquals("[tfciiiiiii]", instance.toString());
+        assertEquals("10!???????", instance.toString());
     }
 }
