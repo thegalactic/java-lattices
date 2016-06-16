@@ -1,7 +1,7 @@
 /*
  * package-info.java
  *
- * Copyright: 2015-2016 The Galactic Organization, France
+ * Copyright: 2016 The Galactic Organization, France
  *
  * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
  *
