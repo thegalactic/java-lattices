@@ -106,13 +106,13 @@ public final class ImplicationalSystemSerializerText implements Reader<Implicati
         // next lines : [elements of the premise separated by a space] -> [elements of the conclusion separated by a space]
         // a StringTokenizer is used to divide each rule.
         String line = file.readLine();
-        while (!(line == null) && !line.isEmpty()) {
+        while (line != null || line.isEmpty()) {
             st = new StringTokenizer(line);
             Rule r = new Rule();
             boolean prem = true;
             while (st.hasMoreTokens()) {
                 String word = st.nextToken();
-                if (word.equals("->")) {
+                if ("->".equals(words)) {
                     prem = false;
                 } else {
                     String x = null;
