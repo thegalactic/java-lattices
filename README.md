@@ -7,6 +7,7 @@ java-lattices
 [![Issues](https://img.shields.io/github/issues-raw/thegalactic/java-lattices.svg)](https://github.com/thegalactic/java-lattices/issues)
 [![Snapshot](http://img.shields.io/badge/snapshot-v2.0.0-orange.svg)](https://github.com/thegalactic/java-lattices)
 [![Release](https://img.shields.io/github/release/thegalactic/java-lattices.svg)](https://github.com/thegalactic/java-lattices/releases/latest)
+[![Commits](https://img.shields.io/github/commits-since/thegalactic/java-lattices/1.0.0.svg)](https://github.com/thegalactic/java-lattices/commits/master)
 [![License](http://img.shields.io/badge/license-CeCILL--B-blue.svg)](http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html)
 
 
