@@ -307,7 +307,7 @@ public class DAGraph extends DGraph {
         // mark each node to false
         TreeMap<Node, Boolean> mark = new TreeMap<Node, Boolean>();
         for (Node node : graph.getNodes()) {
-            mark.put(node, new Boolean(false));
+            mark.put(node, Boolean.FALSE);
         }
         // treatment of nodes according to a topological sort
         ArrayList<Node> sort = graph.topologicalSort();
@@ -328,7 +328,7 @@ public class DAGraph extends DGraph {
                 for (Node z : graph.getSuccessorNodes(y)) {
                     // treatment of z when not marked
                     if (!mark.get(z)) {
-                        mark.put(z, new Boolean(true));
+                        mark.put(z, Boolean.TRUE);
                         graph.addEdge(x, z);
                         number++;
                         set.add(z);
@@ -337,7 +337,7 @@ public class DAGraph extends DGraph {
                 set.remove(y);
             }
             for (Node y : graph.getSuccessorNodes(x)) {
-                mark.put(y, new Boolean(false));
+                mark.put(y, Boolean.FALSE);
             }
         }
         return number;
@@ -363,7 +363,7 @@ public class DAGraph extends DGraph {
         // mark each node to false
         TreeMap<Node, Boolean> mark = new TreeMap<Node, Boolean>();
         for (Node node : this.getNodes()) {
-            mark.put(node, new Boolean(false));
+            mark.put(node, Boolean.FALSE);
         }
         // treatment of nodes according to a topological sort
         ArrayList<Node> sort = this.topologicalSort();
@@ -379,7 +379,7 @@ public class DAGraph extends DGraph {
                 for (Node z : this.getSuccessorNodes(y)) {
                     // treatment of z when not marked
                     if (!mark.get(z)) {
-                        mark.put(z, new Boolean(true));
+                        mark.put(z, Boolean.TRUE);
                         this.addEdge(x, z);
                         number++;
                         set.add(z);
@@ -388,7 +388,7 @@ public class DAGraph extends DGraph {
                 set.remove(y);
             }
             for (Node y : this.getSuccessorNodes(x)) {
-                mark.put(y, new Boolean(false));
+                mark.put(y, Boolean.FALSE);
             }
         }
         return number;
