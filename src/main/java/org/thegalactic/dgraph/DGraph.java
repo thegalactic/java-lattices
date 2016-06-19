@@ -797,7 +797,7 @@ public class DGraph implements Cloneable {
         // mark each node to false
         TreeMap<Node, Boolean> mark = new TreeMap<Node, Boolean>();
         for (Node node : this.nodes) {
-            mark.put(node, new Boolean(false));
+            mark.put(node, Boolean.FALSE);
         }
         // treatment of nodes
         for (Node x : this.nodes) {
@@ -808,7 +808,7 @@ public class DGraph implements Cloneable {
                 for (Node z : this.getSuccessorNodes(y)) {
                     // treatment of y when not marked
                     if (!mark.get(z)) {
-                        mark.put(z, new Boolean(true));
+                        mark.put(z, Boolean.TRUE);
                         this.addEdge(x, z);
                         size++;
                         list.add(z);
@@ -816,7 +816,7 @@ public class DGraph implements Cloneable {
                 }
             }
             for (Node y : this.getSuccessorNodes(x)) {
-                mark.put(y, new Boolean(false));
+                mark.put(y, Boolean.FALSE);
             }
         }
         return size;

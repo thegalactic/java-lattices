@@ -6,7 +6,7 @@ java-lattices
 [![Codacy](https://api.codacy.com/project/badge/Grade/374171f126954caab1f513daa3be3684)](https://www.codacy.com/app/chdemko_2840/java-lattices)
 [![Issues](https://img.shields.io/github/issues-raw/thegalactic/java-lattices.svg)](https://github.com/thegalactic/java-lattices/issues)
 [![Snapshot](http://img.shields.io/badge/snapshot-2.0.0-orange.svg)](https://github.com/thegalactic/java-lattices)
-[![Release](http://img.shields.io/badge/release-1.0.0-blue.svg)](https://github.com/thegalactic/java-lattices/tree/1.0.0)
+[![Release](https://img.shields.io/github/release/thegalactic/java-lattices.svg)](https://github.com/thegalactic/java-lattices/releases/latest0)
 [![License](http://img.shields.io/badge/license-CeCILL--B-blue.svg)](http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html)
 
 
