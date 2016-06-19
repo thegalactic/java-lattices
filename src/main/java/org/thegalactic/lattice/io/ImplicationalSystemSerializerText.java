@@ -112,7 +112,7 @@ public final class ImplicationalSystemSerializerText implements Reader<Implicati
             boolean prem = true;
             while (st.hasMoreTokens()) {
                 String word = st.nextToken();
-                if ("->".equals(words)) {
+                if ("->".equals(word)) {
                     prem = false;
                 } else {
                     String x = null;
