@@ -1,7 +1,7 @@
 package org.thegalactic.context.constraint;
 
 /*
- * CategoricalModel.java
+ * CategoricalAttribute.java
  *
  * Copyright: 2016 The Galactic Organization, France
  *
@@ -13,40 +13,40 @@ package org.thegalactic.context.constraint;
 import java.util.ArrayList;
 
 /**
- * Categorical Model.
+ * Categorical Attribute.
  */
-public final class CategoricalModel {
+public final class CategoricalAttribute {
 
     /**
-     * Factory method to construct a categorical model.
+     * Create a CategoricalAttribute.
      *
-     * @return a new CategoricalModel object
+     * @return new CategoricalAttribute
      */
-    static CategoricalModel create() {
-        return new CategoricalModel();
+    public static CategoricalAttribute create() {
+        return new CategoricalAttribute();
     }
 
     /**
      * Values.
      */
-    private final ArrayList<CategoricalAttribute> values;
+    private final ArrayList<CategoricalValue> values;
 
     /**
      * This class is not designed to be publicly instantiated.
      */
-    private CategoricalModel() {
-        values = new ArrayList<CategoricalAttribute>();
+    private CategoricalAttribute() {
+        values = new ArrayList();
     }
 
     /**
-     * Add a new categorical attribute.
+     * Add a value to a CategoricalAttribute.
      *
-     * @param attribute an attribute to add
+     * @param value value to be added
      *
      * @return this for chaining
      */
-    CategoricalModel add(CategoricalAttribute attribute) {
-        values.add(attribute);
+    public CategoricalAttribute add(CategoricalValue value) {
+        values.add(value);
         return this;
     }
 

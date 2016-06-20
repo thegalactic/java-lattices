@@ -11,10 +11,6 @@ package org.thegalactic.context.constraint;
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
@@ -23,41 +19,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class BooleanStorageTest {
 
-
-    /**
-     * BeforeClass.
-     */
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    /**
-     * AfterClass.
-     */
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    /**
-     * Constructor.
-     */
-    public BooleanStorageTest() {
-    }
-
-    /**
-     * Before.
-     */
-    @Before
-    public void setUp() {
-    }
-
-    /**
-     * After.
-     */
-    @After
-    public void tearDown() {
-    }
-
-    /**
+   /**
      * Test of create method, of class BooleanStorage.
      */
     @Test
