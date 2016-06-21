@@ -1,7 +1,7 @@
-package org.thegalactic.context.constraint;
+package org.thegalactic.context.constraint.binary;
 
 /*
- * BooleanStorage.java
+ * BinaryStorage.java
  *
  * Copyright: 2016 The Galactic Organization, France
  *
@@ -15,17 +15,17 @@ import java.util.BitSet;
 /**
  * Binary Storage.
  */
-public final class BooleanStorage {
+public final class BinaryStorage {
 
     /**
      * Factory method to construct a binary storage.
      *
      * @param length number of bits
      *
-     * @return a new BooleanStorage object
+     * @return a new BinaryStorage object
      */
-    static BooleanStorage create(int length) {
-        return new BooleanStorage(length);
+    public static BinaryStorage create(int length) {
+        return new BinaryStorage(length);
     }
 
     /**
@@ -43,7 +43,7 @@ public final class BooleanStorage {
      *
      * @param length number of bits
      */
-    private BooleanStorage(int length) {
+    private BinaryStorage(int length) {
         this.length = length;
         values = new BitSet(length);
     }
@@ -63,12 +63,12 @@ public final class BooleanStorage {
      * Set truth value.
      *
      * @param index truth value to be set
-     * @param value new truth value
+     * @param truth new truth value
      *
      * @return this for chaining.
      */
-    public BooleanStorage set(int index, boolean value) {
-        values.set(index, value);
+    public BinaryStorage set(int index, boolean truth) {
+        values.set(index, truth);
         return this;
     }
 
@@ -76,12 +76,12 @@ public final class BooleanStorage {
      * Reduce truth value.
      *
      * @param index truth value to be reduced
-     * @param value truth value
+     * @param truth truth value
      *
      * @return this for chaining.
      */
-    public BooleanStorage reduce(int index, boolean value) {
-        values.set(index, value || values.get(index));
+    public BinaryStorage reduce(int index, boolean truth) {
+        values.set(index, truth || values.get(index));
         return this;
     }
 
@@ -89,25 +89,25 @@ public final class BooleanStorage {
      * Extends truth value.
      *
      * @param index truth value to be extended
-     * @param value truth value
+     * @param truth truth value
      *
      * @return this for chaining.
      */
-    public BooleanStorage extend(int index, boolean value) {
-        values.set(index, value && values.get(index));
+    public BinaryStorage extend(int index, boolean truth) {
+        values.set(index, truth && values.get(index));
         return this;
     }
 
     /**
      * Intersection.
      *
-     * @param storage BooleanStorage
+     * @param storage BinaryStorage
      *
      * @return this for chaining.
      *
      * @throws IllegalArgumentException
      */
-    public BooleanStorage intersection(BooleanStorage storage) {
+    public BinaryStorage intersection(BinaryStorage storage) {
         if (storage.length == this.length) {
             values.and(storage.values);
         } else {
@@ -117,15 +117,15 @@ public final class BooleanStorage {
     }
 
     /**
-     * Intersection.
+     * Union.
      *
-     * @param storage BooleanStorage
+     * @param storage BinaryStorage
      *
      * @return this for chaining.
      *
      * @throws IllegalArgumentException
      */
-    public BooleanStorage union(BooleanStorage storage) {
+    public BinaryStorage union(BinaryStorage storage) {
         if (storage.length == this.length) {
             values.or(storage.values);
         } else {

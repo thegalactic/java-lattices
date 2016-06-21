@@ -1,7 +1,5 @@
-package org.thegalactic.context.constraint;
-
 /*
- * CategoricalStorage.java
+ * package-info.java
  *
  * Copyright: 2016 The Galactic Organization, France
  *
@@ -10,14 +8,7 @@ package org.thegalactic.context.constraint;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-// import java.util.BitSet;
-
 /**
- * Categorical Storage.
+ * This package is designed to represent categorical constraints.
  */
-public class CategoricalStorage {
-    /**
-     * Model.
-     */
-    private CategoricalModel model;
-}
+package org.thegalactic.context.constraint.categorical;
