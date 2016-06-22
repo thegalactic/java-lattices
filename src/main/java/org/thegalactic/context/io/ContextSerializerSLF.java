@@ -113,7 +113,7 @@ public final class ContextSerializerSLF implements Reader<Context>, Writer<Conte
             line = file.readLine();
         }
         line = file.readLine();
-        while (!line.equals("[relation]")) {
+        while (!"[relation]".equals(line) {
             att.add(line);
             extent.put(line, new TreeSet());
             line = file.readLine();

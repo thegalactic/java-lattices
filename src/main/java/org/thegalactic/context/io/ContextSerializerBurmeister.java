@@ -101,7 +101,7 @@ public final class ContextSerializerBurmeister implements Reader<Context>, Write
         String str = file.readLine();
 
         // Detect Burmeister magic header
-        if (!str.equals("B")) {
+        if (!"B".equals(str)) {
             throw new IOException("Burmeister magic header not found");
         }
 

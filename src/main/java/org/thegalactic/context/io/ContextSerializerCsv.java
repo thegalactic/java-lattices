@@ -142,7 +142,7 @@ public final class ContextSerializerCsv implements Reader<Context>, Writer<Conte
             }
 
             // Detect empty attribute
-            if (attribute.equals("")) {
+            if ("".equals(attribute)) {
                 throw new IOException("Empty attribute");
             }
         }
