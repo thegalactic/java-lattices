@@ -172,7 +172,7 @@ public class NumericalStorageTest {
      * @param storage1 first storage
      * @param storage2 second storage
      */
-    void initializeAllen(NumericalStorage storage1, NumericalStorage storage2) {
+    protected void initializeAllen(NumericalStorage storage1, NumericalStorage storage2) {
         // See https://en.wikipedia.org/wiki/Allen's_interval_algebra
         storage1.setInf(0, 0);
         storage1.setSup(0, 10);
