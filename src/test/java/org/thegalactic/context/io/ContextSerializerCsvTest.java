@@ -129,7 +129,7 @@ public class ContextSerializerCsvTest {
         try {
             file = File.createTempFile("junit", ".csv");
             filename = file.getPath();
-            Context context = new Context(filename);
+            new Context(filename);
             file.delete();
             fail();
         } catch (IOException e) {
