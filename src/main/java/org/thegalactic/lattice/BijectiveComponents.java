@@ -214,42 +214,42 @@ public class BijectiveComponents {
      */
     public void save(String directory, String name) throws IOException {
         // create the directory
-        directory = directory + File.separator + name + "BijectiveComponents" + File.separator;
-        File f = new File(directory);
+        String realDirectory = directory + File.separator + name + "BijectiveComponents" + File.separator;
+        File f = new File(realDirectory);
         f.mkdir();
-        directory += name;
-        BufferedWriter file = new BufferedWriter(new FileWriter(directory + "Readme.txt"));
+        realDirectory += name;
+        BufferedWriter file = new BufferedWriter(new FileWriter(realDirectory + "Readme.txt"));
         // saves the inital closure system
-        String nameInit = directory + "InitialClosureSystem.txt";
+        String nameInit = realDirectory + "InitialClosureSystem.txt";
         this.closureSystem.save(nameInit);
         String newLine = System.getProperty("line.separator");
         file.write("-> Initial closure system saved in " + nameInit + ": " + newLine);
         file.write(this.closureSystem.toString() + newLine);
         // saves the closed set lattice
-        String nameLattice = directory + "Lattice.dot";
+        String nameLattice = realDirectory + "Lattice.dot";
         this.getLattice().save(nameLattice);
         file.write("-> Closed set or concept lattice saved in " + nameLattice + newLine);
         // saves the reduced lattice
-        String nameReducedLattice = directory + "ReducedLattice.dot";
+        String nameReducedLattice = realDirectory + "ReducedLattice.dot";
         this.getReducedLattice().save(nameReducedLattice);
         file.write("-> Reduced lattice saved in " + nameReducedLattice + newLine);
         // saves the reduced table
-        String nameTable = directory + "Table.txt";
+        String nameTable = realDirectory + "Table.txt";
         this.getTable().save(nameTable);
         file.write("-> Table of the reduced lattice saved in " + nameTable + newLine);
         file.write(this.table.toString() + newLine);
         // saves the canonical basis
-        String nameCB = directory + "CanonicalBasis.txt";
+        String nameCB = realDirectory + "CanonicalBasis.txt";
         this.getCanonicalBasis().save(nameCB);
         file.write("-> Canonical basis saved in " + nameCB + ": " + newLine);
         file.write(this.canonicalBasis.toString() + newLine);
         // saves the canonical direct basis
-        String nameCDB = directory + "CanonicalDirectBasis.txt";
+        String nameCDB = realDirectory + "CanonicalDirectBasis.txt";
         this.getCanonicalDirectBasis().save(nameCDB);
         file.write("-> Canonical direct basis of the reduced lattice saved in " + nameCDB + ": " + newLine);
         file.write(this.canonicalDirectBasis.toString() + newLine);
         // saves the dependency graph
-        String nameODGraph = directory + "DependencyGraph.dot";
+        String nameODGraph = realDirectory + "DependencyGraph.dot";
         this.getDependencyGraph().save(nameODGraph);
         file.write("-> Dependency Graph  of the reduced lattice saved in " + nameODGraph + " " + newLine);
         // saves the minimal generators
