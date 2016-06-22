@@ -81,7 +81,6 @@ public class ConceptLattice extends Lattice {
         }
         // initialise the poset of ideals with the emptyset
         ConceptLattice conceptLattice = new ConceptLattice();
-        int id = 1;
         conceptLattice.addNode(new Concept(true, false));
         // travel on graph according to a topological sort
         DAGraph graph = new DAGraph(dag);
