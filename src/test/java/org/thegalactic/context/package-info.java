@@ -11,6 +11,6 @@
  */
 
 /**
- * This package is for testing the context package.
+ * This package is for testing the org.thegalactic.context package.
  */
 package org.thegalactic.context;

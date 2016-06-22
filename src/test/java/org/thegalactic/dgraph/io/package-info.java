@@ -11,6 +11,6 @@
  */
 
 /**
- * This package is for testing the dgraph.io package.
+ * This package is for testing the org.thegalactic.dgraph.io package.
  */
 package org.thegalactic.dgraph.io;

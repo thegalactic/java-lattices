@@ -11,6 +11,6 @@
  */
 
 /**
- * This package is for testing the lattice package.
+ * This package is for testing the org.thegalactic.lattice package.
  */
 package org.thegalactic.lattice;

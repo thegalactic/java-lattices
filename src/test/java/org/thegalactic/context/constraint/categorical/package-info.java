@@ -10,6 +10,6 @@
  */
 
 /**
- * This package is designed to represent constraints.
+ * This package is for testing the org.thegalactic.context.constraint.categorical package.
  */
 package org.thegalactic.context.constraint.categorical;

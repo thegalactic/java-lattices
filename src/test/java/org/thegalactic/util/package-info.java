@@ -11,6 +11,6 @@
  */
 
 /**
- * This package is for testing the util package.
+ * This package is for testing the org.thegalactic.util package.
  */
 package org.thegalactic.util;
