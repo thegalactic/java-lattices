@@ -36,7 +36,7 @@ public class BijectiveComponentsTest {
     public void testBijectiveComponent() {
         ImplicationalSystem is = new ImplicationalSystem();
         BijectiveComponents bc = new BijectiveComponents(is);
-        long time = bc.compute();
+        bc.compute();
         assertTrue(bc.getClosureSystem() != null);
         assertTrue(bc.getLattice() != null);
         assertTrue(bc.getReducedLattice() != null);
@@ -53,7 +53,7 @@ public class BijectiveComponentsTest {
     public void testCompute() {
         ImplicationalSystem is = new ImplicationalSystem();
         BijectiveComponents bc = new BijectiveComponents(is);
-        long time = bc.compute();
+        bc.compute();
         assertTrue(bc.getClosureSystem() != null);
         assertTrue(bc.getLattice() != null);
         assertTrue(bc.getReducedLattice() != null);
@@ -70,7 +70,7 @@ public class BijectiveComponentsTest {
     public void testinitalizeContext() {
         Context context = new Context();
         BijectiveComponents bc = new BijectiveComponents(context);
-        long time = bc.compute();
+        bc.compute();
         assertTrue(bc.getClosureSystem() != null);
         assertTrue(bc.getLattice() != null);
         assertTrue(bc.getReducedLattice() != null);
@@ -90,7 +90,7 @@ public class BijectiveComponentsTest {
         try {
             ImplicationalSystem is = new ImplicationalSystem();
             BijectiveComponents bc = new BijectiveComponents(is);
-            long time = bc.compute();
+            bc.compute();
 
             File dir = File.createTempFile("junit", "");
             String directory = dir.getPath();
