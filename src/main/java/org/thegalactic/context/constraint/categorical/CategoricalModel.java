@@ -18,15 +18,6 @@ import java.util.ArrayList;
 public final class CategoricalModel {
 
     /**
-     * Factory method to construct a categorical model.
-     *
-     * @return a new CategoricalModel object
-     */
-    static CategoricalModel create() {
-        return new CategoricalModel();
-    }
-
-    /**
      * Instantiated.
      */
     private boolean instantiated;
@@ -35,6 +26,15 @@ public final class CategoricalModel {
      * Values.
      */
     private final ArrayList<CategoricalAttribute> attributes;
+
+    /**
+     * Factory method to construct a categorical model.
+     *
+     * @return a new CategoricalModel object
+     */
+    public static CategoricalModel create() {
+        return new CategoricalModel();
+    }
 
     /**
      * This class is not designed to be publicly instantiated.
@@ -49,7 +49,7 @@ public final class CategoricalModel {
      *
      * @return a new added CategoricalAttribute
      */
-    CategoricalAttribute addAttribute() {
+    public CategoricalAttribute addAttribute() {
         if (instantiated) {
             throw new IllegalStateException("This model has already been instantiated");
         } else {
@@ -73,7 +73,7 @@ public final class CategoricalModel {
      *
      * @return this for chaining
      */
-    CategoricalModel instantiate() {
+    protected CategoricalModel instantiate() {
         instantiated = true;
         return this;
     }
@@ -83,7 +83,7 @@ public final class CategoricalModel {
      *
      * @return the instantiated flag
      */
-    boolean getInstantiated() {
+    protected boolean getInstantiated() {
         return instantiated;
     }
 

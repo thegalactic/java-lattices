@@ -20,17 +20,6 @@ import java.util.ArrayList;
 public final class CategoricalAttribute {
 
     /**
-     * Create a CategoricalAttribute.
-     *
-     * @param model The underlying CategoricalModel
-     *
-     * @return new CategoricalAttribute
-     */
-    static CategoricalAttribute create(CategoricalModel model) {
-        return new CategoricalAttribute(model);
-    }
-
-    /**
      * Values.
      */
     private final ArrayList<CategoricalValue> values;
@@ -39,6 +28,17 @@ public final class CategoricalAttribute {
      * Model.
      */
     private final CategoricalModel model;
+
+    /**
+     * Create a CategoricalAttribute.
+     *
+     * @param model The underlying CategoricalModel
+     *
+     * @return new CategoricalAttribute
+     */
+    protected static CategoricalAttribute create(CategoricalModel model) {
+        return new CategoricalAttribute(model);
+    }
 
     /**
      * This class is not designed to be publicly instantiated.
@@ -57,7 +57,7 @@ public final class CategoricalAttribute {
      *
      * @return the categorical value
      */
-    CategoricalValue addValue(Object data) {
+    public CategoricalValue addValue(Object data) {
         if (model.getInstantiated()) {
             throw new IllegalStateException("The underlying model has already been instantiated");
         } else {
@@ -101,7 +101,7 @@ public final class CategoricalAttribute {
      *
      * @return the underlying model
      */
-    CategoricalModel getModel() {
+    protected CategoricalModel getModel() {
         return model;
     }
 

@@ -23,7 +23,7 @@ public final class CategoricalStorage {
      *
      * @return a new CategoricalStorage
      */
-    static CategoricalStorage create(CategoricalModel model) {
+    public static CategoricalStorage create(CategoricalModel model) {
         return new CategoricalStorage(model);
     }
 
@@ -178,5 +178,4 @@ public final class CategoricalStorage {
 
         return builder.toString();
     }
-
 }

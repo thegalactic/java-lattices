@@ -16,18 +16,6 @@ package org.thegalactic.context.constraint.categorical;
 public final class CategoricalValue {
 
     /**
-     * Create a new CategoricalValue.
-     *
-     * @param data Object
-     * @param attribute CategoricalAttribute
-     *
-     * @return a new CategoricalValue
-     */
-    static CategoricalValue create(Object data, CategoricalAttribute attribute) {
-        return new CategoricalValue(data, attribute);
-    }
-
-    /**
      * Data.
      */
     private Object data;
@@ -36,6 +24,18 @@ public final class CategoricalValue {
      * Attribute.
      */
     private final CategoricalAttribute attribute;
+
+    /**
+     * Create a new CategoricalValue.
+     *
+     * @param data Object
+     * @param attribute CategoricalAttribute
+     *
+     * @return a new CategoricalValue
+     */
+    protected static CategoricalValue create(Object data, CategoricalAttribute attribute) {
+        return new CategoricalValue(data, attribute);
+    }
 
     /**
      * This class is nod designed to be publicly instantiated.
