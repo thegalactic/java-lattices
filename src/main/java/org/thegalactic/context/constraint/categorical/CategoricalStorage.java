@@ -114,7 +114,7 @@ public final class CategoricalStorage {
      * @throws IllegalArgumentException
      */
     public CategoricalStorage intersection(CategoricalStorage storage) {
-        if (storage.model == this.model) {
+        if (storage.model == model) {
             values.and(storage.values);
         } else {
             throw new IllegalArgumentException("CategoricalStorage objects must have the same model");
@@ -132,7 +132,7 @@ public final class CategoricalStorage {
      * @throws IllegalArgumentException
      */
     public CategoricalStorage union(CategoricalStorage storage) {
-        if (storage.model == this.model) {
+        if (storage.model == model) {
             values.or(storage.values);
         } else {
             throw new IllegalArgumentException("CategoricalStorage objects must have the same model");
@@ -152,7 +152,7 @@ public final class CategoricalStorage {
         builder.append("[");
 
         boolean firstAttribute = true;
-        for (CategoricalAttribute attribute : this.model.getAttributes()) {
+        for (CategoricalAttribute attribute : model.getAttributes()) {
             if (!firstAttribute) {
                 builder.append(", ");
             }
@@ -162,7 +162,7 @@ public final class CategoricalStorage {
 
             boolean firstValue = true;
             for (CategoricalValue value : attribute.getValues()) {
-                if (this.get(value)) {
+                if (get(value)) {
                     if (!firstValue) {
                         builder.append(", ");
                     }

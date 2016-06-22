@@ -108,7 +108,7 @@ public final class BinaryStorage {
      * @throws IllegalArgumentException
      */
     public BinaryStorage intersection(BinaryStorage storage) {
-        if (storage.size == this.size) {
+        if (storage.size == size) {
             values.and(storage.values);
         } else {
             throw new IllegalArgumentException("BooleanStorage objects must have the same size");
@@ -126,7 +126,7 @@ public final class BinaryStorage {
      * @throws IllegalArgumentException
      */
     public BinaryStorage union(BinaryStorage storage) {
-        if (storage.size == this.size) {
+        if (storage.size == size) {
             values.or(storage.values);
         } else {
             throw new IllegalArgumentException("BooleanStorage objects must have the same size");
@@ -140,7 +140,7 @@ public final class BinaryStorage {
      * @return the size
      */
     public int size() {
-        return this.size;
+        return size;
     }
 
     /**

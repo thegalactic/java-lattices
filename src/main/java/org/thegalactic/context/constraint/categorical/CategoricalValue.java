@@ -45,7 +45,7 @@ public final class CategoricalValue {
      * @param attribute CategoricalAttribute
      */
     private CategoricalValue(Object object, CategoricalAttribute attribute) {
-        this.setData(object);
+        setData(object);
         this.attribute = attribute;
     }
 
