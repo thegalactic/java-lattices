@@ -76,7 +76,7 @@ public class DAGraph extends DGraph {
         DAGraph graph = new DAGraph();
         // addition of nodes
         for (int i = 2; i <= number; i++) {
-            graph.addNode(new Node(new Integer(i)));
+            graph.addNode(new Node(Integer.valueOf(i)));
         }
         // addition of edges
         for (Node from : graph.getNodes()) {
@@ -103,7 +103,7 @@ public class DAGraph extends DGraph {
         DAGraph graph = new DAGraph();
         // addition of Nodes
         for (int i = 1; i <= size; i++) {
-            graph.addNode(new Node(new Integer(i)));
+            graph.addNode(new Node(Integer.valueOf(i)));
         }
         // addition of edges
         for (Node from : graph.getNodes()) {

@@ -87,7 +87,7 @@ public class ImplicationalSystem extends ClosureSystem {
         ImplicationalSystem sigma = new ImplicationalSystem();
         // addition of elements
         for (int i = 0; i < nbS; i++) {
-            sigma.addElement(new Integer(i));
+            sigma.addElement(Integer.valueOf(i));
         }
         // addition of rules
         //for (int i = 0; i < nbR; i++) { One could get twice the same rule ...

@@ -74,7 +74,7 @@ public class DGraph implements Cloneable {
         DGraph graph = new DGraph();
         // addition of nodes
         for (int i = 1; i <= size; i++) {
-            Node node = new Node(new Integer(i));
+            Node node = new Node(Integer.valueOf(i));
             graph.addNode(node);
         }
         // addition of edges
@@ -627,7 +627,7 @@ public class DGraph implements Cloneable {
         // initialise a map with the number of predecessors (value) for each node (key);
         TreeMap<Node, Integer> size = new TreeMap<Node, Integer>();
         for (Node node : this.nodes) {
-            size.put(node, new Integer(this.getPredecessorNodes(node).size()));
+            size.put(node, Integer.valueOf(this.getPredecessorNodes(node).size()));
         }
         ArrayList<Node> sort = new ArrayList<Node>();
         while (!sinks.isEmpty()) {
@@ -636,7 +636,7 @@ public class DGraph implements Cloneable {
             // updating of the set min by considering the successors of node
             for (Node successor : this.getSuccessorNodes(node)) {
                 int newSize = size.get(successor).intValue() - 1;
-                size.put(successor, new Integer(newSize));
+                size.put(successor, Integer.valueOf(newSize));
                 if (newSize == 0) {
                     sinks.add(successor);
                 }

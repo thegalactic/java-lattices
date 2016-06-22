@@ -497,7 +497,7 @@ public class ConceptLattice extends Lattice {
             Concept c = (Concept) n;
             if (!c.hasSetA() && joinIrr.contains(c)) {
                 ComparableSet setX = new ComparableSet();
-                setX.add(new Integer(c.getIdentifier()));
+                setX.add(Integer.valueOf(c.getIdentifier()));
                 c.putSetA(setX);
             }
         }
@@ -521,7 +521,7 @@ public class ConceptLattice extends Lattice {
             Concept c = (Concept) n;
             if (!c.hasSetB() && meetIrr.contains(c)) {
                 ComparableSet setX = new ComparableSet();
-                setX.add(new Integer(c.getIdentifier()));
+                setX.add(Integer.valueOf(c.getIdentifier()));
                 c.putSetB(setX);
             }
         }

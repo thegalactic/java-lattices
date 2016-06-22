@@ -45,14 +45,14 @@ public class LatticeFactory {
         while (!done) {
             DAGraph dag = DAGraph.random(nb - 2); // what an ugly strategy :-(
             Lattice tmp = new Lattice(dag);
-            Node top = new Node(new Integer(nb - 1));
+            Node top = new Node(Integer.valueOf(nb - 1));
             tmp.addNode(top);
             for (Node n : tmp.max()) {
                 if (!n.equals(top)) {
                     tmp.addEdge(n, top);
                 }
             }
-            Node bot = new Node(new Integer(nb));
+            Node bot = new Node(Integer.valueOf(nb));
             tmp.addNode(bot);
             for (Node n : tmp.min()) {
                 if (!n.equals(bot)) {

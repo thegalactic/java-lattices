@@ -83,7 +83,7 @@ public class NodeTest {
     public void testEquals() {
         Node node = new Node();
         assertTrue(node.equals(node));
-        assertFalse(node.equals(new Integer(1)));
+        assertFalse(node.equals(Integer.valueOf(1)));
     }
 
     /**

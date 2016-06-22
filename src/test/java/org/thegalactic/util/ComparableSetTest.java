@@ -38,9 +38,9 @@ public class ComparableSetTest {
     @Test
     public void testCopyConstructor() {
         TreeSet<Comparable> set = new TreeSet<Comparable>();
-        set.add(new Integer(1));
-        set.add(new Integer(2));
-        set.add(new Integer(3));
+        set.add(Integer.valueOf(1));
+        set.add(Integer.valueOf(2));
+        set.add(Integer.valueOf(3));
         ComparableSet comparableSet = new ComparableSet(set);
         assertEquals(comparableSet.size(), set.size());
     }
@@ -61,9 +61,9 @@ public class ComparableSetTest {
     @Test
     public void testClone() {
         ComparableSet set = new ComparableSet();
-        set.add(new Integer(1));
-        set.add(new Integer(2));
-        set.add(new Integer(3));
+        set.add(Integer.valueOf(1));
+        set.add(Integer.valueOf(2));
+        set.add(Integer.valueOf(3));
         ComparableSet copy = set.clone();
         assertEquals(set, copy);
     }
@@ -74,21 +74,21 @@ public class ComparableSetTest {
     @Test
     public void testEquals() {
         ComparableSet set1 = new ComparableSet();
-        set1.add(new Integer(1));
-        set1.add(new Integer(2));
-        set1.add(new Integer(3));
+        set1.add(Integer.valueOf(1));
+        set1.add(Integer.valueOf(2));
+        set1.add(Integer.valueOf(3));
 
         ComparableSet set2 = new ComparableSet();
-        set2.add(new Integer(1));
-        set2.add(new Integer(2));
-        set2.add(new Integer(3));
+        set2.add(Integer.valueOf(1));
+        set2.add(Integer.valueOf(2));
+        set2.add(Integer.valueOf(3));
 
         assertTrue(set1.equals(set2));
 
-        set2.add(new Integer(4));
+        set2.add(Integer.valueOf(4));
         assertFalse(set1.equals(set2));
 
-        assertFalse(set1.equals(new Integer(0)));
+        assertFalse(set1.equals(Integer.valueOf(0)));
     }
 
     /**
@@ -97,9 +97,9 @@ public class ComparableSetTest {
     @Test
     public void testHashCode() {
         TreeSet<Comparable> set = new TreeSet<Comparable>();
-        set.add(new Integer(1));
-        set.add(new Integer(2));
-        set.add(new Integer(3));
+        set.add(Integer.valueOf(1));
+        set.add(Integer.valueOf(2));
+        set.add(Integer.valueOf(3));
         ComparableSet comparableSet = new ComparableSet(set);
         assertEquals(set.hashCode(), comparableSet.hashCode());
     }
@@ -110,34 +110,34 @@ public class ComparableSetTest {
     @Test
     public void testCompareTo() {
         ComparableSet set1 = new ComparableSet();
-        set1.add(new Integer(1));
-        set1.add(new Integer(2));
-        set1.add(new Integer(3));
-        assertTrue(set1.compareTo(new Integer(1)) < 0);
+        set1.add(Integer.valueOf(1));
+        set1.add(Integer.valueOf(2));
+        set1.add(Integer.valueOf(3));
+        assertTrue(set1.compareTo(Integer.valueOf(1)) < 0);
 
         ComparableSet set2 = new ComparableSet();
 
         set2.clear();
-        set2.add(new Integer(1));
-        set2.add(new Integer(2));
+        set2.add(Integer.valueOf(1));
+        set2.add(Integer.valueOf(2));
         assertTrue(set1.compareTo(set2) > 0);
         assertTrue(set2.compareTo(set1) < 0);
 
         set2.clear();
-        set2.add(new Integer(2));
-        set2.add(new Integer(3));
-        set2.add(new Integer(4));
+        set2.add(Integer.valueOf(2));
+        set2.add(Integer.valueOf(3));
+        set2.add(Integer.valueOf(4));
         assertTrue(set1.compareTo(set2) > 0);
         assertTrue(set2.compareTo(set1) < 0);
 
         set1.clear();
         set2.clear();
-        set1.add(new Integer(1));
-        set1.add(new Integer(3));
-        set1.add(new Integer(5));
-        set2.add(new Integer(2));
-        set2.add(new Integer(3));
-        set2.add(new Integer(6));
+        set1.add(Integer.valueOf(1));
+        set1.add(Integer.valueOf(3));
+        set1.add(Integer.valueOf(5));
+        set2.add(Integer.valueOf(2));
+        set2.add(Integer.valueOf(3));
+        set2.add(Integer.valueOf(6));
         assertTrue(set1.compareTo(set2) > 0);
         assertTrue(set2.compareTo(set1) < 0);
     }
