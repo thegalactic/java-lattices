@@ -107,13 +107,13 @@ public final class ContextSerializerSLF implements Reader<Context>, Writer<Conte
             throw new IOException("Misformated SLF file.");
         }
         String line = file.readLine();
-        while (!line.equals("[Attributes]")) {
+        while (!"[Attributes]".equals(line)) {
             obs.add(line);
             intent.put(line, new TreeSet());
             line = file.readLine();
         }
         line = file.readLine();
-        while (!"[relation]".equals(line) {
+        while (!"[relation]".equals(line)) {
             att.add(line);
             extent.put(line, new TreeSet());
             line = file.readLine();
@@ -128,7 +128,7 @@ public final class ContextSerializerSLF implements Reader<Context>, Writer<Conte
             int cpt = 0;
             while (st.hasMoreTokens()) {
                 String n = st.nextToken();
-                if (n.equals("1")) {
+                if ("1".equals(n)) {
                     context.addExtentIntent(obs.get(i), att.get(cpt));
                 }
                 cpt++;
