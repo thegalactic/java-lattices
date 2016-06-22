@@ -10,6 +10,7 @@
  */
 
 /**
- * This package is for testing the org.thegalactic.context.constraint package.
+ * This package is for testing the org.thegalactic.context.constraint.binary package.
  */
-package org.thegalactic.context.constraint;
+package org.thegalactic.context.constraint.binary;
+

@@ -1,4 +1,4 @@
-package org.thegalactic.context.constraint;
+package org.thegalactic.context.constraint.binary;
 
 /*
  * BinaryStorageTest.java
@@ -11,7 +11,6 @@ package org.thegalactic.context.constraint;
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
 
-import org.thegalactic.context.constraint.binary.BinaryStorage;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -100,7 +99,7 @@ public class BinaryStorageTest {
             storage1.intersection(storage2);
             fail("An IllegalArgumentException must be thrown");
         } catch (IllegalArgumentException e) {
-            assertEquals("BooleanStorage objects must have the same length", e.getMessage());
+            assertEquals("BooleanStorage objects must have the same size", e.getMessage());
         }
     }
 
@@ -126,7 +125,7 @@ public class BinaryStorageTest {
             storage1.union(storage2);
             fail("An IllegalArgumentException must be thrown");
         } catch (IllegalArgumentException e) {
-            assertEquals("BooleanStorage objects must have the same length", e.getMessage());
+            assertEquals("BooleanStorage objects must have the same size", e.getMessage());
         }
     }
 

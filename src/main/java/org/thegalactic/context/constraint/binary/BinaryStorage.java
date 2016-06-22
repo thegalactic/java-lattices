@@ -18,20 +18,9 @@ import java.util.BitSet;
 public final class BinaryStorage {
 
     /**
-     * Factory method to construct a binary storage.
-     *
-     * @param length number of bits
-     *
-     * @return a new BinaryStorage object
-     */
-    public static BinaryStorage create(int length) {
-        return new BinaryStorage(length);
-    }
-
-    /**
      * # values.
      */
-    private final int length;
+    private final int size;
 
     /**
      * Truth values.
@@ -39,13 +28,24 @@ public final class BinaryStorage {
     private final BitSet values;
 
     /**
+     * Factory method to construct a binary storage.
+     *
+     * @param size number of bits
+     *
+     * @return a new BinaryStorage object
+     */
+    public static BinaryStorage create(int size) {
+        return new BinaryStorage(size);
+    }
+
+    /**
      * This class is not designed to be publicly instantiated.
      *
-     * @param length number of bits
+     * @param size number of bits
      */
-    private BinaryStorage(int length) {
-        this.length = length;
-        values = new BitSet(length);
+    private BinaryStorage(int size) {
+        this.size = size;
+        values = new BitSet(size);
     }
 
     /**
@@ -108,10 +108,10 @@ public final class BinaryStorage {
      * @throws IllegalArgumentException
      */
     public BinaryStorage intersection(BinaryStorage storage) {
-        if (storage.length == this.length) {
+        if (storage.size == this.size) {
             values.and(storage.values);
         } else {
-            throw new IllegalArgumentException("BooleanStorage objects must have the same length");
+            throw new IllegalArgumentException("BooleanStorage objects must have the same size");
         }
         return this;
     }
@@ -126,12 +126,21 @@ public final class BinaryStorage {
      * @throws IllegalArgumentException
      */
     public BinaryStorage union(BinaryStorage storage) {
-        if (storage.length == this.length) {
+        if (storage.size == this.size) {
             values.or(storage.values);
         } else {
-            throw new IllegalArgumentException("BooleanStorage objects must have the same length");
+            throw new IllegalArgumentException("BooleanStorage objects must have the same size");
         }
         return this;
+    }
+
+    /**
+     * Get the size.
+     *
+     * @return the size
+     */
+    public int size() {
+        return this.size;
     }
 
     /**
@@ -145,7 +154,7 @@ public final class BinaryStorage {
 
         stringBuilder.append("[");
 
-        for (int index = 0; index < length; index++) {
+        for (int index = 0; index < size; index++) {
             if (values.get(index)) {
                 stringBuilder.append("1");
             } else {
