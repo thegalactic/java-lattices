@@ -34,7 +34,7 @@ public final class BinaryStorage {
      *
      * @return a new BinaryStorage object
      */
-    public static BinaryStorage create(int size) {
+    public static BinaryStorage create(final int size) {
         return new BinaryStorage(size);
     }
 
@@ -43,7 +43,7 @@ public final class BinaryStorage {
      *
      * @param size number of bits
      */
-    private BinaryStorage(int size) {
+    private BinaryStorage(final int size) {
         this.size = size;
         values = new BitSet(size);
     }
@@ -55,7 +55,7 @@ public final class BinaryStorage {
      *
      * @return truth value
      */
-    public boolean get(int index) {
+    public boolean get(final int index) {
         return values.get(index);
     }
 
@@ -67,7 +67,7 @@ public final class BinaryStorage {
      *
      * @return this for chaining.
      */
-    public BinaryStorage set(int index, boolean truth) {
+    public BinaryStorage set(final int index, final boolean truth) {
         values.set(index, truth);
         return this;
     }
@@ -80,7 +80,7 @@ public final class BinaryStorage {
      *
      * @return this for chaining.
      */
-    public BinaryStorage reduce(int index, boolean truth) {
+    public BinaryStorage reduce(final int index, final boolean truth) {
         values.set(index, truth || values.get(index));
         return this;
     }
@@ -93,7 +93,7 @@ public final class BinaryStorage {
      *
      * @return this for chaining.
      */
-    public BinaryStorage extend(int index, boolean truth) {
+    public BinaryStorage extend(final int index, final boolean truth) {
         values.set(index, truth && values.get(index));
         return this;
     }
@@ -107,7 +107,7 @@ public final class BinaryStorage {
      *
      * @throws IllegalArgumentException
      */
-    public BinaryStorage intersection(BinaryStorage storage) {
+    public BinaryStorage intersection(final BinaryStorage storage) {
         if (storage.size == size) {
             values.and(storage.values);
         } else {
@@ -125,7 +125,7 @@ public final class BinaryStorage {
      *
      * @throws IllegalArgumentException
      */
-    public BinaryStorage union(BinaryStorage storage) {
+    public BinaryStorage union(final BinaryStorage storage) {
         if (storage.size == size) {
             values.or(storage.values);
         } else {
@@ -150,19 +150,19 @@ public final class BinaryStorage {
      */
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
+        final StringBuilder stringBuilder = new StringBuilder();
 
-        stringBuilder.append("[");
+        stringBuilder.append('[');
 
         for (int index = 0; index < size; index++) {
             if (values.get(index)) {
-                stringBuilder.append("1");
+                stringBuilder.append('1');
             } else {
-                stringBuilder.append("0");
+                stringBuilder.append('0');
             }
         }
 
-        stringBuilder.append("]");
+        stringBuilder.append(']');
 
         return stringBuilder.toString();
     }
