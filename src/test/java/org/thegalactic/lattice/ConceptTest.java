@@ -529,7 +529,7 @@ public class ConceptTest {
      */
     @Test
     public void testtoDot() {
-        Concept c = new Concept(true, true);
+        //Concept c = new Concept(true, true);
         //assertEquals(c.toDot(), "1 [label=\" []\\n[]\"]");
     }
 }
