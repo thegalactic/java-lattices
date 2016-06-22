@@ -133,6 +133,9 @@ public final class ContextSerializerSLF implements Reader<Context>, Writer<Conte
                 }
                 cpt++;
             }
+            if (cpt != nbAtt) {
+                throw new IOException("Misformated SLF file.");
+            }
         }
         context.setBitSets();
     }
