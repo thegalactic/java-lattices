@@ -10,6 +10,7 @@ package org.thegalactic.context.constraint.categorical;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
+
 /**
  * Categorical Value.
  */

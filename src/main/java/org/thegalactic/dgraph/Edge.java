@@ -11,6 +11,7 @@ package org.thegalactic.dgraph;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
+
 /**
  * This class gives a standard representation for an edge of a graph.
  *
