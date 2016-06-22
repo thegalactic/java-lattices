@@ -200,7 +200,7 @@ public class ContextSerializerCsvTest {
             writer.newLine();
             writer.write("1,0,1");
             writer.close();
-            Context context = new Context(filename);
+            new Context(filename);
             file.delete();
             fail();
         } catch (IOException e) {
