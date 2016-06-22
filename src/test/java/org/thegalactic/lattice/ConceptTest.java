@@ -501,8 +501,8 @@ public class ConceptTest {
         ComparableSet tC = new ComparableSet();
         tC.add(c);
         Concept cA = new Concept(tA, false);
-        Concept cB = new Concept(tB, false);
-        Concept cC = new Concept(tC, false);
+        new Concept(tB, false);
+        new Concept(tC, false);
         Rule r1 = new Rule(tA, tB);
         Rule r2 = new Rule(tB, tC);
         Rule r3 = new Rule(tC, tA);
