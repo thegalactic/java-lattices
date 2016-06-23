@@ -10,7 +10,6 @@ package org.thegalactic.context.constraint.categorical;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 /**
  * Categorical Value.
  */
@@ -59,6 +58,15 @@ public final class CategoricalValue {
     }
 
     /**
+     * Get the underlying model.
+     *
+     * @return the underlying model
+     */
+    public CategoricalModel getModel() {
+        return attribute.getModel();
+    }
+
+    /**
      * Get the underlying data.
      *
      * @return the underlying data
@@ -80,13 +88,14 @@ public final class CategoricalValue {
     }
 
     /**
-     * Get the index of this value.
+     * Get the index of this value relatively to its attribute.
      *
      * @return the index of this value
      */
     protected int index() {
         return attribute.indexOf(this);
     }
+
     /**
      * Returns a string representation of the data.
      *

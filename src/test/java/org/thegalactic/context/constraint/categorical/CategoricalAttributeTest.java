@@ -78,10 +78,24 @@ public class CategoricalAttributeTest {
     @Test
     public void testSize() {
         CategoricalAttribute attribute = CategoricalAttribute.create(CategoricalModel.create());
+        assertEquals(0, attribute.size());
         attribute.addValue("Test1");
+        assertEquals(1, attribute.size());
         attribute.addValue("Test2");
+        assertEquals(2, attribute.size());
         attribute.addValue("Test3");
         assertEquals(3, attribute.size());
+    }
+
+    /**
+     * Test of indexOf method, of class CategoricalAttribute.
+     */
+    @Test
+    public void testIndexOf() {
+        CategoricalAttribute attribute = CategoricalAttribute.create(CategoricalModel.create());
+        assertEquals(0, attribute.indexOf(attribute.addValue("Test1")));
+        assertEquals(1, attribute.indexOf(attribute.addValue("Test2")));
+        assertEquals(2, attribute.indexOf(attribute.addValue("Test3")));
     }
 
     /**

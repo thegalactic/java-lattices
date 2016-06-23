@@ -34,7 +34,7 @@ public final class NumericalStorage {
      *
      * @return a new NumericalStorage object
      */
-    public static NumericalStorage create(int size) {
+    public static NumericalStorage create(final int size) {
         return new NumericalStorage(size);
     }
 
@@ -43,7 +43,7 @@ public final class NumericalStorage {
      *
      * @param size number of values
      */
-    private NumericalStorage(int size) {
+    private NumericalStorage(final int size) {
         inf = new ArrayList<Double>(size);
         sup = new ArrayList<Double>(size);
         // Initialise as an empty set
@@ -60,7 +60,7 @@ public final class NumericalStorage {
      *
      * @return this for chaining
      */
-    public NumericalStorage setEmpty(int index) {
+    public NumericalStorage setEmpty(final int index) {
         inf.set(index, Double.POSITIVE_INFINITY);
         sup.set(index, Double.NEGATIVE_INFINITY);
         return this;
@@ -73,7 +73,7 @@ public final class NumericalStorage {
      *
      * @return this for chaining
      */
-    public boolean isEmpty(int index) {
+    public boolean isEmpty(final int index) {
         return inf.get(index) > sup.get(index);
     }
 
@@ -85,7 +85,7 @@ public final class NumericalStorage {
      *
      * @return this for chaining
      */
-    public NumericalStorage setPoint(int index, double value) {
+    public NumericalStorage setPoint(final int index, final double value) {
         inf.set(index, value);
         sup.set(index, value);
         return this;
@@ -98,7 +98,7 @@ public final class NumericalStorage {
      *
      * @return this for chaining
      */
-    public boolean isPoint(int index) {
+    public boolean isPoint(final int index) {
         return inf.get(index).equals(sup.get(index));
     }
 
@@ -110,7 +110,7 @@ public final class NumericalStorage {
      *
      * @return this for chaining
      */
-    public NumericalStorage setInf(int index, double value) {
+    public NumericalStorage setInf(final int index, final double value) {
         if (isEmpty(index)) {
             setPoint(index, value);
         } else if (value > sup.get(index)) {
@@ -129,7 +129,7 @@ public final class NumericalStorage {
      *
      * @return this for chaining
      */
-    public NumericalStorage setSup(int index, double value) {
+    public NumericalStorage setSup(final int index, final double value) {
         if (isEmpty(index)) {
             setPoint(index, value);
         } else if (value < inf.get(index)) {
@@ -147,7 +147,7 @@ public final class NumericalStorage {
      *
      * @return the inf value
      */
-    public double getInf(int index) {
+    public double getInf(final int index) {
         return inf.get(index);
     }
 
@@ -158,7 +158,7 @@ public final class NumericalStorage {
      *
      * @return the inf value
      */
-    public double getSup(int index) {
+    public double getSup(final int index) {
         return sup.get(index);
     }
 
@@ -170,7 +170,7 @@ public final class NumericalStorage {
      *
      * @return this for chaining.
      */
-    public NumericalStorage reduceInf(int index, double value) {
+    public NumericalStorage reduceInf(final int index, final double value) {
         inf.set(index, Math.max(inf.get(index), value));
         return this;
     }
@@ -183,7 +183,7 @@ public final class NumericalStorage {
      *
      * @return this for chaining.
      */
-    public NumericalStorage reduceSup(int index, double value) {
+    public NumericalStorage reduceSup(final int index, final double value) {
         sup.set(index, Math.min(sup.get(index), value));
         return this;
     }
@@ -196,7 +196,7 @@ public final class NumericalStorage {
      *
      * @return this for chaining
      */
-    public NumericalStorage extendInf(int index, double value) {
+    public NumericalStorage extendInf(final int index, final double value) {
         inf.set(index, Math.min(inf.get(index), value));
         return this;
     }
@@ -209,7 +209,7 @@ public final class NumericalStorage {
      *
      * @return this for chaining
      */
-    public NumericalStorage extendSup(int index, double value) {
+    public NumericalStorage extendSup(final int index, final double value) {
         sup.set(index, Math.max(sup.get(index), value));
         return this;
     }
@@ -222,7 +222,7 @@ public final class NumericalStorage {
      *
      * @return this for chaining.
      */
-    public NumericalStorage extend(int index, double value) {
+    public NumericalStorage extend(final int index, final double value) {
         extendInf(index, value);
         extendSup(index, value);
         return this;
@@ -235,7 +235,7 @@ public final class NumericalStorage {
      *
      * @return this for chaining
      */
-    public NumericalStorage intersection(NumericalStorage storage) {
+    public NumericalStorage intersection(final NumericalStorage storage) {
         int size = inf.size();
         if (storage.inf.size() == size) {
             for (int index = 0; index < size; index++) {
@@ -258,7 +258,7 @@ public final class NumericalStorage {
      *
      * @return this for chaining
      */
-    public NumericalStorage union(NumericalStorage storage) {
+    public NumericalStorage union(final NumericalStorage storage) {
         int size = inf.size();
         if (storage.inf.size() == size) {
             for (int index = 0; index < size; index++) {

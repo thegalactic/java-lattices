@@ -74,10 +74,9 @@ public class CategoricalValueTest {
     @Test
     public void testIndex() {
         CategoricalAttribute attribute = CategoricalAttribute.create(CategoricalModel.create());
-        CategoricalValue.create("Test1", attribute);
-        CategoricalValue value = CategoricalValue.create("Test2", attribute);
-        CategoricalValue.create("Test3", attribute);
-        assertEquals(1, value.index());
+        assertEquals(0, attribute.addValue("Test1").index());
+        assertEquals(1, attribute.addValue("Test2").index());
+        assertEquals(2, attribute.addValue("Test3").index());
     }
 
     /**
