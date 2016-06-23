@@ -289,9 +289,9 @@ public final class NumericalStorage {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
 
-        builder.append("[");
+        builder.append('[');
 
-        int size = inf.size();
+        final int size = inf.size();
         for (int index = 0; index < size; index++) {
             if (index != 0) {
                 builder.append(", ");
