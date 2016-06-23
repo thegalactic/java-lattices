@@ -259,7 +259,7 @@ public final class NumericalStorage {
      * @return this for chaining
      */
     public NumericalStorage union(final NumericalStorage storage) {
-        int size = inf.size();
+        final int size = inf.size();
         if (storage.inf.size() == size) {
             for (int index = 0; index < size; index++) {
                 inf.set(index, Math.min(inf.get(index), storage.inf.get(index)));
