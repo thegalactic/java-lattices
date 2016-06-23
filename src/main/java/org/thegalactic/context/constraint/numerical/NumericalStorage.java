@@ -29,6 +29,11 @@ public final class NumericalStorage {
     private final List<Double> sup;
 
     /**
+     * EXCEPTION_SIZE.
+     */
+    private static final String EXCEPTION_SIZE = "NumericalStorage objects must have the same size";
+
+    /**
      * Factory method to construct a numerical storage.
      *
      * @param size number of values
@@ -224,8 +229,8 @@ public final class NumericalStorage {
      * @return this for chaining.
      */
     public NumericalStorage extend(final int index, final double value) {
-        extendInf(index, value);
-        extendSup(index, value);
+        this.extendInf(index, value);
+        this.extendSup(index, value);
         return this;
     }
 
@@ -245,7 +250,7 @@ public final class NumericalStorage {
             }
             return this;
         } else {
-            throw new IllegalArgumentException("NumericalStorage objects must have the same size");
+            throw new IllegalArgumentException(EXCEPTION_SIZE);
         }
     }
 
@@ -264,11 +269,11 @@ public final class NumericalStorage {
         if (storage.inf.size() == size) {
             for (int index = 0; index < size; index++) {
                 this.inf.set(index, Math.min(this.inf.get(index), storage.inf.get(index)));
-               this. sup.set(index, Math.max(this.sup.get(index), storage.sup.get(index)));
+                this.sup.set(index, Math.max(this.sup.get(index), storage.sup.get(index)));
             }
             return this;
         } else {
-            throw new IllegalArgumentException("NumericalStorage objects must have the same size");
+            throw new IllegalArgumentException(EXCEPTION_SIZE);
         }
     }
 
@@ -297,13 +302,13 @@ public final class NumericalStorage {
             if (index != 0) {
                 builder.append(", ");
             }
-            if (isEmpty(index)) {
+            if (this.isEmpty(index)) {
                 builder.append('@');
-            } else if (isPoint(index)) {
+            } else if (this.isPoint(index)) {
                 builder.append(this.inf.get(index));
             } else {
                 builder.append('(');
-                builder.append(inf.get(index));
+                builder.append(this.inf.get(index));
                 builder.append(',');
                 builder.append(this.sup.get(index));
                 builder.append(')');
