@@ -28,6 +28,16 @@ public final class CategoricalStorage {
     private final BitSet values;
 
     /**
+     * EXCEPTION_VALUE.
+     */
+    private static final String EXCEPTION_VALUE = "The CategoricalValue is not in the model of the CategoricalStorage";
+
+    /**
+     * EXCEPTION_MODEL.
+     */
+    private static final String EXCEPTION_MODEL = "CategoricalStorage objects must have the same model";
+
+    /**
      * Create a CategoricalStorage.
      *
      * @param model Model of this storage
@@ -61,7 +71,7 @@ public final class CategoricalStorage {
         if (model.equals(value.getModel())) {
             return values.get(value.index());
         } else {
-            throw new IllegalArgumentException("The CategoricalValue is not in the model of the CategoricalStorage");
+            throw new IllegalArgumentException(EXCEPTION_VALUE);
         }
     }
 
@@ -73,12 +83,12 @@ public final class CategoricalStorage {
      *
      * @return this for chaining
      */
-    public CategoricalStorage set(final CategoricalValue value, boolean truth) {
+    public CategoricalStorage set(final CategoricalValue value, final boolean truth) {
         if (model.equals(value.getModel())) {
             values.set(value.index(), truth);
             return this;
         } else {
-            throw new IllegalArgumentException("The CategoricalValue is not in the model of the CategoricalStorage");
+            throw new IllegalArgumentException(EXCEPTION_VALUE);
         }
     }
 
@@ -90,13 +100,13 @@ public final class CategoricalStorage {
      *
      * @return this for chaining.
      */
-    public CategoricalStorage reduce(CategoricalValue value, final boolean truth) {
+    public CategoricalStorage reduce(final CategoricalValue value, final boolean truth) {
         if (model.equals(value.getModel())) {
             final int index = value.index();
             values.set(index, truth && values.get(index));
             return this;
         } else {
-            throw new IllegalArgumentException("The CategoricalValue is not in the model of the CategoricalStorage");
+            throw new IllegalArgumentException(EXCEPTION_VALUE);
         }
     }
 
@@ -114,7 +124,7 @@ public final class CategoricalStorage {
             values.set(index, truth || values.get(index));
             return this;
         } else {
-            throw new IllegalArgumentException("The CategoricalValue is not in the model of the CategoricalStorage");
+            throw new IllegalArgumentException(EXCEPTION_VALUE);
         }
     }
 
@@ -131,7 +141,7 @@ public final class CategoricalStorage {
         if (model.equals(storage.model)) {
             values.and(storage.values);
         } else {
-            throw new IllegalArgumentException("CategoricalStorage objects must have the same model");
+            throw new IllegalArgumentException(EXCEPTION_MODEL);
         }
         return this;
     }
@@ -149,7 +159,7 @@ public final class CategoricalStorage {
         if (model.equals(storage.model)) {
             values.or(storage.values);
         } else {
-            throw new IllegalArgumentException("CategoricalStorage objects must have the same model");
+            throw new IllegalArgumentException(EXCEPTION_MODEL);
         }
         return this;
     }
@@ -166,7 +176,7 @@ public final class CategoricalStorage {
         builder.append('[');
 
         boolean firstAttribute = true;
-        for (CategoricalAttribute attribute : model.getAttributes()) {
+        for (final CategoricalAttribute attribute : model.getAttributes()) {
             if (!firstAttribute) {
                 builder.append(", ");
             }
@@ -175,7 +185,7 @@ public final class CategoricalStorage {
             builder.append('[');
 
             boolean firstValue = true;
-            for (CategoricalValue value : attribute.getValues()) {
+            for (final CategoricalValue value : attribute.getValues()) {
                 if (get(value)) {
                     if (!firstValue) {
                         builder.append(", ");

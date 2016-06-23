@@ -125,8 +125,8 @@ public final class CategoricalModel {
             value = size;
         } else {
             value = 0;
-            for (final CategoricalAttribute current : attributes) {
-                value += current.size();
+            for (final CategoricalAttribute attribute : attributes) {
+                value += attribute.size();
             }
         }
         return value;
