@@ -53,7 +53,7 @@ public final class CategoricalModel {
         if (instantiated) {
             throw new IllegalStateException("This model has already been instantiated");
         } else {
-            CategoricalAttribute attribute = CategoricalAttribute.create(this);
+            final CategoricalAttribute attribute = CategoricalAttribute.create(this);
             attributes.add(attribute);
             return attribute;
         }
@@ -83,7 +83,7 @@ public final class CategoricalModel {
      *
      * @return the instantiated flag
      */
-    protected boolean getInstantiated() {
+    protected boolean isInstantiated() {
         return instantiated;
     }
 
@@ -103,12 +103,12 @@ public final class CategoricalModel {
      *
      * @return the index
      */
-    public int indexOf(CategoricalValue value) {
+    public int indexOf(final CategoricalValue value) {
         int index = 0;
-        CategoricalAttribute current = value.getAttribute();
-        for (CategoricalAttribute attribute : attributes) {
-            if (attribute == current) {
-                return index + current.indexOf(value);
+        final CategoricalAttribute current = value.getAttribute();
+        for (final CategoricalAttribute attribute : attributes) {
+            if (attribute.equals(current)) {
+                return index + value.index();
             } else {
                 index += attribute.size();
             }

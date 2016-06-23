@@ -64,14 +64,14 @@ public class CategoricalModelTest {
     }
 
     /**
-     * Test of getInstantiated method, of class CategoricalModel.
+     * Test of isInstantiated method, of class CategoricalModel.
      */
     @Test
-    public void testGetInstantiated() {
+    public void testIsInstantiated() {
         CategoricalModel model = CategoricalModel.create();
-        assertEquals(false, model.getInstantiated());
+        assertEquals(false, model.isInstantiated());
         model.instantiate();
-        assertEquals(true, model.getInstantiated());
+        assertEquals(true, model.isInstantiated());
     }
 
     /**

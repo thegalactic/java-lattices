@@ -69,6 +69,18 @@ public class CategoricalValueTest {
     }
 
     /**
+     * Test of index method, of class CategoricalValue.
+     */
+    @Test
+    public void testIndex() {
+        CategoricalAttribute attribute = CategoricalAttribute.create(CategoricalModel.create());
+        CategoricalValue.create("Test1", attribute);
+        CategoricalValue value = CategoricalValue.create("Test2", attribute);
+        CategoricalValue.create("Test3", attribute);
+        assertEquals(1, value.index());
+    }
+
+    /**
      * Test of toString method, of class CategoricalValue.
      */
     @Test

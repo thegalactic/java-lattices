@@ -80,6 +80,14 @@ public final class CategoricalValue {
     }
 
     /**
+     * Get the index of this value.
+     *
+     * @return the index of this value
+     */
+    protected int index() {
+        return attribute.indexOf(this);
+    }
+    /**
      * Returns a string representation of the data.
      *
      * @return a string representation of the data.

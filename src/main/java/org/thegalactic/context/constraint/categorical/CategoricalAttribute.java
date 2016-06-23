@@ -58,7 +58,7 @@ public final class CategoricalAttribute {
      * @return the categorical value
      */
     public CategoricalValue addValue(final Object data) {
-        if (model.getInstantiated()) {
+        if (model.isInstantiated()) {
             throw new IllegalStateException("The underlying model has already been instantiated");
         } else {
             final CategoricalValue value = CategoricalValue.create(data, this);
