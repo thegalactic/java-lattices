@@ -68,8 +68,8 @@ public final class CategoricalStorage {
      * @return truth value
      */
     public boolean get(final CategoricalValue value) {
-        if (model.equals(value.getModel())) {
-            return values.get(value.index());
+        if (this.model.equals(value.getModel())) {
+            return this.values.get(value.index());
         } else {
             throw new IllegalArgumentException(EXCEPTION_VALUE);
         }
@@ -84,8 +84,8 @@ public final class CategoricalStorage {
      * @return this for chaining
      */
     public CategoricalStorage set(final CategoricalValue value, final boolean truth) {
-        if (model.equals(value.getModel())) {
-            values.set(value.index(), truth);
+        if (this.model.equals(value.getModel())) {
+            this.values.set(value.index(), truth);
             return this;
         } else {
             throw new IllegalArgumentException(EXCEPTION_VALUE);
@@ -101,9 +101,9 @@ public final class CategoricalStorage {
      * @return this for chaining.
      */
     public CategoricalStorage reduce(final CategoricalValue value, final boolean truth) {
-        if (model.equals(value.getModel())) {
+        if (this.model.equals(value.getModel())) {
             final int index = value.index();
-            values.set(index, truth && values.get(index));
+            this.values.set(index, truth && this.values.get(index));
             return this;
         } else {
             throw new IllegalArgumentException(EXCEPTION_VALUE);
@@ -119,9 +119,9 @@ public final class CategoricalStorage {
      * @return this for chaining.
      */
     public CategoricalStorage extend(final CategoricalValue value, final boolean truth) {
-        if (model.equals(value.getModel())) {
+        if (this.model.equals(value.getModel())) {
             final int index = value.index();
-            values.set(index, truth || values.get(index));
+            this.values.set(index, truth || this.values.get(index));
             return this;
         } else {
             throw new IllegalArgumentException(EXCEPTION_VALUE);
@@ -138,8 +138,8 @@ public final class CategoricalStorage {
      * @throws IllegalArgumentException
      */
     public CategoricalStorage intersection(final CategoricalStorage storage) {
-        if (model.equals(storage.model)) {
-            values.and(storage.values);
+        if (this.model.equals(storage.model)) {
+            this.values.and(storage.values);
         } else {
             throw new IllegalArgumentException(EXCEPTION_MODEL);
         }
@@ -156,8 +156,8 @@ public final class CategoricalStorage {
      * @throws IllegalArgumentException
      */
     public CategoricalStorage union(final CategoricalStorage storage) {
-        if (model.equals(storage.model)) {
-            values.or(storage.values);
+        if (this.model.equals(storage.model)) {
+            this.values.or(storage.values);
         } else {
             throw new IllegalArgumentException(EXCEPTION_MODEL);
         }
@@ -176,7 +176,7 @@ public final class CategoricalStorage {
         builder.append('[');
 
         boolean firstAttribute = true;
-        for (final CategoricalAttribute attribute : model.getAttributes()) {
+        for (final CategoricalAttribute attribute : this.model.getAttributes()) {
             if (!firstAttribute) {
                 builder.append(", ");
             }
@@ -186,7 +186,7 @@ public final class CategoricalStorage {
 
             boolean firstValue = true;
             for (final CategoricalValue value : attribute.getValues()) {
-                if (get(value)) {
+                if (this.get(value)) {
                     if (!firstValue) {
                         builder.append(", ");
                     }
