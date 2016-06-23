@@ -86,10 +86,12 @@ public final class CategoricalModel {
      * @return this for chaining
      */
     CategoricalModel instantiate() {
-        size = sizeValues();
+        int start = 0;
         for (final CategoricalAttribute attribute : attributes) {
-            startIndex.put(attribute, this.startIndex(attribute));
+            startIndex.put(attribute, start);
+            start += attribute.size();
         }
+        size = start;
         instantiated = true;
         return this;
     }
@@ -118,16 +120,16 @@ public final class CategoricalModel {
      * @return the number of attributes
      */
     public int sizeValues() {
+        int value;
         if (instantiated) {
-            return size;
+            value = size;
         } else {
-            int currentSize = 0;
+            value = 0;
             for (final CategoricalAttribute current : attributes) {
-                currentSize += current.size();
+                value += current.size();
             }
-            return currentSize;
-
         }
+        return value;
     }
 
     /**
@@ -154,10 +156,11 @@ public final class CategoricalModel {
      */
     public int startIndex(final CategoricalAttribute attribute) {
         if (this.equals(attribute.getModel())) {
+            int start;
             if (instantiated) {
-                return startIndex.get(attribute);
+                start = startIndex.get(attribute);
             } else {
-                int start = 0;
+                start = 0;
                 for (final CategoricalAttribute current : attributes) {
                     if (attribute.equals(current)) {
                         break;
@@ -165,8 +168,8 @@ public final class CategoricalModel {
                         start += current.size();
                     }
                 }
-                return start;
             }
+            return start;
         } else {
             throw new IllegalArgumentException("The CategoricalAttribute is not in this model");
         }
