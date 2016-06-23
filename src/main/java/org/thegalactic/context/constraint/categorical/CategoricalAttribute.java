@@ -57,11 +57,11 @@ public final class CategoricalAttribute {
      * @return the categorical value
      */
     public CategoricalValue addValue(final Object data) {
-        if (model.isInstantiated()) {
+        if (this.model.isInstantiated()) {
             throw new IllegalStateException("The underlying model has already been instantiated");
         } else {
             final CategoricalValue value = CategoricalValue.create(data, this);
-            values.add(value);
+            this.values.add(value);
             return value;
         }
     }
@@ -81,7 +81,7 @@ public final class CategoricalAttribute {
      * @return the number of values
      */
     public int size() {
-        return values.size();
+        return this.values.size();
     }
 
     /**
@@ -90,7 +90,7 @@ public final class CategoricalAttribute {
      * @return the startIndex of this
      */
     public int startIndex() {
-        return model.startIndex(this);
+        return this.model.startIndex(this);
     }
 
     /**
@@ -101,7 +101,7 @@ public final class CategoricalAttribute {
      * @return the index of the CategoricalValue
      */
     public int indexOf(final CategoricalValue value) {
-        return values.indexOf(value);
+        return this.values.indexOf(value);
     }
 
     /**
@@ -110,7 +110,7 @@ public final class CategoricalAttribute {
      * @return the underlying model
      */
     public CategoricalModel getModel() {
-        return model;
+        return this.model;
     }
 
     /**
@@ -120,6 +120,6 @@ public final class CategoricalAttribute {
      */
     @Override
     public String toString() {
-        return values.toString();
+        return this.values.toString();
     }
 }
