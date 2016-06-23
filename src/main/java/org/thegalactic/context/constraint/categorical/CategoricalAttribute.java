@@ -72,7 +72,7 @@ public final class CategoricalAttribute {
      * @return an iterable collection of CategoricalValue
      */
     public Iterable<CategoricalValue> getValues() {
-        return values;
+        return this.values;
     }
 
     /**
