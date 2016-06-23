@@ -44,7 +44,7 @@ public final class CategoricalValue {
      * @param attribute CategoricalAttribute
      */
     private CategoricalValue(final Object object, final CategoricalAttribute attribute) {
-        setData(object);
+        this.setData(object);
         this.attribute = attribute;
     }
 
@@ -54,7 +54,7 @@ public final class CategoricalValue {
      * @return the underlying attribute
      */
     public CategoricalAttribute getAttribute() {
-        return attribute;
+        return this.attribute;
     }
 
     /**
@@ -63,7 +63,7 @@ public final class CategoricalValue {
      * @return the underlying model
      */
     public CategoricalModel getModel() {
-        return attribute.getModel();
+        return this.attribute.getModel();
     }
 
     /**
@@ -72,7 +72,7 @@ public final class CategoricalValue {
      * @return the underlying data
      */
     public Object getData() {
-        return data;
+        return this.data;
     }
 
     /**
@@ -93,7 +93,7 @@ public final class CategoricalValue {
      * @return the index of this value
      */
     public int index() {
-        return attribute.startIndex() + attribute.indexOf(this);
+        return this.attribute.startIndex() + this.attribute.indexOf(this);
     }
 
     /**
@@ -103,7 +103,7 @@ public final class CategoricalValue {
      */
     @Override
     public String toString() {
-        final String string = data.toString();
+        final String string = this.data.toString();
         if (string.contains(" ") || string.contains("\"")) {
             return "\"" + string.replace("\"", "\\\"") + "\"";
         } else {
