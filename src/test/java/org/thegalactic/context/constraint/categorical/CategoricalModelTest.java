@@ -64,27 +64,32 @@ public class CategoricalModelTest {
     }
 
     /**
-     * Test of isInstantiated method, of class CategoricalModel.
+     * Test of sizeAttributes method, of class CategoricalModel.
      */
     @Test
-    public void testIsInstantiated() {
-        CategoricalModel model = CategoricalModel.create();
-        assertEquals(false, model.isInstantiated());
-        model.instantiate();
-        assertEquals(true, model.isInstantiated());
-    }
-
-    /**
-     * Test of size method, of class CategoricalModel.
-     */
-    @Test
-    public void testSize() {
+    public void testSizeAttributes() {
         ArrayList<CategoricalAttribute> attributes = new ArrayList<CategoricalAttribute>();
         CategoricalModel model = CategoricalModel.create();
         attributes.add(model.addAttribute());
         attributes.add(model.addAttribute());
         attributes.add(model.addAttribute());
-        assertEquals(attributes.size(), model.size());
+        assertEquals(attributes.size(), model.sizeAttributes());
+    }
+
+    /**
+     * Test of sizeValues method, of class CategoricalModel.
+     */
+    @Test
+    public void testSizeValues() {
+        CategoricalModel model = CategoricalModel.create();
+        CategoricalAttribute attribute1 = model.addAttribute();
+        attribute1.addValue("Test1");
+        attribute1.addValue("Test2");
+        attribute1.addValue("Test3");
+        CategoricalAttribute attribute2 = model.addAttribute();
+        attribute2.addValue("Test4");
+        attribute2.addValue("Test5");
+        assertEquals(5, model.sizeValues());
     }
 
     /**
@@ -107,6 +112,28 @@ public class CategoricalModelTest {
             fail("An IllegalArgumentException must be thrown");
         } catch (IllegalArgumentException e) {
             assertEquals("The CategoricalValue is not in this model", e.getMessage());
+        }
+    }
+
+    /**
+     * Test of startIndex method, of class CategoricalModel.
+     */
+    @Test
+    public void testStartIndex() {
+        CategoricalModel model = CategoricalModel.create();
+        CategoricalAttribute attribute1 = model.addAttribute();
+        CategoricalValue value1 = attribute1.addValue("Test1");
+        CategoricalValue value2 = attribute1.addValue("Test2");
+        CategoricalAttribute attribute2 = model.addAttribute();
+        CategoricalValue value3 = attribute2.addValue("Test3");
+        assertEquals(0, model.startIndex(attribute1));
+        assertEquals(2, model.startIndex(attribute2));
+        try {
+            model = CategoricalModel.create();
+            model.startIndex(attribute1);
+            fail("An IllegalArgumentException must be thrown");
+        } catch (IllegalArgumentException e) {
+            assertEquals("The CategoricalAttribute is not in this model", e.getMessage());
         }
     }
 

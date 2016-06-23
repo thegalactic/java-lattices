@@ -12,7 +12,6 @@ package org.thegalactic.context.constraint.categorical;
  */
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * CategoricalValue test.
@@ -20,15 +19,23 @@ import static org.junit.Assert.assertTrue;
 public class CategoricalValueTest {
 
     /**
-     * Test of create method, of class CategoricalValue.
+     * Test of getData method, of class CategoricalValue.
      */
     @Test
-    public void testCreate() {
-        CategoricalValue value = CategoricalValue.create(
-                "Test",
-                CategoricalAttribute.create(CategoricalModel.create())
-        );
-        assertTrue(value instanceof CategoricalValue);
+    public void testGetAttribute() {
+        CategoricalAttribute attribute = CategoricalModel.create().addAttribute();
+        CategoricalValue value = CategoricalValue.create("Test", attribute);
+        assertEquals(attribute, value.getAttribute());
+    }
+
+    /**
+     * Test of getModel method, of class CategoricalValue.
+     */
+    @Test
+    public void testGetModel() {
+        CategoricalModel model = CategoricalModel.create();
+        CategoricalValue value = model.addAttribute().addValue("Test");
+        assertEquals(model, value.getModel());
     }
 
     /**
@@ -37,21 +44,8 @@ public class CategoricalValueTest {
     @Test
     public void testGetData() {
         String object = "Test";
-        CategoricalValue value = CategoricalValue.create(
-                object,
-                CategoricalAttribute.create(CategoricalModel.create())
-        );
+        CategoricalValue value = CategoricalModel.create().addAttribute().addValue(object);
         assertEquals(object, value.getData());
-    }
-
-    /**
-     * Test of getData method, of class CategoricalValue.
-     */
-    @Test
-    public void testGetAttribute() {
-        CategoricalAttribute attribute = CategoricalAttribute.create(CategoricalModel.create());
-        CategoricalValue value = CategoricalValue.create("Test", attribute);
-        assertEquals(attribute, value.getAttribute());
     }
 
     /**
@@ -60,10 +54,7 @@ public class CategoricalValueTest {
     @Test
     public void testSetData() {
         String object = "Test2";
-        CategoricalValue value = CategoricalValue.create(
-                "Test",
-                CategoricalAttribute.create(CategoricalModel.create())
-        );
+        CategoricalValue value = CategoricalModel.create().addAttribute().addValue("Test");
         assertEquals(value, value.setData(object));
         assertEquals(object, value.getData());
     }
@@ -73,10 +64,14 @@ public class CategoricalValueTest {
      */
     @Test
     public void testIndex() {
-        CategoricalAttribute attribute = CategoricalAttribute.create(CategoricalModel.create());
-        assertEquals(0, attribute.addValue("Test1").index());
-        assertEquals(1, attribute.addValue("Test2").index());
-        assertEquals(2, attribute.addValue("Test3").index());
+        CategoricalModel model = CategoricalModel.create();
+        CategoricalAttribute attribute1 = model.addAttribute();
+        assertEquals(0, attribute1.addValue("Test1").index());
+        assertEquals(1, attribute1.addValue("Test2").index());
+        assertEquals(2, attribute1.addValue("Test3").index());
+        CategoricalAttribute attribute2 = model.addAttribute();
+        assertEquals(3, attribute2.addValue("Test4").index());
+        assertEquals(4, attribute2.addValue("Test5").index());
     }
 
     /**
@@ -84,12 +79,12 @@ public class CategoricalValueTest {
      */
     @Test
     public void testToString() {
-        CategoricalAttribute attribute = CategoricalAttribute.create(CategoricalModel.create());
-        CategoricalValue value = CategoricalValue.create("Test", attribute);
+        CategoricalAttribute attribute = CategoricalModel.create().addAttribute();
+        CategoricalValue value = attribute.addValue("Test");
         assertEquals("Test", value.toString());
-        value = CategoricalValue.create("Test with spaces", attribute);
+        value = attribute.addValue("Test with spaces");
         assertEquals("\"Test with spaces\"", value.toString());
-        value = CategoricalValue.create("Test\"quotes", attribute);
+        value = attribute.addValue("Test\"quotes");
         assertEquals("\"Test\\\"quotes\"", value.toString());
     }
 }

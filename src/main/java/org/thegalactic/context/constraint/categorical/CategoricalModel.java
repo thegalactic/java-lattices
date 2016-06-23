@@ -11,6 +11,7 @@ package org.thegalactic.context.constraint.categorical;
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Categorical Model.
@@ -28,6 +29,16 @@ public final class CategoricalModel {
     private final ArrayList<CategoricalAttribute> attributes;
 
     /**
+     * startIndex.
+     */
+    private final HashMap<CategoricalAttribute, Integer> startIndex;
+
+    /**
+     * Size.
+     */
+    private int size;
+
+    /**
      * Factory method to construct a categorical model.
      *
      * @return a new CategoricalModel object
@@ -41,6 +52,7 @@ public final class CategoricalModel {
      */
     private CategoricalModel() {
         instantiated = false;
+        startIndex = new HashMap<CategoricalAttribute, Integer>();
         attributes = new ArrayList<CategoricalAttribute>();
     }
 
@@ -73,7 +85,11 @@ public final class CategoricalModel {
      *
      * @return this for chaining
      */
-    protected CategoricalModel instantiate() {
+    CategoricalModel instantiate() {
+        size = sizeValues();
+        for (final CategoricalAttribute attribute : attributes) {
+            startIndex.put(attribute, this.startIndex(attribute));
+        }
         instantiated = true;
         return this;
     }
@@ -83,7 +99,7 @@ public final class CategoricalModel {
      *
      * @return the instantiated flag
      */
-    protected boolean isInstantiated() {
+    boolean isInstantiated() {
         return instantiated;
     }
 
@@ -92,8 +108,26 @@ public final class CategoricalModel {
      *
      * @return the number of attributes
      */
-    public int size() {
+    public int sizeAttributes() {
         return attributes.size();
+    }
+
+    /**
+     * Get the number of attributes.
+     *
+     * @return the number of attributes
+     */
+    public int sizeValues() {
+        if (instantiated) {
+            return size;
+        } else {
+            int currentSize = 0;
+            for (final CategoricalAttribute current : attributes) {
+                currentSize += current.size();
+            }
+            return currentSize;
+
+        }
     }
 
     /**
@@ -112,22 +146,30 @@ public final class CategoricalModel {
     }
 
     /**
-     * Get the start index of this attribute in its model.
+     * Get the startIndex index of this attribute in its model.
      *
      * @param attribute CategoricalAttribute
      *
-     * @return the start
+     * @return the startIndex
      */
-    public int start(final CategoricalAttribute attribute) {
-        int start = 0;
-        for (final CategoricalAttribute current : attributes) {
-            if (attribute.equals(current)) {
-                break;
+    public int startIndex(final CategoricalAttribute attribute) {
+        if (this.equals(attribute.getModel())) {
+            if (instantiated) {
+                return startIndex.get(attribute);
             } else {
-                start += attribute.size();
+                int start = 0;
+                for (final CategoricalAttribute current : attributes) {
+                    if (attribute.equals(current)) {
+                        break;
+                    } else {
+                        start += current.size();
+                    }
+                }
+                return start;
             }
+        } else {
+            throw new IllegalArgumentException("The CategoricalAttribute is not in this model");
         }
-        return start;
     }
 
     /**

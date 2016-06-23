@@ -10,6 +10,7 @@ package org.thegalactic.context.constraint.categorical;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
+import java.util.ArrayList;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -21,21 +22,12 @@ import static org.junit.Assert.fail;
 public class CategoricalAttributeTest {
 
     /**
-     * Test of create method, of class CategoricalAttribute.
-     */
-    @Test
-    public void testCreate() {
-        CategoricalAttribute result = CategoricalAttribute.create(CategoricalModel.create());
-        assertTrue(result instanceof CategoricalAttribute);
-    }
-
-    /**
      * Test of addValue method, of class CategoricalAttribute.
      */
     @Test
     public void testAddValue() {
         CategoricalModel model = CategoricalModel.create();
-        CategoricalAttribute attribute = CategoricalAttribute.create(model);
+        CategoricalAttribute attribute = model.addAttribute();
         assertTrue(attribute.addValue("Test") instanceof CategoricalValue);
         try {
             model.instantiate();
@@ -51,25 +43,16 @@ public class CategoricalAttributeTest {
      */
     @Test
     public void testGetValues() {
-        CategoricalAttribute attribute = CategoricalAttribute.create(CategoricalModel.create());
-        attribute.addValue("Test1");
-        attribute.addValue("Test2");
-        attribute.addValue("Test3");
+        CategoricalAttribute attribute = CategoricalModel.create().addAttribute();
+        ArrayList<CategoricalValue> values = new ArrayList<CategoricalValue>();
+        values.add(attribute.addValue("Test1"));
+        values.add(attribute.addValue("Test2"));
+        values.add(attribute.addValue("Test3"));
         int i = 0;
         for (CategoricalValue value : attribute.getValues()) {
+            assertEquals(values.get(i), value);
             i++;
-            assertEquals("Test" + i, value.toString());
         }
-    }
-
-    /**
-     * Test of getModel method, of class CategoricalAttribute.
-     */
-    @Test
-    public void testGetModel() {
-        CategoricalModel model = CategoricalModel.create();
-        CategoricalAttribute attribute = CategoricalAttribute.create(model);
-        assertEquals(model, attribute.getModel());
     }
 
     /**
@@ -77,7 +60,7 @@ public class CategoricalAttributeTest {
      */
     @Test
     public void testSize() {
-        CategoricalAttribute attribute = CategoricalAttribute.create(CategoricalModel.create());
+        CategoricalAttribute attribute = CategoricalModel.create().addAttribute();
         assertEquals(0, attribute.size());
         attribute.addValue("Test1");
         assertEquals(1, attribute.size());
@@ -88,14 +71,41 @@ public class CategoricalAttributeTest {
     }
 
     /**
+     * Test of startIndex method, of class CategoricalAttribute.
+     */
+    @Test
+    public void testStartIndex() {
+        CategoricalModel model = CategoricalModel.create();
+        CategoricalAttribute attribute1 = model.addAttribute();
+        assertEquals(0, attribute1.startIndex());
+        attribute1.addValue("Test1");
+        attribute1.addValue("Test2");
+        attribute1.addValue("Test3");
+        CategoricalAttribute attribute2 = model.addAttribute();
+        assertEquals(3, attribute2.startIndex());
+        attribute1.addValue("Test4");
+        assertEquals(4, attribute2.startIndex());
+    }
+
+    /**
      * Test of indexOf method, of class CategoricalAttribute.
      */
     @Test
     public void testIndexOf() {
-        CategoricalAttribute attribute = CategoricalAttribute.create(CategoricalModel.create());
+        CategoricalAttribute attribute = CategoricalModel.create().addAttribute();
         assertEquals(0, attribute.indexOf(attribute.addValue("Test1")));
         assertEquals(1, attribute.indexOf(attribute.addValue("Test2")));
         assertEquals(2, attribute.indexOf(attribute.addValue("Test3")));
+    }
+
+    /**
+     * Test of getModel method, of class CategoricalAttribute.
+     */
+    @Test
+    public void testGetModel() {
+        CategoricalModel model = CategoricalModel.create();
+        CategoricalAttribute attribute = model.addAttribute();
+        assertEquals(model, attribute.getModel());
     }
 
     /**
@@ -103,7 +113,7 @@ public class CategoricalAttributeTest {
      */
     @Test
     public void testToString() {
-        CategoricalAttribute attribute = CategoricalAttribute.create(CategoricalModel.create());
+        CategoricalAttribute attribute = CategoricalModel.create().addAttribute();
         attribute.addValue("Test");
         attribute.addValue("Test with spaces");
         attribute.addValue("Test\"quotes");

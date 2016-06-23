@@ -14,8 +14,6 @@ import java.util.ArrayList;
 
 /**
  * Categorical Attribute.
- *
- * @todo Set public visibility?
  */
 public final class CategoricalAttribute {
 
@@ -36,7 +34,7 @@ public final class CategoricalAttribute {
      *
      * @return new CategoricalAttribute
      */
-    protected static CategoricalAttribute create(final CategoricalModel model) {
+    static CategoricalAttribute create(final CategoricalModel model) {
         return new CategoricalAttribute(model);
     }
 
@@ -86,12 +84,12 @@ public final class CategoricalAttribute {
     }
 
     /**
-     * Get the start of this.
+     * Get the startIndex of this.
      *
-     * @return the start of this
+     * @return the startIndex of this
      */
-    protected int start() {
-        return model.start(this);
+    public int startIndex() {
+        return model.startIndex(this);
     }
 
     /**
@@ -101,7 +99,7 @@ public final class CategoricalAttribute {
      *
      * @return the index of the CategoricalValue
      */
-    protected int indexOf(final CategoricalValue value) {
+    public int indexOf(final CategoricalValue value) {
         return values.indexOf(value);
     }
 
@@ -110,7 +108,7 @@ public final class CategoricalAttribute {
      *
      * @return the underlying model
      */
-    protected CategoricalModel getModel() {
+    public CategoricalModel getModel() {
         return model;
     }
 

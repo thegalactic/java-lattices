@@ -40,6 +40,13 @@ public class CategoricalStorageTest {
         CategoricalValue value = attribute.addValue("Test");
         CategoricalStorage storage = CategoricalStorage.create(model);
         assertEquals(true, storage.get(value));
+        try {
+            value = CategoricalModel.create().addAttribute().addValue("Test");
+            storage.get(value);
+            fail("An IllegalArgumentException must be thrown");
+        } catch (IllegalArgumentException e) {
+            assertEquals("The CategoricalValue is not in the model of the CategoricalStorage", e.getMessage());
+        }
     }
 
     /**
@@ -53,6 +60,13 @@ public class CategoricalStorageTest {
         CategoricalStorage storage = CategoricalStorage.create(model);
         storage.set(value, false);
         assertEquals(false, storage.get(value));
+        try {
+            value = CategoricalModel.create().addAttribute().addValue("Test");
+            storage.set(value, true);
+            fail("An IllegalArgumentException must be thrown");
+        } catch (IllegalArgumentException e) {
+            assertEquals("The CategoricalValue is not in the model of the CategoricalStorage", e.getMessage());
+        }
     }
 
     /**
@@ -72,6 +86,13 @@ public class CategoricalStorageTest {
         assertEquals(false, storage.get(value));
         storage.reduce(value, false);
         assertEquals(false, storage.get(value));
+        try {
+            value = CategoricalModel.create().addAttribute().addValue("Test");
+            storage.reduce(value, true);
+            fail("An IllegalArgumentException must be thrown");
+        } catch (IllegalArgumentException e) {
+            assertEquals("The CategoricalValue is not in the model of the CategoricalStorage", e.getMessage());
+        }
     }
 
     /**
@@ -92,6 +113,13 @@ public class CategoricalStorageTest {
         assertEquals(true, storage.get(value));
         storage.extend(value, true);
         assertEquals(true, storage.get(value));
+        try {
+            value = CategoricalModel.create().addAttribute().addValue("Test");
+            storage.extend(value, true);
+            fail("An IllegalArgumentException must be thrown");
+        } catch (IllegalArgumentException e) {
+            assertEquals("The CategoricalValue is not in the model of the CategoricalStorage", e.getMessage());
+        }
     }
 
     /**

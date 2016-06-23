@@ -33,7 +33,7 @@ public final class CategoricalValue {
      *
      * @return a new CategoricalValue
      */
-    protected static CategoricalValue create(Object data, CategoricalAttribute attribute) {
+    static CategoricalValue create(Object data, CategoricalAttribute attribute) {
         return new CategoricalValue(data, attribute);
     }
 
@@ -92,8 +92,8 @@ public final class CategoricalValue {
      *
      * @return the index of this value
      */
-    protected int index() {
-        return attribute.start() + attribute.indexOf(this);
+    public int index() {
+        return attribute.startIndex() + attribute.indexOf(this);
     }
 
     /**
