@@ -130,6 +130,15 @@ public class BinaryStorageTest {
     }
 
     /**
+     * Test of size method, of class BinaryStorage.
+     */
+    @Test
+    public void testSize() {
+        BinaryStorage storage = BinaryStorage.create(10);
+        assertEquals(10, storage.size());
+    }
+
+    /**
      * Test of toString method, of class BinaryStorage.
      */
     @Test
