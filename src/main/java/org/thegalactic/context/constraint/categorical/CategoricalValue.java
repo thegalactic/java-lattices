@@ -33,7 +33,7 @@ public final class CategoricalValue {
      *
      * @return a new CategoricalValue
      */
-    static CategoricalValue create(Object data, CategoricalAttribute attribute) {
+    static CategoricalValue create(final Object data, final CategoricalAttribute attribute) {
         return new CategoricalValue(data, attribute);
     }
 
@@ -43,7 +43,7 @@ public final class CategoricalValue {
      * @param object Object
      * @param attribute CategoricalAttribute
      */
-    private CategoricalValue(Object object, CategoricalAttribute attribute) {
+    private CategoricalValue(final Object object, final CategoricalAttribute attribute) {
         setData(object);
         this.attribute = attribute;
     }
@@ -82,7 +82,7 @@ public final class CategoricalValue {
      *
      * @return this for chaining
      */
-    public CategoricalValue setData(Object data) {
+    public CategoricalValue setData(final Object data) {
         this.data = data;
         return this;
     }
@@ -103,7 +103,7 @@ public final class CategoricalValue {
      */
     @Override
     public String toString() {
-        String string = data.toString();
+        final String string = data.toString();
         if (string.contains(" ") || string.contains("\"")) {
             return "\"" + string.replace("\"", "\\\"") + "\"";
         } else {
