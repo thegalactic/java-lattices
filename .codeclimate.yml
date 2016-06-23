@@ -1,0 +1,9 @@
+engines:
+  # ... CONFIG CONTENT ...
+  fixme:
+    enabled: true
+    # ... CONFIG CONTENT ...
+    checks:
+      XXX:
+        enabled: false
+
