@@ -18,6 +18,11 @@ import java.util.BitSet;
 public final class BinaryStorage {
 
     /**
+     * EXCEPTION_SIZE.
+     */
+    private static final String EXCEPTION_SIZE = "BooleanStorage objects must have the same size";
+
+    /**
      * # values.
      */
     private final int size;
@@ -45,7 +50,7 @@ public final class BinaryStorage {
      */
     private BinaryStorage(final int size) {
         this.size = size;
-        values = new BitSet(size);
+        this.values = new BitSet(size);
     }
 
     /**
@@ -56,7 +61,7 @@ public final class BinaryStorage {
      * @return truth value
      */
     public boolean get(final int index) {
-        return values.get(index);
+        return this.values.get(index);
     }
 
     /**
@@ -68,7 +73,7 @@ public final class BinaryStorage {
      * @return this for chaining.
      */
     public BinaryStorage set(final int index, final boolean truth) {
-        values.set(index, truth);
+        this.values.set(index, truth);
         return this;
     }
 
@@ -81,7 +86,7 @@ public final class BinaryStorage {
      * @return this for chaining.
      */
     public BinaryStorage reduce(final int index, final boolean truth) {
-        values.set(index, truth || values.get(index));
+        this.values.set(index, truth || this.values.get(index));
         return this;
     }
 
@@ -94,7 +99,7 @@ public final class BinaryStorage {
      * @return this for chaining.
      */
     public BinaryStorage extend(final int index, final boolean truth) {
-        values.set(index, truth && values.get(index));
+        this.values.set(index, truth && this.values.get(index));
         return this;
     }
 
@@ -108,10 +113,10 @@ public final class BinaryStorage {
      * @throws IllegalArgumentException
      */
     public BinaryStorage intersection(final BinaryStorage storage) {
-        if (storage.size == size) {
-            values.and(storage.values);
+        if (storage.size == this.size) {
+            this.values.and(storage.values);
         } else {
-            throw new IllegalArgumentException("BooleanStorage objects must have the same size");
+            throw new IllegalArgumentException(EXCEPTION_SIZE);
         }
         return this;
     }
@@ -126,10 +131,10 @@ public final class BinaryStorage {
      * @throws IllegalArgumentException
      */
     public BinaryStorage union(final BinaryStorage storage) {
-        if (storage.size == size) {
-            values.or(storage.values);
+        if (storage.size == this.size) {
+            this.values.or(storage.values);
         } else {
-            throw new IllegalArgumentException("BooleanStorage objects must have the same size");
+            throw new IllegalArgumentException(EXCEPTION_SIZE);
         }
         return this;
     }
@@ -140,7 +145,7 @@ public final class BinaryStorage {
      * @return the size
      */
     public int size() {
-        return size;
+        return this.size;
     }
 
     /**
@@ -154,8 +159,8 @@ public final class BinaryStorage {
 
         stringBuilder.append('[');
 
-        for (int index = 0; index < size; index++) {
-            if (values.get(index)) {
+        for (int index = 0; index < this.size; index++) {
+            if (this.values.get(index)) {
                 stringBuilder.append('1');
             } else {
                 stringBuilder.append('0');
