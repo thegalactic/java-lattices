@@ -16,16 +16,6 @@ import java.util.BitSet;
  * Categorical Storage.
  */
 public final class CategoricalStorage {
-    /**
-     * Create a CategoricalStorage.
-     *
-     * @param model Model of this storage
-     *
-     * @return a new CategoricalStorage
-     */
-    public static CategoricalStorage create(CategoricalModel model) {
-        return new CategoricalStorage(model);
-    }
 
     /**
      * Model.
@@ -36,12 +26,24 @@ public final class CategoricalStorage {
      * Values.
      */
     private final BitSet values;
+
+    /**
+     * Create a CategoricalStorage.
+     *
+     * @param model Model of this storage
+     *
+     * @return a new CategoricalStorage
+     */
+    public static CategoricalStorage create(final CategoricalModel model) {
+        return new CategoricalStorage(model);
+    }
+
     /**
      * This class is not designed to be publicly instantiated.
      *
      * @param model the underlying model
      */
-    private CategoricalStorage(CategoricalModel model) {
+    private CategoricalStorage(final CategoricalModel model) {
         this.model = model;
         model.instantiate();
         int size = 0;
@@ -59,7 +61,7 @@ public final class CategoricalStorage {
      *
      * @return truth value
      */
-    public boolean get(CategoricalValue value) {
+    public boolean get(final CategoricalValue value) {
         return values.get(value.getAttribute().getModel().indexOf(value));
     }
 
@@ -71,7 +73,7 @@ public final class CategoricalStorage {
      *
      * @return this for chaining
      */
-    public CategoricalStorage set(CategoricalValue value, boolean truth) {
+    public CategoricalStorage set(final CategoricalValue value, boolean truth) {
         values.set(value.getAttribute().getModel().indexOf(value), truth);
         return this;
     }
@@ -84,8 +86,8 @@ public final class CategoricalStorage {
      *
      * @return this for chaining.
      */
-    public CategoricalStorage reduce(CategoricalValue value, boolean truth) {
-        int index = value.getAttribute().getModel().indexOf(value);
+    public CategoricalStorage reduce(CategoricalValue value, final boolean truth) {
+        final int index = value.getAttribute().getModel().indexOf(value);
         values.set(index, truth && values.get(index));
         return this;
     }
@@ -98,8 +100,8 @@ public final class CategoricalStorage {
      *
      * @return this for chaining.
      */
-    public CategoricalStorage extend(CategoricalValue value, boolean truth) {
-        int index = value.getAttribute().getModel().indexOf(value);
+    public CategoricalStorage extend(final CategoricalValue value, final boolean truth) {
+        final int index = value.getAttribute().getModel().indexOf(value);
         values.set(index, truth || values.get(index));
         return this;
     }
@@ -113,7 +115,7 @@ public final class CategoricalStorage {
      *
      * @throws IllegalArgumentException
      */
-    public CategoricalStorage intersection(CategoricalStorage storage) {
+    public CategoricalStorage intersection(final CategoricalStorage storage) {
         if (storage.model == model) {
             values.and(storage.values);
         } else {
@@ -131,7 +133,7 @@ public final class CategoricalStorage {
      *
      * @throws IllegalArgumentException
      */
-    public CategoricalStorage union(CategoricalStorage storage) {
+    public CategoricalStorage union(final CategoricalStorage storage) {
         if (storage.model == model) {
             values.or(storage.values);
         } else {
@@ -147,9 +149,9 @@ public final class CategoricalStorage {
      */
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
 
-        builder.append("[");
+        builder.append('[');
 
         boolean firstAttribute = true;
         for (CategoricalAttribute attribute : model.getAttributes()) {
@@ -158,7 +160,7 @@ public final class CategoricalStorage {
             }
             firstAttribute = false;
 
-            builder.append("[");
+            builder.append('[');
 
             boolean firstValue = true;
             for (CategoricalValue value : attribute.getValues()) {
@@ -171,10 +173,10 @@ public final class CategoricalStorage {
                 }
             }
 
-            builder.append("]");
+            builder.append(']');
         }
 
-        builder.append("]");
+        builder.append(']');
 
         return builder.toString();
     }
