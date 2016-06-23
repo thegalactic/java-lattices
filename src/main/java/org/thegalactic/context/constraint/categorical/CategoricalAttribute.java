@@ -36,7 +36,7 @@ public final class CategoricalAttribute {
      *
      * @return new CategoricalAttribute
      */
-    protected static CategoricalAttribute create(CategoricalModel model) {
+    protected static CategoricalAttribute create(final CategoricalModel model) {
         return new CategoricalAttribute(model);
     }
 
@@ -45,7 +45,7 @@ public final class CategoricalAttribute {
      *
      * @param model The underlying CategoricalModel
      */
-    private CategoricalAttribute(CategoricalModel model) {
+    private CategoricalAttribute(final CategoricalModel model) {
         this.values = new ArrayList();
         this.model = model;
     }
@@ -57,11 +57,11 @@ public final class CategoricalAttribute {
      *
      * @return the categorical value
      */
-    public CategoricalValue addValue(Object data) {
+    public CategoricalValue addValue(final Object data) {
         if (model.getInstantiated()) {
             throw new IllegalStateException("The underlying model has already been instantiated");
         } else {
-            CategoricalValue value = CategoricalValue.create(data, this);
+            final CategoricalValue value = CategoricalValue.create(data, this);
             values.add(value);
             return value;
         }
@@ -92,7 +92,7 @@ public final class CategoricalAttribute {
      *
      * @return the index of the CategoricalValue
      */
-    int indexOf(CategoricalValue value) {
+    protected int indexOf(final CategoricalValue value) {
         return values.indexOf(value);
     }
 
