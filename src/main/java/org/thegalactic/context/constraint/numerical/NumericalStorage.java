@@ -236,7 +236,7 @@ public final class NumericalStorage {
      * @return this for chaining
      */
     public NumericalStorage intersection(final NumericalStorage storage) {
-        int size = inf.size();
+        final int size = inf.size();
         if (storage.inf.size() == size) {
             for (int index = 0; index < size; index++) {
                 inf.set(index, Math.max(inf.get(index), storage.inf.get(index)));
@@ -287,7 +287,7 @@ public final class NumericalStorage {
      */
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
 
         builder.append("[");
 
@@ -297,19 +297,19 @@ public final class NumericalStorage {
                 builder.append(", ");
             }
             if (isEmpty(index)) {
-                builder.append("@");
+                builder.append('@');
             } else if (isPoint(index)) {
                 builder.append(inf.get(index));
             } else {
-                builder.append("(");
+                builder.append('(');
                 builder.append(inf.get(index));
-                builder.append(",");
+                builder.append(',');
                 builder.append(sup.get(index));
-                builder.append(")");
+                builder.append(')');
             }
         }
 
-        builder.append("]");
+        builder.append(']');
 
         return builder.toString();
     }
