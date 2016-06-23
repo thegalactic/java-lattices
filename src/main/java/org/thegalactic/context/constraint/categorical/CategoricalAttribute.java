@@ -11,6 +11,7 @@ package org.thegalactic.context.constraint.categorical;
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Categorical Attribute.
@@ -20,7 +21,7 @@ public final class CategoricalAttribute {
     /**
      * Values.
      */
-    private final ArrayList<CategoricalValue> values;
+    private final List<CategoricalValue> values;
 
     /**
      * Model.
