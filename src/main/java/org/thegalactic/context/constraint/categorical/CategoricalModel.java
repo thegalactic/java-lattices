@@ -124,7 +124,7 @@ public final class CategoricalModel {
     public int sizeValues() {
         int value;
         if (this.instantiated) {
-            value = size;
+            value = this.size;
         } else {
             value = 0;
             for (final CategoricalAttribute attribute : this.attributes) {
