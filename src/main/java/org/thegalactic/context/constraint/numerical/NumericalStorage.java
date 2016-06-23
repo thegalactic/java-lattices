@@ -11,6 +11,7 @@ package org.thegalactic.context.constraint.numerical;
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Binary Storage.
@@ -20,12 +21,12 @@ public final class NumericalStorage {
     /**
      * inf values.
      */
-    private final ArrayList<Double> inf;
+    private final List<Double> inf;
 
     /**
      * sup values.
      */
-    private final ArrayList<Double> sup;
+    private final List<Double> sup;
 
     /**
      * Factory method to construct a numerical storage.
@@ -44,12 +45,12 @@ public final class NumericalStorage {
      * @param size number of values
      */
     private NumericalStorage(final int size) {
-        inf = new ArrayList<Double>(size);
-        sup = new ArrayList<Double>(size);
+        this.inf = new ArrayList<Double>(size);
+        this.sup = new ArrayList<Double>(size);
         // Initialise as an empty set
         for (int index = 0; index < size; index++) {
-            inf.add(index, Double.POSITIVE_INFINITY);
-            sup.add(index, Double.NEGATIVE_INFINITY);
+            this.inf.add(index, Double.POSITIVE_INFINITY);
+            this.sup.add(index, Double.NEGATIVE_INFINITY);
         }
     }
 
@@ -61,8 +62,8 @@ public final class NumericalStorage {
      * @return this for chaining
      */
     public NumericalStorage setEmpty(final int index) {
-        inf.set(index, Double.POSITIVE_INFINITY);
-        sup.set(index, Double.NEGATIVE_INFINITY);
+        this.inf.set(index, Double.POSITIVE_INFINITY);
+        this.sup.set(index, Double.NEGATIVE_INFINITY);
         return this;
     }
 
@@ -74,7 +75,7 @@ public final class NumericalStorage {
      * @return this for chaining
      */
     public boolean isEmpty(final int index) {
-        return inf.get(index) > sup.get(index);
+        return this.inf.get(index) > this.sup.get(index);
     }
 
     /**
@@ -86,8 +87,8 @@ public final class NumericalStorage {
      * @return this for chaining
      */
     public NumericalStorage setPoint(final int index, final double value) {
-        inf.set(index, value);
-        sup.set(index, value);
+        this.inf.set(index, value);
+        this.sup.set(index, value);
         return this;
     }
 
@@ -99,7 +100,7 @@ public final class NumericalStorage {
      * @return this for chaining
      */
     public boolean isPoint(final int index) {
-        return inf.get(index).equals(sup.get(index));
+        return this.inf.get(index).equals(this.sup.get(index));
     }
 
     /**
@@ -111,12 +112,12 @@ public final class NumericalStorage {
      * @return this for chaining
      */
     public NumericalStorage setInf(final int index, final double value) {
-        if (isEmpty(index)) {
-            setPoint(index, value);
-        } else if (value > sup.get(index)) {
-            setEmpty(index);
+        if (this.isEmpty(index)) {
+            this.setPoint(index, value);
+        } else if (value > this.sup.get(index)) {
+            this.setEmpty(index);
         } else {
-            inf.set(index, value);
+            this.inf.set(index, value);
         }
         return this;
     }
@@ -130,12 +131,12 @@ public final class NumericalStorage {
      * @return this for chaining
      */
     public NumericalStorage setSup(final int index, final double value) {
-        if (isEmpty(index)) {
-            setPoint(index, value);
-        } else if (value < inf.get(index)) {
-            setEmpty(index);
+        if (this.isEmpty(index)) {
+            this.setPoint(index, value);
+        } else if (value < this.inf.get(index)) {
+            this.setEmpty(index);
         } else {
-            sup.set(index, value);
+            this.sup.set(index, value);
         }
         return this;
     }
@@ -148,7 +149,7 @@ public final class NumericalStorage {
      * @return the inf value
      */
     public double getInf(final int index) {
-        return inf.get(index);
+        return this.inf.get(index);
     }
 
     /**
@@ -159,7 +160,7 @@ public final class NumericalStorage {
      * @return the inf value
      */
     public double getSup(final int index) {
-        return sup.get(index);
+        return this.sup.get(index);
     }
 
     /**
@@ -171,7 +172,7 @@ public final class NumericalStorage {
      * @return this for chaining.
      */
     public NumericalStorage reduceInf(final int index, final double value) {
-        inf.set(index, Math.max(inf.get(index), value));
+        this.inf.set(index, Math.max(this.inf.get(index), value));
         return this;
     }
 
@@ -184,7 +185,7 @@ public final class NumericalStorage {
      * @return this for chaining.
      */
     public NumericalStorage reduceSup(final int index, final double value) {
-        sup.set(index, Math.min(sup.get(index), value));
+        this.sup.set(index, Math.min(this.sup.get(index), value));
         return this;
     }
 
@@ -197,7 +198,7 @@ public final class NumericalStorage {
      * @return this for chaining
      */
     public NumericalStorage extendInf(final int index, final double value) {
-        inf.set(index, Math.min(inf.get(index), value));
+        this.inf.set(index, Math.min(this.inf.get(index), value));
         return this;
     }
 
@@ -210,7 +211,7 @@ public final class NumericalStorage {
      * @return this for chaining
      */
     public NumericalStorage extendSup(final int index, final double value) {
-        sup.set(index, Math.max(sup.get(index), value));
+        this.sup.set(index, Math.max(this.sup.get(index), value));
         return this;
     }
 
@@ -236,11 +237,11 @@ public final class NumericalStorage {
      * @return this for chaining
      */
     public NumericalStorage intersection(final NumericalStorage storage) {
-        final int size = inf.size();
+        final int size = this.inf.size();
         if (storage.inf.size() == size) {
             for (int index = 0; index < size; index++) {
-                inf.set(index, Math.max(inf.get(index), storage.inf.get(index)));
-                sup.set(index, Math.min(sup.get(index), storage.sup.get(index)));
+                this.inf.set(index, Math.max(this.inf.get(index), storage.inf.get(index)));
+                this.sup.set(index, Math.min(this.sup.get(index), storage.sup.get(index)));
             }
             return this;
         } else {
@@ -259,11 +260,11 @@ public final class NumericalStorage {
      * @return this for chaining
      */
     public NumericalStorage union(final NumericalStorage storage) {
-        final int size = inf.size();
+        final int size = this.inf.size();
         if (storage.inf.size() == size) {
             for (int index = 0; index < size; index++) {
-                inf.set(index, Math.min(inf.get(index), storage.inf.get(index)));
-                sup.set(index, Math.max(sup.get(index), storage.sup.get(index)));
+                this.inf.set(index, Math.min(this.inf.get(index), storage.inf.get(index)));
+               this. sup.set(index, Math.max(this.sup.get(index), storage.sup.get(index)));
             }
             return this;
         } else {
@@ -277,7 +278,7 @@ public final class NumericalStorage {
      * @return the size
      */
     public int size() {
-        return inf.size();
+        return this.inf.size();
     }
 
     /**
@@ -291,7 +292,7 @@ public final class NumericalStorage {
 
         builder.append('[');
 
-        final int size = inf.size();
+        final int size = this.inf.size();
         for (int index = 0; index < size; index++) {
             if (index != 0) {
                 builder.append(", ");
@@ -299,12 +300,12 @@ public final class NumericalStorage {
             if (isEmpty(index)) {
                 builder.append('@');
             } else if (isPoint(index)) {
-                builder.append(inf.get(index));
+                builder.append(this.inf.get(index));
             } else {
                 builder.append('(');
                 builder.append(inf.get(index));
                 builder.append(',');
-                builder.append(sup.get(index));
+                builder.append(this.sup.get(index));
                 builder.append(')');
             }
         }
