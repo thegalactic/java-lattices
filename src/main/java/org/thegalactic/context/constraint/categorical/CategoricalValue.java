@@ -88,12 +88,12 @@ public final class CategoricalValue {
     }
 
     /**
-     * Get the index of this value relatively to its attribute.
+     * Get the index of this value relatively to its model.
      *
      * @return the index of this value
      */
     protected int index() {
-        return attribute.indexOf(this);
+        return attribute.start() + attribute.indexOf(this);
     }
 
     /**

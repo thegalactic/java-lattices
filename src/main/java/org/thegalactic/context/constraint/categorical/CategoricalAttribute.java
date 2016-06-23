@@ -86,6 +86,15 @@ public final class CategoricalAttribute {
     }
 
     /**
+     * Get the start of this.
+     *
+     * @return the start of this
+     */
+    protected int start() {
+        return model.start(this);
+    }
+
+    /**
      * Get the index of a CategoricalValue.
      *
      * @param value the CategoricalValue

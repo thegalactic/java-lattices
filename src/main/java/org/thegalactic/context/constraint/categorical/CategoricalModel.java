@@ -104,16 +104,30 @@ public final class CategoricalModel {
      * @return the index
      */
     public int indexOf(final CategoricalValue value) {
-        int index = 0;
-        final CategoricalAttribute current = value.getAttribute();
-        for (final CategoricalAttribute attribute : attributes) {
+        if (this.equals(value.getModel())) {
+            return value.index();
+        } else {
+            throw new IllegalArgumentException("The CategoricalValue is not in this model");
+        }
+    }
+
+    /**
+     * Get the start index of this attribute in its model.
+     *
+     * @param attribute CategoricalAttribute
+     *
+     * @return the start
+     */
+    public int start(final CategoricalAttribute attribute) {
+        int start = 0;
+        for (final CategoricalAttribute current : attributes) {
             if (attribute.equals(current)) {
-                return index + value.index();
+                break;
             } else {
-                index += attribute.size();
+                start += attribute.size();
             }
         }
-        throw new IllegalArgumentException("The CategoricalValue is not in this model");
+        return start;
     }
 
     /**
