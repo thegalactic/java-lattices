@@ -12,6 +12,8 @@ package org.thegalactic.context.constraint.categorical;
  */
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Categorical Model.
@@ -26,12 +28,12 @@ public final class CategoricalModel {
     /**
      * Values.
      */
-    private final ArrayList<CategoricalAttribute> attributes;
+    private final List<CategoricalAttribute> attributes;
 
     /**
      * startIndex.
      */
-    private final HashMap<CategoricalAttribute, Integer> startIndex;
+    private final Map<CategoricalAttribute, Integer> startIndex;
 
     /**
      * Size.
@@ -51,9 +53,9 @@ public final class CategoricalModel {
      * This class is not designed to be publicly instantiated.
      */
     private CategoricalModel() {
-        instantiated = false;
-        startIndex = new HashMap<CategoricalAttribute, Integer>();
-        attributes = new ArrayList<CategoricalAttribute>();
+        this.instantiated = false;
+        this.startIndex = new HashMap<CategoricalAttribute, Integer>();
+        this.attributes = new ArrayList<CategoricalAttribute>();
     }
 
     /**
@@ -62,11 +64,11 @@ public final class CategoricalModel {
      * @return a new added CategoricalAttribute
      */
     public CategoricalAttribute addAttribute() {
-        if (instantiated) {
+        if (this.instantiated) {
             throw new IllegalStateException("This model has already been instantiated");
         } else {
             final CategoricalAttribute attribute = CategoricalAttribute.create(this);
-            attributes.add(attribute);
+            this.attributes.add(attribute);
             return attribute;
         }
     }
@@ -77,7 +79,7 @@ public final class CategoricalModel {
      * @return an iterable collection of CategoricalAttribute
      */
     public Iterable<CategoricalAttribute> getAttributes() {
-        return attributes;
+        return this.attributes;
     }
 
     /**
@@ -87,12 +89,12 @@ public final class CategoricalModel {
      */
     CategoricalModel instantiate() {
         int start = 0;
-        for (final CategoricalAttribute attribute : attributes) {
-            startIndex.put(attribute, start);
+        for (final CategoricalAttribute attribute : this.attributes) {
+            this.startIndex.put(attribute, start);
             start += attribute.size();
         }
-        size = start;
-        instantiated = true;
+        this.size = start;
+        this.instantiated = true;
         return this;
     }
 
@@ -102,7 +104,7 @@ public final class CategoricalModel {
      * @return the instantiated flag
      */
     boolean isInstantiated() {
-        return instantiated;
+        return this.instantiated;
     }
 
     /**
@@ -111,7 +113,7 @@ public final class CategoricalModel {
      * @return the number of attributes
      */
     public int sizeAttributes() {
-        return attributes.size();
+        return this.attributes.size();
     }
 
     /**
@@ -121,11 +123,11 @@ public final class CategoricalModel {
      */
     public int sizeValues() {
         int value;
-        if (instantiated) {
+        if (this.instantiated) {
             value = size;
         } else {
             value = 0;
-            for (final CategoricalAttribute attribute : attributes) {
+            for (final CategoricalAttribute attribute : this.attributes) {
                 value += attribute.size();
             }
         }
@@ -157,11 +159,11 @@ public final class CategoricalModel {
     public int startIndex(final CategoricalAttribute attribute) {
         if (this.equals(attribute.getModel())) {
             int start;
-            if (instantiated) {
-                start = startIndex.get(attribute);
+            if (this.instantiated) {
+                start = this.startIndex.get(attribute);
             } else {
                 start = 0;
-                for (final CategoricalAttribute current : attributes) {
+                for (final CategoricalAttribute current : this.attributes) {
                     if (attribute.equals(current)) {
                         break;
                     } else {
@@ -182,6 +184,6 @@ public final class CategoricalModel {
      */
     @Override
     public String toString() {
-        return attributes.toString();
+        return this.attributes.toString();
     }
 }
