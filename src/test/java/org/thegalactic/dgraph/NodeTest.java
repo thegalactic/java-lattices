@@ -15,6 +15,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -61,8 +62,12 @@ public class NodeTest {
     public void testClone() {
         Object content = new Object();
         Node node = new Node(content);
-        Node copy = node.clone();
-        assertEquals(copy.getContent(), content);
+        try {
+            Node copy = node.clone();
+            assertEquals(copy.getContent(), content);
+            assertNotEquals(copy.getIdentifier(), node.getIdentifier());
+        } catch (CloneNotSupportedException e) {
+        }
     }
 
     /**
