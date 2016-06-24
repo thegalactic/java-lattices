@@ -50,9 +50,9 @@ public class NodeTest {
      */
     @Test
     public void testToString() {
-        String content = new String("Hello World");
+        String content = "Hello World";
         Node node = new Node(content);
-        assertEquals(node.toString(), "Hello World");
+        assertEquals(content, node.toString());
     }
 
     /**
@@ -87,7 +87,6 @@ public class NodeTest {
     @Test
     public void testEquals() {
         Node node = new Node();
-        assertTrue(node.equals(node));
         assertFalse(node.equals(Integer.valueOf(1)));
     }
 
