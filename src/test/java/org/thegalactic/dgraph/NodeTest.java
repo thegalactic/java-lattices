@@ -87,7 +87,7 @@ public class NodeTest {
     @Test
     public void testEquals() {
         Node node = new Node();
-        assertFalse(node.equals(Integer.valueOf(1)));
+        assertFalse(node.equals(1));
     }
 
     /**
