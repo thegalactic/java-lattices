@@ -105,6 +105,5 @@ public class NodeTest {
         assertEquals(node1.compareTo(node1), 0);
         assertTrue(node1.compareTo(node2) < 0);
         assertTrue(node2.compareTo(node1) > 0);
-        assertTrue(node1.compareTo(new Object()) < 0);
     }
 }
