@@ -183,7 +183,7 @@ public class Node implements Comparable<Node>, Cloneable {
      * @return a negative integer, zero, or a positive integer as this node is
      * less than, equal to, or greater than the specified object.
      */
-    public int compareTo(final Node node) {
+    public final int compareTo(final Node node) {
         return this.identifier - node.identifier;
     }
 }
