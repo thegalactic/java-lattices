@@ -1,3 +1,5 @@
+package org.thegalactic.dgraph;
+
 /*
  * Node.java
  *
@@ -9,7 +11,6 @@
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-package org.thegalactic.dgraph;
 
 /**
  * This class gives a standard representation for a node of a graph.
