@@ -1,3 +1,5 @@
+package org.thegalactic.dgraph;
+
 /*
  * Node.java
  *
@@ -9,7 +11,6 @@
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-package org.thegalactic.dgraph;
 
 /**
  * This class gives a standard representation for a node of a graph.
@@ -34,7 +35,7 @@ package org.thegalactic.dgraph;
  * class Node #LightCyan
  * title Node UML graph
  */
-public class Node implements Comparable<Object>, Cloneable {
+public class Node implements Comparable<Node>, Cloneable {
 
     /**
      * The total number of nodes.
@@ -156,7 +157,7 @@ public class Node implements Comparable<Object>, Cloneable {
      */
     @Override
     public boolean equals(final Object object) {
-        return this.compareTo(object) == 0;
+        return this == object || object != null && this.getClass() == object.getClass() && this.identifier == ((Node) object).identifier;
     }
 
     /**
@@ -177,16 +178,12 @@ public class Node implements Comparable<Object>, Cloneable {
      * needed to define a natural ordering. It allows to use objects of this
      * class in a sorted collection.
      *
-     * @param object the specified element to be compared with this node
+     * @param node the specified element to be compared with this node
      *
      * @return a negative integer, zero, or a positive integer as this node is
      * less than, equal to, or greater than the specified object.
      */
-    public int compareTo(final Object object) {
-        if (object instanceof Node) {
-            return this.identifier - ((Node) object).identifier;
-        } else {
-            return -1;
-        }
+    public final int compareTo(final Node node) {
+        return this.identifier - node.identifier;
     }
 }
