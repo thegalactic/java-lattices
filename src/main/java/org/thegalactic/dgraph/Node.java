@@ -156,17 +156,8 @@ public class Node implements Comparable<Node>, Cloneable {
      * @return true or false as this node is equal to the specified object.
      */
     @Override
-    public boolean equals(final Object object) {
-        if (this == object) {
-            return true;
-        }
-        if (object == null) {
-            return false;
-        }
-        if (getClass() != object.getClass()) {
-            return false;
-        }
-        return this.identifier == ((Node) object).identifier;
+    public final boolean equals(final Object object) {
+        return this == object || object != null && this.getClass() == object.getClass() && this.identifier == ((Node) object).identifier;
     }
 
     /**
