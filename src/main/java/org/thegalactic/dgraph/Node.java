@@ -93,7 +93,7 @@ public class Node implements Comparable<Node>, Cloneable {
      *
      * @return the node identifier
      */
-    public int getIdentifier() {
+    public final int getIdentifier() {
         return this.identifier;
     }
 
@@ -102,7 +102,7 @@ public class Node implements Comparable<Node>, Cloneable {
      *
      * @return the node content
      */
-    public Object getContent() {
+    public final Object getContent() {
         return this.content;
     }
 
@@ -113,7 +113,7 @@ public class Node implements Comparable<Node>, Cloneable {
      *
      * @return this for chaining
      */
-    public Node setContent(final Object content) {
+    public final Node setContent(final Object content) {
         this.content = content;
         return this;
     }
@@ -128,11 +128,13 @@ public class Node implements Comparable<Node>, Cloneable {
      */
     @Override
     public String toString() {
+        String string;
         if (this.content == null) {
-            return this.identifier + "";
+            string = String.valueOf(this.identifier);
         } else {
-            return this.content.toString();
+            string = this.content.toString();
         }
+        return string;
     }
 
     /*
