@@ -147,7 +147,7 @@ public class Node implements Comparable<Node>, Cloneable {
      */
     @Override
     public Node clone() throws CloneNotSupportedException {
-        Node node = (Node) super.clone();
+        final Node node = (Node) super.clone();
         node.identifier = ++count;
         return node;
     }
