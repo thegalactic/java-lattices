@@ -142,10 +142,14 @@ public class Node implements Comparable<Node>, Cloneable {
      * Returns a clone of this node.
      *
      * @return a clone of this node
+     *
+     * @throws java.lang.CloneNotSupportedException
      */
     @Override
-    public Node clone() {
-        return new Node(this.content);
+    public Node clone() throws CloneNotSupportedException {
+        final Node node = (Node) super.clone();
+        node.identifier = ++count;
+        return node;
     }
 
     /**
