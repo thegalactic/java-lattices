@@ -53,10 +53,7 @@ public class NodeTest {
         String content = "Hello World";
         Node<String> node = new Node<String>(content);
         StringBuilder builder = new StringBuilder();
-        builder.append('[');
-        builder.append(content);
-        builder.append(']');
-        assertEquals(builder.toString(), node.toString());
+        assertEquals(content, node.toString());
     }
 
     /**

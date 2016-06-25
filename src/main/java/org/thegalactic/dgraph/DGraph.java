@@ -231,7 +231,7 @@ public class DGraph implements Cloneable {
     public SortedSet<Node> getSuccessorNodes(final Node node) {
         TreeSet<Node> successorsFromNode = new TreeSet<Node>();
         for (Edge edge : this.successors.get(node)) {
-            successorsFromNode.add(edge.getTo());
+            successorsFromNode.add(edge.getTarget());
         }
         return successorsFromNode;
     }
@@ -249,7 +249,7 @@ public class DGraph implements Cloneable {
     public TreeSet<Node> getPredecessorNodes(final Node node) {
         TreeSet<Node> predecessorsFromNode = new TreeSet<Node>();
         for (Edge edge : this.predecessors.get(node)) {
-            predecessorsFromNode.add(edge.getFrom());
+            predecessorsFromNode.add(edge.getSource());
         }
         return predecessorsFromNode;
     }
@@ -271,7 +271,7 @@ public class DGraph implements Cloneable {
         }
         if (this.containsEdge(from, to)) {
             for (Edge edge : this.successors.get(from)) {
-                if (edge.getTo().equals(to)) {
+                if (edge.getTarget().equals(to)) {
                     return edge;
                 }
             }
@@ -366,7 +366,7 @@ public class DGraph implements Cloneable {
     public String toString() {
         StringBuilder nodes = new StringBuilder();
         nodes.append(this.sizeNodes()).append(" Nodes: {");
-        StringBuffer edges = new StringBuffer();
+        StringBuilder edges = new StringBuilder();
         edges.append(this.sizeEdges()).append(" Edges: {");
         for (Node from : this.nodes) {
             nodes.append(from.toString()).append(",");
@@ -432,10 +432,10 @@ public class DGraph implements Cloneable {
         if (this.containsNode(node)) {
             // Remove the edges (node,to) with key node in successors, and key to in predecessors
             for (Edge successor : this.successors.get(node)) {
-                if (successor.getTo().compareTo(node) != 0) {
-                    for (Edge predecessor : this.predecessors.get(successor.getTo())) {
-                        if (predecessor.getFrom().compareTo(node) == 0) {
-                            this.predecessors.get(successor.getTo()).remove(predecessor);
+                if (successor.getTarget().compareTo(node) != 0) {
+                    for (Edge predecessor : this.predecessors.get(successor.getTarget())) {
+                        if (predecessor.getSource().compareTo(node) == 0) {
+                            this.predecessors.get(successor.getTarget()).remove(predecessor);
                         }
                     }
                 }
@@ -443,10 +443,10 @@ public class DGraph implements Cloneable {
             }
             // Remove the edges (from,node) with key node in predecessors, and key from in successors
             for (Edge predecessor : this.predecessors.get(node)) {
-                if (predecessor.getFrom().compareTo(node) != 0) {
-                    for (Edge successor : this.successors.get(predecessor.getFrom())) {
-                        if (successor.getTo().compareTo(node) == 0) {
-                            this.successors.get(predecessor.getFrom()).remove(successor);
+                if (predecessor.getSource().compareTo(node) != 0) {
+                    for (Edge successor : this.successors.get(predecessor.getSource())) {
+                        if (successor.getTarget().compareTo(node) == 0) {
+                            this.successors.get(predecessor.getSource()).remove(successor);
                         }
                     }
                 }
@@ -499,7 +499,7 @@ public class DGraph implements Cloneable {
      * @return true if the edge is contained by this component
      */
     public boolean containsEdge(final Edge edge) {
-        return this.containsEdge(edge.getFrom(), edge.getTo());
+        return this.containsEdge(edge.getSource(), edge.getTarget());
     }
 
     /**
@@ -543,7 +543,7 @@ public class DGraph implements Cloneable {
 
     /**
      * Adds the specified edge to this component in the successors of
-     * edge.getFrom() and in the predecessors of edge.getTo().
+ edge.getSource() and in the predecessors of edge.getTarget().
      *
      * If the case where nodes to and from of this edges don't belongs to the
      * node set, then the edge will not be added.
@@ -553,9 +553,9 @@ public class DGraph implements Cloneable {
      * @return true if the edge was added
      */
     public boolean addEdge(final Edge edge) {
-        if (this.containsNode(edge.getFrom()) && this.containsNode(edge.getTo())) {
-            this.successors.get(edge.getFrom()).add(edge);
-            this.predecessors.get(edge.getTo()).add(edge);
+        if (this.containsNode(edge.getSource()) && this.containsNode(edge.getTarget())) {
+            this.successors.get(edge.getSource()).add(edge);
+            this.predecessors.get(edge.getTarget()).add(edge);
             return true;
         }
         return false;
@@ -584,7 +584,7 @@ public class DGraph implements Cloneable {
 
     /**
      * Removes from this component the specified edge from the successors of
-     * edge.getFrom() and from the predecessors of edge.getTo().
+ edge.getSource() and from the predecessors of edge.getTarget().
      *
      * @param edge the edge to be removed.
      *
@@ -592,8 +592,8 @@ public class DGraph implements Cloneable {
      */
     public boolean removeEdge(final Edge edge) {
         if (this.containsEdge(edge)) {
-            this.successors.get(edge.getFrom()).remove(edge);
-            this.predecessors.get(edge.getTo()).remove(edge);
+            this.successors.get(edge.getSource()).remove(edge);
+            this.predecessors.get(edge.getTarget()).remove(edge);
             return true;
         }
         return false;
@@ -689,7 +689,7 @@ public class DGraph implements Cloneable {
         }
         // addition of edges in the subgraph
         for (Edge edge : this.getEdges()) {
-            if (graph.containsNode(edge.getTo())) {
+            if (graph.containsNode(edge.getTarget())) {
                 graph.addEdge(edge);
             }
         }
@@ -830,7 +830,7 @@ public class DGraph implements Cloneable {
         DGraph tmp = new DGraph(this);
         for (Edge edge : tmp.getEdges()) {
             this.removeEdge(edge);
-            this.addEdge(new Edge(edge.getTo(), edge.getFrom(), edge.getContent()));
+            this.addEdge(new Edge(edge.getTarget(), edge.getSource(), edge.getContent()));
         }
     }
 

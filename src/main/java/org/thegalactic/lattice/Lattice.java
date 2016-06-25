@@ -505,7 +505,7 @@ public class Lattice extends DAGraph {
         }
         // addition of edges
         for (Edge ed : this.getEdges()) {
-            csl.addEdge(closure.get(ed.getFrom()), closure.get(ed.getTo()));
+            csl.addEdge(closure.get(ed.getSource()), closure.get(ed.getTarget()));
         }
         return csl;
     }
@@ -543,7 +543,7 @@ public class Lattice extends DAGraph {
         }
         // addition of edges
         for (Edge ed : this.getEdges()) {
-            csl.addEdge(closure.get(ed.getFrom()), closure.get(ed.getTo()));
+            csl.addEdge(closure.get(ed.getSource()), closure.get(ed.getTarget()));
         }
         return csl;
     }
@@ -588,7 +588,7 @@ public class Lattice extends DAGraph {
         }
         // addition of edges
         for (Edge ed : this.getEdges()) {
-            conceptLatice.addEdge(closure.get(ed.getFrom()), closure.get(ed.getTo()));
+            conceptLatice.addEdge(closure.get(ed.getSource()), closure.get(ed.getTarget()));
         }
         return conceptLatice;
     }
@@ -974,8 +974,8 @@ public class Lattice extends DAGraph {
         }
         // computes rules of the BCD from edges of the ODGraph
         for (Edge ed : odGraph.getEdges()) {
-            Node from = ed.getFrom();
-            Node to = ed.getTo();
+            Node from = ed.getSource();
+            Node to = ed.getTarget();
             TreeSet<ComparableSet> l = (TreeSet<ComparableSet>) ed.getContent();
             for (ComparableSet set : l) {
                 ComparableSet premise = new ComparableSet(set);

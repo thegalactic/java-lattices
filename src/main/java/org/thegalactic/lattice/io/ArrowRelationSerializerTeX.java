@@ -80,8 +80,8 @@ public final class ArrowRelationSerializerTeX implements Writer<ArrowRelation> {
         TreeSet<Node> m = new TreeSet<Node>();
         TreeSet<Node> j = new TreeSet<Node>();
         for (Edge e : edges) {
-            m.add(e.getFrom());
-            j.add(e.getTo());
+            m.add(e.getSource());
+            j.add(e.getTarget());
         }
         String newLine = System.getProperty("line.separator");
         String str = "\\begin{tabular}{|c|*{" + Integer.toString(j.size()) + "}{c|}}" + newLine;
