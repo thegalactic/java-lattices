@@ -28,11 +28,11 @@ public class NodeTest {
      */
     @Test
     public void testConstructorFull() {
-        Object content = new Object();
-        Node node1 = new Node(content);
-        assertEquals(node1.getContent(), content);
+        String content = "Hello";
+        Node<String> node1 = new Node<String>(content);
+        assertEquals(content, node1.getContent());
 
-        Node node2 = new Node();
+        Node<String> node2 = new Node<String>();
         assertEquals(node1.getIdentifier() + 1, node2.getIdentifier());
     }
 
@@ -41,8 +41,8 @@ public class NodeTest {
      */
     @Test
     public void testConstructorEmpty() {
-        Node node = new Node();
-        assertEquals(node.getContent(), null);
+        Node<String> node = new Node<String>();
+        assertEquals(null, node.getContent());
     }
 
     /**
@@ -51,8 +51,12 @@ public class NodeTest {
     @Test
     public void testToString() {
         String content = "Hello World";
-        Node node = new Node(content);
-        assertEquals(content, node.toString());
+        Node<String> node = new Node<String>(content);
+        StringBuilder builder = new StringBuilder();
+        builder.append('[');
+        builder.append(content);
+        builder.append(']');
+        assertEquals(builder.toString(), node.toString());
     }
 
     /**
@@ -60,12 +64,12 @@ public class NodeTest {
      */
     @Test
     public void testClone() {
-        Object content = new Object();
-        Node node = new Node(content);
+        String content = "Hello World";
+        Node node = new Node<String>(content);
         try {
-            Node copy = node.clone();
-            assertEquals(copy.getContent(), content);
-            assertNotEquals(copy.getIdentifier(), node.getIdentifier());
+            Node<String> copy = node.clone();
+            assertEquals(content, copy.getContent());
+            assertNotEquals(node.getIdentifier(), copy.getIdentifier());
         } catch (CloneNotSupportedException e) {
         }
     }
@@ -75,10 +79,10 @@ public class NodeTest {
      */
     @Test
     public void testSetContent() {
-        Object content = new Object();
-        Node node = new Node();
-        assertEquals(node.setContent(content), node);
-        assertEquals(node.getContent(), content);
+        String content = "Hello World";
+        Node<String> node = new Node<String>();
+        assertEquals(node, node.setContent(content));
+        assertEquals(content, node.getContent());
     }
 
     /**
@@ -86,7 +90,7 @@ public class NodeTest {
      */
     @Test
     public void testEquals() {
-        Node node = new Node();
+        Node<String> node = new Node<String>();
         assertFalse(node.equals(1));
     }
 
@@ -95,7 +99,7 @@ public class NodeTest {
      */
     @Test
     public void testHashCode() {
-        Node node = new Node();
+        Node<String> node = new Node<String>();
         assertEquals(node.getIdentifier(), node.hashCode());
     }
 
@@ -104,9 +108,9 @@ public class NodeTest {
      */
     @Test
     public void testCompareTo() {
-        Node node1 = new Node();
-        Node node2 = new Node();
-        assertEquals(node1.compareTo(node1), 0);
+        Node<String> node1 = new Node<String>();
+        Node<String> node2 = new Node<String>();
+        assertEquals(0, node1.compareTo(node1));
         assertTrue(node1.compareTo(node2) < 0);
         assertTrue(node2.compareTo(node1) > 0);
     }
