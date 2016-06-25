@@ -11,7 +11,6 @@ package org.thegalactic.dgraph;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 /**
  * This class gives a standard representation for a node of a graph.
  *
@@ -35,6 +34,10 @@ package org.thegalactic.dgraph;
  */
 public class Node<N> implements Comparable<Node<N>>, Cloneable {
 
+    /*
+     * ------------- FIELDS ---------------------
+     */
+
     /**
      * An uniquely defined identifier for this node.
      */
@@ -44,6 +47,7 @@ public class Node<N> implements Comparable<Node<N>>, Cloneable {
      * An object to store information about the element.
      */
     private N content;
+
     /**
      * The total number of nodes.
      *
@@ -53,9 +57,6 @@ public class Node<N> implements Comparable<Node<N>>, Cloneable {
     private static int count = 0;
 
     /*
-    * ------------- FIELDS ---------------------
-     */
- /*
      * ------------- CONSTRUCTORS ------------------
      */
     /**
@@ -129,13 +130,11 @@ public class Node<N> implements Comparable<Node<N>>, Cloneable {
             string = String.valueOf(this.identifier);
         } else {
             string = this.content.toString();
-            if (string.contains(" ")) {
-                StringBuilder builder = new StringBuilder();
-                builder.append('[');
-                builder.append(string.replaceAll("[^\\w ]", ""));
-                builder.append(']');
-                string = builder.toString();
-            }
+            final StringBuilder builder = new StringBuilder();
+            builder.append('[');
+            builder.append(string.replaceAll("[^\\w ]", ""));
+            builder.append(']');
+            string = builder.toString();
         }
         return string;
     }
