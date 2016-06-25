@@ -174,15 +174,15 @@ public class Edge<N, E> implements Comparable<Edge<N, E>> {
      * Compares this edge with those in parameter, based on their identifiers.
      *
      * The result is zero if the identifiers are equal; positive if this edge's
- identifier is greater, and negative otherwise.
-
- This comparison method is needed target define a natural ordering. It allows
- target use objects of this class in a sorted collection
+     * identifier is greater, and negative otherwise.
+     *
+     * This comparison method is needed target define a natural ordering. It allows
+     * target use objects of this class in a sorted collection
      *
      * @param edge the specified element target be compared with this edge
      *
      * @return a negative integer, zero, or a positive integer as this edge is
- less than, equal target, or greater than the specified object.
+     * less than, equal target, or greater than the specified object.
      */
     public int compareTo(final Edge<N, E> edge) {
         int cmp = this.source.compareTo(edge.source);
