@@ -27,26 +27,13 @@ package org.thegalactic.dgraph;
  *
  * ![Node](Node.png)
  *
- * @uml Node.png
- * !include resources/org/thegalactic/dgraph/Node.iuml
+ * @param <N> the content type
  *
- * hide members
- * show Node members
- * class Node #LightCyan
- * title Node UML graph
+ * @uml Node.png !include resources/org/thegalactic/dgraph/Node.iuml
+ *
+ * hide members show Node members class Node #LightCyan title Node UML graph
  */
-public class Node implements Comparable<Node>, Cloneable {
-
-    /**
-     * The total number of nodes.
-     *
-     * Initialised to 0, it is incremented by the constructor, and used to
-     * inialize the identifier.
-     */
-    private static int count = 0;
-    /*
-     * ------------- FIELDS ---------------------
-     */
+public class Node<N> implements Comparable<Node<N>>, Cloneable {
 
     /**
      * An uniquely defined identifier for this node.
@@ -56,10 +43,19 @@ public class Node implements Comparable<Node>, Cloneable {
     /**
      * An object to store information about the element.
      */
-    private Object content;
-
+    private N content;
+    /**
+     * The total number of nodes.
+     *
+     * Initialised to 0, it is incremented by the constructor, and used to
+     * inialize the identifier.
+     */
+    private static int count = 0;
 
     /*
+    * ------------- FIELDS ---------------------
+     */
+ /*
      * ------------- CONSTRUCTORS ------------------
      */
     /**
@@ -70,7 +66,7 @@ public class Node implements Comparable<Node>, Cloneable {
      *
      * @param content Content for this node
      */
-    public Node(final Object content) {
+    public Node(final N content) {
         this.identifier = ++count;
         this.content = content;
     }
@@ -102,7 +98,7 @@ public class Node implements Comparable<Node>, Cloneable {
      *
      * @return the node content
      */
-    public final Object getContent() {
+    public final N getContent() {
         return this.content;
     }
 
@@ -113,7 +109,7 @@ public class Node implements Comparable<Node>, Cloneable {
      *
      * @return this for chaining
      */
-    public final Node setContent(final Object content) {
+    public final Node setContent(final N content) {
         this.content = content;
         return this;
     }
@@ -133,12 +129,19 @@ public class Node implements Comparable<Node>, Cloneable {
             string = String.valueOf(this.identifier);
         } else {
             string = this.content.toString();
+            if (string.contains(" ")) {
+                StringBuilder builder = new StringBuilder();
+                builder.append('[');
+                builder.append(string.replaceAll("[^\\w ]", ""));
+                builder.append(']');
+                string = builder.toString();
+            }
         }
         return string;
     }
 
     /*
-     * --------------- OVERLAPPING METHODS ------------
+     * --------------- OVERRIDDEN METHODS ------------
      */
     /**
      * Returns a clone of this node.
@@ -163,7 +166,8 @@ public class Node implements Comparable<Node>, Cloneable {
      */
     @Override
     public boolean equals(final Object object) {
-        return this == object || object != null && this.getClass() == object.getClass() && this.identifier == ((Node) object).identifier;
+        return this == object || object != null && this.getClass() == object.getClass()
+                && this.identifier == ((Node) object).identifier;
     }
 
     /**
