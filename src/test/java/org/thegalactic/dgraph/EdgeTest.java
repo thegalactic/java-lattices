@@ -27,13 +27,13 @@ public class EdgeTest {
      */
     @Test
     public void testConstructorFull() {
-        Node from = new Node();
-        Node to = new Node();
-        Object content = new Object();
-        Edge edge = new Edge(from, to, content);
-        assertEquals(edge.getContent(), content);
-        assertEquals(edge.getFrom(), from);
-        assertEquals(edge.getTo(), to);
+        Node<String> source = new Node<String>();
+        Node<String> target = new Node<String>();
+        String content = "happy new year";
+        Edge<String, String> edge = new Edge<String, String>(source, target, content);
+        assertEquals(content, edge.getContent());
+        assertEquals(source, edge.getSource());
+        assertEquals(target, edge.getTarget());
     }
 
     /**
@@ -41,54 +41,53 @@ public class EdgeTest {
      */
     @Test
     public void testConstructorRestricted() {
-        Node from = new Node();
-        Node to = new Node();
-        Edge edge = new Edge(from, to);
-        assertEquals(edge.getContent(), null);
-        assertEquals(edge.getFrom(), from);
-        assertEquals(edge.getTo(), to);
+        Node<String> source = new Node<String>();
+        Node<String> target = new Node<String>();
+        Edge<String, String> edge = new Edge<String, String>(source, target);
+        assertEquals(null, edge.getContent());
+        assertEquals(source, edge.getSource());
+        assertEquals(target, edge.getTarget());
     }
 
     /**
-     * Test the setContent() method.
+     * Test of setContent method, of class Edge.
      */
     @Test
     public void testSetContent() {
-        Node from = new Node();
-        Node to = new Node();
-        Edge edge = new Edge(from, to);
-        Object content = new Object();
-        assertEquals(edge.setContent(content), edge);
-        assertEquals(edge.getContent(), content);
+        Node<String> source = new Node<String>();
+        Node<String> target = new Node<String>();
+        Edge<String, String> edge = new Edge<String, String>(source, target);
+        String content = "happy new year";
+        assertEquals(edge, edge.setContent(content));
+        assertEquals(content, edge.getContent());
     }
 
     /**
-     * Test the hasContent() method.
+     * Test the hasContent method, of class Edge.
      */
     @Test
     public void testHasContent() {
-        Node from = new Node();
-        Node to = new Node();
-        Edge edge = new Edge(from, to);
+        Node<String> source = new Node<String>();
+        Node<String> target = new Node<String>();
+        Edge<String, String> edge = new Edge<String, String>(source, target);
         assertFalse(edge.hasContent());
-        edge.setContent(new Object());
+        edge.setContent("happy new year");
         assertTrue(edge.hasContent());
     }
 
     /**
-     * Test the compareTo() method.
+     * Test the compareTo method, of class Edge.
      */
     @Test
     public void testCompareTo() {
-        Node from1 = new Node();
-        Node to1 = new Node();
-        Node from2 = new Node();
-        Node to2 = new Node();
-        Edge edge1 = new Edge(from1, to1);
-        Edge edge2 = new Edge(from2, to2);
-        Edge edge3 = new Edge(from1, to2);
-        assertTrue(edge1.compareTo(new Object()) < 0);
-        assertTrue(edge1.compareTo(edge1) == 0);
+        Node<String> source1 = new Node<String>();
+        Node<String> target1 = new Node<String>();
+        Node<String> source2 = new Node<String>();
+        Node<String> target2 = new Node<String>();
+        Edge<String, String> edge1 = new Edge<String, String>(source1, target1);
+        Edge<String, String> edge2 = new Edge<String, String>(source2, target2);
+        Edge<String, String> edge3 = new Edge<String, String>(source1, target2);
+        assertEquals(0, edge1.compareTo(edge1));
         assertTrue(edge1.compareTo(edge2) < 0);
         assertTrue(edge2.compareTo(edge1) > 0);
         assertTrue(edge1.compareTo(edge3) < 0);
@@ -96,13 +95,58 @@ public class EdgeTest {
     }
 
     /**
-     * Test the toString() method.
+     * Test the toString method, of class Edge.
      */
     @Test
     public void testToString() {
-        Node from = new Node("Hello");
-        Node to = new Node("World");
-        Edge edge = new Edge(from, to, "happy new year");
-        assertEquals(edge.toString(), "Hello->World(happy new year)");
+        Node<String> source = new Node<String>("Hello");
+        Node<String> target = new Node<String>("World");
+        Edge<String, String> edge = new Edge<String, String>(source, target, "happy new year");
+        assertEquals("[Hello]-(happy new year)->[World]", edge.toString());
+    }
+
+    /**
+     * Test of getTarget method, of class Edge.
+     */
+    @Test
+    public void testGetSource() {
+        Node<String> source = new Node<String>("Hello");
+        Node<String> target = new Node<String>("World");
+        Edge<String, String> edge = new Edge<String, String>(source, target, "happy new year");
+        assertEquals(source, edge.getSource());
+    }
+
+    /**
+     * Test of getTarget method, of class Edge.
+     */
+    @Test
+    public void testGetTarget() {
+        Node<String> source = new Node<String>("Hello");
+        Node<String> target = new Node<String>("World");
+        Edge<String, String> edge = new Edge<String, String>(source, target, "happy new year");
+        assertEquals(target, edge.getTarget());
+    }
+
+    /**
+     * Test of getContent method, of class Edge.
+     */
+    @Test
+    public void testGetContent() {
+        Node<String> source = new Node<String>("Hello");
+        Node<String> target = new Node<String>("World");
+        String content = "happy new year";
+        Edge<String, String> edge = new Edge<String, String>(source, target, content);
+        assertEquals(content, edge.getContent());
+    }
+
+    /**
+     * Test of hashCode method, of class Edge.
+     */
+    @Test
+    public void testHashCode() {
+        Node<String> source = new Node<String>("Hello");
+        Node<String> target = new Node<String>("World");
+        Edge<String, String> edge = new Edge<String, String>(source, target, "happy new year");
+        assertEquals(1013 * source.hashCode() ^ 1009 * target.hashCode(), edge.hashCode());
     }
 }

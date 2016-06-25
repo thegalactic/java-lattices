@@ -91,7 +91,7 @@ public final class DGraphSerializerDot implements Writer<DGraph> {
             nodes.append(dot).append(newLine);
         }
         for (Edge edge : graph.getEdges()) {
-            String dot = edge.getFrom().getIdentifier() + "->" + edge.getTo().getIdentifier();
+            String dot = edge.getSource().getIdentifier() + "->" + edge.getTarget().getIdentifier();
             if (edge.hasContent()) {
                 dot = dot + " [" + "label=\"";
                 StringTokenizer tokenizer = new StringTokenizer(edge.getContent().toString(), "\"");

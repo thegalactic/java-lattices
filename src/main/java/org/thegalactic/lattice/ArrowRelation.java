@@ -160,13 +160,13 @@ public class ArrowRelation extends DGraph {
         // observations are join irreductibles
         // attributes are meet irreductibles
         for (Edge e : this.getEdges()) {
-            context.addToObservations(e.getFrom());
-            context.addToAttributes(e.getTo());
+            context.addToObservations(e.getSource());
+            context.addToAttributes(e.getTarget());
         }
         // generation of extent-intent
         for (Edge e : this.getEdges()) {
             if (e.getContent() == ArrowRelation.updown) {
-                context.addExtentIntent(e.getFrom(), e.getTo());
+                context.addExtentIntent(e.getSource(), e.getTarget());
             }
         }
         return context;
@@ -188,13 +188,13 @@ public class ArrowRelation extends DGraph {
         // observations are join irreductibles
         // attributes are meet irreductibles
         for (Edge e : this.getEdges()) {
-            context.addToObservations(e.getFrom());
-            context.addToAttributes(e.getTo());
+            context.addToObservations(e.getSource());
+            context.addToAttributes(e.getTarget());
         }
         // generation of extent-intent
         for (Edge e : this.getEdges()) {
             if (e.getContent() == ArrowRelation.down || e.getContent() == ArrowRelation.updown) {
-                context.addExtentIntent(e.getFrom(), e.getTo());
+                context.addExtentIntent(e.getSource(), e.getTarget());
             }
         }
         return context;
@@ -216,13 +216,13 @@ public class ArrowRelation extends DGraph {
         // observations are join irreductibles
         // attributes are meet irreductibles
         for (Edge e : this.getEdges()) {
-            context.addToObservations(e.getFrom());
-            context.addToAttributes(e.getTo());
+            context.addToObservations(e.getSource());
+            context.addToAttributes(e.getTarget());
         }
         // generation of extent-intent
         for (Edge e : this.getEdges()) {
             if (e.getContent() == ArrowRelation.up || e.getContent() == ArrowRelation.updown) {
-                context.addExtentIntent(e.getFrom(), e.getTo());
+                context.addExtentIntent(e.getSource(), e.getTarget());
             }
         }
         return context;
@@ -245,13 +245,13 @@ public class ArrowRelation extends DGraph {
         // observations are join irreductibles
         // attributes are meet irreductibles
         for (Edge e : this.getEdges()) {
-            context.addToObservations(e.getFrom());
-            context.addToAttributes(e.getTo());
+            context.addToObservations(e.getSource());
+            context.addToAttributes(e.getTarget());
         }
         // generation of extent-intent
         for (Edge e : this.getEdges()) {
             if (e.getContent() == ArrowRelation.updown || e.getContent() == ArrowRelation.circ) {
-                context.addExtentIntent(e.getFrom(), e.getTo());
+                context.addExtentIntent(e.getSource(), e.getTarget());
             }
         }
         return context;

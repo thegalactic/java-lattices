@@ -417,7 +417,7 @@ public class ConceptLattice extends Lattice {
             conceptLattice.addNode(c2);
         }
         for (Edge ed : this.getEdges()) {
-            conceptLattice.addEdge(new Edge(copy.get(ed.getFrom()), copy.get(ed.getTo()), ed.getContent()));
+            conceptLattice.addEdge(new Edge(copy.get(ed.getSource()), copy.get(ed.getTarget()), ed.getContent()));
         }
         return conceptLattice;
     }
@@ -626,7 +626,7 @@ public class ConceptLattice extends Lattice {
         for (Node n1 : this.getNodes()) {
             for (Edge ed : this.getSuccessorEdges(n1)) {
                 if (!ed.hasContent()) {
-                    Node n2 = ed.getTo();
+                    Node n2 = ed.getTarget();
                     TreeSet diff = new TreeSet();
                     diff.addAll(((Concept) n2).getSetA());
                     diff.removeAll(((Concept) n1).getSetA());

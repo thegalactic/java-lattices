@@ -130,11 +130,6 @@ public class Node<N> implements Comparable<Node<N>>, Cloneable {
             string = String.valueOf(this.identifier);
         } else {
             string = this.content.toString();
-            final StringBuilder builder = new StringBuilder();
-            builder.append('[');
-            builder.append(string.replaceAll("[^\\w ]", ""));
-            builder.append(']');
-            string = builder.toString();
         }
         return string;
     }

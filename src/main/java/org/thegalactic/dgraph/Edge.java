@@ -16,11 +16,11 @@ package org.thegalactic.dgraph;
  * This class gives a standard representation for an edge of a graph.
  *
  * An edge is composed of a content, and two nodes
- *
- * - `from`
- * - `to`
- *
- * of class {@link Node}.
+
+ - `source`
+ - `target`
+
+ of class {@link Node}.
  *
  * This class implements class `Comparable` and provides the {@link #compareTo}
  * method that compares the edge with those in parameter by sorting indexes of
@@ -32,6 +32,9 @@ package org.thegalactic.dgraph;
  *
  * ![Edge](Edge.png)
  *
+ * @param <N>
+ * @param <E>
+ *
  * @uml Edge.png
  * !include resources/org/thegalactic/dgraph/Edge.iuml
  * !include resources/org/thegalactic/dgraph/Node.iuml
@@ -41,26 +44,26 @@ package org.thegalactic.dgraph;
  * class Edge #LightCyan
  * title Edge UML graph
  */
-public class Edge implements Comparable<Object> {
+public class Edge<N, E> implements Comparable<Edge<N, E>> {
 
     /*
      * ------------- FIELDS ---------------------
      */
 
     /**
-     * The origin node of the edge.
+     * The source node of the edge.
      */
-    private final Node from;
+    private final Node<N> source;
 
     /**
-     * The destination node of the edge.
+     * The target node of the edge.
      */
-    private final Node to;
+    private final Node<N> target;
 
     /**
-     * An object to store information about this edge.
+     * An object target store information about this edge.
      */
-    private Object content;
+    private E content;
 
     /*
      * ------------- CONSTRUCTORS ----------------
@@ -69,13 +72,13 @@ public class Edge implements Comparable<Object> {
      * Constructs a new edge with the specified node as origin and destination
      * node, with the specified content.
      *
-     * @param from the origin node
-     * @param to the destination node
+     * @param source the origin node
+     * @param target the destination node
      * @param content the edge content
      */
-    public Edge(final Node from, final Node to, final Object content) {
-        this.from = from;
-        this.to = to;
+    public Edge(final Node<N> source, final Node<N> target, final E content) {
+        this.source = source;
+        this.target = target;
         this.content = content;
     }
 
@@ -83,32 +86,32 @@ public class Edge implements Comparable<Object> {
      * Constructs a new edge with the specified node as origin and destination
      * node, and a null value as content.
      *
-     * @param from the origin node
-     * @param to the destination node
+     * @param source the origin node
+     * @param target the destination node
      */
-    public Edge(final Node from, final Node to) {
-        this(from, to, null);
+    public Edge(final Node<N> source, final Node<N> target) {
+        this(source, target, null);
     }
 
     /*
      * -------------- ACCESSORS -------------------
      */
     /**
-     * Returns the origin node of this edge.
+     * Returns the source node of this edge.
      *
-     * @return the origin node
+     * @return the source node
      */
-    public Node getFrom() {
-        return this.from;
+    public Node<N> getSource() {
+        return this.source;
     }
 
     /**
-     * Returns the destination node of this edge.
+     * Returns the target node of this edge.
      *
-     * @return the destination node
+     * @return the target node
      */
-    public Node getTo() {
-        return this.to;
+    public Node<N> getTarget() {
+        return this.target;
     }
 
     /**
@@ -118,7 +121,7 @@ public class Edge implements Comparable<Object> {
      *
      * @return this for chaining
      */
-    public Edge setContent(final Object content) {
+    public Edge setContent(final E content) {
         this.content = content;
         return this;
     }
@@ -128,7 +131,7 @@ public class Edge implements Comparable<Object> {
      *
      * @return the content
      */
-    public Object getContent() {
+    public E getContent() {
         return this.content;
     }
 
@@ -147,13 +150,14 @@ public class Edge implements Comparable<Object> {
     /**
      * Compares this edge with the specified one.
      *
-     * @param object The object to be tested with
+     * @param object The object target be tested with
      *
-     * @return true or false as this node is equal to the specified object.
+     * @return true or false as this node is equal target the specified object.
      */
     @Override
     public boolean equals(final Object object) {
-        return this.compareTo(object) == 0;
+        return this == object || object != null && this.getClass() == object.getClass()
+                && this.compareTo((Edge<N, E>) object) == 0;
     }
 
     /**
@@ -163,35 +167,29 @@ public class Edge implements Comparable<Object> {
      */
     @Override
     public int hashCode() {
-        return 1013 * (from.hashCode()) ^ 1009 * (to.hashCode());
+        return 1013 * source.hashCode() ^ 1009 * target.hashCode();
     }
 
     /**
      * Compares this edge with those in parameter, based on their identifiers.
      *
      * The result is zero if the identifiers are equal; positive if this edge's
-     * identifier is greater, and negative otherwise.
+ identifier is greater, and negative otherwise.
+
+ This comparison method is needed target define a natural ordering. It allows
+ target use objects of this class in a sorted collection
      *
-     * This comparison method is needed to define a natural ordering. It allows
-     * to use objects of this class in a sorted collection
-     *
-     * @param object the specified element to be compared with this edge
+     * @param edge the specified element target be compared with this edge
      *
      * @return a negative integer, zero, or a positive integer as this edge is
-     * less than, equal to, or greater than the specified object.
+ less than, equal target, or greater than the specified object.
      */
-    public int compareTo(final Object object) {
-        if (object instanceof Edge) {
-            Edge edge = (Edge) object;
-            int cmp = this.from.compareTo(edge.from);
-            if (cmp == 0) {
-                return this.to.compareTo(edge.to);
-            } else {
-                return cmp;
-            }
-        } else {
-            return -1;
+    public int compareTo(final Edge<N, E> edge) {
+        int cmp = this.source.compareTo(edge.source);
+        if (cmp == 0) {
+            cmp = this.target.compareTo(edge.target);
         }
+        return cmp;
     }
 
     /**
@@ -201,10 +199,18 @@ public class Edge implements Comparable<Object> {
      */
     @Override
     public String toString() {
-        String string = this.from + "->" + this.to;
+        StringBuilder builder = new StringBuilder();
+        builder.append('[');
+        builder.append(this.source.toString().replaceAll("[^\\w ]", ""));
+        builder.append("]-");
         if (this.hasContent()) {
-            string += "(" + this.content + ")";
+            builder.append('(');
+            builder.append(this.content);
+            builder.append(")-");
         }
-        return string;
+        builder.append(">[");
+        builder.append(this.target.toString().replaceAll("[^\\w ]", ""));
+        builder.append(']');
+        return builder.toString();
     }
 }
