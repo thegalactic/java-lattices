@@ -52,7 +52,6 @@ public class NodeTest {
     public void testToString() {
         String content = "Hello World";
         Node<String> node = new Node<String>(content);
-        StringBuilder builder = new StringBuilder();
         assertEquals(content, node.toString());
     }
 

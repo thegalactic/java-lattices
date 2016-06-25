@@ -184,7 +184,7 @@ public class Edge<N, E> implements Comparable<Edge<N, E>> {
      * @return a negative integer, zero, or a positive integer as this edge is
      * less than, equal target, or greater than the specified object.
      */
-    public int compareTo(final Edge<N, E> edge) {
+    public final int compareTo(final Edge<N, E> edge) {
         int cmp = this.source.compareTo(edge.source);
         if (cmp == 0) {
             cmp = this.target.compareTo(edge.target);
@@ -218,7 +218,7 @@ public class Edge<N, E> implements Comparable<Edge<N, E>> {
      * @param builder StringBuilder
      * @param node Node
      */
-    private void appendNode(StringBuilder builder, Node node) {
+    private void appendNode(final StringBuilder builder, final Node node) {
         builder.append(node.toString().replaceAll("[^\\w ]", ""));
     }
 }
