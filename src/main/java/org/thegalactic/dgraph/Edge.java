@@ -101,7 +101,7 @@ public class Edge<N, E> implements Comparable<Edge<N, E>> {
      *
      * @return the source node
      */
-    public Node<N> getSource() {
+    public final Node<N> getSource() {
         return this.source;
     }
 
@@ -110,7 +110,7 @@ public class Edge<N, E> implements Comparable<Edge<N, E>> {
      *
      * @return the target node
      */
-    public Node<N> getTarget() {
+    public final Node<N> getTarget() {
         return this.target;
     }
 
@@ -121,7 +121,7 @@ public class Edge<N, E> implements Comparable<Edge<N, E>> {
      *
      * @return this for chaining
      */
-    public Edge setContent(final E content) {
+    public final Edge<N, E> setContent(final E content) {
         this.content = content;
         return this;
     }
@@ -131,7 +131,7 @@ public class Edge<N, E> implements Comparable<Edge<N, E>> {
      *
      * @return the content
      */
-    public E getContent() {
+    public final E getContent() {
         return this.content;
     }
 
@@ -140,7 +140,7 @@ public class Edge<N, E> implements Comparable<Edge<N, E>> {
      *
      * @return true if the content is not null
      */
-    public boolean hasContent() {
+    public final boolean hasContent() {
         return this.content != null;
     }
 
@@ -167,7 +167,7 @@ public class Edge<N, E> implements Comparable<Edge<N, E>> {
      */
     @Override
     public int hashCode() {
-        return 1013 * source.hashCode() ^ 1009 * target.hashCode();
+        return 1013 * this.source.hashCode() ^ 1009 * this.target.hashCode();
     }
 
     /**
@@ -199,18 +199,26 @@ public class Edge<N, E> implements Comparable<Edge<N, E>> {
      */
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
         builder.append('[');
-        builder.append(this.source.toString().replaceAll("[^\\w ]", ""));
+        this.appendNode(builder, this.source);
         builder.append("]-");
         if (this.hasContent()) {
-            builder.append('(');
-            builder.append(this.content);
-            builder.append(")-");
+            builder.append('(').append(this.content).append(")-");
         }
         builder.append(">[");
-        builder.append(this.target.toString().replaceAll("[^\\w ]", ""));
+        this.appendNode(builder, this.target);
         builder.append(']');
         return builder.toString();
+    }
+
+    /**
+     * Append the string representation of a node to the StringBuilder.
+     *
+     * @param builder StringBuilder
+     * @param node Node
+     */
+    private void appendNode(StringBuilder builder, Node node) {
+        builder.append(node.toString().replaceAll("[^\\w ]", ""));
     }
 }
