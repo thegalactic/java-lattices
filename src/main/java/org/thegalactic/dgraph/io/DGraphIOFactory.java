@@ -60,5 +60,6 @@ public final class DGraphIOFactory extends org.thegalactic.io.IOFactory<DGraph> 
      * This class is not designed to be publicly instantiated.
      */
     private DGraphIOFactory() {
+        super();
     }
 }
