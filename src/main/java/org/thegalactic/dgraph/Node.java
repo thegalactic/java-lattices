@@ -115,6 +115,15 @@ public class Node<N> implements Comparable<Node<N>>, Cloneable {
         return this;
     }
 
+    /**
+     * Test if this node has a content.
+     *
+     * @return true if this node has a content
+     */
+    public final boolean hasContent() {
+        return this.content != null;
+    }
+
     /*
      * --------------- SAVING METHOD ------------
      */

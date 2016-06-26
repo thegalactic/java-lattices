@@ -82,6 +82,18 @@ public class NodeTest {
     }
 
     /**
+     * Test the setContent method of class Node.
+     */
+    @Test
+    public void testHasContent() {
+        String content = "Hello World";
+        Node<String> node = new Node<String>();
+        assertFalse(node.hasContent());
+        node.setContent(content);
+        assertTrue(node.hasContent());
+    }
+
+    /**
      * Test the equals() method.
      */
     @Test
