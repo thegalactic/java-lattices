@@ -150,7 +150,7 @@ public final class ContextSerializerFIMI implements Reader<Context>, Writer<Cont
      * @throws IOException When an IOException occurs
      */
     @Override
-    public void write(Context context, final BufferedWriter file) throws IOException {
+    public void write(final Context context, final BufferedWriter file) throws IOException {
         HashMap<Comparable, Integer> map = new HashMap();
         Integer count = 0;
         for (Comparable att : context.getAttributes()) {
