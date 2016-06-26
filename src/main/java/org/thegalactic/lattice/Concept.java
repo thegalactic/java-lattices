@@ -15,7 +15,6 @@ package org.thegalactic.lattice;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.SortedSet;
-import java.util.StringTokenizer;
 import java.util.TreeSet;
 
 import org.thegalactic.context.Context;
@@ -428,22 +427,17 @@ public class Concept extends Node {
      */
     @Override
     public String toString() {
-        String s = "";
+        StringBuilder builder = new StringBuilder();
         if (this.hasSetA()) {
-            s += this.setA;
+            builder.append(this.setA);
         }
         if (this.hasSetA() && this.hasSetB()) {
-            s += "-";
+            builder.append('-');
         }
         if (this.hasSetB()) {
-            s += this.setB;
+            builder.append(this.setB);
         }
-        StringTokenizer st = new StringTokenizer(s);
-        s = "";
-        while (st.hasMoreTokens()) {
-            s += st.nextToken();
-        }
-        return s;
+        return builder.toString();
     }
 
     /**
