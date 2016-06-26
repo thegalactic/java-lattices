@@ -63,12 +63,12 @@ public class Concept extends Node {
     /**
      * This first set of comparable elements of the concept.
      */
-    private ComparableSet setA;
+    private ComparableSet setA = null;
 
     /**
      * This second set of comparable elements of the concept.
      */
-    private ComparableSet setB;
+    private ComparableSet setB = null;
 
     /*
      * ------------- CONSTRUCTORS ------------------
@@ -96,13 +96,9 @@ public class Concept extends Node {
     public Concept(boolean setA, boolean setB) {
         if (setA) {
             this.setA = new ComparableSet();
-        } else {
-            this.setA = null;
         }
         if (setB) {
             this.setB = new ComparableSet();
-        } else {
-            this.setB = null;
         }
     }
 
@@ -118,8 +114,6 @@ public class Concept extends Node {
         this.setA = new ComparableSet(setA);
         if (setB) {
             this.setB = new ComparableSet();
-        } else {
-            this.setB = null;
         }
     }
 
@@ -135,8 +129,6 @@ public class Concept extends Node {
         this.setB = new ComparableSet(setB);
         if (setA) {
             this.setA = new ComparableSet();
-        } else {
-            this.setA = null;
         }
     }
 
