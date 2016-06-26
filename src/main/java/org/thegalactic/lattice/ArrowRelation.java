@@ -159,14 +159,14 @@ public class ArrowRelation extends DGraph {
         Context context = new Context();
         // observations are join irreductibles
         // attributes are meet irreductibles
-        for (Edge e : this.getEdges()) {
-            context.addToObservations(e.getSource());
-            context.addToAttributes(e.getTarget());
+        for (Edge edge : this.getEdges()) {
+            context.addToObservations(edge.getSource());
+            context.addToAttributes(edge.getTarget());
         }
         // generation of extent-intent
-        for (Edge e : this.getEdges()) {
-            if (e.getContent() == ArrowRelation.updown) {
-                context.addExtentIntent(e.getSource(), e.getTarget());
+        for (Edge edge : this.getEdges()) {
+            if (edge.getContent() == ArrowRelation.updown) {
+                context.addExtentIntent(edge.getSource(), edge.getTarget());
             }
         }
         return context;
@@ -187,14 +187,14 @@ public class ArrowRelation extends DGraph {
         Context context = new Context();
         // observations are join irreductibles
         // attributes are meet irreductibles
-        for (Edge e : this.getEdges()) {
-            context.addToObservations(e.getSource());
-            context.addToAttributes(e.getTarget());
+        for (Edge edge : this.getEdges()) {
+            context.addToObservations(edge.getSource());
+            context.addToAttributes(edge.getTarget());
         }
         // generation of extent-intent
-        for (Edge e : this.getEdges()) {
-            if (e.getContent() == ArrowRelation.down || e.getContent() == ArrowRelation.updown) {
-                context.addExtentIntent(e.getSource(), e.getTarget());
+        for (Edge edge : this.getEdges()) {
+            if (edge.getContent() == ArrowRelation.down || edge.getContent() == ArrowRelation.updown) {
+                context.addExtentIntent(edge.getSource(), edge.getTarget());
             }
         }
         return context;
@@ -215,14 +215,14 @@ public class ArrowRelation extends DGraph {
         Context context = new Context();
         // observations are join irreductibles
         // attributes are meet irreductibles
-        for (Edge e : this.getEdges()) {
-            context.addToObservations(e.getSource());
-            context.addToAttributes(e.getTarget());
+        for (Edge edge : this.getEdges()) {
+            context.addToObservations(edge.getSource());
+            context.addToAttributes(edge.getTarget());
         }
         // generation of extent-intent
-        for (Edge e : this.getEdges()) {
-            if (e.getContent() == ArrowRelation.up || e.getContent() == ArrowRelation.updown) {
-                context.addExtentIntent(e.getSource(), e.getTarget());
+        for (Edge edge : this.getEdges()) {
+            if (edge.getContent() == ArrowRelation.up || edge.getContent() == ArrowRelation.updown) {
+                context.addExtentIntent(edge.getSource(), edge.getTarget());
             }
         }
         return context;
@@ -244,14 +244,14 @@ public class ArrowRelation extends DGraph {
         Context context = new Context();
         // observations are join irreductibles
         // attributes are meet irreductibles
-        for (Edge e : this.getEdges()) {
-            context.addToObservations(e.getSource());
-            context.addToAttributes(e.getTarget());
+        for (Edge edge : this.getEdges()) {
+            context.addToObservations(edge.getSource());
+            context.addToAttributes(edge.getTarget());
         }
         // generation of extent-intent
-        for (Edge e : this.getEdges()) {
-            if (e.getContent() == ArrowRelation.updown || e.getContent() == ArrowRelation.circ) {
-                context.addExtentIntent(e.getSource(), e.getTarget());
+        for (Edge edge : this.getEdges()) {
+            if (edge.getContent() == ArrowRelation.updown || edge.getContent() == ArrowRelation.circ) {
+                context.addExtentIntent(edge.getSource(), edge.getTarget());
             }
         }
         return context;
@@ -261,64 +261,64 @@ public class ArrowRelation extends DGraph {
      * Returns true if and only if there is an up arrow between the source and the target of
      * edge e.
      *
-     * @param e edge to be tested
+     * @param edge edge to be tested
      *
      * @return true if and only if there is an up arrow between the source and the target of
      * edge e
      */
-    public boolean isUp(Edge e) {
-        return (e.getContent() == ArrowRelation.up);
+    public boolean isUp(Edge edge) {
+        return (edge.getContent() == ArrowRelation.up);
     }
 
     /**
      * Returns true if and only if there is an down arrow between the source and the target of
      * edge e.
      *
-     * @param e edge to be tested
+     * @param edge edge to be tested
      *
      * @return true if and only if there is an down arrow between the source and the target of
      * edge e
      */
-    public boolean isDown(Edge e) {
-        return (e.getContent() == ArrowRelation.down);
+    public boolean isDown(Edge edge) {
+        return (edge.getContent() == ArrowRelation.down);
     }
 
     /**
      * Returns true if and only if there is an up-down arrow between the source and the target
      * of edge e.
      *
-     * @param e edge to be tested
+     * @param edge edge to be tested
      *
      * @return true if and only if there is an up-down arrow between the source and the target
      * of edge e
      */
-    public boolean isUpDown(Edge e) {
-        return (e.getContent() == ArrowRelation.updown);
+    public boolean isUpDown(Edge edge) {
+        return (edge.getContent() == ArrowRelation.updown);
     }
 
     /**
      * Returns true if and only if there is an cross arrow between the source and the target
      * of edge e.
      *
-     * @param e edge to be tested
+     * @param edge edge to be tested
      *
      * @return true if and only if there is an cross arrow between the source and the target
      * of edge e
      */
-    public boolean isCross(Edge e) {
-        return (e.getContent() == ArrowRelation.cross);
+    public boolean isCross(Edge edge) {
+        return (edge.getContent() == ArrowRelation.cross);
     }
 
     /**
      * Returns true if and only if there is an circ arrow between the source and the target of
      * edge e.
      *
-     * @param e edge to be tested
+     * @param edge edge to be tested
      *
      * @return true if and only if there is an circ arrow between the source and the target of
      * edge e
      */
-    public boolean isCirc(Edge e) {
-        return (e.getContent() == ArrowRelation.circ);
+    public boolean isCirc(Edge edge) {
+        return (edge.getContent() == ArrowRelation.circ);
     }
 }

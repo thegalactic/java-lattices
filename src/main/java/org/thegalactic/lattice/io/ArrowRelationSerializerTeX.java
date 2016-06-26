@@ -79,9 +79,9 @@ public final class ArrowRelationSerializerTeX implements Writer<ArrowRelation> {
         SortedSet<Edge> edges = arrow.getEdges();
         TreeSet<Node> m = new TreeSet<Node>();
         TreeSet<Node> j = new TreeSet<Node>();
-        for (Edge e : edges) {
-            m.add(e.getSource());
-            j.add(e.getTarget());
+        for (Edge edge : edges) {
+            m.add(edge.getSource());
+            j.add(edge.getTarget());
         }
         String newLine = System.getProperty("line.separator");
         String str = "\\begin{tabular}{|c|*{" + Integer.toString(j.size()) + "}{c|}}" + newLine;
@@ -94,14 +94,14 @@ public final class ArrowRelationSerializerTeX implements Writer<ArrowRelation> {
         for (Node nm : m) {
             str += nm.getContent();
             for (Node nj : j) {
-                Edge e = arrow.getEdge(nm, nj);
-                if (arrow.isUp(e)) {
+                Edge edge = arrow.getEdge(nm, nj);
+                if (arrow.isUp(edge)) {
                     str += " & $\\uparrow$";
-                } else if (arrow.isDown(e)) {
+                } else if (arrow.isDown(edge)) {
                     str += " & $\\downarrow$";
-                } else if (arrow.isUpDown(e)) {
+                } else if (arrow.isUpDown(edge)) {
                     str += " & $\\updownarrow$";
-                } else if (arrow.isCross(e)) {
+                } else if (arrow.isCross(edge)) {
                     str += " & $\\times$";
                 } else {
                     str += " & $\\circ$";
