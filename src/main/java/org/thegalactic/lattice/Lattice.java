@@ -208,8 +208,8 @@ public class Lattice extends DAGraph {
             }
             for (Comparable j : c.getSetA()) {
                 for (Comparable m : c.getSetB()) {
-                    if ((arrows.getEdge((Node) j, (Node) m).getContent() != "UpDown")
-                            && (arrows.getEdge((Node) j, (Node) m).getContent() != "Circ")) {
+                    if (arrows.getEdge((Node) j, (Node) m).getContent() != "UpDown"
+                            && arrows.getEdge((Node) j, (Node) m).getContent() != "Circ") {
                         return false;
                     }
                 }
@@ -221,7 +221,7 @@ public class Lattice extends DAGraph {
         for (Node j : joins) {
             for (Node m : meats) {
                 int indJ = 0; // Search for the step containning j
-                while ((indJ < steps.size()) && (!steps.get(indJ).containsInA(j))) {
+                while (indJ < steps.size() && !steps.get(indJ).containsInA(j)) {
                     indJ++;
                 }
                 if ((phi.getNodeByContent(indJ) == null) && (indJ != steps.size())) {
