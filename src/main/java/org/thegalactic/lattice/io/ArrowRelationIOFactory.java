@@ -60,5 +60,6 @@ public final class ArrowRelationIOFactory extends org.thegalactic.io.IOFactory<A
      * This class is not designed to be publicly instantiated.
      */
     private ArrowRelationIOFactory() {
+        super();
     }
 }
