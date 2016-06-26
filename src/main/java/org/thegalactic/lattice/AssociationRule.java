@@ -11,7 +11,6 @@ package org.thegalactic.lattice;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-import java.util.StringTokenizer;
 import java.util.TreeSet;
 
 /**
@@ -128,24 +127,15 @@ public class AssociationRule extends Rule {
      */
     @Override
     public String toString() {
-        String s = "";
-        for (Object e : this.getPremise()) {
-            StringTokenizer st = new StringTokenizer(e.toString());
-            while (st.hasMoreTokens()) {
-                s += st.nextToken();
-            }
-            s += " ";
+        StringBuilder builder = new StringBuilder();
+        for (Object element : this.getPremise()) {
+            builder.append(element).append(' ');
         }
-        s += " -> ";
-        for (Object e : this.getConclusion()) {
-            StringTokenizer st = new StringTokenizer(e.toString());
-            while (st.hasMoreTokens()) {
-                s += st.nextToken();
-            }
-            s += " ";
+        builder.append("->");
+        for (Object element : this.getConclusion()) {
+            builder.append(' ').append(element);
         }
-        s += " : ";
-        s += "s:" + support + "/c:" + confidence;
-        return s;
+        builder.append(" : ").append("s:").append(this.support).append("/c:").append(this.confidence);
+        return builder.toString();
     }
 }
