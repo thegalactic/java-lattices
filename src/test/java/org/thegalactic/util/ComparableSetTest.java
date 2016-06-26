@@ -52,7 +52,7 @@ public class ComparableSetTest {
     public void testToString() {
         ComparableSet set = new ComparableSet();
         set.add(new String("Hello world"));
-        assertEquals(set.toString(), "[Helloworld]");
+        assertEquals(set.toString(), "[Hello world]");
     }
 
     /**

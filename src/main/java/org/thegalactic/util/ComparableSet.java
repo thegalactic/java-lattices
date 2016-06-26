@@ -11,7 +11,7 @@ package org.thegalactic.util;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-import java.util.StringTokenizer;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**
@@ -31,6 +31,8 @@ import java.util.TreeSet;
  * "a set `A` is smaller than a set `B` iff there exists an element in `B\A`
  * such that any smaller element belonging to `A` also belongs to `B`."
  *
+ * @param <E> Element type
+ *
  * @todo Check if this class is correctly used (performance). Overload
  * modification method to compute the hashCode only once.
  *
@@ -44,7 +46,7 @@ import java.util.TreeSet;
  * class ComparableSet #LightCyan
  * title ComparableSet UML graph
  */
-public class ComparableSet extends TreeSet implements Comparable<ComparableSet>, Cloneable {
+public class ComparableSet<E extends Comparable> extends TreeSet<E> implements Comparable<ComparableSet>, Cloneable {
 
     /*
      * ------------- CONSTRUCTORS ------------------
@@ -62,7 +64,7 @@ public class ComparableSet extends TreeSet implements Comparable<ComparableSet>,
      *
      * @param set a comparable set
      */
-    public ComparableSet(TreeSet<Comparable> set) {
+    public ComparableSet(SortedSet<E> set) {
         super(set);
     }
 
@@ -70,49 +72,12 @@ public class ComparableSet extends TreeSet implements Comparable<ComparableSet>,
      * --------------- OVERLAPPING METHODS ------------
      */
     /**
-     * Returns a string representation of this component without spaces.
-     *
-     * @return a string representation of this component without spaces
-     */
-    public String toString() {
-        String res = "";
-        StringTokenizer st = new StringTokenizer(super.toString());
-        while (st.hasMoreTokens()) {
-            res += st.nextToken();
-        }
-        return res;
-    }
-
-    /**
      * Returns a clone of this component.
      *
      * @return a clone of this component.
      */
     public ComparableSet clone() {
-        return new ComparableSet((TreeSet) super.clone());
-    }
-
-    /**
-     * Compares this component with the specified one.
-     *
-     * @param object An object to compare with
-     *
-     * @return true or false as this component is equal to the specified object.
-     */
-    public boolean equals(Object object) {
-        if (!(object instanceof ComparableSet)) {
-            return false;
-        }
-        return super.equals(object);
-    }
-
-    /**
-     * Compute the hash code.
-     *
-     * @return an integer representing the object
-     */
-    public int hashCode() {
-        return super.hashCode();
+        return (ComparableSet) super.clone();
     }
 
     /**
