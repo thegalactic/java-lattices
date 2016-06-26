@@ -190,9 +190,9 @@ public final class ContextSerializerBurmeister implements Reader<Context>, Write
         TreeSet<Comparable> observations = context.getObservations();
 
         // Observation and attributes size
-        file.write(observations.size() + "");
+        file.write(String.valueOf(observations.size()));
         file.newLine();
-        file.write(attributes.size() + "");
+        file.write(String.valueOf(attributes.size()));
         file.newLine();
 
         // Observations
@@ -208,16 +208,17 @@ public final class ContextSerializerBurmeister implements Reader<Context>, Write
         }
 
         // Extent/Intent
+        StringBuilder builder = new StringBuilder();
         for (Comparable observation : observations) {
-            String line = "";
+            builder.setLength(0);
             for (Comparable attribute : attributes) {
                 if (context.getIntent(observation).contains(attribute)) {
-                    line = line + "X";
+                    builder.append("X");
                 } else {
-                    line = line + ".";
+                    builder.append(".");
                 }
             }
-            file.write(line);
+            file.write(builder.toString());
             file.newLine();
         }
     }
