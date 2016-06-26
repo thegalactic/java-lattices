@@ -87,7 +87,7 @@ public final class Filer<E> {
      * @throws IOException When an IOException occurs
      */
     public void parse(final E e, IOFactory factory, final String filename) throws IOException {
-        BufferedReader file = new BufferedReader(new FileReader(filename));
+        final BufferedReader file = new BufferedReader(new FileReader(filename));
         factory.getReader(Filer.getExtension(filename)).read(e, file);
         file.close();
     }
