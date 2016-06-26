@@ -222,23 +222,15 @@ public class Rule implements Comparable {
      */
     @Override
     public String toString() {
-        String s = "";
+        StringBuilder builder = new StringBuilder();
         for (Object e : this.getPremise()) {
-            StringTokenizer st = new StringTokenizer(e.toString());
-            while (st.hasMoreTokens()) {
-                s += st.nextToken();
-            }
-            s += " ";
+            builder.append(e).append(' ');
         }
-        s += " -> ";
+        builder.append("->");
         for (Object e : this.getConclusion()) {
-            StringTokenizer st = new StringTokenizer(e.toString());
-            while (st.hasMoreTokens()) {
-                s += st.nextToken();
-            }
-            s += " ";
+            builder.append(' ').append(e);
         }
-        return s;
+        return builder.toString();
     }
 
     /**
