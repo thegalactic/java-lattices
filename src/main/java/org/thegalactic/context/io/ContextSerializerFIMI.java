@@ -153,7 +153,7 @@ public final class ContextSerializerFIMI implements Reader<Context>, Writer<Cont
     public void write(final Context context, final BufferedWriter file) throws IOException {
         final HashMap<Comparable, Integer> map = new HashMap();
         Integer count = 0;
-        for (Comparable att : context.getAttributes()) {
+        for (final Comparable att : context.getAttributes()) {
             count++;
             map.put(att, count);
         }
