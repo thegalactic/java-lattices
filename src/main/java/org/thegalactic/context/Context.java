@@ -110,23 +110,27 @@ public class Context extends ClosureSystem {
                     q = q / 26;
                     name = name + (char) (rem + 65);
                 } while (q != 0);
-                ctx.addToAttributes(name + Integer.toString(j)); // These names are cool ...
+                ctx.addToAttributes(name + Integer.toString(j));
             }
         }
         // Generates all requested observations.
         Random r = new Random();
         int attr = r.nextInt(nbAttrPerGrp) + 1;
-        for (int i = 1; i <= nbObs; i++) { // i : Observation
-            for (int j = 1; j <= nbGrp; j++) { // j : Familly
+        StringBuilder name = new StringBuilder();
+        for (int i = 1; i <= nbObs; i++) {
+            // i : Observation
+            for (int j = 1; j <= nbGrp; j++) {
+                // j : Familly
                 int q = j;
-                String name = "";
+                // Clear the StringBuilder
+                name.setLength(0);
                 do {
                     int rem = q % 26;
                     q = q / 26;
-                    name = name + (char) (rem + 65);
+                    name.append((char) (rem + 65));
                 } while (q != 0);
-                name = name + Integer.toString(attr); // These names are really cool, aren't they ?
-                ctx.addExtentIntent(Integer.toString(i), name);
+                name.append(attr);
+                ctx.addExtentIntent(Integer.toString(i), name.toString());
                 attr = r.nextInt(nbAttrPerGrp) + 1;
             }
         }
