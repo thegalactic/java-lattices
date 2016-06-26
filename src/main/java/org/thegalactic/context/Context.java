@@ -96,6 +96,7 @@ public class Context extends ClosureSystem {
      */
     public static Context random(int nbObs, int nbGrp, int nbAttrPerGrp) {
         Context ctx = new Context();
+        StringBuilder name = new StringBuilder();
         // Generates Observations.
         for (int i = 1; i <= nbObs; i++) {
             ctx.addToObservations(Integer.toString(i));
@@ -104,19 +105,19 @@ public class Context extends ClosureSystem {
         for (int i = 1; i <= nbGrp; i++) {
             for (int j = 1; j <= nbAttrPerGrp; j++) {
                 int q = i;
-                String name = "";
+                name.setLength(0);
                 do {
                     int rem = q % 26;
                     q = q / 26;
-                    name = name + (char) (rem + 65);
+                    name.append((char) (rem + 65));
                 } while (q != 0);
-                ctx.addToAttributes(name + Integer.toString(j));
+                name.append(j);
+                ctx.addToAttributes(name.toString());
             }
         }
         // Generates all requested observations.
         Random r = new Random();
         int attr = r.nextInt(nbAttrPerGrp) + 1;
-        StringBuilder name = new StringBuilder();
         for (int i = 1; i <= nbObs; i++) {
             // i : Observation
             for (int j = 1; j <= nbGrp; j++) {
@@ -137,6 +138,7 @@ public class Context extends ClosureSystem {
         ctx.setBitSets();
         return ctx;
     }
+
     /*
      * ------------- FIELD ------------------
      */

@@ -12,7 +12,6 @@ package org.thegalactic.lattice;
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
 import java.util.Collection;
-import java.util.StringTokenizer;
 import java.util.TreeSet;
 
 import org.thegalactic.util.ComparableSet;
