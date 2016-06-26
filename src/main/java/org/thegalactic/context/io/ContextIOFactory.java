@@ -64,5 +64,6 @@ public final class ContextIOFactory extends org.thegalactic.io.IOFactory<Context
      * This class is not designed to be publicly instantiated.
      */
     private ContextIOFactory() {
+        super();
     }
 }
