@@ -429,11 +429,12 @@ public class ConceptLatticeTest {
             while (scanner.hasNextLine()) {
                 content += scanner.nextLine();
             }
-            assertEquals(content, "digraph G {Graph [rankdir=BT]"
-                + a.getIdentifier() + " [label=\" []\\n[]\"]"
-                + b.getIdentifier() + " [label=\" []\\n[]\"]"
-                + a.getIdentifier() + "->" + b.getIdentifier()
-                + "}"
+            assertEquals("digraph G {Graph [rankdir=BT]"
+                    + a.getIdentifier() + " [label=\"[]\\n[]\"]"
+                    + b.getIdentifier() + " [label=\"[]\\n[]\"]"
+                    + a.getIdentifier() + "->" + b.getIdentifier()
+                    + "}",
+                content
             );
             file.delete();
         } catch (Exception exception) {

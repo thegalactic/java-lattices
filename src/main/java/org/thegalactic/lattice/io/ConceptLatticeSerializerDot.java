@@ -11,7 +11,6 @@ package org.thegalactic.lattice.io;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-import java.util.StringTokenizer;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
@@ -81,44 +80,36 @@ public final class ConceptLatticeSerializerDot implements Writer<ConceptLattice>
         file.newLine();
         file.write("Graph [rankdir=BT]");
         file.newLine();
-        StringBuilder nodes = new StringBuilder();
-        StringBuilder edges = new StringBuilder();
+        StringBuilder builder = new StringBuilder();
         for (Node node : lattice.getNodes()) {
+            builder.setLength(0);
             Concept concept = (Concept) node;
-            String dot = concept.getIdentifier() + " [label=\" ";
-            String tmp = "";
+            file.write(String.valueOf(concept.getIdentifier()));
+            file.write(" [label=\"");
             if (concept.hasSetA()) {
-                tmp += concept.getSetA();
+                builder.append(concept.getSetA().toString().replace("\"", "\\\""));
             }
             if (concept.hasSetA() && concept.hasSetB()) {
-                tmp += "\\n";
+                builder.append("\\n");
             }
             if (concept.hasSetB()) {
-                tmp += concept.getSetB();
+                builder.append(concept.getSetB().toString().replace("\"", "\\\""));
             }
-            StringTokenizer st = new StringTokenizer(tmp, "\"");
-            while (st.hasMoreTokens()) {
-                dot += st.nextToken();
-            }
-            dot += "\"]";
-            nodes.append(dot);
+            file.write(builder.toString());
+            file.write("\"]");
+            file.newLine();
         }
         for (Edge edge : lattice.getEdges()) {
-            String dot = edge.getSource().getIdentifier() + "->" + edge.getTarget().getIdentifier();
+            file.write(String.valueOf(edge.getSource().getIdentifier()));
+            file.write("->");
+            file.write(String.valueOf(edge.getTarget().getIdentifier()));
             if (edge.hasContent()) {
-                dot = dot + " [" + "label=\"";
-                StringTokenizer tokenizer = new StringTokenizer(edge.getContent().toString(), "\"");
-                while (tokenizer.hasMoreTokens()) {
-                    dot += tokenizer.nextToken();
-                }
-                dot = dot + "\"]";
+                file.write(" [label=\"");
+                builder.append(edge.getContent().toString().replace("\"", "\\\""));
+                file.write("\"]");
             }
-            edges.append(dot);
+            file.newLine();
         }
-        file.write(nodes.toString());
-        file.newLine();
-        file.write(edges.toString());
-        file.newLine();
         file.write("}");
     }
 }
