@@ -67,6 +67,7 @@ public final class ContextSerializerText implements Reader<Context>, Writer<Cont
      * This class is not designed to be publicly instantiated.
      */
     private ContextSerializerText() {
+        super();
     }
 
     /**
