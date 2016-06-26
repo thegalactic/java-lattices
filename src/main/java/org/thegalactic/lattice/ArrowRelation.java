@@ -267,7 +267,7 @@ public class ArrowRelation extends DGraph {
      * edge e
      */
     public boolean isUp(Edge edge) {
-        return (edge.getContent() == ArrowRelation.up);
+        return edge.getContent() == ArrowRelation.up;
     }
 
     /**
@@ -280,7 +280,7 @@ public class ArrowRelation extends DGraph {
      * edge e
      */
     public boolean isDown(Edge edge) {
-        return (edge.getContent() == ArrowRelation.down);
+        return edge.getContent() == ArrowRelation.down;
     }
 
     /**
@@ -293,7 +293,7 @@ public class ArrowRelation extends DGraph {
      * of edge e
      */
     public boolean isUpDown(Edge edge) {
-        return (edge.getContent() == ArrowRelation.updown);
+        return edge.getContent() == ArrowRelation.updown;
     }
 
     /**
@@ -306,7 +306,7 @@ public class ArrowRelation extends DGraph {
      * of edge e
      */
     public boolean isCross(Edge edge) {
-        return (edge.getContent() == ArrowRelation.cross);
+        return edge.getContent() == ArrowRelation.cross;
     }
 
     /**
@@ -319,6 +319,6 @@ public class ArrowRelation extends DGraph {
      * edge e
      */
     public boolean isCirc(Edge edge) {
-        return (edge.getContent() == ArrowRelation.circ);
+        return edge.getContent() == ArrowRelation.circ;
     }
 }
