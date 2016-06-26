@@ -76,14 +76,15 @@ public final class ArrowRelationSerializerTeX implements Writer<ArrowRelation> {
      *
      * @throws IOException When an IOException occurs
      */
-    public void write(ArrowRelation arrow, BufferedWriter file) throws IOException {
-        SortedSet<Edge> edges = arrow.getEdges();
-        TreeSet<Node> m = new TreeSet<Node>();
-        TreeSet<Node> j = new TreeSet<Node>();
-        for (Edge edge : edges) {
+    public void write(final ArrowRelation arrow, final BufferedWriter file) throws IOException {
+        final SortedSet<Edge> edges = arrow.getEdges();
+        final TreeSet<Node> m = new TreeSet<Node>();
+        final TreeSet<Node> j = new TreeSet<Node>();
+        for (final Edge edge : edges) {
             m.add(edge.getSource());
             j.add(edge.getTarget());
         }
+
         file.write("\\begin{tabular}{|c|*{");
         file.write(String.valueOf(j.size()));
         file.write("}{c|}}");
@@ -99,10 +100,10 @@ public final class ArrowRelationSerializerTeX implements Writer<ArrowRelation> {
 
         this.writeHline(file);
 
-        for (Node nm : m) {
+        for (final Node nm : m) {
             file.write(nm.getContent().toString());
-            for (Node nj : j) {
-                Edge edge = arrow.getEdge(nm, nj);
+            for (final Node nj : j) {
+                final Edge edge = arrow.getEdge(nm, nj);
                 if (arrow.isUp(edge)) {
                     file.write(" & $\\uparrow$");
                 } else if (arrow.isDown(edge)) {
