@@ -27,7 +27,6 @@ import java.util.TreeSet;
 public class AssociationRule extends Rule {
 
     /* ------------- FIELDS ------------------ */
-
     /**
      * The confidence of the rule.
      */
@@ -50,7 +49,7 @@ public class AssociationRule extends Rule {
      * Constructs a new Rule with the premise and the conclusion given in
      * parameters.
      *
-     * @param premise a set of indexed elements
+     * @param premise    a set of indexed elements
      * @param conclusion a set of indexed elements
      */
     public AssociationRule(TreeSet<Comparable> premise, TreeSet<Comparable> conclusion) {
@@ -61,9 +60,9 @@ public class AssociationRule extends Rule {
      * Constructs a new Rule with the premise, the conclusion, the confidence
      * and the support given in parameters.
      *
-     * @param premise a set of indexed elements
+     * @param premise    a set of indexed elements
      * @param conclusion a set of indexed elements
-     * @param support a support value
+     * @param support    a support value
      * @param confidence a confidence value
      */
     public AssociationRule(TreeSet<Comparable> premise, TreeSet<Comparable> conclusion, double support, double confidence) {
@@ -117,11 +116,8 @@ public class AssociationRule extends Rule {
      * The following format is used:
      *
      * ~~~
-     * [elements of the premise separated by a space] -> [elements of the conclusion separated by a space] : s:support/c:confidence
+     * [premise] -> [conclusion] : s:support/c:confidence
      * ~~~
-     *
-     * a StringTokenizer is used to delete spaces in the string description of
-     * each element of premise and conclusion
      *
      * @return a string made of premises followed by -> and the conclusions.
      */

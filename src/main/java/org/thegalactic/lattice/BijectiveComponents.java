@@ -64,7 +64,6 @@ public class BijectiveComponents {
     /*
      * ------------- FIELDS ------------------
      */
-
     /**
      * The initial closure system.
      */
@@ -181,7 +180,8 @@ public class BijectiveComponents {
      * The canonical basis is obtained by
      *
      * ~~~Java
-     * (new ImplicationalSystem(this.canonicalDirectBasis)).makeCanonicalBasis();
+     * (new
+     * ImplicationalSystem(this.canonicalDirectBasis)).makeCanonicalBasis();
      * ~~~
      *
      * @return time of computation
@@ -208,7 +208,7 @@ public class BijectiveComponents {
      * The specified name is used to defined a name for each file.
      *
      * @param directory location to save file
-     * @param name name of the files
+     * @param name      name of the files
      *
      * @throws IOException When an IOException occurs
      */

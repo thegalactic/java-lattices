@@ -34,7 +34,7 @@ public interface Reader<E> {
     /**
      * Read a context to a file.
      *
-     * @param e an element to read
+     * @param e    an element to read
      * @param file a file
      *
      * @throws IOException When an IOException occurs

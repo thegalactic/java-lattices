@@ -93,7 +93,7 @@ public final class ContextSerializerFIMI implements Reader<Context>, Writer<Cont
      * file gives an observation with no attributes
      *
      * @param context a context to read
-     * @param file a file
+     * @param file    a file
      *
      * @throws IOException When an IOException occurs
      */
@@ -145,7 +145,7 @@ public final class ContextSerializerFIMI implements Reader<Context>, Writer<Cont
      * ~~~
      *
      * @param context a context to write
-     * @param file a file
+     * @param file    a file
      *
      * @throws IOException When an IOException occurs
      */

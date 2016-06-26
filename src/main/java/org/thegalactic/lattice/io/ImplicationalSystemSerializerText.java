@@ -31,7 +31,8 @@ import org.thegalactic.lattice.Rule;
  *
  * ImplicationalSystemSerializerText.png
  *
- * !include resources/org/thegalactic/lattice/io/ImplicationalSystemSerializerText.iuml
+ * !include
+ * resources/org/thegalactic/lattice/io/ImplicationalSystemSerializerText.iuml
  * !include resources/org/thegalactic/io/Reader.iuml
  * !include resources/org/thegalactic/io/Writer.iuml
  *
@@ -41,6 +42,11 @@ import org.thegalactic.lattice.Rule;
  * title ImplicationalSystemSerializerText UML graph
  */
 public final class ImplicationalSystemSerializerText implements Reader<ImplicationalSystem>, Writer<ImplicationalSystem> {
+
+    /**
+     * File extension.
+     */
+    private static final String EXTENSION = "txt";
 
     /**
      * The singleton instance.
@@ -63,8 +69,8 @@ public final class ImplicationalSystemSerializerText implements Reader<Implicati
      * Register this class for reading and writing .txt files.
      */
     public static void register() {
-        ImplicationalSystemIOFactory.getInstance().registerReader(ImplicationalSystemSerializerText.getInstance(), "txt");
-        ImplicationalSystemIOFactory.getInstance().registerWriter(ImplicationalSystemSerializerText.getInstance(), "txt");
+        ImplicationalSystemIOFactory.getInstance().registerReader(ImplicationalSystemSerializerText.getInstance(), EXTENSION);
+        ImplicationalSystemIOFactory.getInstance().registerWriter(ImplicationalSystemSerializerText.getInstance(), EXTENSION);
     }
 
     /**
@@ -90,7 +96,7 @@ public final class ImplicationalSystemSerializerText implements Reader<Implicati
      * ~~~
      *
      * @param system a system to read
-     * @param file a file
+     * @param file   a file
      *
      * @throws IOException When an IOException occurs
      */
@@ -155,7 +161,7 @@ public final class ImplicationalSystemSerializerText implements Reader<Implicati
      * ~~~
      *
      * @param system a system to write
-     * @param file a file
+     * @param file   a file
      *
      * @throws IOException When an IOException occurs
      */

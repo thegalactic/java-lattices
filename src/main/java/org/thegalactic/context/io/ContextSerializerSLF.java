@@ -47,7 +47,7 @@ public final class ContextSerializerSLF implements Reader<Context>, Writer<Conte
     }
 
     /**
-     * Register this class for reading  and writing .slf files.
+     * Register this class for reading and writing .slf files.
      */
     public static void register() {
         ContextIOFactory.getInstance().registerReader(ContextSerializerSLF.getInstance(), "slf");
@@ -85,7 +85,7 @@ public final class ContextSerializerSLF implements Reader<Context>, Writer<Conte
      * ~~~
      *
      * @param context a context to read
-     * @param file a file
+     * @param file    a file
      *
      * @throws IOException When an IOException occurs
      */
@@ -170,7 +170,7 @@ public final class ContextSerializerSLF implements Reader<Context>, Writer<Conte
      * ~~~
      *
      * @param context a context to write
-     * @param file a file
+     * @param file    a file
      *
      * @throws IOException When an IOException occurs
      */

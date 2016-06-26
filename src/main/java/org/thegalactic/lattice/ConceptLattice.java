@@ -222,7 +222,7 @@ public class ConceptLattice extends Lattice {
      * generation. The dependence graph of a lattice encodes at once the minimal
      * generators and the canonical direct basis of the lattice .
      *
-     * @param init a closure system (an ImplicationalSystem or a Context)
+     * @param init    a closure system (an ImplicationalSystem or a Context)
      * @param support a support value, between 0 and 1.
      *
      * @return a concept iceberg
@@ -307,7 +307,8 @@ public class ConceptLattice extends Lattice {
     }
 
     /**
-     * Adds the specified edge to this component: `target` is added as a successor
+     * Adds the specified edge to this component: `target` is added as a
+     * successor
      * of `source`.
      *
      * If the cases where specified nodes don't belongs to the node set, and
@@ -842,7 +843,7 @@ public class ConceptLattice extends Lattice {
      * in the worst case, Cl is the closure computation complexity and g is the
      * number of minimal generators of the lattice.
      *
-     * @param n a concept
+     * @param n    a concept
      * @param init a closure system
      */
     public void recursiveDiagramLattice(Concept n, ClosureSystem init) {
@@ -875,8 +876,8 @@ public class ConceptLattice extends Lattice {
      * in the worst case, Cl is the closure computation complexity and g is the
      * number of minimal generators of the lattice.
      *
-     * @param n a concept
-     * @param init a closure system
+     * @param n         a concept
+     * @param init      a closure system
      * @param threshold a support threshold, as a number of observations
      */
     private void recursiveDiagramIceberg(Concept n, ClosureSystem init, int threshold) {
@@ -917,7 +918,7 @@ public class ConceptLattice extends Lattice {
      * graph is initialised, but it may be not complete. It is the case for
      * example for on-line generation of the concept lattice.
      *
-     * @param n a node
+     * @param n    a node
      * @param init a closure system
      *
      * @return a set of immediate successors

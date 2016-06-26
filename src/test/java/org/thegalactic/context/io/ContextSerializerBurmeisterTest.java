@@ -11,7 +11,6 @@ package org.thegalactic.context.io;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -26,6 +25,7 @@ import org.thegalactic.context.Context;
  * Test the org.thegalactic.dgraph.io.ContextContextSerializerBurmeisterTest class.
  */
 public class ContextSerializerBurmeisterTest {
+
     /**
      * Test getInstance.
      */
@@ -91,4 +91,3 @@ public class ContextSerializerBurmeisterTest {
         }
     }
 }
-

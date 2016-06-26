@@ -12,8 +12,8 @@ package org.thegalactic.context;
  * You can redistribute it and/or modify
  * it under the terms of the CeCILL-B license.
  */
-
 import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -33,6 +33,7 @@ import org.thegalactic.lattice.LatticeFactory;
  * @author cguerin
  */
 public class ContextTest {
+
     /**
      * Test the empty constructor of Context.
      */

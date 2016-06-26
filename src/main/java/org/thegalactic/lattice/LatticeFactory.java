@@ -220,20 +220,20 @@ public class LatticeFactory {
                         }
                     }
                 } else // x wasn't in convex c
-                if (y.getContent().getClass() == test.getClass()) { // y was in convex c
-                    // x wasn't in c but y was
-                    Couple cY = (Couple) y.getContent();
-                    if (l.majorants(l.getNodeByContent(x.getContent())).contains(l.getNodeByContent(cY.getLeft()))
-                            && (((Integer) cY.getRight()) == 0)) {
-                        // x < y in l and x & second component of y is 0.
-                        doubled.addEdge(x, y);
-                    }
-                } else // y wasn't in convex c
-                // x wasn't in c nor y
-                if (l.majorants(l.getNodeByContent(x.getContent())).contains(l.getNodeByContent(y.getContent()))) {
-                    // x < y in l and x & second component of y is 0.
-                    doubled.addEdge(x, y);
-                }
+                 if (y.getContent().getClass() == test.getClass()) { // y was in convex c
+                        // x wasn't in c but y was
+                        Couple cY = (Couple) y.getContent();
+                        if (l.majorants(l.getNodeByContent(x.getContent())).contains(l.getNodeByContent(cY.getLeft()))
+                                && (((Integer) cY.getRight()) == 0)) {
+                            // x < y in l and x & second component of y is 0.
+                            doubled.addEdge(x, y);
+                        }
+                    } else // y wasn't in convex c
+                    // x wasn't in c nor y
+                     if (l.majorants(l.getNodeByContent(x.getContent())).contains(l.getNodeByContent(y.getContent()))) {
+                            // x < y in l and x & second component of y is 0.
+                            doubled.addEdge(x, y);
+                        }
             }
         }
         doubled.transitiveReduction();
@@ -244,8 +244,8 @@ public class LatticeFactory {
      * Computes successors of node n in the boolean algebra currently generated.
      *
      * @param node this method compute successors of this node
-     * @param l boolean algebra currently generated
-     * @param n the number of node of l will be 2^n at the end of computation
+     * @param l    boolean algebra currently generated
+     * @param n    the number of node of l will be 2^n at the end of computation
      */
     private static void recursiveBooleanAlgebra(Node node, Lattice l, int n) {
         for (int i = 0; i < n; i++) {
@@ -269,8 +269,8 @@ public class LatticeFactory {
      * Computes successors of node n in the lattice l.
      *
      * @param node successors of this node are computed by this method
-     * @param l lattice of permutations currently generated
-     * @param n lattice of permutation of the set 1..n is currently generated
+     * @param l    lattice of permutations currently generated
+     * @param n    lattice of permutation of the set 1..n is currently generated
      */
     private static void recursivePermutationLattice(Node node, Lattice l, int n) {
         Permutation s = (Permutation) node.getContent();
@@ -318,7 +318,9 @@ public class LatticeFactory {
      *
      * The content contains :
      *
-     * ~~~ content[0]=1 content[1]=0 content[2]=2 ~~~
+     * ~~~
+     * content[0]=1 content[1]=0 content[2]=2
+     * ~~~
      */
     private static class Permutation {
 
@@ -333,7 +335,9 @@ public class LatticeFactory {
          * If this component transforms : 0 -> 1, 1 -> 0 & 2 -> 2. The field
          * content contains :
          *
-         * ~~~ content[0]=1 content[1]=0 content[2]=2 ~~~
+         * ~~~
+         * content[0]=1 content[1]=0 content[2]=2
+         * ~~~
          */
         private int[] content;
 

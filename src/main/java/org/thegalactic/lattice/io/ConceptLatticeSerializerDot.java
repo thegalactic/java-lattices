@@ -71,7 +71,7 @@ public final class ConceptLatticeSerializerDot implements Writer<ConceptLattice>
      * Write a graph to a output stream.
      *
      * @param lattice a concept lattice to write
-     * @param file a file
+     * @param file    a file
      *
      * @throws IOException When an IOException occurs
      */

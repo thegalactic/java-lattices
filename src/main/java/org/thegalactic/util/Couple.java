@@ -11,7 +11,6 @@ package org.thegalactic.util;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 /**
  * This class provides a representation of couple (A,B) of objects.
  *

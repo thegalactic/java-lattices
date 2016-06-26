@@ -278,12 +278,11 @@ public class Lattice extends DAGraph {
     /*
      * --------------- LATTICE HANDLING METHODS ------------
      */
-
     /**
      * Returns the top of the lattice.
      *
      * @return the node which is at the top of the lattice or null if it is not
-     * unique
+     *         unique
      */
     public Node top() {
         TreeSet<Node> max = new TreeSet<Node>(this.max());
@@ -297,7 +296,7 @@ public class Lattice extends DAGraph {
      * Returns the bottom of the lattice.
      *
      * @return the node which is at the bottom of the lattice or null if it is
-     * not unique
+     *         not unique
      */
     public Node bottom() {
         TreeSet<Node> min = new TreeSet<Node>(this.min());
@@ -314,7 +313,7 @@ public class Lattice extends DAGraph {
      * @param y the second node
      *
      * @return the node which is at the meet of the nodes or null if it does not
-     * exist
+     *         exist
      */
     public Node meet(Node x, Node y) {
         SortedSet<Node> xMinorants = this.minorants(x);
@@ -339,7 +338,7 @@ public class Lattice extends DAGraph {
      * @param y the second node
      *
      * @return the node which is at the join of the nodes or null if it does not
-     * exist
+     *         exist
      */
     public Node join(Node x, Node y) {
         SortedSet<Node> xMajorants = this.majorants(x);
@@ -411,7 +410,7 @@ public class Lattice extends DAGraph {
      * @param node a specified node
      *
      * @return the set of join-irreducibles thar are minorants of the specified
-     * node
+     *         node
      */
     public TreeSet<Comparable> joinIrreducibles(Node node) {
         TreeSet<Comparable> join = new TreeSet<Comparable>(this.joinIrreducibles());
@@ -428,7 +427,7 @@ public class Lattice extends DAGraph {
      * @param node a specified node
      *
      * @return the set of meet-irreducibles thar are majorants of the specified
-     * node
+     *         node
      */
     public TreeSet<Comparable> meetIrreducibles(Node node) {
         TreeSet<Comparable> meet = new TreeSet<Comparable>(this.meetIrreducibles());
@@ -442,7 +441,7 @@ public class Lattice extends DAGraph {
      * component.
      *
      * @return the subgraph induced by the join irreducibles nodes of this
-     * component
+     *         component
      */
     public DAGraph joinIrreduciblesSubgraph() {
         TreeSet<Node> irr = this.joinIrreducibles();
@@ -454,7 +453,7 @@ public class Lattice extends DAGraph {
      * component.
      *
      * @return the subgraph induced by the meet irreducibles nodes of this
-     * component
+     *         component
      */
     public DAGraph meetIrreduciblesSubgraph() {
         TreeSet<Node> irr = this.meetIrreducibles();
@@ -480,7 +479,7 @@ public class Lattice extends DAGraph {
      * irreducibles predecessors stored in a closed set.
      *
      * @return the isomorphic closed set lattice defined on the join
-     * irreducibles set
+     *         irreducibles set
      */
     public ConceptLattice joinClosure() {
         ConceptLattice csl = new ConceptLattice();
@@ -518,7 +517,7 @@ public class Lattice extends DAGraph {
      * irreducibles successors stored in a closed set.
      *
      * @return the isomorphic closed set lattice defined on the meet
-     * irreducibles set
+     *         irreducibles set
      */
     public ConceptLattice meetClosure() {
         ConceptLattice csl = new ConceptLattice();
@@ -829,7 +828,6 @@ public class Lattice extends DAGraph {
     /*
      * ------------- dependency GRAPH RELATIVE METHODS ------------------
      */
-
     /**
      * Returns the dependency graph of this component.
      *
@@ -996,8 +994,8 @@ public class Lattice extends DAGraph {
      * The canonical direct basis is computed. For each generated rule, a set of
      * approximative rules (above the confidence threshold) is generated.
      *
-     * @param context a context
-     * @param support a support threshold, between 0 and 1
+     * @param context    a context
+     * @param support    a support threshold, between 0 and 1
      * @param confidence a confidence threshold, between 0 and 1
      *
      * @return a set of approximative rules
@@ -1081,17 +1079,15 @@ public class Lattice extends DAGraph {
      * Recall that m has a unique successor say m+ and j has a unique
      * predecessor say j-, then :
      *
-     * - j "Up Arrow" m (stored has "Up") iff j is not less or equal than m and
-     * j is less than m+ - j "Down Arrow" m (stored has "Down") iff j is not
-     * less or equal than m and j- is less than m - j "Up Down Arrow" m (stored
-     * has "UpDown") iff j "Up" m and j "Down" m - j "Cross" m (stored has
-     * "Cross") iff j is less or equal than m - j "Circ" m (stored has "Circ")
-     * iff neither j "Up" m nor j "Down" m nor j "Cross" m
+     * - j "Up Arrow" m (stored has "Up") iff j is not less or equal than m and j is less than m+
+     * - j "Down Arrow" m (stored has "Down") iff j is not less or equal than m and j- is less than m
+     * - j "Up Down Arrow" m (stored has "UpDown") iff j "Up" m and j "Down" m
+     * - j "Cross" m (stored has "Cross") iff j is less or equal than m
+     * - j "Circ" m (stored has "Circ") iff neither j "Up" m nor j "Down" m nor j "Cross" m
      *
      * @return DGraph whose :
-     *
-     * - Nodes are join or meet irreductibles of the lattice. - Edges content
-     * encodes arrows as String "Up", "Down", "UpDown", "Cross", "Circ".
+     *         - Nodes are join or meet irreductibles of the lattice.
+     *         - Edges content encodes arrows as String "Up", "Down", "UpDown", "Cross", "Circ".
      *
      */
     public ArrowRelation getArrowRelation() {

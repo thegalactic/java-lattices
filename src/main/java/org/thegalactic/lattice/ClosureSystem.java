@@ -106,7 +106,7 @@ public abstract class ClosureSystem {
      * computed.
      *
      * @param diagram a boolean indicating if the Hasse diagramm of the lattice
-     * is computed or not.
+     *                is computed or not.
      *
      * @return The concept lattice
      */

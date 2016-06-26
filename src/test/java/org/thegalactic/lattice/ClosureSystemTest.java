@@ -11,7 +11,6 @@ package org.thegalactic.lattice;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
@@ -27,6 +26,7 @@ import org.thegalactic.context.Context;
  * @author jeff
  */
 public class ClosureSystemTest {
+
     /**
      * Test for the allClosures method for Context.
      */
@@ -46,28 +46,30 @@ public class ClosureSystemTest {
         context.addExtentIntent("3", "c");
         assertEquals(context.allClosures().size(), 6);
     }
+
     /**
      * Test for the allClosures method for ImplicationSystem.
      */
     @Test
     public void testallClosuresIS() {
-            ImplicationalSystem is = new ImplicationalSystem();
-            TreeSet<Comparable> elements = new TreeSet<Comparable>();
-            elements.add('a');
-            elements.add('b');
-            elements.add('c');
-            is.addAllElements(elements);
-            Rule r = new Rule();
-            r.addToPremise('a');
-            r.addToConclusion('b');
-            r.addToConclusion('c');
-            is.addRule(r);
-            assertEquals(is.allClosures().size(), 5);
+        ImplicationalSystem is = new ImplicationalSystem();
+        TreeSet<Comparable> elements = new TreeSet<Comparable>();
+        elements.add('a');
+        elements.add('b');
+        elements.add('c');
+        is.addAllElements(elements);
+        Rule r = new Rule();
+        r.addToPremise('a');
+        r.addToConclusion('b');
+        r.addToConclusion('c');
+        is.addRule(r);
+        assertEquals(is.allClosures().size(), 5);
     }
+
     /**
      * Test for the closedSetLattice method from a context.
      *
-     * TODO  There's something wrong with that test : diagramLattice is always empty ... See ConceptLattice tests
+     * TODO There's something wrong with that test : diagramLattice is always empty ... See ConceptLattice tests
      */
     @Test
     public void testclosedSetLatticeCTX() {
@@ -77,10 +79,11 @@ public class ClosureSystemTest {
         assertEquals(context.closedSetLattice(true).getEdges().size(), ConceptLattice.diagramLattice(context).getEdges().size());
         assertEquals(context.closedSetLattice(false).getEdges().size(), ConceptLattice.completeLattice(context).getEdges().size());
     }
+
     /**
      * Test for the closedSetLattice method from an implication system.
      *
-     * TODO  There's something wrong with that test : diagramLattice is always almost empty ... See ConceptLattice tests
+     * TODO There's something wrong with that test : diagramLattice is always almost empty ... See ConceptLattice tests
      */
     @Test
     public void testclosedSetLatticeIS() {
@@ -90,6 +93,7 @@ public class ClosureSystemTest {
         assertEquals(is.closedSetLattice(true).getEdges().size(), ConceptLattice.diagramLattice(is).getEdges().size());
         assertEquals(is.closedSetLattice(false).getEdges().size(), ConceptLattice.completeLattice(is).getEdges().size());
     }
+
     /**
      * Test for the getReductibleElements method for ImplicationalSystem.
      */
@@ -112,6 +116,7 @@ public class ClosureSystemTest {
         assertTrue(is.getReducibleElements().get(1).contains(0));
         assertTrue(is.getReducibleElements().get(2).isEmpty());
     }
+
     /**
      * Test for the getReductibleElements method for Context.
      */
@@ -126,6 +131,7 @@ public class ClosureSystemTest {
         context.addExtentIntent("1", "b");
         assertEquals(context.getReducibleElements().size(), 1);
     }
+
     /**
      * Test for the nextClosure method for Context.
      */
@@ -145,6 +151,7 @@ public class ClosureSystemTest {
         context.addExtentIntent("3", "c");
         assertEquals(context.nextClosure(new Concept(context.closure(new ComparableSet()), false)).toString(), "[b]");
     }
+
     /**
      * Test for the nextClosure method for ImplicationalSystem.
      */
@@ -163,6 +170,7 @@ public class ClosureSystemTest {
         is.addRule(r);
         assertEquals(is.nextClosure(new Concept(is.closure(new ComparableSet()), false)).toString(), "[c]");
     }
+
     /**
      * Test for the precedenceGraph method for ImplicationalSystem.
      */
@@ -179,6 +187,7 @@ public class ClosureSystemTest {
         is.addRule(r1);
         assertEquals(is.precedenceGraph().getEdges().size(), 1);
     }
+
     /**
      * Test for the precedenceGraph method for Context.
      */

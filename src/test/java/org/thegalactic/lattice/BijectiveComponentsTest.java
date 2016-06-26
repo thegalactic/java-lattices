@@ -11,7 +11,6 @@ package org.thegalactic.lattice;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -30,6 +29,7 @@ import org.thegalactic.context.Context;
  * @author JeanFrancoisViaud
  */
 public class BijectiveComponentsTest {
+
     /**
      * Test the constructor from an implication system.
      */
@@ -47,6 +47,7 @@ public class BijectiveComponentsTest {
         assertTrue(bc.getCanonicalBasis() != null);
         assertTrue(bc.getTable() != null);
     }
+
     /**
      * Test the compute method with an implicationnal system.
      */
@@ -64,6 +65,7 @@ public class BijectiveComponentsTest {
         assertTrue(bc.getCanonicalBasis() != null);
         assertTrue(bc.getTable() != null);
     }
+
     /**
      * Test the compute method with a context.
      */
@@ -81,10 +83,11 @@ public class BijectiveComponentsTest {
         assertTrue(bc.getCanonicalBasis() != null);
         assertTrue(bc.getTable() != null);
     }
+
     /**
      * Test the save method.
      *
-     * TODO  make the test Windows compliant
+     * TODO make the test Windows compliant
      */
     @Test
     public void testsave() {
@@ -137,6 +140,7 @@ public class BijectiveComponentsTest {
             exception.printStackTrace();
         }
     }
+
     /**
      * Test the getClosureSystem method.
      */
@@ -146,6 +150,7 @@ public class BijectiveComponentsTest {
         BijectiveComponents bc = new BijectiveComponents(is);
         assertEquals(bc.getClosureSystem(), is);
     }
+
     /**
      * Test the setClosureSystem method.
      */
@@ -156,6 +161,7 @@ public class BijectiveComponentsTest {
         bc.setClosureSystem(is);
         assertEquals(bc.getClosureSystem(), is);
     }
+
     /**
      * Test the setLattice method.
      */
@@ -167,6 +173,7 @@ public class BijectiveComponentsTest {
         bc.setLattice(cl);
         assertEquals(bc.getLattice(), cl);
     }
+
     /**
      * Test the getLattice method.
      */
@@ -178,6 +185,7 @@ public class BijectiveComponentsTest {
         bc.setLattice(cl);
         assertEquals(bc.getLattice(), cl);
     }
+
     /**
      * Test the setReducedLattice method.
      */
@@ -189,6 +197,7 @@ public class BijectiveComponentsTest {
         bc.setReducedLattice(l);
         assertEquals(bc.getReducedLattice(), l);
     }
+
     /**
      * Test the getReducedLattice method.
      */
@@ -200,6 +209,7 @@ public class BijectiveComponentsTest {
         bc.setReducedLattice(l);
         assertEquals(bc.getReducedLattice(), l);
     }
+
     /**
      * Test the setDependencyGraph method.
      */
@@ -211,6 +221,7 @@ public class BijectiveComponentsTest {
         bc.setDependencyGraph(dg);
         assertEquals(bc.getDependencyGraph(), dg);
     }
+
     /**
      * Test the getDependencyGraph method.
      */
@@ -222,6 +233,7 @@ public class BijectiveComponentsTest {
         bc.setReducedLattice(l);
         assertEquals(bc.getReducedLattice(), l);
     }
+
     /**
      * Test the setMinimalGenerators method.
      */
@@ -233,6 +245,7 @@ public class BijectiveComponentsTest {
         bc.setMinimalGenerators(mingen);
         assertEquals(bc.getMinimalGenerators(), mingen);
     }
+
     /**
      * Test the getMinimalGenerators method.
      */
@@ -244,6 +257,7 @@ public class BijectiveComponentsTest {
         bc.setTable(table);
         assertEquals(bc.getTable(), table);
     }
+
     /**
      * Test the setCanonicalDirectBasis method.
      */
@@ -254,6 +268,7 @@ public class BijectiveComponentsTest {
         bc.setCanonicalDirectBasis(is);
         assertEquals(bc.getCanonicalDirectBasis(), is);
     }
+
     /**
      * Test the getCanonicalDirectBasis method.
      */
@@ -264,6 +279,7 @@ public class BijectiveComponentsTest {
         bc.setCanonicalDirectBasis(is);
         assertEquals(bc.getCanonicalDirectBasis(), is);
     }
+
     /**
      * Test the setCanonicalBasis method.
      */
@@ -274,6 +290,7 @@ public class BijectiveComponentsTest {
         bc.setCanonicalBasis(is);
         assertEquals(bc.getCanonicalBasis(), is);
     }
+
     /**
      * Test the getCanonicalBasis method.
      */
@@ -284,6 +301,7 @@ public class BijectiveComponentsTest {
         bc.setCanonicalBasis(is);
         assertEquals(bc.getCanonicalBasis(), is);
     }
+
     /**
      * Test the setTable method.
      */
@@ -295,6 +313,7 @@ public class BijectiveComponentsTest {
         bc.setTable(table);
         assertEquals(bc.getTable(), table);
     }
+
     /**
      * Test the getTable method.
      */

@@ -81,7 +81,7 @@ public class ImplicationalSystem extends ClosureSystem {
      * @param nbR the number of rules of the generated ImplicationalSystem
      *
      * @return a random implicational system with a specified number of nodes
-     * and rules.
+     *         and rules.
      */
     public static ImplicationalSystem random(int nbS, int nbR) {
         ImplicationalSystem sigma = new ImplicationalSystem();
@@ -172,7 +172,9 @@ public class ImplicationalSystem extends ClosureSystem {
      * first line ; - then, each rule on a line, written like [premise] ->
      * [conclusion] where elements are separated by a space.
      *
-     * ~~~ a b c d e a b -> c d c d -> e ~~~
+     * ~~~
+     * a b c d e a b -> c d c d -> e
+     * ~~~
      *
      * Each element must be declared on the first line, otherwise, it is not
      * added in the rule Each rule must have a non empty concusion, otherwise,
@@ -377,11 +379,16 @@ public class ImplicationalSystem extends ClosureSystem {
      * The following format is used:
      *
      * An implicational system can be instancied from and save to a text file in
-     * the following format: - A list of elements separated by a space in the
-     * first line ; - then, each rule on a line, written like [premise] ->
-     * [conclusion] where elements are separated by a space.
+     * the following format:
+     * - A list of elements separated by a space in the first line ;
+     * - then, each rule on a line, written like [premise] -> [conclusion] where
+     * elements are separated by a space.
      *
-     * ~~~ a b c d e a b -> c d c d -> e ~~~
+     * ~~~
+     * a b c d e
+     * a b -> c
+     * d c d -> e
+     * ~~~
      *
      * @return a string representation of this component.
      */
@@ -444,7 +451,7 @@ public class ImplicationalSystem extends ClosureSystem {
      * This test is perfomed in O(|Sigma||S|) by testing conclusion of each rule
      *
      * @return true if and only if this component is a proper implicational
-     * system.
+     *         system.
      */
     public boolean isProper() {
         for (Rule rule : this.sigma) {
@@ -646,7 +653,7 @@ public class ImplicationalSystem extends ClosureSystem {
      * This treatment is performed in O(|Sigma||S|).
      *
      * @return the difference between the number of rules of this component
-     * before and after this treatment
+     *         before and after this treatment
      */
     public int makeProper() {
         ImplicationalSystem save = new ImplicationalSystem(this);
@@ -681,7 +688,7 @@ public class ImplicationalSystem extends ClosureSystem {
      * This treatment is performed in O(|Sigma||S|).
      *
      * @return the difference between the number of rules of this component
-     * before and after this treatment
+     *         before and after this treatment
      */
     public int makeUnary() {
         ImplicationalSystem save = new ImplicationalSystem(this);
@@ -707,7 +714,7 @@ public class ImplicationalSystem extends ClosureSystem {
      * This treatment is performed in O(|sigma|^2|S|)
      *
      * @return the difference between the number of rules of this component
-     * before and after this treatment
+     *         before and after this treatment
      */
     public int makeCompact() {
         ImplicationalSystem save = new ImplicationalSystem(this);
@@ -744,7 +751,7 @@ public class ImplicationalSystem extends ClosureSystem {
      * This treatment is performed in O(|sigma|^2|S|)
      *
      * @return the difference between the number of rules of this component
-     * before and after this treatment
+     *         before and after this treatment
      */
     public int makeCompactAssociation() {
         ImplicationalSystem save = new ImplicationalSystem(this);
@@ -782,7 +789,7 @@ public class ImplicationalSystem extends ClosureSystem {
      * computation of a closure.
      *
      * @return the difference between the number of rules of this component
-     * before and after this treatment
+     *         before and after this treatment
      */
     public int makeRightMaximal() {
         int s = this.sizeRules();
@@ -807,7 +814,7 @@ public class ImplicationalSystem extends ClosureSystem {
      * Then, the left-minimal treatment is performed in O(|sigma|^2|S|))
      *
      * @return the difference between the number of rules of this component
-     * before and after this treatment
+     *         before and after this treatment
      */
     public int makeLeftMinimal() {
         this.makeUnary();
@@ -840,7 +847,7 @@ public class ImplicationalSystem extends ClosureSystem {
      * exponential in the worst case.
      *
      * @return the difference between the number of rules of this component
-     * before and after this treatment
+     *         before and after this treatment
      */
     public int makeDirect() {
         this.makeUnary();
@@ -884,7 +891,7 @@ public class ImplicationalSystem extends ClosureSystem {
      * computation of a closure.
      *
      * @return the difference between the number of rules of this component
-     * before and after this treatment
+     *         before and after this treatment
      */
     public int makeMinimum() {
         this.makeRightMaximal();
@@ -911,7 +918,7 @@ public class ImplicationalSystem extends ClosureSystem {
      * exponential in the worst case.
      *
      * @return the difference between the number of rules of this component
-     * before and after this treatment
+     *         before and after this treatment
      */
     public int makeCanonicalDirectBasis() {
         int s = this.sizeRules();
@@ -932,7 +939,7 @@ public class ImplicationalSystem extends ClosureSystem {
      * computation of a closure.
      *
      * @return the difference between the number of rules of this component
-     * before and after this treatment
+     *         before and after this treatment
      */
     public int makeCanonicalBasis() {
         this.makeMinimum();
@@ -1020,7 +1027,7 @@ public class ImplicationalSystem extends ClosureSystem {
      * O(O(|Sigma||S|^2)
      *
      * @return the set of reducibles removed elements, with their equivalent
-     * elements
+     *         elements
      */
     public TreeMap<Comparable, TreeSet<Comparable>> reduction() {
         // compute the reducible elements
@@ -1087,7 +1094,6 @@ public class ImplicationalSystem extends ClosureSystem {
     /*
      * --------------- IMPLEMENTATION OF CLOSURESYSTEM ABSTRACT METHODS ------------
      */
-
     /**
      * Builds the closure of a set X of indexed elements.
      *

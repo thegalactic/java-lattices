@@ -51,7 +51,6 @@ public class ComparableSet<E extends Comparable> extends TreeSet<E> implements C
     /*
      * ------------- CONSTRUCTORS ------------------
      */
-
     /**
      * Constructs a new and empty ComparableSet.
      */
@@ -92,9 +91,9 @@ public class ComparableSet<E extends Comparable> extends TreeSet<E> implements C
      * such that any smaller element belonging to A also belongs to B. The
      * result is
      *
-     *  - zero if the identifiers are equal;
-     *  - 1 if this component's identifier is greater;
-     *  - -1 otherwise.
+     * - zero if the identifiers are equal;
+     * - 1 if this component's identifier is greater;
+     * - -1 otherwise.
      *
      * This comparison method is needed to define a natural and total sort on a
      * sets.
@@ -104,8 +103,8 @@ public class ComparableSet<E extends Comparable> extends TreeSet<E> implements C
      * @param set the specified element to be compared with this component
      *
      * @return a negative integer, zero, or a positive integer as this component
-     * is less than, equal to, or greater than the specified object according to
-     * the lectic order.
+     *         is less than, equal to, or greater than the specified object according to
+     *         the lectic order.
      *
      * @todo Is this correct? (see test)
      */

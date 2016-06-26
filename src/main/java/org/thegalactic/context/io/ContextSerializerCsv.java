@@ -100,7 +100,7 @@ public final class ContextSerializerCsv implements Reader<Context>, Writer<Conte
      * ~~~
      *
      * @param context a context to read
-     * @param file a file
+     * @param file    a file
      *
      * @throws IOException When an IOException occurs
      */
@@ -200,7 +200,7 @@ public final class ContextSerializerCsv implements Reader<Context>, Writer<Conte
      * ~~~
      *
      * @param context a context to write
-     * @param file a file
+     * @param file    a file
      *
      * @throws IOException When an IOException occurs
      */

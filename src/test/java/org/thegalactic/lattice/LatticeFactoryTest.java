@@ -11,7 +11,6 @@ package org.thegalactic.lattice;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -27,6 +26,7 @@ import org.thegalactic.dgraph.Node;
  * @author jeff
  */
 public class LatticeFactoryTest {
+
     /**
      * Test constructor.
      */
@@ -35,6 +35,7 @@ public class LatticeFactoryTest {
         LatticeFactory lf = new LatticeFactory();
         assertEquals(lf.getClass().toString(), "class org.thegalactic.lattice.LatticeFactory");
     }
+
     /**
      * Test for the random method.
      */
@@ -44,6 +45,7 @@ public class LatticeFactoryTest {
         assertTrue(l.isLattice());
         assertEquals(l.getNodes().size(), 10);
     }
+
     /**
      * Test for the booleanAlgebra method.
      */
@@ -55,6 +57,7 @@ public class LatticeFactoryTest {
         assertEquals(l.getNodes().size(), (int) Math.pow(2, n));
         assertEquals(l.getEdges().size(), n * ((int) Math.pow(2, n - 1)));
     }
+
     /**
      * Test for the permutationLattice method.
      */
@@ -63,6 +66,7 @@ public class LatticeFactoryTest {
         Lattice l = LatticeFactory.permutationLattice(6);
         assertEquals(l.getNodes().size(), 6 * 5 * 4 * 3 * 2);
     }
+
     /**
      * Test product method.
      */
@@ -73,6 +77,7 @@ public class LatticeFactoryTest {
         Lattice lr = LatticeFactory.product(l, r);
         assertTrue(lr.getNodes().size() == 16);
     }
+
     /**
      * Test doublingConvex method.
      */

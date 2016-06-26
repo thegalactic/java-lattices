@@ -11,16 +11,15 @@ package org.thegalactic.dgraph;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 /**
  * This class gives a standard representation for an edge of a graph.
  *
  * An edge is composed of a content, and two nodes
-
- - `source`
- - `target`
-
- of class {@link Node}.
+ *
+ * - `source`
+ * - `target`
+ *
+ * of class {@link Node}.
  *
  * This class implements class `Comparable` and provides the {@link #compareTo}
  * method that compares the edge with those in parameter by sorting indexes of
@@ -49,7 +48,6 @@ public class Edge<N, E> implements Comparable<Edge<N, E>> {
     /*
      * ------------- FIELDS ---------------------
      */
-
     /**
      * The source node of the edge.
      */
@@ -72,8 +70,8 @@ public class Edge<N, E> implements Comparable<Edge<N, E>> {
      * Constructs a new edge with the specified node as origin and destination
      * node, with the specified content.
      *
-     * @param source the origin node
-     * @param target the destination node
+     * @param source  the origin node
+     * @param target  the destination node
      * @param content the edge content
      */
     public Edge(final Node<N> source, final Node<N> target, final E content) {
@@ -176,13 +174,13 @@ public class Edge<N, E> implements Comparable<Edge<N, E>> {
      * The result is zero if the identifiers are equal; positive if this edge's
      * identifier is greater, and negative otherwise.
      *
-     * This comparison method is needed target define a natural ordering. It allows
-     * target use objects of this class in a sorted collection
+     * This comparison method is needed target define a natural ordering. It
+     * allows target use objects of this class in a sorted collection
      *
      * @param edge the specified element target be compared with this edge
      *
      * @return a negative integer, zero, or a positive integer as this edge is
-     * less than, equal target, or greater than the specified object.
+     *         less than, equal target, or greater than the specified object.
      */
     public final int compareTo(final Edge<N, E> edge) {
         int cmp = this.source.compareTo(edge.source);
@@ -216,7 +214,7 @@ public class Edge<N, E> implements Comparable<Edge<N, E>> {
      * Append the string representation of a node to the StringBuilder.
      *
      * @param builder StringBuilder
-     * @param node Node
+     * @param node    Node
      */
     private void appendNode(final StringBuilder builder, final Node node) {
         builder.append(node.toString().replaceAll("[^\\w ]", ""));

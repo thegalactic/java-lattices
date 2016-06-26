@@ -10,7 +10,6 @@ package org.thegalactic.context.constraint.binary;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -21,7 +20,7 @@ import static org.junit.Assert.fail;
  */
 public class BinaryStorageTest {
 
-   /**
+    /**
      * Test of create method, of class BinaryStorage.
      */
     @Test

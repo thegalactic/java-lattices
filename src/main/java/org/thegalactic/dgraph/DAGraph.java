@@ -59,7 +59,6 @@ public class DAGraph extends DGraph {
     /*
      * ----------- STATIC GENERATION METHODS -------------
      */
-
     /**
      * Generates the directed asyclic graph (DAG) of divisors for integers
      * included betwwen 2 and the specified value.
@@ -94,7 +93,7 @@ public class DAGraph extends DGraph {
     /**
      * Generates a random directed and acyclic graph (DAG) of size nodes.
      *
-     * @param size the number of nodes of the generated graph
+     * @param size      the number of nodes of the generated graph
      * @param threshold the threshold to generate an edge
      *
      * @return a random acyclic graph

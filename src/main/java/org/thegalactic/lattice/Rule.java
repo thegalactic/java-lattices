@@ -52,7 +52,6 @@ public class Rule implements Comparable {
     /*
      * ------------- FIELDS ------------------
      */
-
     /**
      * The premise of the rule.
      */
@@ -76,7 +75,7 @@ public class Rule implements Comparable {
      * Constructs a new Rule with the premise and the conclusion given in
      * parameters.
      *
-     * @param premise a set of indexed elements
+     * @param premise    a set of indexed elements
      * @param conclusion a set of indexed elements
      */
     public Rule(TreeSet<Comparable> premise, TreeSet<Comparable> conclusion) {
@@ -169,7 +168,7 @@ public class Rule implements Comparable {
      * this component.
      *
      * @param a Collection of comparables to remove to this component's
-     * premises.
+     *          premises.
      *
      * @return true if addition is successfull.
      */
@@ -182,7 +181,7 @@ public class Rule implements Comparable {
      * this component.
      *
      * @param a Collection of comparables to add to this component's
-     * conclusions.
+     *          conclusions.
      *
      * @return true if addition is successfull.
      */
@@ -195,7 +194,7 @@ public class Rule implements Comparable {
      * of this component.
      *
      * @param a Collection of comparables to remove to this component's
-     * conclusions.
+     *          conclusions.
      *
      * @return true if addition is successfull.
      */
@@ -211,8 +210,9 @@ public class Rule implements Comparable {
      *
      * The following format is used:
      *
-     * ~~~ [elements of the premise separated by a space] -> [elements of the
-     * conclusion separated by a space] ~~~
+     * ~~~
+     * [elements of the premise separated by a space] -> [elements of the conclusion separated by a space]
+     * ~~~
      *
      * a StringTokenizer is used to delete spaces in the string description of
      * each element of premise and conclusion
@@ -248,7 +248,7 @@ public class Rule implements Comparable {
      * @param o object to compare to this component.
      *
      * @return true or false as this componant is equals to the specified
-     * object.
+     *         object.
      */
     @Override
     public boolean equals(Object o) {
@@ -266,7 +266,7 @@ public class Rule implements Comparable {
      * @param o object to compare to this component.
      *
      * @return a negative integer, zero, or a positive integer as this component
-     * is less than, equal to, or greater than the specified object.
+     *         is less than, equal to, or greater than the specified object.
      */
     public int compareTo(Object o) {
         Rule r = (Rule) o;

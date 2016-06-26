@@ -58,7 +58,6 @@ public class Concept extends Node {
     /*
      * ------------- FIELDS ------------------
      */
-
     /**
      * This first set of comparable elements of the concept.
      */
@@ -476,7 +475,7 @@ public class Concept extends Node {
      * order.
      *
      * @return a negative integer, zero, or a positive integer as this component
-     * is less than, equal to, or greater than the specified object.
+     *         is less than, equal to, or greater than the specified object.
      */
     /*
      * public int compareTo(Object o){
@@ -563,11 +562,11 @@ public class Concept extends Node {
      * Returns the number of observations corresponding to the set of attributes
      * in the init context.
      *
-     * @param init initial context from which attributes are count.
+     * @param init       initial context from which attributes are count.
      * @param attributes attributes from which observations are counted.
      *
      * @return number of observations corresponding to the set of attributes in
-     * init context.
+     *         init context.
      */
     private int count(Context init, TreeSet<Comparable> attributes) {
         return init.getExtentNb(attributes);
@@ -597,7 +596,7 @@ public class Concept extends Node {
      * ConceptLattice to Concept
      *
      * @param init closure system used to compute immediate successors of this
-     * component.
+     *             component.
      *
      * @return the list of immediate successors of this component.
      */

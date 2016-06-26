@@ -28,7 +28,7 @@ public final class CategoricalValue {
     /**
      * Create a new CategoricalValue.
      *
-     * @param data Object
+     * @param data      Object
      * @param attribute CategoricalAttribute
      *
      * @return a new CategoricalValue
@@ -40,7 +40,7 @@ public final class CategoricalValue {
     /**
      * This class is nod designed to be publicly instantiated.
      *
-     * @param object Object
+     * @param object    Object
      * @param attribute CategoricalAttribute
      */
     private CategoricalValue(final Object object, final CategoricalAttribute attribute) {

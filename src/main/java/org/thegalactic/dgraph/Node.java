@@ -37,7 +37,6 @@ public class Node<N> implements Comparable<Node<N>>, Cloneable {
     /*
      * ------------- FIELDS ---------------------
      */
-
     /**
      * An uniquely defined identifier for this node.
      */
@@ -194,7 +193,7 @@ public class Node<N> implements Comparable<Node<N>>, Cloneable {
      * @param node the specified element to be compared with this node
      *
      * @return a negative integer, zero, or a positive integer as this node is
-     * less than, equal to, or greater than the specified object.
+     *         less than, equal to, or greater than the specified object.
      */
     public final int compareTo(final Node node) {
         return this.identifier - node.identifier;

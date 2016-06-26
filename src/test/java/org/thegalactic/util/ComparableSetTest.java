@@ -11,7 +11,6 @@ package org.thegalactic.util;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -23,6 +22,7 @@ import java.util.TreeSet;
  * Test class for the ComparableSet class.
  */
 public class ComparableSetTest {
+
     /**
      * Test the empty constructor.
      */

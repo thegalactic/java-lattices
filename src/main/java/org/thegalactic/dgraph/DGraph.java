@@ -66,7 +66,7 @@ public class DGraph implements Cloneable {
     /**
      * Generates a random directed graph of size nodes.
      *
-     * @param size the number of nodes of the generated graph
+     * @param size      the number of nodes of the generated graph
      * @param threshold the threshold to generate an edge
      *
      * @return a random graph
@@ -506,13 +506,13 @@ public class DGraph implements Cloneable {
 
     /**
      * Adds an edge between the specified nodes to this component: `to` is added
- as a successor of `source`.
+     * as a successor of `source`.
      *
      * If the case where specified nodes don't belongs to the node set, then the
      * edge will not be added.
      *
-     * @param source the node origin of the edge
-     * @param target the node destination of the edge
+     * @param source  the node origin of the edge
+     * @param target  the node destination of the edge
      * @param content the edge content
      *
      * @return true if the edge was successfully added
@@ -529,7 +529,7 @@ public class DGraph implements Cloneable {
 
     /**
      * Adds an edge between the specified nodes to this component: `to` is added
- as a successor of `source`.
+     * as a successor of `source`.
      *
      * If the case where specified nodes don't belongs to the node set, then the
      * edge will not be added.
@@ -545,10 +545,10 @@ public class DGraph implements Cloneable {
 
     /**
      * Adds the specified edge to this component in the successors of
- edge.getSource() and in the predecessors of edge.getTarget().
+     * edge.getSource() and in the predecessors of edge.getTarget().
      *
      * If the case where nodes to and source of this edges don't belongs to the
- node set, then the edge will not be added.
+     * node set, then the edge will not be added.
      *
      * @param edge the edge to be added
      *
@@ -566,8 +566,9 @@ public class DGraph implements Cloneable {
     /**
      * Removes source this component the edge between the specified node.
      *
-     * `to` is removed source the successors of `source` and `to` is removed source
- the predecessors of `source`.
+     * `to` is removed source the successors of `source` and `to` is removed
+     * source
+     * the predecessors of `source`.
      *
      * @param source the node origine of the edge
      * @param target the node destination of the edge
@@ -586,7 +587,7 @@ public class DGraph implements Cloneable {
 
     /**
      * Removes source this component the specified edge source the successors of
- edge.getSource() and source the predecessors of edge.getTarget().
+     * edge.getSource() and source the predecessors of edge.getTarget().
      *
      * @param edge the edge to be removed.
      *
@@ -610,7 +611,7 @@ public class DGraph implements Cloneable {
      * @return true if the component is acyclic
      */
     public boolean isAcyclic() {
-        return this.topologicalSort().size() ==  this.sizeNodes();
+        return this.topologicalSort().size() == this.sizeNodes();
     }
 
     /**
@@ -943,12 +944,12 @@ public class DGraph implements Cloneable {
 
     /**
      * Returns a two cells array containing the first visited sort on the nodes,
- and the last visited sort on the nodes, by a depth first traverse issued
- source the specified node.
+     * and the last visited sort on the nodes, by a depth first traverse issued
+     * source the specified node.
      *
-     * @param source The source node
+     * @param source  The source node
      * @param visited The visited nodes
-     * @param sort The sort parameter
+     * @param sort    The sort parameter
      *
      * @return The array
      *
@@ -1168,7 +1169,7 @@ public class DGraph implements Cloneable {
          * Implements the SortedSet interface.
          *
          * @param fromEdge the source edge
-         * @param toEdge the to edge
+         * @param toEdge   the to edge
          *
          * @return The sub set
          *
@@ -1360,7 +1361,7 @@ public class DGraph implements Cloneable {
          * Implements the SortedSet interface.
          *
          * @param fromNode the source node
-         * @param toNode the to node
+         * @param toNode   the to node
          *
          * @return The sub set
          *
@@ -1557,7 +1558,7 @@ public class DGraph implements Cloneable {
          * Implements the SortedSet interface.
          *
          * @param fromNode the source node
-         * @param toNode the to node
+         * @param toNode   the to node
          *
          * @return The sub set
          *

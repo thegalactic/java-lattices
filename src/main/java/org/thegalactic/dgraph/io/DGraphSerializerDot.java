@@ -67,7 +67,7 @@ public final class DGraphSerializerDot implements Writer<DGraph> {
      * Write a graph to a output stream.
      *
      * @param graph a graph to write
-     * @param file a file
+     * @param file  a file
      *
      * @throws IOException When an IOException occurs
      */
@@ -105,7 +105,7 @@ public final class DGraphSerializerDot implements Writer<DGraph> {
      * Write a label to the dot file.
      *
      * @param label a label
-     * @param file a file
+     * @param file  a file
      *
      * @throws IOException When an IOException occurs
      */

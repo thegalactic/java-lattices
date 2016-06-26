@@ -34,7 +34,7 @@ public interface Writer<E> {
     /**
      * Write a context to a file.
      *
-     * @param e an element to write
+     * @param e    an element to write
      * @param file a file
      *
      * @throws IOException When an IOException occurs

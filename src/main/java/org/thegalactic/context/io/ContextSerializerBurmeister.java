@@ -26,7 +26,8 @@ import org.thegalactic.io.Writer;
  * ![ContextSerializerBurmeister](ContextSerializerBurmeister.png)
  *
  * @uml ContextSerializerBurmeister.png
- * !include resources/org/thegalactic/context/io/ContextSerializerBurmeister.iuml
+ * !include
+ * resources/org/thegalactic/context/io/ContextSerializerBurmeister.iuml
  * !include resources/org/thegalactic/io/Reader.iuml
  * !include resources/org/thegalactic/io/Writer.iuml
  *
@@ -73,10 +74,14 @@ public final class ContextSerializerBurmeister implements Reader<Context>, Write
      * The file format is structured as follows:
      *
      * The first line consists of a single "B"
-     * The second line contains the name of the context (note that this is ignored)
-     * The third and fourth line consist of the object and attribute count, respectively
-     * after that, all objects and all attributes are listed, each on a separate line
-     * finally, the context is given as a combination of . and X, each row on a separate line.
+     * The second line contains the name of the context (note that this is
+     * ignored)
+     * The third and fourth line consist of the object and attribute count,
+     * respectively
+     * after that, all objects and all attributes are listed, each on a separate
+     * line
+     * finally, the context is given as a combination of . and X, each row on a
+     * separate line.
      *
      * ~~~
      * B
@@ -152,11 +157,15 @@ public final class ContextSerializerBurmeister implements Reader<Context>, Write
      * The file format is structured as follows:
      *
      * The first line consists of a single "B"
-     * The second line contains the name of the context (note that this is ignored)
-     * The third and fourth line consist of the object and attribute count, respectively.
+     * The second line contains the name of the context (note that this is
+     * ignored)
+     * The third and fourth line consist of the object and attribute count,
+     * respectively.
      * The fifth line is empty.
-     * After that, all objects and all attributes are listed, each on a separate line
-     * finally, the context is given as a combination of . and X, each row on a separate line.
+     * After that, all objects and all attributes are listed, each on a separate
+     * line
+     * finally, the context is given as a combination of . and X, each row on a
+     * separate line.
      *
      * ~~~
      * B

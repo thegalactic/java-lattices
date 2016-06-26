@@ -31,13 +31,13 @@ import org.thegalactic.lattice.io.ArrowRelationIOFactory;
  * say j-, then :
  *
  * - j "Up Arrow" m (stored as "Up") iff j is not less or equal than m and
- *   j is less than m+
+ * j is less than m+
  * - j "Down Arrow" m (stored as "Down") iff j is not less or equal than m and
- *   j- is less than m
+ * j- is less than m
  * - j "Up Down Arrow" m (stored as "UpDown") iff j "Up" m and j "Down" m
  * - j "Cross" m (stored as "Cross") iff j is less or equal than m
  * - j "Circ" m (stored as "Circ") iff neither j "Up" m nor j "Down" m nor
- *     j "Cross" m
+ * j "Cross" m
  *
  * ![ArrowRelation](ArrowRelation.png)
  *
@@ -258,65 +258,75 @@ public class ArrowRelation extends DGraph {
     }
 
     /**
-     * Returns true if and only if there is an up arrow between the source and the target of
+     * Returns true if and only if there is an up arrow between the source and
+     * the target of
      * edge e.
      *
      * @param edge edge to be tested
      *
-     * @return true if and only if there is an up arrow between the source and the target of
-     * edge e
+     * @return true if and only if there is an up arrow between the source and
+     *         the target of
+     *         edge e
      */
     public boolean isUp(Edge edge) {
         return edge.getContent() == ArrowRelation.up;
     }
 
     /**
-     * Returns true if and only if there is an down arrow between the source and the target of
+     * Returns true if and only if there is an down arrow between the source and
+     * the target of
      * edge e.
      *
      * @param edge edge to be tested
      *
-     * @return true if and only if there is an down arrow between the source and the target of
-     * edge e
+     * @return true if and only if there is an down arrow between the source and
+     *         the target of
+     *         edge e
      */
     public boolean isDown(Edge edge) {
         return edge.getContent() == ArrowRelation.down;
     }
 
     /**
-     * Returns true if and only if there is an up-down arrow between the source and the target
+     * Returns true if and only if there is an up-down arrow between the source
+     * and the target
      * of edge e.
      *
      * @param edge edge to be tested
      *
-     * @return true if and only if there is an up-down arrow between the source and the target
-     * of edge e
+     * @return true if and only if there is an up-down arrow between the source
+     *         and the target
+     *         of edge e
      */
     public boolean isUpDown(Edge edge) {
         return edge.getContent() == ArrowRelation.updown;
     }
 
     /**
-     * Returns true if and only if there is an cross arrow between the source and the target
+     * Returns true if and only if there is an cross arrow between the source
+     * and the target
      * of edge e.
      *
      * @param edge edge to be tested
      *
-     * @return true if and only if there is an cross arrow between the source and the target
-     * of edge e
+     * @return true if and only if there is an cross arrow between the source
+     *         and the target
+     *         of edge e
      */
     public boolean isCross(Edge edge) {
         return edge.getContent() == ArrowRelation.cross;
     }
 
     /**
-     * Returns true if and only if there is an circ arrow between the source and the target of
+     * Returns true if and only if there is an circ arrow between the source and
+     * the target of
      * edge e.
      *
      * @param edge edge to be tested
      *
-     * @return true if and only if there is an circ arrow between the source and the target of
-     * edge e
+     * @return true if and only if there is an circ arrow between the source and
+     *         the target of
+     *         edge e
      */
     public boolean isCirc(Edge edge) {
         return edge.getContent() == ArrowRelation.circ;

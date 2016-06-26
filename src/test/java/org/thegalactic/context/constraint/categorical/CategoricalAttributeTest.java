@@ -10,12 +10,13 @@ package org.thegalactic.context.constraint.categorical;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-import java.util.ArrayList;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
+import java.util.ArrayList;
 
 /**
  * CategoricalAttribute test.
