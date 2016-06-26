@@ -113,7 +113,6 @@ public class ComparableSetTest {
         set1.add(Integer.valueOf(1));
         set1.add(Integer.valueOf(2));
         set1.add(Integer.valueOf(3));
-        assertTrue(set1.compareTo(Integer.valueOf(1)) < 0);
 
         ComparableSet set2 = new ComparableSet();
 

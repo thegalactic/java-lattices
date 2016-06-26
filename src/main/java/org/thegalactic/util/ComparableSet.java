@@ -44,7 +44,7 @@ import java.util.TreeSet;
  * class ComparableSet #LightCyan
  * title ComparableSet UML graph
  */
-public class ComparableSet extends TreeSet implements Comparable, Cloneable {
+public class ComparableSet extends TreeSet implements Comparable<ComparableSet>, Cloneable {
 
     /*
      * ------------- CONSTRUCTORS ------------------
@@ -124,15 +124,18 @@ public class ComparableSet extends TreeSet implements Comparable, Cloneable {
      *
      * A set `A` is smaller than a set `B` iff there exists an element in `B\A`
      * such that any smaller element belonging to A also belongs to B. The
-     * result is - zero if the identifiers are equal; - 1 if this component's
-     * identifier is greater, - -1 otherwise.
+     * result is
+     *
+     *  - zero if the identifiers are equal;
+     *  - 1 if this component's identifier is greater;
+     *  - -1 otherwise.
      *
      * This comparison method is needed to define a natural and total sort on a
      * sets.
      *
      * It allows to use sets of this class in a sorted collection
      *
-     * @param object the specified element to be compared with this component
+     * @param set the specified element to be compared with this component
      *
      * @return a negative integer, zero, or a positive integer as this component
      * is less than, equal to, or greater than the specified object according to
@@ -140,19 +143,12 @@ public class ComparableSet extends TreeSet implements Comparable, Cloneable {
      *
      * @todo Is this correct? (see test)
      */
-    public int compareTo(Object object) {
-        // case of an object not instance of ComparableSet
-        if (!(object instanceof ComparableSet)) {
-            return -1;
-        }
+    public int compareTo(ComparableSet set) {
 
         // case of equality between this component and object
-        if (this.equals(object)) {
+        if (this.equals(set)) {
             return 0;
         }
-
-        // test if this component is smaller than the set by lectic order
-        ComparableSet set = (ComparableSet) object;
 
         // computes index i of the first element in set minus this
         // if i doesn't exist, then this component is not smaller than the set by lectic order

@@ -93,7 +93,7 @@ public class Rule implements Comparable {
      *
      * @return premises of this component
      */
-    public TreeSet<Comparable> getPremise() {
+    public ComparableSet getPremise() {
         return this.premise;
     }
 
@@ -102,7 +102,7 @@ public class Rule implements Comparable {
      *
      * @return conclusions of this component
      */
-    public TreeSet<Comparable> getConclusion() {
+    public ComparableSet getConclusion() {
         return this.conclusion;
     }
 
