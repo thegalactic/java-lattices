@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeMap;
@@ -74,7 +75,7 @@ public class DGraph implements Cloneable {
         DGraph graph = new DGraph();
         // addition of nodes
         for (int i = 1; i <= size; i++) {
-            Node node = new Node(Integer.valueOf(i));
+            Node node = new Node(i);
             graph.addNode(node);
         }
         // addition of edges
@@ -174,7 +175,8 @@ public class DGraph implements Cloneable {
      *
      * @return the clone of this
      */
-    public DGraph clone() {
+    @Override
+    public DGraph clone() throws CloneNotSupportedException {
         return new DGraph(this);
     }
 
@@ -608,8 +610,7 @@ public class DGraph implements Cloneable {
      * @return true if the component is acyclic
      */
     public boolean isAcyclic() {
-        ArrayList<Node> nodes = this.topologicalSort();
-        return (nodes.size() == this.sizeNodes());
+        return this.topologicalSort().size() ==  this.sizeNodes();
     }
 
     /**
@@ -622,7 +623,7 @@ public class DGraph implements Cloneable {
      *
      * @return the nodes
      */
-    public ArrayList<Node> topologicalSort() {
+    public List<Node> topologicalSort() {
         TreeSet<Node> sinks = new TreeSet<Node>(this.getSinks());
         // initialise a map with the number of predecessors (value) for each node (key);
         TreeMap<Node, Integer> size = new TreeMap<Node, Integer>();

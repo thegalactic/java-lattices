@@ -12,12 +12,12 @@ package org.thegalactic.lattice;
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
 import org.thegalactic.context.Context;
-import java.util.ArrayList;
 import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
 import java.io.IOException;
+import java.util.List;
 
 import org.thegalactic.util.ComparableSet;
 import org.thegalactic.dgraph.DAGraph;
@@ -86,7 +86,7 @@ public class ConceptLattice extends Lattice {
         DAGraph graph = new DAGraph(dag);
         graph.transitiveClosure();
         // treatment of nodes according to a topological sort
-        ArrayList<Node> sort = graph.topologicalSort();
+        List<Node> sort = graph.topologicalSort();
         for (Node x : sort) {
             // computation of Jx
             TreeSet<Node> jxmoins = new TreeSet<Node>(graph.getPredecessorNodes(x));
@@ -554,7 +554,7 @@ public class ConceptLattice extends Lattice {
         if (setA) {
             // computation of an inverse topological sort
             this.transpose();
-            ArrayList<Node> sort = this.topologicalSort();
+            List<Node> sort = this.topologicalSort();
             this.transpose();
             // reduction of set A
             for (Node to : sort) {
@@ -568,7 +568,7 @@ public class ConceptLattice extends Lattice {
         // makes setB inclusion reduction
         if (setB) {
             // computation of a topological sort
-            ArrayList<Node> sort = this.topologicalSort();
+            List<Node> sort = this.topologicalSort();
             // reduction of set B
             for (Node to : sort) {
                 Concept cto = (Concept) to;

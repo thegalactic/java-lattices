@@ -11,7 +11,7 @@ package org.thegalactic.dgraph;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeMap;
@@ -310,7 +310,7 @@ public class DAGraph extends DGraph {
             mark.put(node, Boolean.FALSE);
         }
         // treatment of nodes according to a topological sort
-        ArrayList<Node> sort = graph.topologicalSort();
+        List<Node> sort = graph.topologicalSort();
         for (Node x : sort) {
             TreeSet<Node> set = new TreeSet<Node>(graph.getSuccessorNodes(x));
             while (!set.isEmpty()) {
@@ -366,7 +366,7 @@ public class DAGraph extends DGraph {
             mark.put(node, Boolean.FALSE);
         }
         // treatment of nodes according to a topological sort
-        ArrayList<Node> sort = this.topologicalSort();
+        List<Node> sort = this.topologicalSort();
         for (Node x : sort) {
             TreeSet<Node> set = new TreeSet<Node>(this.getSuccessorNodes(x));
             while (!set.isEmpty()) {

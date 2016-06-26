@@ -18,10 +18,12 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Test the dgraph.DGraph class.
@@ -106,13 +108,18 @@ public class DGraphTest {
         set.add(node2);
         DGraph graph = new DGraph(set);
         graph.addEdge(node1, node2);
-        DGraph copy = graph.clone();
-        assertEquals(copy.sizeNodes(), 2);
-        node1 = copy.getNodeByContent("1");
-        node2 = copy.getNodeByContent("2");
-        assertTrue(node1 != null);
-        assertTrue(node2 != null);
-        assertTrue(copy.containsEdge(node1, node2));
+        DGraph copy;
+        try {
+            copy = graph.clone();
+            assertEquals(copy.sizeNodes(), 2);
+            node1 = copy.getNodeByContent("1");
+            node2 = copy.getNodeByContent("2");
+            assertTrue(node1 != null);
+            assertTrue(node2 != null);
+            assertTrue(copy.containsEdge(node1, node2));
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(DGraphTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -481,7 +488,7 @@ public class DGraphTest {
         graph.addEdge(node4, node7);
         graph.addEdge(node4, node8);
         graph.addEdge(node5, node7);
-        ArrayList<Node> sort = graph.topologicalSort();
+        List<Node> sort = graph.topologicalSort();
         assertTrue(sort.indexOf(node1) < sort.indexOf(node4));
         assertTrue(sort.indexOf(node1) < sort.indexOf(node5));
         assertTrue(sort.indexOf(node1) < sort.indexOf(node6));
