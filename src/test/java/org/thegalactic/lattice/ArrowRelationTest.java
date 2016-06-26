@@ -59,13 +59,13 @@ public class ArrowRelationTest {
         }
         assertEquals(content, "\\begin{tabular}{|c|*{3}{c|}}"
                 + "\\hline"
-                + " & b & c & d\\\\ "
+                + " & b & c & d\\\\"
                 + "\\hline"
-                + "b & $\\times$ & $\\times$ & $\\updownarrow$\\\\ "
+                + "b & $\\times$ & $\\times$ & $\\updownarrow$\\\\"
                 + "\\hline"
-                + "c & $\\updownarrow$ & $\\times$ & $\\uparrow$\\\\ "
+                + "c & $\\updownarrow$ & $\\times$ & $\\uparrow$\\\\"
                 + "\\hline"
-                + "d & $\\downarrow$ & $\\updownarrow$ & $\\times$\\\\ "
+                + "d & $\\downarrow$ & $\\updownarrow$ & $\\times$\\\\"
                 + "\\hline"
                 + "\\end{tabular}"
         );

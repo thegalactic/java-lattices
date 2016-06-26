@@ -83,42 +83,58 @@ public final class ArrowRelationSerializerTeX implements Writer<ArrowRelation> {
             m.add(edge.getSource());
             j.add(edge.getTarget());
         }
-        String newLine = System.getProperty("line.separator");
-        String str = "\\begin{tabular}{|c|*{" + Integer.toString(j.size()) + "}{c|}}" + newLine;
-        str += "\\hline" + newLine;
+        StringBuilder builder = new StringBuilder();
+        builder.append("\\begin{tabular}{|c|*{").append(j.size()).append("}{c|}}");
+        file.write(builder.toString());
+        file.newLine();
+
+        builder.setLength(0);
+        builder.append("\\hline");
+        file.write(builder.toString());
+        file.newLine();
+
+        builder.setLength(0);
         for (Node nj : j) {
-            str += " & " + nj.getContent();
+            builder.append(" & ").append(nj.getContent());
         }
-        str += "\\\\ " + newLine;
-        str += "\\hline" + newLine;
+        builder.append("\\\\");
+        file.write(builder.toString());
+        file.newLine();
+
+        builder.setLength(0);
+        builder.append("\\hline");
+        file.write(builder.toString());
+        file.newLine();
+
         for (Node nm : m) {
-            str += nm.getContent();
+            builder.setLength(0);
+            builder.append(nm.getContent());
             for (Node nj : j) {
                 Edge edge = arrow.getEdge(nm, nj);
                 if (arrow.isUp(edge)) {
-                    str += " & $\\uparrow$";
+                    builder.append(" & $\\uparrow$");
                 } else if (arrow.isDown(edge)) {
-                    str += " & $\\downarrow$";
+                    builder.append(" & $\\downarrow$");
                 } else if (arrow.isUpDown(edge)) {
-                    str += " & $\\updownarrow$";
+                    builder.append(" & $\\updownarrow$");
                 } else if (arrow.isCross(edge)) {
-                    str += " & $\\times$";
+                    builder.append(" & $\\times$");
                 } else {
-                    str += " & $\\circ$";
-                } /* Previous code, in a Java7 only way, was :
-                switch ((String)e.getContent()) {
-                    case "Up":str += " & $\\uparrow$";break;
-                    case "Down":str += " & $\\downarrow$";break;
-                    case "UpDown":str += " & $\\updownarrow$";break;
-                    case "Cross":str += " & $\\times$";break;
-                    case "Circ":str += " & $\\circ$";break;
-                    default :break;
-                 */
+                    builder.append(" & $\\circ$");
+                }
             }
-            str += "\\\\ " + newLine;
-            str += "\\hline" + newLine;
+            builder.append("\\\\");
+            file.write(builder.toString());
+            file.newLine();
+
+            builder.setLength(0);
+            builder.append("\\hline");
+            file.write(builder.toString());
+            file.newLine();
         }
-        str += "\\end{tabular}" + newLine;
-        file.write(str);
+        builder.setLength(0);
+        builder.append("\\end{tabular}");
+        file.write(builder.toString());
+        file.newLine();
     }
 }
