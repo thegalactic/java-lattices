@@ -73,19 +73,20 @@ public final class DGraphSerializerDot implements Writer<DGraph> {
      */
     @Override
     public void write(final DGraph graph, final BufferedWriter file) throws IOException {
-        final String newLine = System.getProperty("line.separator");
-
+        // Writing start of graph
         file.write("digraph G {");
-        file.write(newLine);
+        file.newLine();
         file.write("Graph [rankdir=BT]");
-        file.write(newLine);
+        file.newLine();
 
+        // Writing nodes
         for (final Node node : graph.getNodes()) {
             file.write(String.valueOf(node.getIdentifier()));
             this.writeLabel(node.toString(), file);
-            file.write(newLine);
+            file.newLine();
         }
 
+        // Writing edges
         for (final Edge edge : graph.getEdges()) {
             file.write(String.valueOf(edge.getSource().getIdentifier()));
             file.write("->");
@@ -93,9 +94,10 @@ public final class DGraphSerializerDot implements Writer<DGraph> {
             if (edge.hasContent()) {
                 this.writeLabel(edge.getContent().toString(), file);
             }
-            file.write(newLine);
+            file.newLine();
         }
 
+        // Writing end of graph
         file.write("}");
     }
 
