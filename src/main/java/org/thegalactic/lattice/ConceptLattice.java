@@ -323,7 +323,7 @@ public class ConceptLattice extends Lattice {
      */
     @Override
     public boolean addEdge(Node source, Node target) {
-        if ((target instanceof Concept) && (source instanceof Concept)) {
+        if (target instanceof Concept && source instanceof Concept) {
             return super.addEdge(source, target);
         } else {
             return false;
