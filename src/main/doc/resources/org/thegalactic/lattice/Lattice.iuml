@@ -18,8 +18,8 @@ package org.thegalactic.lattice {
 
         +TreeSet<Node> joinIrreducibles()
         +TreeSet<Node> meetIrreducibles()
-        +TreeSet<Comparable> joinIrreducibles(Node n)
-        +TreeSet<Comparable> meetIrreducibles(Node n)
+        +TreeSet<Comparable> joinIrreducibles(Node node)
+        +TreeSet<Comparable> meetIrreducibles(Node node)
         +DAGraph joinIrreduciblesSubgraph()
         +DAGraph meetIrreduciblesSubgraph()
         +DAGraph irreduciblesSubgraph()

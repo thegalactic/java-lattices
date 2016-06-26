@@ -1,14 +1,14 @@
 package org.thegalactic.dgraph {
     class Edge {
-        -Node from
-        -Node to
+        -Node source
+        -Node target
         -Object content
         .. Constructors ..
-        +Edge(final Node from, final Node to, final Object content)
-        +Edge(final Node from, final Node to)
+        +Edge(final Node source, final Node target, final Object content)
+        +Edge(final Node source, final Node target)
         .. Accessors ..
-        +Node getFrom()
-        +Node getTo()
+        +Node getSource()
+        +Node getTarget()
         +Object getContent()
         .. Mutators ..
         +Edge setContent(final Object content)

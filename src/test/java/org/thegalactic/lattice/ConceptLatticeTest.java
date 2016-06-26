@@ -113,8 +113,8 @@ public class ConceptLatticeTest {
         l.addEdge(a, b);
         ConceptLattice instance = new ConceptLattice(l);
         boolean expResult = true;
-        for (Node n : instance.getNodes()) {
-            expResult &= ((Concept) n).hasSetA();
+        for (Node node : instance.getNodes()) {
+            expResult &= ((Concept) node).hasSetA();
         }
         boolean result = instance.containsAllSetA();
         assertEquals(expResult, result);
@@ -131,8 +131,8 @@ public class ConceptLatticeTest {
         l.addEdge(a, b);
         ConceptLattice instance = new ConceptLattice(l);
         boolean expResult = true;
-        for (Node n : instance.getNodes()) {
-            expResult &= ((Concept) n).hasSetB();
+        for (Node node : instance.getNodes()) {
+            expResult &= ((Concept) node).hasSetB();
         }
         boolean result = instance.containsAllSetB();
         assertEquals(expResult, result);
@@ -297,8 +297,8 @@ public class ConceptLatticeTest {
         assertTrue(lat.isLattice());
         assertEquals(2, lat.getNodes().size());
         assertEquals(1, lat.getEdges().size());
-        for (Node n : lat.getNodes()) {
-            assertTrue(n.getContent() != null);
+        for (Node node : lat.getNodes()) {
+            assertTrue(node.getContent() != null);
         }
     }
 

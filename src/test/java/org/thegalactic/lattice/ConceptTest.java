@@ -177,10 +177,10 @@ public class ConceptTest {
      */
     @Test
     public void testcontainsInA() {
-        Concept c = new Concept(true, true);
-        Node n = new Node('n');
-        c.addToA(n);
-        assertTrue(c.containsInA(n));
+        Concept concept = new Concept(true, true);
+        Node node = new Node('n');
+        concept.addToA(node);
+        assertTrue(concept.containsInA(node));
     }
     /**
      * Test the containsInA method.
@@ -188,20 +188,20 @@ public class ConceptTest {
      */
     @Test
     public void testcontainsInAF() {
-        Concept c = new Concept(false, true);
-        Node n = new Node('n');
-        c.addToA(n);
-        assertFalse(c.containsInA(n));
+        Concept concept = new Concept(false, true);
+        Node node = new Node('n');
+        concept.addToA(node);
+        assertFalse(concept.containsInA(node));
     }
     /**
      * Test the containsInB method.
      */
     @Test
     public void testcontainsInB() {
-        Concept c = new Concept(true, true);
-        Node n = new Node('n');
-        c.addToB(n);
-        assertTrue(c.containsInB(n));
+        Concept concept = new Concept(true, true);
+        Node node = new Node('n');
+        concept.addToB(node);
+        assertTrue(concept.containsInB(node));
     }
     /**
      * Test the containsInB method.
@@ -209,24 +209,24 @@ public class ConceptTest {
      */
     @Test
     public void testcontainsInBF() {
-        Concept c = new Concept(true, false);
-        Node n = new Node('n');
-        c.addToB(n);
-        assertFalse(c.containsInB(n));
+        Concept concept = new Concept(true, false);
+        Node node = new Node('n');
+        concept.addToB(node);
+        assertFalse(concept.containsInB(node));
     }
     /**
      * Test the containsAllInA method.
      */
     @Test
     public void testcontainsAllInA() {
-        Concept c = new Concept(true, true);
-        Node n = new Node('n');
-        Node m = new Node('m');
+        Concept concept = new Concept(true, true);
+        Node node1 = new Node("node1");
+        Node node2 = new Node("node2");
         ComparableSet tn = new ComparableSet();
-        tn.add(m);
-        tn.add(n);
-        c.putSetA(tn);
-        assertTrue(c.containsAllInA(tn));
+        tn.add(node2);
+        tn.add(node1);
+        concept.putSetA(tn);
+        assertTrue(concept.containsAllInA(tn));
     }
     /**
      * Test the containsAllInB method.
@@ -234,11 +234,11 @@ public class ConceptTest {
     @Test
     public void testcontainsAllInB() {
         Concept c = new Concept(true, true);
-        Node n = new Node('n');
-        Node m = new Node('m');
+        Node node1 = new Node("node1");
+        Node node2 = new Node("node2");
         ComparableSet tn = new ComparableSet();
-        tn.add(m);
-        tn.add(n);
+        tn.add(node2);
+        tn.add(node1);
         c.putSetB(tn);
         assertTrue(c.containsAllInB(tn));
     }
@@ -249,11 +249,11 @@ public class ConceptTest {
     @Test
     public void testcontainsAllInAF() {
         Concept c = new Concept(false, true);
-        Node n = new Node('n');
-        Node m = new Node('m');
+        Node node1 = new Node("node1");
+        Node node2 = new Node("node2");
         ComparableSet tn = new ComparableSet();
-        tn.add(m);
-        tn.add(n);
+        tn.add(node2);
+        tn.add(node1);
         c.addAllToA(tn);
         assertFalse(c.containsAllInA(tn));
     }
@@ -264,11 +264,11 @@ public class ConceptTest {
     @Test
     public void testcontainsAllInBF() {
         Concept c = new Concept(true, false);
-        Node n = new Node('n');
-        Node m = new Node('m');
+        Node node1 = new Node("node1");
+        Node node2 = new Node("node2");
         ComparableSet tn = new ComparableSet();
-        tn.add(m);
-        tn.add(n);
+        tn.add(node2);
+        tn.add(node1);
         c.addAllToB(tn);
         assertFalse(c.containsAllInB(tn));
     }
@@ -278,11 +278,11 @@ public class ConceptTest {
     @Test
     public void testputSetB() {
         Concept c = new Concept(true, true);
-        Node n = new Node('n');
-        Node m = new Node('m');
+        Node node1 = new Node("node1");
+        Node node2 = new Node("node2");
         ComparableSet tn = new ComparableSet();
-        tn.add(m);
-        tn.add(n);
+        tn.add(node2);
+        tn.add(node1);
         c.putSetB(tn);
         assertTrue(c.containsAllInB(tn));
         Concept cf = new Concept(true, false);
@@ -295,11 +295,11 @@ public class ConceptTest {
     @Test
     public void testputSetA() {
         Concept c = new Concept(true, true);
-        Node n = new Node('n');
-        Node m = new Node('m');
+        Node node1 = new Node("node1");
+        Node node2 = new Node("node2");
         ComparableSet tn = new ComparableSet();
-        tn.add(m);
-        tn.add(n);
+        tn.add(node2);
+        tn.add(node1);
         c.putSetA(tn);
         assertTrue(c.containsAllInA(tn));
         Concept cf = new Concept(false, true);
@@ -312,9 +312,9 @@ public class ConceptTest {
     @Test
     public void testaddToA() {
         Concept c = new Concept(true, true);
-        Node n = new Node('n');
-        c.addToA(n);
-        assertTrue(c.containsInA(n));
+        Node node = new Node('n');
+        c.addToA(node);
+        assertTrue(c.containsInA(node));
     }
     /**
      * Test the addToB method.
@@ -322,9 +322,9 @@ public class ConceptTest {
     @Test
     public void testaddToB() {
         Concept c = new Concept(true, true);
-        Node n = new Node('n');
-        c.addToB(n);
-        assertTrue(c.containsInB(n));
+        Node node = new Node('n');
+        c.addToB(node);
+        assertTrue(c.containsInB(node));
     }
     /**
      * Test the removeFromA method.
@@ -332,14 +332,14 @@ public class ConceptTest {
     @Test
     public void testremoveFromA() {
         Concept c = new Concept(true, true);
-        Node n = new Node('n');
-        c.addToA(n);
-        c.removeFromA(n);
-        assertFalse(c.containsInA(n));
+        Node node = new Node('n');
+        c.addToA(node);
+        c.removeFromA(node);
+        assertFalse(c.containsInA(node));
         Concept cf = new Concept(false, true);
-        cf.addToA(n);
-        cf.removeFromA(n);
-        assertFalse(cf.containsInA(n));
+        cf.addToA(node);
+        cf.removeFromA(node);
+        assertFalse(cf.containsInA(node));
     }
     /**
      * Test the removeFromB method.
@@ -347,14 +347,14 @@ public class ConceptTest {
     @Test
     public void testremoveFromB() {
         Concept c = new Concept(true, true);
-        Node n = new Node('n');
-        c.addToB(n);
-        c.removeFromB(n);
-        assertFalse(c.containsInB(n));
+        Node node = new Node('n');
+        c.addToB(node);
+        c.removeFromB(node);
+        assertFalse(c.containsInB(node));
         Concept cf = new Concept(true, false);
-        cf.addToB(n);
-        cf.removeFromB(n);
-        assertFalse(cf.containsInB(n));
+        cf.addToB(node);
+        cf.removeFromB(node);
+        assertFalse(cf.containsInB(node));
     }
     /**
      * Test the addAllToA method.
@@ -362,11 +362,11 @@ public class ConceptTest {
     @Test
     public void testaddAllToA() {
         Concept c = new Concept(true, true);
-        Node n = new Node('n');
-        Node m = new Node('m');
+        Node node1 = new Node("node1");
+        Node node2 = new Node("node2");
         ComparableSet tn = new ComparableSet();
-        tn.add(m);
-        tn.add(n);
+        tn.add(node2);
+        tn.add(node1);
         c.addAllToA(tn);
         assertTrue(c.containsAllInA(tn));
     }
@@ -376,11 +376,11 @@ public class ConceptTest {
     @Test
     public void testaddAllToB() {
         Concept c = new Concept(true, true);
-        Node n = new Node('n');
-        Node m = new Node('m');
+        Node node1 = new Node("node1");
+        Node node2 = new Node("node2");
         ComparableSet tn = new ComparableSet();
-        tn.add(m);
-        tn.add(n);
+        tn.add(node2);
+        tn.add(node1);
         c.addAllToB(tn);
         assertTrue(c.containsAllInB(tn));
     }
@@ -390,11 +390,11 @@ public class ConceptTest {
     @Test
     public void testremoveAllFromA() {
         Concept c = new Concept(true, true);
-        Node n = new Node('n');
-        Node m = new Node('m');
+        Node node1 = new Node("node1");
+        Node node2 = new Node("node2");
         ComparableSet tn = new ComparableSet();
-        tn.add(m);
-        tn.add(n);
+        tn.add(node2);
+        tn.add(node1);
         c.addAllToA(tn);
         c.removeAllFromA(tn);
         assertFalse(c.containsAllInA(tn));
@@ -409,11 +409,11 @@ public class ConceptTest {
     @Test
     public void testremoveAllFromB() {
         Concept c = new Concept(true, true);
-        Node n = new Node('n');
-        Node m = new Node('m');
+        Node node1 = new Node("node1");
+        Node node2 = new Node("node2");
         ComparableSet tn = new ComparableSet();
-        tn.add(m);
-        tn.add(n);
+        tn.add(node2);
+        tn.add(node1);
         c.addAllToB(tn);
         c.removeAllFromB(tn);
         assertFalse(c.containsAllInB(tn));

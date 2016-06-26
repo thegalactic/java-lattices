@@ -359,11 +359,11 @@ public class Context extends ClosureSystem {
     public TreeSet<Node> getDivisionConvex(Context ctx) {
         ConceptLattice factor = ctx.conceptLattice(true);
         TreeSet<Node> convex = new TreeSet<Node>();
-        for (Node n : factor.getNodes()) {
-            Concept c = (Concept) n;
+        for (Node node : factor.getNodes()) {
+            Concept c = (Concept) node;
             if (!c.getSetB().containsAll(this.getExtent(c.getSetA()))
                     && !c.getSetA().containsAll(this.getIntent(c.getSetB()))) {
-                convex.add(n);
+                convex.add(node);
             }
         }
         return convex;
@@ -1164,8 +1164,8 @@ public class Context extends ClosureSystem {
     public ConceptLattice conceptLattice(boolean diagram) {
         ConceptLattice csl = this.closedSetLattice(diagram);
         // TreeMap<Concept, Concept> nodes = new TreeMap<Concept, Concept>();
-        for (Node n : csl.getNodes()) {
-            Concept cl = (Concept) n;
+        for (Node node : csl.getNodes()) {
+            Concept cl = (Concept) node;
             cl.putSetB(new ComparableSet(this.getExtent(cl.getSetA())));
         }
         return csl;
@@ -1188,13 +1188,13 @@ public class Context extends ClosureSystem {
         } else {
             ConceptLattice cl = (ConceptLattice) copy.poll();
             ArrayList<Couple> nodes = new ArrayList<Couple>();
-            for (Node n : cl.getNodes()) {
+            for (Node node : cl.getNodes()) {
                 ArrayList<Concept> listCopy = new ArrayList<Concept>();
                 for (Concept cpt : (ArrayList<Concept>) c.getLeft()) {
                     listCopy.add(cpt);
                 }
                 Couple coupleCopy = new Couple(listCopy, c.getRight());
-                ((ArrayList<Concept>) coupleCopy.getLeft()).add((Concept) n);
+                ((ArrayList<Concept>) coupleCopy.getLeft()).add((Concept) node);
                 nodes.addAll(reccursiveGenProd(coupleCopy, copy));
             }
             return nodes;
@@ -1261,12 +1261,12 @@ public class Context extends ClosureSystem {
         ArrayList<Couple> nodes = new ArrayList<Couple>();
         LinkedList<ConceptLattice> copy = (LinkedList<ConceptLattice>) clParts.clone();
         ConceptLattice firstCL = (ConceptLattice) copy.poll();
-        for (Node n : firstCL.getNodes()) {
-            Couple c = new Couple(new ArrayList<Concept>(), false);
+        for (Node node : firstCL.getNodes()) {
+            Couple couple = new Couple(new ArrayList<Concept>(), false);
             ArrayList<Concept> prodCPT = new ArrayList<Concept>();
-            prodCPT.add((Concept) n);
-            c.setLeft(prodCPT);
-            nodes.addAll(reccursiveGenProd(c, copy));
+            prodCPT.add((Concept) node);
+            couple.setLeft(prodCPT);
+            nodes.addAll(reccursiveGenProd(couple, copy));
         }
         for (Couple c : nodes) {
             prod.addNode(new Node(c));

@@ -861,9 +861,9 @@ public class DGraph implements Cloneable {
         }
         // second depth first search according to sort
         TreeSet<Node> visited = new TreeSet<Node>();
-        for (Node n : sort) {
-            if (!visited.contains(n)) {
-                last = transposedGraph.depthFirstSearch(n, visited, sort)[1];
+        for (Node node : sort) {
+            if (!visited.contains(node)) {
+                last = transposedGraph.depthFirstSearch(node, visited, sort)[1];
                 visited.addAll(last);
                 TreeSet<Node> sCC = new TreeSet<Node>(last);
                 // a strongly connected component is generated

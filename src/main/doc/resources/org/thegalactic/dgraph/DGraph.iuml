@@ -19,7 +19,7 @@ package org.thegalactic.dgraph {
         +SortedSet<Edge> getPredecessorEdges(final Node node)
         +SortedSet<Node> getSuccessorNodes(final Node node)
         +SortedSet<Node> getPredecessorNodes(final Node node)
-        +Edge getEdge(final Node from, final Node to)
+        +Edge getEdge(final Node source, final Node target)
         +Node getNode(final Object search)
         +Node getNodeByContent(final Object content)
         +Node getNodeByIdentifier(int identifier)
@@ -33,7 +33,7 @@ package org.thegalactic.dgraph {
         #DGraph setPredecessors(final TreeMap<Node, TreeSet<Edge>> predecessors)
         .. Predicates ..
         +boolean containsNode(final Node node)
-        +boolean containsEdge(final Node from, final Node to)
+        +boolean containsEdge(final Node source, final Node target)
         +boolean containsEdge(final Edge edge)
         +boolean isAcyclic()
         .. Transformers ..
@@ -42,12 +42,12 @@ package org.thegalactic.dgraph {
         +void save(final String filename)
         .. Operations ..
         +boolean addNode(final Node node)
-        +boolean addEdge(final Node from, final Node to, final Object content)
-        +boolean addEdge(final Node from, final Node to)
+        +boolean addEdge(final Node source, final Node target, final Object content)
+        +boolean addEdge(final Node source, final Node target)
         +boolean addEdge(final Edge edge)
         +boolean removeNode(final Node node)
         +boolean removeNodes(final Set<Node> nodes)
-        +boolean removeEdge(final Node from, final Node to)
+        +boolean removeEdge(final Node source, final Node target)
         +boolean removeEdge(final Edge edge)
         +ArrayList<Node> topologicalSort()
         +DGraph getSubgraphByNodes(final Set<Node> nodes)

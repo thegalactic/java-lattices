@@ -969,9 +969,9 @@ public class ImplicationalSystem extends ClosureSystem {
         DGraph pred = new DGraph();
         TreeMap<Comparable, Node> nodeCreated = new TreeMap<Comparable, Node>();
         for (Comparable x : tmp.getSet()) {
-            Node n = new Node(x);
-            pred.addNode(n);
-            nodeCreated.put(x, n);
+            Node node = new Node(x);
+            pred.addNode(node);
+            nodeCreated.put(x, node);
         }
         // an edge is added from b to a when there exists a rule X+a -> b or a -> b
         for (Rule rule : tmp.getRules()) {

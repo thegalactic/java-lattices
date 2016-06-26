@@ -93,12 +93,12 @@ public class ArrowRelation extends DGraph {
          * Nodes are join or meet irreductibles of the lattice.
          */
         TreeSet<Node> joins = new TreeSet<Node>(lattice.joinIrreducibles());
-        for (Node n : joins) {
-            this.addNode(n);
+        for (Node node : joins) {
+            this.addNode(node);
         }
         TreeSet<Node> meets = new TreeSet<Node>(lattice.meetIrreducibles());
-        for (Node n : meets) {
-            this.addNode(n);
+        for (Node node : meets) {
+            this.addNode(node);
         }
         Lattice transitiveClosure = new Lattice(lattice);
         transitiveClosure.transitiveClosure();

@@ -220,9 +220,9 @@ public abstract class ClosureSystem {
         DGraph prec = new DGraph();
         TreeMap<Comparable, Node> nodeCreated = new TreeMap<Comparable, Node>();
         for (Comparable x : this.getSet()) {
-            Node n = new Node(x);
-            prec.addNode(n);
-            nodeCreated.put(x, n);
+            Node node = new Node(x);
+            prec.addNode(node);
+            nodeCreated.put(x, node);
         }
         // edges of the graph are closures containments
         for (Comparable source : this.getSet()) {
@@ -285,8 +285,8 @@ public abstract class ClosureSystem {
         // Finaly, checking a remaining attribute equivalent to its predecessors or not may reduce more attributes.
         // Check all remaining nodes of graph G
         TreeSet<Node> remainingNodes = new TreeSet<Node>();
-        for (Node n : graph.getNodes()) {
-            remainingNodes.add(n);
+        for (Node node : graph.getNodes()) {
+            remainingNodes.add(node);
         }
         remainingNodes.removeAll(rubbishBin);
         for (Node x : remainingNodes) {
@@ -299,8 +299,8 @@ public abstract class ClosureSystem {
                 TreeSet closureSet = this.closure(set);
                 // Create the closure of predecessors
                 TreeSet<Comparable> pred = new TreeSet<Comparable>();
-                for (Node n : predecessors) {
-                    pred.add((Comparable) n.getContent());
+                for (Node node : predecessors) {
+                    pred.add((Comparable) node.getContent());
                 }
                 TreeSet<Comparable> closureP = this.closure(pred);
                 // Check the equality of two closures

@@ -47,16 +47,16 @@ public class LatticeFactory {
             Lattice tmp = new Lattice(dag);
             Node top = new Node(Integer.valueOf(nb - 1));
             tmp.addNode(top);
-            for (Node n : tmp.max()) {
-                if (!n.equals(top)) {
-                    tmp.addEdge(n, top);
+            for (Node node : tmp.max()) {
+                if (!node.equals(top)) {
+                    tmp.addEdge(node, top);
                 }
             }
             Node bot = new Node(Integer.valueOf(nb));
             tmp.addNode(bot);
-            for (Node n : tmp.min()) {
-                if (!n.equals(bot)) {
-                    tmp.addEdge(bot, n);
+            for (Node node : tmp.min()) {
+                if (!node.equals(bot)) {
+                    tmp.addEdge(bot, node);
                 }
             }
             if (tmp.isLattice()) {
@@ -177,18 +177,18 @@ public class LatticeFactory {
     public static Lattice doublingConvex(Lattice l, DAGraph c) {
         Lattice doubled = new Lattice();
         // Copy nodes by Content
-        for (Node n : l.getNodes()) {
-            if (c.containsNode(n)) {
+        for (Node node : l.getNodes()) {
+            if (c.containsNode(node)) {
                 // These nodes are doubled
-                Couple cpl0 = new Couple(n.getContent(), 0);
+                Couple cpl0 = new Couple(node.getContent(), 0);
                 Node n0 = new Node(cpl0);
-                Couple cpl1 = new Couple(n.getContent(), 1);
+                Couple cpl1 = new Couple(node.getContent(), 1);
                 Node n1 = new Node(cpl1);
                 doubled.addNode(n0);
                 doubled.addNode(n1);
             } else {
                 // These nodes are just copied
-                doubled.addNode(new Node(n.getContent()));
+                doubled.addNode(new Node(node.getContent()));
             }
         }
         // Construct edges of doubled
