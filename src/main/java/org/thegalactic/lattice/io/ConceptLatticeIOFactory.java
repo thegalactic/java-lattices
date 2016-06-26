@@ -60,5 +60,6 @@ public final class ConceptLatticeIOFactory extends org.thegalactic.io.IOFactory<
      * This class is not designed to be publicly instantiated.
      */
     private ConceptLatticeIOFactory() {
+        super();
     }
 }
