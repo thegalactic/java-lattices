@@ -109,41 +109,44 @@ public class ComparableSet<E extends Comparable> extends TreeSet<E> implements C
      *
      * @todo Is this correct? (see test)
      */
-    public int compareTo(ComparableSet set) {
+    public int compareTo(final ComparableSet set) {
+
+        int cmp;
 
         // case of equality between this component and object
         if (this.equals(set)) {
-            return 0;
-        }
-
-        // computes index i of the first element in set minus this
-        // if i doesn't exist, then this component is not smaller than the set by lectic order
-        TreeSet<Comparable> setMinusThis = new TreeSet(set);
-        setMinusThis.removeAll(this);
-        if (setMinusThis.isEmpty()) {
-            return 1;
-        }
-
-        Comparable i = setMinusThis.first();
-        // compute this inter {1, ..., i-1}
-        TreeSet setAiMinus1 = new TreeSet();
-        for (Object c : this) {
-            if (i.compareTo(c) > 0) {
-                setAiMinus1.add(c);
-            }
-        }
-        // compute set inter {1, ..., i-1}
-        TreeSet setBiMinus1 = new TreeSet();
-        for (Object c : set) {
-            if (i.compareTo(c) > 0) {
-                setBiMinus1.add(c);
-            }
-        }
-        // if setAiminus1 and setBiminus1 are equal then this component is smaller than B by lectic order
-        if (setAiMinus1.equals(setBiMinus1)) {
-            return -1;
+            cmp = 0;
         } else {
-            return 1;
+            // computes index i of the first element in set minus this
+            // if i doesn't exist, then this component is not smaller than the set by lectic order
+            final TreeSet<Comparable> setMinusThis = new TreeSet(set);
+            setMinusThis.removeAll(this);
+            if (setMinusThis.isEmpty()) {
+                cmp = 1;
+            } else {
+                final Comparable i = setMinusThis.first();
+                // compute this inter {1, ..., i-1}
+                final TreeSet setAiMinus1 = new TreeSet();
+                for (final Object c : this) {
+                    if (i.compareTo(c) > 0) {
+                        setAiMinus1.add(c);
+                    }
+                }
+                // compute set inter {1, ..., i-1}
+                final TreeSet setBiMinus1 = new TreeSet();
+                for (final Object c : set) {
+                    if (i.compareTo(c) > 0) {
+                        setBiMinus1.add(c);
+                    }
+                }
+                // if setAiminus1 and setBiminus1 are equal then this component is smaller than B by lectic order
+                if (setAiMinus1.equals(setBiMinus1)) {
+                    cmp = -1;
+                } else {
+                    cmp = 1;
+                }
+            }
         }
+        return cmp;
     }
 }
