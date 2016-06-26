@@ -13,7 +13,6 @@ package org.thegalactic.dgraph.io;
  */
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.util.StringTokenizer;
 
 import org.thegalactic.dgraph.DGraph;
 import org.thegalactic.dgraph.Edge;
@@ -75,35 +74,34 @@ public final class DGraphSerializerDot implements Writer<DGraph> {
      * @throws IOException When an IOException occurs
      */
     @Override
-    public void write(DGraph graph, BufferedWriter file) throws IOException {
-        String newLine = System.getProperty("line.separator");
-        file.write("digraph G {" + newLine);
-        file.write("Graph [rankdir=BT]" + newLine);
-        StringBuilder nodes = new StringBuilder();
-        StringBuilder edges = new StringBuilder();
-        for (Node node : graph.getNodes()) {
-            String dot = node.getIdentifier() + " [label=\"";
-            StringTokenizer tokenizer = new StringTokenizer(node.toString(), "\"");
-            while (tokenizer.hasMoreTokens()) {
-                dot += tokenizer.nextToken();
-            }
-            dot += "\"]";
-            nodes.append(dot).append(newLine);
+    public void write(final DGraph graph, final BufferedWriter file) throws IOException {
+        final String newLine = System.getProperty("line.separator");
+
+        file.write("digraph G {");
+        file.write(newLine);
+        file.write("Graph [rankdir=BT]");
+        file.write(newLine);
+
+        for (final Node node : graph.getNodes()) {
+            file.write(String.valueOf(node.getIdentifier()));
+            file.write(" [label=\"");
+            file.write(node.toString().replace("\"", "\\\""));
+            file.write("\"]");
+            file.write(newLine);
         }
-        for (Edge edge : graph.getEdges()) {
-            String dot = edge.getSource().getIdentifier() + "->" + edge.getTarget().getIdentifier();
+
+        for (final Edge edge : graph.getEdges()) {
+            file.write(String.valueOf(edge.getSource().getIdentifier()));
+            file.write("->");
+            file.write(String.valueOf(edge.getTarget().getIdentifier()));
             if (edge.hasContent()) {
-                dot = dot + " [" + "label=\"";
-                StringTokenizer tokenizer = new StringTokenizer(edge.getContent().toString(), "\"");
-                while (tokenizer.hasMoreTokens()) {
-                    dot += tokenizer.nextToken();
-                }
-                dot = dot + "\"]";
+                file.write(" [label=\"");
+                file.write(edge.getContent().toString().replace("\"", "\\\""));
+                file.write("\"]");
             }
-            edges.append(dot).append(newLine);
+            file.write(newLine);
         }
-        file.write(nodes.toString());
-        file.write(edges.toString());
+
         file.write("}");
     }
 }
