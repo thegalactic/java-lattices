@@ -107,7 +107,7 @@ public final class ContextSerializerFIMI implements Reader<Context>, Writer<Cont
             lineNumber++;
 
             // Get the next identifier
-            String identifier = "O" + lineNumber;
+            final String identifier = "O" + lineNumber;
             context.addToObservations(identifier);
 
             // Get the current line
