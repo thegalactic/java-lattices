@@ -15,7 +15,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.StringTokenizer;
+
 import org.thegalactic.context.Context;
 import org.thegalactic.io.Reader;
 import org.thegalactic.io.Writer;
@@ -40,7 +40,7 @@ public final class ContextSerializerFIMI implements Reader<Context>, Writer<Cont
     /**
      * String extension.
      */
-    private final static String EXTENSION = "dat";
+    private static final String EXTENSION = "dat";
 
     /**
      * The singleton instance.
@@ -114,10 +114,8 @@ public final class ContextSerializerFIMI implements Reader<Context>, Writer<Cont
             final String str = file.readLine();
 
             // Tokenize the line
-            StringTokenizer tok = new StringTokenizer(str);
-            while (tok.hasMoreTokens()) {
-                // Get the next attribute
-                Integer attribute = Integer.parseInt(tok.nextToken());
+            for (String token : str.split(" +")) {
+                Integer attribute = Integer.parseInt(token);
                 if (!context.containsAttribute(attribute)) {
                     context.addToAttributes(attribute);
                 }
