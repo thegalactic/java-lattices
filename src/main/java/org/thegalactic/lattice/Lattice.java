@@ -224,14 +224,14 @@ public class Lattice extends DAGraph {
                 while (indJ < steps.size() && !steps.get(indJ).containsInA(j)) {
                     indJ++;
                 }
-                if ((phi.getNodeByContent(indJ) == null) && (indJ != steps.size())) {
+                if (phi.getNodeByContent(indJ) == null && indJ != steps.size()) {
                     phi.addNode(new Node(indJ));
                 }
                 int indM = 0; // Search for the step containning m
-                while ((indM < steps.size()) && (!steps.get(indM).containsInB(m))) {
+                while (indM < steps.size() && !steps.get(indM).containsInB(m)) {
                     indM++;
                 }
-                if ((phi.getNodeByContent(indM) == null) && (indM != steps.size())) {
+                if (phi.getNodeByContent(indM) == null && indM != steps.size()) {
                     phi.addNode(new Node(indM));
                 }
                 if (indM != steps.size() && indJ != steps.size()) {
