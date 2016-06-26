@@ -179,9 +179,9 @@ public final class ContextSerializerSLF implements Reader<Context>, Writer<Conte
         ArrayList<Comparable> att = new ArrayList(context.getAttributes());
         file.write("[Lattice]");
         file.newLine();
-        file.write("" + context.getObservations().size());
+        file.write(String.valueOf(context.getObservations().size()));
         file.newLine();
-        file.write("" + context.getAttributes().size());
+        file.write(String.valueOf(context.getAttributes().size()));
         file.newLine();
         file.write("[Objects]");
         file.newLine();
