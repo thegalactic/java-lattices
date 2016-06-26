@@ -978,13 +978,13 @@ public class ImplicationalSystem extends ClosureSystem {
             for (Object a : rule.getPremise()) {
                 ComparableSet diff = new ComparableSet(rule.getPremise());
                 diff.remove(a);
-                Node from = nodeCreated.get(rule.getConclusion().first());
-                Node to = nodeCreated.get(a);
+                Node source = nodeCreated.get(rule.getConclusion().first());
+                Node target = nodeCreated.get(a);
                 Edge ed;
-                if (pred.containsEdge(from, to)) {
-                    ed = pred.getEdge(from, to);
+                if (pred.containsEdge(source, target)) {
+                    ed = pred.getEdge(source, target);
                 } else {
-                    ed = new Edge(from, to, new TreeSet<ComparableSet>());
+                    ed = new Edge(source, target, new TreeSet<ComparableSet>());
                     pred.addEdge(ed);
                 }
                 ((TreeSet<ComparableSet>) ed.getContent()).add(diff);

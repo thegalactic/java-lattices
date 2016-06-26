@@ -669,24 +669,24 @@ public class Concept extends Node {
         // computes the dependance relation between nodes in S\F
         // and valuated this relation by the subset of S\F
         TreeSet<Edge> e = new TreeSet<Edge>();
-        for (Node from : n) {
-            for (Node to : n) {
-                if (!from.equals(to)) {
-                    // check if from is in dependance relation with to
-                    // i.e. "from" belongs to the closure of "F+to"
+        for (Node source : n) {
+            for (Node target : n) {
+                if (!source.equals(target)) {
+                    // check if source is in dependance relation with target
+                    // i.e. "source" belongs to the closure of "F+target"
                     ComparableSet fPlusTo = new ComparableSet(f);
-                    fPlusTo.add(to.getContent());
+                    fPlusTo.add(target.getContent());
                     fPlusTo = new ComparableSet(init.closure(fPlusTo));
-                    if (fPlusTo.contains(from.getContent())) {
-                        // there is a dependance relation between from and to
-                        // search for an existing edge between from and to
-                        Edge ed = dependanceGraph.getEdge(from, to);
+                    if (fPlusTo.contains(source.getContent())) {
+                        // there is a dependance relation between source and target
+                        // search for an existing edge between source and target
+                        Edge ed = dependanceGraph.getEdge(source, target);
                         if (ed == null) {
-                            ed = new Edge(from, to, new TreeSet<ComparableSet>());
+                            ed = new Edge(source, target, new TreeSet<ComparableSet>());
                             dependanceGraph.addEdge(ed);
                         }
                         e.add(ed);
-                        // check if F is a minimal set closed for dependance relation between from and to
+                        // check if F is a minimal set closed for dependance relation between source and target
                         ((TreeSet<ComparableSet>) ed.getContent()).add(newVal);
                         TreeSet<ComparableSet> valEd = new TreeSet<ComparableSet>((TreeSet<ComparableSet>) ed.getContent());
                         for (ComparableSet x1 : valEd) {

@@ -1272,20 +1272,20 @@ public class Context extends ClosureSystem {
             prod.addNode(new Node(c));
         }
         // Add edges
-        for (Node from : prod.getNodes()) {
-            for (Node to : prod.getNodes()) {
-                Couple contentFrom = (Couple) from.getContent();
-                Couple contentTo = (Couple) to.getContent();
+        for (Node source : prod.getNodes()) {
+            for (Node target : prod.getNodes()) {
+                Couple contentSource = (Couple) source.getContent();
+                Couple contentTarget = (Couple) target.getContent();
                 boolean haveEdge = true;
                 boolean equals = true;
                 for (int i = 0; i < clParts.size(); i++) { // clParts.size() is the number of factor
-                    Concept cptFrom = ((ArrayList<Concept>) contentFrom.getLeft()).get(i);
-                    Concept cptTo = ((ArrayList<Concept>) contentTo.getLeft()).get(i);
-                    equals = equals && cptFrom.equals(cptTo);
-                    haveEdge = haveEdge && (clParts.get(i).containsEdge(cptFrom, cptTo) || cptFrom.equals(cptTo));
+                    Concept cptSource = ((ArrayList<Concept>) contentSource.getLeft()).get(i);
+                    Concept cptTarget = ((ArrayList<Concept>) contentTarget.getLeft()).get(i);
+                    equals = equals && cptSource.equals(cptTarget);
+                    haveEdge = haveEdge && (clParts.get(i).containsEdge(cptSource, cptTarget) || cptSource.equals(cptTarget));
                 }
                 if (haveEdge && !equals) {
-                    prod.addEdge(from, to);
+                    prod.addEdge(source, target);
                 }
             }
         }

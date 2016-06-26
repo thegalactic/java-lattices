@@ -153,13 +153,13 @@ public class LatticeFactory {
             }
         }
         // Create edges
-        for (Node from : prod.getNodes()) {
-            for (Node to : prod.getNodes()) {
-                if (l.containsEdge(l.getNodeByContent(((Couple) from.getContent()).getLeft()),
-                        l.getNodeByContent(((Couple) to.getContent()).getLeft()))
-                        && r.containsEdge(r.getNodeByContent(((Couple) from.getContent()).getRight()),
-                                r.getNodeByContent(((Couple) to.getContent()).getRight()))) {
-                    prod.addEdge(from, to);
+        for (Node source : prod.getNodes()) {
+            for (Node target : prod.getNodes()) {
+                if (l.containsEdge(l.getNodeByContent(((Couple) source.getContent()).getLeft()),
+                        l.getNodeByContent(((Couple) target.getContent()).getLeft()))
+                        && r.containsEdge(r.getNodeByContent(((Couple) source.getContent()).getRight()),
+                                r.getNodeByContent(((Couple) target.getContent()).getRight()))) {
+                    prod.addEdge(source, target);
                 }
             }
         }

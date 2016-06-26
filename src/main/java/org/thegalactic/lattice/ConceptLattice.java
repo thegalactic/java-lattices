@@ -143,10 +143,10 @@ public class ConceptLattice extends Lattice {
         }
 
         // an edge corresponds to an inclusion between two closed sets
-        for (Node from : lattice.getNodes()) {
-            for (Node to : lattice.getNodes()) {
-                if (((Concept) to).containsAllInA(((Concept) from).getSetA())) {
-                    lattice.addEdge(from, to);
+        for (Node source : lattice.getNodes()) {
+            for (Node target : lattice.getNodes()) {
+                if (((Concept) target).containsAllInA(((Concept) source).getSetA())) {
+                    lattice.addEdge(source, target);
                 }
             }
         }
@@ -307,24 +307,24 @@ public class ConceptLattice extends Lattice {
     }
 
     /**
-     * Adds the specified edge to this component: `to` is added as a successor
-     * of `from`.
+     * Adds the specified edge to this component: `target` is added as a successor
+     * of `source`.
      *
      * If the cases where specified nodes don't belongs to the node set, and
      * where nodes don't contains concept as content, then the edge will not be
      * added.
      *
-     * @param from the node origine of the edge
-     * @param to the node destination of the edge
+     * @param source the node origine of the edge
+     * @param target the node destination of the edge
      *
      * @return a boolean
      *
      * @todo Comment the return
      */
     @Override
-    public boolean addEdge(Node from, Node to) {
-        if ((to instanceof Concept) && (from instanceof Concept)) {
-            return super.addEdge(from, to);
+    public boolean addEdge(Node source, Node target) {
+        if ((target instanceof Concept) && (source instanceof Concept)) {
+            return super.addEdge(source, target);
         } else {
             return false;
         }
@@ -559,9 +559,9 @@ public class ConceptLattice extends Lattice {
             // reduction of set A
             for (Node to : sort) {
                 Concept cto = (Concept) to;
-                for (Node from : this.getPredecessorNodes(to)) {
-                    Concept cfrom = (Concept) from;
-                    cto.getSetA().removeAll(cfrom.getSetA());
+                for (Node source : this.getPredecessorNodes(to)) {
+                    Concept csource = (Concept) source;
+                    cto.getSetA().removeAll(csource.getSetA());
                 }
             }
         }
@@ -572,9 +572,9 @@ public class ConceptLattice extends Lattice {
             // reduction of set B
             for (Node to : sort) {
                 Concept cto = (Concept) to;
-                for (Node from : this.getSuccessorNodes(to)) {
-                    Concept cfrom = (Concept) from;
-                    cto.getSetB().removeAll(cfrom.getSetB());
+                for (Node source : this.getSuccessorNodes(to)) {
+                    Concept csource = (Concept) source;
+                    cto.getSetB().removeAll(csource.getSetB());
                 }
             }
         }
@@ -677,9 +677,9 @@ public class ConceptLattice extends Lattice {
             lattice.addNode(reduced.get(n));
         }
         // addtion of edges to lattice
-        for (Node from : csl.getNodes()) {
-            for (Node to : csl.getSuccessorNodes(from)) {
-                lattice.addEdge(reduced.get(from), reduced.get(to));
+        for (Node source : csl.getNodes()) {
+            for (Node target : csl.getSuccessorNodes(source)) {
+                lattice.addEdge(reduced.get(source), reduced.get(target));
             }
         }
         return lattice;
@@ -724,9 +724,9 @@ public class ConceptLattice extends Lattice {
             lattice.addNode(reduced.get(n));
         }
         // addtion of edges to lattice
-        for (Node from : csl.getNodes()) {
-            for (Node to : csl.getSuccessorNodes(from)) {
-                lattice.addEdge(reduced.get(from), reduced.get(to));
+        for (Node source : csl.getNodes()) {
+            for (Node target : csl.getSuccessorNodes(source)) {
+                lattice.addEdge(reduced.get(source), reduced.get(target));
             }
         }
         return lattice;
@@ -781,9 +781,9 @@ public class ConceptLattice extends Lattice {
             lattice.addNode(reduced.get(n));
         }
         // addtion of edges to lattice
-        for (Node from : csl.getNodes()) {
-            for (Node to : csl.getSuccessorNodes(from)) {
-                lattice.addEdge(reduced.get(from), reduced.get(to));
+        for (Node source : csl.getNodes()) {
+            for (Node target : csl.getSuccessorNodes(source)) {
+                lattice.addEdge(reduced.get(source), reduced.get(target));
             }
         }
         return lattice;
@@ -971,24 +971,24 @@ public class ConceptLattice extends Lattice {
         // computes the dependance relation between nodes in S\F
         // and valuated this relation by the subset of S\F
         TreeSet<Edge> edges = new TreeSet<Edge>();
-        for (Node from : nodes) {
-            for (Node to : nodes) {
-                if (!from.equals(to)) {
-                    // check if from is in dependance relation with to
-                    // i.e. "from" belongs to the closure of "F+to"
+        for (Node source : nodes) {
+            for (Node target : nodes) {
+                if (!source.equals(target)) {
+                    // check if source is in dependance relation with target
+                    // i.e. "source" belongs to the closure of "F+target"
                     ComparableSet fPlusTo = new ComparableSet(setF);
-                    fPlusTo.add(to.getContent());
+                    fPlusTo.add(target.getContent());
                     fPlusTo = new ComparableSet(init.closure(fPlusTo));
-                    if (fPlusTo.contains(from.getContent())) {
-                        // there is a dependance relation between from and to
-                        // search for an existing edge between from and to
-                        Edge ed = this.getDependencyGraph().getEdge(from, to);
+                    if (fPlusTo.contains(source.getContent())) {
+                        // there is a dependance relation between source and target
+                        // search for an existing edge between source and target
+                        Edge ed = this.getDependencyGraph().getEdge(source, target);
                         if (ed == null) {
-                            ed = new Edge(from, to, new TreeSet<ComparableSet>());
+                            ed = new Edge(source, target, new TreeSet<ComparableSet>());
                             this.getDependencyGraph().addEdge(ed);
                         }
                         edges.add(ed);
-                        // check if F is a minimal set closed for dependance relation between from and to
+                        // check if F is a minimal set closed for dependance relation between source and target
                         ((TreeSet<ComparableSet>) ed.getContent()).add(newVal);
                         TreeSet<ComparableSet> valEd = new TreeSet<ComparableSet>((TreeSet<ComparableSet>) ed.getContent());
                         for (ComparableSet x1 : valEd) {

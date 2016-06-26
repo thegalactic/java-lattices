@@ -492,9 +492,9 @@ public class Lattice extends DAGraph {
         lattice.reflexiveClosure();
         for (Node to : lattice.getNodes()) {
             ComparableSet jx = new ComparableSet();
-            for (Node from : lattice.getPredecessorNodes(to)) {
-                if (join.contains(from)) {
-                    jx.add(from.getContent());
+            for (Node source : lattice.getPredecessorNodes(to)) {
+                if (join.contains(source)) {
+                    jx.add(source.getContent());
                 }
             }
             closure.put(to, new Concept(jx, false));
@@ -530,9 +530,9 @@ public class Lattice extends DAGraph {
         lattice.reflexiveClosure();
         for (Node to : lattice.getNodes()) {
             ComparableSet mx = new ComparableSet();
-            for (Node from : lattice.getSuccessorNodes(to)) {
-                if (meet.contains(from)) {
-                    mx.add(from);
+            for (Node source : lattice.getSuccessorNodes(to)) {
+                if (meet.contains(source)) {
+                    mx.add(source);
                 }
             }
             closure.put(to, new Concept(false, mx));
@@ -569,15 +569,15 @@ public class Lattice extends DAGraph {
         lattice.reflexiveClosure();
         for (Node to : lattice.getNodes()) {
             ComparableSet jx = new ComparableSet();
-            for (Node from : lattice.getPredecessorNodes(to)) {
-                if (join.contains(from)) {
-                    jx.add(from);
+            for (Node source : lattice.getPredecessorNodes(to)) {
+                if (join.contains(source)) {
+                    jx.add(source);
                 }
             }
             ComparableSet mx = new ComparableSet();
-            for (Node from : lattice.getSuccessorNodes(to)) {
-                if (meet.contains(from)) {
-                    mx.add(from);
+            for (Node source : lattice.getSuccessorNodes(to)) {
+                if (meet.contains(source)) {
+                    mx.add(source);
                 }
             }
             closure.put(to, new Concept(jx, mx));
@@ -974,14 +974,14 @@ public class Lattice extends DAGraph {
         }
         // computes rules of the BCD from edges of the ODGraph
         for (Edge ed : odGraph.getEdges()) {
-            Node from = ed.getSource();
-            Node to = ed.getTarget();
+            Node source = ed.getSource();
+            Node target = ed.getTarget();
             TreeSet<ComparableSet> l = (TreeSet<ComparableSet>) ed.getContent();
             for (ComparableSet set : l) {
                 ComparableSet premise = new ComparableSet(set);
-                premise.add((Comparable) to.getContent());
+                premise.add((Comparable) target.getContent());
                 ComparableSet conclusion = new ComparableSet();
-                conclusion.add((Comparable) from.getContent());
+                conclusion.add((Comparable) source.getContent());
                 bcd.addRule(new Rule(premise, conclusion));
             }
         }

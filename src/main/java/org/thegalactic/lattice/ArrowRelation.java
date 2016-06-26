@@ -258,12 +258,12 @@ public class ArrowRelation extends DGraph {
     }
 
     /**
-     * Returns true if and only if there is an up arrow between from and to of
+     * Returns true if and only if there is an up arrow between the source and the target of
      * edge e.
      *
      * @param e edge to be tested
      *
-     * @return true if and only if there is an up arrow between from and to of
+     * @return true if and only if there is an up arrow between the source and the target of
      * edge e
      */
     public boolean isUp(Edge e) {
@@ -271,12 +271,12 @@ public class ArrowRelation extends DGraph {
     }
 
     /**
-     * Returns true if and only if there is an down arrow between from and to of
+     * Returns true if and only if there is an down arrow between the source and the target of
      * edge e.
      *
      * @param e edge to be tested
      *
-     * @return true if and only if there is an down arrow between from and to of
+     * @return true if and only if there is an down arrow between the source and the target of
      * edge e
      */
     public boolean isDown(Edge e) {
@@ -284,12 +284,12 @@ public class ArrowRelation extends DGraph {
     }
 
     /**
-     * Returns true if and only if there is an up-down arrow between from and to
+     * Returns true if and only if there is an up-down arrow between the source and the target
      * of edge e.
      *
      * @param e edge to be tested
      *
-     * @return true if and only if there is an up-down arrow between from and to
+     * @return true if and only if there is an up-down arrow between the source and the target
      * of edge e
      */
     public boolean isUpDown(Edge e) {
@@ -297,12 +297,12 @@ public class ArrowRelation extends DGraph {
     }
 
     /**
-     * Returns true if and only if there is an cross arrow between from and to
+     * Returns true if and only if there is an cross arrow between the source and the target
      * of edge e.
      *
      * @param e edge to be tested
      *
-     * @return true if and only if there is an cross arrow between from and to
+     * @return true if and only if there is an cross arrow between the source and the target
      * of edge e
      */
     public boolean isCross(Edge e) {
@@ -310,12 +310,12 @@ public class ArrowRelation extends DGraph {
     }
 
     /**
-     * Returns true if and only if there is an circ arrow between from and to of
+     * Returns true if and only if there is an circ arrow between the source and the target of
      * edge e.
      *
      * @param e edge to be tested
      *
-     * @return true if and only if there is an circ arrow between from and to of
+     * @return true if and only if there is an circ arrow between the source and the target of
      * edge e
      */
     public boolean isCirc(Edge e) {

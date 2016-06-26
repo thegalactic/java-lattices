@@ -225,12 +225,12 @@ public abstract class ClosureSystem {
             nodeCreated.put(x, n);
         }
         // edges of the graph are closures containments
-        for (Comparable from : this.getSet()) {
-            for (Comparable to : this.getSet()) {
-                if (!from.equals(to)) {
-                    // check if from belongs to the closure of to
-                    if (closures.get(to).contains(from)) {
-                        prec.addEdge(nodeCreated.get(from), nodeCreated.get(to));
+        for (Comparable source : this.getSet()) {
+            for (Comparable target : this.getSet()) {
+                if (!source.equals(target)) {
+                    // check if source belongs to the closure of target
+                    if (closures.get(target).contains(source)) {
+                        prec.addEdge(nodeCreated.get(source), nodeCreated.get(target));
                     }
                 }
             }

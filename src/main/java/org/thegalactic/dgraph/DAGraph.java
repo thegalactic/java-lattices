@@ -79,12 +79,12 @@ public class DAGraph extends DGraph {
             graph.addNode(new Node(Integer.valueOf(i)));
         }
         // addition of edges
-        for (Node from : graph.getNodes()) {
-            for (Node to : graph.getNodes()) {
-                int v1 = ((Integer) from.getContent()).intValue();
-                int v2 = ((Integer) to.getContent()).intValue();
+        for (Node source : graph.getNodes()) {
+            for (Node target : graph.getNodes()) {
+                int v1 = ((Integer) source.getContent()).intValue();
+                int v2 = ((Integer) target.getContent()).intValue();
                 if (v1 < v2 && v2 % v1 == 0) {
-                    graph.addEdge(from, to);
+                    graph.addEdge(source, target);
                 }
             }
         }
@@ -106,12 +106,12 @@ public class DAGraph extends DGraph {
             graph.addNode(new Node(Integer.valueOf(i)));
         }
         // addition of edges
-        for (Node from : graph.getNodes()) {
-            for (Node to : graph.getNodes()) {
+        for (Node source : graph.getNodes()) {
+            for (Node target : graph.getNodes()) {
                 // Test to avoid cycles
-                if (from.compareTo(to) > 0) {
+                if (source.compareTo(target) > 0) {
                     if (Math.random() < threshold) {
-                        graph.addEdge(from, to);
+                        graph.addEdge(source, target);
                     }
                 }
             }

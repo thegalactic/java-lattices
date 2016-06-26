@@ -360,19 +360,19 @@ public class DGraphTest {
      */
     @Test
     public void testRemoveNode() {
-        Node from = new Node();
-        Node to = new Node();
+        Node source = new Node();
+        Node target = new Node();
         DGraph graph = new DGraph();
-        graph.addNode(from);
-        graph.addNode(to);
-        graph.addEdge(from, to);
-        assertTrue(graph.removeNode(from));
-        assertFalse(graph.removeNode(from));
-        assertFalse(graph.containsNode(from));
-        assertTrue(graph.containsNode(to));
-        assertFalse(graph.containsEdge(from, to));
-        assertTrue(graph.getSuccessorEdges(to).isEmpty());
-        assertTrue(graph.getPredecessorEdges(to).isEmpty());
+        graph.addNode(source);
+        graph.addNode(target);
+        graph.addEdge(source, target);
+        assertTrue(graph.removeNode(source));
+        assertFalse(graph.removeNode(source));
+        assertFalse(graph.containsNode(source));
+        assertTrue(graph.containsNode(target));
+        assertFalse(graph.containsEdge(source, target));
+        assertTrue(graph.getSuccessorEdges(target).isEmpty());
+        assertTrue(graph.getPredecessorEdges(target).isEmpty());
     }
 
     /**
@@ -380,21 +380,21 @@ public class DGraphTest {
      */
     @Test
     public void testRemoveNodes() {
-        Node from = new Node();
-        Node to = new Node();
+        Node source = new Node();
+        Node target = new Node();
         DGraph graph = new DGraph();
-        graph.addNode(from);
-        graph.addNode(to);
-        graph.addEdge(from, to);
+        graph.addNode(source);
+        graph.addNode(target);
+        graph.addEdge(source, target);
         TreeSet<Node> set = new TreeSet<Node>();
-        set.add(from);
+        set.add(source);
         assertTrue(graph.removeNodes(set));
         assertFalse(graph.removeNodes(set));
-        assertFalse(graph.containsNode(from));
-        assertTrue(graph.containsNode(to));
-        assertFalse(graph.containsEdge(from, to));
-        assertTrue(graph.getSuccessorEdges(to).isEmpty());
-        assertTrue(graph.getPredecessorEdges(to).isEmpty());
+        assertFalse(graph.containsNode(source));
+        assertTrue(graph.containsNode(target));
+        assertFalse(graph.containsEdge(source, target));
+        assertTrue(graph.getSuccessorEdges(target).isEmpty());
+        assertTrue(graph.getPredecessorEdges(target).isEmpty());
     }
 
     /**
@@ -402,16 +402,16 @@ public class DGraphTest {
      */
     @Test
     public void testEdgeNodes() {
-        Node from = new Node();
-        Node to = new Node();
+        Node source = new Node();
+        Node target = new Node();
         DGraph graph = new DGraph();
-        graph.addNode(from);
-        graph.addNode(to);
-        assertFalse(graph.containsEdge(from, to));
-        graph.addEdge(from, to);
-        assertTrue(graph.containsEdge(from, to));
-        graph.removeEdge(from, to);
-        assertFalse(graph.containsEdge(from, to));
+        graph.addNode(source);
+        graph.addNode(target);
+        assertFalse(graph.containsEdge(source, target));
+        graph.addEdge(source, target);
+        assertTrue(graph.containsEdge(source, target));
+        graph.removeEdge(source, target);
+        assertFalse(graph.containsEdge(source, target));
     }
 
     /**
@@ -419,12 +419,12 @@ public class DGraphTest {
      */
     @Test
     public void testEdge() {
-        Node from = new Node();
-        Node to = new Node();
-        Edge edge = new Edge(from, to);
+        Node source = new Node();
+        Node target = new Node();
+        Edge edge = new Edge(source, target);
         DGraph graph = new DGraph();
-        graph.addNode(from);
-        graph.addNode(to);
+        graph.addNode(source);
+        graph.addNode(target);
         assertFalse(graph.containsEdge(edge));
         graph.addEdge(edge);
         assertTrue(graph.containsEdge(edge));
@@ -439,13 +439,13 @@ public class DGraphTest {
     public void testIsAcyclic() {
         DGraph graph = new DGraph();
         assertTrue(graph.isAcyclic());
-        Node from = new Node();
-        Node to = new Node();
-        graph.addNode(from);
-        graph.addNode(to);
-        graph.addEdge(from, to);
+        Node source = new Node();
+        Node target = new Node();
+        graph.addNode(source);
+        graph.addNode(target);
+        graph.addEdge(source, target);
         assertTrue(graph.isAcyclic());
-        graph.addEdge(to, from);
+        graph.addEdge(target, source);
         assertFalse(graph.isAcyclic());
     }
 
@@ -516,17 +516,17 @@ public class DGraphTest {
      */
     @Test
     public void testGetSinks() {
-        Node from = new Node();
-        Node to = new Node();
-        Edge edge = new Edge(from, to);
+        Node source = new Node();
+        Node target = new Node();
+        Edge edge = new Edge(source, target);
         DGraph graph = new DGraph();
-        graph.addNode(from);
-        graph.addNode(to);
+        graph.addNode(source);
+        graph.addNode(target);
         graph.addEdge(edge);
         SortedSet<Node> sinks = graph.getSinks();
         assertEquals(sinks.size(), 1);
         for (Node sink : sinks) {
-            assertEquals(sink, from);
+            assertEquals(sink, source);
         }
     }
 
@@ -535,17 +535,17 @@ public class DGraphTest {
      */
     @Test
     public void testGetWells() {
-        Node from = new Node();
-        Node to = new Node();
-        Edge edge = new Edge(from, to);
+        Node source = new Node();
+        Node target = new Node();
+        Edge edge = new Edge(source, target);
         DGraph graph = new DGraph();
-        graph.addNode(from);
-        graph.addNode(to);
+        graph.addNode(source);
+        graph.addNode(target);
         graph.addEdge(edge);
         SortedSet<Node> wells = graph.getWells();
         assertEquals(wells.size(), 1);
         for (Node well : wells) {
-            assertEquals(well, to);
+            assertEquals(well, target);
         }
     }
 

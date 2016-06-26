@@ -78,10 +78,10 @@ public class DGraph implements Cloneable {
             graph.addNode(node);
         }
         // addition of edges
-        for (Node from : graph.nodes) {
-            for (Node to : graph.nodes) {
+        for (Node source : graph.nodes) {
+            for (Node target : graph.nodes) {
                 if (Math.random() < threshold) {
-                    graph.addEdge(from, to);
+                    graph.addEdge(source, target);
                 }
             }
         }
@@ -131,7 +131,7 @@ public class DGraph implements Cloneable {
     }
 
     /**
-     * Constructs a new directed graph from the specified set of nodes.
+     * Constructs a new directed graph source the specified set of nodes.
      *
      * Successors and predecessors of each nodes are initialised by an empty
      * set.
@@ -255,23 +255,23 @@ public class DGraph implements Cloneable {
     }
 
     /**
-     * Returns, if it exists, the edge between node from and node to.
+     * Returns, if it exists, the edge between node source and node to.
      *
-     * @param from The origin node
-     * @param to The destination node
+     * @param source The origin node
+     * @param target The destination node
      *
      * @return the found edge or null
      *
      * @todo see getNode
      */
-    public Edge getEdge(final Node from, final Node to) {
-        TreeSet<Edge> node = successors.get(from);
+    public Edge getEdge(final Node source, final Node target) {
+        TreeSet<Edge> node = successors.get(source);
         if (node == null) {
             return null;
         }
-        if (this.containsEdge(from, to)) {
-            for (Edge edge : this.successors.get(from)) {
-                if (edge.getTarget().equals(to)) {
+        if (this.containsEdge(source, target)) {
+            for (Edge edge : this.successors.get(source)) {
+                if (edge.getTarget().equals(target)) {
                     return edge;
                 }
             }
@@ -368,11 +368,11 @@ public class DGraph implements Cloneable {
         nodes.append(this.sizeNodes()).append(" Nodes: {");
         StringBuilder edges = new StringBuilder();
         edges.append(this.sizeEdges()).append(" Edges: {");
-        for (Node from : this.nodes) {
-            nodes.append(from.toString()).append(",");
+        for (Node source : this.nodes) {
+            nodes.append(source.toString()).append(",");
         }
-        for (Edge ed : this.getEdges()) {
-            edges.append(ed.toString()).append(",");
+        for (Edge edge : this.getEdges()) {
+            edges.append(edge.toString()).append(",");
         }
         String newLine = System.getProperty("line.separator");
         nodes.append("}").append(newLine).append(edges).append("}").append(newLine);
@@ -422,7 +422,7 @@ public class DGraph implements Cloneable {
     }
 
     /**
-     * Removes the specified node from this component.
+     * Removes the specified node source this component.
      *
      * @param node the node to remove
      *
@@ -441,7 +441,7 @@ public class DGraph implements Cloneable {
                 }
                 this.successors.remove(node);
             }
-            // Remove the edges (from,node) with key node in predecessors, and key from in successors
+            // Remove the edges (source,node) with key node in predecessors, and key source in successors
             for (Edge predecessor : this.predecessors.get(node)) {
                 if (predecessor.getSource().compareTo(node) != 0) {
                     for (Edge successor : this.successors.get(predecessor.getSource())) {
@@ -460,7 +460,7 @@ public class DGraph implements Cloneable {
     }
 
     /**
-     * Removes the specified set of nodes from this component.
+     * Removes the specified set of nodes source this component.
      *
      * @param nodes set of nodes
      *
@@ -479,16 +479,16 @@ public class DGraph implements Cloneable {
     /**
      * Checks if there exists an edge between the two specified nodes.
      *
-     * @param from the node origine of the edge
-     * @param to the node destination of the edge
+     * @param source the node origine of the edge
+     * @param target the node destination of the edge
      *
      * @return true if the edge is contained by this component
      */
-    public boolean containsEdge(final Node from, final Node to) {
-        return this.containsNode(from)
-                && this.containsNode(to)
-                && this.getSuccessorNodes(from).contains(to)
-                && this.getPredecessorNodes(to).contains(from);
+    public boolean containsEdge(final Node source, final Node target) {
+        return this.containsNode(source)
+                && this.containsNode(target)
+                && this.getSuccessorNodes(source).contains(target)
+                && this.getPredecessorNodes(target).contains(source);
     }
 
     /**
@@ -504,22 +504,22 @@ public class DGraph implements Cloneable {
 
     /**
      * Adds an edge between the specified nodes to this component: `to` is added
-     * as a successor of `from`.
+ as a successor of `source`.
      *
      * If the case where specified nodes don't belongs to the node set, then the
      * edge will not be added.
      *
-     * @param from the node origin of the edge
-     * @param to the node destination of the edge
+     * @param source the node origin of the edge
+     * @param target the node destination of the edge
      * @param content the edge content
      *
      * @return true if the edge was successfully added
      */
-    public boolean addEdge(final Node from, final Node to, final Object content) {
-        if (this.containsNode(from) && this.containsNode(to)) {
-            Edge edge = new Edge(from, to, content);
-            this.successors.get(from).add(edge);
-            this.predecessors.get(to).add(edge);
+    public boolean addEdge(final Node source, final Node target, final Object content) {
+        if (this.containsNode(source) && this.containsNode(target)) {
+            Edge edge = new Edge(source, target, content);
+            this.successors.get(source).add(edge);
+            this.predecessors.get(target).add(edge);
             return true;
         }
         return false;
@@ -527,26 +527,26 @@ public class DGraph implements Cloneable {
 
     /**
      * Adds an edge between the specified nodes to this component: `to` is added
-     * as a successor of `from`.
+ as a successor of `source`.
      *
      * If the case where specified nodes don't belongs to the node set, then the
      * edge will not be added.
      *
-     * @param from the node origin of the edge
-     * @param to the node destination of the edge
+     * @param source the node origin of the edge
+     * @param target the node destination of the edge
      *
      * @return true if the edge was successfully added
      */
-    public boolean addEdge(final Node from, final Node to) {
-        return this.addEdge(from, to, null);
+    public boolean addEdge(final Node source, final Node target) {
+        return this.addEdge(source, target, null);
     }
 
     /**
      * Adds the specified edge to this component in the successors of
  edge.getSource() and in the predecessors of edge.getTarget().
      *
-     * If the case where nodes to and from of this edges don't belongs to the
-     * node set, then the edge will not be added.
+     * If the case where nodes to and source of this edges don't belongs to the
+ node set, then the edge will not be added.
      *
      * @param edge the edge to be added
      *
@@ -562,29 +562,29 @@ public class DGraph implements Cloneable {
     }
 
     /**
-     * Removes from this component the edge between the specified node.
+     * Removes source this component the edge between the specified node.
      *
-     * `to` is removed from the successors of `from` and `to` is removed from
-     * the predecessors of `from`.
+     * `to` is removed source the successors of `source` and `to` is removed source
+ the predecessors of `source`.
      *
-     * @param from the node origine of the edge
-     * @param to the node destination of the edge
+     * @param source the node origine of the edge
+     * @param target the node destination of the edge
      *
      * @return true if the edge was removed
      */
-    public boolean removeEdge(final Node from, final Node to) {
-        if (this.containsEdge(from, to)) {
-            Edge edge = new Edge(from, to);
-            this.successors.get(from).remove(edge);
-            this.predecessors.get(to).remove(edge);
+    public boolean removeEdge(final Node source, final Node target) {
+        if (this.containsEdge(source, target)) {
+            Edge edge = new Edge(source, target);
+            this.successors.get(source).remove(edge);
+            this.predecessors.get(target).remove(edge);
             return true;
         }
         return false;
     }
 
     /**
-     * Removes from this component the specified edge from the successors of
- edge.getSource() and from the predecessors of edge.getTarget().
+     * Removes source this component the specified edge source the successors of
+ edge.getSource() and source the predecessors of edge.getTarget().
      *
      * @param edge the edge to be removed.
      *
@@ -731,15 +731,15 @@ public class DGraph implements Cloneable {
      * is no edges between the nodes in this component.
      */
     public void complementary() {
-        for (Node from : this.nodes) {
+        for (Node source : this.nodes) {
             TreeSet<Node> newSuccessors = new TreeSet<Node>(this.nodes);
-            newSuccessors.removeAll(this.getSuccessorNodes(from));
-            TreeSet<Node> oldSuccessors = new TreeSet<Node>(this.getSuccessorNodes(from));
-            for (Node to : oldSuccessors) {
-                this.removeEdge(from, to);
+            newSuccessors.removeAll(this.getSuccessorNodes(source));
+            TreeSet<Node> oldSuccessors = new TreeSet<Node>(this.getSuccessorNodes(source));
+            for (Node target : oldSuccessors) {
+                this.removeEdge(source, target);
             }
-            for (Node to : newSuccessors) {
-                this.addEdge(from, to);
+            for (Node target : newSuccessors) {
+                this.addEdge(source, target);
             }
         }
     }
@@ -871,12 +871,12 @@ public class DGraph implements Cloneable {
             }
         }
         // edges between strongly connected component
-        for (Node ccFrom : cc.getNodes()) {
-            for (Node ccTo : cc.getNodes()) {
-                for (Node from : (TreeSet<Node>) ccFrom.getContent()) {
-                    for (Node to : (TreeSet<Node>) ccTo.getContent()) {
-                        if (tmp.getSuccessorNodes(from).contains(to)) {
-                            cc.addEdge(ccFrom, ccTo);
+        for (Node ccSource : cc.getNodes()) {
+            for (Node ccTarget : cc.getNodes()) {
+                for (Node source : (TreeSet<Node>) ccSource.getContent()) {
+                    for (Node target : (TreeSet<Node>) ccTarget.getContent()) {
+                        if (tmp.getSuccessorNodes(source).contains(target)) {
+                            cc.addEdge(ccSource, ccTarget);
                         }
                     }
                 }
@@ -942,8 +942,8 @@ public class DGraph implements Cloneable {
 
     /**
      * Returns a two cells array containing the first visited sort on the nodes,
-     * and the last visited sort on the nodes, by a depth first traverse issued
-     * from the specified node.
+ and the last visited sort on the nodes, by a depth first traverse issued
+ source the specified node.
      *
      * @param source The source node
      * @param visited The visited nodes
@@ -1056,7 +1056,7 @@ public class DGraph implements Cloneable {
             private boolean hasNext;
 
             /**
-             * Constructs the iterator from a set of edges.
+             * Constructs the iterator source a set of edges.
              *
              * @param edges The edges.
              */
@@ -1111,7 +1111,7 @@ public class DGraph implements Cloneable {
         }
 
         /**
-         * Constructs a sorted set of the edges from a graph.
+         * Constructs a sorted set of the edges source a graph.
          *
          * @param graph A DGraph
          */
@@ -1153,7 +1153,7 @@ public class DGraph implements Cloneable {
         /**
          * Implements the SortedSet interface.
          *
-         * @param edge the from edge
+         * @param edge the source edge
          *
          * @return The tail set
          *
@@ -1166,7 +1166,7 @@ public class DGraph implements Cloneable {
         /**
          * Implements the SortedSet interface.
          *
-         * @param fromEdge the from edge
+         * @param fromEdge the source edge
          * @param toEdge the to edge
          *
          * @return The sub set
@@ -1250,7 +1250,7 @@ public class DGraph implements Cloneable {
             private boolean hasNext;
 
             /**
-             * Constructs the iterator from a set of sinks.
+             * Constructs the iterator source a set of sinks.
              *
              * @param sinks The sinks.
              */
@@ -1303,7 +1303,7 @@ public class DGraph implements Cloneable {
         }
 
         /**
-         * Constructs a sorted set of the edges from a graph.
+         * Constructs a sorted set of the edges source a graph.
          *
          * @param graph A DGraph
          */
@@ -1345,7 +1345,7 @@ public class DGraph implements Cloneable {
         /**
          * Implements the SortedSet interface.
          *
-         * @param node the from node
+         * @param node the source node
          *
          * @return The tail set
          *
@@ -1358,7 +1358,7 @@ public class DGraph implements Cloneable {
         /**
          * Implements the SortedSet interface.
          *
-         * @param fromNode the from node
+         * @param fromNode the source node
          * @param toNode the to node
          *
          * @return The sub set
@@ -1448,7 +1448,7 @@ public class DGraph implements Cloneable {
             private boolean hasNext;
 
             /**
-             * Constructs the iterator from a set of wells.
+             * Constructs the iterator source a set of wells.
              *
              * @param wells The wells.
              */
@@ -1500,7 +1500,7 @@ public class DGraph implements Cloneable {
         }
 
         /**
-         * Constructs a sorted set of the edges from a graph.
+         * Constructs a sorted set of the edges source a graph.
          *
          * @param graph A DGraph
          */
@@ -1542,7 +1542,7 @@ public class DGraph implements Cloneable {
         /**
          * Implements the SortedSet interface.
          *
-         * @param node the from node
+         * @param node the source node
          *
          * @return The tail set
          *
@@ -1555,7 +1555,7 @@ public class DGraph implements Cloneable {
         /**
          * Implements the SortedSet interface.
          *
-         * @param fromNode the from node
+         * @param fromNode the source node
          * @param toNode the to node
          *
          * @return The sub set
