@@ -46,16 +46,6 @@ public class ComparableSetTest {
     }
 
     /**
-     * Test the toString method.
-     */
-    @Test
-    public void testToString() {
-        ComparableSet set = new ComparableSet();
-        set.add(new String("Hello world"));
-        assertEquals(set.toString(), "[Hello world]");
-    }
-
-    /**
      * Test the clone method.
      */
     @Test
@@ -66,42 +56,6 @@ public class ComparableSetTest {
         set.add(Integer.valueOf(3));
         ComparableSet copy = set.clone();
         assertEquals(set, copy);
-    }
-
-    /**
-     * Test the equals method.
-     */
-    @Test
-    public void testEquals() {
-        ComparableSet set1 = new ComparableSet();
-        set1.add(Integer.valueOf(1));
-        set1.add(Integer.valueOf(2));
-        set1.add(Integer.valueOf(3));
-
-        ComparableSet set2 = new ComparableSet();
-        set2.add(Integer.valueOf(1));
-        set2.add(Integer.valueOf(2));
-        set2.add(Integer.valueOf(3));
-
-        assertTrue(set1.equals(set2));
-
-        set2.add(Integer.valueOf(4));
-        assertFalse(set1.equals(set2));
-
-        assertFalse(set1.equals(Integer.valueOf(0)));
-    }
-
-    /**
-     * Test the hashCode method.
-     */
-    @Test
-    public void testHashCode() {
-        TreeSet<Comparable> set = new TreeSet<Comparable>();
-        set.add(Integer.valueOf(1));
-        set.add(Integer.valueOf(2));
-        set.add(Integer.valueOf(3));
-        ComparableSet comparableSet = new ComparableSet(set);
-        assertEquals(set.hashCode(), comparableSet.hashCode());
     }
 
     /**
