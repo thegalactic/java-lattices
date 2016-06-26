@@ -76,6 +76,7 @@ public class ComparableSet<E extends Comparable> extends TreeSet<E> implements C
      *
      * @return a clone of this component.
      */
+    @Override
     public ComparableSet clone() {
         return (ComparableSet) super.clone();
     }
