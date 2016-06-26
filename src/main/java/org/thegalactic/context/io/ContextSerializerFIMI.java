@@ -115,7 +115,7 @@ public final class ContextSerializerFIMI implements Reader<Context>, Writer<Cont
 
             // Tokenize the line
             for (final String token : str.split(" +")) {
-                Integer attribute = Integer.parseInt(token);
+                final Integer attribute = Integer.parseInt(token);
                 if (!context.containsAttribute(attribute)) {
                     context.addToAttributes(attribute);
                 }
