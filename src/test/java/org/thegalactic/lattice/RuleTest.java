@@ -45,8 +45,8 @@ public class RuleTest {
         ComparableSet p = new ComparableSet();
         ComparableSet c = new ComparableSet();
         Rule r = new Rule(p, c);
-        assertEquals(r.getPremise(), p);
-        assertEquals(r.getConclusion(), c);
+        assertEquals(p, r.getPremise());
+        assertEquals(c, r.getConclusion());
     }
 
     /**
@@ -57,8 +57,8 @@ public class RuleTest {
         ComparableSet p = new ComparableSet();
         ComparableSet c = new ComparableSet();
         Rule r = new Rule(p, c);
-        assertEquals(r.getPremise(), p);
-        assertEquals(r.getConclusion(), c);
+        assertEquals(p, r.getPremise());
+        assertEquals(c, r.getConclusion());
     }
 
     /**
@@ -69,8 +69,8 @@ public class RuleTest {
         ComparableSet p = new ComparableSet();
         ComparableSet c = new ComparableSet();
         Rule r = new Rule(p, c);
-        assertEquals(r.getPremise(), p);
-        assertEquals(r.getConclusion(), c);
+        assertEquals(p, r.getPremise());
+        assertEquals(c, r.getConclusion());
     }
 
     /**
@@ -187,7 +187,7 @@ public class RuleTest {
         Node b = new Node('b');
         r.addToPremise(a);
         r.addToConclusion(b);
-        assertEquals(r.toString(), "a  -> b ");
+        assertEquals("a -> b", r.toString());
     }
 
     /**
@@ -196,7 +196,7 @@ public class RuleTest {
     @Test
     public void testhashCode() {
         Rule r = new Rule();
-        assertEquals(r.hashCode(), (Object) r.hashCode());
+        assertEquals((Object) r.hashCode(), r.hashCode());
     }
 
     /**
@@ -215,6 +215,6 @@ public class RuleTest {
     @Test
     public void testcompareTo() {
         Rule r = new Rule();
-        assertEquals(r.compareTo(r), 0);
+        assertEquals(0, r.compareTo(r));
     }
 }

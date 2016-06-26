@@ -87,10 +87,10 @@ public class ImplicationalSystemTest {
             FileWriter out = new FileWriter(file);
             String newLine = System.getProperty("line.separator");
             out.write("a b c " + newLine);
-            out.write("a -> b c " + newLine);
+            out.write("a -> b c" + newLine);
             out.close();
             ImplicationalSystem is = new ImplicationalSystem(file.getAbsolutePath());
-            assertEquals(is.toString(), "a b c " + newLine + "a  -> b c " + newLine);
+            assertEquals("a b c " + newLine + "a -> b c" + newLine, is.toString());
             assertEquals(is.getRules().size(), 1);
             file.delete();
         } catch (IOException e) {
@@ -236,7 +236,7 @@ public class ImplicationalSystemTest {
             while (scanner.hasNextLine()) {
                 content += scanner.nextLine();
             }
-            assertEquals(content, "a b c a  -> b c ");
+            assertEquals(content, "a b c a -> b c");
             file.delete();
         } catch (IOException e) {
             System.out.println("IOException : " + e.getMessage());
