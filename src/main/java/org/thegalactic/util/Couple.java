@@ -97,7 +97,7 @@ public class Couple {
      * @return true if c is equals to this component.
      */
     public boolean equals(Couple c) {
-        return (this.left == c.getLeft()) && (this.right == c.getRight());
+        return this.left == c.getLeft() && this.right == c.getRight();
     }
 
     /**
