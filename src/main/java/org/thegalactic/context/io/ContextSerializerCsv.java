@@ -162,7 +162,7 @@ public final class ContextSerializerCsv implements Reader<Context>, Writer<Conte
             if (first == 1) {
                 identifier = record.get(0);
             } else {
-                identifier = j + "";
+                identifier = String.valueOf(j);
             }
 
             // Detect duplicated identifier
