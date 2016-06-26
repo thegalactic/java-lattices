@@ -60,5 +60,6 @@ public final class ImplicationalSystemIOFactory extends org.thegalactic.io.IOFac
      * This class is not designed to be publicly instantiated.
      */
     private ImplicationalSystemIOFactory() {
+        super();
     }
 }
