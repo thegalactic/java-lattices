@@ -70,7 +70,7 @@ public final class Filer<E> {
      *
      * @throws IOException When an IOException occurs
      */
-    public void save(final E e, IOFactory factory, final String filename) throws IOException {
+    public void save(final E e, final IOFactory factory, final String filename) throws IOException {
         final BufferedWriter file = new BufferedWriter(new FileWriter(filename));
         factory.getWriter(Filer.getExtension(filename)).write(e, file);
         file.close();
