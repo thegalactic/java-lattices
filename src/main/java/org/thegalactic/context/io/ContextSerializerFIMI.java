@@ -157,7 +157,7 @@ public final class ContextSerializerFIMI implements Reader<Context>, Writer<Cont
             count++;
             map.put(att, count);
         }
-        for (Comparable obs : context.getObservations()) {
+        for (final Comparable obs : context.getObservations()) {
             for (Comparable att : context.getIntent(obs)) {
                 file.write(map.get(att) + " ");
             }
