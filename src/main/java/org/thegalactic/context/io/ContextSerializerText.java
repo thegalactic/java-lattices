@@ -194,7 +194,7 @@ public final class ContextSerializerText implements Reader<Context>, Writer<Cont
      *
      * @throws IOException When an IOException occurs
      */
-    public void write(Context context, final BufferedWriter file) throws IOException {
+    public void write(final Context context, final BufferedWriter file) throws IOException {
         file.write(context.toString());
     }
 }
