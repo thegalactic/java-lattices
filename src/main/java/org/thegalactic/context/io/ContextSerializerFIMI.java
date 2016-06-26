@@ -38,6 +38,11 @@ import org.thegalactic.io.Writer;
 public final class ContextSerializerFIMI implements Reader<Context>, Writer<Context> {
 
     /**
+     * String extension.
+     */
+    private final static String EXTENSION = "dat";
+
+    /**
      * The singleton instance.
      */
     private static final ContextSerializerFIMI INSTANCE = new ContextSerializerFIMI();
@@ -55,8 +60,8 @@ public final class ContextSerializerFIMI implements Reader<Context>, Writer<Cont
      * Register this class for reading and writing .dat files.
      */
     public static void register() {
-        ContextIOFactory.getInstance().registerReader(ContextSerializerFIMI.getInstance(), "dat");
-        ContextIOFactory.getInstance().registerWriter(ContextSerializerFIMI.getInstance(), "dat");
+        ContextIOFactory.getInstance().registerReader(ContextSerializerFIMI.getInstance(), EXTENSION);
+        ContextIOFactory.getInstance().registerWriter(ContextSerializerFIMI.getInstance(), EXTENSION);
     }
 
     /**
