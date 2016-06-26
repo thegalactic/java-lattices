@@ -67,11 +67,12 @@ public final class ArrowRelationSerializerTeX implements Writer<ArrowRelation> {
 
     /**
      * Produces the LaTex source code for the array of arrows of this component.
+     *
      * The LaTeX source produced isn't autonomous. It must be included in a
      * document.
      *
      * @param arrow an arrow relation to write
-     * @param file a file
+     * @param file  a file
      *
      * @throws IOException When an IOException occurs
      */
@@ -83,58 +84,68 @@ public final class ArrowRelationSerializerTeX implements Writer<ArrowRelation> {
             m.add(edge.getSource());
             j.add(edge.getTarget());
         }
-        StringBuilder builder = new StringBuilder();
-        builder.append("\\begin{tabular}{|c|*{").append(j.size()).append("}{c|}}");
-        file.write(builder.toString());
+        file.write("\\begin{tabular}{|c|*{");
+        file.write(String.valueOf(j.size()));
+        file.write("}{c|}}");
         file.newLine();
 
-        builder.setLength(0);
-        builder.append("\\hline");
-        file.write(builder.toString());
-        file.newLine();
+        this.writeHline(file);
 
-        builder.setLength(0);
         for (Node nj : j) {
-            builder.append(" & ").append(nj.getContent());
+            file.write(" & ");
+            file.write(nj.getContent().toString());
         }
-        builder.append("\\\\");
-        file.write(builder.toString());
-        file.newLine();
+        this.writeEndOfLine(file);
 
-        builder.setLength(0);
-        builder.append("\\hline");
-        file.write(builder.toString());
-        file.newLine();
+        this.writeHline(file);
 
         for (Node nm : m) {
-            builder.setLength(0);
-            builder.append(nm.getContent());
+            file.write(nm.getContent().toString());
             for (Node nj : j) {
                 Edge edge = arrow.getEdge(nm, nj);
                 if (arrow.isUp(edge)) {
-                    builder.append(" & $\\uparrow$");
+                    file.write(" & $\\uparrow$");
                 } else if (arrow.isDown(edge)) {
-                    builder.append(" & $\\downarrow$");
+                    file.write(" & $\\downarrow$");
                 } else if (arrow.isUpDown(edge)) {
-                    builder.append(" & $\\updownarrow$");
+                    file.write(" & $\\updownarrow$");
                 } else if (arrow.isCross(edge)) {
-                    builder.append(" & $\\times$");
+                    file.write(" & $\\times$");
                 } else {
-                    builder.append(" & $\\circ$");
+                    file.write(" & $\\circ$");
                 }
             }
-            builder.append("\\\\");
-            file.write(builder.toString());
-            file.newLine();
 
-            builder.setLength(0);
-            builder.append("\\hline");
-            file.write(builder.toString());
-            file.newLine();
+            this.writeEndOfLine(file);
+
+            this.writeHline(file);
         }
-        builder.setLength(0);
-        builder.append("\\end{tabular}");
-        file.write(builder.toString());
+
+        file.write("\\end{tabular}");
+        file.newLine();
+    }
+
+    /**
+     * Write a \hline in LaTeX.
+     *
+     * @param file a file
+     *
+     * @throws IOException When an IOException occurs
+     */
+    private void writeHline(BufferedWriter file) throws IOException {
+        file.write("\\hline");
+        file.newLine();
+    }
+
+    /**
+     * Write a LateX end of line.
+     *
+     * @param file a file
+     *
+     * @throws IOException When an IOException occurs
+     */
+    private void writeEndOfLine(BufferedWriter file) throws IOException {
+        file.write("\\\\");
         file.newLine();
     }
 }
