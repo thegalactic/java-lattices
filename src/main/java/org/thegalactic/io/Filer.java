@@ -48,7 +48,7 @@ public final class Filer<E> {
      */
     private static String getExtension(final String filename) {
         String extension = "";
-        int index = filename.lastIndexOf('.');
+        final int index = filename.lastIndexOf('.');
         if (index > 0) {
             extension = filename.substring(index + 1);
         }
