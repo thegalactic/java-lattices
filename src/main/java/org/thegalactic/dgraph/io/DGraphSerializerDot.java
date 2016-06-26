@@ -31,10 +31,8 @@ import org.thegalactic.io.Writer;
  * !include resources/org/thegalactic/dgraph/io/DGraphSerializerDot.iuml
  * !include resources/org/thegalactic/io/Writer.iuml
  *
- * hide members
- * show DGraphSerializerDot members
- * class DGraphSerializerDot #LightCyan
- * title DGraphSerializerDot UML graph
+ * hide members show DGraphSerializerDot members class DGraphSerializerDot
+ * #LightCyan title DGraphSerializerDot UML graph
  */
 public final class DGraphSerializerDot implements Writer<DGraph> {
 
@@ -84,9 +82,7 @@ public final class DGraphSerializerDot implements Writer<DGraph> {
 
         for (final Node node : graph.getNodes()) {
             file.write(String.valueOf(node.getIdentifier()));
-            file.write(" [label=\"");
-            file.write(node.toString().replace("\"", "\\\""));
-            file.write("\"]");
+            this.writeLabel(node.toString(), file);
             file.write(newLine);
         }
 
@@ -95,13 +91,25 @@ public final class DGraphSerializerDot implements Writer<DGraph> {
             file.write("->");
             file.write(String.valueOf(edge.getTarget().getIdentifier()));
             if (edge.hasContent()) {
-                file.write(" [label=\"");
-                file.write(edge.getContent().toString().replace("\"", "\\\""));
-                file.write("\"]");
+                this.writeLabel(edge.getContent().toString(), file);
             }
             file.write(newLine);
         }
 
         file.write("}");
+    }
+
+    /**
+     * Write a label to the dot file.
+     *
+     * @param label a label
+     * @param file a file
+     *
+     * @throws IOException When an IOException occurs
+     */
+    private void writeLabel(final String label, final BufferedWriter file) throws IOException {
+        file.write(" [label=\"");
+        file.write(label.replace("\"", "\\\""));
+        file.write("\"]");
     }
 }
