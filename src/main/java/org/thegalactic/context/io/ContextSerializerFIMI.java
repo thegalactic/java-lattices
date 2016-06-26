@@ -111,7 +111,7 @@ public final class ContextSerializerFIMI implements Reader<Context>, Writer<Cont
             context.addToObservations(identifier);
 
             // Get the current line
-            String str = file.readLine();
+            final String str = file.readLine();
 
             // Tokenize the line
             StringTokenizer tok = new StringTokenizer(str);
