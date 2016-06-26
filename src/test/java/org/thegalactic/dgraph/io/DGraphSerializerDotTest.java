@@ -11,15 +11,16 @@ package org.thegalactic.dgraph.io;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.thegalactic.dgraph.DGraph;
 
@@ -27,6 +28,12 @@ import org.thegalactic.dgraph.DGraph;
  * Test the org.thegalactic.dgraph.io.DGraphSerializerDot class.
  */
 public class DGraphSerializerDotTest {
+
+    /**
+     * Logger.
+     */
+    private static final Logger LOGGER = Logger.getLogger(DGraphSerializerDotTest.class.getName());
+
     /**
      * Test getInstance.
      */
@@ -51,9 +58,8 @@ public class DGraphSerializerDotTest {
             assertEquals(list.get(1), "Graph [rankdir=BT]");
             assertEquals(list.get(2), "}");
             file.delete();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException exception) {
+            LOGGER.warning(exception.getMessage());
         }
     }
 }
-
