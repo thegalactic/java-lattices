@@ -64,7 +64,7 @@ public class ComparableSet<E extends Comparable> extends TreeSet<E> implements C
      *
      * @param set a comparable set
      */
-    public ComparableSet(SortedSet<E> set) {
+    public ComparableSet(final SortedSet<E> set) {
         super(set);
     }
 
