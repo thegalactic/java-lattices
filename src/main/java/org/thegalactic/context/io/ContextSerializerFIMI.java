@@ -97,7 +97,7 @@ public final class ContextSerializerFIMI implements Reader<Context>, Writer<Cont
      *
      * @throws IOException When an IOException occurs
      */
-    public void read(Context context, BufferedReader file) throws IOException {
+    public void read(final Context context, BufferedReader file) throws IOException {
         // Initialize the line number
         int lineNumber = 0;
 
