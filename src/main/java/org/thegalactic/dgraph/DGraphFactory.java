@@ -1,14 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.thegalactic.dgraph;
 
+/*
+ * DGraphFactory.java
+ *
+ * Copyright: 2016 The Galactic Organization, France
+ *
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
+ * This file is part of java-lattices.
+ * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
+ */
 /**
  * DGraphFactory.
  */
-public final class DGraphFactory {
+public abstract class DGraphFactory {
 
     /*
      * ----------- STATIC GENERATION METHODS -------------
@@ -21,16 +26,16 @@ public final class DGraphFactory {
      *
      * @return a random graph
      */
-    public static DGraph random(int size, double threshold) {
-        DGraph graph = new DGraph();
+    public static DGraph random(final int size, final double threshold) {
+        final DGraph graph = new DGraph();
         // addition of nodes
         for (int i = 1; i <= size; i++) {
             Node node = new Node(i);
             graph.addNode(node);
         }
         // addition of edges
-        for (Node source : graph.getNodes()) {
-            for (Node target : graph.getNodes()) {
+        for (final Node source : graph.getNodes()) {
+            for (final Node target : graph.getNodes()) {
                 if (Math.random() < threshold) {
                     graph.addEdge(source, target);
                 }
@@ -46,15 +51,7 @@ public final class DGraphFactory {
      *
      * @return a random graph
      */
-    public static DGraph random(int size) {
+    public static DGraph random(final int size) {
         return random(size, 0.5);
     }
-
-    /**
-     * This class is not designed to be publicly instantiated.
-     */
-    private DGraphFactory() {
-        super();
-    }
-
 }
