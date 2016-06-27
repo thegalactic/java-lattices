@@ -83,20 +83,6 @@ public class DGraphTest {
     }
 
     /**
-     * Test the random static method.
-     */
-    @Test
-    public void testRandom() {
-        DGraph graph = DGraph.random(10, 0);
-        assertEquals(graph.sizeNodes(), 10);
-        assertEquals(graph.sizeEdges(), 0);
-
-        graph = DGraph.random(10, 1);
-        assertEquals(graph.sizeNodes(), 10);
-        assertEquals(graph.sizeEdges(), 100);
-    }
-
-    /**
      * Test the clone method.
      */
     @Test
