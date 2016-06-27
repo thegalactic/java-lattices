@@ -13,7 +13,7 @@ package org.thegalactic.dgraph;
 /**
  * DGraphFactory.
  */
-public class DGraphFactory {
+public final class DGraphFactory {
 
     /*
      * ----------- STATIC GENERATION METHODS -------------
@@ -30,7 +30,7 @@ public class DGraphFactory {
         final DGraph graph = new DGraph();
         // addition of nodes
         for (int i = 1; i <= size; i++) {
-            Node node = new Node(i);
+            final Node node = new Node(i);
             graph.addNode(node);
         }
         // addition of edges
