@@ -21,30 +21,24 @@ import org.thegalactic.io.Filer;
 public abstract class AbstractDGraph {
 
     /**
-     * Basic constructor.
-     */
-    public AbstractDGraph() {
-    }
-
-    /**
      * Returns a String representation of this component.
      *
      * @return the string representation
      */
     @Override
     public String toString() {
-        StringBuilder nodes = new StringBuilder();
+        final StringBuilder nodes = new StringBuilder();
         nodes.append(this.sizeNodes()).append(" Nodes: {");
-        StringBuilder edges = new StringBuilder();
+        final StringBuilder edges = new StringBuilder();
         edges.append(this.sizeEdges()).append(" Edges: {");
-        for (Node node : this.getNodes()) {
-            nodes.append(node.toString()).append(",");
+        for (final Node node : this.getNodes()) {
+            nodes.append(node.toString()).append(',');
         }
-        for (Edge edge : this.getEdges()) {
-            edges.append(edge.toString()).append(",");
+        for (final Edge edge : this.getEdges()) {
+            edges.append(edge.toString()).append(',');
         }
-        String newLine = System.getProperty("line.separator");
-        nodes.append("}").append(newLine).append(edges).append("}").append(newLine);
+        final String newLine = System.getProperty("line.separator");
+        nodes.append('}').append(newLine).append(edges).append('}').append(newLine);
         return nodes.toString();
     }
 

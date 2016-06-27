@@ -130,6 +130,8 @@ public class DGraph extends AbstractDGraph implements Cloneable {
      * each edge.
      *
      * @return the clone of this
+     *
+     * @throws java.lang.CloneNotSupportedException
      */
     @Override
     public DGraph clone() throws CloneNotSupportedException {
