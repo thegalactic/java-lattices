@@ -110,92 +110,7 @@ public abstract class AbstractDGraph {
         /**
          * The underlying graph.
          */
-        private AbstractDGraph graph;
-
-        /**
-         * Get the underlying graph.
-         *
-         * @return the graph
-         */
-        protected AbstractDGraph getGraph() {
-            return graph;
-        }
-
-        /**
-         * This class implements an iterator over the edges of a graph.
-         */
-        private class SinksIterator implements Iterator<Node> {
-
-            /**
-             * The nodes iterator.
-             */
-            private Iterator<Node> nodesIterator;
-            /**
-             * The sinks object.
-             */
-            private DGraph.Sinks sinks;
-            /**
-             * The next sink.
-             */
-            private Node next;
-            /**
-             * The hasNext flag.
-             */
-            private boolean hasNext;
-
-            /**
-             * Constructs the iterator source a set of sinks.
-             *
-             * @param sinks The sinks.
-             */
-            SinksIterator(DGraph.Sinks sinks) {
-                super();
-                this.sinks = sinks;
-                this.nodesIterator = sinks.graph.getNodes().iterator();
-                this.prepareNext();
-            }
-
-            /**
-             * Prepare the next sink and the hasNext flag.
-             */
-            private void prepareNext() {
-                hasNext = false;
-                while (!hasNext && nodesIterator.hasNext()) {
-                    next = nodesIterator.next();
-                    hasNext = sinks.graph.getPredecessorEdges(next).isEmpty();
-                }
-            }
-
-            /**
-             * The remove operation is not supported.
-             *
-             * @throws UnsupportedOperationException
-             */
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
-            }
-
-            /**
-             * The next method returns the next sink.
-             *
-             * @return The next sink
-             */
-            public Node next() {
-                Node sink = next;
-                this.prepareNext();
-                return sink;
-            }
-
-            /**
-             * The hasNext method return true if the iterator has a next edge.
-             *
-             * @return true if the iterator has a next edge
-             */
-            public boolean hasNext() {
-                return hasNext;
-            }
-        }
+        private final AbstractDGraph graph;
 
         /**
          * Constructs a sorted set of the edges source a graph.
@@ -205,6 +120,15 @@ public abstract class AbstractDGraph {
         Sinks(DGraph graph) {
             super();
             this.graph = graph;
+        }
+
+        /**
+         * Get the underlying graph.
+         *
+         * @return the graph
+         */
+        protected AbstractDGraph getGraph() {
+            return graph;
         }
 
         /**
@@ -281,7 +205,7 @@ public abstract class AbstractDGraph {
          */
         public int size() {
             int size = 0;
-            DGraph.Sinks.SinksIterator iterator = this.iterator();
+            final Iterator iterator = this.iterator();
             while (iterator.hasNext()) {
                 size++;
                 iterator.next();
@@ -294,8 +218,84 @@ public abstract class AbstractDGraph {
          *
          * @return a new sinks iterator
          */
-        public DGraph.Sinks.SinksIterator iterator() {
-            return new DGraph.Sinks.SinksIterator(this);
+        public Iterator iterator() {
+            return new SinksIterator(this);
+        }
+
+        /**
+         * This class implements an iterator over the edges of a graph.
+         */
+        private class SinksIterator implements Iterator<Node> {
+
+            /**
+             * The nodes iterator.
+             */
+            private final Iterator<Node> nodesIterator;
+            /**
+             * The sinks object.
+             */
+            private final Sinks sinks;
+            /**
+             * The next sink.
+             */
+            private Node next;
+            /**
+             * The hasNext flag.
+             */
+            private boolean hasNext;
+
+            /**
+             * Constructs the iterator source a set of sinks.
+             *
+             * @param sinks The sinks.
+             */
+            SinksIterator(DGraph.Sinks sinks) {
+                super();
+                this.sinks = sinks;
+                this.nodesIterator = sinks.graph.getNodes().iterator();
+                this.prepareNext();
+            }
+
+            /**
+             * Prepare the next sink and the hasNext flag.
+             */
+            private void prepareNext() {
+                hasNext = false;
+                while (!hasNext && nodesIterator.hasNext()) {
+                    next = nodesIterator.next();
+                    hasNext = sinks.graph.getPredecessorEdges(next).isEmpty();
+                }
+            }
+
+            /**
+             * The remove operation is not supported.
+             *
+             * @throws UnsupportedOperationException
+             */
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+
+            /**
+             * The next method returns the next sink.
+             *
+             * @return The next sink
+             */
+            public Node next() {
+                final Node sink = next;
+                this.prepareNext();
+                return sink;
+            }
+
+            /**
+             * The hasNext method return true if the iterator has a next edge.
+             *
+             * @return true if the iterator has a next edge
+             */
+            public boolean hasNext() {
+                return hasNext;
+            }
         }
     }
 
@@ -307,7 +307,7 @@ public abstract class AbstractDGraph {
         /**
          * The underlying graph.
          */
-        private AbstractDGraph graph;
+        private final AbstractDGraph graph;
 
         /**
          * Get the underlying graph.
@@ -326,11 +326,11 @@ public abstract class AbstractDGraph {
             /**
              * The nodes iterator.
              */
-            private Iterator<Node> nodesIterator;
+            private final Iterator<Node> nodesIterator;
             /**
              * The wells object.
              */
-            private DGraph.Wells wells;
+            private final Wells wells;
             /**
              * The next well.
              */
@@ -345,7 +345,7 @@ public abstract class AbstractDGraph {
              *
              * @param wells The wells.
              */
-            WellsIterator(DGraph.Wells wells) {
+            WellsIterator(Wells wells) {
                 super();
                 this.wells = wells;
                 this.nodesIterator = wells.graph.getNodes().iterator();
@@ -368,6 +368,7 @@ public abstract class AbstractDGraph {
              *
              * @throws UnsupportedOperationException
              */
+            @Override
             public void remove() {
                 throw new UnsupportedOperationException();
             }
@@ -378,7 +379,7 @@ public abstract class AbstractDGraph {
              * @return The next well
              */
             public Node next() {
-                Node well = next;
+                final Node well = next;
                 this.prepareNext();
                 return well;
             }
@@ -477,7 +478,7 @@ public abstract class AbstractDGraph {
          */
         public int size() {
             int size = 0;
-            DGraph.Wells.WellsIterator iterator = this.iterator();
+            final Iterator iterator = this.iterator();
             while (iterator.hasNext()) {
                 size++;
                 iterator.next();
@@ -490,8 +491,8 @@ public abstract class AbstractDGraph {
          *
          * @return a new Wells iterator
          */
-        public DGraph.Wells.WellsIterator iterator() {
-            return new DGraph.Wells.WellsIterator(this);
+        public Iterator iterator() {
+            return new WellsIterator(this);
         }
     }
 }
