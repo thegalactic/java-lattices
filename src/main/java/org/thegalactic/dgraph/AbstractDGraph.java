@@ -218,7 +218,7 @@ public abstract class AbstractDGraph {
          *
          * @return a new sinks iterator
          */
-        public Iterator iterator() {
+        public final Iterator iterator() {
             return new SinksIterator(this);
         }
 
@@ -231,14 +231,17 @@ public abstract class AbstractDGraph {
              * The nodes iterator.
              */
             private final Iterator<Node> nodesIterator;
+
             /**
              * The sinks object.
              */
             private final Sinks sinks;
+
             /**
              * The next sink.
              */
             private Node next;
+
             /**
              * The hasNext flag.
              */
@@ -260,10 +263,10 @@ public abstract class AbstractDGraph {
              * Prepare the next sink and the hasNext flag.
              */
             private void prepareNext() {
-                hasNext = false;
-                while (!hasNext && nodesIterator.hasNext()) {
-                    next = nodesIterator.next();
-                    hasNext = sinks.graph.getPredecessorEdges(next).isEmpty();
+                this.hasNext = false;
+                while (!this.hasNext && this.nodesIterator.hasNext()) {
+                    this.next = this.nodesIterator.next();
+                    this.hasNext = this.sinks.graph.getPredecessorEdges(this.next).isEmpty();
                 }
             }
 
@@ -283,7 +286,7 @@ public abstract class AbstractDGraph {
              * @return The next sink
              */
             public Node next() {
-                final Node sink = next;
+                final Node sink = this.next;
                 this.prepareNext();
                 return sink;
             }
@@ -294,7 +297,7 @@ public abstract class AbstractDGraph {
              * @return true if the iterator has a next edge
              */
             public boolean hasNext() {
-                return hasNext;
+                return this.hasNext;
             }
         }
     }
@@ -315,7 +318,7 @@ public abstract class AbstractDGraph {
          * @return the graph
          */
         protected AbstractDGraph getGraph() {
-            return graph;
+            return this.graph;
         }
 
         /**
@@ -356,10 +359,10 @@ public abstract class AbstractDGraph {
              * Prepare the next well and the hasNext flag.
              */
             private void prepareNext() {
-                hasNext = false;
-                while (!hasNext && nodesIterator.hasNext()) {
-                    next = nodesIterator.next();
-                    hasNext = wells.graph.getSuccessorEdges(next).isEmpty();
+                this.hasNext = false;
+                while (!this.hasNext && this.nodesIterator.hasNext()) {
+                    this.next = this.nodesIterator.next();
+                    this.hasNext = this.wells.graph.getSuccessorEdges(this.next).isEmpty();
                 }
             }
 
@@ -379,7 +382,7 @@ public abstract class AbstractDGraph {
              * @return The next well
              */
             public Node next() {
-                final Node well = next;
+                final Node well = this.next;
                 this.prepareNext();
                 return well;
             }
@@ -390,7 +393,7 @@ public abstract class AbstractDGraph {
              * @return true if the iterator has a next edge
              */
             public boolean hasNext() {
-                return hasNext;
+                return this.hasNext;
             }
         }
 
