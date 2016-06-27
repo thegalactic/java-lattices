@@ -11,7 +11,6 @@ package org.thegalactic.dgraph;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-import java.io.IOException;
 import java.util.AbstractSet;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,9 +21,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
-
-import org.thegalactic.dgraph.io.DGraphIOFactory;
-import org.thegalactic.io.Filer;
 
 /**
  * This class gives a standard representation for a directed graph by sets of
@@ -58,47 +54,7 @@ import org.thegalactic.io.Filer;
  * class DGraph #LightCyan
  * title DGraph UML graph
  */
-public class DGraph implements Cloneable {
-
-    /*
-     * ----------- STATIC GENERATION METHODS -------------
-     */
-    /**
-     * Generates a random directed graph of size nodes.
-     *
-     * @param size      the number of nodes of the generated graph
-     * @param threshold the threshold to generate an edge
-     *
-     * @return a random graph
-     */
-    public static DGraph random(int size, double threshold) {
-        DGraph graph = new DGraph();
-        // addition of nodes
-        for (int i = 1; i <= size; i++) {
-            Node node = new Node(i);
-            graph.addNode(node);
-        }
-        // addition of edges
-        for (Node source : graph.nodes) {
-            for (Node target : graph.nodes) {
-                if (Math.random() < threshold) {
-                    graph.addEdge(source, target);
-                }
-            }
-        }
-        return graph;
-    }
-
-    /**
-     * Generates a random directed graph of size nodes.
-     *
-     * @param size the number of nodes of the generated graph
-     *
-     * @return a random graph
-     */
-    public static DGraph random(int size) {
-        return random(size, 0.5);
-    }
+public class DGraph extends AbstractDGraph implements Cloneable {
 
     /*
      * ------------- FIELDS ------------------
@@ -174,6 +130,8 @@ public class DGraph implements Cloneable {
      * each edge.
      *
      * @return the clone of this
+     *
+     * @throws java.lang.CloneNotSupportedException
      */
     @Override
     public DGraph clone() throws CloneNotSupportedException {
@@ -359,38 +317,6 @@ public class DGraph implements Cloneable {
         return size;
     }
 
-    /**
-     * Returns a String representation of this component.
-     *
-     * @return the string representation
-     */
-    @Override
-    public String toString() {
-        StringBuilder nodes = new StringBuilder();
-        nodes.append(this.sizeNodes()).append(" Nodes: {");
-        StringBuilder edges = new StringBuilder();
-        edges.append(this.sizeEdges()).append(" Edges: {");
-        for (Node source : this.nodes) {
-            nodes.append(source.toString()).append(",");
-        }
-        for (Edge edge : this.getEdges()) {
-            edges.append(edge.toString()).append(",");
-        }
-        String newLine = System.getProperty("line.separator");
-        nodes.append("}").append(newLine).append(edges).append("}").append(newLine);
-        return nodes.toString();
-    }
-
-    /**
-     * Save the description of this component in a file whose name is specified.
-     *
-     * @param filename the name of the file
-     *
-     * @throws IOException When an IOException occurs
-     */
-    public void save(final String filename) throws IOException {
-        Filer.getInstance().save(this, DGraphIOFactory.getInstance(), filename);
-    }
 
     /*
      * --------------- NODES AND EDGES MODIFICATION METHODS ------------
