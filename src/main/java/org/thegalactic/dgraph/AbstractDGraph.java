@@ -26,7 +26,7 @@ public abstract class AbstractDGraph {
      * @return the string representation
      */
     @Override
-    public String toString() {
+    public final String toString() {
         final StringBuilder nodes = new StringBuilder();
         nodes.append(this.sizeNodes()).append(" Nodes: {");
         final StringBuilder edges = new StringBuilder();

@@ -13,7 +13,7 @@ package org.thegalactic.dgraph;
 /**
  * DGraphFactory.
  */
-public abstract class DGraphFactory {
+public class DGraphFactory {
 
     /*
      * ----------- STATIC GENERATION METHODS -------------
@@ -53,5 +53,12 @@ public abstract class DGraphFactory {
      */
     public static DGraph random(final int size) {
         return random(size, 0.5);
+    }
+
+    /**
+     * This class is not designed to be publicly instantiated.
+     */
+    private DGraphFactory() {
+        super();
     }
 }
