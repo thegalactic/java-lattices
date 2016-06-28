@@ -110,7 +110,7 @@ public abstract class AbstractDGraph {
      *
      * @return the sinks
      */
-    public SortedSet<Node> getSinks() {
+    public final SortedSet<Node> getSinks() {
         return new Sinks(this);
     }
 
@@ -119,7 +119,7 @@ public abstract class AbstractDGraph {
      *
      * @return the wells
      */
-    public SortedSet<Node> getWells() {
+    public final SortedSet<Node> getWells() {
         return new Wells(this);
     }
 
@@ -138,7 +138,7 @@ public abstract class AbstractDGraph {
          *
          * @param graph A DGraph
          */
-        Sinks(AbstractDGraph graph) {
+        Sinks(final AbstractDGraph graph) {
             super();
             this.graph = graph;
         }
@@ -148,8 +148,8 @@ public abstract class AbstractDGraph {
          *
          * @return the graph
          */
-        protected AbstractDGraph getGraph() {
-            return graph;
+        protected final AbstractDGraph getGraph() {
+            return this.graph;
         }
 
         /**
@@ -157,7 +157,7 @@ public abstract class AbstractDGraph {
          *
          * @return the first edge
          */
-        public Node first() {
+        public final Node first() {
             throw new UnsupportedOperationException();
         }
 
@@ -166,7 +166,7 @@ public abstract class AbstractDGraph {
          *
          * @return the last edge
          */
-        public Node last() {
+        public final Node last() {
             throw new UnsupportedOperationException();
         }
 
@@ -179,7 +179,7 @@ public abstract class AbstractDGraph {
          *
          * @throws UnsupportedOperationException
          */
-        public SortedSet<Node> headSet(Node node) {
+        public final SortedSet<Node> headSet(Node node) {
             throw new UnsupportedOperationException();
         }
 
@@ -192,7 +192,7 @@ public abstract class AbstractDGraph {
          *
          * @throws UnsupportedOperationException
          */
-        public SortedSet<Node> tailSet(Node node) {
+        public final SortedSet<Node> tailSet(Node node) {
             throw new UnsupportedOperationException();
         }
 
@@ -206,7 +206,7 @@ public abstract class AbstractDGraph {
          *
          * @throws UnsupportedOperationException
          */
-        public SortedSet<Node> subSet(Node fromNode, Node toNode) {
+        public final SortedSet<Node> subSet(Node fromNode, Node toNode) {
             throw new UnsupportedOperationException();
         }
 
@@ -215,7 +215,7 @@ public abstract class AbstractDGraph {
          *
          * @return null
          */
-        public Comparator<? super Node> comparator() {
+        public final Comparator<? super Node> comparator() {
             return null;
         }
 
@@ -224,7 +224,7 @@ public abstract class AbstractDGraph {
          *
          * @return the size of the collection
          */
-        public int size() {
+        public final int size() {
             int size = 0;
             final Iterator iterator = this.iterator();
             while (iterator.hasNext()) {
@@ -273,7 +273,7 @@ public abstract class AbstractDGraph {
              *
              * @param sinks The sinks.
              */
-            SinksIterator(DGraph.Sinks sinks) {
+            SinksIterator(final Sinks sinks) {
                 super();
                 this.sinks = sinks;
                 this.nodesIterator = sinks.graph.getNodes().iterator();
@@ -297,7 +297,7 @@ public abstract class AbstractDGraph {
              * @throws UnsupportedOperationException
              */
             @Override
-            public void remove() {
+            public final void remove() {
                 throw new UnsupportedOperationException();
             }
 
@@ -306,7 +306,7 @@ public abstract class AbstractDGraph {
              *
              * @return The next sink
              */
-            public Node next() {
+            public final Node next() {
                 final Node sink = this.next;
                 this.prepareNext();
                 return sink;
@@ -317,7 +317,7 @@ public abstract class AbstractDGraph {
              *
              * @return true if the iterator has a next edge
              */
-            public boolean hasNext() {
+            public final boolean hasNext() {
                 return this.hasNext;
             }
         }
@@ -338,7 +338,7 @@ public abstract class AbstractDGraph {
          *
          * @return the graph
          */
-        protected AbstractDGraph getGraph() {
+        protected final AbstractDGraph getGraph() {
             return this.graph;
         }
 
@@ -369,7 +369,7 @@ public abstract class AbstractDGraph {
              *
              * @param wells The wells.
              */
-            WellsIterator(Wells wells) {
+            WellsIterator(final Wells wells) {
                 super();
                 this.wells = wells;
                 this.nodesIterator = wells.graph.getNodes().iterator();
@@ -393,7 +393,7 @@ public abstract class AbstractDGraph {
              * @throws UnsupportedOperationException
              */
             @Override
-            public void remove() {
+            public final void remove() {
                 throw new UnsupportedOperationException();
             }
 
@@ -402,7 +402,7 @@ public abstract class AbstractDGraph {
              *
              * @return The next well
              */
-            public Node next() {
+            public final Node next() {
                 final Node well = this.next;
                 this.prepareNext();
                 return well;
@@ -413,7 +413,7 @@ public abstract class AbstractDGraph {
              *
              * @return true if the iterator has a next edge
              */
-            public boolean hasNext() {
+            public final boolean hasNext() {
                 return this.hasNext;
             }
         }
@@ -423,7 +423,7 @@ public abstract class AbstractDGraph {
          *
          * @param graph A DGraph
          */
-        Wells(AbstractDGraph graph) {
+        Wells(final AbstractDGraph graph) {
             super();
             this.graph = graph;
         }
@@ -433,7 +433,7 @@ public abstract class AbstractDGraph {
          *
          * @return the first edge
          */
-        public Node first() {
+        public final Node first() {
             throw new UnsupportedOperationException();
         }
 
@@ -442,7 +442,7 @@ public abstract class AbstractDGraph {
          *
          * @return the last edge
          */
-        public Node last() {
+        public final Node last() {
             throw new UnsupportedOperationException();
         }
 
@@ -455,7 +455,7 @@ public abstract class AbstractDGraph {
          *
          * @throws UnsupportedOperationException
          */
-        public SortedSet<Node> headSet(Node node) {
+        public final SortedSet<Node> headSet(Node node) {
             throw new UnsupportedOperationException();
         }
 
@@ -468,7 +468,7 @@ public abstract class AbstractDGraph {
          *
          * @throws UnsupportedOperationException
          */
-        public SortedSet<Node> tailSet(Node node) {
+        public final SortedSet<Node> tailSet(Node node) {
             throw new UnsupportedOperationException();
         }
 
@@ -482,7 +482,7 @@ public abstract class AbstractDGraph {
          *
          * @throws UnsupportedOperationException
          */
-        public SortedSet<Node> subSet(Node fromNode, Node toNode) {
+        public final SortedSet<Node> subSet(Node fromNode, Node toNode) {
             throw new UnsupportedOperationException();
         }
 
@@ -491,7 +491,7 @@ public abstract class AbstractDGraph {
          *
          * @return null
          */
-        public Comparator<? super Node> comparator() {
+        public final Comparator<? super Node> comparator() {
             return null;
         }
 
@@ -500,7 +500,7 @@ public abstract class AbstractDGraph {
          *
          * @return the size of the collection
          */
-        public int size() {
+        public final int size() {
             int size = 0;
             final Iterator iterator = this.iterator();
             while (iterator.hasNext()) {
@@ -515,7 +515,7 @@ public abstract class AbstractDGraph {
          *
          * @return a new Wells iterator
          */
-        public Iterator iterator() {
+        public final Iterator iterator() {
             return new WellsIterator(this);
         }
     }
