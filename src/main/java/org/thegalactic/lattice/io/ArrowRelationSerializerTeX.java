@@ -133,7 +133,7 @@ public final class ArrowRelationSerializerTeX implements Writer<ArrowRelation> {
      *
      * @throws IOException When an IOException occurs
      */
-    private void writeHline(BufferedWriter file) throws IOException {
+    private void writeHline(final BufferedWriter file) throws IOException {
         file.write("\\hline");
         file.newLine();
     }
