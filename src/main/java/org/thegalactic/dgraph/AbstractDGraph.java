@@ -24,6 +24,13 @@ import org.thegalactic.io.Filer;
 public abstract class AbstractDGraph {
 
     /**
+     * Basic constructor.
+     */
+    protected AbstractDGraph() {
+        super();
+    }
+
+    /**
      * Returns a String representation of this component.
      *
      * @return the string representation
@@ -124,9 +131,9 @@ public abstract class AbstractDGraph {
     }
 
     /**
-     * End.
+     * AbstractEnd.
      */
-    protected abstract class End extends AbstractSet<Node> implements SortedSet<Node> {
+    protected abstract class AbstractEnd extends AbstractSet<Node> implements SortedSet<Node> {
 
         /**
          * The underlying graph.
@@ -138,7 +145,7 @@ public abstract class AbstractDGraph {
          *
          * @param graph A DGraph
          */
-        End(final AbstractDGraph graph) {
+        AbstractEnd(final AbstractDGraph graph) {
             super();
             this.graph = graph;
         }
@@ -239,7 +246,7 @@ public abstract class AbstractDGraph {
     /**
      * This class implements a sorted set of the sinks.
      */
-    protected class Sinks extends End {
+    protected class Sinks extends AbstractEnd {
 
         /**
          * Constructor.
@@ -342,7 +349,7 @@ public abstract class AbstractDGraph {
     /**
      * This class implements a sorted set of the wells.
      */
-    protected class Wells extends End {
+    protected class Wells extends AbstractEnd {
 
         /**
          * Constructs a sorted set of the edges source a graph.
