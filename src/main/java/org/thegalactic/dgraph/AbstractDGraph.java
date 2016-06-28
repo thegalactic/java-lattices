@@ -124,9 +124,9 @@ public abstract class AbstractDGraph {
     }
 
     /**
-     * This class implements a sorted set of the sinks.
+     * End.
      */
-    protected class Sinks extends AbstractSet<Node> implements SortedSet<Node> {
+    protected abstract class End extends AbstractSet<Node> implements SortedSet<Node> {
 
         /**
          * The underlying graph.
@@ -138,7 +138,7 @@ public abstract class AbstractDGraph {
          *
          * @param graph A DGraph
          */
-        Sinks(final AbstractDGraph graph) {
+        End(final AbstractDGraph graph) {
             super();
             this.graph = graph;
         }
@@ -232,6 +232,22 @@ public abstract class AbstractDGraph {
                 iterator.next();
             }
             return size;
+        }
+
+    }
+
+    /**
+     * This class implements a sorted set of the sinks.
+     */
+    protected class Sinks extends End {
+
+        /**
+         * Constructor.
+         *
+         * @param graph the underlying graph
+         */
+        Sinks(final AbstractDGraph graph) {
+            super(graph);
         }
 
         /**
@@ -276,7 +292,7 @@ public abstract class AbstractDGraph {
             SinksIterator(final Sinks sinks) {
                 super();
                 this.sinks = sinks;
-                this.nodesIterator = sinks.graph.getNodes().iterator();
+                this.nodesIterator = sinks.getGraph().getNodes().iterator();
                 this.prepareNext();
             }
 
@@ -287,7 +303,7 @@ public abstract class AbstractDGraph {
                 this.hasNext = false;
                 while (!this.hasNext && this.nodesIterator.hasNext()) {
                     this.next = this.nodesIterator.next();
-                    this.hasNext = this.sinks.graph.getPredecessorEdges(this.next).isEmpty();
+                    this.hasNext = this.sinks.getGraph().getPredecessorEdges(this.next).isEmpty();
                 }
             }
 
@@ -326,21 +342,7 @@ public abstract class AbstractDGraph {
     /**
      * This class implements a sorted set of the wells.
      */
-    protected class Wells extends AbstractSet<Node> implements SortedSet<Node> {
-
-        /**
-         * The underlying graph.
-         */
-        private final AbstractDGraph graph;
-
-        /**
-         * Get the underlying graph.
-         *
-         * @return the graph
-         */
-        protected final AbstractDGraph getGraph() {
-            return this.graph;
-        }
+    protected class Wells extends End {
 
         /**
          * Constructs a sorted set of the edges source a graph.
@@ -348,90 +350,7 @@ public abstract class AbstractDGraph {
          * @param graph A DGraph
          */
         Wells(final AbstractDGraph graph) {
-            super();
-            this.graph = graph;
-        }
-
-        /**
-         * Implements the SortedSet interface.
-         *
-         * @return the first edge
-         */
-        public final Node first() {
-            throw new UnsupportedOperationException();
-        }
-
-        /**
-         * Implements the SortedSet interface.
-         *
-         * @return the last edge
-         */
-        public final Node last() {
-            throw new UnsupportedOperationException();
-        }
-
-        /**
-         * Implements the SortedSet interface.
-         *
-         * @param node the to node
-         *
-         * @return The head set
-         *
-         * @throws UnsupportedOperationException
-         */
-        public final SortedSet<Node> headSet(final Node node) {
-            throw new UnsupportedOperationException();
-        }
-
-        /**
-         * Implements the SortedSet interface.
-         *
-         * @param node the source node
-         *
-         * @return The tail set
-         *
-         * @throws UnsupportedOperationException
-         */
-        public final SortedSet<Node> tailSet(final Node node) {
-            throw new UnsupportedOperationException();
-        }
-
-        /**
-         * Implements the SortedSet interface.
-         *
-         * @param fromNode the source node
-         * @param toNode   the to node
-         *
-         * @return The sub set
-         *
-         * @throws UnsupportedOperationException
-         */
-        public final SortedSet<Node> subSet(final Node fromNode, final Node toNode) {
-            throw new UnsupportedOperationException();
-        }
-
-        /**
-         * Implements the SortedSet interface.
-         *
-         * @return null
-         */
-        public final Comparator<? super Node> comparator() {
-            return null;
-        }
-
-        /**
-         * Implements the AbstractCollection class.
-         *
-         * @return the size of the collection
-         */
-        public final int size() {
-            int size = 0;
-            final Iterator iterator = this.iterator();
-            while (iterator.hasNext()) {
-                size++;
-                iterator.next();
-            }
-            return size;
+            super(graph);
         }
 
         /**
@@ -476,7 +395,7 @@ public abstract class AbstractDGraph {
             WellsIterator(final Wells wells) {
                 super();
                 this.wells = wells;
-                this.nodesIterator = wells.graph.getNodes().iterator();
+                this.nodesIterator = wells.getGraph().getNodes().iterator();
                 this.prepareNext();
             }
 
@@ -487,7 +406,7 @@ public abstract class AbstractDGraph {
                 this.hasNext = false;
                 while (!this.hasNext && this.nodesIterator.hasNext()) {
                     this.next = this.nodesIterator.next();
-                    this.hasNext = this.wells.graph.getSuccessorEdges(this.next).isEmpty();
+                    this.hasNext = this.wells.getGraph().getSuccessorEdges(this.next).isEmpty();
                 }
             }
 
