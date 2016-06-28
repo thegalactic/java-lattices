@@ -179,7 +179,7 @@ public abstract class AbstractDGraph {
          *
          * @throws UnsupportedOperationException
          */
-        public final SortedSet<Node> headSet(Node node) {
+        public final SortedSet<Node> headSet(final Node node) {
             throw new UnsupportedOperationException();
         }
 
@@ -192,7 +192,7 @@ public abstract class AbstractDGraph {
          *
          * @throws UnsupportedOperationException
          */
-        public final SortedSet<Node> tailSet(Node node) {
+        public final SortedSet<Node> tailSet(final Node node) {
             throw new UnsupportedOperationException();
         }
 
@@ -206,7 +206,7 @@ public abstract class AbstractDGraph {
          *
          * @throws UnsupportedOperationException
          */
-        public final SortedSet<Node> subSet(Node fromNode, Node toNode) {
+        public final SortedSet<Node> subSet(final Node fromNode, final Node toNode) {
             throw new UnsupportedOperationException();
         }
 
@@ -455,7 +455,7 @@ public abstract class AbstractDGraph {
          *
          * @throws UnsupportedOperationException
          */
-        public final SortedSet<Node> headSet(Node node) {
+        public final SortedSet<Node> headSet(final Node node) {
             throw new UnsupportedOperationException();
         }
 
@@ -468,7 +468,7 @@ public abstract class AbstractDGraph {
          *
          * @throws UnsupportedOperationException
          */
-        public final SortedSet<Node> tailSet(Node node) {
+        public final SortedSet<Node> tailSet(final Node node) {
             throw new UnsupportedOperationException();
         }
 
@@ -482,7 +482,7 @@ public abstract class AbstractDGraph {
          *
          * @throws UnsupportedOperationException
          */
-        public final SortedSet<Node> subSet(Node fromNode, Node toNode) {
+        public final SortedSet<Node> subSet(final Node fromNode, final Node toNode) {
             throw new UnsupportedOperationException();
         }
 
