@@ -102,6 +102,27 @@ public abstract class AbstractDGraph {
      */
     public abstract SortedSet<Edge> getSuccessorEdges(final Node node);
 
+    /*
+     * --------------- GRAPH HANDLING METHODS ------------
+     */
+    /**
+     * Returns the sinks of this component.
+     *
+     * @return the sinks
+     */
+    public SortedSet<Node> getSinks() {
+        return new Sinks(this);
+    }
+
+    /**
+     * Returns the wells of this component.
+     *
+     * @return the wells
+     */
+    public SortedSet<Node> getWells() {
+        return new Wells(this);
+    }
+
     /**
      * This class implements a sorted set of the sinks.
      */
@@ -117,7 +138,7 @@ public abstract class AbstractDGraph {
          *
          * @param graph A DGraph
          */
-        Sinks(DGraph graph) {
+        Sinks(AbstractDGraph graph) {
             super();
             this.graph = graph;
         }
@@ -402,7 +423,7 @@ public abstract class AbstractDGraph {
          *
          * @param graph A DGraph
          */
-        Wells(DGraph graph) {
+        Wells(AbstractDGraph graph) {
             super();
             this.graph = graph;
         }

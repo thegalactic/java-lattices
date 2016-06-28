@@ -15,8 +15,13 @@ package org.thegalactic.dgraph;
  */
 public final class DGraphFactory {
 
+    /**
+     * The singleton instance.
+     */
+    private static final DGraphFactory INSTANCE = new DGraphFactory();
+
     /*
-     * ----------- STATIC GENERATION METHODS -------------
+    * ----------- STATIC GENERATION METHODS -------------
      */
     /**
      * Generates a random directed graph of size nodes.
@@ -26,7 +31,7 @@ public final class DGraphFactory {
      *
      * @return a random graph
      */
-    public static DGraph random(final int size, final double threshold) {
+    public DGraph random(final int size, final double threshold) {
         final DGraph graph = new DGraph();
         // addition of nodes
         for (int i = 1; i <= size; i++) {
@@ -51,8 +56,17 @@ public final class DGraphFactory {
      *
      * @return a random graph
      */
-    public static DGraph random(final int size) {
-        return random(size, 0.5);
+    public DGraph random(final int size) {
+        return this.random(size, 0.5);
+    }
+
+    /**
+     * Return the singleton instance of this class.
+     *
+     * @return the singleton instance
+     */
+    public static DGraphFactory getInstance() {
+        return INSTANCE;
     }
 
     /**

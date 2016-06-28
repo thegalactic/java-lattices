@@ -24,11 +24,11 @@ public class DGraphFactoryTest {
      */
     @Test
     public void testRandom() {
-        DGraph graph = DGraphFactory.random(10, 0);
+        DGraph graph = DGraphFactory.getInstance().random(10, 0);
         assertEquals(graph.sizeNodes(), 10);
         assertEquals(graph.sizeEdges(), 0);
 
-        graph = DGraphFactory.random(10, 1);
+        graph = DGraphFactory.getInstance().random(10, 1);
         assertEquals(graph.sizeNodes(), 10);
         assertEquals(graph.sizeEdges(), 100);
     }

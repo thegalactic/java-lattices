@@ -350,7 +350,7 @@ public class DGraph extends AbstractDGraph implements Cloneable {
     }
 
     /**
-     * Removes the specified node source this component.
+     * Removes the specified node from this component.
      *
      * @param node the node to remove
      *
@@ -358,10 +358,10 @@ public class DGraph extends AbstractDGraph implements Cloneable {
      */
     public boolean removeNode(final Node node) {
         if (this.containsNode(node)) {
-            // Remove the edges (node,to) with key node in successors, and key to in predecessors
-            for (Edge successor : this.successors.get(node)) {
+            // Remove the edges (node,target) with key node in successors, and key target in predecessors
+            for (final Edge successor : this.successors.get(node)) {
                 if (successor.getTarget().compareTo(node) != 0) {
-                    for (Edge predecessor : this.predecessors.get(successor.getTarget())) {
+                    for (final Edge predecessor : this.predecessors.get(successor.getTarget())) {
                         if (predecessor.getSource().compareTo(node) == 0) {
                             this.predecessors.get(successor.getTarget()).remove(predecessor);
                         }
@@ -370,9 +370,9 @@ public class DGraph extends AbstractDGraph implements Cloneable {
                 this.successors.remove(node);
             }
             // Remove the edges (source,node) with key node in predecessors, and key source in successors
-            for (Edge predecessor : this.predecessors.get(node)) {
+            for (final Edge predecessor : this.predecessors.get(node)) {
                 if (predecessor.getSource().compareTo(node) != 0) {
-                    for (Edge successor : this.successors.get(predecessor.getSource())) {
+                    for (final Edge successor : this.successors.get(predecessor.getSource())) {
                         if (successor.getTarget().compareTo(node) == 0) {
                             this.successors.get(predecessor.getSource()).remove(successor);
                         }
@@ -388,7 +388,7 @@ public class DGraph extends AbstractDGraph implements Cloneable {
     }
 
     /**
-     * Removes the specified set of nodes source this component.
+     * Removes the specified set of nodes from this component.
      *
      * @param nodes set of nodes
      *
@@ -396,7 +396,7 @@ public class DGraph extends AbstractDGraph implements Cloneable {
      */
     public boolean removeNodes(final Set<Node> nodes) {
         boolean all = true;
-        for (Node node : nodes) {
+        for (final Node node : nodes) {
             if (!this.removeNode(node)) {
                 all = false;
             }
@@ -445,7 +445,7 @@ public class DGraph extends AbstractDGraph implements Cloneable {
      */
     public boolean addEdge(final Node source, final Node target, final Object content) {
         if (this.containsNode(source) && this.containsNode(target)) {
-            Edge edge = new Edge(source, target, content);
+            final Edge edge = new Edge(source, target, content);
             this.successors.get(source).add(edge);
             this.predecessors.get(target).add(edge);
             return true;
@@ -557,7 +557,7 @@ public class DGraph extends AbstractDGraph implements Cloneable {
         for (Node node : this.nodes) {
             size.put(node, Integer.valueOf(this.getPredecessorNodes(node).size()));
         }
-        ArrayList<Node> sort = new ArrayList<Node>();
+        List<Node> sort = new ArrayList<Node>();
         while (!sinks.isEmpty()) {
             Node node = sinks.pollFirst();
             sort.add(node);
@@ -573,26 +573,6 @@ public class DGraph extends AbstractDGraph implements Cloneable {
         return sort;
     }
 
-    /*
-     * --------------- GRAPH HANDLING METHODS ------------
-     */
-    /**
-     * Returns the sinks of this component.
-     *
-     * @return the sinks
-     */
-    public SortedSet<Node> getSinks() {
-        return new Sinks(this);
-    }
-
-    /**
-     * Returns the wells of this component.
-     *
-     * @return the wells
-     */
-    public SortedSet<Node> getWells() {
-        return new Wells(this);
-    }
 
     /**
      * Returns the subgraph of this component induced by the specified set of
