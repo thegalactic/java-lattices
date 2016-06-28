@@ -39,6 +39,16 @@ import org.thegalactic.io.Writer;
 public final class ContextSerializerBurmeister implements Reader<Context>, Writer<Context> {
 
     /**
+     * String extension.
+     */
+    private static final String EXTENSION = "cxt";
+
+    /**
+     * Burmeister header.
+     */
+    private static final String HEADER = "B";
+
+    /**
      * The singleton instance.
      */
     private static final ContextSerializerBurmeister INSTANCE = new ContextSerializerBurmeister();
@@ -56,8 +66,8 @@ public final class ContextSerializerBurmeister implements Reader<Context>, Write
      * Register this class for reading and writing .cxt files.
      */
     public static void register() {
-        ContextIOFactory.getInstance().registerReader(ContextSerializerBurmeister.getInstance(), "cxt");
-        ContextIOFactory.getInstance().registerWriter(ContextSerializerBurmeister.getInstance(), "cxt");
+        ContextIOFactory.getInstance().registerReader(ContextSerializerBurmeister.getInstance(), EXTENSION);
+        ContextIOFactory.getInstance().registerWriter(ContextSerializerBurmeister.getInstance(), EXTENSION);
     }
 
     /**
@@ -99,54 +109,72 @@ public final class ContextSerializerBurmeister implements Reader<Context>, Write
      * @param context a context to read
      * @param file    a file
      *
-     * @throws IOException When an IOException occurs
+     * @throws IOException               When an IOException occurs
+     * @throws NumberFormatException     when context sizes are incorrect
+     * @throws IndexOutOfBoundsException
+     *
+     *
      */
-    public void read(Context context, BufferedReader file) throws IOException {
+    public void read(final Context context, final BufferedReader file) throws IOException {
         // str corresponds to the string "B". First line (Unused).
         String str = file.readLine();
 
         // Detect Burmeister magic header
-        if (!"B".equals(str)) {
+        if (!HEADER.equals(str)) {
             throw new IOException("Burmeister magic header not found");
         }
 
         // Second line (Unused).
         file.readLine();
 
-        // number of observations. Third line.
-        Integer nbObs = Integer.parseInt(file.readLine());
+        try {
+            // number of observations. Third line.
+            final int nbObs = Integer.parseInt(file.readLine());
 
-        // number of attributes. Fourth line.
-        Integer nbAtt = Integer.parseInt(file.readLine());
+            // number of attributes. Fourth line.
+            final int nbAtt = Integer.parseInt(file.readLine());
 
-        // Now reading observations
-        // Observations names must be recorded for the reading context phase
-        String[] obsNames = new String[nbObs];
-        for (int i = 0; i < nbObs; i++) {
-            str = file.readLine();
-            context.addToObservations(str);
-            obsNames[i] = str;
-        }
-
-        // Now reading attributes
-        // Attributes names must be recorded for the reading context phase
-        String[] attNames = new String[nbAtt];
-        for (int i = 0; i < nbAtt; i++) {
-            str = file.readLine();
-            context.addToAttributes(str);
-            attNames[i] = str;
-        }
-
-        // Now reading context
-        for (int i = 0; i < nbObs; i++) {
-            str = file.readLine();
-            for (int j = 0; j < nbAtt; j++) {
-                if (str.charAt(j) == 'X') {
-                    context.addExtentIntent(obsNames[i], attNames[j]);
-                }
+            // Now reading observations
+            // Observations names must be recorded for the reading context phase
+            String[] obsNames = new String[nbObs];
+            for (int i = 0; i < nbObs; i++) {
+                do {
+                    str = file.readLine();
+                } while ("".equals(str));
+                context.addToObservations(str);
+                obsNames[i] = str;
             }
+
+            // Now reading attributes
+            // Attributes names must be recorded for the reading context phase
+            String[] attNames = new String[nbAtt];
+            for (int i = 0; i < nbAtt; i++) {
+                do {
+                    str = file.readLine();
+                } while ("".equals(str));
+                context.addToAttributes(str);
+                attNames[i] = str;
+            }
+
+            // Now reading context
+            try {
+                for (int i = 0; i < nbObs; i++) {
+                    do {
+                        str = file.readLine();
+                    } while ("".equals(str));
+                    for (int j = 0; j < nbAtt; j++) {
+                        if (str.charAt(j) == 'X') {
+                            context.addExtentIntent(obsNames[i], attNames[j]);
+                        }
+                    }
+                }
+            } catch (IndexOutOfBoundsException ex) {
+                throw new IOException(ex.getMessage());
+            }
+            context.setBitSets();
+        } catch (NumberFormatException ex) {
+            throw new IOException(ex.getMessage());
         }
-        context.setBitSets();
     }
 
     /**
@@ -187,16 +215,16 @@ public final class ContextSerializerBurmeister implements Reader<Context>, Write
      * @throws IOException When an IOException occurs
      */
     @Override
-    public void write(Context context, BufferedWriter file) throws IOException {
+    public void write(final Context context, final BufferedWriter file) throws IOException {
         // Magic header
-        file.write("B");
+        file.write(HEADER);
         file.newLine();
 
         // Empty name
         file.newLine();
 
-        TreeSet<Comparable> attributes = context.getAttributes();
-        TreeSet<Comparable> observations = context.getObservations();
+        final TreeSet<Comparable> attributes = context.getAttributes();
+        final TreeSet<Comparable> observations = context.getObservations();
 
         // Observation and attributes size
         file.write(String.valueOf(observations.size()));
@@ -205,26 +233,26 @@ public final class ContextSerializerBurmeister implements Reader<Context>, Write
         file.newLine();
 
         // Observations
-        for (Comparable observation : observations) {
+        for (final Comparable observation : observations) {
             file.write(observation.toString());
             file.newLine();
         }
 
         // Attributes
-        for (Comparable attribute : attributes) {
+        for (final Comparable attribute : attributes) {
             file.write(attribute.toString());
             file.newLine();
         }
 
         // Extent/Intent
-        StringBuilder builder = new StringBuilder();
-        for (Comparable observation : observations) {
+        final StringBuilder builder = new StringBuilder();
+        for (final Comparable observation : observations) {
             builder.setLength(0);
             for (Comparable attribute : attributes) {
                 if (context.getIntent(observation).contains(attribute)) {
-                    builder.append("X");
+                    builder.append('X');
                 } else {
-                    builder.append(".");
+                    builder.append('.');
                 }
             }
             file.write(builder.toString());
