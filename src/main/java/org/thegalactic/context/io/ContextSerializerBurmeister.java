@@ -109,11 +109,7 @@ public final class ContextSerializerBurmeister implements Reader<Context>, Write
      * @param context a context to read
      * @param file    a file
      *
-     * @throws IOException               When an IOException occurs
-     * @throws NumberFormatException     when context sizes are incorrect
-     * @throws IndexOutOfBoundsException
-     *
-     *
+     * @throws IOException When an IOException occurs
      */
     public void read(final Context context, final BufferedReader file) throws IOException {
         // str corresponds to the string "B". First line (Unused).
@@ -124,7 +120,7 @@ public final class ContextSerializerBurmeister implements Reader<Context>, Write
             throw new IOException("Burmeister magic header not found");
         }
 
-        // Second line (Unused).
+        // Second line (Unused in the code).
         file.readLine();
 
         try {
@@ -138,43 +134,50 @@ public final class ContextSerializerBurmeister implements Reader<Context>, Write
             // Observations names must be recorded for the reading context phase
             String[] obsNames = new String[nbObs];
             for (int i = 0; i < nbObs; i++) {
-                do {
-                    str = file.readLine();
-                } while ("".equals(str));
-                context.addToObservations(str);
-                obsNames[i] = str;
+                obsNames[i] = this.readNextLine(file);
+                context.addToObservations(obsNames[i]);
             }
 
             // Now reading attributes
             // Attributes names must be recorded for the reading context phase
             String[] attNames = new String[nbAtt];
             for (int i = 0; i < nbAtt; i++) {
-                do {
-                    str = file.readLine();
-                } while ("".equals(str));
-                context.addToAttributes(str);
-                attNames[i] = str;
+                attNames[i] = this.readNextLine(file);
+                context.addToAttributes(attNames[i]);
             }
 
             // Now reading context
-            try {
-                for (int i = 0; i < nbObs; i++) {
-                    do {
-                        str = file.readLine();
-                    } while ("".equals(str));
-                    for (int j = 0; j < nbAtt; j++) {
-                        if (str.charAt(j) == 'X') {
-                            context.addExtentIntent(obsNames[i], attNames[j]);
-                        }
+            for (int i = 0; i < nbObs; i++) {
+                str = this.readNextLine(file);
+                for (int j = 0; j < nbAtt; j++) {
+                    if (str.charAt(j) == 'X') {
+                        context.addExtentIntent(obsNames[i], attNames[j]);
                     }
                 }
-            } catch (IndexOutOfBoundsException ex) {
-                throw new IOException(ex.getMessage());
             }
             context.setBitSets();
         } catch (NumberFormatException ex) {
             throw new IOException(ex.getMessage());
+        } catch (IndexOutOfBoundsException ex) {
+            throw new IOException(ex.getMessage());
         }
+    }
+
+    /**
+     * Return the next non-empty line.
+     *
+     * @param file a file
+     *
+     * @return the next non-empty line
+     *
+     * @throws IOException When an IOException occurs
+     */
+    private String readNextLine(final BufferedReader file) throws IOException {
+        String str;
+        do {
+            str = file.readLine();
+        } while ("".equals(str));
+        return str;
     }
 
     /**
