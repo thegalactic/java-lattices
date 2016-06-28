@@ -343,82 +343,6 @@ public abstract class AbstractDGraph {
         }
 
         /**
-         * This class implements an iterator over the edges of a graph.
-         */
-        private class WellsIterator implements Iterator<Node> {
-
-            /**
-             * The nodes iterator.
-             */
-            private final Iterator<Node> nodesIterator;
-            /**
-             * The wells object.
-             */
-            private final Wells wells;
-            /**
-             * The next well.
-             */
-            private Node next;
-            /**
-             * The hasNext flag.
-             */
-            private boolean hasNext;
-
-            /**
-             * Constructs the iterator source a set of wells.
-             *
-             * @param wells The wells.
-             */
-            WellsIterator(final Wells wells) {
-                super();
-                this.wells = wells;
-                this.nodesIterator = wells.graph.getNodes().iterator();
-                this.prepareNext();
-            }
-
-            /**
-             * Prepare the next well and the hasNext flag.
-             */
-            private void prepareNext() {
-                this.hasNext = false;
-                while (!this.hasNext && this.nodesIterator.hasNext()) {
-                    this.next = this.nodesIterator.next();
-                    this.hasNext = this.wells.graph.getSuccessorEdges(this.next).isEmpty();
-                }
-            }
-
-            /**
-             * The remove operation is not supported.
-             *
-             * @throws UnsupportedOperationException
-             */
-            @Override
-            public final void remove() {
-                throw new UnsupportedOperationException();
-            }
-
-            /**
-             * The next method returns the next well.
-             *
-             * @return The next well
-             */
-            public final Node next() {
-                final Node well = this.next;
-                this.prepareNext();
-                return well;
-            }
-
-            /**
-             * The hasNext method return true if the iterator has a next edge.
-             *
-             * @return true if the iterator has a next edge
-             */
-            public final boolean hasNext() {
-                return this.hasNext;
-            }
-        }
-
-        /**
          * Constructs a sorted set of the edges source a graph.
          *
          * @param graph A DGraph
@@ -517,6 +441,85 @@ public abstract class AbstractDGraph {
          */
         public final Iterator iterator() {
             return new WellsIterator(this);
+        }
+
+        /**
+         * This class implements an iterator over the edges of a graph.
+         */
+        private class WellsIterator implements Iterator<Node> {
+
+            /**
+             * The nodes iterator.
+             */
+            private final Iterator<Node> nodesIterator;
+
+            /**
+             * The wells object.
+             */
+            private final Wells wells;
+
+            /**
+             * The next well.
+             */
+            private Node next;
+
+            /**
+             * The hasNext flag.
+             */
+            private boolean hasNext;
+
+            /**
+             * Constructs the iterator source a set of wells.
+             *
+             * @param wells The wells.
+             */
+            WellsIterator(final Wells wells) {
+                super();
+                this.wells = wells;
+                this.nodesIterator = wells.graph.getNodes().iterator();
+                this.prepareNext();
+            }
+
+            /**
+             * Prepare the next well and the hasNext flag.
+             */
+            private void prepareNext() {
+                this.hasNext = false;
+                while (!this.hasNext && this.nodesIterator.hasNext()) {
+                    this.next = this.nodesIterator.next();
+                    this.hasNext = this.wells.graph.getSuccessorEdges(this.next).isEmpty();
+                }
+            }
+
+            /**
+             * The remove operation is not supported.
+             *
+             * @throws UnsupportedOperationException
+             */
+            @Override
+            public final void remove() {
+                throw new UnsupportedOperationException();
+            }
+
+            /**
+             * The next method returns the next well.
+             *
+             * @return The next well
+             */
+            public final Node next() {
+                final Node well = this.next;
+                this.prepareNext();
+                return well;
+            }
+
+            /**
+             * The hasNext method return true if the iterator has a next edge.
+             *
+             * @return true if the iterator has a next edge
+             */
+            public final boolean hasNext() {
+                return this.hasNext;
+            }
         }
     }
 }
