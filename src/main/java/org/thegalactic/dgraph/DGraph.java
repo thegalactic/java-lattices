@@ -143,8 +143,8 @@ public class DGraph extends AbstractDGraph implements Cloneable {
      *
      * @return the set of nodes
      */
-    public SortedSet<Node> getNodes() {
-        return Collections.unmodifiableSortedSet((SortedSet<Node>) this.nodes);
+    public final SortedSet<Node> getNodes() {
+        return Collections.unmodifiableSortedSet(this.nodes);
     }
 
     /**
@@ -152,7 +152,7 @@ public class DGraph extends AbstractDGraph implements Cloneable {
      *
      * @return the set of edges
      */
-    public SortedSet<Edge> getEdges() {
+    public final SortedSet<Edge> getEdges() {
         return new Edges(this);
     }
 
@@ -163,8 +163,8 @@ public class DGraph extends AbstractDGraph implements Cloneable {
      *
      * @return the set of edges
      */
-    public SortedSet<Edge> getSuccessorEdges(final Node node) {
-        return Collections.unmodifiableSortedSet((SortedSet<Edge>) this.successors.get(node));
+    public final SortedSet<Edge> getSuccessorEdges(final Node node) {
+        return Collections.unmodifiableSortedSet(this.successors.get(node));
     }
 
     /**
@@ -174,8 +174,8 @@ public class DGraph extends AbstractDGraph implements Cloneable {
      *
      * @return the set of edges
      */
-    public SortedSet<Edge> getPredecessorEdges(final Node node) {
-        return Collections.unmodifiableSortedSet((SortedSet<Edge>) this.predecessors.get(node));
+    public final SortedSet<Edge> getPredecessorEdges(final Node node) {
+        return Collections.unmodifiableSortedSet(this.predecessors.get(node));
     }
 
     /**
@@ -188,12 +188,12 @@ public class DGraph extends AbstractDGraph implements Cloneable {
      * @todo use iterator pattern (some changes in ArrowRelation.java and
      * Lattice.java)
      */
-    public SortedSet<Node> getSuccessorNodes(final Node node) {
-        TreeSet<Node> successorsFromNode = new TreeSet<Node>();
-        for (Edge edge : this.successors.get(node)) {
+    public final SortedSet<Node> getSuccessorNodes(final Node node) {
+        final SortedSet<Node> successorsFromNode = new TreeSet<Node>();
+        for (final Edge edge : this.successors.get(node)) {
             successorsFromNode.add(edge.getTarget());
         }
-        return successorsFromNode;
+        return Collections.unmodifiableSortedSet(successorsFromNode);
     }
 
     /**
@@ -206,12 +206,12 @@ public class DGraph extends AbstractDGraph implements Cloneable {
      * @todo use iterator pattern (some changes in ArrowRelation.java and
      * Lattice.java)
      */
-    public TreeSet<Node> getPredecessorNodes(final Node node) {
-        TreeSet<Node> predecessorsFromNode = new TreeSet<Node>();
-        for (Edge edge : this.predecessors.get(node)) {
+    public final SortedSet<Node> getPredecessorNodes(final Node node) {
+        final SortedSet<Node> predecessorsFromNode = new TreeSet<Node>();
+        for (final Edge edge : this.predecessors.get(node)) {
             predecessorsFromNode.add(edge.getSource());
         }
-        return predecessorsFromNode;
+        return Collections.unmodifiableSortedSet(predecessorsFromNode);
     }
 
     /**
@@ -224,13 +224,13 @@ public class DGraph extends AbstractDGraph implements Cloneable {
      *
      * @todo see getNode
      */
-    public Edge getEdge(final Node source, final Node target) {
-        TreeSet<Edge> node = successors.get(source);
+    public final Edge getEdge(final Node source, final Node target) {
+        SortedSet<Edge> node = successors.get(source);
         if (node == null) {
             return null;
         }
         if (this.containsEdge(source, target)) {
-            for (Edge edge : this.successors.get(source)) {
+            for (final Edge edge : this.successors.get(source)) {
                 if (edge.getTarget().equals(target)) {
                     return edge;
                 }
@@ -250,8 +250,8 @@ public class DGraph extends AbstractDGraph implements Cloneable {
      * true).first(); } catch (NoSuchElementException e) { return null; }
      *
      */
-    public Node getNode(Node search) {
-        for (Node node : this.nodes) {
+    public final Node getNode(final Node search) {
+        for (final Node node : this.nodes) {
             if (node.equals(search)) {
                 return node;
             }
@@ -270,8 +270,8 @@ public class DGraph extends AbstractDGraph implements Cloneable {
      * Dgraph using content field? Verify where it is called for migrating it if
      * necessary.
      */
-    public Node getNodeByContent(final Object content) {
-        for (Node node : this.nodes) {
+    public final Node getNodeByContent(final Object content) {
+        for (final Node node : this.nodes) {
             if (node.getContent().equals(content)) {
                 return node;
             }
@@ -286,8 +286,8 @@ public class DGraph extends AbstractDGraph implements Cloneable {
      *
      * @return the found node or null
      */
-    public Node getNodeByIdentifier(int identifier) {
-        for (Node node : this.nodes) {
+    public final Node getNodeByIdentifier(int identifier) {
+        for (final Node node : this.nodes) {
             if (node.getIdentifier() == identifier) {
                 return node;
             }
@@ -300,7 +300,7 @@ public class DGraph extends AbstractDGraph implements Cloneable {
      *
      * @return the number of nodes
      */
-    public int sizeNodes() {
+    public final int sizeNodes() {
         return this.nodes.size();
     }
 
@@ -309,10 +309,10 @@ public class DGraph extends AbstractDGraph implements Cloneable {
      *
      * @return the number of edges
      */
-    public int sizeEdges() {
+    public final int sizeEdges() {
         int size = 0;
-        for (Node node : nodes) {
-            size += successors.get(node).size();
+        for (final Node node : this.nodes) {
+            size += this.successors.get(node).size();
         }
         return size;
     }

@@ -271,7 +271,7 @@ public class Lattice extends DAGraph {
      */
     public boolean isCoAtomistic() {
         TreeSet<Node> meet = this.meetIrreducibles();
-        TreeSet<Node> coatoms = this.getPredecessorNodes(this.top());
+        SortedSet<Node> coatoms = this.getPredecessorNodes(this.top());
         return meet.containsAll(coatoms) && coatoms.containsAll(meet);
     }
 
@@ -314,12 +314,15 @@ public class Lattice extends DAGraph {
      *
      * @return the node which is at the meet of the nodes or null if it does not
      *         exist
+     *
+     * @todo this.minorants should return an iterator
      */
     public Node meet(Node x, Node y) {
-        SortedSet<Node> xMinorants = this.minorants(x);
+        // TODO minorants should return an iterator
+        SortedSet<Node> xMinorants = new TreeSet<Node>(this.minorants(x));
         xMinorants.add(x);
 
-        SortedSet<Node> yMinorants = this.minorants(y);
+        SortedSet<Node> yMinorants = new TreeSet<Node>(this.minorants(y));
         yMinorants.add(y);
 
         xMinorants.retainAll(yMinorants);
@@ -339,12 +342,15 @@ public class Lattice extends DAGraph {
      *
      * @return the node which is at the join of the nodes or null if it does not
      *         exist
+     *
+     * @todo this.majorants should return an iterator
      */
     public Node join(Node x, Node y) {
-        SortedSet<Node> xMajorants = this.majorants(x);
+        // TODO this.majorants should return an iterator
+        SortedSet<Node> xMajorants = new TreeSet<Node>(this.majorants(x));
         xMajorants.add(x);
 
-        SortedSet<Node> yMajorants = this.majorants(y);
+        SortedSet<Node> yMajorants = new TreeSet<Node>(this.majorants(y));
         yMajorants.add(y);
 
         xMajorants.retainAll(yMajorants);

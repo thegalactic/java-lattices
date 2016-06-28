@@ -290,7 +290,8 @@ public abstract class ClosureSystem {
         }
         remainingNodes.removeAll(rubbishBin);
         for (Node x : remainingNodes) {
-            TreeSet<Node> predecessors = graph.getPredecessorNodes(x);
+            // TODO getPredecessorNodes must return an iterator
+            SortedSet<Node> predecessors = new TreeSet<Node>(graph.getPredecessorNodes(x));
             predecessors.removeAll(rubbishBin);
             if (predecessors.size() > 1) {
                 // Create the closure of x

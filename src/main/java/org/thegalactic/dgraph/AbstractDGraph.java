@@ -244,9 +244,9 @@ public abstract class AbstractDGraph {
     }
 
     /**
-     * AbstractEndIterator.
+     * AbstractEndsIterator.
      */
-    private abstract class AbstractEndIterator implements Iterator<Node> {
+    private abstract class AbstractEndsIterator implements Iterator<Node> {
 
         /**
          * The nodes iterator.
@@ -273,7 +273,7 @@ public abstract class AbstractDGraph {
          *
          * @param ends The ends.
          */
-        protected AbstractEndIterator(final AbstractEnds ends) {
+        protected AbstractEndsIterator(final AbstractEnds ends) {
             super();
             this.ends = ends;
             this.nodesIterator = ends.getGraph().getNodes().iterator();
@@ -374,7 +374,7 @@ public abstract class AbstractDGraph {
         /**
          * This class implements an iterator over the edges of a graph.
          */
-        private class SinksIterator extends AbstractEndIterator {
+        private class SinksIterator extends AbstractEndsIterator {
 
             /**
              * Basic constructor.
@@ -422,7 +422,7 @@ public abstract class AbstractDGraph {
         /**
          * This class implements an iterator over the edges of a graph.
          */
-        private class WellsIterator extends AbstractEndIterator {
+        private class WellsIterator extends AbstractEndsIterator {
 
             /**
              * Constructs the iterator source a set of wells.
