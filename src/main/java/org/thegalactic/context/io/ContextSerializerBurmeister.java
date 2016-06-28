@@ -251,7 +251,7 @@ public final class ContextSerializerBurmeister implements Reader<Context>, Write
         final StringBuilder builder = new StringBuilder();
         for (final Comparable observation : observations) {
             builder.setLength(0);
-            for (Comparable attribute : attributes) {
+            for (final Comparable attribute : attributes) {
                 if (context.getIntent(observation).contains(attribute)) {
                     builder.append('X');
                 } else {
