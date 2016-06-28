@@ -93,6 +93,8 @@ public final class ContextSerializerText implements Reader<Context>, Writer<Cont
      * @param file    a file
      *
      * @throws IOException When an IOException occurs
+     *
+     * @todo use Scanner or StreamTokenizer
      */
     public void read(Context context, BufferedReader file) throws IOException {
         /*
