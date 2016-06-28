@@ -92,7 +92,7 @@ public final class ArrowRelationSerializerTeX implements Writer<ArrowRelation> {
 
         this.writeHline(file);
 
-        for (Node nj : j) {
+        for (final Node nj : j) {
             file.write(" & ");
             file.write(nj.getContent().toString());
         }
