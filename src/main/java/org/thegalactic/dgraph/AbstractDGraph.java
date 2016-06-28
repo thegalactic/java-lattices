@@ -381,7 +381,7 @@ public abstract class AbstractDGraph {
              *
              * @param sinks the sinks
              */
-            protected SinksIterator(Sinks sinks) {
+            protected SinksIterator(final Sinks sinks) {
                 super(sinks);
             }
 
