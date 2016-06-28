@@ -131,9 +131,9 @@ public abstract class AbstractDGraph {
     }
 
     /**
-     * AbstractEnd.
+     * AbstractEnds.
      */
-    protected abstract class AbstractEnd extends AbstractSet<Node> implements SortedSet<Node> {
+    private abstract class AbstractEnds extends AbstractSet<Node> implements SortedSet<Node> {
 
         /**
          * The underlying graph.
@@ -145,7 +145,7 @@ public abstract class AbstractDGraph {
          *
          * @param graph A DGraph
          */
-        AbstractEnd(final AbstractDGraph graph) {
+        protected AbstractEnds(final AbstractDGraph graph) {
             super();
             this.graph = graph;
         }
@@ -244,16 +244,121 @@ public abstract class AbstractDGraph {
     }
 
     /**
+     * AbstractEndIterator.
+     */
+    private abstract class AbstractEndIterator implements Iterator<Node> {
+
+        /**
+         * The nodes iterator.
+         */
+        private final Iterator<Node> nodesIterator;
+
+        /**
+         * The sinks object.
+         */
+        private final AbstractEnds ends;
+
+        /**
+         * The next sink.
+         */
+        private Node next;
+
+        /**
+         * The hasNext flag.
+         */
+        private boolean hasNext;
+
+        /**
+         * Constructs the iterator source a set of sinks.
+         *
+         * @param ends The ends.
+         */
+        protected AbstractEndIterator(final AbstractEnds ends) {
+            super();
+            this.ends = ends;
+            this.nodesIterator = ends.getGraph().getNodes().iterator();
+            this.prepareNext();
+        }
+
+        /**
+         * Get the ends.
+         *
+         * @return the ends
+         */
+        protected final AbstractEnds getEnds() {
+            return this.ends;
+        }
+
+        /**
+         * Get the next node to be analyzed.
+         *
+         * @return the next node
+         */
+        protected final Node getNext() {
+            return this.next;
+        }
+
+        /**
+         * Prepare the next sink and the hasNext flag.
+         */
+        private void prepareNext() {
+            this.hasNext = false;
+            while (!this.hasNext && this.nodesIterator.hasNext()) {
+                this.next = this.nodesIterator.next();
+                this.hasNext = this.computeHasNext();
+            }
+        }
+
+        /**
+         * The remove operation is not supported.
+         *
+         * @throws UnsupportedOperationException
+         */
+        @Override
+        public final void remove() {
+            throw new UnsupportedOperationException();
+        }
+
+        /**
+         * The next method returns the next sink.
+         *
+         * @return The next sink
+         */
+        public final Node next() {
+            final Node sink = this.next;
+            this.prepareNext();
+            return sink;
+        }
+
+        /**
+         * The hasNext method return true if the iterator has a next edge.
+         *
+         * @return true if the iterator has a next edge
+         */
+        public final boolean hasNext() {
+            return this.hasNext;
+        }
+
+        /**
+         * Compute the hasNext flag.
+         *
+         * @return the hasNext flag
+         */
+        protected abstract boolean computeHasNext();
+
+    }
+
+    /**
      * This class implements a sorted set of the sinks.
      */
-    protected class Sinks extends AbstractEnd {
+    private class Sinks extends AbstractEnds {
 
         /**
          * Constructor.
          *
          * @param graph the underlying graph
          */
-        Sinks(final AbstractDGraph graph) {
+        protected Sinks(final AbstractDGraph graph) {
             super(graph);
         }
 
@@ -269,79 +374,24 @@ public abstract class AbstractDGraph {
         /**
          * This class implements an iterator over the edges of a graph.
          */
-        private class SinksIterator implements Iterator<Node> {
+        private class SinksIterator extends AbstractEndIterator {
 
             /**
-             * The nodes iterator.
-             */
-            private final Iterator<Node> nodesIterator;
-
-            /**
-             * The sinks object.
-             */
-            private final Sinks sinks;
-
-            /**
-             * The next sink.
-             */
-            private Node next;
-
-            /**
-             * The hasNext flag.
-             */
-            private boolean hasNext;
-
-            /**
-             * Constructs the iterator source a set of sinks.
+             * Basic constructor.
              *
-             * @param sinks The sinks.
+             * @param sinks the sinks
              */
-            SinksIterator(final Sinks sinks) {
-                super();
-                this.sinks = sinks;
-                this.nodesIterator = sinks.getGraph().getNodes().iterator();
-                this.prepareNext();
+            protected SinksIterator(Sinks sinks) {
+                super(sinks);
             }
 
             /**
-             * Prepare the next sink and the hasNext flag.
-             */
-            private void prepareNext() {
-                this.hasNext = false;
-                while (!this.hasNext && this.nodesIterator.hasNext()) {
-                    this.next = this.nodesIterator.next();
-                    this.hasNext = this.sinks.getGraph().getPredecessorEdges(this.next).isEmpty();
-                }
-            }
-
-            /**
-             * The remove operation is not supported.
+             * Compute the hasNext flag value.
              *
-             * @throws UnsupportedOperationException
+             * @return the hasNext flag value
              */
-            @Override
-            public final void remove() {
-                throw new UnsupportedOperationException();
-            }
-
-            /**
-             * The next method returns the next sink.
-             *
-             * @return The next sink
-             */
-            public final Node next() {
-                final Node sink = this.next;
-                this.prepareNext();
-                return sink;
-            }
-
-            /**
-             * The hasNext method return true if the iterator has a next edge.
-             *
-             * @return true if the iterator has a next edge
-             */
-            public final boolean hasNext() {
-                return this.hasNext;
+            protected final boolean computeHasNext() {
+                return this.getEnds().getGraph().getPredecessorEdges(this.getNext()).isEmpty();
             }
         }
     }
@@ -349,14 +399,14 @@ public abstract class AbstractDGraph {
     /**
      * This class implements a sorted set of the wells.
      */
-    protected class Wells extends AbstractEnd {
+    private class Wells extends AbstractEnds {
 
         /**
-         * Constructs a sorted set of the edges source a graph.
+         * Constructor.
          *
-         * @param graph A DGraph
+         * @param graph the underlying graph
          */
-        Wells(final AbstractDGraph graph) {
+        protected Wells(final AbstractDGraph graph) {
             super(graph);
         }
 
@@ -372,79 +422,24 @@ public abstract class AbstractDGraph {
         /**
          * This class implements an iterator over the edges of a graph.
          */
-        private class WellsIterator implements Iterator<Node> {
-
-            /**
-             * The nodes iterator.
-             */
-            private final Iterator<Node> nodesIterator;
-
-            /**
-             * The wells object.
-             */
-            private final Wells wells;
-
-            /**
-             * The next well.
-             */
-            private Node next;
-
-            /**
-             * The hasNext flag.
-             */
-            private boolean hasNext;
+        private class WellsIterator extends AbstractEndIterator {
 
             /**
              * Constructs the iterator source a set of wells.
              *
              * @param wells The wells.
              */
-            WellsIterator(final Wells wells) {
-                super();
-                this.wells = wells;
-                this.nodesIterator = wells.getGraph().getNodes().iterator();
-                this.prepareNext();
+            protected WellsIterator(final Wells wells) {
+                super(wells);
             }
 
             /**
-             * Prepare the next well and the hasNext flag.
-             */
-            private void prepareNext() {
-                this.hasNext = false;
-                while (!this.hasNext && this.nodesIterator.hasNext()) {
-                    this.next = this.nodesIterator.next();
-                    this.hasNext = this.wells.getGraph().getSuccessorEdges(this.next).isEmpty();
-                }
-            }
-
-            /**
-             * The remove operation is not supported.
+             * Compute the hasNext flag value.
              *
-             * @throws UnsupportedOperationException
+             * @return the hasNext flag value
              */
-            @Override
-            public final void remove() {
-                throw new UnsupportedOperationException();
-            }
-
-            /**
-             * The next method returns the next well.
-             *
-             * @return The next well
-             */
-            public final Node next() {
-                final Node well = this.next;
-                this.prepareNext();
-                return well;
-            }
-
-            /**
-             * The hasNext method return true if the iterator has a next edge.
-             *
-             * @return true if the iterator has a next edge
-             */
-            public final boolean hasNext() {
-                return this.hasNext;
+            protected final boolean computeHasNext() {
+                return this.getEnds().getGraph().getSuccessorEdges(this.getNext()).isEmpty();
             }
         }
     }
