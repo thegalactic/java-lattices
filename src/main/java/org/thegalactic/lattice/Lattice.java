@@ -880,12 +880,12 @@ public class Lattice<N, E> extends DAGraph<N, E> {
         joinG.transitiveClosure();
         // edges of the dependency graph are dependency relation between join-irreducibles
         // they are first valuated by nodes of the lattice
-        for (Node j1 : joins) {
-            SortedSet<Node> majj1 = this.majorants(j1);
-            for (Node j2 : joins) {
+        for (Node<N> j1 : joins) {
+            SortedSet<Node<N>> majj1 = this.majorants(j1);
+            for (Node<N> j2 : joins) {
                 if (!j1.equals(j2)) {
                     // computes the set S of nodes not greather than j1 and j2
-                    TreeSet<Node> set = new TreeSet<Node>(this.getNodes());
+                    TreeSet<Node<N>> set = new TreeSet<Node<N>>(this.getNodes());
                     set.removeAll(majj1);
                     set.removeAll(this.majorants(j2));
                     set.remove(j1);
