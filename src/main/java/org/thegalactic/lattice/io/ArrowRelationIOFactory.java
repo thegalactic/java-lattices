@@ -26,7 +26,7 @@ import org.thegalactic.lattice.ArrowRelation;
  * class ArrowRelationIOFactory #LightCyan
  * title ArrowRelationIOFactory UML graph
  */
-public final class ArrowRelationIOFactory extends org.thegalactic.io.IOFactory<ArrowRelation> {
+public final class ArrowRelationIOFactory extends org.thegalactic.io.AbstractIOFactory<ArrowRelation> {
 
     /**
      * The singleton instance.

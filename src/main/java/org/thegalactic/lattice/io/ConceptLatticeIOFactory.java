@@ -26,7 +26,7 @@ import org.thegalactic.lattice.ConceptLattice;
  * class ConceptLatticeIOFactory #LightCyan
  * title ConceptLatticeIOFactory UML graph
  */
-public final class ConceptLatticeIOFactory extends org.thegalactic.io.IOFactory<ConceptLattice> {
+public final class ConceptLatticeIOFactory extends org.thegalactic.io.AbstractIOFactory<ConceptLattice> {
 
     /**
      * The singleton instance.

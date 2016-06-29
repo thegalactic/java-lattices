@@ -26,7 +26,7 @@ import org.thegalactic.rule.ImplicationalSystem;
  * class ImplicationalSystemIOFactory #LightCyan
  * title ImplicationalSystemIOFactory UML graph
  */
-public final class ImplicationalSystemIOFactory extends org.thegalactic.io.IOFactory<ImplicationalSystem> {
+public final class ImplicationalSystemIOFactory extends org.thegalactic.io.AbstractIOFactory<ImplicationalSystem> {
 
     /**
      * The singleton instance.

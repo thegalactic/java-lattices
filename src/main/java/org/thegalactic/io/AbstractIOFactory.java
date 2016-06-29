@@ -1,7 +1,7 @@
 package org.thegalactic.io;
 
 /*
- * IOFactory.java
+ * AbstractIOFactory.java
  *
  * Copyright: 2010-2015 Karell Bertet, France
  * Copyright: 2015-2016 The Galactic Organization, France
@@ -12,13 +12,14 @@ package org.thegalactic.io;
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class defines a standard way for getting reader and writer.
  *
  * @param <E> Element to be saved and parsed
  *
- * ![IOFactory](IOFactory.png)
+ * ![AbstractIOFactory](AbstractIOFactory.png)
  *
  * @uml Factory.png
  * !include resources/org/thegalactic/io/IOFactory.iuml
@@ -30,17 +31,24 @@ import java.util.HashMap;
  * class IOFactory #LightCyan
  * title IOFactory UML graph
  */
-public abstract class IOFactory<E> {
+public abstract class AbstractIOFactory<E> {
 
     /**
      * Map of extension/reader.
      */
-    private final HashMap<String, Reader<E>> readers = new HashMap<String, Reader<E>>();
+    private final Map<String, Reader<E>> readers = new HashMap<String, Reader<E>>();
 
     /**
      * Map of extension/writer.
      */
-    private final HashMap<String, Writer<E>> writers = new HashMap<String, Writer<E>>();
+    private final Map<String, Writer<E>> writers = new HashMap<String, Writer<E>>();
+
+    /**
+     * Basic constructor.
+     */
+    protected AbstractIOFactory() {
+        super();
+    }
 
     /**
      * Register a reader with an extension.
@@ -50,9 +58,9 @@ public abstract class IOFactory<E> {
      *
      * @return The old reader or null
      */
-    public Reader<E> registerReader(Reader<E> reader, String extension) {
-        Reader<E> old = readers.get(extension);
-        readers.put(extension, reader);
+    public final Reader<E> registerReader(final Reader<E> reader, final String extension) {
+        final Reader<E> old = this.readers.get(extension);
+        this.readers.put(extension, reader);
         return old;
     }
 
@@ -64,9 +72,9 @@ public abstract class IOFactory<E> {
      *
      * @return The old reader or null
      */
-    public Writer<E> registerWriter(Writer<E> writer, String extension) {
-        Writer<E> old = writers.get(extension);
-        writers.put(extension, writer);
+    public final Writer<E> registerWriter(final Writer<E> writer, final String extension) {
+        final Writer<E> old = this.writers.get(extension);
+        this.writers.put(extension, writer);
         return old;
     }
 
@@ -77,9 +85,9 @@ public abstract class IOFactory<E> {
      *
      * @return The old reader or null
      */
-    public Reader<E> unregisterReader(String extension) {
-        Reader<E> old = readers.get(extension);
-        readers.remove(extension);
+    public final Reader<E> unregisterReader(final String extension) {
+        final Reader<E> old = this.readers.get(extension);
+        this.readers.remove(extension);
         return old;
     }
 
@@ -90,9 +98,9 @@ public abstract class IOFactory<E> {
      *
      * @return The old writer or null
      */
-    public Writer<E> unregisterWriter(String extension) {
-        Writer<E> old = writers.get(extension);
-        writers.remove(extension);
+    public final Writer<E> unregisterWriter(final String extension) {
+        final Writer<E> old = this.writers.get(extension);
+        this.writers.remove(extension);
         return old;
     }
 
@@ -103,8 +111,8 @@ public abstract class IOFactory<E> {
      *
      * @return The reader or null
      */
-    public Reader<E> getReader(String extension) {
-        return readers.get(extension);
+    public final Reader<E> getReader(final String extension) {
+        return this.readers.get(extension);
     }
 
     /**
@@ -114,7 +122,7 @@ public abstract class IOFactory<E> {
      *
      * @return The writer or null
      */
-    public Writer<E> getWriter(String extension) {
-        return writers.get(extension);
+    public final Writer<E> getWriter(final String extension) {
+        return this.writers.get(extension);
     }
 }
