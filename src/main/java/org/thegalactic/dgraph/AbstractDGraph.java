@@ -115,20 +115,20 @@ public abstract class AbstractDGraph<N, E> implements DGraph<N, E> {
      *
      * @return the nodes
      */
-    public List<Node<N>> topologicalSort() {
-        TreeSet<Node<N>> sinks = new TreeSet<Node<N>>(this.getSinks());
+    public final List<Node<N>> topologicalSort() {
+        final TreeSet<Node<N>> sinks = new TreeSet<Node<N>>(this.getSinks());
         // initialise a map with the number of predecessors (value) for each node (key);
-        TreeMap<Node<N>, Integer> size = new TreeMap<Node<N>, Integer>();
-        for (Node<N> node : this.getNodes()) {
+        final TreeMap<Node<N>, Integer> size = new TreeMap<Node<N>, Integer>();
+        for (final Node<N> node : this.getNodes()) {
             size.put(node, this.getPredecessorNodes(node).size());
         }
-        List<Node<N>> sort = new ArrayList<Node<N>>();
+        final List<Node<N>> sort = new ArrayList<Node<N>>();
         while (!sinks.isEmpty()) {
-            Node<N> node = sinks.pollFirst();
+            final Node<N> node = sinks.pollFirst();
             sort.add(node);
             // updating of the set min by considering the successors of node
-            for (Node<N> successor : this.getSuccessorNodes(node)) {
-                int newSize = size.get(successor) - 1;
+            for (final Node<N> successor : this.getSuccessorNodes(node)) {
+                final int newSize = size.get(successor) - 1;
                 size.put(successor, newSize);
                 if (newSize == 0) {
                     sinks.add(successor);
