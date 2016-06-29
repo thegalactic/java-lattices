@@ -12,9 +12,13 @@ package org.thegalactic.dgraph;
  */
 import java.io.IOException;
 import java.util.AbstractSet;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
 import org.thegalactic.dgraph.io.DGraphIOFactory;
 import org.thegalactic.io.Filer;
 
@@ -90,6 +94,48 @@ public abstract class AbstractDGraph<N, E> implements DGraph<N, E> {
     @Override
     public final SortedSet<Node<N>> getWells() {
         return new Wells(this);
+    }
+
+    /**
+     * Check if this component is acyclic.
+     *
+     * @return true if the component is acyclic
+     */
+    public final boolean isAcyclic() {
+        return this.topologicalSort().size() == this.sizeNodes();
+    }
+
+    /**
+     * Returns a topological sort of the node of this component.
+     *
+     * This topological sort is a sort on all the nodes according to their
+     * successors. If the graph is not acyclic, some nodes don't belong to the
+     * sort. This treatment is performed in O(n+m), where n corresponds to the
+     * number of nodes, and m corresponds to the number of edges.
+     *
+     * @return the nodes
+     */
+    public List<Node<N>> topologicalSort() {
+        TreeSet<Node<N>> sinks = new TreeSet<Node<N>>(this.getSinks());
+        // initialise a map with the number of predecessors (value) for each node (key);
+        TreeMap<Node<N>, Integer> size = new TreeMap<Node<N>, Integer>();
+        for (Node<N> node : this.getNodes()) {
+            size.put(node, this.getPredecessorNodes(node).size());
+        }
+        List<Node<N>> sort = new ArrayList<Node<N>>();
+        while (!sinks.isEmpty()) {
+            Node<N> node = sinks.pollFirst();
+            sort.add(node);
+            // updating of the set min by considering the successors of node
+            for (Node<N> successor : this.getSuccessorNodes(node)) {
+                int newSize = size.get(successor) - 1;
+                size.put(successor, newSize);
+                if (newSize == 0) {
+                    sinks.add(successor);
+                }
+            }
+        }
+        return sort;
     }
 
     /**

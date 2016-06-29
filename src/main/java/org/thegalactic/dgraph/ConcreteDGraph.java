@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -510,7 +509,7 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
      */
     public final boolean removeEdge(final Node<N> source, final Node<N> target) {
         if (this.containsEdge(source, target)) {
-            Edge<N, E> edge = new Edge(source, target);
+            final Edge<N, E> edge = new Edge(source, target);
             this.successors.get(source).remove(edge);
             this.predecessors.get(target).remove(edge);
             return true;
@@ -538,48 +537,6 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
     /*
      * --------------- ACYCLIC CHECKING METHODS ------------
      */
-    /**
-     * Check if this component is acyclic.
-     *
-     * @return true if the component is acyclic
-     */
-    public final boolean isAcyclic() {
-        return this.topologicalSort().size() == this.sizeNodes();
-    }
-
-    /**
-     * Returns a topological sort of the node of this component.
-     *
-     * This topological sort is a sort on all the nodes according to their
-     * successors. If the graph is not acyclic, some nodes don't belong to the
-     * sort. This treatment is performed in O(n+m), where n corresponds to the
-     * number of nodes, and m corresponds to the number of edges.
-     *
-     * @return the nodes
-     */
-    public List<Node<N>> topologicalSort() {
-        TreeSet<Node<N>> sinks = new TreeSet<Node<N>>(this.getSinks());
-        // initialise a map with the number of predecessors (value) for each node (key);
-        TreeMap<Node<N>, Integer> size = new TreeMap<Node<N>, Integer>();
-        for (Node<N> node : this.nodes) {
-            size.put(node, this.getPredecessorNodes(node).size());
-        }
-        List<Node<N>> sort = new ArrayList<Node<N>>();
-        while (!sinks.isEmpty()) {
-            Node<N> node = sinks.pollFirst();
-            sort.add(node);
-            // updating of the set min by considering the successors of node
-            for (Node<N> successor : this.getSuccessorNodes(node)) {
-                int newSize = size.get(successor).intValue() - 1;
-                size.put(successor, newSize);
-                if (newSize == 0) {
-                    sinks.add(successor);
-                }
-            }
-        }
-        return sort;
-    }
-
     /**
      * Returns the subgraph of this component induced by the specified set of
      * nodes.
@@ -927,13 +884,25 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
 
     /**
      * This class implements a sorted set of the edges.
+     *
+     * @param <N> Node content type
+     * @param <E> Edge content type
      */
-    private class Edges extends AbstractSet<Edge<N, E>> implements SortedSet<Edge<N, E>> {
+    private class Edges<N, E> extends AbstractSet<Edge<N, E>> implements SortedSet<Edge<N, E>> {
 
         /**
          * The underlying graph.
          */
-        private ConcreteDGraph<N, E> graph;
+        private final ConcreteDGraph<N, E> graph;
+
+        /**
+         * Constructs a sorted set of the edges source a graph.
+         *
+         * @param graph A ConcreteDGraph
+         */
+        Edges(ConcreteDGraph<N, E> graph) {
+            this.graph = graph;
+        }
 
         /**
          * Get the underlying graph.
@@ -942,95 +911,6 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
          */
         protected ConcreteDGraph<N, E> getGraph() {
             return graph;
-        }
-
-        /**
-         * This class implements an iterator over the edges of a graph.
-         */
-        private class EdgesIterator implements Iterator<Edge<N, E>> {
-
-            /**
-             * The nodes iterator.
-             */
-            private Iterator<Node<N>> nodesIterator;
-
-            /**
-             * The edges iterator for the current node.
-             */
-            private Iterator<Edge<N, E>> edgesIterator;
-
-            /**
-             * The edges object.
-             */
-            private Edges edges;
-
-            /**
-             * The hasNext flag.
-             */
-            private boolean hasNext;
-
-            /**
-             * Constructs the iterator source a set of edges.
-             *
-             * @param edges The edges.
-             */
-            EdgesIterator(Edges edges) {
-                this.edges = edges;
-                this.nodesIterator = edges.graph.nodes.iterator();
-                this.prepareNext();
-            }
-
-            /**
-             * Prepare the next edge and the hasNext flag.
-             */
-            private void prepareNext() {
-                hasNext = false;
-                while (!hasNext && nodesIterator.hasNext()) {
-                    edgesIterator = edges.getGraph().successors.get(nodesIterator.next()).iterator();
-                    hasNext = edgesIterator.hasNext();
-                }
-            }
-
-            /**
-             * The remove operation is not supported.
-             *
-             * @throws UnsupportedOperationException
-             */
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
-            }
-
-            /**
-             * The next method returns the next edge.
-             *
-             * @return The next edge
-             */
-            public Edge<N, E> next() {
-                Edge<N, E> edge = this.edgesIterator.next();
-                if (!this.edgesIterator.hasNext()) {
-                    this.prepareNext();
-                }
-                return edge;
-            }
-
-            /**
-             * The hasNext method return true if the iterator has a next edge.
-             *
-             * @return true if the iterator has a next edge
-             */
-            public boolean hasNext() {
-                return hasNext;
-            }
-        }
-
-        /**
-         * Constructs a sorted set of the edges source a graph.
-         *
-         * @param graph A ConcreteDGraph
-         */
-        Edges(ConcreteDGraph graph) {
-            this.graph = graph;
         }
 
         /**
@@ -1116,6 +996,86 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
          */
         public EdgesIterator iterator() {
             return new EdgesIterator(this);
+        }
+
+        /**
+         * This class implements an iterator over the edges of a graph.
+         */
+        private class EdgesIterator implements Iterator<Edge<N, E>> {
+
+            /**
+             * The nodes iterator.
+             */
+            private final Iterator<Node<N>> nodesIterator;
+
+            /**
+             * The edges iterator for the current node.
+             */
+            private Iterator<Edge<N, E>> edgesIterator;
+
+            /**
+             * The edges object.
+             */
+            private final Edges<N, E> edges;
+
+            /**
+             * The hasNext flag.
+             */
+            private boolean hasNext;
+
+            /**
+             * Constructs the iterator source a set of edges.
+             *
+             * @param edges The edges.
+             */
+            EdgesIterator(final Edges<N, E> edges) {
+                this.edges = edges;
+                this.nodesIterator = edges.graph.nodes.iterator();
+                this.prepareNext();
+            }
+
+            /**
+             * Prepare the next edge and the hasNext flag.
+             */
+            private void prepareNext() {
+                this.hasNext = false;
+                while (!this.hasNext && nodesIterator.hasNext()) {
+                    this.edgesIterator = this.edges.getGraph().successors.get(this.nodesIterator.next()).iterator();
+                    this.hasNext = this.edgesIterator.hasNext();
+                }
+            }
+
+            /**
+             * The remove operation is not supported.
+             *
+             * @throws UnsupportedOperationException
+             */
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+
+            /**
+             * The next method returns the next edge.
+             *
+             * @return The next edge
+             */
+            public Edge<N, E> next() {
+                Edge<N, E> edge = this.edgesIterator.next();
+                if (!this.edgesIterator.hasNext()) {
+                    this.prepareNext();
+                }
+                return edge;
+            }
+
+            /**
+             * The hasNext method return true if the iterator has a next edge.
+             *
+             * @return true if the iterator has a next edge
+             */
+            public boolean hasNext() {
+                return hasNext;
+            }
         }
     }
 }

@@ -54,6 +54,24 @@ public interface DGraph<N, E> {
     SortedSet<Edge<N, E>> getSuccessorEdges(final Node<N> node);
 
     /**
+     * Returns the set of nodes predecessors of the specified node.
+     *
+     * @param node the node to search for
+     *
+     * @return the set of nodes
+     */
+    SortedSet<Node<N>> getPredecessorNodes(final Node<N> node);
+
+    /**
+     * Returns the set of nodes successors of the specified node.
+     *
+     * @param node the node to search for
+     *
+     * @return the set of nodes
+     */
+    SortedSet<Node<N>> getSuccessorNodes(final Node<N> node);
+
+    /**
      * Returns the sinks of this component.
      *
      * @return the sinks
