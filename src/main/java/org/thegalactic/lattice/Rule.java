@@ -251,12 +251,10 @@ public class Rule implements Comparable<Rule> {
      *         object.
      */
     @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof Rule)) {
-            return false;
-        }
-        Rule r = (Rule) o;
-        return this.getPremise().equals(r.getPremise()) && this.getConclusion().equals(r.getConclusion());
+    public boolean equals(Object object) {
+        return this == object || object != null && this.getClass() == object.getClass()
+                && this.getPremise().equals(((Rule) object).getPremise())
+                && this.getConclusion().equals(((Rule) object).getConclusion());
     }
 
     /**
@@ -268,9 +266,9 @@ public class Rule implements Comparable<Rule> {
      * @return a negative integer, zero, or a positive integer as this component
      *         is less than, equal to, or greater than the specified object.
      */
-    public int compareTo(Rule rule) {
-        ComparableSet thisPremise = (ComparableSet) this.getPremise();
-        ComparableSet thisConclusion = (ComparableSet) this.getConclusion();
+    public final int compareTo(final Rule rule) {
+        final ComparableSet thisPremise = (ComparableSet) this.getPremise();
+        final ComparableSet thisConclusion = (ComparableSet) this.getConclusion();
         int cmp = thisPremise.compareTo(rule.getPremise());
         if (cmp == 0) {
             cmp = thisConclusion.compareTo(rule.getConclusion());
