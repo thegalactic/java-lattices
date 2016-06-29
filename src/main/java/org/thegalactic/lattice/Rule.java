@@ -47,7 +47,7 @@ import org.thegalactic.util.ComparableSet;
  * class Rule #LightCyan
  * title Rule UML graph
  */
-public class Rule implements Comparable {
+public class Rule implements Comparable<Rule> {
 
     /*
      * ------------- FIELDS ------------------
@@ -55,20 +55,20 @@ public class Rule implements Comparable {
     /**
      * The premise of the rule.
      */
-    private ComparableSet premise;
+    private final ComparableSet premise;
 
     /**
      * The conclusion of the rule.
      */
-    private ComparableSet conclusion;
+    private final ComparableSet conclusion;
 
     /* ------------- CONSTRUCTORS ------------------ */
     /**
      * Constructs a new empty Rule with a empty premise and an empty conclusion.
      */
     public Rule() {
-        premise = new ComparableSet();
-        conclusion = new ComparableSet();
+        this.premise = new ComparableSet();
+        this.conclusion = new ComparableSet();
     }
 
     /**
@@ -78,7 +78,7 @@ public class Rule implements Comparable {
      * @param premise    a set of indexed elements
      * @param conclusion a set of indexed elements
      */
-    public Rule(SortedSet<Comparable> premise, SortedSet<Comparable> conclusion) {
+    public Rule(final SortedSet<Comparable> premise, final SortedSet<Comparable> conclusion) {
         this.premise = new ComparableSet(premise);
         this.conclusion = new ComparableSet(conclusion);
     }
@@ -91,7 +91,7 @@ public class Rule implements Comparable {
      *
      * @return premises of this component
      */
-    public ComparableSet getPremise() {
+    public final ComparableSet getPremise() {
         return this.premise;
     }
 
@@ -100,7 +100,7 @@ public class Rule implements Comparable {
      *
      * @return conclusions of this component
      */
-    public ComparableSet getConclusion() {
+    public final ComparableSet getConclusion() {
         return this.conclusion;
     }
 
@@ -114,7 +114,7 @@ public class Rule implements Comparable {
      *
      * @return true if addition is successfull.
      */
-    public boolean addToPremise(Comparable a) {
+    public final boolean addToPremise(final Comparable a) {
         return this.premise.add(a);
     }
 
@@ -125,7 +125,7 @@ public class Rule implements Comparable {
      *
      * @return true if addition is successfull.
      */
-    public boolean removeFromPremise(Comparable a) {
+    public final boolean removeFromPremise(final Comparable a) {
         return this.premise.remove(a);
     }
 
@@ -136,7 +136,7 @@ public class Rule implements Comparable {
      *
      * @return true if addition is successfull.
      */
-    public boolean addToConclusion(Comparable a) {
+    public final boolean addToConclusion(final Comparable a) {
         return this.conclusion.add(a);
     }
 
@@ -147,7 +147,7 @@ public class Rule implements Comparable {
      *
      * @return true if addition is successfull.
      */
-    public boolean removeFromConclusion(Object a) {
+    public final boolean removeFromConclusion(final Object a) {
         return this.conclusion.remove(a);
     }
 
@@ -159,7 +159,7 @@ public class Rule implements Comparable {
      *
      * @return true if addition is successfull.
      */
-    public boolean addAllToPremise(Collection<Comparable> a) {
+    public final boolean addAllToPremise(final Collection<Comparable> a) {
         return this.premise.addAll(a);
     }
 
@@ -172,8 +172,8 @@ public class Rule implements Comparable {
      *
      * @return true if addition is successfull.
      */
-    public boolean removeAllFromPremise(Collection<Comparable> a) {
-        return premise.removeAll(a);
+    public final boolean removeAllFromPremise(final Collection<Comparable> a) {
+        return this.premise.removeAll(a);
     }
 
     /**
@@ -185,8 +185,8 @@ public class Rule implements Comparable {
      *
      * @return true if addition is successfull.
      */
-    public boolean addAllToConclusion(Collection<Comparable> a) {
-        return conclusion.addAll(a);
+    public final boolean addAllToConclusion(final Collection<Comparable> a) {
+        return this.conclusion.addAll(a);
     }
 
     /**
@@ -198,12 +198,12 @@ public class Rule implements Comparable {
      *
      * @return true if addition is successfull.
      */
-    public boolean removeAllFromConclusion(Collection<Comparable> a) {
-        return conclusion.removeAll(a);
+    public final boolean removeAllFromConclusion(final Collection<Comparable> a) {
+        return this.conclusion.removeAll(a);
     }
 
     /*
-     * ------------- OVERLAPING METHODS ------------------
+     * ------------- OVERRIDDEN METHODS ------------------
      */
     /**
      * Returns a String representation of this component.
@@ -263,19 +263,18 @@ public class Rule implements Comparable {
      * Compares this component with the specified one by comparing their
      * premises, or their conclusion in case of equality of the premises.
      *
-     * @param o object to compare to this component.
+     * @param rule object to compare to this component.
      *
      * @return a negative integer, zero, or a positive integer as this component
      *         is less than, equal to, or greater than the specified object.
      */
-    public int compareTo(Object o) {
-        Rule r = (Rule) o;
+    public int compareTo(Rule rule) {
         ComparableSet thisPremise = (ComparableSet) this.getPremise();
         ComparableSet thisConclusion = (ComparableSet) this.getConclusion();
-        if (thisPremise.compareTo(r.getPremise()) == 0) {
-            return thisConclusion.compareTo(r.getConclusion());
-        } else {
-            return thisPremise.compareTo(r.getPremise());
+        int cmp = thisPremise.compareTo(rule.getPremise());
+        if (cmp == 0) {
+            cmp = thisConclusion.compareTo(rule.getConclusion());
         }
+        return cmp;
     }
 }

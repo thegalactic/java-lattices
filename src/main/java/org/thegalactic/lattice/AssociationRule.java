@@ -65,7 +65,12 @@ public class AssociationRule extends Rule {
      * @param support    a support value
      * @param confidence a confidence value
      */
-    public AssociationRule(final SortedSet<Comparable> premise, final SortedSet<Comparable> conclusion, final double support, final double confidence) {
+    public AssociationRule(
+            final SortedSet<Comparable> premise,
+            final SortedSet<Comparable> conclusion,
+            final double support,
+            final double confidence
+    ) {
         super(premise, conclusion);
         this.support = support;
         this.confidence = confidence;
@@ -109,7 +114,7 @@ public class AssociationRule extends Rule {
         this.support = support;
     }
 
-    /* ------------- OVERLAPING METHODS ------------------ */
+    /* ------------- OVERRIDEN METHODS ------------------ */
     /**
      * Returns a String representation of this component.
      *
