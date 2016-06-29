@@ -381,7 +381,7 @@ public class Context extends ClosureSystem {
         ConceptLattice factor = ctx.conceptLattice(true);
         TreeSet<Node> convex = new TreeSet<Node>();
         for (Node node : factor.getNodes()) {
-            Concept c = (Concept) node.getContent();
+            Concept c = (Concept) node;
             if (!c.getSetB().containsAll(this.getExtent(c.getSetA()))
                     && !c.getSetA().containsAll(this.getIntent(c.getSetB()))) {
                 convex.add(node);

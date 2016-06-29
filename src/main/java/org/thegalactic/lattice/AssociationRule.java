@@ -11,7 +11,7 @@ package org.thegalactic.lattice;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-import java.util.TreeSet;
+import java.util.SortedSet;
 
 /**
  * This class gives a representation for an association rule.
@@ -52,7 +52,7 @@ public class AssociationRule extends Rule {
      * @param premise    a set of indexed elements
      * @param conclusion a set of indexed elements
      */
-    public AssociationRule(TreeSet<Comparable> premise, TreeSet<Comparable> conclusion) {
+    public AssociationRule(final SortedSet<Comparable> premise, final SortedSet<Comparable> conclusion) {
         super(premise, conclusion);
     }
 
@@ -65,7 +65,7 @@ public class AssociationRule extends Rule {
      * @param support    a support value
      * @param confidence a confidence value
      */
-    public AssociationRule(TreeSet<Comparable> premise, TreeSet<Comparable> conclusion, double support, double confidence) {
+    public AssociationRule(final SortedSet<Comparable> premise, final SortedSet<Comparable> conclusion, double support, double confidence) {
         super(premise, conclusion);
         this.support = support;
         this.confidence = confidence;
@@ -77,8 +77,8 @@ public class AssociationRule extends Rule {
      *
      * @return confidence value
      */
-    public double getConfidence() {
-        return confidence;
+    public final double getConfidence() {
+        return this.confidence;
     }
 
     /**
@@ -86,8 +86,8 @@ public class AssociationRule extends Rule {
      *
      * @return support value
      */
-    public double getSupport() {
-        return support;
+    public final double getSupport() {
+        return this.support;
     }
 
     /* ------------- MODIFICATION METHODS ------------------ */
@@ -96,7 +96,7 @@ public class AssociationRule extends Rule {
      *
      * @param confidence the confidence value
      */
-    public void setConfidence(double confidence) {
+    public final void setConfidence(final double confidence) {
         this.confidence = confidence;
     }
 
@@ -105,7 +105,7 @@ public class AssociationRule extends Rule {
      *
      * @param support the support value
      */
-    public void setSupport(double support) {
+    public final void setSupport(final double support) {
         this.support = support;
     }
 
@@ -124,14 +124,9 @@ public class AssociationRule extends Rule {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        for (Object element : this.getPremise()) {
-            builder.append(element).append(' ');
-        }
-        builder.append("->");
-        for (Object element : this.getConclusion()) {
-            builder.append(' ').append(element);
-        }
-        builder.append(" : ").append("s:").append(this.support).append("/c:").append(this.confidence);
+        builder.append(super.toString()).append(" : ");
+        builder.append("s:").append(this.support);
+        builder.append("/c:").append(this.confidence);
         return builder.toString();
     }
 }

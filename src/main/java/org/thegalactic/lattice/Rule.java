@@ -12,7 +12,7 @@ package org.thegalactic.lattice;
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
 import java.util.Collection;
-import java.util.TreeSet;
+import java.util.SortedSet;
 
 import org.thegalactic.util.ComparableSet;
 
@@ -78,7 +78,7 @@ public class Rule implements Comparable {
      * @param premise    a set of indexed elements
      * @param conclusion a set of indexed elements
      */
-    public Rule(TreeSet<Comparable> premise, TreeSet<Comparable> conclusion) {
+    public Rule(SortedSet<Comparable> premise, SortedSet<Comparable> conclusion) {
         this.premise = new ComparableSet(premise);
         this.conclusion = new ComparableSet(conclusion);
     }
