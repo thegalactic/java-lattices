@@ -24,7 +24,7 @@ import org.thegalactic.io.Filer;
  * @param <N> Node content type
  * @param <E> Edge content type
  */
-public abstract class AbstractDGraph<N, E> {
+public abstract class AbstractDGraph<N, E> implements DGraph<N, E> {
 
     /**
      * Basic constructor.
@@ -55,33 +55,6 @@ public abstract class AbstractDGraph<N, E> {
         return nodes.toString();
     }
 
-    /**
-     * Returns the number of edges of this component.
-     *
-     * @return the number of edges
-     */
-    public abstract int sizeEdges();
-
-    /**
-     * Returns the number of nodes of this component.
-     *
-     * @return the number of nodes
-     */
-    public abstract int sizeNodes();
-
-    /**
-     * Returns the set of edges of this component.
-     *
-     * @return the set of edges
-     */
-    public abstract SortedSet<Edge<N, E>> getEdges();
-
-    /**
-     * Returns the set of nodes of this component.
-     *
-     * @return the set of nodes
-     */
-    public abstract SortedSet<Node<N>> getNodes();
 
     /**
      * Save the description of this component in a file whose name is specified.
@@ -90,27 +63,11 @@ public abstract class AbstractDGraph<N, E> {
      *
      * @throws IOException When an IOException occurs
      */
+    @Override
     public void save(final String filename) throws IOException {
         Filer.getInstance().save(this, DGraphIOFactory.getInstance(), filename);
     }
 
-    /**
-     * Returns the set of edges predecessors of the specified node.
-     *
-     * @param node the node to search for
-     *
-     * @return the set of edges
-     */
-    public abstract SortedSet<Edge<N, E>> getPredecessorEdges(final Node<N> node);
-
-    /**
-     * Returns the set of edges successors of the specified node.
-     *
-     * @param node the node to search for
-     *
-     * @return the set of edges
-     */
-    public abstract SortedSet<Edge<N, E>> getSuccessorEdges(final Node<N> node);
 
     /*
      * --------------- GRAPH HANDLING METHODS ------------
@@ -120,6 +77,7 @@ public abstract class AbstractDGraph<N, E> {
      *
      * @return the sinks
      */
+    @Override
     public final SortedSet<Node<N>> getSinks() {
         return new Sinks(this);
     }
@@ -129,6 +87,7 @@ public abstract class AbstractDGraph<N, E> {
      *
      * @return the wells
      */
+    @Override
     public final SortedSet<Node<N>> getWells() {
         return new Wells(this);
     }
