@@ -65,7 +65,7 @@ public class AssociationRule extends Rule {
      * @param support    a support value
      * @param confidence a confidence value
      */
-    public AssociationRule(final SortedSet<Comparable> premise, final SortedSet<Comparable> conclusion, double support, double confidence) {
+    public AssociationRule(final SortedSet<Comparable> premise, final SortedSet<Comparable> conclusion, final double support, final double confidence) {
         super(premise, conclusion);
         this.support = support;
         this.confidence = confidence;
@@ -123,10 +123,8 @@ public class AssociationRule extends Rule {
      */
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append(super.toString()).append(" : ");
-        builder.append("s:").append(this.support);
-        builder.append("/c:").append(this.confidence);
+        final StringBuilder builder = new StringBuilder();
+        builder.append(super.toString()).append(" : s:").append(this.support).append("/c:").append(this.confidence);
         return builder.toString();
     }
 }
