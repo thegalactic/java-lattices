@@ -17,8 +17,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
-import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -66,17 +67,17 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
     /**
      * A set of elements.
      */
-    private SortedSet<Node<N>> nodes;
+    private TreeSet<Node<N>> nodes;
 
     /**
      * A map to associate a set of successors to each node.
      */
-    private SortedMap<Node<N>, SortedSet<Edge<N, E>>> successors;
+    private TreeMap<Node<N>, TreeSet<Edge<N, E>>> successors;
 
     /**
      * A map to associate a set of predecessors to each node.
      */
-    private SortedMap<Node<N>, SortedSet<Edge<N, E>>> predecessors;
+    private TreeMap<Node<N>, TreeSet<Edge<N, E>>> predecessors;
 
 
     /*
@@ -88,8 +89,8 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
     public ConcreteDGraph() {
         super();
         this.nodes = new TreeSet<Node<N>>();
-        this.successors = new TreeMap<Node<N>, SortedSet<Edge<N, E>>>();
-        this.predecessors = new TreeMap<Node<N>, SortedSet<Edge<N, E>>>();
+        this.successors = new TreeMap<Node<N>, TreeSet<Edge<N, E>>>();
+        this.predecessors = new TreeMap<Node<N>, TreeSet<Edge<N, E>>>();
     }
 
     /**
@@ -135,9 +136,15 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
     @Override
     public ConcreteDGraph<N, E> clone() throws CloneNotSupportedException {
         ConcreteDGraph<N, E> graph = (ConcreteDGraph<N, E>) super.clone();
-        graph.nodes = (SortedSet) ((TreeSet) this.nodes).clone();
-        graph.successors = (SortedMap) ((TreeMap) this.successors).clone();
-        graph.predecessors = (SortedMap) ((TreeMap) this.predecessors).clone();
+        graph.nodes = (TreeSet) this.nodes.clone();
+        graph.successors = new TreeMap<Node<N>, TreeSet<Edge<N, E>>>();
+        graph.predecessors = new TreeMap<Node<N>, TreeSet<Edge<N, E>>>();
+        for (Map.Entry<Node<N>, TreeSet<Edge<N, E>>> entry : this.successors.entrySet()) {
+            graph.successors.put(entry.getKey(), (TreeSet<Edge<N, E>>) entry.getValue().clone());
+        }
+        for (Map.Entry<Node<N>, TreeSet<Edge<N, E>>> entry : this.predecessors.entrySet()) {
+            graph.predecessors.put(entry.getKey(), (TreeSet<Edge<N, E>>) entry.getValue().clone());
+        }
         return graph;
     }
 
@@ -228,18 +235,16 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
      * @todo see getNode
      */
     public final Edge<N, E> getEdge(final Node<N> source, final Node<N> target) {
-        SortedSet<Edge<N, E>> node = this.successors.get(source);
-        if (node == null) {
-            return null;
+        Edge<N, E> edge;
+        try {
+            Edge<N, E> search = new Edge<N, E>(source, target);
+            edge = this.successors.get(source).subSet(search, true, search, true).first();
+        } catch (NullPointerException ex) {
+            edge = null;
+        } catch (NoSuchElementException ex) {
+            edge = null;
         }
-        if (this.containsEdge(source, target)) {
-            for (final Edge<N, E> edge : this.successors.get(source)) {
-                if (edge.getTarget().equals(target)) {
-                    return edge;
-                }
-            }
-        }
-        return null;
+        return edge;
     }
 
     /**
@@ -813,7 +818,7 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
      *
      * @return the map
      */
-    protected SortedMap<Node<N>, SortedSet<Edge<N, E>>> getSuccessors() {
+    protected TreeMap<Node<N>, TreeSet<Edge<N, E>>> getSuccessors() {
         return this.successors;
     }
 
@@ -824,7 +829,7 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
      *
      * @return this for chaining
      */
-    protected ConcreteDGraph<N, E> setSuccessors(final TreeMap<Node<N>, SortedSet<Edge<N, E>>> successors) {
+    protected ConcreteDGraph<N, E> setSuccessors(final TreeMap<Node<N>, TreeSet<Edge<N, E>>> successors) {
         this.successors = successors;
         return this;
     }
@@ -834,7 +839,7 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
      *
      * @return the map
      */
-    protected SortedMap<Node<N>, SortedSet<Edge<N, E>>> getPredecessors() {
+    protected TreeMap<Node<N>, TreeSet<Edge<N, E>>> getPredecessors() {
         return this.predecessors;
     }
 
@@ -845,7 +850,7 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
      *
      * @return this for chaining
      */
-    protected ConcreteDGraph<N, E> setPredecessors(final TreeMap<Node<N>, SortedSet<Edge<N, E>>> predecessors) {
+    protected ConcreteDGraph<N, E> setPredecessors(final TreeMap<Node<N>, TreeSet<Edge<N, E>>> predecessors) {
         this.predecessors = predecessors;
         return this;
     }

@@ -162,8 +162,8 @@ public class DAGraph<N, E> extends ConcreteDGraph<N, E> {
         if (this.isAcyclic()) {
             this.reflexiveReduction();
         } else {
-            TreeMap<Node<N>, SortedSet<Edge<N, E>>> successors = new TreeMap<Node<N>, SortedSet<Edge<N, E>>>();
-            TreeMap<Node<N>, SortedSet<Edge<N, E>>> predecessors = new TreeMap<Node<N>, SortedSet<Edge<N, E>>>();
+            TreeMap<Node<N>, TreeSet<Edge<N, E>>> successors = new TreeMap<Node<N>, TreeSet<Edge<N, E>>>();
+            TreeMap<Node<N>, TreeSet<Edge<N, E>>> predecessors = new TreeMap<Node<N>, TreeSet<Edge<N, E>>>();
             for (Node<N> node : this.getNodes()) {
                 successors.put(node, new TreeSet<Edge<N, E>>());
                 predecessors.put(node, new TreeSet<Edge<N, E>>());
@@ -297,11 +297,11 @@ public class DAGraph<N, E> extends ConcreteDGraph<N, E> {
         DAGraph<N, E> graph = new DAGraph<N, E>(this);
         graph.reflexiveReduction();
         // initalize this component with no edges
-        this.setSuccessors(new TreeMap<Node<N>, SortedSet<Edge<N, E>>>());
+        this.setSuccessors(new TreeMap<Node<N>, TreeSet<Edge<N, E>>>());
         for (Node<N> node : this.getNodes()) {
             this.getSuccessors().put(node, new TreeSet<Edge<N, E>>());
         }
-        this.setPredecessors(new TreeMap<Node<N>, SortedSet<Edge<N, E>>>());
+        this.setPredecessors(new TreeMap<Node<N>, TreeSet<Edge<N, E>>>());
         for (Node<N> node : this.getNodes()) {
             this.getPredecessors().put(node, new TreeSet<Edge<N, E>>());
         }

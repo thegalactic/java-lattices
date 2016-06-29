@@ -131,8 +131,8 @@ public class Lattice<N, E> extends DAGraph<N, E> {
         super(graph);
         if (!this.isAcyclic()) {
             this.setNodes(new TreeSet<Node<N>>());
-            this.setSuccessors(new TreeMap<Node<N>, SortedSet<Edge<N, E>>>());
-            this.setPredecessors(new TreeMap<Node<N>, SortedSet<Edge<N, E>>>());
+            this.setSuccessors(new TreeMap<Node<N>, TreeSet<Edge<N, E>>>());
+            this.setPredecessors(new TreeMap<Node<N>, TreeSet<Edge<N, E>>>());
         }
     }
 
