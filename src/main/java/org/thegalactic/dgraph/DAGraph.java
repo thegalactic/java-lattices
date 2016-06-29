@@ -142,7 +142,7 @@ public class DAGraph extends ConcreteDGraph {
      *
      * @param set the set of nodes
      */
-    public DAGraph(final Set<Node> set) {
+    public DAGraph(final SortedSet<Node> set) {
         super(set);
     }
 

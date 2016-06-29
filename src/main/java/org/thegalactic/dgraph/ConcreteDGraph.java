@@ -83,6 +83,7 @@ public class ConcreteDGraph extends AbstractDGraph implements Cloneable {
      * Constructs a new directed graph with an empty set of node.
      */
     public ConcreteDGraph() {
+        super();
         this.nodes = new TreeSet<Node>();
         this.successors = new TreeMap<Node, SortedSet<Edge>>();
         this.predecessors = new TreeMap<Node, SortedSet<Edge>>();
@@ -96,7 +97,8 @@ public class ConcreteDGraph extends AbstractDGraph implements Cloneable {
      *
      * @param set the set of nodes
      */
-    public ConcreteDGraph(final Set<Node> set) {
+    public ConcreteDGraph(final SortedSet<Node> set) {
+        super();
         this.nodes = new TreeSet<Node>(set);
         this.successors = new TreeMap<Node, SortedSet<Edge>>();
         for (Node node : this.nodes) {
@@ -114,6 +116,7 @@ public class ConcreteDGraph extends AbstractDGraph implements Cloneable {
      * @param graph the directed graph to be copied
      */
     public ConcreteDGraph(final ConcreteDGraph graph) {
+        super();
         this.nodes = new TreeSet<Node>(graph.nodes);
         this.successors = new TreeMap<Node, SortedSet<Edge>>();
         this.predecessors = new TreeMap<Node, SortedSet<Edge>>();
