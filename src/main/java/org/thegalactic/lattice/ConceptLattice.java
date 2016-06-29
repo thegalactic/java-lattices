@@ -283,55 +283,6 @@ public class ConceptLattice extends Lattice {
     }
 
     /*
-     * ------------- OVERLAPPING METHODS ------------------
-     */
-    /**
-     * Adds the specified node to the set of node of this component.
-     *
-     * In the case where content of this node is not a concept, the node will
-     * not be added
-     *
-     * @param node a node
-     *
-     * @return a boolean
-     *
-     * @todo Comment the return
-     */
-    @Override
-    public boolean addNode(Node node) {
-        if (node instanceof Concept) {
-            return super.addNode(node);
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Adds the specified edge to this component: `target` is added as a
-     * successor
-     * of `source`.
-     *
-     * If the cases where specified nodes don't belongs to the node set, and
-     * where nodes don't contains concept as content, then the edge will not be
-     * added.
-     *
-     * @param source the node origine of the edge
-     * @param target the node destination of the edge
-     *
-     * @return a boolean
-     *
-     * @todo Comment the return
-     */
-    @Override
-    public boolean addEdge(Node source, Node target) {
-        if (target instanceof Concept && source instanceof Concept) {
-            return super.addEdge(source, target);
-        } else {
-            return false;
-        }
-    }
-
-    /*
      * ------------- CONCEPT LATTICE CHEKING METHOD ------------------
      */
     /**

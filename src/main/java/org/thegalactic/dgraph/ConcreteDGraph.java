@@ -135,14 +135,14 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
      */
     @Override
     public ConcreteDGraph<N, E> clone() throws CloneNotSupportedException {
-        ConcreteDGraph<N, E> graph = (ConcreteDGraph<N, E>) super.clone();
+        final ConcreteDGraph<N, E> graph = (ConcreteDGraph<N, E>) super.clone();
         graph.nodes = (TreeSet) this.nodes.clone();
         graph.successors = new TreeMap<Node<N>, TreeSet<Edge<N, E>>>();
         graph.predecessors = new TreeMap<Node<N>, TreeSet<Edge<N, E>>>();
-        for (Map.Entry<Node<N>, TreeSet<Edge<N, E>>> entry : this.successors.entrySet()) {
+        for (final Map.Entry<Node<N>, TreeSet<Edge<N, E>>> entry : this.successors.entrySet()) {
             graph.successors.put(entry.getKey(), (TreeSet<Edge<N, E>>) entry.getValue().clone());
         }
-        for (Map.Entry<Node<N>, TreeSet<Edge<N, E>>> entry : this.predecessors.entrySet()) {
+        for (final Map.Entry<Node<N>, TreeSet<Edge<N, E>>> entry : this.predecessors.entrySet()) {
             graph.predecessors.put(entry.getKey(), (TreeSet<Edge<N, E>>) entry.getValue().clone());
         }
         return graph;
@@ -235,14 +235,13 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
      * @todo see getNode
      */
     public final Edge<N, E> getEdge(final Node<N> source, final Node<N> target) {
-        Edge<N, E> edge;
-        try {
-            Edge<N, E> search = new Edge<N, E>(source, target);
-            edge = this.successors.get(source).subSet(search, true, search, true).first();
-        } catch (NullPointerException ex) {
-            edge = null;
-        } catch (NoSuchElementException ex) {
-            edge = null;
+        Edge<N, E> edge = null;
+        if (source != null && target != null) {
+            try {
+                final Edge<N, E> search = new Edge<N, E>(source, target);
+                edge = this.successors.get(source).subSet(search, true, search, true).first();
+            } catch (NoSuchElementException ex) {
+            }
         }
         return edge;
     }
@@ -336,7 +335,7 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
      *
      * @return true if the node has been successfully inserted
      */
-    public boolean containsNode(final Node<N> node) {
+    public final boolean containsNode(final Node<N> node) {
         return this.nodes.contains(node);
     }
 
@@ -347,7 +346,7 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
      *
      * @return true if the node has been successfully inserted
      */
-    public boolean addNode(final Node<N> node) {
+    public final boolean addNode(final Node<N> node) {
         if (!this.containsNode(node)) {
             this.nodes.add(node);
             this.successors.put(node, new TreeSet<Edge<N, E>>());
@@ -364,7 +363,7 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
      *
      * @return true if the node was successfully removed
      */
-    public boolean removeNode(final Node<N> node) {
+    public final boolean removeNode(final Node<N> node) {
         if (this.containsNode(node)) {
             // Remove the edges (node,target) with key node in successors, and key target in predecessors
             for (final Edge<N, E> successor : this.successors.get(node)) {
@@ -402,7 +401,7 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
      *
      * @return true if all nodes were removed
      */
-    public boolean removeNodes(final Set<Node<N>> nodes) {
+    public final boolean removeNodes(final Set<Node<N>> nodes) {
         boolean all = true;
         for (final Node<N> node : nodes) {
             if (!this.removeNode(node)) {
@@ -420,7 +419,7 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
      *
      * @return true if the edge is contained by this component
      */
-    public boolean containsEdge(final Node<N> source, final Node<N> target) {
+    public final boolean containsEdge(final Node<N> source, final Node<N> target) {
         return this.containsNode(source)
                 && this.containsNode(target)
                 && this.getSuccessorNodes(source).contains(target)
@@ -434,7 +433,7 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
      *
      * @return true if the edge is contained by this component
      */
-    public boolean containsEdge(final Edge<N, E> edge) {
+    public final boolean containsEdge(final Edge<N, E> edge) {
         return this.containsEdge(edge.getSource(), edge.getTarget());
     }
 
@@ -451,7 +450,7 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
      *
      * @return true if the edge was successfully added
      */
-    public boolean addEdge(final Node<N> source, final Node<N> target, final Object content) {
+    public final boolean addEdge(final Node<N> source, final Node<N> target, final Object content) {
         if (this.containsNode(source) && this.containsNode(target)) {
             final Edge<N, E> edge = new Edge(source, target, content);
             this.successors.get(source).add(edge);
@@ -473,7 +472,7 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
      *
      * @return true if the edge was successfully added
      */
-    public boolean addEdge(final Node<N> source, final Node<N> target) {
+    public final boolean addEdge(final Node<N> source, final Node<N> target) {
         return this.addEdge(source, target, null);
     }
 
@@ -509,7 +508,7 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
      *
      * @return true if the edge was removed
      */
-    public boolean removeEdge(final Node<N> source, final Node<N> target) {
+    public final boolean removeEdge(final Node<N> source, final Node<N> target) {
         if (this.containsEdge(source, target)) {
             Edge<N, E> edge = new Edge(source, target);
             this.successors.get(source).remove(edge);
@@ -527,7 +526,7 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
      *
      * @return true if the edge was removed
      */
-    public boolean removeEdge(final Edge<N, E> edge) {
+    public final boolean removeEdge(final Edge<N, E> edge) {
         if (this.containsEdge(edge)) {
             this.successors.get(edge.getSource()).remove(edge);
             this.predecessors.get(edge.getTarget()).remove(edge);
@@ -544,7 +543,7 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
      *
      * @return true if the component is acyclic
      */
-    public boolean isAcyclic() {
+    public final boolean isAcyclic() {
         return this.topologicalSort().size() == this.sizeNodes();
     }
 
@@ -563,7 +562,7 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
         // initialise a map with the number of predecessors (value) for each node (key);
         TreeMap<Node<N>, Integer> size = new TreeMap<Node<N>, Integer>();
         for (Node<N> node : this.nodes) {
-            size.put(node, Integer.valueOf(this.getPredecessorNodes(node).size()));
+            size.put(node, this.getPredecessorNodes(node).size());
         }
         List<Node<N>> sort = new ArrayList<Node<N>>();
         while (!sinks.isEmpty()) {
@@ -572,7 +571,7 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
             // updating of the set min by considering the successors of node
             for (Node<N> successor : this.getSuccessorNodes(node)) {
                 int newSize = size.get(successor).intValue() - 1;
-                size.put(successor, Integer.valueOf(newSize));
+                size.put(successor, newSize);
                 if (newSize == 0) {
                     sinks.add(successor);
                 }
