@@ -11,6 +11,7 @@ package org.thegalactic.lattice;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
+import org.thegalactic.rule.ImplicationalSystem;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;

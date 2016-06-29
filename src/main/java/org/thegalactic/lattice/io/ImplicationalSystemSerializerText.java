@@ -18,8 +18,8 @@ import java.util.StringTokenizer;
 
 import org.thegalactic.io.Reader;
 import org.thegalactic.io.Writer;
-import org.thegalactic.lattice.ImplicationalSystem;
-import org.thegalactic.lattice.Rule;
+import org.thegalactic.rule.ImplicationalSystem;
+import org.thegalactic.rule.Rule;
 
 /**
  * This class defines the way for reading an implicational system from a text

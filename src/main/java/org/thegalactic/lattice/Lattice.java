@@ -11,6 +11,9 @@ package org.thegalactic.lattice;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
+import org.thegalactic.rule.Rule;
+import org.thegalactic.rule.ImplicationalSystem;
+import org.thegalactic.rule.AssociationRule;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.SortedSet;

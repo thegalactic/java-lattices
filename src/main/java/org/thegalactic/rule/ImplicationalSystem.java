@@ -1,4 +1,4 @@
-package org.thegalactic.lattice;
+package org.thegalactic.rule;
 
 /*
  * ImplicationalSystem.java
@@ -24,6 +24,7 @@ import org.thegalactic.dgraph.DGraph;
 import org.thegalactic.dgraph.Edge;
 import org.thegalactic.dgraph.Node;
 import org.thegalactic.io.Filer;
+import org.thegalactic.lattice.ClosureSystem;
 import org.thegalactic.lattice.io.ImplicationalSystemIOFactory;
 import org.thegalactic.util.ComparableSet;
 

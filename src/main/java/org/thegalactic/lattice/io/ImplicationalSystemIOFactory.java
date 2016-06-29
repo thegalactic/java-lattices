@@ -11,7 +11,7 @@ package org.thegalactic.lattice.io;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-import org.thegalactic.lattice.ImplicationalSystem;
+import org.thegalactic.rule.ImplicationalSystem;
 
 /**
  * This class register readers and writers for the Context class.

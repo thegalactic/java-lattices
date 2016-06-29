@@ -1,4 +1,4 @@
-package org.thegalactic.lattice;
+package org.thegalactic.rule;
 
 /*
  * Rule.java
