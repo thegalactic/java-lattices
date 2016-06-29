@@ -113,8 +113,8 @@ public class ArrowRelation extends ConcreteDGraph {
          */
         for (Node j : joins) {
             for (Node m : meets) {
-                mplus = transitiveReduction.getSuccessorNodes(m).first();
-                jminus = transitiveReduction.getPredecessorNodes(j).first();
+                mplus = (Node) transitiveReduction.getSuccessorNodes(m).first();
+                jminus = (Node) transitiveReduction.getPredecessorNodes(j).first();
                 if (transitiveClosure.getSuccessorNodes(j).contains(m) || j.equals(m)) {
                     arrow = ArrowRelation.cross;
                 } else if (transitiveClosure.getSuccessorNodes(jminus).contains(m) || jminus.equals(m)) {
@@ -154,19 +154,21 @@ public class ArrowRelation extends ConcreteDGraph {
      * in double arrow relation with the meet irreducible node in the lattice.
      *
      * @return the table of the lattice
+     *
+     * @todo Avoid using for (Object edge : this.getEdges()). Use for (Edge edge : this.getEdges())
      */
     public Context getDoubleArrowTable() {
         Context context = new Context();
         // observations are join irreductibles
         // attributes are meet irreductibles
-        for (Edge edge : this.getEdges()) {
-            context.addToObservations(edge.getSource());
-            context.addToAttributes(edge.getTarget());
+        for (Object edge : this.getEdges()) {
+            context.addToObservations(((Edge) edge).getSource());
+            context.addToAttributes(((Edge) edge).getTarget());
         }
         // generation of extent-intent
-        for (Edge edge : this.getEdges()) {
-            if (edge.getContent() == ArrowRelation.updown) {
-                context.addExtentIntent(edge.getSource(), edge.getTarget());
+        for (Object edge : this.getEdges()) {
+            if (((Edge) edge).getContent() == ArrowRelation.updown) {
+                context.addExtentIntent(((Edge) edge).getSource(), ((Edge) edge).getTarget());
             }
         }
         return context;
@@ -187,14 +189,14 @@ public class ArrowRelation extends ConcreteDGraph {
         Context context = new Context();
         // observations are join irreductibles
         // attributes are meet irreductibles
-        for (Edge edge : this.getEdges()) {
-            context.addToObservations(edge.getSource());
-            context.addToAttributes(edge.getTarget());
+        for (Object edge : this.getEdges()) {
+            context.addToObservations(((Edge) edge).getSource());
+            context.addToAttributes(((Edge) edge).getTarget());
         }
         // generation of extent-intent
-        for (Edge edge : this.getEdges()) {
-            if (edge.getContent() == ArrowRelation.down || edge.getContent() == ArrowRelation.updown) {
-                context.addExtentIntent(edge.getSource(), edge.getTarget());
+        for (Object edge : this.getEdges()) {
+            if (((Edge) edge).getContent() == ArrowRelation.down || ((Edge) edge).getContent() == ArrowRelation.updown) {
+                context.addExtentIntent(((Edge) edge).getSource(), ((Edge) edge).getTarget());
             }
         }
         return context;
@@ -215,14 +217,14 @@ public class ArrowRelation extends ConcreteDGraph {
         Context context = new Context();
         // observations are join irreductibles
         // attributes are meet irreductibles
-        for (Edge edge : this.getEdges()) {
-            context.addToObservations(edge.getSource());
-            context.addToAttributes(edge.getTarget());
+        for (Object edge : this.getEdges()) {
+            context.addToObservations(((Edge) edge).getSource());
+            context.addToAttributes(((Edge) edge).getTarget());
         }
         // generation of extent-intent
-        for (Edge edge : this.getEdges()) {
-            if (edge.getContent() == ArrowRelation.up || edge.getContent() == ArrowRelation.updown) {
-                context.addExtentIntent(edge.getSource(), edge.getTarget());
+        for (Object edge : this.getEdges()) {
+            if (((Edge) edge).getContent() == ArrowRelation.up || ((Edge) edge).getContent() == ArrowRelation.updown) {
+                context.addExtentIntent(((Edge) edge).getSource(), ((Edge) edge).getTarget());
             }
         }
         return context;
@@ -244,14 +246,14 @@ public class ArrowRelation extends ConcreteDGraph {
         Context context = new Context();
         // observations are join irreductibles
         // attributes are meet irreductibles
-        for (Edge edge : this.getEdges()) {
-            context.addToObservations(edge.getSource());
-            context.addToAttributes(edge.getTarget());
+        for (Object edge : this.getEdges()) {
+            context.addToObservations(((Edge) edge).getSource());
+            context.addToAttributes(((Edge) edge).getTarget());
         }
         // generation of extent-intent
-        for (Edge edge : this.getEdges()) {
-            if (edge.getContent() == ArrowRelation.updown || edge.getContent() == ArrowRelation.circ) {
-                context.addExtentIntent(edge.getSource(), edge.getTarget());
+        for (Object edge : this.getEdges()) {
+            if (((Edge) edge).getContent() == ArrowRelation.updown || ((Edge) edge).getContent() == ArrowRelation.circ) {
+                context.addExtentIntent(((Edge) edge).getSource(), ((Edge) edge).getTarget());
             }
         }
         return context;

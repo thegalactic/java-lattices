@@ -15,7 +15,6 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 
 import org.thegalactic.dgraph.Edge;
-import org.thegalactic.dgraph.Node;
 import org.thegalactic.io.Writer;
 import org.thegalactic.lattice.Concept;
 import org.thegalactic.lattice.ConceptLattice;
@@ -81,7 +80,7 @@ public final class ConceptLatticeSerializerDot implements Writer<ConceptLattice>
         file.write("Graph [rankdir=BT]");
         file.newLine();
         StringBuilder builder = new StringBuilder();
-        for (Node node : lattice.getNodes()) {
+        for (Object node : lattice.getNodes()) {
             builder.setLength(0);
             Concept concept = (Concept) node;
             file.write(String.valueOf(concept.getIdentifier()));
@@ -99,13 +98,13 @@ public final class ConceptLatticeSerializerDot implements Writer<ConceptLattice>
             file.write("\"]");
             file.newLine();
         }
-        for (Edge edge : lattice.getEdges()) {
-            file.write(String.valueOf(edge.getSource().getIdentifier()));
+        for (Object edge : lattice.getEdges()) {
+            file.write(String.valueOf(((Edge) edge).getSource().getIdentifier()));
             file.write("->");
-            file.write(String.valueOf(edge.getTarget().getIdentifier()));
-            if (edge.hasContent()) {
+            file.write(String.valueOf(((Edge) edge).getTarget().getIdentifier()));
+            if (((Edge) edge).hasContent()) {
                 file.write(" [label=\"");
-                builder.append(edge.getContent().toString().replace("\"", "\\\""));
+                builder.append(((Edge) edge).getContent().toString().replace("\"", "\\\""));
                 file.write("\"]");
             }
             file.newLine();

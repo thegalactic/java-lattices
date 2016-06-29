@@ -31,16 +31,16 @@ public final class DGraphFactory {
      *
      * @return a random graph
      */
-    public ConcreteDGraph random(final int size, final double threshold) {
-        final ConcreteDGraph graph = new ConcreteDGraph();
+    public ConcreteDGraph<Integer, ?> random(final int size, final double threshold) {
+        final ConcreteDGraph<Integer, ?> graph = new ConcreteDGraph<Integer, Object>();
         // addition of nodes
         for (int i = 1; i <= size; i++) {
-            final Node node = new Node(i);
+            final Node<Integer> node = new Node<Integer>(i);
             graph.addNode(node);
         }
         // addition of edges
-        for (final Node source : graph.getNodes()) {
-            for (final Node target : graph.getNodes()) {
+        for (final Node<Integer> source : graph.getNodes()) {
+            for (final Node<Integer> target : graph.getNodes()) {
                 if (Math.random() < threshold) {
                     graph.addEdge(source, target);
                 }

@@ -29,6 +29,10 @@ import org.thegalactic.context.Context;
 
 /**
  * Test of class ConceptLattice.
+ *
+ * @todo Avoid using Object when a Node is required
+ *
+ * @todo Avoid casting to Node
  */
 public class ConceptLatticeTest {
 
@@ -118,7 +122,7 @@ public class ConceptLatticeTest {
         l.addEdge(a, b);
         ConceptLattice instance = new ConceptLattice(l);
         boolean expResult = true;
-        for (Node node : instance.getNodes()) {
+        for (Object node : instance.getNodes()) {
             expResult &= ((Concept) node).hasSetA();
         }
         boolean result = instance.containsAllSetA();
@@ -138,7 +142,7 @@ public class ConceptLatticeTest {
         l.addEdge(a, b);
         ConceptLattice instance = new ConceptLattice(l);
         boolean expResult = true;
-        for (Node node : instance.getNodes()) {
+        for (Object node : instance.getNodes()) {
             expResult &= ((Concept) node).hasSetB();
         }
         boolean result = instance.containsAllSetB();
@@ -314,8 +318,8 @@ public class ConceptLatticeTest {
         assertTrue(lat.isLattice());
         assertEquals(2, lat.getNodes().size());
         assertEquals(1, lat.getEdges().size());
-        for (Node node : lat.getNodes()) {
-            assertTrue(node.getContent() != null);
+        for (Object node : lat.getNodes()) {
+            assertTrue(((Node) node).getContent() != null);
         }
     }
 
@@ -380,7 +384,7 @@ public class ConceptLatticeTest {
         cs.addExtentIntent("3", "b");
         cs.addExtentIntent("3", "c");
         ConceptLattice result = ConceptLattice.diagramLattice(cs);
-        assertEquals(null, result.getNodes().first().getContent());
+        assertEquals(null, ((Node) result.getNodes().first()).getContent());
     }
 
     /**

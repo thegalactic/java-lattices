@@ -24,6 +24,9 @@ import org.thegalactic.io.Writer;
  *
  * ![DGraphSerializerDot](DGraphSerializerDot.png)
  *
+ * @param <N> Node content type
+ * @param <E> Edge content type
+ *
  * @uml
  *
  * DGraphSerializerDot.png
@@ -34,7 +37,7 @@ import org.thegalactic.io.Writer;
  * hide members show DGraphSerializerDot members class DGraphSerializerDot
  * #LightCyan title DGraphSerializerDot UML graph
  */
-public final class DGraphSerializerDot implements Writer<ConcreteDGraph> {
+public final class DGraphSerializerDot<N, E> implements Writer<ConcreteDGraph<N, E>> {
 
     /**
      * The singleton instance.
@@ -72,7 +75,7 @@ public final class DGraphSerializerDot implements Writer<ConcreteDGraph> {
      * @throws IOException When an IOException occurs
      */
     @Override
-    public void write(final ConcreteDGraph graph, final BufferedWriter file) throws IOException {
+    public void write(final ConcreteDGraph<N, E> graph, final BufferedWriter file) throws IOException {
         // Writing start of graph
         file.write("digraph G {");
         file.newLine();
@@ -80,14 +83,14 @@ public final class DGraphSerializerDot implements Writer<ConcreteDGraph> {
         file.newLine();
 
         // Writing nodes
-        for (final Node node : graph.getNodes()) {
+        for (final Node<N> node : graph.getNodes()) {
             file.write(String.valueOf(node.getIdentifier()));
             this.writeLabel(node.toString(), file);
             file.newLine();
         }
 
         // Writing edges
-        for (final Edge edge : graph.getEdges()) {
+        for (final Edge<N, E> edge : graph.getEdges()) {
             file.write(String.valueOf(edge.getSource().getIdentifier()));
             file.write("->");
             file.write(String.valueOf(edge.getTarget().getIdentifier()));

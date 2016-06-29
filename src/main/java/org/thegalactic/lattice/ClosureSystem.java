@@ -208,7 +208,7 @@ public abstract class ClosureSystem {
      *
      * @return the precedence graph
      */
-    public ConcreteDGraph precedenceGraph() {
+    public ConcreteDGraph<Comparable, ?> precedenceGraph() {
         // compute a TreeMap of closures for each element of the component
         TreeMap<Comparable, TreeSet<Comparable>> closures = new TreeMap<Comparable, TreeSet<Comparable>>();
         for (Comparable x : this.getSet()) {
@@ -217,7 +217,7 @@ public abstract class ClosureSystem {
             closures.put(x, this.closure(setX));
         }
         // nodes of the graph are elements
-        ConcreteDGraph prec = new ConcreteDGraph();
+        ConcreteDGraph<Comparable, ?> prec = new ConcreteDGraph<Comparable, Object>();
         TreeMap<Comparable, Node> nodeCreated = new TreeMap<Comparable, Node>();
         for (Comparable x : this.getSet()) {
             Node node = new Node(x);
@@ -253,16 +253,16 @@ public abstract class ClosureSystem {
         // Initialise a map Red of reducible attributes
         TreeMap<Object, TreeSet> red = new TreeMap();
         // Initialise the precedence graph G of the closure system
-        ConcreteDGraph graph = this.precedenceGraph();
+        ConcreteDGraph<Comparable, ?> graph = this.precedenceGraph();
         // First, compute each group of equivalent attributes
         // This group will be a strongly connected component on the graph.
         // Then, only one element of each group is skipped, others will be deleted.
-        DAGraph cfc = graph.getStronglyConnectedComponent();
-        for (Node node : cfc.getNodes()) {
+        DAGraph<SortedSet<Node<Comparable>>, ?> cfc = graph.getStronglyConnectedComponent();
+        for (Node<SortedSet<Node<Comparable>>> node : cfc.getNodes()) {
             // Get list of node of this component
-            TreeSet<Node> sCC = (TreeSet<Node>) node.getContent();
+            SortedSet<Node<Comparable>> sCC = node.getContent();
             if (sCC.size() > 1) {
-                Node y = sCC.first();
+                Node<?> y = sCC.first();
                 TreeSet yClass = new TreeSet();
                 yClass.add(y.getContent());
                 for (Node x : sCC) {
