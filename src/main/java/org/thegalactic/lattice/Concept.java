@@ -624,7 +624,7 @@ public class Concept extends Node {
         newVal.addAll(f);
         for (Object x : f) {
             // computes nx, the strongly connected component containing x
-            Node nx = null;
+            Node<SortedSet<Node<Comparable>>> nx = null;
             for (Node cc : acyclPrec.getNodes()) {
                 TreeSet<Node> cC = (TreeSet<Node>) cc.getContent();
                 for (Node y : cC) {
@@ -634,7 +634,7 @@ public class Concept extends Node {
                 }
             }
             // computes the minorants of nx in the acyclic graph
-            SortedSet<Node> ccMinNx = acyclPrec.minorants(nx);
+            SortedSet<Node<SortedSet<Node<Comparable>>>> ccMinNx = acyclPrec.minorants(nx);
             // removes from newVal every minorants of nx
             for (Node cc : ccMinNx) {
                 TreeSet<Node> cC = (TreeSet<Node>) cc.getContent();
