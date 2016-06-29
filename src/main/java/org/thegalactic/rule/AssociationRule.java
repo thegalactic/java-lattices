@@ -23,6 +23,7 @@ import java.util.SortedSet;
  * for which the rule is true. The support represents the minimum number of
  * observations for the rule to be relevant.
  *
+ * @todo do we use composition over inheritance?
  */
 public class AssociationRule extends Rule {
 
