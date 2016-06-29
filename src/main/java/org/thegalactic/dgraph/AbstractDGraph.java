@@ -20,8 +20,11 @@ import org.thegalactic.io.Filer;
 
 /**
  * AbstractDGraph.
+ *
+ * @param <N> Node content type
+ * @param <E> Edge content type
  */
-public abstract class AbstractDGraph {
+public abstract class AbstractDGraph<N, E> {
 
     /**
      * Basic constructor.
@@ -41,10 +44,10 @@ public abstract class AbstractDGraph {
         nodes.append(this.sizeNodes()).append(" Nodes: {");
         final StringBuilder edges = new StringBuilder();
         edges.append(this.sizeEdges()).append(" Edges: {");
-        for (final Node node : this.getNodes()) {
+        for (final Node<N> node : this.getNodes()) {
             nodes.append(node.toString()).append(',');
         }
-        for (final Edge edge : this.getEdges()) {
+        for (final Edge<N, E> edge : this.getEdges()) {
             edges.append(edge.toString()).append(',');
         }
         final String newLine = System.getProperty("line.separator");
@@ -71,14 +74,14 @@ public abstract class AbstractDGraph {
      *
      * @return the set of edges
      */
-    public abstract SortedSet<Edge> getEdges();
+    public abstract SortedSet<Edge<N, E>> getEdges();
 
     /**
      * Returns the set of nodes of this component.
      *
      * @return the set of nodes
      */
-    public abstract SortedSet<Node> getNodes();
+    public abstract SortedSet<Node<N>> getNodes();
 
     /**
      * Save the description of this component in a file whose name is specified.
@@ -98,7 +101,7 @@ public abstract class AbstractDGraph {
      *
      * @return the set of edges
      */
-    public abstract SortedSet<Edge> getPredecessorEdges(final Node node);
+    public abstract SortedSet<Edge<N, E>> getPredecessorEdges(final Node<N> node);
 
     /**
      * Returns the set of edges successors of the specified node.
@@ -107,7 +110,7 @@ public abstract class AbstractDGraph {
      *
      * @return the set of edges
      */
-    public abstract SortedSet<Edge> getSuccessorEdges(final Node node);
+    public abstract SortedSet<Edge<N, E>> getSuccessorEdges(final Node<N> node);
 
     /*
      * --------------- GRAPH HANDLING METHODS ------------
@@ -117,7 +120,7 @@ public abstract class AbstractDGraph {
      *
      * @return the sinks
      */
-    public final SortedSet<Node> getSinks() {
+    public final SortedSet<Node<N>> getSinks() {
         return new Sinks(this);
     }
 
@@ -126,14 +129,14 @@ public abstract class AbstractDGraph {
      *
      * @return the wells
      */
-    public final SortedSet<Node> getWells() {
+    public final SortedSet<Node<N>> getWells() {
         return new Wells(this);
     }
 
     /**
      * AbstractEnds.
      */
-    private abstract class AbstractEnds extends AbstractSet<Node> implements SortedSet<Node> {
+    private abstract class AbstractEnds extends AbstractSet<Node<N>> implements SortedSet<Node<N>> {
 
         /**
          * The underlying graph.
@@ -164,7 +167,7 @@ public abstract class AbstractDGraph {
          *
          * @return the first edge
          */
-        public final Node first() {
+        public final Node<N> first() {
             throw new UnsupportedOperationException();
         }
 
@@ -173,7 +176,7 @@ public abstract class AbstractDGraph {
          *
          * @return the last edge
          */
-        public final Node last() {
+        public final Node<N> last() {
             throw new UnsupportedOperationException();
         }
 
@@ -186,7 +189,7 @@ public abstract class AbstractDGraph {
          *
          * @throws UnsupportedOperationException
          */
-        public final SortedSet<Node> headSet(final Node node) {
+        public final SortedSet<Node<N>> headSet(final Node<N> node) {
             throw new UnsupportedOperationException();
         }
 
@@ -199,7 +202,7 @@ public abstract class AbstractDGraph {
          *
          * @throws UnsupportedOperationException
          */
-        public final SortedSet<Node> tailSet(final Node node) {
+        public final SortedSet<Node<N>> tailSet(final Node<N> node) {
             throw new UnsupportedOperationException();
         }
 
@@ -213,7 +216,7 @@ public abstract class AbstractDGraph {
          *
          * @throws UnsupportedOperationException
          */
-        public final SortedSet<Node> subSet(final Node fromNode, final Node toNode) {
+        public final SortedSet<Node<N>> subSet(final Node<N> fromNode, final Node<N> toNode) {
             throw new UnsupportedOperationException();
         }
 
@@ -222,7 +225,7 @@ public abstract class AbstractDGraph {
          *
          * @return null
          */
-        public final Comparator<? super Node> comparator() {
+        public final Comparator<? super Node<N>> comparator() {
             return null;
         }
 
@@ -246,12 +249,12 @@ public abstract class AbstractDGraph {
     /**
      * AbstractEndsIterator.
      */
-    private abstract class AbstractEndsIterator implements Iterator<Node> {
+    private abstract class AbstractEndsIterator implements Iterator<Node<N>> {
 
         /**
          * The nodes iterator.
          */
-        private final Iterator<Node> nodesIterator;
+        private final Iterator<Node<N>> nodesIterator;
 
         /**
          * The sinks object.
@@ -261,7 +264,7 @@ public abstract class AbstractDGraph {
         /**
          * The next sink.
          */
-        private Node next;
+        private Node<N> next;
 
         /**
          * The hasNext flag.
@@ -294,7 +297,7 @@ public abstract class AbstractDGraph {
          *
          * @return the next node
          */
-        protected final Node getNext() {
+        protected final Node<N> getNext() {
             return this.next;
         }
 
@@ -324,8 +327,8 @@ public abstract class AbstractDGraph {
          *
          * @return The next sink
          */
-        public final Node next() {
-            final Node sink = this.next;
+        public final Node<N> next() {
+            final Node<N> sink = this.next;
             this.prepareNext();
             return sink;
         }

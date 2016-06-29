@@ -26,7 +26,7 @@ import org.thegalactic.dgraph.DGraph;
  * class DGraphIOFactory #LightCyan
  * title DGraphIOFactory UML graph
  */
-public final class DGraphIOFactory extends org.thegalactic.io.AbstractIOFactory<DGraph> {
+public final class DGraphIOFactory extends org.thegalactic.io.IOFactory<DGraph> {
 
     /**
      * The singleton instance.

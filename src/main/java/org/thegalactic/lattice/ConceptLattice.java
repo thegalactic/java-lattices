@@ -821,9 +821,10 @@ public class ConceptLattice extends Lattice {
         }
         Node t = this.top();
         l.addNode(t);
-        for (Node node : l.getWells()) {
+        // TODO use Node<Concept>
+        for (Object node : l.getWells()) {
             if (!node.equals(t)) {
-                l.addEdge(node, t);
+                l.addEdge((Node) node, t);
             }
         }
         return l;

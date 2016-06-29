@@ -26,7 +26,7 @@ import org.thegalactic.context.Context;
  * class ContextIOFactory #LightCyan
  * title ContextIOFactory UML graph
  */
-public final class ContextIOFactory extends org.thegalactic.io.AbstractIOFactory<Context> {
+public final class ContextIOFactory extends org.thegalactic.io.IOFactory<Context> {
 
     /**
      * The singleton instance.
