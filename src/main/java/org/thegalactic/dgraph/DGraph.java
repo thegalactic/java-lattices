@@ -18,6 +18,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -62,17 +63,17 @@ public class DGraph extends AbstractDGraph implements Cloneable {
     /**
      * A set of elements.
      */
-    private TreeSet<Node> nodes;
+    private SortedSet<Node> nodes;
 
     /**
      * A map to associate a set of successors to each node.
      */
-    private TreeMap<Node, TreeSet<Edge>> successors;
+    private SortedMap<Node, SortedSet<Edge>> successors;
 
     /**
      * A map to associate a set of predecessors to each node.
      */
-    private TreeMap<Node, TreeSet<Edge>> predecessors;
+    private SortedMap<Node, SortedSet<Edge>> predecessors;
 
 
     /*
@@ -83,8 +84,8 @@ public class DGraph extends AbstractDGraph implements Cloneable {
      */
     public DGraph() {
         this.nodes = new TreeSet<Node>();
-        this.successors = new TreeMap<Node, TreeSet<Edge>>();
-        this.predecessors = new TreeMap<Node, TreeSet<Edge>>();
+        this.successors = new TreeMap<Node, SortedSet<Edge>>();
+        this.predecessors = new TreeMap<Node, SortedSet<Edge>>();
     }
 
     /**
@@ -97,11 +98,11 @@ public class DGraph extends AbstractDGraph implements Cloneable {
      */
     public DGraph(final Set<Node> set) {
         this.nodes = new TreeSet<Node>(set);
-        this.successors = new TreeMap<Node, TreeSet<Edge>>();
+        this.successors = new TreeMap<Node, SortedSet<Edge>>();
         for (Node node : this.nodes) {
             this.successors.put(node, new TreeSet<Edge>());
         }
-        this.predecessors = new TreeMap<Node, TreeSet<Edge>>();
+        this.predecessors = new TreeMap<Node, SortedSet<Edge>>();
         for (Node node : this.nodes) {
             this.predecessors.put(node, new TreeSet<Edge>());
         }
@@ -114,8 +115,8 @@ public class DGraph extends AbstractDGraph implements Cloneable {
      */
     public DGraph(final DGraph graph) {
         this.nodes = new TreeSet<Node>(graph.nodes);
-        this.successors = new TreeMap<Node, TreeSet<Edge>>();
-        this.predecessors = new TreeMap<Node, TreeSet<Edge>>();
+        this.successors = new TreeMap<Node, SortedSet<Edge>>();
+        this.predecessors = new TreeMap<Node, SortedSet<Edge>>();
         for (Node node : graph.nodes) {
             this.successors.put(node, new TreeSet<Edge>(graph.successors.get(node)));
             this.predecessors.put(node, new TreeSet<Edge>(graph.predecessors.get(node)));
@@ -811,7 +812,7 @@ public class DGraph extends AbstractDGraph implements Cloneable {
      *
      * @return the map
      */
-    protected TreeMap<Node, TreeSet<Edge>> getSuccessors() {
+    protected SortedMap<Node, SortedSet<Edge>> getSuccessors() {
         return this.successors;
     }
 
@@ -822,7 +823,7 @@ public class DGraph extends AbstractDGraph implements Cloneable {
      *
      * @return this for chaining
      */
-    protected DGraph setSuccessors(final TreeMap<Node, TreeSet<Edge>> successors) {
+    protected DGraph setSuccessors(final TreeMap<Node, SortedSet<Edge>> successors) {
         this.successors = successors;
         return this;
     }
@@ -832,7 +833,7 @@ public class DGraph extends AbstractDGraph implements Cloneable {
      *
      * @return the map
      */
-    protected TreeMap<Node, TreeSet<Edge>> getPredecessors() {
+    protected SortedMap<Node, SortedSet<Edge>> getPredecessors() {
         return this.predecessors;
     }
 
@@ -843,7 +844,7 @@ public class DGraph extends AbstractDGraph implements Cloneable {
      *
      * @return this for chaining
      */
-    protected DGraph setPredecessors(final TreeMap<Node, TreeSet<Edge>> predecessors) {
+    protected DGraph setPredecessors(final TreeMap<Node, SortedSet<Edge>> predecessors) {
         this.predecessors = predecessors;
         return this;
     }

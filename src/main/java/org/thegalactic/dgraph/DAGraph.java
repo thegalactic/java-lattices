@@ -159,8 +159,8 @@ public class DAGraph extends DGraph {
         if (this.isAcyclic()) {
             this.reflexiveReduction();
         } else {
-            TreeMap<Node, TreeSet<Edge>> successors = new TreeMap<Node, TreeSet<Edge>>();
-            TreeMap<Node, TreeSet<Edge>> predecessors = new TreeMap<Node, TreeSet<Edge>>();
+            TreeMap<Node, SortedSet<Edge>> successors = new TreeMap<Node, SortedSet<Edge>>();
+            TreeMap<Node, SortedSet<Edge>> predecessors = new TreeMap<Node, SortedSet<Edge>>();
             for (Node node : this.getNodes()) {
                 successors.put(node, new TreeSet<Edge>());
                 predecessors.put(node, new TreeSet<Edge>());
@@ -294,11 +294,11 @@ public class DAGraph extends DGraph {
         DAGraph graph = new DAGraph(this);
         graph.reflexiveReduction();
         // initalize this component with no edges
-        this.setSuccessors(new TreeMap<Node, TreeSet<Edge>>());
+        this.setSuccessors(new TreeMap<Node, SortedSet<Edge>>());
         for (Node node : this.getNodes()) {
             this.getSuccessors().put(node, new TreeSet<Edge>());
         }
-        this.setPredecessors(new TreeMap<Node, TreeSet<Edge>>());
+        this.setPredecessors(new TreeMap<Node, SortedSet<Edge>>());
         for (Node node : this.getNodes()) {
             this.getPredecessors().put(node, new TreeSet<Edge>());
         }

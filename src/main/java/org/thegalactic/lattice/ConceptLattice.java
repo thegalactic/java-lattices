@@ -277,8 +277,8 @@ public class ConceptLattice extends Lattice {
         super(lattice);
         if (!this.isConceptLattice()) {
             this.setNodes(new TreeSet<Node>());
-            this.setSuccessors(new TreeMap<Node, TreeSet<Edge>>());
-            this.setPredecessors(new TreeMap<Node, TreeSet<Edge>>());
+            this.setSuccessors(new TreeMap<Node, SortedSet<Edge>>());
+            this.setPredecessors(new TreeMap<Node, SortedSet<Edge>>());
         }
     }
 
