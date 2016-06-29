@@ -39,22 +39,22 @@ public class LatticeFactory {
      *
      * @return a randomly generated lattice with nb nodes
      */
-    public static Lattice random(int nb) {
+    public static Lattice<Integer, ?> random(int nb) {
         boolean done = false;
         Lattice l = new Lattice();
         while (!done) {
             DAGraph dag = DAGraph.random(nb - 2); // what an ugly strategy :-(
-            Lattice tmp = new Lattice(dag);
-            Node top = new Node(Integer.valueOf(nb - 1));
+            Lattice<Integer, ?> tmp = new Lattice(dag);
+            Node<Integer> top = new Node(nb - 1);
             tmp.addNode(top);
-            for (Node node : tmp.max()) {
+            for (Node<Integer> node : tmp.max()) {
                 if (!node.equals(top)) {
                     tmp.addEdge(node, top);
                 }
             }
-            Node bot = new Node(Integer.valueOf(nb));
+            Node<Integer> bot = new Node(nb);
             tmp.addNode(bot);
-            for (Node node : tmp.min()) {
+            for (Node<Integer> node : tmp.min()) {
                 if (!node.equals(bot)) {
                     tmp.addEdge(bot, node);
                 }
@@ -75,14 +75,14 @@ public class LatticeFactory {
      * @return the boolean algebra of cardinal 2^n
      */
     public static Lattice booleanAlgebra(int n) {
-        Lattice l = new Lattice();
+        Lattice<BitSet, ?> l = new Lattice();
         BitSet b = new BitSet(n);
-        Node bot = new Node(b);
+        Node<BitSet> bot = new Node(b);
         l.addNode(bot);
         for (int i = 0; i < n; i++) {
             BitSet bs = new BitSet(n);
             bs.set(i, true);
-            Node next = new Node(bs);
+            Node<BitSet> next = new Node(bs);
             l.addNode(next);
             l.addEdge(bot, next);
             recursiveBooleanAlgebra(next, l, n);
@@ -108,14 +108,14 @@ public class LatticeFactory {
      * @return the lattice of permutations of 1..n.
      */
     public static Lattice permutationLattice(int n) {
-        Lattice l = new Lattice();
+        Lattice<Permutation, ?> l = new Lattice();
         int[] content = new int[n];
         for (int i = 0; i < n; i++) {
             content[i] = i;
         }
         Permutation s = new Permutation(n);
         s.setContent(content);
-        Node bot = new Node(s);
+        Node<Permutation> bot = new Node(s);
         l.addNode(bot);
         for (int i = 0; i < n - 1; i++) {
             int[] newC = content.clone();
@@ -123,7 +123,7 @@ public class LatticeFactory {
             newC[i + 1] = content[i];
             Permutation newS = new Permutation(n);
             newS.setContent(newC);
-            Node succ = new Node(newS);
+            Node<Permutation> succ = new Node(newS);
             l.addNode(succ);
             l.addEdge(bot, succ);
             recursivePermutationLattice(succ, l, n);
@@ -147,19 +147,19 @@ public class LatticeFactory {
     public static Lattice product(Lattice l, Lattice r) {
         Lattice prod = new Lattice();
         // Create nodes
-        for (Node nL : l.getNodes()) {
-            for (Node nR : r.getNodes()) {
-                prod.addNode(new Node(new Couple(nL.getContent(), nR.getContent())));
+        for (Object nL : l.getNodes()) {
+            for (Object nR : r.getNodes()) {
+                prod.addNode(new Node(new Couple(((Node) nL).getContent(), ((Node) nR).getContent())));
             }
         }
         // Create edges
-        for (Node source : prod.getNodes()) {
-            for (Node target : prod.getNodes()) {
-                if (l.containsEdge(l.getNodeByContent(((Couple) source.getContent()).getLeft()),
-                        l.getNodeByContent(((Couple) target.getContent()).getLeft()))
-                        && r.containsEdge(r.getNodeByContent(((Couple) source.getContent()).getRight()),
-                                r.getNodeByContent(((Couple) target.getContent()).getRight()))) {
-                    prod.addEdge(source, target);
+        for (Object source : prod.getNodes()) {
+            for (Object target : prod.getNodes()) {
+                if (l.containsEdge(l.getNodeByContent(((Couple) ((Node) source).getContent()).getLeft()),
+                        l.getNodeByContent(((Couple) ((Node) target).getContent()).getLeft()))
+                        && r.containsEdge(r.getNodeByContent(((Couple) ((Node) source).getContent()).getRight()),
+                                r.getNodeByContent(((Couple) ((Node) target).getContent()).getRight()))) {
+                    prod.addEdge((Node) source, (Node) target);
                 }
             }
         }
@@ -177,62 +177,62 @@ public class LatticeFactory {
     public static Lattice doublingConvex(Lattice l, DAGraph c) {
         Lattice doubled = new Lattice();
         // Copy nodes by Content
-        for (Node node : l.getNodes()) {
-            if (c.containsNode(node)) {
+        for (Object node : l.getNodes()) {
+            if (c.containsNode((Node) node)) {
                 // These nodes are doubled
-                Couple cpl0 = new Couple(node.getContent(), 0);
+                Couple cpl0 = new Couple(((Node) node).getContent(), 0);
                 Node n0 = new Node(cpl0);
-                Couple cpl1 = new Couple(node.getContent(), 1);
+                Couple cpl1 = new Couple(((Node) node).getContent(), 1);
                 Node n1 = new Node(cpl1);
                 doubled.addNode(n0);
                 doubled.addNode(n1);
             } else {
                 // These nodes are just copied
-                doubled.addNode(new Node(node.getContent()));
+                doubled.addNode(new Node(((Node) node).getContent()));
             }
         }
         // Construct edges of doubled
         Couple test = new Couple(0, 0); // used to test class of contents
-        for (Node x : doubled.getNodes()) {
-            for (Node y : doubled.getNodes()) {
+        for (Object x : doubled.getNodes()) {
+            for (Object y : doubled.getNodes()) {
                 // Add an edge if x < y
-                if (x.getContent().getClass() == test.getClass()) { // x was in convex c
-                    if (y.getContent().getClass() == test.getClass()) { // y was also in convex c
+                if (((Node) x).getContent().getClass() == test.getClass()) { // x was in convex c
+                    if (((Node) y).getContent().getClass() == test.getClass()) { // y was also in convex c
                         // x & y were in convex c
-                        Couple cX = (Couple) x.getContent();
-                        Couple cY = (Couple) y.getContent();
+                        Couple cX = (Couple) ((Node) x).getContent();
+                        Couple cY = (Couple) ((Node) y).getContent();
                         if ((cX.getLeft() == cY.getLeft()) && (((Integer) cX.getRight()) == 0)
                                 && (((Integer) cY.getRight()) == 1)) {
                             // Same content means same node. x is of the form (cX, 0) and y is of the for (cX, 1) so x < y in doubled.
-                            doubled.addEdge(x, y);
+                            doubled.addEdge((Node) x, (Node) y);
                         } else if (l.majorants(l.getNodeByContent(cX.getLeft())).contains(l.getNodeByContent(cY.getLeft()))
                                 && (cX.getRight() == cY.getRight())) {
                             // x < y in l and x & y have the same second component si x < y in doubled.
-                            doubled.addEdge(x, y);
+                            doubled.addEdge((Node) x, (Node) y);
                         }
                     } else { // y wasn't in convex c
                         // x was in c & y wasn't
-                        Couple cX = (Couple) x.getContent();
-                        if (l.majorants(l.getNodeByContent(cX.getLeft())).contains(l.getNodeByContent(y.getContent()))
+                        Couple cX = (Couple) ((Node) x).getContent();
+                        if (l.majorants(l.getNodeByContent(cX.getLeft())).contains(l.getNodeByContent(((Node) y).getContent()))
                                 && (((Integer) cX.getRight()) == 1)) {
                             // x < y in l and second component of x is 1.
-                            doubled.addEdge(x, y);
+                            doubled.addEdge((Node) x, (Node) y);
                         }
                     }
                 } else // x wasn't in convex c
-                 if (y.getContent().getClass() == test.getClass()) { // y was in convex c
+                 if (((Node) y).getContent().getClass() == test.getClass()) { // y was in convex c
                         // x wasn't in c but y was
-                        Couple cY = (Couple) y.getContent();
-                        if (l.majorants(l.getNodeByContent(x.getContent())).contains(l.getNodeByContent(cY.getLeft()))
+                        Couple cY = (Couple) ((Node) y).getContent();
+                        if (l.majorants(l.getNodeByContent(((Node) x).getContent())).contains(l.getNodeByContent(cY.getLeft()))
                                 && (((Integer) cY.getRight()) == 0)) {
                             // x < y in l and x & second component of y is 0.
-                            doubled.addEdge(x, y);
+                            doubled.addEdge((Node) x, (Node) y);
                         }
                     } else // y wasn't in convex c
                     // x wasn't in c nor y
-                     if (l.majorants(l.getNodeByContent(x.getContent())).contains(l.getNodeByContent(y.getContent()))) {
+                     if (l.majorants(l.getNodeByContent(((Node) x).getContent())).contains(l.getNodeByContent(((Node) y).getContent()))) {
                             // x < y in l and x & second component of y is 0.
-                            doubled.addEdge(x, y);
+                            doubled.addEdge((Node) x, (Node) y);
                         }
             }
         }

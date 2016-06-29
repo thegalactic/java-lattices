@@ -405,8 +405,8 @@ public class ContextTest {
         ConceptLattice cl = ctx.conceptLattice(true);
         Lattice l = ctx.subDirectDecomposition();
         int count = 0;
-        for (Node node : l.getNodes()) {
-            Couple couple = (Couple) node.getContent();
+        for (Object node : l.getNodes()) {
+            Couple couple = (Couple) ((Node) node).getContent();
             if (couple.getRight().toString() == "true") {
                 count++;
             }

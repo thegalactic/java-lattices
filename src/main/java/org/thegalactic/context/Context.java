@@ -17,6 +17,7 @@ import java.util.BitSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
+import java.util.SortedSet;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -380,7 +381,8 @@ public class Context extends ClosureSystem {
     public TreeSet<Node> getDivisionConvex(Context ctx) {
         ConceptLattice factor = ctx.conceptLattice(true);
         TreeSet<Node> convex = new TreeSet<Node>();
-        for (Node node : factor.getNodes()) {
+        // TODO Use parameterized Node
+        for (Node node : (SortedSet<Node>) factor.getNodes()) {
             Concept c = (Concept) node;
             if (!c.getSetB().containsAll(this.getExtent(c.getSetA()))
                     && !c.getSetA().containsAll(this.getIntent(c.getSetB()))) {
@@ -1214,7 +1216,7 @@ public class Context extends ClosureSystem {
     public ConceptLattice conceptLattice(boolean diagram) {
         ConceptLattice csl = this.closedSetLattice(diagram);
         // TreeMap<Concept, Concept> nodes = new TreeMap<Concept, Concept>();
-        for (Node node : csl.getNodes()) {
+        for (Object node : csl.getNodes()) {
             Concept cl = (Concept) node;
             cl.putSetB(new ComparableSet(this.getExtent(cl.getSetA())));
         }
@@ -1238,7 +1240,7 @@ public class Context extends ClosureSystem {
         } else {
             ConceptLattice cl = (ConceptLattice) copy.poll();
             ArrayList<Couple> nodes = new ArrayList<Couple>();
-            for (Node node : cl.getNodes()) {
+            for (Object node : cl.getNodes()) {
                 ArrayList<Concept> listCopy = new ArrayList<Concept>();
                 for (Concept cpt : (ArrayList<Concept>) c.getLeft()) {
                     listCopy.add(cpt);
@@ -1313,7 +1315,7 @@ public class Context extends ClosureSystem {
         ArrayList<Couple> nodes = new ArrayList<Couple>();
         LinkedList<ConceptLattice> copy = (LinkedList<ConceptLattice>) clParts.clone();
         ConceptLattice firstCL = (ConceptLattice) copy.poll();
-        for (Node node : firstCL.getNodes()) {
+        for (Object node : firstCL.getNodes()) {
             Couple couple = new Couple(new ArrayList<Concept>(), false);
             ArrayList<Concept> prodCPT = new ArrayList<Concept>();
             prodCPT.add((Concept) node);
@@ -1324,10 +1326,10 @@ public class Context extends ClosureSystem {
             prod.addNode(new Node(c));
         }
         // Add edges
-        for (Node source : prod.getNodes()) {
-            for (Node target : prod.getNodes()) {
-                Couple contentSource = (Couple) source.getContent();
-                Couple contentTarget = (Couple) target.getContent();
+        for (Object source : prod.getNodes()) {
+            for (Object target : prod.getNodes()) {
+                Couple contentSource = (Couple) ((Node) source).getContent();
+                Couple contentTarget = (Couple) ((Node) target).getContent();
                 boolean haveEdge = true;
                 boolean equals = true;
                 for (int i = 0; i < clParts.size(); i++) { // clParts.size() is the number of factor
@@ -1337,7 +1339,7 @@ public class Context extends ClosureSystem {
                     haveEdge = haveEdge && (clParts.get(i).containsEdge(cptSource, cptTarget) || cptSource.equals(cptTarget));
                 }
                 if (haveEdge && !equals) {
-                    prod.addEdge(source, target);
+                    prod.addEdge(((Node) source), ((Node) target));
                 }
             }
         }
@@ -1346,7 +1348,7 @@ public class Context extends ClosureSystem {
         // In the subdirect decomposition, if (A,B) is a concept then (A \cap H,B \cap N) also.
         // Transform nodes of the original lattice into nodes of the subproduct lattice and mark them
         ConceptLattice cl = this.conceptLattice(true);
-        for (Node cpt : cl.getNodes()) {
+        for (Object cpt : cl.getNodes()) {
             // Compute cpt representation in prod
             ArrayList<Concept> subCpt = new ArrayList<Concept>();
             for (int i = 0; i < parts.size(); i++) {
@@ -1361,9 +1363,9 @@ public class Context extends ClosureSystem {
                 subCpt.add(term.getConcept((ComparableSet) setA, (ComparableSet) setB));
             }
             // Check if cpt is in prod
-            for (Node nodeProd : prod.getNodes()) {
-                if (((Couple) nodeProd.getContent()).getLeft().equals(subCpt)) {
-                    ((Couple) nodeProd.getContent()).setRight(true);
+            for (Object nodeProd : prod.getNodes()) {
+                if (((Couple) ((Node) nodeProd).getContent()).getLeft().equals(subCpt)) {
+                    ((Couple) ((Node) nodeProd).getContent()).setRight(true);
                 }
             }
         }

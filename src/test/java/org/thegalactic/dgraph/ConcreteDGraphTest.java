@@ -128,7 +128,7 @@ public class ConcreteDGraphTest {
      */
     @Test
     public void testGetEdges() {
-        ConcreteDGraph graph = new ConcreteDGraph();
+        ConcreteDGraph<?, ?> graph = new ConcreteDGraph();
         Node node1 = new Node();
         Node node2 = new Node();
         Node node3 = new Node();
@@ -155,9 +155,9 @@ public class ConcreteDGraphTest {
      */
     @Test
     public void testGetSuccessorEdges() {
-        Node node1 = new Node();
-        Node node2 = new Node();
-        ConcreteDGraph graph = new ConcreteDGraph();
+        Node<Integer> node1 = new Node(1);
+        Node<Integer> node2 = new Node(2);
+        ConcreteDGraph<Integer, ?> graph = new ConcreteDGraph();
         graph.addNode(node1);
         graph.addNode(node2);
         graph.addEdge(node1, node2);
@@ -171,9 +171,9 @@ public class ConcreteDGraphTest {
      */
     @Test
     public void testGetPredecessorEdges() {
-        Node node1 = new Node();
-        Node node2 = new Node();
-        ConcreteDGraph graph = new ConcreteDGraph();
+        Node<Integer> node1 = new Node(1);
+        Node<Integer> node2 = new Node(2);
+        ConcreteDGraph<Integer, ?> graph = new ConcreteDGraph();
         graph.addNode(node1);
         graph.addNode(node2);
         graph.addEdge(node1, node2);
@@ -852,15 +852,15 @@ public class ConcreteDGraphTest {
      */
     @Test
     public void testGetStronglyConnectedComponent() {
-        ConcreteDGraph graph = new ConcreteDGraph();
-        Node node1 = new Node();
-        Node node2 = new Node();
-        Node node3 = new Node();
-        Node node4 = new Node();
-        Node node5 = new Node();
-        Node node6 = new Node();
-        Node node7 = new Node();
-        Node node8 = new Node();
+        ConcreteDGraph<Integer, ?> graph = new ConcreteDGraph();
+        Node<Integer> node1 = new Node(1);
+        Node<Integer> node2 = new Node(2);
+        Node<Integer> node3 = new Node(3);
+        Node<Integer> node4 = new Node(4);
+        Node<Integer> node5 = new Node(5);
+        Node<Integer> node6 = new Node(6);
+        Node<Integer> node7 = new Node(7);
+        Node<Integer> node8 = new Node(8);
         graph.addNode(node1);
         graph.addNode(node2);
         graph.addNode(node3);
@@ -883,16 +883,16 @@ public class ConcreteDGraphTest {
         graph.addEdge(node7, node6);
         graph.addEdge(node8, node4);
         graph.addEdge(node8, node7);
-        DAGraph dag = graph.getStronglyConnectedComponent();
+        DAGraph<SortedSet<Node<Integer>>, ?> dag = graph.getStronglyConnectedComponent();
 
         assertEquals(dag.sizeNodes(), 3);
         assertEquals(dag.sizeEdges(), 3);
 
         int i = 0;
-        Node set1 = null;
-        Node set2 = null;
-        Node set3 = null;
-        for (Node node : dag.getNodes()) {
+        Node<SortedSet<Node<Integer>>> set1 = null;
+        Node<SortedSet<Node<Integer>>> set2 = null;
+        Node<SortedSet<Node<Integer>>> set3 = null;
+        for (Node<SortedSet<Node<Integer>>> node : dag.getNodes()) {
             switch (i) {
                 case 0:
                     set1 = node;
@@ -908,19 +908,19 @@ public class ConcreteDGraphTest {
             i++;
         }
 
-        assertEquals(((TreeSet<Node>) set1.getContent()).size(), 3);
-        assertTrue(((TreeSet<Node>) set1.getContent()).contains(node1));
-        assertTrue(((TreeSet<Node>) set1.getContent()).contains(node2));
-        assertTrue(((TreeSet<Node>) set1.getContent()).contains(node5));
+        assertEquals(set1.getContent().size(), 3);
+        assertTrue(set1.getContent().contains(node1));
+        assertTrue(set1.getContent().contains(node2));
+        assertTrue(set1.getContent().contains(node5));
 
-        assertEquals(((TreeSet<Node>) set2.getContent()).size(), 3);
-        assertTrue(((TreeSet<Node>) set2.getContent()).contains(node3));
-        assertTrue(((TreeSet<Node>) set2.getContent()).contains(node4));
-        assertTrue(((TreeSet<Node>) set2.getContent()).contains(node8));
+        assertEquals(set2.getContent().size(), 3);
+        assertTrue(set2.getContent().contains(node3));
+        assertTrue(set2.getContent().contains(node4));
+        assertTrue(set2.getContent().contains(node8));
 
-        assertEquals(((TreeSet<Node>) set3.getContent()).size(), 2);
-        assertTrue(((TreeSet<Node>) set3.getContent()).contains(node6));
-        assertTrue(((TreeSet<Node>) set3.getContent()).contains(node7));
+        assertEquals(set3.getContent().size(), 2);
+        assertTrue(set3.getContent().contains(node6));
+        assertTrue(set3.getContent().contains(node7));
 
         assertTrue(dag.containsEdge(set1, set2));
         assertTrue(dag.containsEdge(set1, set3));

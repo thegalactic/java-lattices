@@ -39,6 +39,9 @@ import java.util.TreeSet;
  *
  * ![DAGraph](DAGraph.png)
  *
+ * @param <N> Node content type
+ * @param <E> Edge content type
+ *
  * @todo Do we forbid to add an edge that breaks acyclic property by verifying
  * that the destination node has no successors? May be a DAGraph could contain a
  * DGraph and export only interesting method by proxy
@@ -54,7 +57,7 @@ import java.util.TreeSet;
  * class DAGraph #LightCyan
  * title DAGraph UML graph
  */
-public class DAGraph extends ConcreteDGraph {
+public class DAGraph<N, E> extends ConcreteDGraph<N, E> {
 
     /*
      * ----------- STATIC GENERATION METHODS -------------
@@ -71,15 +74,15 @@ public class DAGraph extends ConcreteDGraph {
      *
      * @return the acyclic graph
      */
-    public static DAGraph divisors(int number) {
-        DAGraph graph = new DAGraph();
+    public static DAGraph<Integer, ?> divisors(int number) {
+        DAGraph<Integer, ?> graph = new DAGraph<Integer, Object>();
         // addition of nodes
         for (int i = 2; i <= number; i++) {
-            graph.addNode(new Node(Integer.valueOf(i)));
+            graph.addNode(new Node<Integer>(Integer.valueOf(i)));
         }
         // addition of edges
-        for (Node source : graph.getNodes()) {
-            for (Node target : graph.getNodes()) {
+        for (Node<Integer> source : graph.getNodes()) {
+            for (Node<Integer> target : graph.getNodes()) {
                 int v1 = ((Integer) source.getContent()).intValue();
                 int v2 = ((Integer) target.getContent()).intValue();
                 if (v1 < v2 && v2 % v1 == 0) {
@@ -98,15 +101,15 @@ public class DAGraph extends ConcreteDGraph {
      *
      * @return a random acyclic graph
      */
-    public static DAGraph random(int size, double threshold) {
-        DAGraph graph = new DAGraph();
+    public static DAGraph<Integer, ?> random(int size, double threshold) {
+        DAGraph<Integer, ?> graph = new DAGraph<Integer, Object>();
         // addition of Nodes
         for (int i = 1; i <= size; i++) {
-            graph.addNode(new Node(Integer.valueOf(i)));
+            graph.addNode(new Node<Integer>(Integer.valueOf(i)));
         }
         // addition of edges
-        for (Node source : graph.getNodes()) {
-            for (Node target : graph.getNodes()) {
+        for (Node<Integer> source : graph.getNodes()) {
+            for (Node<Integer> target : graph.getNodes()) {
                 // Test to avoid cycles
                 if (source.compareTo(target) > 0) {
                     if (Math.random() < threshold) {
@@ -125,7 +128,7 @@ public class DAGraph extends ConcreteDGraph {
      *
      * @return a random acyclic graph
      */
-    public static DAGraph random(int size) {
+    public static DAGraph<Integer, ?> random(int size) {
         return random(size, 0.5);
     }
 
@@ -142,7 +145,7 @@ public class DAGraph extends ConcreteDGraph {
      *
      * @param set the set of nodes
      */
-    public DAGraph(final SortedSet<Node> set) {
+    public DAGraph(final SortedSet<Node<N>> set) {
         super(set);
     }
 
@@ -154,16 +157,16 @@ public class DAGraph extends ConcreteDGraph {
      *
      * @param graph the ConcreteDGraph to be copied
      */
-    public DAGraph(final ConcreteDGraph graph) {
+    public DAGraph(final ConcreteDGraph<N, E> graph) {
         super(graph);
         if (this.isAcyclic()) {
             this.reflexiveReduction();
         } else {
-            TreeMap<Node, SortedSet<Edge>> successors = new TreeMap<Node, SortedSet<Edge>>();
-            TreeMap<Node, SortedSet<Edge>> predecessors = new TreeMap<Node, SortedSet<Edge>>();
-            for (Node node : this.getNodes()) {
-                successors.put(node, new TreeSet<Edge>());
-                predecessors.put(node, new TreeSet<Edge>());
+            TreeMap<Node<N>, SortedSet<Edge<N, E>>> successors = new TreeMap<Node<N>, SortedSet<Edge<N, E>>>();
+            TreeMap<Node<N>, SortedSet<Edge<N, E>>> predecessors = new TreeMap<Node<N>, SortedSet<Edge<N, E>>>();
+            for (Node<N> node : this.getNodes()) {
+                successors.put(node, new TreeSet<Edge<N, E>>());
+                predecessors.put(node, new TreeSet<Edge<N, E>>());
             }
             this.setSuccessors(successors);
             this.setPredecessors(predecessors);
@@ -178,7 +181,7 @@ public class DAGraph extends ConcreteDGraph {
      *
      * @return the minimal element
      */
-    public SortedSet<Node> min() {
+    public SortedSet<Node<N>> min() {
         return this.getSinks();
     }
 
@@ -187,7 +190,7 @@ public class DAGraph extends ConcreteDGraph {
      *
      * @return the maximal element
      */
-    public SortedSet<Node> max() {
+    public SortedSet<Node<N>> max() {
         return this.getWells();
     }
 
@@ -200,7 +203,7 @@ public class DAGraph extends ConcreteDGraph {
      *
      * @return the set of majorants
      */
-    public SortedSet<Node> majorants(final Node node) {
+    public SortedSet<Node<N>> majorants(final Node<N> node) {
         DAGraph graph = new DAGraph(this);
         graph.transitiveClosure();
         return graph.getSuccessorNodes(node);
@@ -215,7 +218,7 @@ public class DAGraph extends ConcreteDGraph {
      *
      * @return the set of minorants
      */
-    public SortedSet<Node> minorants(final Node node) {
+    public SortedSet<Node<N>> minorants(final Node<N> node) {
         DAGraph graph = new DAGraph(this);
         graph.transitiveClosure();
         return graph.getPredecessorNodes(node);
@@ -229,8 +232,8 @@ public class DAGraph extends ConcreteDGraph {
      *
      * @return the subgraph
      */
-    public DAGraph filter(final Node node) {
-        TreeSet<Node> set = new TreeSet<Node>(this.majorants(node));
+    public DAGraph<N, E> filter(final Node<N> node) {
+        TreeSet<Node<N>> set = new TreeSet<Node<N>>(this.majorants(node));
         set.add(node);
         return this.getSubgraphByNodes(set);
     }
@@ -243,8 +246,8 @@ public class DAGraph extends ConcreteDGraph {
      *
      * @return the subgraph
      */
-    public DAGraph ideal(final Node node) {
-        TreeSet<Node> set = new TreeSet<Node>(this.minorants(node));
+    public DAGraph<N, E> ideal(final Node<N> node) {
+        TreeSet<Node<N>> set = new TreeSet<Node<N>>(this.minorants(node));
         set.add(node);
         return this.getSubgraphByNodes(set);
     }
@@ -261,7 +264,7 @@ public class DAGraph extends ConcreteDGraph {
      * @return The subgraph
      */
     @Override
-    public DAGraph getSubgraphByNodes(final Set<Node> nodes) {
+    public DAGraph<N, E> getSubgraphByNodes(final Set<Node<N>> nodes) {
         ConcreteDGraph tmp = new ConcreteDGraph(this);
         tmp.transitiveClosure();
         ConcreteDGraph sub = tmp.getSubgraphByNodes(nodes);
@@ -291,40 +294,40 @@ public class DAGraph extends ConcreteDGraph {
     public int transitiveReduction() {
 
         // copy this component in a new DAG graph
-        DAGraph graph = new DAGraph(this);
+        DAGraph<N, E> graph = new DAGraph<N, E>(this);
         graph.reflexiveReduction();
         // initalize this component with no edges
-        this.setSuccessors(new TreeMap<Node, SortedSet<Edge>>());
-        for (Node node : this.getNodes()) {
-            this.getSuccessors().put(node, new TreeSet<Edge>());
+        this.setSuccessors(new TreeMap<Node<N>, SortedSet<Edge<N, E>>>());
+        for (Node<N> node : this.getNodes()) {
+            this.getSuccessors().put(node, new TreeSet<Edge<N, E>>());
         }
-        this.setPredecessors(new TreeMap<Node, SortedSet<Edge>>());
-        for (Node node : this.getNodes()) {
-            this.getPredecessors().put(node, new TreeSet<Edge>());
+        this.setPredecessors(new TreeMap<Node<N>, SortedSet<Edge<N, E>>>());
+        for (Node<N> node : this.getNodes()) {
+            this.getPredecessors().put(node, new TreeSet<Edge<N, E>>());
         }
         int number = 0;
         // mark each node to false
-        TreeMap<Node, Boolean> mark = new TreeMap<Node, Boolean>();
-        for (Node node : graph.getNodes()) {
+        TreeMap<Node<N>, Boolean> mark = new TreeMap<Node<N>, Boolean>();
+        for (Node<N> node : graph.getNodes()) {
             mark.put(node, Boolean.FALSE);
         }
         // treatment of nodes according to a topological sort
-        List<Node> sort = graph.topologicalSort();
-        for (Node x : sort) {
-            TreeSet<Node> set = new TreeSet<Node>(graph.getSuccessorNodes(x));
+        List<Node<N>> sort = graph.topologicalSort();
+        for (Node<N> x : sort) {
+            TreeSet<Node<N>> set = new TreeSet<Node<N>>(graph.getSuccessorNodes(x));
             while (!set.isEmpty()) {
                 // compute the smallest successor y of x according to the topological sort
                 int i = 0;
                 while (!set.contains(sort.get(i))) {
                     i++;
                 }
-                Node y = sort.get(i);
+                Node<N> y = sort.get(i);
                 // when y is not not marked, x->y is a reduced edge
                 if (y != null && !mark.get(y)) {
                     this.addEdge(x, y);
                     graph.addEdge(x, y);
                 }
-                for (Node z : graph.getSuccessorNodes(y)) {
+                for (Node<N> z : graph.getSuccessorNodes(y)) {
                     // treatment of z when not marked
                     if (!mark.get(z)) {
                         mark.put(z, Boolean.TRUE);
@@ -335,7 +338,7 @@ public class DAGraph extends ConcreteDGraph {
                 }
                 set.remove(y);
             }
-            for (Node y : graph.getSuccessorNodes(x)) {
+            for (Node<N> y : graph.getSuccessorNodes(x)) {
                 mark.put(y, Boolean.FALSE);
             }
         }
@@ -360,22 +363,22 @@ public class DAGraph extends ConcreteDGraph {
     public int transitiveClosure() {
         int number = 0;
         // mark each node to false
-        TreeMap<Node, Boolean> mark = new TreeMap<Node, Boolean>();
-        for (Node node : this.getNodes()) {
+        TreeMap<Node<N>, Boolean> mark = new TreeMap<Node<N>, Boolean>();
+        for (Node<N> node : this.getNodes()) {
             mark.put(node, Boolean.FALSE);
         }
         // treatment of nodes according to a topological sort
-        List<Node> sort = this.topologicalSort();
-        for (Node x : sort) {
-            TreeSet<Node> set = new TreeSet<Node>(this.getSuccessorNodes(x));
+        List<Node<N>> sort = this.topologicalSort();
+        for (Node<N> x : sort) {
+            TreeSet<Node<N>> set = new TreeSet<Node<N>>(this.getSuccessorNodes(x));
             while (!set.isEmpty()) {
                 // compute the smallest successor y of x according to the topological sort
                 int i = 0;
                 do {
                     i++;
                 } while (!set.contains(sort.get(i)));
-                Node y = sort.get(i);
-                for (Node z : this.getSuccessorNodes(y)) {
+                Node<N> y = sort.get(i);
+                for (Node<N> z : this.getSuccessorNodes(y)) {
                     // treatment of z when not marked
                     if (!mark.get(z)) {
                         mark.put(z, Boolean.TRUE);
@@ -386,7 +389,7 @@ public class DAGraph extends ConcreteDGraph {
                 }
                 set.remove(y);
             }
-            for (Node y : this.getSuccessorNodes(x)) {
+            for (Node<N> y : this.getSuccessorNodes(x)) {
                 mark.put(y, Boolean.FALSE);
             }
         }

@@ -14,6 +14,7 @@ package org.thegalactic.lattice;
  */
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -602,9 +603,9 @@ public class Concept extends Node {
      */
     public ArrayList<TreeSet<Comparable>> immediateSuccessors(ClosureSystem init) {
         // Initialisation of the dependance graph when not initialised by method recursiveDiagramLattice
-        ConcreteDGraph dependanceGraph = new ConcreteDGraph();
+        ConcreteDGraph<Comparable, ?> dependenceGraph = new ConcreteDGraph<Comparable, Object>();
         for (Comparable c : init.getSet()) {
-            dependanceGraph.addNode(new Node(c));
+            dependenceGraph.addNode(new Node(c));
         }
         // computes newVal, the subset to be used to valuate every new dependance relation
         // newVal = F\predecessors of F in the precedence graph of the closure system
@@ -617,13 +618,13 @@ public class Concept extends Node {
         System.out.println(System.currentTimeMillis() - start + "ms");
         start = System.currentTimeMillis();
         System.out.print("Srongly connected component... ");
-        DAGraph acyclPrec = prec.getStronglyConnectedComponent();
+        DAGraph<SortedSet<Node<Comparable>>, ?>  acyclPrec = prec.getStronglyConnectedComponent();
         System.out.println(System.currentTimeMillis() - start + "ms");
         ComparableSet newVal = new ComparableSet();
         newVal.addAll(f);
         for (Object x : f) {
             // computes nx, the strongly connected component containing x
-            Node nx = null;
+            Node<SortedSet<Node<Comparable>>> nx = null;
             for (Node cc : acyclPrec.getNodes()) {
                 TreeSet<Node> cC = (TreeSet<Node>) cc.getContent();
                 for (Node y : cC) {
@@ -633,7 +634,7 @@ public class Concept extends Node {
                 }
             }
             // computes the minorants of nx in the acyclic graph
-            SortedSet<Node> ccMinNx = acyclPrec.minorants(nx);
+            SortedSet<Node<SortedSet<Node<Comparable>>>> ccMinNx = acyclPrec.minorants(nx);
             // removes from newVal every minorants of nx
             for (Node cc : ccMinNx) {
                 TreeSet<Node> cC = (TreeSet<Node>) cc.getContent();
@@ -643,8 +644,8 @@ public class Concept extends Node {
             }
         }
         // computes the node belonging in S\F
-        TreeSet<Node> n = new TreeSet<Node>();
-        for (Node in : dependanceGraph.getNodes()) {
+        Set<Node<Comparable>> n = new TreeSet<Node<Comparable>>();
+        for (Node in : dependenceGraph.getNodes()) {
             if (!f.contains(in.getContent())) {
                 n.add(in);
             }
@@ -665,10 +666,10 @@ public class Concept extends Node {
                     if (fPlusTo.contains(source.getContent())) {
                         // there is a dependance relation between source and target
                         // search for an existing edge between source and target
-                        Edge ed = dependanceGraph.getEdge(source, target);
+                        Edge ed = dependenceGraph.getEdge(source, target);
                         if (ed == null) {
                             ed = new Edge(source, target, new TreeSet<ComparableSet>());
-                            dependanceGraph.addEdge(ed);
+                            dependenceGraph.addEdge(ed);
                         }
                         e.add(ed);
                         // check if F is a minimal set closed for dependance relation between source and target
@@ -691,7 +692,7 @@ public class Concept extends Node {
         start = System.currentTimeMillis();
         // computes the dependance subgraph of the closed set F as the reduction
         // of the dependance graph composed of nodes in S\A and edges of the dependance relation
-        ConcreteDGraph sub = dependanceGraph.getSubgraphByNodes(n);
+        ConcreteDGraph sub = dependenceGraph.getSubgraphByNodes(n);
         ConcreteDGraph delta = sub.getSubgraphByEdges(e);
         // computes the sources of the CFC of the dependance subgraph
         // that corresponds to successors of the closed set F

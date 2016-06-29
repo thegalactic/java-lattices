@@ -92,7 +92,7 @@ public class ConceptLattice extends Lattice {
             TreeSet<Node> jxmoins = new TreeSet<Node>(graph.getPredecessorNodes(x));
             // storage of new ideals in a set
             TreeSet<Concept> toAdd = new TreeSet<Concept>();
-            for (Node j1 : conceptLattice.getNodes()) {
+            for (Object j1 : conceptLattice.getNodes()) {
                 if (((Concept) j1).containsAllInA(jxmoins)) {
                     Concept newJ = new Concept(true, false);
                     newJ.addAllToA(((TreeSet) ((Concept) j1).getSetA()));
@@ -106,10 +106,10 @@ public class ConceptLattice extends Lattice {
             }
         }
         // computation of the inclusion relaton
-        for (Node node1 : conceptLattice.getNodes()) {
-            for (Node node2 : conceptLattice.getNodes()) {
+        for (Object node1 : conceptLattice.getNodes()) {
+            for (Object node2 : conceptLattice.getNodes()) {
                 if (((Concept) node1).containsAllInA(((Concept) node2).getSetA())) {
-                    conceptLattice.addEdge(node2, node1);
+                    conceptLattice.addEdge((Node) node2, (Node) node1);
                 }
             }
         }
@@ -143,10 +143,10 @@ public class ConceptLattice extends Lattice {
         }
 
         // an edge corresponds to an inclusion between two closed sets
-        for (Node source : lattice.getNodes()) {
-            for (Node target : lattice.getNodes()) {
+        for (Object source : lattice.getNodes()) {
+            for (Object target : lattice.getNodes()) {
                 if (((Concept) target).containsAllInA(((Concept) source).getSetA())) {
-                    lattice.addEdge(source, target);
+                    lattice.addEdge((Node) source, (Node) target);
                 }
             }
         }
@@ -342,7 +342,7 @@ public class ConceptLattice extends Lattice {
      * @todo Comment the return
      */
     public boolean containsConcepts() {
-        for (Node node : this.getNodes()) {
+        for (Object node : this.getNodes()) {
             if (!(node instanceof Concept)) {
                 return false;
             }
@@ -373,7 +373,7 @@ public class ConceptLattice extends Lattice {
         if (!this.containsConcepts()) {
             return false;
         }
-        for (Node node : this.getNodes()) {
+        for (Object node : this.getNodes()) {
             if (!((Concept) node).hasSetA()) {
                 return false;
             }
@@ -393,7 +393,7 @@ public class ConceptLattice extends Lattice {
         if (!this.containsConcepts()) {
             return false;
         }
-        for (Node node : this.getNodes()) {
+        for (Object node : this.getNodes()) {
             if (!((Concept) node).hasSetB()) {
                 return false;
             }
@@ -411,14 +411,18 @@ public class ConceptLattice extends Lattice {
     public ConceptLattice clone() {
         ConceptLattice conceptLattice = new ConceptLattice();
         TreeMap<Concept, Concept> copy = new TreeMap<Concept, Concept>();
-        for (Node node : this.getNodes()) {
+        for (Object node : this.getNodes()) {
             Concept c = (Concept) node;
             Concept c2 = c.clone();
             copy.put(c, c2);
             conceptLattice.addNode(c2);
         }
-        for (Edge ed : this.getEdges()) {
-            conceptLattice.addEdge(new Edge(copy.get(ed.getSource()), copy.get(ed.getTarget()), ed.getContent()));
+        for (Object ed : this.getEdges()) {
+            conceptLattice.addEdge(new Edge(
+                    copy.get(((Edge) ed).getSource()),
+                    copy.get(((Edge) ed).getTarget()),
+                    ((Edge) ed).getContent()
+            ));
         }
         return conceptLattice;
     }
@@ -456,7 +460,7 @@ public class ConceptLattice extends Lattice {
         if (!this.containsConcepts()) {
             return false;
         }
-        for (Node node : this.getNodes()) {
+        for (Object node : this.getNodes()) {
             Concept c = (Concept) node;
             c.putSetA(null);
         }
@@ -474,7 +478,7 @@ public class ConceptLattice extends Lattice {
         if (!this.containsConcepts()) {
             return false;
         }
-        for (Node node : this.getNodes()) {
+        for (Object node : this.getNodes()) {
             Concept c = (Concept) node;
             c.putSetB(null);
         }
@@ -494,7 +498,7 @@ public class ConceptLattice extends Lattice {
             return false;
         }
         TreeSet<Node> joinIrr = this.joinIrreducibles();
-        for (Node node : this.getNodes()) {
+        for (Object node : this.getNodes()) {
             Concept c = (Concept) node;
             if (!c.hasSetA() && joinIrr.contains(c)) {
                 ComparableSet setX = new ComparableSet();
@@ -518,7 +522,7 @@ public class ConceptLattice extends Lattice {
             return false;
         }
         TreeSet<Node> meetIrr = this.meetIrreducibles();
-        for (Node node : this.getNodes()) {
+        for (Object node : this.getNodes()) {
             Concept c = (Concept) node;
             if (!c.hasSetB() && meetIrr.contains(c)) {
                 ComparableSet setX = new ComparableSet();
@@ -560,7 +564,7 @@ public class ConceptLattice extends Lattice {
             // reduction of set A
             for (Node to : sort) {
                 Concept cto = (Concept) to;
-                for (Node source : this.getPredecessorNodes(to)) {
+                for (Object source : this.getPredecessorNodes(to)) {
                     Concept csource = (Concept) source;
                     cto.getSetA().removeAll(csource.getSetA());
                 }
@@ -573,7 +577,7 @@ public class ConceptLattice extends Lattice {
             // reduction of set B
             for (Node to : sort) {
                 Concept cto = (Concept) to;
-                for (Node source : this.getSuccessorNodes(to)) {
+                for (Object source : this.getSuccessorNodes(to)) {
                     Concept csource = (Concept) source;
                     cto.getSetB().removeAll(csource.getSetB());
                 }
@@ -599,7 +603,7 @@ public class ConceptLattice extends Lattice {
             // and if not set B reduced concepts are meet irreducibles
             TreeSet<Node> joinIrr = this.joinIrreducibles();
             TreeSet<Node> meetIrr = this.meetIrreducibles();
-            for (Node node : this.getNodes()) {
+            for (Object node : this.getNodes()) {
                 Concept c = (Concept) node;
                 if (c.hasSetA() && !c.getSetA().isEmpty() && !joinIrr.contains(c)) {
                     c.putSetA(new ComparableSet());
@@ -624,14 +628,14 @@ public class ConceptLattice extends Lattice {
         if (!this.containsConcepts()) {
             return false;
         }
-        for (Node n1 : this.getNodes()) {
-            for (Edge ed : this.getSuccessorEdges(n1)) {
-                if (!ed.hasContent()) {
-                    Node n2 = ed.getTarget();
+        for (Object n1 : this.getNodes()) {
+            for (Object ed : this.getSuccessorEdges((Node) n1)) {
+                if (!((Edge) ed).hasContent()) {
+                    Node n2 = ((Edge) ed).getTarget();
                     TreeSet diff = new TreeSet();
                     diff.addAll(((Concept) n2).getSetA());
                     diff.removeAll(((Concept) n1).getSetA());
-                    ed.setContent(diff);
+                    ((Edge) ed).setContent(diff);
                 }
             }
         }
@@ -663,7 +667,7 @@ public class ConceptLattice extends Lattice {
         TreeSet<Node> joinIrr = csl.joinIrreducibles();
         // addition to lattice of a comparable issued from each reduced closed set
         TreeMap<Node, Node> reduced = new TreeMap<Node, Node>();
-        for (Node node : csl.getNodes()) {
+        for (Object node : csl.getNodes()) {
             Concept c = (Concept) node;
             Node nred;
             if (c.hasSetA() && joinIrr.contains(node)) {
@@ -671,15 +675,15 @@ public class ConceptLattice extends Lattice {
             } else {
                 nred = new Node();
             }
-            reduced.put(node, nred);
+            reduced.put((Node) node, nred);
         }
         // addtion of nodes to lattice
-        for (Node node : csl.getNodes()) {
+        for (Object node : csl.getNodes()) {
             lattice.addNode(reduced.get(node));
         }
         // addtion of edges to lattice
-        for (Node source : csl.getNodes()) {
-            for (Node target : csl.getSuccessorNodes(source)) {
+        for (Object source : csl.getNodes()) {
+            for (Object target : csl.getSuccessorNodes((Node) source)) {
                 lattice.addEdge(reduced.get(source), reduced.get(target));
             }
         }
@@ -711,7 +715,7 @@ public class ConceptLattice extends Lattice {
         TreeSet<Node> meetIrr = csl.meetIrreducibles();
         // addition to lattice of a comparable issued from each reduced closed set
         TreeMap<Node, Node> reduced = new TreeMap<Node, Node>();
-        for (Node node : csl.getNodes()) {
+        for (Object node : csl.getNodes()) {
             Concept c = (Concept) node;
             Node nred;
             if (c.hasSetB() && meetIrr.contains(node)) {
@@ -719,14 +723,14 @@ public class ConceptLattice extends Lattice {
             } else {
                 nred = new Node();
             }
-            reduced.put(node, nred);
+            reduced.put((Node) node, nred);
         }
-        for (Node node : csl.getNodes()) {
+        for (Object node : csl.getNodes()) {
             lattice.addNode(reduced.get(node));
         }
         // addtion of edges to lattice
-        for (Node source : csl.getNodes()) {
-            for (Node target : csl.getSuccessorNodes(source)) {
+        for (Object source : csl.getNodes()) {
+            for (Object target : csl.getSuccessorNodes((Node) source)) {
                 lattice.addEdge(reduced.get(source), reduced.get(target));
             }
         }
@@ -756,7 +760,7 @@ public class ConceptLattice extends Lattice {
         TreeSet<Node> meetIrr = csl.meetIrreducibles();
         // addition to lattice of a comparable issued from each reduced closed set
         TreeMap<Node, Node> reduced = new TreeMap<Node, Node>();
-        for (Node node : csl.getNodes()) {
+        for (Object node : csl.getNodes()) {
             Concept c = (Concept) node;
             // create a new Node with two indexed elements: the first of set A and the first of set B
             if (c.hasSetA() && c.hasSetB() && meetIrr.contains(c) && joinIrr.contains(c)) {
@@ -764,26 +768,26 @@ public class ConceptLattice extends Lattice {
                 content.add(c.getSetA().first());
                 content.add(c.getSetB().first());
                 Node nred = new Node(content);
-                reduced.put(node, nred);
+                reduced.put((Node) node, nred);
             } else if (c.hasSetA() && joinIrr.contains(node)) {
                 // create a new Node with the first element of set A
                 Node nred = new Node(((Concept) node).getSetA().first());
-                reduced.put(node, nred);
+                reduced.put((Node) node, nred);
             } else if (c.hasSetB() && meetIrr.contains(node)) {
                 // create a new Node with the first element of set A
                 Node nred = new Node(((Concept) node).getSetB().first());
-                reduced.put(node, nred);
+                reduced.put((Node) node, nred);
             } else {
-                reduced.put(node, new Node());
+                reduced.put((Node) node, new Node());
             }
         }
         // addtion of nodes to lattice
-        for (Node node : csl.getNodes()) {
+        for (Object node : csl.getNodes()) {
             lattice.addNode(reduced.get(node));
         }
         // addtion of edges to lattice
-        for (Node source : csl.getNodes()) {
-            for (Node target : csl.getSuccessorNodes(source)) {
+        for (Object source : csl.getNodes()) {
+            for (Object target : csl.getSuccessorNodes((Node) source)) {
                 lattice.addEdge(reduced.get(source), reduced.get(target));
             }
         }
@@ -806,16 +810,16 @@ public class ConceptLattice extends Lattice {
         ConceptLattice l = new ConceptLattice();
         Concept b = (Concept) this.bottom();
         int card = b.getSetB().size();
-        for (Node node : this.getNodes()) {
+        for (Object node : this.getNodes()) {
             Concept cpt = (Concept) node;
             if ((float) cpt.getSetB().size() / (float) card >= threshold) {
-                l.addNode(node);
+                l.addNode((Node) node);
             }
         }
-        for (Node f : l.getNodes()) {
-            for (Node t : l.getNodes()) {
-                if (this.containsEdge(f, t)) {
-                    l.addEdge(f, t);
+        for (Object f : l.getNodes()) {
+            for (Object t : l.getNodes()) {
+                if (this.containsEdge((Node) f, (Node) t)) {
+                    l.addEdge((Node) f, (Node) t);
                 }
             }
         }
@@ -945,11 +949,11 @@ public class ConceptLattice extends Lattice {
         for (Object x : setF) {
             // computes nx, the strongly connected component containing x
             Node nx = null;
-            for (Node cc : acyclPrec.getNodes()) {
-                TreeSet<Node> setCC = (TreeSet<Node>) cc.getContent();
+            for (Object cc : acyclPrec.getNodes()) {
+                TreeSet<Node> setCC = (TreeSet<Node>) ((Node) cc).getContent();
                 for (Node y : setCC) {
                     if (x.equals(y.getContent())) {
-                        nx = cc;
+                        nx = (Node) cc;
                     }
                 }
             }
@@ -965,9 +969,9 @@ public class ConceptLattice extends Lattice {
         }
         // computes the node belonging in S\F
         TreeSet<Node> nodes = new TreeSet<Node>();
-        for (Node in : this.getDependencyGraph().getNodes()) {
-            if (!setF.contains(in.getContent())) {
-                nodes.add(in);
+        for (Object in : this.getDependencyGraph().getNodes()) {
+            if (!setF.contains(((Node) in).getContent())) {
+                nodes.add((Node) in);
             }
         }
         // computes the dependance relation between nodes in S\F
