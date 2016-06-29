@@ -1,7 +1,7 @@
 package org.thegalactic.io;
 
 /*
- * AbstractIOFactory.java
+ * IOFactory.java
  *
  * Copyright: 2010-2015 Karell Bertet, France
  * Copyright: 2015-2016 The Galactic Organization, France
@@ -18,8 +18,8 @@ import java.util.Map;
  * This class defines a standard way for getting reader and writer.
  *
  * @param <E> Element to be saved and parsed
- *
- * ![AbstractIOFactory](AbstractIOFactory.png)
+
+ ![IOFactory](IOFactory.png)
  *
  * @uml Factory.png
  * !include resources/org/thegalactic/io/IOFactory.iuml
@@ -31,7 +31,7 @@ import java.util.Map;
  * class IOFactory #LightCyan
  * title IOFactory UML graph
  */
-public abstract class AbstractIOFactory<E> {
+public class IOFactory<E> {
 
     /**
      * Map of extension/reader.
@@ -46,7 +46,7 @@ public abstract class AbstractIOFactory<E> {
     /**
      * Basic constructor.
      */
-    protected AbstractIOFactory() {
+    protected IOFactory() {
         super();
     }
 
