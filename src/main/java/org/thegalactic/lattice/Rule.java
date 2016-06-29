@@ -221,12 +221,12 @@ public class Rule implements Comparable<Rule> {
      */
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
-        for (Object e : this.getPremise()) {
+        final StringBuilder builder = new StringBuilder();
+        for (final Object e : this.getPremise()) {
             builder.append(e).append(' ');
         }
         builder.append("->");
-        for (Object e : this.getConclusion()) {
+        for (final Object e : this.getConclusion()) {
             builder.append(' ').append(e);
         }
         return builder.toString();
@@ -245,13 +245,13 @@ public class Rule implements Comparable<Rule> {
     /**
      * Compares this component with the specified one.
      *
-     * @param o object to compare to this component.
+     * @param object object to compare to this component.
      *
      * @return true or false as this componant is equals to the specified
      *         object.
      */
     @Override
-    public boolean equals(Object object) {
+    public boolean equals(final Object object) {
         return this == object || object != null && this.getClass() == object.getClass()
                 && this.getPremise().equals(((Rule) object).getPremise())
                 && this.getConclusion().equals(((Rule) object).getConclusion());
