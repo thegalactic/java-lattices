@@ -24,7 +24,7 @@ public class DGraphFactoryTest {
      */
     @Test
     public void testRandom() {
-        DGraph graph = DGraphFactory.getInstance().random(10, 0);
+        ConcreteDGraph graph = DGraphFactory.getInstance().random(10, 0);
         assertEquals(graph.sizeNodes(), 10);
         assertEquals(graph.sizeEdges(), 0);
 

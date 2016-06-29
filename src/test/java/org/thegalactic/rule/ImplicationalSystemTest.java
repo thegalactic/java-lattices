@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.TreeSet;
 
-import org.thegalactic.dgraph.DGraph;
+import org.thegalactic.dgraph.ConcreteDGraph;
 import org.thegalactic.dgraph.Edge;
 import org.thegalactic.dgraph.Node;
 
@@ -486,7 +486,7 @@ public class ImplicationalSystemTest {
         r.addToPremise('b');
         r.addToConclusion('c');
         is.addRule(r);
-        DGraph dg = is.representativeGraph();
+        ConcreteDGraph dg = is.representativeGraph();
         Node a = dg.getNodeByContent('a');
         Node b = dg.getNodeByContent('b');
         Node c = dg.getNodeByContent('c');
@@ -515,7 +515,7 @@ public class ImplicationalSystemTest {
         r.addToPremise('b');
         r.addToConclusion('c');
         is.addRule(r);
-        DGraph dg = is.dependencyGraph();
+        ConcreteDGraph dg = is.dependencyGraph();
         Node a = dg.getNodeByContent('a');
         Node b = dg.getNodeByContent('b');
         Node c = dg.getNodeByContent('c');

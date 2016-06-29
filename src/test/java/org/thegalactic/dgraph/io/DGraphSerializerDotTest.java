@@ -23,7 +23,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.thegalactic.dgraph.DGraph;
+import org.thegalactic.dgraph.ConcreteDGraph;
 
 /**
  * Test the org.thegalactic.dgraph.io.DGraphSerializerDot class.
@@ -52,7 +52,7 @@ public class DGraphSerializerDotTest {
         try {
             File file = File.createTempFile("junit", ".dot");
             String filename = file.getPath();
-            DGraph graph = new DGraph();
+            ConcreteDGraph graph = new ConcreteDGraph();
             graph.save(filename);
             List<String> list = Files.readAllLines(Paths.get(filename), Charset.forName("UTF-8"));
             assertEquals(list.get(0), "digraph G {");

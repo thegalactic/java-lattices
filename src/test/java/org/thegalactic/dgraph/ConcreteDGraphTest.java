@@ -1,7 +1,7 @@
 package org.thegalactic.dgraph;
 
 /*
- * DGraphTest.java
+ * ConcreteDGraphTest.java
  *
  * Copyright: 2010-2015 Karell Bertet, France
  * Copyright: 2015-2016 The Galactic Organization, France
@@ -26,16 +26,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Test the dgraph.DGraph class.
+ * Test the dgraph.ConcreteDGraph class.
  */
-public class DGraphTest {
+public class ConcreteDGraphTest {
 
     /**
      * Test the empty constructor.
      */
     @Test
     public void constructorEmpty() {
-        DGraph graph = new DGraph();
+        ConcreteDGraph graph = new ConcreteDGraph();
         assertTrue(graph.getNodes().isEmpty());
     }
 
@@ -49,7 +49,7 @@ public class DGraphTest {
         Node node2 = new Node();
         set.add(node1);
         set.add(node2);
-        DGraph graph = new DGraph(set);
+        ConcreteDGraph graph = new ConcreteDGraph(set);
         assertEquals(graph.sizeNodes(), 2);
         assertTrue(graph.getNodes().contains(node1));
         assertTrue(graph.getNodes().contains(node2));
@@ -69,9 +69,9 @@ public class DGraphTest {
         Node node2 = new Node();
         set.add(node1);
         set.add(node2);
-        DGraph graph = new DGraph(set);
+        ConcreteDGraph graph = new ConcreteDGraph(set);
         graph.addEdge(node1, node2);
-        DGraph copy = new DGraph(graph);
+        ConcreteDGraph copy = new ConcreteDGraph(graph);
         assertEquals(copy.sizeNodes(), 2);
         assertTrue(copy.getNodes().contains(node1));
         assertTrue(copy.getNodes().contains(node2));
@@ -92,9 +92,9 @@ public class DGraphTest {
         Node node2 = new Node("2");
         set.add(node1);
         set.add(node2);
-        DGraph graph = new DGraph(set);
+        ConcreteDGraph graph = new ConcreteDGraph(set);
         graph.addEdge(node1, node2);
-        DGraph copy;
+        ConcreteDGraph copy;
         try {
             copy = graph.clone();
             assertEquals(copy.sizeNodes(), 2);
@@ -104,7 +104,7 @@ public class DGraphTest {
             assertTrue(node2 != null);
             assertTrue(copy.containsEdge(node1, node2));
         } catch (CloneNotSupportedException ex) {
-            Logger.getLogger(DGraphTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConcreteDGraphTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -115,7 +115,7 @@ public class DGraphTest {
     public void testGetNodes() {
         Node node1 = new Node();
         Node node2 = new Node();
-        DGraph graph = new DGraph();
+        ConcreteDGraph graph = new ConcreteDGraph();
         graph.addNode(node1);
         graph.addNode(node2);
         assertEquals(graph.sizeNodes(), 2);
@@ -128,7 +128,7 @@ public class DGraphTest {
      */
     @Test
     public void testGetEdges() {
-        DGraph graph = new DGraph();
+        ConcreteDGraph graph = new ConcreteDGraph();
         Node node1 = new Node();
         Node node2 = new Node();
         Node node3 = new Node();
@@ -157,7 +157,7 @@ public class DGraphTest {
     public void testGetSuccessorEdges() {
         Node node1 = new Node();
         Node node2 = new Node();
-        DGraph graph = new DGraph();
+        ConcreteDGraph graph = new ConcreteDGraph();
         graph.addNode(node1);
         graph.addNode(node2);
         graph.addEdge(node1, node2);
@@ -173,7 +173,7 @@ public class DGraphTest {
     public void testGetPredecessorEdges() {
         Node node1 = new Node();
         Node node2 = new Node();
-        DGraph graph = new DGraph();
+        ConcreteDGraph graph = new ConcreteDGraph();
         graph.addNode(node1);
         graph.addNode(node2);
         graph.addEdge(node1, node2);
@@ -189,7 +189,7 @@ public class DGraphTest {
     public void testGetSuccessorNodes() {
         Node node1 = new Node();
         Node node2 = new Node();
-        DGraph graph = new DGraph();
+        ConcreteDGraph graph = new ConcreteDGraph();
         graph.addNode(node1);
         graph.addNode(node2);
         graph.addEdge(node1, node2);
@@ -205,7 +205,7 @@ public class DGraphTest {
     public void testGetPredecessorNodes() {
         Node node1 = new Node();
         Node node2 = new Node();
-        DGraph graph = new DGraph();
+        ConcreteDGraph graph = new ConcreteDGraph();
         graph.addNode(node1);
         graph.addNode(node2);
         graph.addEdge(node1, node2);
@@ -220,7 +220,7 @@ public class DGraphTest {
     @Test
     public void testGetNodeByContent() {
         Node node = new Node("1");
-        DGraph graph = new DGraph();
+        ConcreteDGraph graph = new ConcreteDGraph();
         graph.addNode(node);
         assertEquals(graph.getNodeByContent("1"), node);
         assertEquals(graph.getNodeByContent("notfound"), null);
@@ -232,7 +232,7 @@ public class DGraphTest {
     @Test
     public void testGetNodeByIdentifier() {
         Node node = new Node();
-        DGraph graph = new DGraph();
+        ConcreteDGraph graph = new ConcreteDGraph();
         graph.addNode(node);
         assertEquals(graph.getNodeByIdentifier(node.getIdentifier()), node);
         assertEquals(graph.getNodeByIdentifier(0), null);
@@ -245,7 +245,7 @@ public class DGraphTest {
     public void testSizeNodes() {
         Node node1 = new Node();
         Node node2 = new Node();
-        DGraph graph = new DGraph();
+        ConcreteDGraph graph = new ConcreteDGraph();
         assertEquals(graph.sizeNodes(), 0);
         graph.addNode(node1);
         graph.addNode(node2);
@@ -259,7 +259,7 @@ public class DGraphTest {
     public void testSizeEdges() {
         Node node1 = new Node();
         Node node2 = new Node();
-        DGraph graph = new DGraph();
+        ConcreteDGraph graph = new ConcreteDGraph();
         assertEquals(graph.sizeEdges(), 0);
         graph.addNode(node1);
         graph.addNode(node2);
@@ -276,7 +276,7 @@ public class DGraphTest {
             File file = File.createTempFile("junit", ".dot");
             String filename = file.getPath();
             file.delete();
-            DGraph graph = new DGraph();
+            ConcreteDGraph graph = new ConcreteDGraph();
             Node node1 = new Node("1");
             Node node2 = new Node("2");
             Node node3 = new Node("3");
@@ -313,7 +313,7 @@ public class DGraphTest {
     public void testToString() {
         Node node1 = new Node("Hello");
         Node node2 = new Node("World");
-        DGraph graph = new DGraph();
+        ConcreteDGraph graph = new ConcreteDGraph();
         graph.addNode(node1);
         graph.addNode(node2);
         graph.addEdge(node1, node2, "happy");
@@ -328,7 +328,7 @@ public class DGraphTest {
     public void testContainsNode() {
         Node node = new Node();
         Node dummy = new Node();
-        DGraph graph = new DGraph();
+        ConcreteDGraph graph = new ConcreteDGraph();
         graph.addNode(node);
         assertTrue(graph.containsNode(node));
         assertFalse(graph.containsNode(dummy));
@@ -340,7 +340,7 @@ public class DGraphTest {
     @Test
     public void testAddNode() {
         Node node = new Node();
-        DGraph graph = new DGraph();
+        ConcreteDGraph graph = new ConcreteDGraph();
         assertTrue(graph.addNode(node));
         assertTrue(graph.containsNode(node));
         assertTrue(graph.getSuccessorEdges(node).isEmpty());
@@ -355,7 +355,7 @@ public class DGraphTest {
     public void testRemoveNode() {
         Node source = new Node();
         Node target = new Node();
-        DGraph graph = new DGraph();
+        ConcreteDGraph graph = new ConcreteDGraph();
         graph.addNode(source);
         graph.addNode(target);
         graph.addEdge(source, target);
@@ -375,7 +375,7 @@ public class DGraphTest {
     public void testRemoveNodes() {
         Node source = new Node();
         Node target = new Node();
-        DGraph graph = new DGraph();
+        ConcreteDGraph graph = new ConcreteDGraph();
         graph.addNode(source);
         graph.addNode(target);
         graph.addEdge(source, target);
@@ -397,7 +397,7 @@ public class DGraphTest {
     public void testEdgeNodes() {
         Node source = new Node();
         Node target = new Node();
-        DGraph graph = new DGraph();
+        ConcreteDGraph graph = new ConcreteDGraph();
         graph.addNode(source);
         graph.addNode(target);
         assertFalse(graph.containsEdge(source, target));
@@ -415,7 +415,7 @@ public class DGraphTest {
         Node source = new Node();
         Node target = new Node();
         Edge edge = new Edge(source, target);
-        DGraph graph = new DGraph();
+        ConcreteDGraph graph = new ConcreteDGraph();
         graph.addNode(source);
         graph.addNode(target);
         assertFalse(graph.containsEdge(edge));
@@ -430,7 +430,7 @@ public class DGraphTest {
      */
     @Test
     public void testIsAcyclic() {
-        DGraph graph = new DGraph();
+        ConcreteDGraph graph = new ConcreteDGraph();
         assertTrue(graph.isAcyclic());
         Node source = new Node();
         Node target = new Node();
@@ -447,7 +447,7 @@ public class DGraphTest {
      */
     @Test
     public void testTopologicalSort() {
-        DGraph graph = new DGraph();
+        ConcreteDGraph graph = new ConcreteDGraph();
         assertTrue(graph.topologicalSort().isEmpty());
         Node node1 = new Node();
         Node node2 = new Node();
@@ -512,7 +512,7 @@ public class DGraphTest {
         Node source = new Node();
         Node target = new Node();
         Edge edge = new Edge(source, target);
-        DGraph graph = new DGraph();
+        ConcreteDGraph graph = new ConcreteDGraph();
         graph.addNode(source);
         graph.addNode(target);
         graph.addEdge(edge);
@@ -531,7 +531,7 @@ public class DGraphTest {
         Node source = new Node();
         Node target = new Node();
         Edge edge = new Edge(source, target);
-        DGraph graph = new DGraph();
+        ConcreteDGraph graph = new ConcreteDGraph();
         graph.addNode(source);
         graph.addNode(target);
         graph.addEdge(edge);
@@ -547,7 +547,7 @@ public class DGraphTest {
      */
     @Test
     public void testGetSubgraphByNodes() {
-        DGraph graph = new DGraph();
+        ConcreteDGraph graph = new ConcreteDGraph();
         Node node1 = new Node();
         Node node2 = new Node();
         Node node3 = new Node();
@@ -579,7 +579,7 @@ public class DGraphTest {
         set.add(node4);
         set.add(node6);
         set.add(node7);
-        DGraph subgraph = graph.getSubgraphByNodes(set);
+        ConcreteDGraph subgraph = graph.getSubgraphByNodes(set);
         assertEquals(subgraph.sizeNodes(), 4);
         assertTrue(subgraph.getNodes().contains(node1));
         assertTrue(subgraph.getNodes().contains(node4));
@@ -596,7 +596,7 @@ public class DGraphTest {
      */
     @Test
     public void testGetSubgraphByEdges() {
-        DGraph graph = new DGraph();
+        ConcreteDGraph graph = new ConcreteDGraph();
         Node node1 = new Node();
         Node node2 = new Node();
         Node node3 = new Node();
@@ -636,7 +636,7 @@ public class DGraphTest {
         set.add(edge1);
         set.add(edge2);
         set.add(edge3);
-        DGraph subgraph = graph.getSubgraphByEdges(set);
+        ConcreteDGraph subgraph = graph.getSubgraphByEdges(set);
         assertEquals(subgraph.sizeNodes(), graph.sizeNodes());
         assertEquals(subgraph.sizeEdges(), 3);
         assertTrue(subgraph.getEdges().contains(edge1));
@@ -649,7 +649,7 @@ public class DGraphTest {
      */
     @Test
     public void testComplementary() {
-        DGraph graph = new DGraph();
+        ConcreteDGraph graph = new ConcreteDGraph();
         Node node1 = new Node();
         Node node2 = new Node();
         Node node3 = new Node();
@@ -675,7 +675,7 @@ public class DGraphTest {
      */
     @Test
     public void testReflexiveReduction() {
-        DGraph graph = new DGraph();
+        ConcreteDGraph graph = new ConcreteDGraph();
         Node node1 = new Node();
         Node node2 = new Node();
         Node node3 = new Node();
@@ -699,7 +699,7 @@ public class DGraphTest {
      */
     @Test
     public void testReflexiveClosure() {
-        DGraph graph = new DGraph();
+        ConcreteDGraph graph = new ConcreteDGraph();
         Node node1 = new Node();
         Node node2 = new Node();
         Node node3 = new Node();
@@ -726,7 +726,7 @@ public class DGraphTest {
      */
     @Test
     public void testTransitiveClosure() {
-        DGraph graph = new DGraph();
+        ConcreteDGraph graph = new ConcreteDGraph();
         Node node1 = new Node();
         Node node2 = new Node();
         Node node3 = new Node();
@@ -780,7 +780,7 @@ public class DGraphTest {
     /*
      * @Test
      * public void testDepthFirstSearch() {
-     * DGraph graph = new DGraph();
+     * ConcreteDGraph graph = new ConcreteDGraph();
      * Node node1 = new Node();
      * Node node2 = new Node();
      * Node node3 = new Node();
@@ -832,7 +832,7 @@ public class DGraphTest {
      */
     @Test
     public void testTranspose() {
-        DGraph graph = new DGraph();
+        ConcreteDGraph graph = new ConcreteDGraph();
         Node node1 = new Node("1");
         Node node2 = new Node("2");
         Node node3 = new Node("3");
@@ -852,7 +852,7 @@ public class DGraphTest {
      */
     @Test
     public void testGetStronglyConnectedComponent() {
-        DGraph graph = new DGraph();
+        ConcreteDGraph graph = new ConcreteDGraph();
         Node node1 = new Node();
         Node node2 = new Node();
         Node node3 = new Node();

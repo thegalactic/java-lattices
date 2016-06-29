@@ -19,7 +19,7 @@ import java.util.TreeSet;
 
 import org.thegalactic.context.Context;
 import org.thegalactic.dgraph.DAGraph;
-import org.thegalactic.dgraph.DGraph;
+import org.thegalactic.dgraph.ConcreteDGraph;
 import org.thegalactic.dgraph.Edge;
 import org.thegalactic.dgraph.Node;
 import org.thegalactic.util.ComparableSet;
@@ -602,7 +602,7 @@ public class Concept extends Node {
      */
     public ArrayList<TreeSet<Comparable>> immediateSuccessors(ClosureSystem init) {
         // Initialisation of the dependance graph when not initialised by method recursiveDiagramLattice
-        DGraph dependanceGraph = new DGraph();
+        ConcreteDGraph dependanceGraph = new ConcreteDGraph();
         for (Comparable c : init.getSet()) {
             dependanceGraph.addNode(new Node(c));
         }
@@ -613,7 +613,7 @@ public class Concept extends Node {
         ComparableSet f = new ComparableSet(this.getSetA());
         long start = System.currentTimeMillis();
         System.out.print("Precedence graph... ");
-        DGraph prec = init.precedenceGraph();
+        ConcreteDGraph prec = init.precedenceGraph();
         System.out.println(System.currentTimeMillis() - start + "ms");
         start = System.currentTimeMillis();
         System.out.print("Srongly connected component... ");
@@ -691,8 +691,8 @@ public class Concept extends Node {
         start = System.currentTimeMillis();
         // computes the dependance subgraph of the closed set F as the reduction
         // of the dependance graph composed of nodes in S\A and edges of the dependance relation
-        DGraph sub = dependanceGraph.getSubgraphByNodes(n);
-        DGraph delta = sub.getSubgraphByEdges(e);
+        ConcreteDGraph sub = dependanceGraph.getSubgraphByNodes(n);
+        ConcreteDGraph delta = sub.getSubgraphByEdges(e);
         // computes the sources of the CFC of the dependance subgraph
         // that corresponds to successors of the closed set F
         DAGraph cfc = delta.getStronglyConnectedComponent();

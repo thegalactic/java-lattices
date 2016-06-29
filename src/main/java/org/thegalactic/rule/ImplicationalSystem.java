@@ -20,7 +20,7 @@ import java.util.StringTokenizer;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import org.thegalactic.dgraph.DGraph;
+import org.thegalactic.dgraph.ConcreteDGraph;
 import org.thegalactic.dgraph.Edge;
 import org.thegalactic.dgraph.Node;
 import org.thegalactic.io.Filer;
@@ -970,11 +970,11 @@ public class ImplicationalSystem extends ClosureSystem {
      *
      * @return the representative graph of this component.
      */
-    public DGraph representativeGraph() {
+    public ConcreteDGraph representativeGraph() {
         ImplicationalSystem tmp = new ImplicationalSystem(this);
         tmp.makeUnary();
         // nodes of the graph are elements not belonging to X
-        DGraph pred = new DGraph();
+        ConcreteDGraph pred = new ConcreteDGraph();
         TreeMap<Comparable, Node> nodeCreated = new TreeMap<Comparable, Node>();
         for (Comparable x : tmp.getSet()) {
             Node node = new Node(x);
@@ -1013,7 +1013,7 @@ public class ImplicationalSystem extends ClosureSystem {
      *
      * @return the dependency graph of this component.
      */
-    public DGraph dependencyGraph() {
+    public ConcreteDGraph dependencyGraph() {
         ImplicationalSystem bcd = new ImplicationalSystem(this);
         bcd.makeCanonicalDirectBasis();
         bcd.makeUnary();

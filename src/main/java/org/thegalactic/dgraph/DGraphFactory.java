@@ -31,8 +31,8 @@ public final class DGraphFactory {
      *
      * @return a random graph
      */
-    public DGraph random(final int size, final double threshold) {
-        final DGraph graph = new DGraph();
+    public ConcreteDGraph random(final int size, final double threshold) {
+        final ConcreteDGraph graph = new ConcreteDGraph();
         // addition of nodes
         for (int i = 1; i <= size; i++) {
             final Node node = new Node(i);
@@ -56,7 +56,7 @@ public final class DGraphFactory {
      *
      * @return a random graph
      */
-    public DGraph random(final int size) {
+    public ConcreteDGraph random(final int size) {
         return this.random(size, 0.5);
     }
 

@@ -22,7 +22,7 @@ import java.io.File;
 import java.util.Scanner;
 
 import org.thegalactic.util.ComparableSet;
-import org.thegalactic.dgraph.DGraph;
+import org.thegalactic.dgraph.ConcreteDGraph;
 import org.thegalactic.context.Context;
 
 /**
@@ -218,7 +218,7 @@ public class BijectiveComponentsTest {
     public void testsetDependencyGraph() {
         ImplicationalSystem is = new ImplicationalSystem();
         BijectiveComponents bc = new BijectiveComponents(is);
-        DGraph dg = new DGraph();
+        ConcreteDGraph dg = new ConcreteDGraph();
         bc.setDependencyGraph(dg);
         assertEquals(bc.getDependencyGraph(), dg);
     }

@@ -11,12 +11,12 @@ package org.thegalactic.dgraph.io;
  * This file is part of java-lattices.
  * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
  */
-import org.thegalactic.dgraph.DGraph;
+import org.thegalactic.dgraph.ConcreteDGraph;
 
 /**
- * This class register readers and writers for the DGraph class.
- *
- * ![DGraphIOFactory](DGraphIOFactory.png)
+ * This class register readers and writers for the ConcreteDGraph class.
+
+ ![DGraphIOFactory](DGraphIOFactory.png)
  *
  * @uml DGraphIOFactory.png
  * !include resources/org/thegalactic/dgraph/io/DGraphIOFactory.iuml
@@ -26,7 +26,7 @@ import org.thegalactic.dgraph.DGraph;
  * class DGraphIOFactory #LightCyan
  * title DGraphIOFactory UML graph
  */
-public final class DGraphIOFactory extends org.thegalactic.io.IOFactory<DGraph> {
+public final class DGraphIOFactory extends org.thegalactic.io.IOFactory<ConcreteDGraph> {
 
     /**
      * The singleton instance.

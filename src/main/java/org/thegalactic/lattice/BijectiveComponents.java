@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.TreeSet;
 
 import org.thegalactic.context.Context;
-import org.thegalactic.dgraph.DGraph;
+import org.thegalactic.dgraph.ConcreteDGraph;
 import org.thegalactic.util.ComparableSet;
 
 /**
@@ -87,7 +87,7 @@ public class BijectiveComponents {
     /**
      * The dependency graph of the reduced lattice.
      */
-    private DGraph dependencyGraph = null;
+    private ConcreteDGraph dependencyGraph = null;
 
     /**
      * The minimal generators of the reduced lattice.
@@ -332,7 +332,7 @@ public class BijectiveComponents {
      *
      * @return dependencyGraph dependency graph of this component
      */
-    public DGraph getDependencyGraph() {
+    public ConcreteDGraph getDependencyGraph() {
         if (dependencyGraph == null) {
             // FIXME: do we use getLattice or getReducedLattice ?
             dependencyGraph = this.getReducedLattice().getDependencyGraph();
@@ -347,7 +347,7 @@ public class BijectiveComponents {
      *
      * @return this for chaining
      */
-    protected BijectiveComponents setDependencyGraph(DGraph dependencyGraph) {
+    protected BijectiveComponents setDependencyGraph(ConcreteDGraph dependencyGraph) {
         this.dependencyGraph = dependencyGraph;
         return this;
     }

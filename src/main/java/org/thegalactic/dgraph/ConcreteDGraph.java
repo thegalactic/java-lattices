@@ -1,7 +1,7 @@
 package org.thegalactic.dgraph;
 
 /*
- * DGraph.java
+ * ConcreteDGraph.java
  *
  * Copyright: 2010-2015 Karell Bertet, France
  * Copyright: 2015-2016 The Galactic Organization, France
@@ -33,17 +33,17 @@ import java.util.TreeSet;
  * that associates to each node a treeset of successors, defined by class
  * {@link Edge}; - a treemap of predecessors that associates to each node a
  * treeset of predecessors, defined by class {@link Edge}.
- *
- * This class provides methods implementing classical operation on a directed
- * graph:
- *
- * - sinks - wells - subgraph - reflexive closure and reduction - transitive
- * closure - strongly connected components - ...
- *
- * This class also provides a static method randomly generating a directed
- * graph.
- *
- * ![DGraph](DGraph.png)
+
+ This class provides methods implementing classical operation on a directed
+ graph:
+
+ - sinks - wells - subgraph - reflexive closure and reduction - transitive
+ closure - strongly connected components - ...
+
+ This class also provides a static method randomly generating a directed
+ graph.
+
+ ![ConcreteDGraph](ConcreteDGraph.png)
  *
  * @uml DGraph.png
  * !include resources/org/thegalactic/dgraph/DGraph.iuml
@@ -55,7 +55,7 @@ import java.util.TreeSet;
  * class DGraph #LightCyan
  * title DGraph UML graph
  */
-public class DGraph extends AbstractDGraph implements Cloneable {
+public class ConcreteDGraph extends AbstractDGraph implements Cloneable {
 
     /*
      * ------------- FIELDS ------------------
@@ -82,7 +82,7 @@ public class DGraph extends AbstractDGraph implements Cloneable {
     /**
      * Constructs a new directed graph with an empty set of node.
      */
-    public DGraph() {
+    public ConcreteDGraph() {
         this.nodes = new TreeSet<Node>();
         this.successors = new TreeMap<Node, SortedSet<Edge>>();
         this.predecessors = new TreeMap<Node, SortedSet<Edge>>();
@@ -96,7 +96,7 @@ public class DGraph extends AbstractDGraph implements Cloneable {
      *
      * @param set the set of nodes
      */
-    public DGraph(final Set<Node> set) {
+    public ConcreteDGraph(final Set<Node> set) {
         this.nodes = new TreeSet<Node>(set);
         this.successors = new TreeMap<Node, SortedSet<Edge>>();
         for (Node node : this.nodes) {
@@ -113,7 +113,7 @@ public class DGraph extends AbstractDGraph implements Cloneable {
      *
      * @param graph the directed graph to be copied
      */
-    public DGraph(final DGraph graph) {
+    public ConcreteDGraph(final ConcreteDGraph graph) {
         this.nodes = new TreeSet<Node>(graph.nodes);
         this.successors = new TreeMap<Node, SortedSet<Edge>>();
         this.predecessors = new TreeMap<Node, SortedSet<Edge>>();
@@ -135,8 +135,8 @@ public class DGraph extends AbstractDGraph implements Cloneable {
      * @throws java.lang.CloneNotSupportedException
      */
     @Override
-    public DGraph clone() throws CloneNotSupportedException {
-        return new DGraph(this);
+    public ConcreteDGraph clone() throws CloneNotSupportedException {
+        return new ConcreteDGraph(this);
     }
 
     /**
@@ -588,8 +588,8 @@ public class DGraph extends AbstractDGraph implements Cloneable {
      *
      * @todo implement a SubGraph class?
      */
-    public DGraph getSubgraphByNodes(final Set<Node> nodes) {
-        DGraph graph = new DGraph();
+    public ConcreteDGraph getSubgraphByNodes(final Set<Node> nodes) {
+        ConcreteDGraph graph = new ConcreteDGraph();
         // addition of nodes in the subgraph
         for (Node node : nodes) {
             if (this.containsNode(node)) {
@@ -618,8 +618,8 @@ public class DGraph extends AbstractDGraph implements Cloneable {
      *
      * @todo implement a SubGraph class?
      */
-    public DGraph getSubgraphByEdges(final Set<Edge> edges) {
-        DGraph graph = new DGraph();
+    public ConcreteDGraph getSubgraphByEdges(final Set<Edge> edges) {
+        ConcreteDGraph graph = new ConcreteDGraph();
         // addition of all nodes in the subgraph
         for (Node node : this.nodes) {
             graph.addNode(node);
@@ -736,7 +736,7 @@ public class DGraph extends AbstractDGraph implements Cloneable {
      * its predecessor set, and its predecessor set by its successor set.
      */
     public void transpose() {
-        DGraph tmp = new DGraph(this);
+        ConcreteDGraph tmp = new ConcreteDGraph(this);
         for (Edge edge : tmp.getEdges()) {
             this.removeEdge(edge);
             this.addEdge(new Edge(edge.getTarget(), edge.getSource(), edge.getContent()));
@@ -756,11 +756,11 @@ public class DGraph extends AbstractDGraph implements Cloneable {
     public DAGraph getStronglyConnectedComponent() {
         DAGraph cc = new DAGraph();
         // first depth first search
-        DGraph tmp = new DGraph(this);
+        ConcreteDGraph tmp = new ConcreteDGraph(this);
         tmp.transitiveClosure();
         ArrayList<Node> last = tmp.depthFirstSearch()[1];
         // transposition of the graph
-        DGraph transposedGraph = new DGraph(this);
+        ConcreteDGraph transposedGraph = new ConcreteDGraph(this);
         transposedGraph.transpose();
         // sort nodes according to the reverse last sort
         ArrayList<Node> sort = new ArrayList<Node>();
@@ -802,7 +802,7 @@ public class DGraph extends AbstractDGraph implements Cloneable {
      *
      * @return this for chaining
      */
-    protected DGraph setNodes(final TreeSet<Node> nodes) {
+    protected ConcreteDGraph setNodes(final TreeSet<Node> nodes) {
         this.nodes = nodes;
         return this;
     }
@@ -823,7 +823,7 @@ public class DGraph extends AbstractDGraph implements Cloneable {
      *
      * @return this for chaining
      */
-    protected DGraph setSuccessors(final TreeMap<Node, SortedSet<Edge>> successors) {
+    protected ConcreteDGraph setSuccessors(final TreeMap<Node, SortedSet<Edge>> successors) {
         this.successors = successors;
         return this;
     }
@@ -844,7 +844,7 @@ public class DGraph extends AbstractDGraph implements Cloneable {
      *
      * @return this for chaining
      */
-    protected DGraph setPredecessors(final TreeMap<Node, SortedSet<Edge>> predecessors) {
+    protected ConcreteDGraph setPredecessors(final TreeMap<Node, SortedSet<Edge>> predecessors) {
         this.predecessors = predecessors;
         return this;
     }
@@ -928,14 +928,14 @@ public class DGraph extends AbstractDGraph implements Cloneable {
         /**
          * The underlying graph.
          */
-        private DGraph graph;
+        private ConcreteDGraph graph;
 
         /**
          * Get the underlying graph.
          *
          * @return the graph
          */
-        protected DGraph getGraph() {
+        protected ConcreteDGraph getGraph() {
             return graph;
         }
 
@@ -1022,9 +1022,9 @@ public class DGraph extends AbstractDGraph implements Cloneable {
         /**
          * Constructs a sorted set of the edges source a graph.
          *
-         * @param graph A DGraph
+         * @param graph A ConcreteDGraph
          */
-        Edges(DGraph graph) {
+        Edges(ConcreteDGraph graph) {
             this.graph = graph;
         }
 

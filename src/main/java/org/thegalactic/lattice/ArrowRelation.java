@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.TreeSet;
 
 import org.thegalactic.context.Context;
-import org.thegalactic.dgraph.DGraph;
+import org.thegalactic.dgraph.ConcreteDGraph;
 import org.thegalactic.dgraph.Edge;
 import org.thegalactic.dgraph.Node;
 import org.thegalactic.io.Filer;
@@ -52,7 +52,7 @@ import org.thegalactic.lattice.io.ArrowRelationIOFactory;
  * class ArrowRelation #LightCyan
  * title ArrowRelation UML graph
  */
-public class ArrowRelation extends DGraph {
+public class ArrowRelation extends ConcreteDGraph {
 
     /**
      * Field used to encode up arrow relation.

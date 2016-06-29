@@ -23,7 +23,7 @@ import java.util.TreeSet;
 
 import org.thegalactic.util.ComparableSet;
 import org.thegalactic.dgraph.Node;
-import org.thegalactic.dgraph.DGraph;
+import org.thegalactic.dgraph.ConcreteDGraph;
 import org.thegalactic.dgraph.DAGraph;
 import org.thegalactic.context.Context;
 
@@ -143,7 +143,7 @@ public class LatticeTest {
      */
     @Test
     public void testgetDependencyGraph() {
-        DGraph dg = new DGraph();
+        ConcreteDGraph dg = new ConcreteDGraph();
         Node a = new Node("a");
         dg.addNode(a);
         Node b = new Node("b");
@@ -226,7 +226,7 @@ public class LatticeTest {
      */
     @Test
     public void testhasDependencyGraph() {
-        DGraph dg = new DGraph();
+        ConcreteDGraph dg = new ConcreteDGraph();
         Node a = new Node("a");
         dg.addNode(a);
         Node b = new Node("b");
@@ -712,7 +712,7 @@ public class LatticeTest {
      */
     @Test
     public void testsetDependencyGraph() {
-        DGraph dg = new DGraph();
+        ConcreteDGraph dg = new ConcreteDGraph();
         Node a = new Node("a");
         dg.addNode(a);
         Node b = new Node("b");

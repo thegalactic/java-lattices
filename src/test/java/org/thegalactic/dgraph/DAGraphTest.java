@@ -64,7 +64,7 @@ public class DAGraphTest {
         Node node2 = new Node();
         set.add(node1);
         set.add(node2);
-        DGraph graph = new DGraph(set);
+        ConcreteDGraph graph = new ConcreteDGraph(set);
         graph.addEdge(node1, node2);
         DAGraph dag = new DAGraph(graph);
         assertEquals(dag.sizeNodes(), 2);

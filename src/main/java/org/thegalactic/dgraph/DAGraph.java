@@ -19,7 +19,7 @@ import java.util.TreeSet;
 
 /**
  * This class extends the representation of a directed graph given by class
- * {@link DGraph} for directed acyclic graph (DAG).
+ * {@link ConcreteDGraph} for directed acyclic graph (DAG).
  *
  * The main property of a directed acyclic graph is to be a partially ordered
  * set (poset) when transitively closed, and a Hasse diagram when transitively
@@ -54,7 +54,7 @@ import java.util.TreeSet;
  * class DAGraph #LightCyan
  * title DAGraph UML graph
  */
-public class DAGraph extends DGraph {
+public class DAGraph extends ConcreteDGraph {
 
     /*
      * ----------- STATIC GENERATION METHODS -------------
@@ -152,9 +152,9 @@ public class DAGraph extends DGraph {
      * Acyclic property is checked for the specified DAG. When not verified,
      * this component is construct with the same set of nodes but with no edges.
      *
-     * @param graph the DGraph to be copied
+     * @param graph the ConcreteDGraph to be copied
      */
-    public DAGraph(final DGraph graph) {
+    public DAGraph(final ConcreteDGraph graph) {
         super(graph);
         if (this.isAcyclic()) {
             this.reflexiveReduction();
@@ -262,9 +262,9 @@ public class DAGraph extends DGraph {
      */
     @Override
     public DAGraph getSubgraphByNodes(final Set<Node> nodes) {
-        DGraph tmp = new DGraph(this);
+        ConcreteDGraph tmp = new ConcreteDGraph(this);
         tmp.transitiveClosure();
-        DGraph sub = tmp.getSubgraphByNodes(nodes);
+        ConcreteDGraph sub = tmp.getSubgraphByNodes(nodes);
         DAGraph sub2 = new DAGraph(sub);
         sub2.transitiveReduction();
         return sub2;
@@ -346,7 +346,7 @@ public class DAGraph extends DGraph {
      * Computes the transitive closure of this component.
      *
      * This method overlaps the computation of the transitive closure for
-     * directed graph in class {@link DGraph} with an implementation of the
+     * directed graph in class {@link ConcreteDGraph} with an implementation of the
      * Goralcikova-Koubeck algorithm dedicated to acyclic directed graph. This
      * algorithm can also compute the transitive reduction of a directed acyclic
      * graph.

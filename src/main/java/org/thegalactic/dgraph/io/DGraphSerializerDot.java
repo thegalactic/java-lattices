@@ -14,7 +14,7 @@ package org.thegalactic.dgraph.io;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
-import org.thegalactic.dgraph.DGraph;
+import org.thegalactic.dgraph.ConcreteDGraph;
 import org.thegalactic.dgraph.Edge;
 import org.thegalactic.dgraph.Node;
 import org.thegalactic.io.Writer;
@@ -34,7 +34,7 @@ import org.thegalactic.io.Writer;
  * hide members show DGraphSerializerDot members class DGraphSerializerDot
  * #LightCyan title DGraphSerializerDot UML graph
  */
-public final class DGraphSerializerDot implements Writer<DGraph> {
+public final class DGraphSerializerDot implements Writer<ConcreteDGraph> {
 
     /**
      * The singleton instance.
@@ -72,7 +72,7 @@ public final class DGraphSerializerDot implements Writer<DGraph> {
      * @throws IOException When an IOException occurs
      */
     @Override
-    public void write(final DGraph graph, final BufferedWriter file) throws IOException {
+    public void write(final ConcreteDGraph graph, final BufferedWriter file) throws IOException {
         // Writing start of graph
         file.write("digraph G {");
         file.newLine();

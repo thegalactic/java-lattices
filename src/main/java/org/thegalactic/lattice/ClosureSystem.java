@@ -18,7 +18,7 @@ import java.util.TreeSet;
 import java.util.Vector;
 
 import org.thegalactic.dgraph.DAGraph;
-import org.thegalactic.dgraph.DGraph;
+import org.thegalactic.dgraph.ConcreteDGraph;
 import org.thegalactic.dgraph.Node;
 import org.thegalactic.util.ComparableSet;
 
@@ -208,7 +208,7 @@ public abstract class ClosureSystem {
      *
      * @return the precedence graph
      */
-    public DGraph precedenceGraph() {
+    public ConcreteDGraph precedenceGraph() {
         // compute a TreeMap of closures for each element of the component
         TreeMap<Comparable, TreeSet<Comparable>> closures = new TreeMap<Comparable, TreeSet<Comparable>>();
         for (Comparable x : this.getSet()) {
@@ -217,7 +217,7 @@ public abstract class ClosureSystem {
             closures.put(x, this.closure(setX));
         }
         // nodes of the graph are elements
-        DGraph prec = new DGraph();
+        ConcreteDGraph prec = new ConcreteDGraph();
         TreeMap<Comparable, Node> nodeCreated = new TreeMap<Comparable, Node>();
         for (Comparable x : this.getSet()) {
             Node node = new Node(x);
@@ -253,7 +253,7 @@ public abstract class ClosureSystem {
         // Initialise a map Red of reducible attributes
         TreeMap<Object, TreeSet> red = new TreeMap();
         // Initialise the precedence graph G of the closure system
-        DGraph graph = this.precedenceGraph();
+        ConcreteDGraph graph = this.precedenceGraph();
         // First, compute each group of equivalent attributes
         // This group will be a strongly connected component on the graph.
         // Then, only one element of each group is skipped, others will be deleted.

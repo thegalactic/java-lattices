@@ -24,7 +24,7 @@ import java.util.LinkedList;
 import org.thegalactic.util.ComparableSet;
 import org.thegalactic.context.Context;
 import org.thegalactic.dgraph.DAGraph;
-import org.thegalactic.dgraph.DGraph;
+import org.thegalactic.dgraph.ConcreteDGraph;
 import org.thegalactic.dgraph.Edge;
 import org.thegalactic.dgraph.Node;
 
@@ -92,7 +92,7 @@ public class Lattice extends DAGraph {
      * join-irreducibles such that the join of elements of X corresponds to the
      * node x of the lattice.
      */
-    private DGraph dependencyGraph = null;
+    private ConcreteDGraph dependencyGraph = null;
 
     /*
      * ------------- CONSTRUCTORS ------------------
@@ -220,7 +220,7 @@ public class Lattice extends DAGraph {
         }
         joins = this.joinIrreducibles();
         meats = this.meetIrreducibles();
-        DGraph phi = new DGraph();
+        ConcreteDGraph phi = new ConcreteDGraph();
         for (Node j : joins) {
             for (Node m : meats) {
                 int indJ = 0; // Search for the step containning j
@@ -862,11 +862,11 @@ public class Lattice extends DAGraph {
      *
      * @return the dependency graph
      */
-    public DGraph getDependencyGraph() {
+    public ConcreteDGraph getDependencyGraph() {
         if (!(this.dependencyGraph == null)) {
             return this.dependencyGraph;
         }
-        this.dependencyGraph = new DGraph();
+        this.dependencyGraph = new ConcreteDGraph();
         // nodes of the dependency graph are join-irreducibles
         TreeSet<Node> joins = this.joinIrreducibles();
         for (Node j : joins) {
@@ -943,7 +943,7 @@ public class Lattice extends DAGraph {
      *
      * @return this for chaining
      */
-    protected Lattice setDependencyGraph(DGraph graph) {
+    protected Lattice setDependencyGraph(ConcreteDGraph graph) {
         this.dependencyGraph = graph;
         return this;
     }
@@ -973,7 +973,7 @@ public class Lattice extends DAGraph {
      * @return the canonical direct basis of the lattice
      */
     public ImplicationalSystem getCanonicalDirectBasis() {
-        DGraph odGraph = this.getDependencyGraph();
+        ConcreteDGraph odGraph = this.getDependencyGraph();
         // initialise elements of the ImplicationalSystem with nodes of the ODGraph
         ImplicationalSystem bcd = new ImplicationalSystem();
         for (Node node : odGraph.getNodes()) {
@@ -1094,9 +1094,9 @@ public class Lattice extends DAGraph {
      * - j "Cross" m (stored has "Cross") iff j is less or equal than m
      * - j "Circ" m (stored has "Circ") iff neither j "Up" m nor j "Down" m nor j "Cross" m
      *
-     * @return DGraph whose :
-     *         - Nodes are join or meet irreductibles of the lattice.
-     *         - Edges content encodes arrows as String "Up", "Down", "UpDown", "Cross", "Circ".
+     * @return ConcreteDGraph whose :
+         - Nodes are join or meet irreductibles of the lattice.
+         - Edges content encodes arrows as String "Up", "Down", "UpDown", "Cross", "Circ".
      *
      */
     public ArrowRelation getArrowRelation() {

@@ -21,7 +21,7 @@ import java.util.List;
 
 import org.thegalactic.util.ComparableSet;
 import org.thegalactic.dgraph.DAGraph;
-import org.thegalactic.dgraph.DGraph;
+import org.thegalactic.dgraph.ConcreteDGraph;
 import org.thegalactic.dgraph.Edge;
 import org.thegalactic.dgraph.Node;
 import org.thegalactic.io.Filer;
@@ -181,7 +181,7 @@ public class ConceptLattice extends Lattice {
         //if (Diagram) {
         // computes the dependance graph of the closure system
         // addition of nodes in the precedence graph
-        DGraph graph = new DGraph();
+        ConcreteDGraph graph = new ConcreteDGraph();
         for (Comparable c : init.getSet()) {
             graph.addNode(new Node(c));
         }
@@ -231,7 +231,7 @@ public class ConceptLattice extends Lattice {
         ConceptLattice lattice = new ConceptLattice();
         // computes the dependance graph of the closure system
         // addition of nodes in the precedence graph
-        DGraph graph = new DGraph();
+        ConcreteDGraph graph = new ConcreteDGraph();
         for (Comparable c : init.getSet()) {
             graph.addNode(new Node(c));
         }
@@ -927,7 +927,7 @@ public class ConceptLattice extends Lattice {
     public Vector<TreeSet<Comparable>> immediateSuccessors(Node n, ClosureSystem init) {
         // Initialisation of the dependance graph when not initialised by method recursiveDiagramLattice
         if (!this.hasDependencyGraph()) {
-            DGraph graph = new DGraph();
+            ConcreteDGraph graph = new ConcreteDGraph();
             for (Comparable c : init.getSet()) {
                 graph.addNode(new Node(c));
             }
@@ -938,7 +938,7 @@ public class ConceptLattice extends Lattice {
         // For a non reduced closure system, the precedence graph is not acyclic,
         // and therefore strongly connected components have to be used.
         ComparableSet setF = new ComparableSet(((Concept) n).getSetA());
-        DGraph prec = init.precedenceGraph();
+        ConcreteDGraph prec = init.precedenceGraph();
         DAGraph acyclPrec = prec.getStronglyConnectedComponent();
         ComparableSet newVal = new ComparableSet();
         newVal.addAll(setF);
@@ -1007,8 +1007,8 @@ public class ConceptLattice extends Lattice {
         }
         // computes the dependance subgraph of the closed set F as the reduction
         // of the dependance graph composed of nodes in S\A and edges of the dependance relation
-        DGraph sub = this.getDependencyGraph().getSubgraphByNodes(nodes);
-        DGraph delta = sub.getSubgraphByEdges(edges);
+        ConcreteDGraph sub = this.getDependencyGraph().getSubgraphByNodes(nodes);
+        ConcreteDGraph delta = sub.getSubgraphByEdges(edges);
         // computes the sources of the CFC of the dependance subgraph
         // that corresponds to successors of the closed set F
         DAGraph cfc = delta.getStronglyConnectedComponent();
