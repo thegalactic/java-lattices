@@ -381,7 +381,7 @@ public class Context extends ClosureSystem {
         ConceptLattice factor = ctx.conceptLattice(true);
         TreeSet<Node> convex = new TreeSet<Node>();
         for (Node node : factor.getNodes()) {
-            Concept c = (Concept) node;
+            Concept c = (Concept) node.getContent();
             if (!c.getSetB().containsAll(this.getExtent(c.getSetA()))
                     && !c.getSetA().containsAll(this.getIntent(c.getSetB()))) {
                 convex.add(node);
@@ -1229,7 +1229,7 @@ public class Context extends ClosureSystem {
      *
      * @return a list of nodes to add to the product.
      */
-    private ArrayList<Couple> reccursiveGenProd(Couple c, LinkedList<ConceptLattice> clParts) {
+    private ArrayList<Couple> recursiveGenProd(Couple c, LinkedList<ConceptLattice> clParts) {
         LinkedList<ConceptLattice> copy = (LinkedList<ConceptLattice>) clParts.clone();
         if (copy.isEmpty()) {
             ArrayList<Couple> result = new ArrayList<Couple>();
@@ -1245,7 +1245,7 @@ public class Context extends ClosureSystem {
                 }
                 Couple coupleCopy = new Couple(listCopy, c.getRight());
                 ((ArrayList<Concept>) coupleCopy.getLeft()).add((Concept) node);
-                nodes.addAll(reccursiveGenProd(coupleCopy, copy));
+                nodes.addAll(recursiveGenProd(coupleCopy, copy));
             }
             return nodes;
         }
@@ -1318,7 +1318,7 @@ public class Context extends ClosureSystem {
             ArrayList<Concept> prodCPT = new ArrayList<Concept>();
             prodCPT.add((Concept) node);
             couple.setLeft(prodCPT);
-            nodes.addAll(reccursiveGenProd(couple, copy));
+            nodes.addAll(recursiveGenProd(couple, copy));
         }
         for (Couple c : nodes) {
             prod.addNode(new Node(c));
