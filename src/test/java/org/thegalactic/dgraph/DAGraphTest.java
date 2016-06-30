@@ -201,35 +201,11 @@ public class DAGraphTest {
     }
 
     /**
-     * Test the random static method.
-     */
-    @Test
-    public void testRandom() {
-        DAGraph dag = DAGraph.random(10, 0);
-        assertEquals(dag.sizeNodes(), 10);
-        assertEquals(dag.sizeEdges(), 0);
-
-        dag = DAGraph.random(10, 1);
-        assertEquals(dag.sizeNodes(), 10);
-        assertEquals(dag.sizeEdges(), 45);
-    }
-
-    /**
-     * Test the divisors static method.
-     */
-    @Test
-    public void testDivisors() {
-        DAGraph dag = DAGraph.divisors(20);
-        assertEquals(dag.sizeNodes(), 19);
-        assertEquals(dag.sizeEdges(), 27);
-    }
-
-    /**
      * Test the transitiveReduction method.
      */
     @Test
     public void testTransitiveReduction() {
-        DAGraph dag = DAGraph.divisors(20);
+        DAGraph dag = DAGraphFactory.getInstance().divisors(20);
         assertEquals(dag.transitiveReduction(), 9);
         assertEquals(dag.sizeEdges(), 18);
     }
@@ -239,7 +215,7 @@ public class DAGraphTest {
      */
     @Test
     public void testTransitiveClosure() {
-        DAGraph dag = DAGraph.divisors(20);
+        DAGraph dag = DAGraphFactory.getInstance().divisors(20);
         DAGraph copy = new DAGraph(dag);
         copy.transitiveReduction();
         copy.transitiveClosure();

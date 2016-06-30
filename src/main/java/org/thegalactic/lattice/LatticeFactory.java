@@ -15,6 +15,7 @@ import java.util.BitSet;
 import java.util.Iterator;
 
 import org.thegalactic.dgraph.DAGraph;
+import org.thegalactic.dgraph.DAGraphFactory;
 import org.thegalactic.dgraph.Node;
 import org.thegalactic.util.Couple;
 
@@ -43,7 +44,7 @@ public class LatticeFactory {
         boolean done = false;
         Lattice l = new Lattice();
         while (!done) {
-            DAGraph dag = DAGraph.random(nb - 2); // what an ugly strategy :-(
+            DAGraph dag = DAGraphFactory.getInstance().random(nb - 2); // what an ugly strategy :-(
             Lattice<Integer, ?> tmp = new Lattice(dag);
             Node<Integer> top = new Node(nb - 1);
             tmp.addNode(top);
