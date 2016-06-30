@@ -83,8 +83,8 @@ public class DAGraph<N, E> extends ConcreteDGraph<N, E> {
         // addition of edges
         for (Node<Integer> source : graph.getNodes()) {
             for (Node<Integer> target : graph.getNodes()) {
-                int v1 = ((Integer) source.getContent()).intValue();
-                int v2 = ((Integer) target.getContent()).intValue();
+                int v1 = source.getContent();
+                int v2 = target.getContent();
                 if (v1 < v2 && v2 % v1 == 0) {
                     graph.addEdge(source, target);
                 }

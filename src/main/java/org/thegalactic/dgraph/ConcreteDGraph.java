@@ -672,12 +672,13 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
             mark.put(node, Boolean.FALSE);
         }
         // treatment of nodes
+        final List<Node<N>> list = new ArrayList<Node<N>>();
         for (final Node<N> source : this.nodes) {
-            final List<Node<N>> list = new ArrayList<Node<N>>();
+            list.clear();
             list.add(source);
             while (!list.isEmpty()) {
                 // Remove the first node
-                Node<N> source2 = list.remove(0);
+                final Node<N> source2 = list.remove(0);
                 for (final Node<N> target : this.getSuccessorNodes(source2)) {
                     // treatment of target when not marked
                     if (!mark.get(target)) {
