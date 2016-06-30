@@ -905,7 +905,7 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
          *
          * @param graph A ConcreteDGraph
          */
-        Edges(ConcreteDGraph<N, E> graph) {
+        Edges(final ConcreteDGraph<N, E> graph) {
             this.graph = graph;
         }
 
@@ -915,7 +915,7 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
          * @return the graph
          */
         protected final ConcreteDGraph<N, E> getGraph() {
-            return graph;
+            return this.graph;
         }
 
         /**
