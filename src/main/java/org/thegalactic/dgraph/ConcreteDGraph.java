@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -623,9 +624,9 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
      *
      * @return the number of removed edges
      */
-    public int reflexiveReduction() {
+    public final int reflexiveReduction() {
         int size = 0;
-        for (Node<N> node : this.nodes) {
+        for (final Node<N> node : this.nodes) {
             if (this.containsEdge(node, node)) {
                 size++;
                 this.removeEdge(node, node);
@@ -639,9 +640,9 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
      *
      * @return the number of added edges
      */
-    public int reflexiveClosure() {
+    public final int reflexiveClosure() {
         int size = 0;
-        for (Node<N> node : this.nodes) {
+        for (final Node<N> node : this.nodes) {
             if (!this.containsEdge(node, node)) {
                 size++;
                 this.addEdge(node, node);
@@ -653,12 +654,12 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
     /**
      * Computes the transitive closure of this component.
      *
-     * This treatment is performed in O(nm+m_c), where n corresponds to the
-     * number of nodes, m to the number of edges, and m_c to the number of edges
+     * This treatment is performed in $O(nm+m_c)$, where $n$ corresponds to the
+     * number of nodes, $m$ to the number of edges, and $m_c$ to the number of edges
      * in the closure. This treatment improves the Roy-Warshall algorithm that
-     * directly implements the definition in O(logm n^3).
+     * directly implements the definition in $O(log(m) n^3)$.
      *
-     * This treatment is overlapped in class {@link DAGraph} with a more
+     * This treatment is overridden in class {@link DAGraph} with a more
      * efficient algorithm dedicated to directed acyclic graph.
      *
      * @return the number of added edges
@@ -666,28 +667,29 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
     public int transitiveClosure() {
         int size = 0;
         // mark each node to false
-        TreeMap<Node<N>, Boolean> mark = new TreeMap<Node<N>, Boolean>();
-        for (Node<N> node : this.nodes) {
+        final TreeMap<Node<N>, Boolean> mark = new TreeMap<Node<N>, Boolean>();
+        for (final Node<N> node : this.nodes) {
             mark.put(node, Boolean.FALSE);
         }
         // treatment of nodes
-        for (Node<N> x : this.nodes) {
-            ArrayList<Node<N>> list = new ArrayList<Node<N>>();
-            list.add(x);
+        for (final Node<N> source : this.nodes) {
+            final List<Node<N>> list = new ArrayList<Node<N>>();
+            list.add(source);
             while (!list.isEmpty()) {
-                Node<N> y = list.remove(0);
-                for (Node<N> z : this.getSuccessorNodes(y)) {
-                    // treatment of y when not marked
-                    if (!mark.get(z)) {
-                        mark.put(z, Boolean.TRUE);
-                        this.addEdge(x, z);
+                // Remove the first node
+                Node<N> source2 = list.remove(0);
+                for (final Node<N> target : this.getSuccessorNodes(source2)) {
+                    // treatment of target when not marked
+                    if (!mark.get(target)) {
+                        mark.put(target, Boolean.TRUE);
+                        this.addEdge(source, target);
+                        list.add(target);
                         size++;
-                        list.add(z);
                     }
                 }
             }
-            for (Node<N> y : this.getSuccessorNodes(x)) {
-                mark.put(y, Boolean.FALSE);
+            for (final Node<N> target : this.getSuccessorNodes(source)) {
+                mark.put(target, Boolean.FALSE);
             }
         }
         return size;
@@ -697,7 +699,7 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
      * Transposes this component by replacing for each node its successor set by
      * its predecessor set, and its predecessor set by its successor set.
      */
-    public void transpose() {
+    public final void transpose() {
         ConcreteDGraph<N, E> tmp = new ConcreteDGraph<N, E>(this);
         for (Edge<N, E> edge : tmp.getEdges()) {
             this.removeEdge(edge);
