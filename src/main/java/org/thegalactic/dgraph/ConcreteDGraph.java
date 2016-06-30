@@ -71,6 +71,8 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
 
     /**
      * A map to associate a set of successors to each node.
+     *
+     * @todo use a TreeSet for edges with a specific comparator for predecessors
      */
     private TreeMap<Node<N>, TreeSet<Edge<N, E>>> successors;
 
@@ -912,7 +914,7 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
          *
          * @return the graph
          */
-        protected ConcreteDGraph<N, E> getGraph() {
+        protected final ConcreteDGraph<N, E> getGraph() {
             return graph;
         }
 
@@ -921,7 +923,7 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
          *
          * @return the first edge
          */
-        public Edge<N, E> first() {
+        public final Edge<N, E> first() {
             throw new UnsupportedOperationException();
         }
 
@@ -930,7 +932,7 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
          *
          * @return the last edge
          */
-        public Edge<N, E> last() {
+        public final Edge<N, E> last() {
             throw new UnsupportedOperationException();
         }
 
@@ -943,7 +945,7 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
          *
          * @throws UnsupportedOperationException
          */
-        public SortedSet<Edge<N, E>> headSet(Edge<N, E> edge) {
+        public final SortedSet<Edge<N, E>> headSet(Edge<N, E> edge) {
             throw new UnsupportedOperationException();
         }
 
@@ -956,7 +958,7 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
          *
          * @throws UnsupportedOperationException
          */
-        public SortedSet<Edge<N, E>> tailSet(Edge<N, E> edge) {
+        public final SortedSet<Edge<N, E>> tailSet(Edge<N, E> edge) {
             throw new UnsupportedOperationException();
         }
 
@@ -970,7 +972,7 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
          *
          * @throws UnsupportedOperationException
          */
-        public SortedSet<Edge<N, E>> subSet(Edge<N, E> fromEdge, Edge<N, E> toEdge) {
+        public final SortedSet<Edge<N, E>> subSet(final Edge<N, E> fromEdge, final Edge<N, E> toEdge) {
             throw new UnsupportedOperationException();
         }
 
@@ -979,7 +981,7 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
          *
          * @return null
          */
-        public Comparator<? super Edge<N, E>> comparator() {
+        public final Comparator<? super Edge<N, E>> comparator() {
             return null;
         }
 
@@ -988,8 +990,8 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
          *
          * @return the size of the collection
          */
-        public int size() {
-            return graph.sizeEdges();
+        public final int size() {
+            return this.graph.sizeEdges();
         }
 
         /**
@@ -997,7 +999,7 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
          *
          * @return a new edges iterator
          */
-        public EdgesIterator iterator() {
+        public final EdgesIterator iterator() {
             return new EdgesIterator(this);
         }
 
@@ -1042,7 +1044,7 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
              */
             private void prepareNext() {
                 this.hasNext = false;
-                while (!this.hasNext && nodesIterator.hasNext()) {
+                while (!this.hasNext && this.nodesIterator.hasNext()) {
                     this.edgesIterator = this.edges.getGraph().successors.get(this.nodesIterator.next()).iterator();
                     this.hasNext = this.edgesIterator.hasNext();
                 }
@@ -1077,7 +1079,7 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
              * @return true if the iterator has a next edge
              */
             public boolean hasNext() {
-                return hasNext;
+                return this.hasNext;
             }
         }
     }
