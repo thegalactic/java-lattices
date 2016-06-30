@@ -945,7 +945,7 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
          *
          * @throws UnsupportedOperationException
          */
-        public final SortedSet<Edge<N, E>> headSet(Edge<N, E> edge) {
+        public final SortedSet<Edge<N, E>> headSet(final Edge<N, E> edge) {
             throw new UnsupportedOperationException();
         }
 
@@ -958,7 +958,7 @@ public class ConcreteDGraph<N, E> extends AbstractDGraph<N, E> implements Clonea
          *
          * @throws UnsupportedOperationException
          */
-        public final SortedSet<Edge<N, E>> tailSet(Edge<N, E> edge) {
+        public final SortedSet<Edge<N, E>> tailSet(final Edge<N, E> edge) {
             throw new UnsupportedOperationException();
         }
 
