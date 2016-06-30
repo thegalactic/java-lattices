@@ -52,6 +52,11 @@ public final class ContextSerializerSLF implements Reader<Context>, Writer<Conte
     private static final String ATTRIBUTES = "[Attributes]";
 
     /**
+     * relation.
+     */
+    private static final String RELATION = "[relation]";
+
+    /**
      * Misformed exception.
      */
     private static final String MISFORMED = "Misformated SLF file.";
@@ -119,46 +124,46 @@ public final class ContextSerializerSLF implements Reader<Context>, Writer<Conte
             throw new IOException(MISFORMED);
         }
 
-        final int nbObs = Integer.parseInt(file.readLine());
-        final int nbAtt = Integer.parseInt(file.readLine());
+        final int countObservations = Integer.parseInt(file.readLine());
+        final int countAttributes = Integer.parseInt(file.readLine());
 
         if (!file.readLine().equals(OBJECTS)) {
             throw new IOException(MISFORMED);
         }
 
-        final List<Comparable> obs = new ArrayList(nbObs);
-        final List<Comparable> att = new ArrayList(nbAtt);
+        final List<Comparable> observations = new ArrayList(countObservations);
+        final List<Comparable> attributes = new ArrayList(countAttributes);
         final TreeMap<Comparable, TreeSet<Comparable>> intent = new TreeMap();
         final TreeMap<Comparable, TreeSet<Comparable>> extent = new TreeMap();
 
         String line = file.readLine();
         while (!ATTRIBUTES.equals(line)) {
-            obs.add(line);
+            observations.add(line);
             intent.put(line, new TreeSet());
             line = file.readLine();
         }
         line = file.readLine();
-        while (!"[relation]".equals(line)) {
-            att.add(line);
+        while (!RELATION.equals(line)) {
+            attributes.add(line);
             extent.put(line, new TreeSet());
             line = file.readLine();
         }
 
-        context.addAllToAttributes(new TreeSet(att));
-        context.addAllToObservations(new TreeSet(obs));
+        context.addAllToAttributes(new TreeSet(attributes));
+        context.addAllToObservations(new TreeSet(observations));
 
-        for (int i = 0; i < nbObs; i++) {
+        for (int i = 0; i < countObservations; i++) {
             line = file.readLine();
-            StringTokenizer st = new StringTokenizer(line);
-            int cpt = 0;
-            while (st.hasMoreTokens()) {
-                String n = st.nextToken();
+            StringTokenizer tokenizer = new StringTokenizer(line);
+            int count = 0;
+            while (tokenizer.hasMoreTokens()) {
+                String n = tokenizer.nextToken();
                 if ("1".equals(n)) {
-                    context.addExtentIntent(obs.get(i), att.get(cpt));
+                    context.addExtentIntent(observations.get(i), attributes.get(count));
                 }
-                cpt++;
+                count++;
             }
-            if (cpt != nbAtt) {
+            if (count != countAttributes) {
                 throw new IOException(MISFORMED);
             }
         }
@@ -218,7 +223,7 @@ public final class ContextSerializerSLF implements Reader<Context>, Writer<Conte
             file.write(attribute.toString());
             file.newLine();
         }
-        file.write("[relation]");
+        file.write(RELATION);
         file.newLine();
         for (final Comparable observation : context.getObservations()) {
             final SortedSet<Comparable> intent = context.getIntent(observation);
