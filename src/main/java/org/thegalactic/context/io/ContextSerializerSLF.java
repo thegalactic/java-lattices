@@ -110,13 +110,13 @@ public final class ContextSerializerSLF implements Reader<Context>, Writer<Conte
 
         final int nbObs = Integer.parseInt(file.readLine());
         final int nbAtt = Integer.parseInt(file.readLine());
-        final List<Comparable> obs = new ArrayList(nbObs);
-        final List<Comparable> att = new ArrayList(nbAtt);
 
         if (!file.readLine().equals("[Objects]")) {
             throw new IOException(MISFORMED);
         }
 
+        final List<Comparable> obs = new ArrayList(nbObs);
+        final List<Comparable> att = new ArrayList(nbAtt);
         final TreeMap<Comparable, TreeSet<Comparable>> intent = new TreeMap();
         final TreeMap<Comparable, TreeSet<Comparable>> extent = new TreeMap();
 

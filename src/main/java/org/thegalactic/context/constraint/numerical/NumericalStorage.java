@@ -240,6 +240,8 @@ public final class NumericalStorage {
      * @param storage NumericalStorage
      *
      * @return this for chaining
+     *
+     * @todo Is it the meet operation?
      */
     public NumericalStorage intersection(final NumericalStorage storage) {
         final int size = this.inf.size();
