@@ -36,9 +36,14 @@ public final class ContextSerializerSLF implements Reader<Context>, Writer<Conte
     private static final String EXTENSION = "slf";
 
     /**
-     *
+     * Header.
      */
     private static final String HEADER = "[Lattice]";
+
+    /**
+     * Misformed exception.
+     */
+    private static final String MISFORMED = "Misformated SLF file.";
 
     /**
      * The singleton INSTANCE.
@@ -100,14 +105,14 @@ public final class ContextSerializerSLF implements Reader<Context>, Writer<Conte
     public void read(final Context context, final BufferedReader file) throws IOException {
 
         if (!file.readLine().equals(HEADER)) {
-            throw new IOException("Misformated SLF file.");
+            throw new IOException(MISFORMED);
         }
 
-        int nbObs = Integer.parseInt(file.readLine());
-        int nbAtt = Integer.parseInt(file.readLine());
+        final int nbObs = Integer.parseInt(file.readLine());
+        final int nbAtt = Integer.parseInt(file.readLine());
 
         if (!file.readLine().equals("[Objects]")) {
-            throw new IOException("Misformated SLF file.");
+            throw new IOException(MISFORMED);
         }
 
         final List<Comparable> obs = new ArrayList();
@@ -143,7 +148,7 @@ public final class ContextSerializerSLF implements Reader<Context>, Writer<Conte
                 cpt++;
             }
             if (cpt != nbAtt) {
-                throw new IOException("Misformated SLF file.");
+                throw new IOException(MISFORMED);
             }
         }
         context.setBitSets();
