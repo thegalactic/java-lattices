@@ -117,6 +117,8 @@ public final class ContextSerializerSLF implements Reader<Context>, Writer<Conte
      * @param file    a file
      *
      * @throws IOException When an IOException occurs
+     *
+     * @todo use StreamTokenizer
      */
     public void read(final Context context, final BufferedReader file) throws IOException {
 
@@ -154,11 +156,11 @@ public final class ContextSerializerSLF implements Reader<Context>, Writer<Conte
 
         for (int i = 0; i < countObservations; i++) {
             line = file.readLine();
-            StringTokenizer tokenizer = new StringTokenizer(line);
+            final StringTokenizer tokenizer = new StringTokenizer(line);
             int count = 0;
             while (tokenizer.hasMoreTokens()) {
-                String n = tokenizer.nextToken();
-                if ("1".equals(n)) {
+                final String next = tokenizer.nextToken();
+                if ("1".equals(next)) {
                     context.addExtentIntent(observations.get(i), attributes.get(count));
                 }
                 count++;
