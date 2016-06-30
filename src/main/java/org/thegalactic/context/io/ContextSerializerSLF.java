@@ -41,6 +41,16 @@ public final class ContextSerializerSLF implements Reader<Context>, Writer<Conte
     private static final String HEADER = "[Lattice]";
 
     /**
+     * Objects.
+     */
+    private static final String OBJECTS = "[Objects]";
+
+    /**
+     * Attributes.
+     */
+    private static final String ATTRIBUTES = "[Attributes]";
+
+    /**
      * Misformed exception.
      */
     private static final String MISFORMED = "Misformated SLF file.";
@@ -111,7 +121,7 @@ public final class ContextSerializerSLF implements Reader<Context>, Writer<Conte
         final int nbObs = Integer.parseInt(file.readLine());
         final int nbAtt = Integer.parseInt(file.readLine());
 
-        if (!file.readLine().equals("[Objects]")) {
+        if (!file.readLine().equals(OBJECTS)) {
             throw new IOException(MISFORMED);
         }
 
@@ -121,7 +131,7 @@ public final class ContextSerializerSLF implements Reader<Context>, Writer<Conte
         final TreeMap<Comparable, TreeSet<Comparable>> extent = new TreeMap();
 
         String line = file.readLine();
-        while (!"[Attributes]".equals(line)) {
+        while (!ATTRIBUTES.equals(line)) {
             obs.add(line);
             intent.put(line, new TreeSet());
             line = file.readLine();
@@ -197,13 +207,13 @@ public final class ContextSerializerSLF implements Reader<Context>, Writer<Conte
         file.newLine();
         file.write(String.valueOf(context.getAttributes().size()));
         file.newLine();
-        file.write("[Objects]");
+        file.write(OBJECTS);
         file.newLine();
         for (Comparable o : obs) {
             file.write((String) o);
             file.newLine();
         }
-        file.write("[Attributes]");
+        file.write(ATTRIBUTES);
         file.newLine();
         for (Comparable a : att) {
             file.write((String) a);
