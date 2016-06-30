@@ -59,79 +59,6 @@ import java.util.TreeSet;
  */
 public class DAGraph<N, E> extends ConcreteDGraph<N, E> {
 
-    /*
-     * ----------- STATIC GENERATION METHODS -------------
-     */
-    /**
-     * Generates the directed asyclic graph (DAG) of divisors for integers
-     * included betwwen 2 and the specified value.
-     *
-     * In this DAG, nodes corresponds to the integers, and there is an edge
-     * between two integers if and only if the second one is divisible by the
-     * first one.
-     *
-     * @param number the maximal integer
-     *
-     * @return the acyclic graph
-     */
-    public static DAGraph<Integer, ?> divisors(int number) {
-        DAGraph<Integer, ?> graph = new DAGraph<Integer, Object>();
-        // addition of nodes
-        for (int i = 2; i <= number; i++) {
-            graph.addNode(new Node<Integer>(Integer.valueOf(i)));
-        }
-        // addition of edges
-        for (Node<Integer> source : graph.getNodes()) {
-            for (Node<Integer> target : graph.getNodes()) {
-                int v1 = source.getContent();
-                int v2 = target.getContent();
-                if (v1 < v2 && v2 % v1 == 0) {
-                    graph.addEdge(source, target);
-                }
-            }
-        }
-        return graph;
-    }
-
-    /**
-     * Generates a random directed and acyclic graph (DAG) of size nodes.
-     *
-     * @param size      the number of nodes of the generated graph
-     * @param threshold the threshold to generate an edge
-     *
-     * @return a random acyclic graph
-     */
-    public static DAGraph<Integer, ?> random(int size, double threshold) {
-        DAGraph<Integer, ?> graph = new DAGraph<Integer, Object>();
-        // addition of Nodes
-        for (int i = 1; i <= size; i++) {
-            graph.addNode(new Node<Integer>(Integer.valueOf(i)));
-        }
-        // addition of edges
-        for (Node<Integer> source : graph.getNodes()) {
-            for (Node<Integer> target : graph.getNodes()) {
-                // Test to avoid cycles
-                if (source.compareTo(target) > 0) {
-                    if (Math.random() < threshold) {
-                        graph.addEdge(source, target);
-                    }
-                }
-            }
-        }
-        return graph;
-    }
-
-    /**
-     * Generates a random directed graph of size nodes.
-     *
-     * @param size the number of nodes of the generated graph
-     *
-     * @return a random acyclic graph
-     */
-    public static DAGraph<Integer, ?> random(int size) {
-        return random(size, 0.5);
-    }
-
     /**
      * Constructs a new DAG with an empty set of node.
      */
@@ -177,20 +104,20 @@ public class DAGraph<N, E> extends ConcreteDGraph<N, E> {
      * --------------- DAG HANDLING METHODS ------------
      */
     /**
-     * Returns the minimal element of this component.
+     * Returns the minimal elements of this component.
      *
-     * @return the minimal element
+     * @return the minimal elements
      */
-    public SortedSet<Node<N>> min() {
+    public final SortedSet<Node<N>> min() {
         return this.getSinks();
     }
 
     /**
-     * Returns the maximal element of this component.
+     * Returns the maximal elements of this component.
      *
-     * @return the maximal element
+     * @return the maximal elements
      */
-    public SortedSet<Node<N>> max() {
+    public final SortedSet<Node<N>> max() {
         return this.getWells();
     }
 
@@ -203,7 +130,7 @@ public class DAGraph<N, E> extends ConcreteDGraph<N, E> {
      *
      * @return the set of majorants
      */
-    public SortedSet<Node<N>> majorants(final Node<N> node) {
+    public final SortedSet<Node<N>> majorants(final Node<N> node) {
         DAGraph graph = new DAGraph(this);
         graph.transitiveClosure();
         return graph.getSuccessorNodes(node);

@@ -86,10 +86,8 @@ public final class DAGraphFactory {
         for (final Node<Integer> source : graph.getNodes()) {
             for (final Node<Integer> target : graph.getNodes()) {
                 // Test to avoid cycles
-                if (source.compareTo(target) > 0) {
-                    if (Math.random() < threshold) {
-                        graph.addEdge(source, target);
-                    }
+                if (source.compareTo(target) > 0 && Math.random() < threshold) {
+                    graph.addEdge(source, target);
                 }
             }
         }
