@@ -16,6 +16,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -198,9 +199,7 @@ public final class ContextSerializerSLF implements Reader<Context>, Writer<Conte
      *
      * @throws IOException When an IOException occurs
      */
-    public void write(Context context, BufferedWriter file) throws IOException {
-        List<Comparable> obs = new ArrayList(context.getObservations());
-        List<Comparable> att = new ArrayList(context.getAttributes());
+    public void write(final Context context, final BufferedWriter file) throws IOException {
         file.write(HEADER);
         file.newLine();
         file.write(String.valueOf(context.getObservations().size()));
@@ -209,22 +208,22 @@ public final class ContextSerializerSLF implements Reader<Context>, Writer<Conte
         file.newLine();
         file.write(OBJECTS);
         file.newLine();
-        for (Comparable o : obs) {
-            file.write((String) o);
+        for (final Comparable observation : context.getObservations()) {
+            file.write(observation.toString());
             file.newLine();
         }
         file.write(ATTRIBUTES);
         file.newLine();
-        for (Comparable a : att) {
-            file.write((String) a);
+        for (final Comparable attribute : context.getAttributes()) {
+            file.write(attribute.toString());
             file.newLine();
         }
         file.write("[relation]");
         file.newLine();
-        for (Comparable o : obs) {
-            TreeSet<Comparable> intent = context.getIntent(o);
-            for (Comparable a : att) {
-                if (intent.contains(a)) {
+        for (final Comparable observation : context.getObservations()) {
+            final SortedSet<Comparable> intent = context.getIntent(observation);
+            for (final Comparable attribute : context.getAttributes()) {
+                if (intent.contains(attribute)) {
                     file.write("1 ");
                 } else {
                     file.write("0 ");
