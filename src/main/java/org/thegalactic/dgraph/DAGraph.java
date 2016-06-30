@@ -145,8 +145,8 @@ public class DAGraph<N, E> extends ConcreteDGraph<N, E> {
      *
      * @return the set of minorants
      */
-    public SortedSet<Node<N>> minorants(final Node<N> node) {
-        DAGraph graph = new DAGraph(this);
+    public final SortedSet<Node<N>> minorants(final Node<N> node) {
+        final DAGraph graph = new DAGraph(this);
         graph.transitiveClosure();
         return graph.getPredecessorNodes(node);
     }
@@ -159,8 +159,8 @@ public class DAGraph<N, E> extends ConcreteDGraph<N, E> {
      *
      * @return the subgraph
      */
-    public DAGraph<N, E> filter(final Node<N> node) {
-        TreeSet<Node<N>> set = new TreeSet<Node<N>>(this.majorants(node));
+    public final DAGraph<N, E> filter(final Node<N> node) {
+        final TreeSet<Node<N>> set = new TreeSet<Node<N>>(this.majorants(node));
         set.add(node);
         return this.getSubgraphByNodes(set);
     }
@@ -173,8 +173,8 @@ public class DAGraph<N, E> extends ConcreteDGraph<N, E> {
      *
      * @return the subgraph
      */
-    public DAGraph<N, E> ideal(final Node<N> node) {
-        TreeSet<Node<N>> set = new TreeSet<Node<N>>(this.minorants(node));
+    public final DAGraph<N, E> ideal(final Node<N> node) {
+        final TreeSet<Node<N>> set = new TreeSet<Node<N>>(this.minorants(node));
         set.add(node);
         return this.getSubgraphByNodes(set);
     }
