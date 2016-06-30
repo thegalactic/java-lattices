@@ -15,6 +15,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -30,28 +31,35 @@ import org.thegalactic.io.Writer;
 public final class ContextSerializerSLF implements Reader<Context>, Writer<Context> {
 
     /**
-     * The singleton instance.
+     * String extension.
      */
-    private static ContextSerializerSLF instance = null;
+    private static final String EXTENSION = "slf";
 
     /**
-     * Return the singleton instance of this class.
      *
-     * @return the singleton instance
      */
-    public static ContextSerializerSLF getInstance() {
-        if (instance == null) {
-            instance = new ContextSerializerSLF();
-        }
-        return instance;
+    private static final String HEADER = "[Lattice]";
+
+    /**
+     * The singleton INSTANCE.
+     */
+    private static final ContextSerializerSLF INSTANCE = new ContextSerializerSLF();
+
+    /**
+     * Return the singleton INSTANCE of this class.
+     *
+     * @return the singleton INSTANCE
+     */
+    public static ContextSerializerSLF getINSTANCE() {
+        return INSTANCE;
     }
 
     /**
      * Register this class for reading and writing .slf files.
      */
     public static void register() {
-        ContextIOFactory.getInstance().registerReader(ContextSerializerSLF.getInstance(), "slf");
-        ContextIOFactory.getInstance().registerWriter(ContextSerializerSLF.getInstance(), "slf");
+        ContextIOFactory.getInstance().registerReader(ContextSerializerSLF.getINSTANCE(), EXTENSION);
+        ContextIOFactory.getInstance().registerWriter(ContextSerializerSLF.getINSTANCE(), EXTENSION);
     }
 
     /**
@@ -89,23 +97,24 @@ public final class ContextSerializerSLF implements Reader<Context>, Writer<Conte
      *
      * @throws IOException When an IOException occurs
      */
-    public void read(Context context, BufferedReader file) throws IOException {
+    public void read(final Context context, final BufferedReader file) throws IOException {
 
-        ArrayList<Comparable> obs = new ArrayList();
-        ArrayList<Comparable> att = new ArrayList();
-
-        TreeMap<Comparable, TreeSet<Comparable>> intent = new TreeMap();
-        TreeMap<Comparable, TreeSet<Comparable>> extent = new TreeMap();
-
-        if (!file.readLine().equals("[Lattice]")) {
+        if (!file.readLine().equals(HEADER)) {
             throw new IOException("Misformated SLF file.");
         }
+
         int nbObs = Integer.parseInt(file.readLine());
         int nbAtt = Integer.parseInt(file.readLine());
 
         if (!file.readLine().equals("[Objects]")) {
             throw new IOException("Misformated SLF file.");
         }
+
+        final List<Comparable> obs = new ArrayList();
+        final List<Comparable> att = new ArrayList();
+        final TreeMap<Comparable, TreeSet<Comparable>> intent = new TreeMap();
+        final TreeMap<Comparable, TreeSet<Comparable>> extent = new TreeMap();
+
         String line = file.readLine();
         while (!"[Attributes]".equals(line)) {
             obs.add(line);
@@ -175,9 +184,9 @@ public final class ContextSerializerSLF implements Reader<Context>, Writer<Conte
      * @throws IOException When an IOException occurs
      */
     public void write(Context context, BufferedWriter file) throws IOException {
-        ArrayList<Comparable> obs = new ArrayList(context.getObservations());
-        ArrayList<Comparable> att = new ArrayList(context.getAttributes());
-        file.write("[Lattice]");
+        List<Comparable> obs = new ArrayList(context.getObservations());
+        List<Comparable> att = new ArrayList(context.getAttributes());
+        file.write(HEADER);
         file.newLine();
         file.write(String.valueOf(context.getObservations().size()));
         file.newLine();

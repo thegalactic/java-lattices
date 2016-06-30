@@ -131,7 +131,7 @@ public class DAGraph<N, E> extends ConcreteDGraph<N, E> {
      * @return the set of majorants
      */
     public final SortedSet<Node<N>> majorants(final Node<N> node) {
-        DAGraph graph = new DAGraph(this);
+        final DAGraph graph = new DAGraph(this);
         graph.transitiveClosure();
         return graph.getSuccessorNodes(node);
     }

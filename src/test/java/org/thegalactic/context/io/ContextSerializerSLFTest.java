@@ -29,8 +29,8 @@ public class ContextSerializerSLFTest {
      */
     @Test
     public void testGetInstance() {
-        ContextSerializerSLF serializer = ContextSerializerSLF.getInstance();
-        assertEquals(serializer, ContextSerializerSLF.getInstance());
+        ContextSerializerSLF serializer = ContextSerializerSLF.getINSTANCE();
+        assertEquals(serializer, ContextSerializerSLF.getINSTANCE());
     }
 
     /**
