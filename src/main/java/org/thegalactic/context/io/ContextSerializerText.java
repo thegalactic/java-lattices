@@ -96,16 +96,30 @@ public final class ContextSerializerText implements Reader<Context>, Writer<Cont
      * @param file    a file
      *
      * @throws IOException When an IOException occurs
-     *
-     * @todo use Scanner or StreamTokenizer
      */
     public void read(final Context context, final BufferedReader file) throws IOException {
-        String line;
-        List<String> list;
+        this.readObservations(context, file);
+        this.readAttributes(context, file);
+        this.readExtentIntent(context, file);
+        context.setBitSets();
+    }
 
-        // First line : All observations separated by a space or enclosed in "
-        line = file.readLine();
-        list = this.analyzeString(line);
+    /**
+     * Read observations from a file.
+     *
+     * The following format is respected:
+     *
+     * ~~~
+     * Observations: 1 2 3
+     * ~~~
+     *
+     * @param context a context to read
+     * @param file    a file
+     *
+     * @throws IOException When an IOException occurs
+     */
+    private void readObservations(final Context context, final BufferedReader file) throws IOException {
+        final List<String> list = this.analyzeString(file.readLine());
         if ("Observations".equals(list.get(0))) {
             for (int i = 1; i < list.size(); i++) {
                 if (!context.addToObservations(list.get(i))) {
@@ -115,10 +129,24 @@ public final class ContextSerializerText implements Reader<Context>, Writer<Cont
         } else {
             throw new IOException("Invalid declaration of observations");
         }
+    }
 
-        // Second line : All attributes separated by a space eventually enclosed between double quotes
-        line = file.readLine();
-        list = this.analyzeString(line);
+    /**
+     * Read attributes from a file.
+     *
+     * The following format is respected:
+     *
+     * ~~~
+     * Attributes: a b c d e
+     * ~~~
+     *
+     * @param context a context to read
+     * @param file    a file
+     *
+     * @throws IOException When an IOException occurs
+     */
+    private void readAttributes(final Context context, final BufferedReader file) throws IOException {
+        final List<String> list = this.analyzeString(file.readLine());
         if ("Attributes".equals(list.get(0))) {
             for (int i = 1; i < list.size(); i++) {
                 if (!context.addToAttributes(list.get(i))) {
@@ -128,11 +156,28 @@ public final class ContextSerializerText implements Reader<Context>, Writer<Cont
         } else {
             throw new IOException("Invalid declaration of attributes");
         }
+    }
 
-        /*
-         * Next lines : All intents of observations, one on each line
-         * observation: list of attributes
-         */
+    /**
+     * Read extension and intension from a file.
+     *
+     * The following format is respected:
+     *
+     * ~~~
+     * 1: a c
+     * 2: a b
+     * 3: b d e
+     * 4: c e
+     * ~~~
+     *
+     * @param context a context to read
+     * @param file    a file
+     *
+     * @throws IOException When an IOException occurs
+     */
+    private void readExtentIntent(final Context context, final BufferedReader file) throws IOException {
+        String line;
+        List<String> list;
         line = file.readLine();
         while (line != null && !line.isEmpty()) {
             list = this.analyzeString(line);
@@ -148,8 +193,6 @@ public final class ContextSerializerText implements Reader<Context>, Writer<Cont
             }
             line = file.readLine();
         }
-
-        context.setBitSets();
     }
 
     /**
