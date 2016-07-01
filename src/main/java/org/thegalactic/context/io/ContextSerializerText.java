@@ -168,25 +168,30 @@ public final class ContextSerializerText implements Reader<Context>, Writer<Cont
         matcher = definition.matcher(string);
         if (matcher.find()) {
             // Get the first name (before the colon)
-            String first;
-            if (matcher.group("quoted") != null) {
-                first = matcher.group("quoted").replace("\\\"", "\"").replace("\\n", "\n").replace("\\t", "\t");
-            } else {
-                first = matcher.group("simple");
-            }
-            list.add(first);
+            list.add(this.getElement(matcher));
             matcher = elements.matcher(matcher.group("elements"));
             while (matcher.find()) {
-                String element;
-                if (matcher.group("quoted") != null) {
-                    element = matcher.group("quoted").replace("\\\"", "\"").replace("\\n", "\n").replace("\\t", "\t");
-                } else {
-                    element = matcher.group("simple");
-                }
-                list.add(element);
+                list.add(this.getElement(matcher));
             }
         }
         return list;
+    }
+
+    /**
+     * Get the element using the matcher.
+     *
+     * @param matcher the matcher
+     *
+     * @return the string
+     */
+    private String getElement(final Matcher matcher) {
+        String element;
+        if (matcher.group("quoted") == null) {
+            element = matcher.group("simple");
+        } else {
+            element = matcher.group("quoted").replace("\\\"", "\"").replace("\\n", "\n").replace("\\t", "\t");
+        }
+        return element;
     }
 
     /**
