@@ -18,7 +18,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.SortedSet;
-import java.util.StringTokenizer;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
@@ -828,56 +827,59 @@ public class Context extends ClosureSystem {
      * ~~~
      *
      * @return the string representation of this component
+     *
+     * @todo Enforce test
      */
     @Override
     public String toString() {
-        StringBuilder string = new StringBuilder();
-        string.append("Observations: ");
+        String string;
+        StringBuilder builder = new StringBuilder();
+        builder.append("Observations: ");
         for (Comparable o : this.observations) {
             // first line : All observations separated by a space
             // a StringTokenizer is used to delete spaces in the
             // string description of each observation
-            StringTokenizer st = new StringTokenizer(o.toString());
-            while (st.hasMoreTokens()) {
-                string.append(st.nextToken());
+            string = o.toString();
+            if (string.contains(" ") || string.contains("\"") || string.contains("\n") || string.contains("\t")) {
+                string = "\"" + string.replace("\"", "\\\"").replace("\n", "\\n").replace("\t", "\\t") + "\"";
             }
-            string.append(" ");
+            builder.append(string).append(" ");
         }
 
         String newLine = System.getProperty("line.separator");
-        string.append(newLine).append("Attributes: ");
+        builder.append(newLine).append("Attributes: ");
         for (Comparable a : this.attributes) {
             // second line : All attributes separated by a space
             // a StringTokenizer is used to delete spaces in the
             // string description of each observation
-            StringTokenizer st = new StringTokenizer(a.toString());
-            while (st.hasMoreTokens()) {
-                string.append(st.nextToken());
+            string = a.toString();
+            if (string.contains(" ") || string.contains("\"") || string.contains("\n") || string.contains("\t")) {
+                string = "\"" + string.replace("\"", "\\\"").replace("\n", "\\n").replace("\t", "\\t") + "\"";
             }
-            string.append(" ");
+            builder.append(string).append(" ");
         }
 
         // next lines : All intents of observations, one on each line:
         // observation : list of attributes
         // a StringTokenizer is used to delete spaces in the
         // string description of each observation and attributes
-        string.append(newLine);
+        builder.append(newLine);
         for (Comparable o : this.observations) {
-            StringTokenizer st = new StringTokenizer(o.toString());
-            while (st.hasMoreTokens()) {
-                string.append(st.nextToken());
+            string = o.toString();
+            if (string.contains(" ") || string.contains("\"") || string.contains("\n") || string.contains("\t")) {
+                string = "\"" + string.replace("\"", "\\\"").replace("\n", "\\n").replace("\t", "\\t") + "\"";
             }
-            string.append(": ");
+            builder.append(string).append(": ");
             for (Comparable a : this.getIntent(o)) {
-                st = new StringTokenizer(a.toString());
-                while (st.hasMoreTokens()) {
-                    string.append(st.nextToken());
+                string = a.toString();
+                if (string.contains(" ") || string.contains("\"") || string.contains("\n") || string.contains("\t")) {
+                    string = "\"" + string.replace("\"", "\\\"").replace("\n", "\\n").replace("\t", "\\t") + "\"";
                 }
-                string.append(" ");
+                builder.append(string).append(" ");
             }
-            string.append(newLine);
+            builder.append(newLine);
         }
-        return string.toString();
+        return builder.toString();
     }
 
     /**

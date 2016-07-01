@@ -14,7 +14,10 @@ package org.thegalactic.context.io;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.util.StringTokenizer;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.thegalactic.context.Context;
 import org.thegalactic.io.Reader;
@@ -96,81 +99,94 @@ public final class ContextSerializerText implements Reader<Context>, Writer<Cont
      *
      * @todo use Scanner or StreamTokenizer
      */
-    public void read(Context context, BufferedReader file) throws IOException {
-        /*
-         * First line : All observations separated by a space.
-         * A StringTokenizer is used to divide the line into different observations considering spaces as separator.
-         */
-        StringTokenizer tokenizer = new StringTokenizer(file.readLine());
+    public void read(final Context context, final BufferedReader file) throws IOException {
+        String line;
+        List<String> list;
 
-        // First token corresponds to the string "Observations:"
-        if (!tokenizer.nextToken().equals("Observations:")) {
+        // First line : All observations separated by a space or enclosed in "
+        line = file.readLine();
+        list = this.analyzeString(line);
+        if ("Observations".equals(list.get(0))) {
+            for (int i = 1; i < list.size(); i++) {
+                if (!context.addToObservations(list.get(i))) {
+                    throw new IOException("Duplicated observation");
+                }
+            }
+        } else {
             throw new IOException("Invalid declaration of observations");
         }
 
-        // Add all the observations
-        while (tokenizer.hasMoreTokens()) {
-            if (!context.addToObservations(tokenizer.nextToken())) {
-                throw new IOException("Duplicated observation");
+        // Second line : All attributes separated by a space eventually enclosed between double quotes
+        line = file.readLine();
+        list = this.analyzeString(line);
+        if ("Attributes".equals(list.get(0))) {
+            for (int i = 1; i < list.size(); i++) {
+                if (!context.addToAttributes(list.get(i))) {
+                    throw new IOException("Duplicated attribute");
+                }
             }
-        }
-
-        /*
-         * Second line : All attributes separated by a space
-         * A StringTokenizer is used to divide the line into different token considering spaces as separator.
-         */
-        tokenizer = new StringTokenizer(file.readLine());
-
-        // first token corresponds to the string "Attributes:"
-        if (!tokenizer.nextToken().equals("Attributes:")) {
+        } else {
             throw new IOException("Invalid declaration of attributes");
         }
 
-        // Add all the attributes
-        while (tokenizer.hasMoreTokens()) {
-            if (!context.addToAttributes(tokenizer.nextToken())) {
-                throw new IOException("Duplicated attribute");
-            }
-        }
-
         /*
-         * Next lines : All intents of observations, one on each line:
+         * Next lines : All intents of observations, one on each line
          * observation: list of attributes
-         * a StringTokenizer is used to divide each intent.
          */
-        String line = file.readLine();
+        line = file.readLine();
         while (line != null && !line.isEmpty()) {
-            tokenizer = new StringTokenizer(line);
-
-            // Get the observation identifier
-            String identifier = tokenizer.nextToken();
-
-            // Detect invalid format
-            if (!identifier.substring(identifier.length() - 1).equals(":")) {
-                throw new IOException("Observation name must be followed by a semi-colon");
-            }
-            identifier = identifier.substring(0, identifier.length() - 1);
-
-            // Verify existence of this observation
-            if (!context.containsObservation(identifier)) {
+            list = this.analyzeString(line);
+            if (!context.containsObservation(list.get(0))) {
                 throw new IOException("Unexisting observation");
             }
-
-            // Add intents for this observation
-            while (tokenizer.hasMoreTokens()) {
-                String attribute = tokenizer.nextToken();
-
-                // Detect invalid format
-                if (!context.containsAttribute(attribute)) {
+            for (int i = 1; i < list.size(); i++) {
+                if (!context.containsAttribute(list.get(i))) {
                     throw new IOException("Unexisting attribute");
                 }
-
-                // Add the extent/intent for the current identifier and current attribute
-                context.addExtentIntent(identifier, attribute);
+                // Add the extent/intent for the current observation and current attribute
+                context.addExtentIntent(list.get(0), list.get(i));
             }
             line = file.readLine();
         }
+
         context.setBitSets();
+    }
+
+    /**
+     * Analyze a string.
+     *
+     * @param string line to analyze
+     *
+     * @return a list of string
+     */
+    private List<String> analyzeString(final String string) {
+        final Pattern definition = Pattern.compile("(?:(?:\"(?<quoted>(?:[^\"]|\\\")+)\")|(?<simple>[^ :\"]+)):(?<elements>.*)");
+        final Pattern elements = Pattern.compile("(?:\"(?<quoted>(?:[^\"]|\\\")+)\")|(?<simple>[^ :\"]+)");
+        final List<String> list = new ArrayList<String>();
+        Matcher matcher;
+
+        matcher = definition.matcher(string);
+        if (matcher.find()) {
+            // Get the first name (before the colon)
+            String first;
+            if (matcher.group("quoted") != null) {
+                first = matcher.group("quoted").replace("\\\"", "\"").replace("\\n", "\n").replace("\\t", "\t");
+            } else {
+                first = matcher.group("simple");
+            }
+            list.add(first);
+            matcher = elements.matcher(matcher.group("elements"));
+            while (matcher.find()) {
+                String element;
+                if (matcher.group("quoted") != null) {
+                    element = matcher.group("quoted").replace("\\\"", "\"").replace("\\n", "\n").replace("\\t", "\t");
+                } else {
+                    element = matcher.group("simple");
+                }
+                list.add(element);
+            }
+        }
+        return list;
     }
 
     /**

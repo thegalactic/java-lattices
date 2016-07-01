@@ -77,15 +77,15 @@ public class ContextTest {
             File file = File.createTempFile("junit", ".txt");
             String filename = file.getPath();
             Context context = new Context();
-            context.addToAttributes("a");
+            context.addToAttributes("a special");
             context.addToAttributes("b");
             context.addToAttributes("c");
             context.addToObservations("1");
             context.addToObservations("2");
             context.addToObservations("3");
-            context.addExtentIntent("1", "a");
+            context.addExtentIntent("1", "a special");
             context.addExtentIntent("1", "b");
-            context.addExtentIntent("2", "a");
+            context.addExtentIntent("2", "a special");
             context.addExtentIntent("3", "b");
             context.addExtentIntent("3", "c");
             context.save(filename);
