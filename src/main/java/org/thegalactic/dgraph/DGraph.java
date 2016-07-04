@@ -18,6 +18,8 @@ import java.util.SortedSet;
  *
  * @param <N> Node content type
  * @param <E> Edge content type
+ *
+ * @todo Do use N insteand of Node and E instead of Edge by defining DGraph<N extends Comparable<N>, E>
  */
 public interface DGraph<N, E> {
 
