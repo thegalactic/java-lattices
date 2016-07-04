@@ -44,7 +44,7 @@ import java.util.TreeSet;
  *
  * @todo Do we forbid to add an edge that breaks acyclic property by verifying
  * that the destination node has no successors? May be a DAGraph could contain a
- * DGraph and export only interesting method by proxy
+ * ConcreteDGraph and export only interesting method by proxy
  *
  * @uml DAGraph.png
  * !include resources/org/thegalactic/dgraph/DAGraph.iuml
