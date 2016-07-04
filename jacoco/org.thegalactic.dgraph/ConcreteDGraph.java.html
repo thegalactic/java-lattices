@@ -1,0 +1,1087 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConcreteDGraph.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lattices</a> &gt; <a href="index.source.html" class="el_package">org.thegalactic.dgraph</a> &gt; <span class="el_source">ConcreteDGraph.java</span></div><h1>ConcreteDGraph.java</h1><pre class="source lang-java linenums">package org.thegalactic.dgraph;
+
+/*
+ * ConcreteDGraph.java
+ *
+ * Copyright: 2010-2015 Karell Bertet, France
+ * Copyright: 2015-2016 The Galactic Organization, France
+ *
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
+ * This file is part of java-lattices.
+ * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
+ */
+import java.util.AbstractSet;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
+
+/**
+ * This class gives a standard representation for a directed graph by sets of
+ * successors and predecessors.
+ *
+ * A directed graph is composed of
+ *
+ * - a treeset of node, defined by class {@link Node}; - a treemap of successors
+ * that associates to each node a treeset of successors, defined by class
+ * {@link Edge}; - a treemap of predecessors that associates to each node a
+ * treeset of predecessors, defined by class {@link Edge}.
+ *
+ * This class provides methods implementing classical operation on a directed
+ * graph:
+ *
+ * - sinks - wells - subgraph - reflexive closure and reduction - transitive
+ * closure - strongly connected components - ...
+ *
+ * This class also provides a static method randomly generating a directed
+ * graph.
+ *
+ * ![ConcreteDGraph](ConcreteDGraph.png)
+ *
+ * @param &lt;N&gt; Node content type
+ * @param &lt;E&gt; Edge content type
+ *
+ * @uml DGraph.png
+ * !include resources/org/thegalactic/dgraph/DGraph.iuml
+ * !include resources/org/thegalactic/dgraph/Edge.iuml
+ * !include resources/org/thegalactic/dgraph/Node.iuml
+ *
+ * hide members
+ * show DGraph members
+ * class DGraph #LightCyan
+ * title DGraph UML graph
+ */
+public class ConcreteDGraph&lt;N, E&gt; extends AbstractDGraph&lt;N, E&gt; implements Cloneable {
+
+    /*
+     * ------------- FIELDS ------------------
+     */
+    /**
+     * A set of elements.
+     */
+    private TreeSet&lt;Node&lt;N&gt;&gt; nodes;
+
+    /**
+     * A map to associate a set of successors to each node.
+     *
+     * @todo use a TreeSet for edges with a specific comparator for predecessors
+     */
+    private TreeMap&lt;Node&lt;N&gt;, TreeSet&lt;Edge&lt;N, E&gt;&gt;&gt; successors;
+
+    /**
+     * A map to associate a set of predecessors to each node.
+     */
+    private TreeMap&lt;Node&lt;N&gt;, TreeSet&lt;Edge&lt;N, E&gt;&gt;&gt; predecessors;
+
+
+    /*
+     * ------------- CONSTRUCTORS ------------------
+     */
+    /**
+     * Constructs a new directed graph with an empty set of node.
+     */
+    public ConcreteDGraph() {
+<span class="fc" id="L92">        super();</span>
+<span class="fc" id="L93">        this.nodes = new TreeSet&lt;Node&lt;N&gt;&gt;();</span>
+<span class="fc" id="L94">        this.successors = new TreeMap&lt;Node&lt;N&gt;, TreeSet&lt;Edge&lt;N, E&gt;&gt;&gt;();</span>
+<span class="fc" id="L95">        this.predecessors = new TreeMap&lt;Node&lt;N&gt;, TreeSet&lt;Edge&lt;N, E&gt;&gt;&gt;();</span>
+<span class="fc" id="L96">    }</span>
+
+    /**
+     * Constructs a new directed graph source the specified set of nodes.
+     *
+     * Successors and predecessors of each nodes are initialised by an empty
+     * set.
+     *
+     * @param set the set of nodes
+     */
+    public ConcreteDGraph(final SortedSet&lt;Node&lt;N&gt;&gt; set) {
+<span class="fc" id="L107">        this();</span>
+<span class="fc" id="L108">        this.nodes.addAll(set);</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">        for (final Node&lt;N&gt; node : this.nodes) {</span>
+<span class="fc" id="L110">            this.successors.put(node, new TreeSet&lt;Edge&lt;N, E&gt;&gt;());</span>
+<span class="fc" id="L111">            this.predecessors.put(node, new TreeSet&lt;Edge&lt;N, E&gt;&gt;());</span>
+<span class="fc" id="L112">        }</span>
+<span class="fc" id="L113">    }</span>
+
+    /**
+     * Constructs this component as a copy of the specified directed graph.
+     *
+     * @param graph the directed graph to be copied
+     */
+    public ConcreteDGraph(final DGraph&lt;N, E&gt; graph) {
+<span class="fc" id="L121">        this(graph.getNodes());</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        for (final Edge&lt;N, E&gt; edge : graph.getEdges()) {</span>
+<span class="fc" id="L123">            this.addEdge(edge);</span>
+<span class="fc" id="L124">        }</span>
+<span class="fc" id="L125">    }</span>
+
+    /*
+     * --------------- ACCESSOR AND OVERLAPPING METHODS ------------
+     */
+    /**
+     * Returns a clone of this component composed of a clone of each node and
+     * each edge.
+     *
+     * @return the clone of this
+     *
+     * @throws java.lang.CloneNotSupportedException
+     */
+    @Override
+    public ConcreteDGraph&lt;N, E&gt; clone() throws CloneNotSupportedException {
+<span class="fc" id="L140">        final ConcreteDGraph&lt;N, E&gt; graph = (ConcreteDGraph&lt;N, E&gt;) super.clone();</span>
+<span class="fc" id="L141">        graph.nodes = (TreeSet) this.nodes.clone();</span>
+<span class="fc" id="L142">        graph.successors = new TreeMap&lt;Node&lt;N&gt;, TreeSet&lt;Edge&lt;N, E&gt;&gt;&gt;();</span>
+<span class="fc" id="L143">        graph.predecessors = new TreeMap&lt;Node&lt;N&gt;, TreeSet&lt;Edge&lt;N, E&gt;&gt;&gt;();</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">        for (final Map.Entry&lt;Node&lt;N&gt;, TreeSet&lt;Edge&lt;N, E&gt;&gt;&gt; entry : this.successors.entrySet()) {</span>
+<span class="fc" id="L145">            graph.successors.put(entry.getKey(), (TreeSet&lt;Edge&lt;N, E&gt;&gt;) entry.getValue().clone());</span>
+<span class="fc" id="L146">        }</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">        for (final Map.Entry&lt;Node&lt;N&gt;, TreeSet&lt;Edge&lt;N, E&gt;&gt;&gt; entry : this.predecessors.entrySet()) {</span>
+<span class="fc" id="L148">            graph.predecessors.put(entry.getKey(), (TreeSet&lt;Edge&lt;N, E&gt;&gt;) entry.getValue().clone());</span>
+<span class="fc" id="L149">        }</span>
+<span class="fc" id="L150">        return graph;</span>
+    }
+
+    /**
+     * Returns the set of nodes of this component.
+     *
+     * @return the set of nodes
+     */
+    public final SortedSet&lt;Node&lt;N&gt;&gt; getNodes() {
+<span class="fc" id="L159">        return Collections.unmodifiableSortedSet(this.nodes);</span>
+    }
+
+    /**
+     * Returns the set of edges of this component.
+     *
+     * @return the set of edges
+     */
+    public final SortedSet&lt;Edge&lt;N, E&gt;&gt; getEdges() {
+<span class="fc" id="L168">        return new Edges(this);</span>
+    }
+
+    /**
+     * Returns the set of edges successors of the specified node.
+     *
+     * @param node the node to search for
+     *
+     * @return the set of edges
+     */
+    public final SortedSet&lt;Edge&lt;N, E&gt;&gt; getSuccessorEdges(final Node&lt;N&gt; node) {
+<span class="fc" id="L179">        return Collections.unmodifiableSortedSet(this.successors.get(node));</span>
+    }
+
+    /**
+     * Returns the set of edges predecessors of the specified node.
+     *
+     * @param node the node to search for
+     *
+     * @return the set of edges
+     */
+    public final SortedSet&lt;Edge&lt;N, E&gt;&gt; getPredecessorEdges(final Node&lt;N&gt; node) {
+<span class="fc" id="L190">        return Collections.unmodifiableSortedSet(this.predecessors.get(node));</span>
+    }
+
+    /**
+     * Returns the set of nodes successors of the specified node.
+     *
+     * @param node the node to search for
+     *
+     * @return the set of nodes
+     *
+     * @todo use iterator pattern (some changes in ArrowRelation.java and
+     * Lattice.java)
+     */
+    public final SortedSet&lt;Node&lt;N&gt;&gt; getSuccessorNodes(final Node&lt;N&gt; node) {
+<span class="fc" id="L204">        final SortedSet&lt;Node&lt;N&gt;&gt; successorsFromNode = new TreeSet&lt;Node&lt;N&gt;&gt;();</span>
+<span class="fc bfc" id="L205" title="All 2 branches covered.">        for (final Edge&lt;N, E&gt; edge : this.successors.get(node)) {</span>
+<span class="fc" id="L206">            successorsFromNode.add(edge.getTarget());</span>
+<span class="fc" id="L207">        }</span>
+<span class="fc" id="L208">        return Collections.unmodifiableSortedSet(successorsFromNode);</span>
+    }
+
+    /**
+     * Returns the set of nodes predecessors of the specified node.
+     *
+     * @param node the node to search for
+     *
+     * @return the set of nodes
+     *
+     * @todo use iterator pattern (some changes in ArrowRelation.java and
+     * Lattice.java)
+     */
+    public final SortedSet&lt;Node&lt;N&gt;&gt; getPredecessorNodes(final Node&lt;N&gt; node) {
+<span class="fc" id="L222">        final SortedSet&lt;Node&lt;N&gt;&gt; predecessorsFromNode = new TreeSet&lt;Node&lt;N&gt;&gt;();</span>
+<span class="fc bfc" id="L223" title="All 2 branches covered.">        for (final Edge&lt;N, E&gt; edge : this.predecessors.get(node)) {</span>
+<span class="fc" id="L224">            predecessorsFromNode.add(edge.getSource());</span>
+<span class="fc" id="L225">        }</span>
+<span class="fc" id="L226">        return Collections.unmodifiableSortedSet(predecessorsFromNode);</span>
+    }
+
+    /**
+     * Returns, if it exists, the edge between node source and node to.
+     *
+     * @param source The origin node
+     * @param target The destination node
+     *
+     * @return the found edge or null
+     *
+     * @todo see getNode
+     */
+    public final Edge&lt;N, E&gt; getEdge(final Node&lt;N&gt; source, final Node&lt;N&gt; target) {
+<span class="fc" id="L240">        Edge&lt;N, E&gt; edge = null;</span>
+<span class="pc bpc" id="L241" title="2 of 4 branches missed.">        if (source != null &amp;&amp; target != null) {</span>
+            try {
+<span class="fc" id="L243">                final Edge&lt;N, E&gt; search = new Edge&lt;N, E&gt;(source, target);</span>
+<span class="fc" id="L244">                edge = this.successors.get(source).subSet(search, true, search, true).first();</span>
+<span class="fc" id="L245">            } catch (NoSuchElementException ex) {</span>
+<span class="fc" id="L246">            }</span>
+        }
+<span class="fc" id="L248">        return edge;</span>
+    }
+
+    /**
+     * Returns the node that is equal to the specified one.
+     *
+     * @param search The node to search for
+     *
+     * @return the found node or null
+     *
+     * @todo maybe use try { return this.nodes.subSet(search, true, search,
+     * true).first(); } catch (NoSuchElementException e) { return null; }
+     *
+     */
+    public final Node&lt;N&gt; getNode(final Node&lt;N&gt; search) {
+<span class="fc bfc" id="L263" title="All 2 branches covered.">        for (final Node&lt;N&gt; node : this.nodes) {</span>
+<span class="fc bfc" id="L264" title="All 2 branches covered.">            if (node.equals(search)) {</span>
+<span class="fc" id="L265">                return node;</span>
+            }
+<span class="fc" id="L267">        }</span>
+<span class="fc" id="L268">        return null;</span>
+    }
+
+    /**
+     * Returns the node whose content is equal to the specified one.
+     *
+     * @param content The content to search for
+     *
+     * @return the found node or null
+     *
+     * @todo this method is not efficient. Do we remove it or add an index on
+     * DGraph using content field? Verify where it is called for migrating it if
+     * necessary.
+     */
+    public final Node&lt;N&gt; getNodeByContent(final Object content) {
+<span class="fc bfc" id="L283" title="All 2 branches covered.">        for (final Node&lt;N&gt; node : this.nodes) {</span>
+<span class="fc bfc" id="L284" title="All 2 branches covered.">            if (node.getContent().equals(content)) {</span>
+<span class="fc" id="L285">                return node;</span>
+            }
+<span class="fc" id="L287">        }</span>
+<span class="fc" id="L288">        return null;</span>
+    }
+
+    /**
+     * Returns the node whose ident is equal to the specified one.
+     *
+     * @param identifier node identifier
+     *
+     * @return the found node or null
+     */
+    public final Node&lt;N&gt; getNodeByIdentifier(int identifier) {
+<span class="fc bfc" id="L299" title="All 2 branches covered.">        for (final Node&lt;N&gt; node : this.nodes) {</span>
+<span class="fc bfc" id="L300" title="All 2 branches covered.">            if (node.getIdentifier() == identifier) {</span>
+<span class="fc" id="L301">                return node;</span>
+            }
+<span class="fc" id="L303">        }</span>
+<span class="fc" id="L304">        return null;</span>
+    }
+
+    /**
+     * Returns the number of nodes of this component.
+     *
+     * @return the number of nodes
+     */
+    public final int sizeNodes() {
+<span class="fc" id="L313">        return this.nodes.size();</span>
+    }
+
+    /**
+     * Returns the number of edges of this component.
+     *
+     * @return the number of edges
+     */
+    public final int sizeEdges() {
+<span class="fc" id="L322">        int size = 0;</span>
+<span class="fc bfc" id="L323" title="All 2 branches covered.">        for (final Node&lt;N&gt; node : this.nodes) {</span>
+<span class="fc" id="L324">            size += this.successors.get(node).size();</span>
+<span class="fc" id="L325">        }</span>
+<span class="fc" id="L326">        return size;</span>
+    }
+
+
+    /*
+     * --------------- NODES AND EDGES MODIFICATION METHODS ------------
+     */
+    /**
+     * Checks if the specified node belong to this component.
+     *
+     * @param node the node to insert
+     *
+     * @return true if the node has been successfully inserted
+     */
+    public final boolean containsNode(final Node&lt;N&gt; node) {
+<span class="fc" id="L341">        return this.nodes.contains(node);</span>
+    }
+
+    /**
+     * Adds the specified node to the set of node of this component.
+     *
+     * @param node the node to insert
+     *
+     * @return true if the node has been successfully inserted
+     */
+    public final boolean addNode(final Node&lt;N&gt; node) {
+<span class="fc bfc" id="L352" title="All 2 branches covered.">        if (!this.containsNode(node)) {</span>
+<span class="fc" id="L353">            this.nodes.add(node);</span>
+<span class="fc" id="L354">            this.successors.put(node, new TreeSet&lt;Edge&lt;N, E&gt;&gt;());</span>
+<span class="fc" id="L355">            this.predecessors.put(node, new TreeSet&lt;Edge&lt;N, E&gt;&gt;());</span>
+<span class="fc" id="L356">            return true;</span>
+        }
+<span class="fc" id="L358">        return false;</span>
+    }
+
+    /**
+     * Removes the specified node from this component.
+     *
+     * @param node the node to remove
+     *
+     * @return true if the node was successfully removed
+     */
+    public final boolean removeNode(final Node&lt;N&gt; node) {
+<span class="fc bfc" id="L369" title="All 2 branches covered.">        if (this.containsNode(node)) {</span>
+            // Remove the edges (node,target) with key node in successors, and key target in predecessors
+<span class="fc bfc" id="L371" title="All 2 branches covered.">            for (final Edge&lt;N, E&gt; successor : this.successors.get(node)) {</span>
+<span class="pc bpc" id="L372" title="1 of 2 branches missed.">                if (successor.getTarget().compareTo(node) != 0) {</span>
+<span class="fc bfc" id="L373" title="All 2 branches covered.">                    for (final Edge&lt;N, E&gt; predecessor : this.predecessors.get(successor.getTarget())) {</span>
+<span class="pc bpc" id="L374" title="1 of 2 branches missed.">                        if (predecessor.getSource().compareTo(node) == 0) {</span>
+<span class="fc" id="L375">                            this.predecessors.get(successor.getTarget()).remove(predecessor);</span>
+                        }
+<span class="fc" id="L377">                    }</span>
+                }
+<span class="fc" id="L379">                this.successors.remove(node);</span>
+<span class="fc" id="L380">            }</span>
+            // Remove the edges (source,node) with key node in predecessors, and key source in successors
+<span class="pc bpc" id="L382" title="1 of 2 branches missed.">            for (final Edge&lt;N, E&gt; predecessor : this.predecessors.get(node)) {</span>
+<span class="nc bnc" id="L383" title="All 2 branches missed.">                if (predecessor.getSource().compareTo(node) != 0) {</span>
+<span class="nc bnc" id="L384" title="All 2 branches missed.">                    for (final Edge&lt;N, E&gt; successor : this.successors.get(predecessor.getSource())) {</span>
+<span class="nc bnc" id="L385" title="All 2 branches missed.">                        if (successor.getTarget().compareTo(node) == 0) {</span>
+<span class="nc" id="L386">                            this.successors.get(predecessor.getSource()).remove(successor);</span>
+                        }
+<span class="nc" id="L388">                    }</span>
+                }
+<span class="nc" id="L390">                this.predecessors.remove(node);</span>
+<span class="nc" id="L391">            }</span>
+            // Remove node
+<span class="fc" id="L393">            this.nodes.remove(node);</span>
+<span class="fc" id="L394">            return true;</span>
+        }
+<span class="fc" id="L396">        return false;</span>
+    }
+
+    /**
+     * Removes the specified set of nodes from this component.
+     *
+     * @param nodes set of nodes
+     *
+     * @return true if all nodes were removed
+     */
+    public final boolean removeNodes(final Set&lt;Node&lt;N&gt;&gt; nodes) {
+<span class="fc" id="L407">        boolean all = true;</span>
+<span class="fc bfc" id="L408" title="All 2 branches covered.">        for (final Node&lt;N&gt; node : nodes) {</span>
+<span class="fc bfc" id="L409" title="All 2 branches covered.">            if (!this.removeNode(node)) {</span>
+<span class="fc" id="L410">                all = false;</span>
+            }
+<span class="fc" id="L412">        }</span>
+<span class="fc" id="L413">        return all;</span>
+    }
+
+    /**
+     * Checks if there exists an edge between the two specified nodes.
+     *
+     * @param source the node origine of the edge
+     * @param target the node destination of the edge
+     *
+     * @return true if the edge is contained by this component
+     */
+    public final boolean containsEdge(final Node&lt;N&gt; source, final Node&lt;N&gt; target) {
+<span class="fc bfc" id="L425" title="All 2 branches covered.">        return this.containsNode(source)</span>
+<span class="pc bpc" id="L426" title="1 of 2 branches missed.">                &amp;&amp; this.containsNode(target)</span>
+<span class="fc bfc" id="L427" title="All 2 branches covered.">                &amp;&amp; this.getSuccessorNodes(source).contains(target)</span>
+<span class="pc bpc" id="L428" title="1 of 2 branches missed.">                &amp;&amp; this.getPredecessorNodes(target).contains(source);</span>
+    }
+
+    /**
+     * Checks if the specified edge belong to this component.
+     *
+     * @param edge the edge to be checked
+     *
+     * @return true if the edge is contained by this component
+     */
+    public final boolean containsEdge(final Edge&lt;N, E&gt; edge) {
+<span class="fc" id="L439">        return this.containsEdge(edge.getSource(), edge.getTarget());</span>
+    }
+
+    /**
+     * Adds an edge between the specified nodes to this component: `to` is added
+     * as a successor of `source`.
+     *
+     * If the case where specified nodes don't belongs to the node set, then the
+     * edge will not be added.
+     *
+     * @param source  the node origin of the edge
+     * @param target  the node destination of the edge
+     * @param content the edge content
+     *
+     * @return true if the edge was successfully added
+     */
+    public final boolean addEdge(final Node&lt;N&gt; source, final Node&lt;N&gt; target, final Object content) {
+<span class="pc bpc" id="L456" title="2 of 4 branches missed.">        if (this.containsNode(source) &amp;&amp; this.containsNode(target)) {</span>
+<span class="fc" id="L457">            final Edge&lt;N, E&gt; edge = new Edge(source, target, content);</span>
+<span class="fc" id="L458">            this.successors.get(source).add(edge);</span>
+<span class="fc" id="L459">            this.predecessors.get(target).add(edge);</span>
+<span class="fc" id="L460">            return true;</span>
+        }
+<span class="nc" id="L462">        return false;</span>
+    }
+
+    /**
+     * Adds an edge between the specified nodes to this component: `to` is added
+     * as a successor of `source`.
+     *
+     * If the case where specified nodes don't belongs to the node set, then the
+     * edge will not be added.
+     *
+     * @param source the node origin of the edge
+     * @param target the node destination of the edge
+     *
+     * @return true if the edge was successfully added
+     */
+    public final boolean addEdge(final Node&lt;N&gt; source, final Node&lt;N&gt; target) {
+<span class="fc" id="L478">        return this.addEdge(source, target, null);</span>
+    }
+
+    /**
+     * Adds the specified edge to this component in the successors of
+     * edge.getSource() and in the predecessors of edge.getTarget().
+     *
+     * If the case where nodes to and source of this edges don't belongs to the
+     * node set, then the edge will not be added.
+     *
+     * @param edge the edge to be added
+     *
+     * @return true if the edge was added
+     */
+    public final boolean addEdge(final Edge&lt;N, E&gt; edge) {
+<span class="pc bpc" id="L493" title="1 of 4 branches missed.">        if (this.containsNode(edge.getSource()) &amp;&amp; this.containsNode(edge.getTarget())) {</span>
+<span class="fc" id="L494">            this.successors.get(edge.getSource()).add(edge);</span>
+<span class="fc" id="L495">            this.predecessors.get(edge.getTarget()).add(edge);</span>
+<span class="fc" id="L496">            return true;</span>
+        }
+<span class="fc" id="L498">        return false;</span>
+    }
+
+    /**
+     * Removes source this component the edge between the specified node.
+     *
+     * `to` is removed source the successors of `source` and `to` is removed
+     * source
+     * the predecessors of `source`.
+     *
+     * @param source the node origine of the edge
+     * @param target the node destination of the edge
+     *
+     * @return true if the edge was removed
+     */
+    public final boolean removeEdge(final Node&lt;N&gt; source, final Node&lt;N&gt; target) {
+<span class="pc bpc" id="L514" title="1 of 2 branches missed.">        if (this.containsEdge(source, target)) {</span>
+<span class="fc" id="L515">            final Edge&lt;N, E&gt; edge = new Edge(source, target);</span>
+<span class="fc" id="L516">            this.successors.get(source).remove(edge);</span>
+<span class="fc" id="L517">            this.predecessors.get(target).remove(edge);</span>
+<span class="fc" id="L518">            return true;</span>
+        }
+<span class="nc" id="L520">        return false;</span>
+    }
+
+    /**
+     * Removes source this component the specified edge source the successors of
+     * edge.getSource() and source the predecessors of edge.getTarget().
+     *
+     * @param edge the edge to be removed.
+     *
+     * @return true if the edge was removed
+     */
+    public final boolean removeEdge(final Edge&lt;N, E&gt; edge) {
+<span class="pc bpc" id="L532" title="1 of 2 branches missed.">        if (this.containsEdge(edge)) {</span>
+<span class="fc" id="L533">            this.successors.get(edge.getSource()).remove(edge);</span>
+<span class="fc" id="L534">            this.predecessors.get(edge.getTarget()).remove(edge);</span>
+<span class="fc" id="L535">            return true;</span>
+        }
+<span class="nc" id="L537">        return false;</span>
+    }
+
+    /*
+     * --------------- ACYCLIC CHECKING METHODS ------------
+     */
+    /**
+     * Returns the subgraph of this component induced by the specified set of
+     * nodes.
+     *
+     * The subgraph only contains nodes of the specified set that also are in
+     * this component.
+     *
+     * @param nodes The set of nodes
+     *
+     * @return The subgraph
+     *
+     * @todo implement a SubGraph class?
+     */
+    public ConcreteDGraph&lt;N, E&gt; getSubgraphByNodes(final Set&lt;Node&lt;N&gt;&gt; nodes) {
+<span class="fc" id="L557">        ConcreteDGraph&lt;N, E&gt; graph = new ConcreteDGraph&lt;N, E&gt;();</span>
+        // addition of nodes in the subgraph
+<span class="fc bfc" id="L559" title="All 2 branches covered.">        for (Node&lt;N&gt; node : nodes) {</span>
+<span class="pc bpc" id="L560" title="1 of 2 branches missed.">            if (this.containsNode(node)) {</span>
+<span class="fc" id="L561">                graph.addNode(node);</span>
+            }
+<span class="fc" id="L563">        }</span>
+        // addition of edges in the subgraph
+<span class="fc bfc" id="L565" title="All 2 branches covered.">        for (Edge&lt;N, E&gt; edge : this.getEdges()) {</span>
+<span class="fc bfc" id="L566" title="All 2 branches covered.">            if (graph.containsNode(edge.getTarget())) {</span>
+<span class="fc" id="L567">                graph.addEdge(edge);</span>
+            }
+<span class="fc" id="L569">        }</span>
+<span class="fc" id="L570">        return graph;</span>
+    }
+
+    /**
+     * Returns the subgraph of this component induced by the specified set of
+     * edges.
+     *
+     * The subgraph contains all nodes of this components, and only edges of the
+     * specified set that also are in this component.
+     *
+     * @param edges The set of edges
+     *
+     * @return The subgraph
+     *
+     * @todo implement a SubGraph class?
+     */
+    public ConcreteDGraph&lt;N, E&gt; getSubgraphByEdges(final Set&lt;Edge&lt;N, E&gt;&gt; edges) {
+<span class="fc" id="L587">        ConcreteDGraph&lt;N, E&gt; graph = new ConcreteDGraph&lt;N, E&gt;();</span>
+        // addition of all nodes in the subgraph
+<span class="fc bfc" id="L589" title="All 2 branches covered.">        for (Node&lt;N&gt; node : this.nodes) {</span>
+<span class="fc" id="L590">            graph.addNode(node);</span>
+<span class="fc" id="L591">        }</span>
+        // addition of specified edges in the subgraph
+<span class="fc bfc" id="L593" title="All 2 branches covered.">        for (Edge&lt;N, E&gt; edge : edges) {</span>
+<span class="pc bpc" id="L594" title="1 of 2 branches missed.">            if (this.containsEdge(edge)) {</span>
+<span class="fc" id="L595">                graph.addEdge(edge);</span>
+            }
+<span class="fc" id="L597">        }</span>
+<span class="fc" id="L598">        return graph;</span>
+    }
+
+    /**
+     * Replaces this component by its complementary graph.
+     *
+     * There is an edge between to nodes in the complementary graph when there
+     * is no edges between the nodes in this component.
+     */
+    public void complementary() {
+<span class="fc bfc" id="L608" title="All 2 branches covered.">        for (Node&lt;N&gt; source : this.nodes) {</span>
+<span class="fc" id="L609">            TreeSet&lt;Node&lt;N&gt;&gt; newSuccessors = new TreeSet&lt;Node&lt;N&gt;&gt;(this.nodes);</span>
+<span class="fc" id="L610">            newSuccessors.removeAll(this.getSuccessorNodes(source));</span>
+<span class="fc" id="L611">            TreeSet&lt;Node&lt;N&gt;&gt; oldSuccessors = new TreeSet&lt;Node&lt;N&gt;&gt;(this.getSuccessorNodes(source));</span>
+<span class="fc bfc" id="L612" title="All 2 branches covered.">            for (Node&lt;N&gt; target : oldSuccessors) {</span>
+<span class="fc" id="L613">                this.removeEdge(source, target);</span>
+<span class="fc" id="L614">            }</span>
+<span class="fc bfc" id="L615" title="All 2 branches covered.">            for (Node&lt;N&gt; target : newSuccessors) {</span>
+<span class="fc" id="L616">                this.addEdge(source, target);</span>
+<span class="fc" id="L617">            }</span>
+<span class="fc" id="L618">        }</span>
+<span class="fc" id="L619">    }</span>
+
+    /*
+     * --------------- GRAPH TREATMENT METHODS ------------
+     */
+    /**
+     * Computes the reflexive reduction of this component.
+     *
+     * @return the number of removed edges
+     */
+    public final int reflexiveReduction() {
+<span class="fc" id="L630">        int size = 0;</span>
+<span class="fc bfc" id="L631" title="All 2 branches covered.">        for (final Node&lt;N&gt; node : this.nodes) {</span>
+<span class="fc bfc" id="L632" title="All 2 branches covered.">            if (this.containsEdge(node, node)) {</span>
+<span class="fc" id="L633">                size++;</span>
+<span class="fc" id="L634">                this.removeEdge(node, node);</span>
+            }
+<span class="fc" id="L636">        }</span>
+<span class="fc" id="L637">        return size;</span>
+    }
+
+    /**
+     * Computes the reflexive closure of this component.
+     *
+     * @return the number of added edges
+     */
+    public final int reflexiveClosure() {
+<span class="fc" id="L646">        int size = 0;</span>
+<span class="fc bfc" id="L647" title="All 2 branches covered.">        for (final Node&lt;N&gt; node : this.nodes) {</span>
+<span class="fc bfc" id="L648" title="All 2 branches covered.">            if (!this.containsEdge(node, node)) {</span>
+<span class="fc" id="L649">                size++;</span>
+<span class="fc" id="L650">                this.addEdge(node, node);</span>
+            }
+<span class="fc" id="L652">        }</span>
+<span class="fc" id="L653">        return size;</span>
+    }
+
+    /**
+     * Computes the transitive closure of this component.
+     *
+     * This treatment is performed in $O(nm+m_c)$, where $n$ corresponds to the
+     * number of nodes, $m$ to the number of edges, and $m_c$ to the number of edges
+     * in the closure. This treatment improves the Roy-Warshall algorithm that
+     * directly implements the definition in $O(log(m) n^3)$.
+     *
+     * This treatment is overridden in class {@link DAGraph} with a more
+     * efficient algorithm dedicated to directed acyclic graph.
+     *
+     * @return the number of added edges
+     */
+    public int transitiveClosure() {
+<span class="fc" id="L670">        int size = 0;</span>
+        // mark each node to false
+<span class="fc" id="L672">        final TreeMap&lt;Node&lt;N&gt;, Boolean&gt; mark = new TreeMap&lt;Node&lt;N&gt;, Boolean&gt;();</span>
+<span class="fc bfc" id="L673" title="All 2 branches covered.">        for (final Node&lt;N&gt; node : this.nodes) {</span>
+<span class="fc" id="L674">            mark.put(node, Boolean.FALSE);</span>
+<span class="fc" id="L675">        }</span>
+        // treatment of nodes
+<span class="fc" id="L677">        final List&lt;Node&lt;N&gt;&gt; list = new ArrayList&lt;Node&lt;N&gt;&gt;();</span>
+<span class="fc bfc" id="L678" title="All 2 branches covered.">        for (final Node&lt;N&gt; source : this.nodes) {</span>
+<span class="fc" id="L679">            list.clear();</span>
+<span class="fc" id="L680">            list.add(source);</span>
+<span class="fc bfc" id="L681" title="All 2 branches covered.">            while (!list.isEmpty()) {</span>
+                // Remove the first node
+<span class="fc" id="L683">                final Node&lt;N&gt; source2 = list.remove(0);</span>
+<span class="fc bfc" id="L684" title="All 2 branches covered.">                for (final Node&lt;N&gt; target : this.getSuccessorNodes(source2)) {</span>
+                    // treatment of target when not marked
+<span class="fc bfc" id="L686" title="All 2 branches covered.">                    if (!mark.get(target)) {</span>
+<span class="fc" id="L687">                        mark.put(target, Boolean.TRUE);</span>
+<span class="fc" id="L688">                        this.addEdge(source, target);</span>
+<span class="fc" id="L689">                        list.add(target);</span>
+<span class="fc" id="L690">                        size++;</span>
+                    }
+<span class="fc" id="L692">                }</span>
+<span class="fc" id="L693">            }</span>
+<span class="fc bfc" id="L694" title="All 2 branches covered.">            for (final Node&lt;N&gt; target : this.getSuccessorNodes(source)) {</span>
+<span class="fc" id="L695">                mark.put(target, Boolean.FALSE);</span>
+<span class="fc" id="L696">            }</span>
+<span class="fc" id="L697">        }</span>
+<span class="fc" id="L698">        return size;</span>
+    }
+
+    /**
+     * Transposes this component by replacing for each node its successor set by
+     * its predecessor set, and its predecessor set by its successor set.
+     */
+    public final void transpose() {
+<span class="fc" id="L706">        ConcreteDGraph&lt;N, E&gt; tmp = new ConcreteDGraph&lt;N, E&gt;(this);</span>
+<span class="fc bfc" id="L707" title="All 2 branches covered.">        for (Edge&lt;N, E&gt; edge : tmp.getEdges()) {</span>
+<span class="fc" id="L708">            this.removeEdge(edge);</span>
+<span class="fc" id="L709">            this.addEdge(new Edge(edge.getTarget(), edge.getSource(), edge.getContent()));</span>
+<span class="fc" id="L710">        }</span>
+<span class="fc" id="L711">    }</span>
+
+    /**
+     * Returns the directed acyclic graph where each node corresponds to a
+     * strongly connected component (SCC) of this component stored in a TreeSet
+     * of nodes.
+     *
+     * When two nodes in two different SCC are in relation, the same is for the
+     * SCC they belongs to.
+     *
+     * @return The directed acyclic graph
+     */
+    public DAGraph&lt;SortedSet&lt;Node&lt;N&gt;&gt;, Object&gt; getStronglyConnectedComponent() {
+<span class="fc" id="L724">        DAGraph&lt;SortedSet&lt;Node&lt;N&gt;&gt;, Object&gt; cc = new DAGraph&lt;SortedSet&lt;Node&lt;N&gt;&gt;, Object&gt;();</span>
+        // first depth first search
+<span class="fc" id="L726">        ConcreteDGraph&lt;N, E&gt; tmp = new ConcreteDGraph&lt;N, E&gt;(this);</span>
+<span class="fc" id="L727">        tmp.transitiveClosure();</span>
+<span class="fc" id="L728">        ArrayList&lt;Node&lt;N&gt;&gt; last = tmp.depthFirstSearch()[1];</span>
+        // transposition of the graph
+<span class="fc" id="L730">        ConcreteDGraph&lt;N, E&gt; transposedGraph = new ConcreteDGraph&lt;N, E&gt;(this);</span>
+<span class="fc" id="L731">        transposedGraph.transpose();</span>
+        // sort nodes according to the reverse last sort
+<span class="fc" id="L733">        ArrayList&lt;Node&lt;N&gt;&gt; sort = new ArrayList&lt;Node&lt;N&gt;&gt;();</span>
+<span class="fc" id="L734">        Object[] array = last.toArray();</span>
+<span class="fc bfc" id="L735" title="All 2 branches covered.">        for (int i = array.length - 1; i &gt;= 0; i--) {</span>
+<span class="fc" id="L736">            sort.add((Node&lt;N&gt;) array[i]);</span>
+        }
+        // second depth first search according to sort
+<span class="fc" id="L739">        TreeSet&lt;Node&lt;N&gt;&gt; visited = new TreeSet&lt;Node&lt;N&gt;&gt;();</span>
+<span class="fc bfc" id="L740" title="All 2 branches covered.">        for (Node&lt;N&gt; node : sort) {</span>
+<span class="fc bfc" id="L741" title="All 2 branches covered.">            if (!visited.contains(node)) {</span>
+<span class="fc" id="L742">                last = transposedGraph.depthFirstSearch(node, visited, sort)[1];</span>
+<span class="fc" id="L743">                visited.addAll(last);</span>
+<span class="fc" id="L744">                TreeSet&lt;Node&lt;N&gt;&gt; sCC = new TreeSet&lt;Node&lt;N&gt;&gt;(last);</span>
+                // a strongly connected component is generated
+<span class="fc" id="L746">                cc.addNode(new Node&lt;SortedSet&lt;Node&lt;N&gt;&gt;&gt;(sCC));    // addition of</span>
+            }
+<span class="fc" id="L748">        }</span>
+        // edges between strongly connected component
+<span class="fc bfc" id="L750" title="All 2 branches covered.">        for (Node&lt;SortedSet&lt;Node&lt;N&gt;&gt;&gt; ccSource : cc.getNodes()) {</span>
+<span class="fc bfc" id="L751" title="All 2 branches covered.">            for (Node&lt;SortedSet&lt;Node&lt;N&gt;&gt;&gt; ccTarget : cc.getNodes()) {</span>
+<span class="fc bfc" id="L752" title="All 2 branches covered.">                for (Node&lt;N&gt; source : ccSource.getContent()) {</span>
+<span class="fc bfc" id="L753" title="All 2 branches covered.">                    for (Node&lt;N&gt; target : ccTarget.getContent()) {</span>
+<span class="fc bfc" id="L754" title="All 2 branches covered.">                        if (tmp.getSuccessorNodes(source).contains(target)) {</span>
+<span class="fc" id="L755">                            cc.addEdge(ccSource, ccTarget);</span>
+                        }
+<span class="fc" id="L757">                    }</span>
+<span class="fc" id="L758">                }</span>
+<span class="fc" id="L759">            }</span>
+<span class="fc" id="L760">        }</span>
+<span class="fc" id="L761">        cc.reflexiveReduction();</span>
+<span class="fc" id="L762">        return cc;</span>
+    }
+
+    /**
+     * Set the set of nodes of this component.
+     *
+     * @param nodes The nodes
+     *
+     * @return this for chaining
+     */
+    protected ConcreteDGraph&lt;N, E&gt; setNodes(final TreeSet&lt;Node&lt;N&gt;&gt; nodes) {
+<span class="fc" id="L773">        this.nodes = nodes;</span>
+<span class="fc" id="L774">        return this;</span>
+    }
+
+    /**
+     * Returns the successors of this component.
+     *
+     * @return the map
+     */
+    protected TreeMap&lt;Node&lt;N&gt;, TreeSet&lt;Edge&lt;N, E&gt;&gt;&gt; getSuccessors() {
+<span class="fc" id="L783">        return this.successors;</span>
+    }
+
+    /**
+     * Set the successors of this component.
+     *
+     * @param successors The successors
+     *
+     * @return this for chaining
+     */
+    protected ConcreteDGraph&lt;N, E&gt; setSuccessors(final TreeMap&lt;Node&lt;N&gt;, TreeSet&lt;Edge&lt;N, E&gt;&gt;&gt; successors) {
+<span class="fc" id="L794">        this.successors = successors;</span>
+<span class="fc" id="L795">        return this;</span>
+    }
+
+    /**
+     * Returns the predecessors of this component.
+     *
+     * @return the map
+     */
+    protected TreeMap&lt;Node&lt;N&gt;, TreeSet&lt;Edge&lt;N, E&gt;&gt;&gt; getPredecessors() {
+<span class="fc" id="L804">        return this.predecessors;</span>
+    }
+
+    /**
+     * Set the predecessors of this component.
+     *
+     * @param predecessors The predecessors
+     *
+     * @return this for chaining
+     */
+    protected ConcreteDGraph&lt;N, E&gt; setPredecessors(final TreeMap&lt;Node&lt;N&gt;, TreeSet&lt;Edge&lt;N, E&gt;&gt;&gt; predecessors) {
+<span class="fc" id="L815">        this.predecessors = predecessors;</span>
+<span class="fc" id="L816">        return this;</span>
+    }
+
+    /**
+     * Returns a two cells array containing the first visited sort on the nodes,
+     * and the last visited sort on the nodes, by a depth first traverse issued
+     * source the specified node.
+     *
+     * @param source  The source node
+     * @param visited The visited nodes
+     * @param sort    The sort parameter
+     *
+     * @return The array
+     *
+     * @todo Do we change that to iterators? Change to private and add a method
+     * that return an iterator
+     */
+    private ArrayList&lt;Node&lt;N&gt;&gt;[] depthFirstSearch(Node&lt;N&gt; source, TreeSet&lt;Node&lt;N&gt;&gt; visited, ArrayList&lt;Node&lt;N&gt;&gt; sort) {
+<span class="fc" id="L834">        ArrayList&lt;Node&lt;N&gt;&gt; first = new ArrayList&lt;Node&lt;N&gt;&gt;();</span>
+<span class="fc" id="L835">        ArrayList&lt;Node&lt;N&gt;&gt; last = new ArrayList&lt;Node&lt;N&gt;&gt;();</span>
+<span class="fc" id="L836">        first.add(source);</span>
+<span class="fc" id="L837">        visited.add(source);</span>
+<span class="fc" id="L838">        ArrayList&lt;Node&lt;N&gt;&gt;[] arrayVisited = new ArrayList[2];</span>
+<span class="fc bfc" id="L839" title="All 2 branches covered.">        if (sort != null) {</span>
+            // search according to a sort
+<span class="fc bfc" id="L841" title="All 2 branches covered.">            for (Node&lt;N&gt; node : sort) {</span>
+<span class="fc bfc" id="L842" title="All 4 branches covered.">                if (this.getSuccessorNodes(source).contains(node) &amp;&amp; !visited.contains(node)) {</span>
+<span class="fc" id="L843">                    arrayVisited = this.depthFirstSearch(node, visited, sort);</span>
+<span class="fc" id="L844">                    visited.addAll(arrayVisited[0]);</span>
+<span class="fc" id="L845">                    first.addAll(arrayVisited[0]);</span>
+<span class="fc" id="L846">                    last.addAll(arrayVisited[1]);</span>
+                }
+<span class="fc" id="L848">            }</span>
+        } else {
+            // classical search
+<span class="fc bfc" id="L851" title="All 2 branches covered.">            for (Node&lt;N&gt; node : this.getSuccessorNodes(source)) {</span>
+<span class="fc bfc" id="L852" title="All 2 branches covered.">                if (!visited.contains(node)) {</span>
+<span class="fc" id="L853">                    arrayVisited = this.depthFirstSearch(node, visited, sort);</span>
+<span class="fc" id="L854">                    visited.addAll(arrayVisited[0]);</span>
+<span class="fc" id="L855">                    first.addAll(arrayVisited[0]);</span>
+<span class="fc" id="L856">                    last.addAll(arrayVisited[1]);</span>
+                }
+<span class="fc" id="L858">            }</span>
+        }
+<span class="fc" id="L860">        last.add(source);</span>
+<span class="fc" id="L861">        arrayVisited[0] = first;</span>
+<span class="fc" id="L862">        arrayVisited[1] = last;</span>
+<span class="fc" id="L863">        return arrayVisited;</span>
+    }
+
+    /**
+     * Returns a two cells array containing the first visited sort on the nodes,
+     * and the last visited sort on the nodes, by a depth first search.
+     *
+     * @return The array
+     */
+    private ArrayList&lt;Node&lt;N&gt;&gt;[] depthFirstSearch() {
+<span class="fc" id="L873">        TreeSet&lt;Node&lt;N&gt;&gt; visited = new TreeSet&lt;Node&lt;N&gt;&gt;();</span>
+<span class="fc" id="L874">        ArrayList&lt;Node&lt;N&gt;&gt;[] arrayVisited = new ArrayList[2];</span>
+<span class="fc" id="L875">        ArrayList&lt;Node&lt;N&gt;&gt; first = new ArrayList&lt;Node&lt;N&gt;&gt;();</span>
+<span class="fc" id="L876">        ArrayList&lt;Node&lt;N&gt;&gt; last = new ArrayList&lt;Node&lt;N&gt;&gt;();</span>
+<span class="fc bfc" id="L877" title="All 2 branches covered.">        for (Node&lt;N&gt; node : this.nodes) {</span>
+<span class="fc bfc" id="L878" title="All 2 branches covered.">            if (!visited.contains(node)) {</span>
+<span class="fc" id="L879">                arrayVisited = this.depthFirstSearch(node, visited, null);</span>
+<span class="fc" id="L880">                visited.addAll(arrayVisited[0]);</span>
+<span class="fc" id="L881">                first.addAll(arrayVisited[0]);</span>
+<span class="fc" id="L882">                last.addAll(arrayVisited[1]);</span>
+            }
+<span class="fc" id="L884">        }</span>
+<span class="fc" id="L885">        arrayVisited[0] = first;</span>
+<span class="fc" id="L886">        arrayVisited[1] = last;</span>
+<span class="fc" id="L887">        return arrayVisited;</span>
+    }
+
+    /**
+     * This class implements a sorted set of the edges.
+     *
+     * @param &lt;N&gt; Node content type
+     * @param &lt;E&gt; Edge content type
+     */
+    private class Edges&lt;N, E&gt; extends AbstractSet&lt;Edge&lt;N, E&gt;&gt; implements SortedSet&lt;Edge&lt;N, E&gt;&gt; {
+
+        /**
+         * The underlying graph.
+         */
+        private final ConcreteDGraph&lt;N, E&gt; graph;
+
+        /**
+         * Constructs a sorted set of the edges source a graph.
+         *
+         * @param graph A ConcreteDGraph
+         */
+<span class="fc" id="L908">        Edges(final ConcreteDGraph&lt;N, E&gt; graph) {</span>
+<span class="fc" id="L909">            this.graph = graph;</span>
+<span class="fc" id="L910">        }</span>
+
+        /**
+         * Get the underlying graph.
+         *
+         * @return the graph
+         */
+        protected final ConcreteDGraph&lt;N, E&gt; getGraph() {
+<span class="fc" id="L918">            return this.graph;</span>
+        }
+
+        /**
+         * Implements the SortedSet interface.
+         *
+         * @return the first edge
+         */
+        public final Edge&lt;N, E&gt; first() {
+<span class="nc" id="L927">            throw new UnsupportedOperationException();</span>
+        }
+
+        /**
+         * Implements the SortedSet interface.
+         *
+         * @return the last edge
+         */
+        public final Edge&lt;N, E&gt; last() {
+<span class="nc" id="L936">            throw new UnsupportedOperationException();</span>
+        }
+
+        /**
+         * Implements the SortedSet interface.
+         *
+         * @param edge the to edge
+         *
+         * @return The head set
+         *
+         * @throws UnsupportedOperationException
+         */
+        public final SortedSet&lt;Edge&lt;N, E&gt;&gt; headSet(final Edge&lt;N, E&gt; edge) {
+<span class="nc" id="L949">            throw new UnsupportedOperationException();</span>
+        }
+
+        /**
+         * Implements the SortedSet interface.
+         *
+         * @param edge the source edge
+         *
+         * @return The tail set
+         *
+         * @throws UnsupportedOperationException
+         */
+        public final SortedSet&lt;Edge&lt;N, E&gt;&gt; tailSet(final Edge&lt;N, E&gt; edge) {
+<span class="nc" id="L962">            throw new UnsupportedOperationException();</span>
+        }
+
+        /**
+         * Implements the SortedSet interface.
+         *
+         * @param fromEdge the source edge
+         * @param toEdge   the to edge
+         *
+         * @return The sub set
+         *
+         * @throws UnsupportedOperationException
+         */
+        public final SortedSet&lt;Edge&lt;N, E&gt;&gt; subSet(final Edge&lt;N, E&gt; fromEdge, final Edge&lt;N, E&gt; toEdge) {
+<span class="nc" id="L976">            throw new UnsupportedOperationException();</span>
+        }
+
+        /**
+         * Implements the SortedSet interface.
+         *
+         * @return null
+         */
+        public final Comparator&lt;? super Edge&lt;N, E&gt;&gt; comparator() {
+<span class="nc" id="L985">            return null;</span>
+        }
+
+        /**
+         * Implements the AbstractCollection class.
+         *
+         * @return the size of the collection
+         */
+        public final int size() {
+<span class="fc" id="L994">            return this.graph.sizeEdges();</span>
+        }
+
+        /**
+         * Implements the AbstractCollection class.
+         *
+         * @return a new edges iterator
+         */
+        public final EdgesIterator iterator() {
+<span class="fc" id="L1003">            return new EdgesIterator(this);</span>
+        }
+
+        /**
+         * This class implements an iterator over the edges of a graph.
+         */
+        private class EdgesIterator implements Iterator&lt;Edge&lt;N, E&gt;&gt; {
+
+            /**
+             * The nodes iterator.
+             */
+            private final Iterator&lt;Node&lt;N&gt;&gt; nodesIterator;
+
+            /**
+             * The edges iterator for the current node.
+             */
+            private Iterator&lt;Edge&lt;N, E&gt;&gt; edgesIterator;
+
+            /**
+             * The edges object.
+             */
+            private final Edges&lt;N, E&gt; edges;
+
+            /**
+             * The hasNext flag.
+             */
+            private boolean hasNext;
+
+            /**
+             * Constructs the iterator source a set of edges.
+             *
+             * @param edges The edges.
+             */
+<span class="fc" id="L1036">            EdgesIterator(final Edges&lt;N, E&gt; edges) {</span>
+<span class="fc" id="L1037">                this.edges = edges;</span>
+<span class="fc" id="L1038">                this.nodesIterator = edges.graph.nodes.iterator();</span>
+<span class="fc" id="L1039">                this.prepareNext();</span>
+<span class="fc" id="L1040">            }</span>
+
+            /**
+             * Prepare the next edge and the hasNext flag.
+             */
+            private void prepareNext() {
+<span class="fc" id="L1046">                this.hasNext = false;</span>
+<span class="fc bfc" id="L1047" title="All 4 branches covered.">                while (!this.hasNext &amp;&amp; this.nodesIterator.hasNext()) {</span>
+<span class="fc" id="L1048">                    this.edgesIterator = this.edges.getGraph().successors.get(this.nodesIterator.next()).iterator();</span>
+<span class="fc" id="L1049">                    this.hasNext = this.edgesIterator.hasNext();</span>
+                }
+<span class="fc" id="L1051">            }</span>
+
+            /**
+             * The remove operation is not supported.
+             *
+             * @throws UnsupportedOperationException
+             */
+            @Override
+            public void remove() {
+<span class="nc" id="L1060">                throw new UnsupportedOperationException();</span>
+            }
+
+            /**
+             * The next method returns the next edge.
+             *
+             * @return The next edge
+             */
+            public Edge&lt;N, E&gt; next() {
+<span class="fc" id="L1069">                Edge&lt;N, E&gt; edge = this.edgesIterator.next();</span>
+<span class="fc bfc" id="L1070" title="All 2 branches covered.">                if (!this.edgesIterator.hasNext()) {</span>
+<span class="fc" id="L1071">                    this.prepareNext();</span>
+                }
+<span class="fc" id="L1073">                return edge;</span>
+            }
+
+            /**
+             * The hasNext method return true if the iterator has a next edge.
+             *
+             * @return true if the iterator has a next edge
+             */
+            public boolean hasNext() {
+<span class="fc" id="L1082">                return this.hasNext;</span>
+            }
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

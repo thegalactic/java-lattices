@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BinaryStorage.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lattices</a> &gt; <a href="index.source.html" class="el_package">org.thegalactic.context.constraint.binary</a> &gt; <span class="el_source">BinaryStorage.java</span></div><h1>BinaryStorage.java</h1><pre class="source lang-java linenums">package org.thegalactic.context.constraint.binary;
+
+/*
+ * BinaryStorage.java
+ *
+ * Copyright: 2016 The Galactic Organization, France
+ *
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
+ * This file is part of java-lattices.
+ * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
+ */
+import java.util.BitSet;
+
+/**
+ * Binary Storage.
+ */
+public final class BinaryStorage {
+
+    /**
+     * EXCEPTION_SIZE.
+     */
+    private static final String EXCEPTION_SIZE = &quot;BooleanStorage objects must have the same size&quot;;
+
+    /**
+     * # values.
+     */
+    private final int size;
+
+    /**
+     * Truth values.
+     */
+    private final BitSet values;
+
+    /**
+     * Factory method to construct a binary storage.
+     *
+     * @param size number of bits
+     *
+     * @return a new BinaryStorage object
+     */
+    public static BinaryStorage create(final int size) {
+<span class="fc" id="L43">        return new BinaryStorage(size);</span>
+    }
+
+    /**
+     * This class is not designed to be publicly instantiated.
+     *
+     * @param size number of bits
+     */
+<span class="fc" id="L51">    private BinaryStorage(final int size) {</span>
+<span class="fc" id="L52">        this.size = size;</span>
+<span class="fc" id="L53">        this.values = new BitSet(size);</span>
+<span class="fc" id="L54">    }</span>
+
+    /**
+     * Get truth value.
+     *
+     * @param index truth value to be get
+     *
+     * @return truth value
+     */
+    public boolean get(final int index) {
+<span class="fc" id="L64">        return this.values.get(index);</span>
+    }
+
+    /**
+     * Set truth value.
+     *
+     * @param index truth value to be set
+     * @param truth new truth value
+     *
+     * @return this for chaining.
+     */
+    public BinaryStorage set(final int index, final boolean truth) {
+<span class="fc" id="L76">        this.values.set(index, truth);</span>
+<span class="fc" id="L77">        return this;</span>
+    }
+
+    /**
+     * Reduce truth value.
+     *
+     * @param index truth value to be reduced
+     * @param truth truth value
+     *
+     * @return this for chaining.
+     */
+    public BinaryStorage reduce(final int index, final boolean truth) {
+<span class="fc bfc" id="L89" title="All 4 branches covered.">        this.values.set(index, truth || this.values.get(index));</span>
+<span class="fc" id="L90">        return this;</span>
+    }
+
+    /**
+     * Extends truth value.
+     *
+     * @param index truth value to be extended
+     * @param truth truth value
+     *
+     * @return this for chaining.
+     */
+    public BinaryStorage extend(final int index, final boolean truth) {
+<span class="fc bfc" id="L102" title="All 4 branches covered.">        this.values.set(index, truth &amp;&amp; this.values.get(index));</span>
+<span class="fc" id="L103">        return this;</span>
+    }
+
+    /**
+     * Intersection.
+     *
+     * @param storage BinaryStorage
+     *
+     * @return this for chaining.
+     *
+     * @throws IllegalArgumentException
+     */
+    public BinaryStorage intersection(final BinaryStorage storage) {
+<span class="fc bfc" id="L116" title="All 2 branches covered.">        if (storage.size == this.size) {</span>
+<span class="fc" id="L117">            this.values.and(storage.values);</span>
+        } else {
+<span class="fc" id="L119">            throw new IllegalArgumentException(EXCEPTION_SIZE);</span>
+        }
+<span class="fc" id="L121">        return this;</span>
+    }
+
+    /**
+     * Union.
+     *
+     * @param storage BinaryStorage
+     *
+     * @return this for chaining.
+     *
+     * @throws IllegalArgumentException
+     */
+    public BinaryStorage union(final BinaryStorage storage) {
+<span class="fc bfc" id="L134" title="All 2 branches covered.">        if (storage.size == this.size) {</span>
+<span class="fc" id="L135">            this.values.or(storage.values);</span>
+        } else {
+<span class="fc" id="L137">            throw new IllegalArgumentException(EXCEPTION_SIZE);</span>
+        }
+<span class="fc" id="L139">        return this;</span>
+    }
+
+    /**
+     * Get the size.
+     *
+     * @return the size
+     */
+    public int size() {
+<span class="fc" id="L148">        return this.size;</span>
+    }
+
+    /**
+     * Returns a String representation of this object.
+     *
+     * @return a string representation of this object
+     */
+    @Override
+    public String toString() {
+<span class="fc" id="L158">        final StringBuilder stringBuilder = new StringBuilder();</span>
+
+<span class="fc" id="L160">        stringBuilder.append('[');</span>
+
+<span class="fc bfc" id="L162" title="All 2 branches covered.">        for (int index = 0; index &lt; this.size; index++) {</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">            if (this.values.get(index)) {</span>
+<span class="fc" id="L164">                stringBuilder.append('1');</span>
+            } else {
+<span class="fc" id="L166">                stringBuilder.append('0');</span>
+            }
+        }
+
+<span class="fc" id="L170">        stringBuilder.append(']');</span>
+
+<span class="fc" id="L172">        return stringBuilder.toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

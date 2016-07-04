@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ContextSerializerFIMI.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lattices</a> &gt; <a href="index.source.html" class="el_package">org.thegalactic.context.io</a> &gt; <span class="el_source">ContextSerializerFIMI.java</span></div><h1>ContextSerializerFIMI.java</h1><pre class="source lang-java linenums">package org.thegalactic.context.io;
+
+/*
+ * ContextSerializerFIMI.java
+ *
+ * Copyright: 2010-2015 Karell Bertet, France
+ * Copyright: 2015-2016 The Galactic Organization, France
+ *
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
+ * This file is part of java-lattices.
+ * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
+ */
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.util.HashMap;
+
+import org.thegalactic.context.Context;
+import org.thegalactic.io.Reader;
+import org.thegalactic.io.Writer;
+
+/**
+ * This class defines the way for reading a context from a text file.
+ *
+ * ![ContextSerializerFIMI](ContextSerializerFIMI.png)
+ *
+ * @uml ContextSerializerFIMI.png
+ * !include resources/org/thegalactic/context/io/ContextSerializerFIMI.iuml
+ * !include resources/org/thegalactic/io/Reader.iuml
+ * !include resources/org/thegalactic/io/Writer.iuml
+ *
+ * hide members
+ * show ContextSerializerFIMI members
+ * class ContextSerializerFIMI #LightCyan
+ * title ContextSerializerFIMI UML graph
+ */
+public final class ContextSerializerFIMI implements Reader&lt;Context&gt;, Writer&lt;Context&gt; {
+
+    /**
+     * String extension.
+     */
+    private static final String EXTENSION = &quot;dat&quot;;
+
+    /**
+     * The singleton instance.
+     */
+<span class="fc" id="L48">    private static final ContextSerializerFIMI INSTANCE = new ContextSerializerFIMI();</span>
+
+    /**
+     * Return the singleton instance of this class.
+     *
+     * @return the singleton instance
+     */
+    public static ContextSerializerFIMI getInstance() {
+<span class="fc" id="L56">        return INSTANCE;</span>
+    }
+
+    /**
+     * Register this class for reading and writing .dat files.
+     */
+    public static void register() {
+<span class="fc" id="L63">        ContextIOFactory.getInstance().registerReader(ContextSerializerFIMI.getInstance(), EXTENSION);</span>
+<span class="fc" id="L64">        ContextIOFactory.getInstance().registerWriter(ContextSerializerFIMI.getInstance(), EXTENSION);</span>
+<span class="fc" id="L65">    }</span>
+
+    /**
+     * This class is not designed to be publicly instantiated.
+     */
+<span class="fc" id="L70">    private ContextSerializerFIMI() {</span>
+<span class="fc" id="L71">    }</span>
+
+    /**
+     * Read a context from a file.
+     *
+     * The FIMI dat format file is respected:
+     *
+     * The file format is structured as follows:
+     *
+     * Each line corresponds to an observation Each line is made of a list of
+     * integers corresponding to attributes separated by a space
+     *
+     * ~~~
+     * 1 3
+     * 2 4 5
+     * 1 2
+     * 3 4 5
+     * ~~~
+     *
+     * For reading convinience, observations are labelled with 'O' + LineNumber.
+     *
+     * Be careful when using a downloaded file: an empty line at the end of the
+     * file gives an observation with no attributes
+     *
+     * @param context a context to read
+     * @param file    a file
+     *
+     * @throws IOException When an IOException occurs
+     */
+    public void read(final Context context, final BufferedReader file) throws IOException {
+        // Initialize the line number
+<span class="fc" id="L102">        int lineNumber = 0;</span>
+
+        // Loop on the file
+<span class="fc bfc" id="L105" title="All 2 branches covered.">        while (file.ready()) {</span>
+            // Increment the line number
+<span class="fc" id="L107">            lineNumber++;</span>
+
+            // Get the next identifier
+<span class="fc" id="L110">            final String identifier = &quot;O&quot; + lineNumber;</span>
+<span class="fc" id="L111">            context.addToObservations(identifier);</span>
+
+            // Get the current line
+<span class="fc" id="L114">            final String str = file.readLine();</span>
+
+            // Tokenize the line
+<span class="fc bfc" id="L117" title="All 2 branches covered.">            for (final String token : str.split(&quot; +&quot;)) {</span>
+<span class="fc" id="L118">                final Integer attribute = Integer.parseInt(token);</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">                if (!context.containsAttribute(attribute)) {</span>
+<span class="fc" id="L120">                    context.addToAttributes(attribute);</span>
+                }
+
+                // Add the extent/intent for the current identifier and current attribute
+<span class="fc" id="L124">                context.addExtentIntent(identifier, attribute);</span>
+            }
+<span class="fc" id="L126">        }</span>
+<span class="fc" id="L127">        context.setBitSets();</span>
+<span class="fc" id="L128">    }</span>
+
+    /**
+     * Write a context to a file.
+     *
+     * The FIMI dat format file is respected :
+     *
+     * The file format is structured as follows:
+     *
+     * Each line corresponds to an observation Each line is made of a list of
+     * integers corresponding to attributes separated by a space
+     *
+     * ~~~
+     * 1 3
+     * 2 4 5
+     * 1 2
+     * 3 4 5
+     * ~~~
+     *
+     * @param context a context to write
+     * @param file    a file
+     *
+     * @throws IOException When an IOException occurs
+     */
+    @Override
+    public void write(final Context context, final BufferedWriter file) throws IOException {
+<span class="fc" id="L154">        final HashMap&lt;Comparable, Integer&gt; map = new HashMap();</span>
+<span class="fc" id="L155">        Integer count = 0;</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">        for (final Comparable att : context.getAttributes()) {</span>
+<span class="fc" id="L157">            count++;</span>
+<span class="fc" id="L158">            map.put(att, count);</span>
+<span class="fc" id="L159">        }</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">        for (final Comparable obs : context.getObservations()) {</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">            for (final Comparable att : context.getIntent(obs)) {</span>
+<span class="fc" id="L162">                file.write(map.get(att) + &quot; &quot;);</span>
+<span class="fc" id="L163">            }</span>
+<span class="fc" id="L164">            file.newLine();</span>
+<span class="fc" id="L165">        }</span>
+<span class="fc" id="L166">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

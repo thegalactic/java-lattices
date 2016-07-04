@@ -1,0 +1,13 @@
+org.thegalactic.context
+org.thegalactic.context.constraint
+org.thegalactic.context.constraint.binary
+org.thegalactic.context.constraint.categorical
+org.thegalactic.context.constraint.numerical
+org.thegalactic.context.io
+org.thegalactic.dgraph
+org.thegalactic.dgraph.io
+org.thegalactic.io
+org.thegalactic.lattice
+org.thegalactic.lattice.io
+org.thegalactic.rule
+org.thegalactic.util

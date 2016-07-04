@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LatticeFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lattices</a> &gt; <a href="index.source.html" class="el_package">org.thegalactic.lattice</a> &gt; <span class="el_source">LatticeFactory.java</span></div><h1>LatticeFactory.java</h1><pre class="source lang-java linenums">package org.thegalactic.lattice;
+
+/*
+ * LatticeFactory.java
+ *
+ * Copyright: 2010-2015 Karell Bertet, France
+ * Copyright: 2015-2016 The Galactic Organization, France
+ *
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
+ * This file is part of java-lattices.
+ * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
+ */
+import java.util.BitSet;
+import java.util.Iterator;
+
+import org.thegalactic.dgraph.DAGraph;
+import org.thegalactic.dgraph.DAGraphFactory;
+import org.thegalactic.dgraph.Node;
+import org.thegalactic.util.Couple;
+
+/**
+ * This class provides a few methods to constructs lattice examples.
+ *
+ * ![LatticeFactory](LatticeFactory.png)
+ *
+ * @uml LatticeFactory.png
+ * !include resources/org/thegalactic/lattice/LatticeFactory.iuml
+ *
+ * class LatticeFactory #LightCyan
+ * title LatticeFactory UML graph
+ * @author jeff
+ */
+public class LatticeFactory {
+
+    /**
+     * Returns a randomly generated lattice with nb nodes.
+     *
+     * @param nb Number of nodes in the randomly generated lattice
+     *
+     * @return a randomly generated lattice with nb nodes
+     */
+    public static Lattice&lt;Integer, ?&gt; random(int nb) {
+<span class="fc" id="L44">        boolean done = false;</span>
+<span class="fc" id="L45">        Lattice l = new Lattice();</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        while (!done) {</span>
+<span class="fc" id="L47">            DAGraph dag = DAGraphFactory.getInstance().random(nb - 2); // what an ugly strategy :-(</span>
+<span class="fc" id="L48">            Lattice&lt;Integer, ?&gt; tmp = new Lattice(dag);</span>
+<span class="fc" id="L49">            Node&lt;Integer&gt; top = new Node(nb - 1);</span>
+<span class="fc" id="L50">            tmp.addNode(top);</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">            for (Node&lt;Integer&gt; node : tmp.max()) {</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">                if (!node.equals(top)) {</span>
+<span class="fc" id="L53">                    tmp.addEdge(node, top);</span>
+                }
+<span class="fc" id="L55">            }</span>
+<span class="fc" id="L56">            Node&lt;Integer&gt; bot = new Node(nb);</span>
+<span class="fc" id="L57">            tmp.addNode(bot);</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">            for (Node&lt;Integer&gt; node : tmp.min()) {</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">                if (!node.equals(bot)) {</span>
+<span class="fc" id="L60">                    tmp.addEdge(bot, node);</span>
+                }
+<span class="fc" id="L62">            }</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">            if (tmp.isLattice()) {</span>
+<span class="fc" id="L64">                done = true;</span>
+<span class="fc" id="L65">                l = tmp;</span>
+            }
+<span class="fc" id="L67">        }</span>
+<span class="fc" id="L68">        return l;</span>
+    }
+
+    /**
+     * Returns the boolean algebra of cardinal 2^n.
+     *
+     * @param n cardinal of the boolean algebra return by this method is 2^n
+     *
+     * @return the boolean algebra of cardinal 2^n
+     */
+    public static Lattice booleanAlgebra(int n) {
+<span class="fc" id="L79">        Lattice&lt;BitSet, ?&gt; l = new Lattice();</span>
+<span class="fc" id="L80">        BitSet b = new BitSet(n);</span>
+<span class="fc" id="L81">        Node&lt;BitSet&gt; bot = new Node(b);</span>
+<span class="fc" id="L82">        l.addNode(bot);</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">        for (int i = 0; i &lt; n; i++) {</span>
+<span class="fc" id="L84">            BitSet bs = new BitSet(n);</span>
+<span class="fc" id="L85">            bs.set(i, true);</span>
+<span class="fc" id="L86">            Node&lt;BitSet&gt; next = new Node(bs);</span>
+<span class="fc" id="L87">            l.addNode(next);</span>
+<span class="fc" id="L88">            l.addEdge(bot, next);</span>
+<span class="fc" id="L89">            recursiveBooleanAlgebra(next, l, n);</span>
+        }
+<span class="fc" id="L91">        return l;</span>
+    }
+
+    /**
+     * Returns the lattice of permutations of 1..n.
+     *
+     * Permutation are ordered as follows : A permutation s2 is a succesor of a
+     * permutation s1, if s2 is obtained from s1 by inverting two consecutive
+     * elements i and j such that before inversion j &gt; i.
+     *
+     * Example : 124356 has following successors 214356, 142356, 124536 and
+     * 124365.
+     *
+     * The bottom of this lattice is identity (for exemple 123456) and the top
+     * is for instance 654321.
+     *
+     * @param n the lattice of permutations of the set 1..n
+     *
+     * @return the lattice of permutations of 1..n.
+     */
+    public static Lattice permutationLattice(int n) {
+<span class="fc" id="L112">        Lattice&lt;Permutation, ?&gt; l = new Lattice();</span>
+<span class="fc" id="L113">        int[] content = new int[n];</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">        for (int i = 0; i &lt; n; i++) {</span>
+<span class="fc" id="L115">            content[i] = i;</span>
+        }
+<span class="fc" id="L117">        Permutation s = new Permutation(n);</span>
+<span class="fc" id="L118">        s.setContent(content);</span>
+<span class="fc" id="L119">        Node&lt;Permutation&gt; bot = new Node(s);</span>
+<span class="fc" id="L120">        l.addNode(bot);</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">        for (int i = 0; i &lt; n - 1; i++) {</span>
+<span class="fc" id="L122">            int[] newC = content.clone();</span>
+<span class="fc" id="L123">            newC[i] = content[i + 1];</span>
+<span class="fc" id="L124">            newC[i + 1] = content[i];</span>
+<span class="fc" id="L125">            Permutation newS = new Permutation(n);</span>
+<span class="fc" id="L126">            newS.setContent(newC);</span>
+<span class="fc" id="L127">            Node&lt;Permutation&gt; succ = new Node(newS);</span>
+<span class="fc" id="L128">            l.addNode(succ);</span>
+<span class="fc" id="L129">            l.addEdge(bot, succ);</span>
+<span class="fc" id="L130">            recursivePermutationLattice(succ, l, n);</span>
+        }
+<span class="fc" id="L132">        return l;</span>
+    }
+
+    /**
+     * Returns the lattice cartesian product of l and r.
+     *
+     * A node in the product is a cartesian product of two nodes
+     *
+     * There is an edge (n1, m1) -&gt; (n2, m2) if and only if there are edges n1
+     * -&gt; n2 and m1 -&gt; m2
+     *
+     * @param l Lattice of the left hand side of the product
+     * @param r Lattice of the right hand side of the product
+     *
+     * @return the lattice cartesian product of l and r
+     */
+    public static Lattice product(Lattice l, Lattice r) {
+<span class="fc" id="L149">        Lattice prod = new Lattice();</span>
+        // Create nodes
+<span class="fc bfc" id="L151" title="All 2 branches covered.">        for (Object nL : l.getNodes()) {</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">            for (Object nR : r.getNodes()) {</span>
+<span class="fc" id="L153">                prod.addNode(new Node(new Couple(((Node) nL).getContent(), ((Node) nR).getContent())));</span>
+<span class="fc" id="L154">            }</span>
+<span class="fc" id="L155">        }</span>
+        // Create edges
+<span class="fc bfc" id="L157" title="All 2 branches covered.">        for (Object source : prod.getNodes()) {</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">            for (Object target : prod.getNodes()) {</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">                if (l.containsEdge(l.getNodeByContent(((Couple) ((Node) source).getContent()).getLeft()),</span>
+<span class="fc" id="L160">                        l.getNodeByContent(((Couple) ((Node) target).getContent()).getLeft()))</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">                        &amp;&amp; r.containsEdge(r.getNodeByContent(((Couple) ((Node) source).getContent()).getRight()),</span>
+<span class="fc" id="L162">                                r.getNodeByContent(((Couple) ((Node) target).getContent()).getRight()))) {</span>
+<span class="fc" id="L163">                    prod.addEdge((Node) source, (Node) target);</span>
+                }
+<span class="fc" id="L165">            }</span>
+<span class="fc" id="L166">        }</span>
+<span class="fc" id="L167">        return prod;</span>
+    }
+
+    /**
+     * Returns lattice l in which convex c has been doubled.
+     *
+     * @param l a lattice
+     * @param c a convex subset of l, to be doubled.
+     *
+     * @return a lattice construct from l by doubling the convex subset c.
+     */
+    public static Lattice doublingConvex(Lattice l, DAGraph c) {
+<span class="fc" id="L179">        Lattice doubled = new Lattice();</span>
+        // Copy nodes by Content
+<span class="fc bfc" id="L181" title="All 2 branches covered.">        for (Object node : l.getNodes()) {</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">            if (c.containsNode((Node) node)) {</span>
+                // These nodes are doubled
+<span class="fc" id="L184">                Couple cpl0 = new Couple(((Node) node).getContent(), 0);</span>
+<span class="fc" id="L185">                Node n0 = new Node(cpl0);</span>
+<span class="fc" id="L186">                Couple cpl1 = new Couple(((Node) node).getContent(), 1);</span>
+<span class="fc" id="L187">                Node n1 = new Node(cpl1);</span>
+<span class="fc" id="L188">                doubled.addNode(n0);</span>
+<span class="fc" id="L189">                doubled.addNode(n1);</span>
+<span class="fc" id="L190">            } else {</span>
+                // These nodes are just copied
+<span class="fc" id="L192">                doubled.addNode(new Node(((Node) node).getContent()));</span>
+            }
+<span class="fc" id="L194">        }</span>
+        // Construct edges of doubled
+<span class="fc" id="L196">        Couple test = new Couple(0, 0); // used to test class of contents</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">        for (Object x : doubled.getNodes()) {</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">            for (Object y : doubled.getNodes()) {</span>
+                // Add an edge if x &lt; y
+<span class="fc bfc" id="L200" title="All 2 branches covered.">                if (((Node) x).getContent().getClass() == test.getClass()) { // x was in convex c</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">                    if (((Node) y).getContent().getClass() == test.getClass()) { // y was also in convex c</span>
+                        // x &amp; y were in convex c
+<span class="fc" id="L203">                        Couple cX = (Couple) ((Node) x).getContent();</span>
+<span class="fc" id="L204">                        Couple cY = (Couple) ((Node) y).getContent();</span>
+<span class="fc bfc" id="L205" title="All 4 branches covered.">                        if ((cX.getLeft() == cY.getLeft()) &amp;&amp; (((Integer) cX.getRight()) == 0)</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">                                &amp;&amp; (((Integer) cY.getRight()) == 1)) {</span>
+                            // Same content means same node. x is of the form (cX, 0) and y is of the for (cX, 1) so x &lt; y in doubled.
+<span class="fc" id="L208">                            doubled.addEdge((Node) x, (Node) y);</span>
+<span class="fc bfc" id="L209" title="All 2 branches covered.">                        } else if (l.majorants(l.getNodeByContent(cX.getLeft())).contains(l.getNodeByContent(cY.getLeft()))</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">                                &amp;&amp; (cX.getRight() == cY.getRight())) {</span>
+                            // x &lt; y in l and x &amp; y have the same second component si x &lt; y in doubled.
+<span class="fc" id="L212">                            doubled.addEdge((Node) x, (Node) y);</span>
+                        }
+<span class="fc" id="L214">                    } else { // y wasn't in convex c</span>
+                        // x was in c &amp; y wasn't
+<span class="fc" id="L216">                        Couple cX = (Couple) ((Node) x).getContent();</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">                        if (l.majorants(l.getNodeByContent(cX.getLeft())).contains(l.getNodeByContent(((Node) y).getContent()))</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">                                &amp;&amp; (((Integer) cX.getRight()) == 1)) {</span>
+                            // x &lt; y in l and second component of x is 1.
+<span class="fc" id="L220">                            doubled.addEdge((Node) x, (Node) y);</span>
+                        }
+<span class="fc" id="L222">                    }</span>
+                } else // x wasn't in convex c
+<span class="fc bfc" id="L224" title="All 2 branches covered.">                 if (((Node) y).getContent().getClass() == test.getClass()) { // y was in convex c</span>
+                        // x wasn't in c but y was
+<span class="fc" id="L226">                        Couple cY = (Couple) ((Node) y).getContent();</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">                        if (l.majorants(l.getNodeByContent(((Node) x).getContent())).contains(l.getNodeByContent(cY.getLeft()))</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">                                &amp;&amp; (((Integer) cY.getRight()) == 0)) {</span>
+                            // x &lt; y in l and x &amp; second component of y is 0.
+<span class="fc" id="L230">                            doubled.addEdge((Node) x, (Node) y);</span>
+                        }
+<span class="fc" id="L232">                    } else // y wasn't in convex c</span>
+                    // x wasn't in c nor y
+<span class="fc bfc" id="L234" title="All 2 branches covered.">                     if (l.majorants(l.getNodeByContent(((Node) x).getContent())).contains(l.getNodeByContent(((Node) y).getContent()))) {</span>
+                            // x &lt; y in l and x &amp; second component of y is 0.
+<span class="fc" id="L236">                            doubled.addEdge((Node) x, (Node) y);</span>
+                        }
+<span class="fc" id="L238">            }</span>
+<span class="fc" id="L239">        }</span>
+<span class="fc" id="L240">        doubled.transitiveReduction();</span>
+<span class="fc" id="L241">        return doubled;</span>
+    }
+
+    /**
+     * Computes successors of node n in the boolean algebra currently generated.
+     *
+     * @param node this method compute successors of this node
+     * @param l    boolean algebra currently generated
+     * @param n    the number of node of l will be 2^n at the end of computation
+     */
+    private static void recursiveBooleanAlgebra(Node node, Lattice l, int n) {
+<span class="fc bfc" id="L252" title="All 2 branches covered.">        for (int i = 0; i &lt; n; i++) {</span>
+<span class="fc" id="L253">            BitSet b = (BitSet) node.getContent();</span>
+<span class="fc bfc" id="L254" title="All 2 branches covered.">            if (!b.get(i)) {</span>
+<span class="fc" id="L255">                BitSet bs = (BitSet) b.clone();</span>
+<span class="fc" id="L256">                bs.set(i, true);</span>
+<span class="fc bfc" id="L257" title="All 2 branches covered.">                if (l.getNodeByContent(bs) == null) {</span>
+<span class="fc" id="L258">                    Node next = new Node(bs);</span>
+<span class="fc" id="L259">                    l.addNode(next);</span>
+<span class="fc" id="L260">                    l.addEdge(node, next);</span>
+<span class="fc" id="L261">                    recursiveBooleanAlgebra(next, l, n);</span>
+<span class="fc" id="L262">                } else {</span>
+<span class="fc" id="L263">                    l.addEdge(node, l.getNodeByContent(bs));</span>
+                }
+            }
+        }
+<span class="fc" id="L267">    }</span>
+
+    /**
+     * Computes successors of node n in the lattice l.
+     *
+     * @param node successors of this node are computed by this method
+     * @param l    lattice of permutations currently generated
+     * @param n    lattice of permutation of the set 1..n is currently generated
+     */
+    private static void recursivePermutationLattice(Node node, Lattice l, int n) {
+<span class="fc" id="L277">        Permutation s = (Permutation) node.getContent();</span>
+<span class="fc bfc" id="L278" title="All 2 branches covered.">        for (int i = 0; i &lt; s.getLength() - 1; i++) {</span>
+<span class="fc bfc" id="L279" title="All 2 branches covered.">            if (s.getContent()[i] &lt; s.getContent()[i + 1]) {</span>
+<span class="fc" id="L280">                int[] newC = s.getContent().clone();</span>
+<span class="fc" id="L281">                Node currentNode = new Node();</span>
+<span class="fc" id="L282">                newC[i] = s.getContent()[i + 1];</span>
+<span class="fc" id="L283">                newC[i + 1] = s.getContent()[i];</span>
+<span class="fc" id="L284">                Permutation newP = new Permutation(n);</span>
+<span class="fc" id="L285">                newP.setContent(newC);</span>
+<span class="fc" id="L286">                boolean newNode = true;</span>
+<span class="fc" id="L287">                Iterator&lt;Node&gt; it = l.getNodes().iterator();</span>
+<span class="fc bfc" id="L288" title="All 4 branches covered.">                while (it.hasNext() &amp;&amp; newNode) {</span>
+<span class="fc" id="L289">                    currentNode = it.next();</span>
+<span class="fc" id="L290">                    Permutation currentContent = (Permutation) currentNode.getContent();</span>
+<span class="fc bfc" id="L291" title="All 2 branches covered.">                    newNode = !(currentContent.equals(newP));</span>
+<span class="fc" id="L292">                }</span>
+<span class="fc bfc" id="L293" title="All 2 branches covered.">                if (newNode) {</span>
+<span class="fc" id="L294">                    Permutation newS = new Permutation(n);</span>
+<span class="fc" id="L295">                    newS.setContent(newC);</span>
+<span class="fc" id="L296">                    Node next = new Node(newS);</span>
+<span class="fc" id="L297">                    l.addNode(next);</span>
+<span class="fc" id="L298">                    l.addEdge(node, next);</span>
+<span class="fc" id="L299">                    recursivePermutationLattice(next, l, n);</span>
+<span class="fc" id="L300">                } else {</span>
+<span class="fc" id="L301">                    l.addEdge(node, currentNode);</span>
+                }
+            }
+        }
+<span class="fc" id="L305">    }</span>
+
+    /**
+     * Empty constructor.
+     */
+    protected LatticeFactory() {
+<span class="fc" id="L311">        super();</span>
+<span class="fc" id="L312">    }</span>
+
+    /**
+     * This class provides a representation of permutations.
+     *
+     * If this component transforms : 0 -&gt; 1, 1 -&gt; 0 &amp; 2 -&gt; 2. Then its length
+     * is 3 and
+     *
+     * The content contains :
+     *
+     * ~~~
+     * content[0]=1 content[1]=0 content[2]=2
+     * ~~~
+     */
+    private static class Permutation {
+
+        /**
+         * This component is a permutation of 0..length-1.
+         */
+        private int length;
+
+        /**
+         * The transformation represented by this component.
+         *
+         * If this component transforms : 0 -&gt; 1, 1 -&gt; 0 &amp; 2 -&gt; 2. The field
+         * content contains :
+         *
+         * ~~~
+         * content[0]=1 content[1]=0 content[2]=2
+         * ~~~
+         */
+        private int[] content;
+
+        /**
+         * Constructs identity of the set 0..n-1.
+         *
+         * @param n permutation of the set 0..n-1.
+         */
+<span class="fc" id="L350">        Permutation(int n) {</span>
+<span class="fc" id="L351">            this.length = n;</span>
+<span class="fc" id="L352">            this.content = new int[n];</span>
+<span class="fc bfc" id="L353" title="All 2 branches covered.">            for (int i = 0; i &lt; n; i++) {</span>
+<span class="fc" id="L354">                this.content[i] = i;</span>
+            }
+<span class="fc" id="L356">        }</span>
+
+        /**
+         * Returns the transformation coded by this component.
+         *
+         * @return the transformation coded by this component.
+         */
+        public int[] getContent() {
+<span class="fc" id="L364">            return this.content;</span>
+        }
+
+        /**
+         * Set the transformation coded by this component.
+         *
+         * Length of this component is update by this method.
+         *
+         * @param c the transformation coded in this component.
+         *
+         * @return this for chaining
+         */
+        public Permutation setContent(int[] c) {
+<span class="fc" id="L377">            this.content = c;</span>
+<span class="fc" id="L378">            this.length = c.length;</span>
+<span class="fc" id="L379">            return this;</span>
+        }
+
+        /**
+         * Return length of this component.
+         *
+         * @return length of this component.
+         */
+        public int getLength() {
+<span class="fc" id="L388">            return this.length;</span>
+        }
+
+        /**
+         * Set length of this componenet.
+         *
+         * @param l length of this component.
+         *
+         * @return true if update is successful.
+         */
+        public boolean setLength(int l) {
+<span class="nc bnc" id="L399" title="All 4 branches missed.">            if ((this.content.length == l) &amp;&amp; (l &lt;= this.getLength())) {</span>
+<span class="nc" id="L400">                this.length = l;</span>
+<span class="nc" id="L401">                return true;</span>
+            } else {
+<span class="nc" id="L403">                return false;</span>
+            }
+        }
+
+        /**
+         * Returns a string representation of this component.
+         *
+         * @return a string representation of this component.
+         */
+        @Override
+        public String toString() {
+<span class="nc" id="L414">            String str = &quot;&quot;;</span>
+<span class="nc bnc" id="L415" title="All 2 branches missed.">            for (int i = 0; i &lt; this.length; i++) {</span>
+<span class="nc" id="L416">                str = str + this.content[i];</span>
+            }
+<span class="nc" id="L418">            return str;</span>
+        }
+
+        /**
+         * Returns true if this component is equal to s.
+         *
+         * @param s test if this component is equal to s
+         *
+         * @return true if this component is equal to s
+         */
+        public boolean equals(Permutation s) {
+<span class="pc bpc" id="L429" title="1 of 2 branches missed.">            if (!(s.getLength() == this.length)) {</span>
+<span class="nc" id="L430">                return false;</span>
+            } else {
+<span class="fc" id="L432">                boolean tmp = true;</span>
+<span class="fc bfc" id="L433" title="All 2 branches covered.">                for (int i = 0; i &lt; this.length; i++) {</span>
+<span class="fc bfc" id="L434" title="All 4 branches covered.">                    tmp = tmp &amp;&amp; (this.content[i] == s.getContent()[i]);</span>
+                }
+<span class="fc" id="L436">                return tmp;</span>
+            }
+        }
+
+        /**
+         * Compute the hash code.
+         *
+         * @return an integer representing the object
+         */
+        @Override
+        public int hashCode() {
+<span class="nc" id="L447">            return super.hashCode();</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

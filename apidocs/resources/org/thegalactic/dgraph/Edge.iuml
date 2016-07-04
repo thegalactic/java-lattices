@@ -1,0 +1,26 @@
+package org.thegalactic.dgraph {
+    class Edge {
+        -Node source
+        -Node target
+        -Object content
+        .. Constructors ..
+        +Edge(final Node source, final Node target, final Object content)
+        +Edge(final Node source, final Node target)
+        .. Accessors ..
+        +Node getSource()
+        +Node getTarget()
+        +Object getContent()
+        .. Mutators ..
+        +Edge setContent(final Object content)
+        .. Predicates ..
+        +boolean hasContent()
+        .. Transformers ..
+        +String toString()
+        .. Comparators ..
+        +boolean equals(final Object object);
+        +int hashCode()
+        +int compareTo(final Object object)
+    }
+
+    Edge *-- "2" Node
+}

@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DAGraph.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lattices</a> &gt; <a href="index.source.html" class="el_package">org.thegalactic.dgraph</a> &gt; <span class="el_source">DAGraph.java</span></div><h1>DAGraph.java</h1><pre class="source lang-java linenums">package org.thegalactic.dgraph;
+
+/*
+ * DAGraph.java
+ *
+ * Copyright: 2010-2015 Karell Bertet, France
+ * Copyright: 2015-2016 The Galactic Organization, France
+ *
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
+ * This file is part of java-lattices.
+ * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
+ */
+import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
+
+/**
+ * This class extends the representation of a directed graph given by class
+ * {@link ConcreteDGraph} for directed acyclic graph (DAG).
+ *
+ * The main property of a directed acyclic graph is to be a partially ordered
+ * set (poset) when transitively closed, and a Hasse diagram when transitively
+ * reduced.
+ *
+ * This property is not ensured for components of this class because it would
+ * require a checking treatment over the graph whenever a new edge or node is
+ * added. However, this property can be explicitely ckecked using method
+ * {@link #isAcyclic}.
+ *
+ * This class provides methods implementing classical operation on a directed
+ * acyclic graph: minorants and majorants, filter and ideal, transitive
+ * reduction, ideal lattice, ...
+ *
+ * This class also provides a static method randomly generating a directed
+ * acyclic graph, and a static method generating the graph of divisors.
+ *
+ * ![DAGraph](DAGraph.png)
+ *
+ * @param &lt;N&gt; Node content type
+ * @param &lt;E&gt; Edge content type
+ *
+ * @todo Do we forbid to add an edge that breaks acyclic property by verifying
+ * that the destination node has no successors? May be a DAGraph could contain a
+ * ConcreteDGraph and export only interesting method by proxy
+ *
+ * @uml DAGraph.png
+ * !include resources/org/thegalactic/dgraph/DAGraph.iuml
+ * !include resources/org/thegalactic/dgraph/DGraph.iuml
+ * !include resources/org/thegalactic/dgraph/Edge.iuml
+ * !include resources/org/thegalactic/dgraph/Node.iuml
+ *
+ * hide members
+ * show DAGraph members
+ * class DAGraph #LightCyan
+ * title DAGraph UML graph
+ */
+public class DAGraph&lt;N, E&gt; extends ConcreteDGraph&lt;N, E&gt; {
+
+    /**
+     * Constructs a new DAG with an empty set of node.
+     */
+    public DAGraph() {
+<span class="fc" id="L66">        super();</span>
+<span class="fc" id="L67">    }</span>
+
+    /**
+     * Constructs this component with the specified set of nodes, and empty
+     * treemap of successors and predecessors.
+     *
+     * @param set the set of nodes
+     */
+    public DAGraph(final SortedSet&lt;Node&lt;N&gt;&gt; set) {
+<span class="fc" id="L76">        super(set);</span>
+<span class="fc" id="L77">    }</span>
+
+    /**
+     * Constructs this component as a copy of the specified directed graph.
+     *
+     * Acyclic property is checked for the specified DAG. When not verified,
+     * this component is construct with the same set of nodes but with no edges.
+     *
+     * @param graph the ConcreteDGraph to be copied
+     */
+    public DAGraph(final ConcreteDGraph&lt;N, E&gt; graph) {
+<span class="fc" id="L88">        super(graph);</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">        if (this.isAcyclic()) {</span>
+<span class="fc" id="L90">            this.reflexiveReduction();</span>
+        } else {
+<span class="fc" id="L92">            TreeMap&lt;Node&lt;N&gt;, TreeSet&lt;Edge&lt;N, E&gt;&gt;&gt; successors = new TreeMap&lt;Node&lt;N&gt;, TreeSet&lt;Edge&lt;N, E&gt;&gt;&gt;();</span>
+<span class="fc" id="L93">            TreeMap&lt;Node&lt;N&gt;, TreeSet&lt;Edge&lt;N, E&gt;&gt;&gt; predecessors = new TreeMap&lt;Node&lt;N&gt;, TreeSet&lt;Edge&lt;N, E&gt;&gt;&gt;();</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">            for (Node&lt;N&gt; node : this.getNodes()) {</span>
+<span class="fc" id="L95">                successors.put(node, new TreeSet&lt;Edge&lt;N, E&gt;&gt;());</span>
+<span class="fc" id="L96">                predecessors.put(node, new TreeSet&lt;Edge&lt;N, E&gt;&gt;());</span>
+<span class="fc" id="L97">            }</span>
+<span class="fc" id="L98">            this.setSuccessors(successors);</span>
+<span class="fc" id="L99">            this.setPredecessors(predecessors);</span>
+        }
+<span class="fc" id="L101">    }</span>
+
+    /*
+     * --------------- DAG HANDLING METHODS ------------
+     */
+    /**
+     * Returns the minimal elements of this component.
+     *
+     * @return the minimal elements
+     */
+    public final SortedSet&lt;Node&lt;N&gt;&gt; min() {
+<span class="fc" id="L112">        return this.getSinks();</span>
+    }
+
+    /**
+     * Returns the maximal elements of this component.
+     *
+     * @return the maximal elements
+     */
+    public final SortedSet&lt;Node&lt;N&gt;&gt; max() {
+<span class="fc" id="L121">        return this.getWells();</span>
+    }
+
+    /**
+     * Returns the set of majorants of the specified node.
+     *
+     * Majorants of a node are its successors in the transitive closure
+     *
+     * @param node the specified node
+     *
+     * @return the set of majorants
+     */
+    public final SortedSet&lt;Node&lt;N&gt;&gt; majorants(final Node&lt;N&gt; node) {
+<span class="fc" id="L134">        final DAGraph graph = new DAGraph(this);</span>
+<span class="fc" id="L135">        graph.transitiveClosure();</span>
+<span class="fc" id="L136">        return graph.getSuccessorNodes(node);</span>
+    }
+
+    /**
+     * Returns the set of minorants of the specified node.
+     *
+     * Minorants of a node are its predecessors in the transitive closure
+     *
+     * @param node the specified node
+     *
+     * @return the set of minorants
+     */
+    public final SortedSet&lt;Node&lt;N&gt;&gt; minorants(final Node&lt;N&gt; node) {
+<span class="fc" id="L149">        final DAGraph graph = new DAGraph(this);</span>
+<span class="fc" id="L150">        graph.transitiveClosure();</span>
+<span class="fc" id="L151">        return graph.getPredecessorNodes(node);</span>
+    }
+
+    /**
+     * Returns the subgraph induced by the specified node and its successors in
+     * the transitive closure.
+     *
+     * @param node the specified node
+     *
+     * @return the subgraph
+     */
+    public final DAGraph&lt;N, E&gt; filter(final Node&lt;N&gt; node) {
+<span class="fc" id="L163">        final TreeSet&lt;Node&lt;N&gt;&gt; set = new TreeSet&lt;Node&lt;N&gt;&gt;(this.majorants(node));</span>
+<span class="fc" id="L164">        set.add(node);</span>
+<span class="fc" id="L165">        return this.getSubgraphByNodes(set);</span>
+    }
+
+    /**
+     * Returns the subgraph induced by the specified node and its predecessors
+     * in the transitive closure.
+     *
+     * @param node the specified node
+     *
+     * @return the subgraph
+     */
+    public final DAGraph&lt;N, E&gt; ideal(final Node&lt;N&gt; node) {
+<span class="fc" id="L177">        final TreeSet&lt;Node&lt;N&gt;&gt; set = new TreeSet&lt;Node&lt;N&gt;&gt;(this.minorants(node));</span>
+<span class="fc" id="L178">        set.add(node);</span>
+<span class="fc" id="L179">        return this.getSubgraphByNodes(set);</span>
+    }
+
+    /**
+     * Returns the subgraph of this component induced by the specified set of
+     * nodes.
+     *
+     * The subgraph only contains nodes of the specified set that also are in
+     * this component.
+     *
+     * @param nodes The set of nodes
+     *
+     * @return The subgraph
+     */
+    @Override
+    public DAGraph&lt;N, E&gt; getSubgraphByNodes(final Set&lt;Node&lt;N&gt;&gt; nodes) {
+<span class="fc" id="L195">        ConcreteDGraph tmp = new ConcreteDGraph(this);</span>
+<span class="fc" id="L196">        tmp.transitiveClosure();</span>
+<span class="fc" id="L197">        ConcreteDGraph sub = tmp.getSubgraphByNodes(nodes);</span>
+<span class="fc" id="L198">        DAGraph sub2 = new DAGraph(sub);</span>
+<span class="fc" id="L199">        sub2.transitiveReduction();</span>
+<span class="fc" id="L200">        return sub2;</span>
+    }
+
+    /*
+     * --------------- DAG TREATMENT METHODS ------------
+     */
+    /**
+     * Computes the transitive reduction of this component.
+     *
+     * The transitive reduction is not uniquely defined only when the acyclic
+     * property is verified. In this case, it corresponds to the Hasse diagram
+     * of the DAG.
+     *
+     * This method is an implementation of the Goralcikova-Koubeck algorithm
+     * that can also compute the transitive closure. This tratment is performed
+     * in O(n+nm_r+nm_c), where n corresponds to the number of nodes, m_r to the
+     * numer of edges in the transitive closure, and m_r the number of edges in
+     * the transitive reduction.
+     *
+     * @return the number of added edges
+     */
+    public int transitiveReduction() {
+
+        // copy this component in a new DAG graph
+<span class="fc" id="L224">        DAGraph&lt;N, E&gt; graph = new DAGraph&lt;N, E&gt;(this);</span>
+<span class="fc" id="L225">        graph.reflexiveReduction();</span>
+        // initalize this component with no edges
+<span class="fc" id="L227">        this.setSuccessors(new TreeMap&lt;Node&lt;N&gt;, TreeSet&lt;Edge&lt;N, E&gt;&gt;&gt;());</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">        for (Node&lt;N&gt; node : this.getNodes()) {</span>
+<span class="fc" id="L229">            this.getSuccessors().put(node, new TreeSet&lt;Edge&lt;N, E&gt;&gt;());</span>
+<span class="fc" id="L230">        }</span>
+<span class="fc" id="L231">        this.setPredecessors(new TreeMap&lt;Node&lt;N&gt;, TreeSet&lt;Edge&lt;N, E&gt;&gt;&gt;());</span>
+<span class="fc bfc" id="L232" title="All 2 branches covered.">        for (Node&lt;N&gt; node : this.getNodes()) {</span>
+<span class="fc" id="L233">            this.getPredecessors().put(node, new TreeSet&lt;Edge&lt;N, E&gt;&gt;());</span>
+<span class="fc" id="L234">        }</span>
+<span class="fc" id="L235">        int number = 0;</span>
+        // mark each node to false
+<span class="fc" id="L237">        TreeMap&lt;Node&lt;N&gt;, Boolean&gt; mark = new TreeMap&lt;Node&lt;N&gt;, Boolean&gt;();</span>
+<span class="fc bfc" id="L238" title="All 2 branches covered.">        for (Node&lt;N&gt; node : graph.getNodes()) {</span>
+<span class="fc" id="L239">            mark.put(node, Boolean.FALSE);</span>
+<span class="fc" id="L240">        }</span>
+        // treatment of nodes according to a topological sort
+<span class="fc" id="L242">        List&lt;Node&lt;N&gt;&gt; sort = graph.topologicalSort();</span>
+<span class="fc bfc" id="L243" title="All 2 branches covered.">        for (Node&lt;N&gt; x : sort) {</span>
+<span class="fc" id="L244">            TreeSet&lt;Node&lt;N&gt;&gt; set = new TreeSet&lt;Node&lt;N&gt;&gt;(graph.getSuccessorNodes(x));</span>
+<span class="fc bfc" id="L245" title="All 2 branches covered.">            while (!set.isEmpty()) {</span>
+                // compute the smallest successor y of x according to the topological sort
+<span class="fc" id="L247">                int i = 0;</span>
+<span class="fc bfc" id="L248" title="All 2 branches covered.">                while (!set.contains(sort.get(i))) {</span>
+<span class="fc" id="L249">                    i++;</span>
+                }
+<span class="fc" id="L251">                Node&lt;N&gt; y = sort.get(i);</span>
+                // when y is not not marked, x-&gt;y is a reduced edge
+<span class="pc bpc" id="L253" title="1 of 4 branches missed.">                if (y != null &amp;&amp; !mark.get(y)) {</span>
+<span class="fc" id="L254">                    this.addEdge(x, y);</span>
+<span class="fc" id="L255">                    graph.addEdge(x, y);</span>
+                }
+<span class="fc bfc" id="L257" title="All 2 branches covered.">                for (Node&lt;N&gt; z : graph.getSuccessorNodes(y)) {</span>
+                    // treatment of z when not marked
+<span class="fc bfc" id="L259" title="All 2 branches covered.">                    if (!mark.get(z)) {</span>
+<span class="fc" id="L260">                        mark.put(z, Boolean.TRUE);</span>
+<span class="fc" id="L261">                        graph.addEdge(x, z);</span>
+<span class="fc" id="L262">                        number++;</span>
+<span class="fc" id="L263">                        set.add(z);</span>
+                    }
+<span class="fc" id="L265">                }</span>
+<span class="fc" id="L266">                set.remove(y);</span>
+<span class="fc" id="L267">            }</span>
+<span class="fc bfc" id="L268" title="All 2 branches covered.">            for (Node&lt;N&gt; y : graph.getSuccessorNodes(x)) {</span>
+<span class="fc" id="L269">                mark.put(y, Boolean.FALSE);</span>
+<span class="fc" id="L270">            }</span>
+<span class="fc" id="L271">        }</span>
+<span class="fc" id="L272">        return number;</span>
+    }
+
+    /**
+     * Computes the transitive closure of this component.
+     *
+     * This method overlaps the computation of the transitive closure for
+     * directed graph in class {@link ConcreteDGraph} with an implementation of the
+     * Goralcikova-Koubeck algorithm dedicated to acyclic directed graph. This
+     * algorithm can also compute the transitive reduction of a directed acyclic
+     * graph.
+     *
+     * This treatment is performed in O(n+nm_r+nm_c), where n corresponds to the
+     * number of nodes, m_r to the numer of edges in the transitive closure, and
+     * m_r the number of edges in the transitive reduction.
+     *
+     * @return the number of added edges
+     */
+    public int transitiveClosure() {
+<span class="fc" id="L291">        int number = 0;</span>
+        // mark each node to false
+<span class="fc" id="L293">        TreeMap&lt;Node&lt;N&gt;, Boolean&gt; mark = new TreeMap&lt;Node&lt;N&gt;, Boolean&gt;();</span>
+<span class="fc bfc" id="L294" title="All 2 branches covered.">        for (Node&lt;N&gt; node : this.getNodes()) {</span>
+<span class="fc" id="L295">            mark.put(node, Boolean.FALSE);</span>
+<span class="fc" id="L296">        }</span>
+        // treatment of nodes according to a topological sort
+<span class="fc" id="L298">        List&lt;Node&lt;N&gt;&gt; sort = this.topologicalSort();</span>
+<span class="fc bfc" id="L299" title="All 2 branches covered.">        for (Node&lt;N&gt; x : sort) {</span>
+<span class="fc" id="L300">            TreeSet&lt;Node&lt;N&gt;&gt; set = new TreeSet&lt;Node&lt;N&gt;&gt;(this.getSuccessorNodes(x));</span>
+<span class="fc bfc" id="L301" title="All 2 branches covered.">            while (!set.isEmpty()) {</span>
+                // compute the smallest successor y of x according to the topological sort
+<span class="fc" id="L303">                int i = 0;</span>
+                do {
+<span class="fc" id="L305">                    i++;</span>
+<span class="fc bfc" id="L306" title="All 2 branches covered.">                } while (!set.contains(sort.get(i)));</span>
+<span class="fc" id="L307">                Node&lt;N&gt; y = sort.get(i);</span>
+<span class="fc bfc" id="L308" title="All 2 branches covered.">                for (Node&lt;N&gt; z : this.getSuccessorNodes(y)) {</span>
+                    // treatment of z when not marked
+<span class="fc bfc" id="L310" title="All 2 branches covered.">                    if (!mark.get(z)) {</span>
+<span class="fc" id="L311">                        mark.put(z, Boolean.TRUE);</span>
+<span class="fc" id="L312">                        this.addEdge(x, z);</span>
+<span class="fc" id="L313">                        number++;</span>
+<span class="fc" id="L314">                        set.add(z);</span>
+                    }
+<span class="fc" id="L316">                }</span>
+<span class="fc" id="L317">                set.remove(y);</span>
+<span class="fc" id="L318">            }</span>
+<span class="fc bfc" id="L319" title="All 2 branches covered.">            for (Node&lt;N&gt; y : this.getSuccessorNodes(x)) {</span>
+<span class="fc" id="L320">                mark.put(y, Boolean.FALSE);</span>
+<span class="fc" id="L321">            }</span>
+<span class="fc" id="L322">        }</span>
+<span class="fc" id="L323">        return number;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

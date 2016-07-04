@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NumericalStorage.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lattices</a> &gt; <a href="index.source.html" class="el_package">org.thegalactic.context.constraint.numerical</a> &gt; <span class="el_source">NumericalStorage.java</span></div><h1>NumericalStorage.java</h1><pre class="source lang-java linenums">package org.thegalactic.context.constraint.numerical;
+
+/*
+ * NumericalStorage.java
+ *
+ * Copyright: 2016 The Galactic Organization, France
+ *
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
+ * This file is part of java-lattices.
+ * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
+ */
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Binary Storage.
+ */
+public final class NumericalStorage {
+
+    /**
+     * inf values.
+     */
+    private final List&lt;Double&gt; inf;
+
+    /**
+     * sup values.
+     */
+    private final List&lt;Double&gt; sup;
+
+    /**
+     * EXCEPTION_SIZE.
+     */
+    private static final String EXCEPTION_SIZE = &quot;NumericalStorage objects must have the same size&quot;;
+
+    /**
+     * Factory method to construct a numerical storage.
+     *
+     * @param size number of values
+     *
+     * @return a new NumericalStorage object
+     */
+    public static NumericalStorage create(final int size) {
+<span class="fc" id="L44">        return new NumericalStorage(size);</span>
+    }
+
+    /**
+     * This class is not designed to be publicly instantiated.
+     *
+     * @param size number of values
+     */
+<span class="fc" id="L52">    private NumericalStorage(final int size) {</span>
+<span class="fc" id="L53">        this.inf = new ArrayList&lt;Double&gt;(size);</span>
+<span class="fc" id="L54">        this.sup = new ArrayList&lt;Double&gt;(size);</span>
+        // Initialise as an empty set
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        for (int index = 0; index &lt; size; index++) {</span>
+<span class="fc" id="L57">            this.inf.add(index, Double.POSITIVE_INFINITY);</span>
+<span class="fc" id="L58">            this.sup.add(index, Double.NEGATIVE_INFINITY);</span>
+        }
+<span class="fc" id="L60">    }</span>
+
+    /**
+     * Set the set at specified index empty.
+     *
+     * @param index index of the numerical set
+     *
+     * @return this for chaining
+     */
+    public NumericalStorage setEmpty(final int index) {
+<span class="fc" id="L70">        this.inf.set(index, Double.POSITIVE_INFINITY);</span>
+<span class="fc" id="L71">        this.sup.set(index, Double.NEGATIVE_INFINITY);</span>
+<span class="fc" id="L72">        return this;</span>
+    }
+
+    /**
+     * Is the set at specified index empty?
+     *
+     * @param index index of the numerical set
+     *
+     * @return this for chaining
+     */
+    public boolean isEmpty(final int index) {
+<span class="fc bfc" id="L83" title="All 2 branches covered.">        return this.inf.get(index) &gt; this.sup.get(index);</span>
+    }
+
+    /**
+     * Set the set at specified index a point.
+     *
+     * @param index index of the numerical set
+     * @param value the new value
+     *
+     * @return this for chaining
+     */
+    public NumericalStorage setPoint(final int index, final double value) {
+<span class="fc" id="L95">        this.inf.set(index, value);</span>
+<span class="fc" id="L96">        this.sup.set(index, value);</span>
+<span class="fc" id="L97">        return this;</span>
+    }
+
+    /**
+     * Is the set at specified index a point?
+     *
+     * @param index index of the numerical set
+     *
+     * @return this for chaining
+     */
+    public boolean isPoint(final int index) {
+<span class="fc" id="L108">        return this.inf.get(index).equals(this.sup.get(index));</span>
+    }
+
+    /**
+     * Set the inf mark to specified value.
+     *
+     * @param index the specified index
+     * @param value the new value
+     *
+     * @return this for chaining
+     */
+    public NumericalStorage setInf(final int index, final double value) {
+<span class="fc bfc" id="L120" title="All 2 branches covered.">        if (this.isEmpty(index)) {</span>
+<span class="fc" id="L121">            this.setPoint(index, value);</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        } else if (value &gt; this.sup.get(index)) {</span>
+<span class="fc" id="L123">            this.setEmpty(index);</span>
+        } else {
+<span class="fc" id="L125">            this.inf.set(index, value);</span>
+        }
+<span class="fc" id="L127">        return this;</span>
+    }
+
+    /**
+     * Set the sup mark to specified value.
+     *
+     * @param index the specified index
+     * @param value the new value
+     *
+     * @return this for chaining
+     */
+    public NumericalStorage setSup(final int index, final double value) {
+<span class="fc bfc" id="L139" title="All 2 branches covered.">        if (this.isEmpty(index)) {</span>
+<span class="fc" id="L140">            this.setPoint(index, value);</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">        } else if (value &lt; this.inf.get(index)) {</span>
+<span class="fc" id="L142">            this.setEmpty(index);</span>
+        } else {
+<span class="fc" id="L144">            this.sup.set(index, value);</span>
+        }
+<span class="fc" id="L146">        return this;</span>
+    }
+
+    /**
+     * Get the inf value at specified index.
+     *
+     * @param index the specified index
+     *
+     * @return the inf value
+     */
+    public double getInf(final int index) {
+<span class="fc" id="L157">        return this.inf.get(index);</span>
+    }
+
+    /**
+     * Get the sup value at specified index.
+     *
+     * @param index the specified index
+     *
+     * @return the inf value
+     */
+    public double getSup(final int index) {
+<span class="fc" id="L168">        return this.sup.get(index);</span>
+    }
+
+    /**
+     * Reduce by inf value.
+     *
+     * @param index value to be reduced
+     * @param value value used to reduce
+     *
+     * @return this for chaining.
+     */
+    public NumericalStorage reduceInf(final int index, final double value) {
+<span class="fc" id="L180">        this.inf.set(index, Math.max(this.inf.get(index), value));</span>
+<span class="fc" id="L181">        return this;</span>
+    }
+
+    /**
+     * Reduce by sup value.
+     *
+     * @param index value to be reduced
+     * @param value value used to reduce
+     *
+     * @return this for chaining.
+     */
+    public NumericalStorage reduceSup(final int index, final double value) {
+<span class="fc" id="L193">        this.sup.set(index, Math.min(this.sup.get(index), value));</span>
+<span class="fc" id="L194">        return this;</span>
+    }
+
+    /**
+     * Extend by inf value.
+     *
+     * @param index value to be extended
+     * @param value value used to extend
+     *
+     * @return this for chaining
+     */
+    public NumericalStorage extendInf(final int index, final double value) {
+<span class="fc" id="L206">        this.inf.set(index, Math.min(this.inf.get(index), value));</span>
+<span class="fc" id="L207">        return this;</span>
+    }
+
+    /**
+     * Extend by sup value.
+     *
+     * @param index value to be extended
+     * @param value value used to extend
+     *
+     * @return this for chaining
+     */
+    public NumericalStorage extendSup(final int index, final double value) {
+<span class="fc" id="L219">        this.sup.set(index, Math.max(this.sup.get(index), value));</span>
+<span class="fc" id="L220">        return this;</span>
+    }
+
+    /**
+     * Extends value.
+     *
+     * @param index value to be extended
+     * @param value value used to extend
+     *
+     * @return this for chaining.
+     */
+    public NumericalStorage extend(final int index, final double value) {
+<span class="fc" id="L232">        this.extendInf(index, value);</span>
+<span class="fc" id="L233">        this.extendSup(index, value);</span>
+<span class="fc" id="L234">        return this;</span>
+    }
+
+    /**
+     * Intersection.
+     *
+     * @param storage NumericalStorage
+     *
+     * @return this for chaining
+     *
+     * @todo Is it the meet operation?
+     */
+    public NumericalStorage intersection(final NumericalStorage storage) {
+<span class="fc" id="L247">        final int size = this.inf.size();</span>
+<span class="fc bfc" id="L248" title="All 2 branches covered.">        if (storage.inf.size() == size) {</span>
+<span class="fc bfc" id="L249" title="All 2 branches covered.">            for (int index = 0; index &lt; size; index++) {</span>
+<span class="fc" id="L250">                this.inf.set(index, Math.max(this.inf.get(index), storage.inf.get(index)));</span>
+<span class="fc" id="L251">                this.sup.set(index, Math.min(this.sup.get(index), storage.sup.get(index)));</span>
+            }
+<span class="fc" id="L253">            return this;</span>
+        } else {
+<span class="fc" id="L255">            throw new IllegalArgumentException(EXCEPTION_SIZE);</span>
+        }
+    }
+
+    /**
+     * Union.
+     *
+     * An approximation is made for union when the two intervals are disjoint.
+     * The result is the minimum interval containing both intervals.
+     *
+     * @param storage NumericalStorage
+     *
+     * @return this for chaining
+     */
+    public NumericalStorage union(final NumericalStorage storage) {
+<span class="fc" id="L270">        final int size = this.inf.size();</span>
+<span class="fc bfc" id="L271" title="All 2 branches covered.">        if (storage.inf.size() == size) {</span>
+<span class="fc bfc" id="L272" title="All 2 branches covered.">            for (int index = 0; index &lt; size; index++) {</span>
+<span class="fc" id="L273">                this.inf.set(index, Math.min(this.inf.get(index), storage.inf.get(index)));</span>
+<span class="fc" id="L274">                this.sup.set(index, Math.max(this.sup.get(index), storage.sup.get(index)));</span>
+            }
+<span class="fc" id="L276">            return this;</span>
+        } else {
+<span class="fc" id="L278">            throw new IllegalArgumentException(EXCEPTION_SIZE);</span>
+        }
+    }
+
+    /**
+     * Get the size.
+     *
+     * @return the size
+     */
+    public int size() {
+<span class="fc" id="L288">        return this.inf.size();</span>
+    }
+
+    /**
+     * Returns a String representation of this object.
+     *
+     * @return a string representation of this object
+     */
+    @Override
+    public String toString() {
+<span class="fc" id="L298">        final StringBuilder builder = new StringBuilder();</span>
+
+<span class="fc" id="L300">        builder.append('[');</span>
+
+<span class="fc" id="L302">        final int size = this.inf.size();</span>
+<span class="fc bfc" id="L303" title="All 2 branches covered.">        for (int index = 0; index &lt; size; index++) {</span>
+<span class="fc bfc" id="L304" title="All 2 branches covered.">            if (index != 0) {</span>
+<span class="fc" id="L305">                builder.append(&quot;, &quot;);</span>
+            }
+<span class="fc bfc" id="L307" title="All 2 branches covered.">            if (this.isEmpty(index)) {</span>
+<span class="fc" id="L308">                builder.append('@');</span>
+<span class="fc bfc" id="L309" title="All 2 branches covered.">            } else if (this.isPoint(index)) {</span>
+<span class="fc" id="L310">                builder.append(this.inf.get(index));</span>
+            } else {
+<span class="fc" id="L312">                builder.append('(');</span>
+<span class="fc" id="L313">                builder.append(this.inf.get(index));</span>
+<span class="fc" id="L314">                builder.append(',');</span>
+<span class="fc" id="L315">                builder.append(this.sup.get(index));</span>
+<span class="fc" id="L316">                builder.append(')');</span>
+            }
+        }
+
+<span class="fc" id="L320">        builder.append(']');</span>
+
+<span class="fc" id="L322">        return builder.toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

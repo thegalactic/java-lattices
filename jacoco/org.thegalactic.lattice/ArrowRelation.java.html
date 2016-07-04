@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ArrowRelation.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lattices</a> &gt; <a href="index.source.html" class="el_package">org.thegalactic.lattice</a> &gt; <span class="el_source">ArrowRelation.java</span></div><h1>ArrowRelation.java</h1><pre class="source lang-java linenums">package org.thegalactic.lattice;
+
+/*
+ * ArrowRelation.java
+ *
+ * Copyright: 2010-2015 Karell Bertet, France
+ * Copyright: 2015-2016 The Galactic Organization, France
+ *
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
+ * This file is part of java-lattices.
+ * You can redistribute it and/or modify
+ * it under the terms of the CeCILL-B license.
+ */
+import java.io.IOException;
+import java.util.TreeSet;
+
+import org.thegalactic.context.Context;
+import org.thegalactic.dgraph.ConcreteDGraph;
+import org.thegalactic.dgraph.Edge;
+import org.thegalactic.dgraph.Node;
+import org.thegalactic.io.Filer;
+import org.thegalactic.lattice.io.ArrowRelationIOFactory;
+
+/**
+ * The ArrowRelation class encodes arrow relation between meet &amp;
+ * join-irreductibles of a lattice.
+ *
+ * Let m and b be respectively meet and join irreductibles of a lattice.
+ * Recall that m has a unique successor say m+ and j has a unique predecessor
+ * say j-, then :
+ *
+ * - j &quot;Up Arrow&quot; m (stored as &quot;Up&quot;) iff j is not less or equal than m and
+ * j is less than m+
+ * - j &quot;Down Arrow&quot; m (stored as &quot;Down&quot;) iff j is not less or equal than m and
+ * j- is less than m
+ * - j &quot;Up Down Arrow&quot; m (stored as &quot;UpDown&quot;) iff j &quot;Up&quot; m and j &quot;Down&quot; m
+ * - j &quot;Cross&quot; m (stored as &quot;Cross&quot;) iff j is less or equal than m
+ * - j &quot;Circ&quot; m (stored as &quot;Circ&quot;) iff neither j &quot;Up&quot; m nor j &quot;Down&quot; m nor
+ * j &quot;Cross&quot; m
+ *
+ * ![ArrowRelation](ArrowRelation.png)
+ *
+ * @uml ArrowRelation.png
+ * !include resources/org/thegalactic/dgraph/DGraph.iuml
+ * !include resources/org/thegalactic/dgraph/Edge.iuml
+ * !include resources/org/thegalactic/dgraph/Node.iuml
+ * !include resources/org/thegalactic/lattice/ArrowRelation.iuml
+ *
+ * hide members
+ * show ArrowRelation members
+ * class ArrowRelation #LightCyan
+ * title ArrowRelation UML graph
+ */
+public class ArrowRelation extends ConcreteDGraph {
+
+    /**
+     * Field used to encode up arrow relation.
+     */
+<span class="fc" id="L60">    private static Object up = &quot;Up&quot;;</span>
+
+    /**
+     * Field used to encode down arrow relation.
+     */
+<span class="fc" id="L65">    private static Object down = &quot;Down&quot;;</span>
+
+    /**
+     * Field used to encode up-down arrow relation.
+     */
+<span class="fc" id="L70">    private static Object updown = &quot;UpDown&quot;;</span>
+
+    /**
+     * Field used to encode cross arrow relation.
+     */
+<span class="fc" id="L75">    private static Object cross = &quot;Cross&quot;;</span>
+
+    /**
+     * Field used to encode circ arrow relation.
+     */
+<span class="fc" id="L80">    private static Object circ = &quot;Circ&quot;;</span>
+
+    /**
+     * Unique constructor of this component from a lattice.
+     *
+     * Nodes are join or meet irreductibles of the lattice. Edges content
+     * encodes arrows as String &quot;Up&quot;, &quot;Down&quot;, &quot;UpDown&quot;, &quot;Cross&quot;, &quot;Circ&quot;.
+     *
+     * @param lattice Lattice from which this component is deduced.
+     */
+<span class="fc" id="L90">    public ArrowRelation(Lattice lattice) {</span>
+
+        /*
+         * Nodes are join or meet irreductibles of the lattice.
+         */
+<span class="fc" id="L95">        TreeSet&lt;Node&gt; joins = new TreeSet&lt;Node&gt;(lattice.joinIrreducibles());</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">        for (Node node : joins) {</span>
+<span class="fc" id="L97">            this.addNode(node);</span>
+<span class="fc" id="L98">        }</span>
+<span class="fc" id="L99">        TreeSet&lt;Node&gt; meets = new TreeSet&lt;Node&gt;(lattice.meetIrreducibles());</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">        for (Node node : meets) {</span>
+<span class="fc" id="L101">            this.addNode(node);</span>
+<span class="fc" id="L102">        }</span>
+<span class="fc" id="L103">        Lattice transitiveClosure = new Lattice(lattice);</span>
+<span class="fc" id="L104">        transitiveClosure.transitiveClosure();</span>
+<span class="fc" id="L105">        Lattice transitiveReduction = new Lattice(lattice);</span>
+<span class="fc" id="L106">        transitiveReduction.transitiveReduction();</span>
+<span class="fc" id="L107">        Node jminus = new Node();</span>
+<span class="fc" id="L108">        Node mplus = new Node();</span>
+<span class="fc" id="L109">        Object arrow = new Object();</span>
+
+        /*
+         * Content of edges are arrows
+         */
+<span class="fc bfc" id="L114" title="All 2 branches covered.">        for (Node j : joins) {</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">            for (Node m : meets) {</span>
+<span class="fc" id="L116">                mplus = (Node) transitiveReduction.getSuccessorNodes(m).first();</span>
+<span class="fc" id="L117">                jminus = (Node) transitiveReduction.getPredecessorNodes(j).first();</span>
+<span class="fc bfc" id="L118" title="All 4 branches covered.">                if (transitiveClosure.getSuccessorNodes(j).contains(m) || j.equals(m)) {</span>
+<span class="fc" id="L119">                    arrow = ArrowRelation.cross;</span>
+<span class="fc bfc" id="L120" title="All 4 branches covered.">                } else if (transitiveClosure.getSuccessorNodes(jminus).contains(m) || jminus.equals(m)) {</span>
+<span class="fc" id="L121">                    arrow = ArrowRelation.down;</span>
+<span class="fc bfc" id="L122" title="All 4 branches covered.">                    if (transitiveClosure.getPredecessorNodes(mplus).contains(j) || mplus.equals(j)) {</span>
+<span class="fc" id="L123">                        arrow = ArrowRelation.updown;</span>
+                    }
+<span class="fc bfc" id="L125" title="All 2 branches covered.">                } else if (transitiveClosure.getPredecessorNodes(mplus).contains(j)) {</span>
+<span class="fc" id="L126">                    arrow = ArrowRelation.up;</span>
+                } else {
+<span class="fc" id="L128">                    arrow = ArrowRelation.circ;</span>
+                }
+<span class="fc" id="L130">                this.addEdge(j, m, arrow);</span>
+<span class="fc" id="L131">            }</span>
+<span class="fc" id="L132">        }</span>
+<span class="fc" id="L133">    }</span>
+
+    /**
+     * Save the description of this component in a file whose name is specified.
+     *
+     * @param filename the name of the file
+     *
+     * @throws IOException When an IOException occurs
+     */
+    @Override
+    public void save(final String filename) throws IOException {
+<span class="fc" id="L144">        Filer.getInstance().save(this, ArrowRelationIOFactory.getInstance(), filename);</span>
+<span class="fc" id="L145">    }</span>
+
+    /**
+     * Returns the table of the lattice, composed of the join and meet
+     * irreducibles nodes.
+     *
+     * Each attribute of the table is a copy of a join irreducibles node. Each
+     * observation of the table is a copy of a meet irreducibles node. An
+     * attribute is extent of an observation when its join irreducible node is
+     * in double arrow relation with the meet irreducible node in the lattice.
+     *
+     * @return the table of the lattice
+     *
+     * @todo Avoid using for (Object edge : this.getEdges()). Use for (Edge edge : this.getEdges())
+     */
+    public Context getDoubleArrowTable() {
+<span class="fc" id="L161">        Context context = new Context();</span>
+        // observations are join irreductibles
+        // attributes are meet irreductibles
+<span class="fc bfc" id="L164" title="All 2 branches covered.">        for (Object edge : this.getEdges()) {</span>
+<span class="fc" id="L165">            context.addToObservations(((Edge) edge).getSource());</span>
+<span class="fc" id="L166">            context.addToAttributes(((Edge) edge).getTarget());</span>
+<span class="fc" id="L167">        }</span>
+        // generation of extent-intent
+<span class="fc bfc" id="L169" title="All 2 branches covered.">        for (Object edge : this.getEdges()) {</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">            if (((Edge) edge).getContent() == ArrowRelation.updown) {</span>
+<span class="fc" id="L171">                context.addExtentIntent(((Edge) edge).getSource(), ((Edge) edge).getTarget());</span>
+            }
+<span class="fc" id="L173">        }</span>
+<span class="fc" id="L174">        return context;</span>
+    }
+
+    /**
+     * Returns the table of the lattice, composed of the join and meet
+     * irreducibles nodes.
+     *
+     * Each attribute of the table is a copy of a join irreducibles node. Each
+     * observation of the table is a copy of a meet irreducibles node. An
+     * attribute is extent of an observation when its join irreducible node is
+     * in down arrow relation with the meet irreducible node in the lattice.
+     *
+     * @return the table of the lattice
+     */
+    public Context getDoubleDownArrowTable() {
+<span class="fc" id="L189">        Context context = new Context();</span>
+        // observations are join irreductibles
+        // attributes are meet irreductibles
+<span class="fc bfc" id="L192" title="All 2 branches covered.">        for (Object edge : this.getEdges()) {</span>
+<span class="fc" id="L193">            context.addToObservations(((Edge) edge).getSource());</span>
+<span class="fc" id="L194">            context.addToAttributes(((Edge) edge).getTarget());</span>
+<span class="fc" id="L195">        }</span>
+        // generation of extent-intent
+<span class="fc bfc" id="L197" title="All 2 branches covered.">        for (Object edge : this.getEdges()) {</span>
+<span class="fc bfc" id="L198" title="All 4 branches covered.">            if (((Edge) edge).getContent() == ArrowRelation.down || ((Edge) edge).getContent() == ArrowRelation.updown) {</span>
+<span class="fc" id="L199">                context.addExtentIntent(((Edge) edge).getSource(), ((Edge) edge).getTarget());</span>
+            }
+<span class="fc" id="L201">        }</span>
+<span class="fc" id="L202">        return context;</span>
+    }
+
+    /**
+     * Returns the table of the lattice, composed of the join and meet
+     * irreducibles nodes.
+     *
+     * Each attribute of the table is a copy of a join irreducibles node. Each
+     * observation of the table is a copy of a meet irreducibles node. An
+     * attribute is extent of an observation when its join irreducible node is
+     * in up arrow relation with the meet irreducible node in the lattice.
+     *
+     * @return the table of the lattice
+     */
+    public Context getDoubleUpArrowTable() {
+<span class="fc" id="L217">        Context context = new Context();</span>
+        // observations are join irreductibles
+        // attributes are meet irreductibles
+<span class="fc bfc" id="L220" title="All 2 branches covered.">        for (Object edge : this.getEdges()) {</span>
+<span class="fc" id="L221">            context.addToObservations(((Edge) edge).getSource());</span>
+<span class="fc" id="L222">            context.addToAttributes(((Edge) edge).getTarget());</span>
+<span class="fc" id="L223">        }</span>
+        // generation of extent-intent
+<span class="fc bfc" id="L225" title="All 2 branches covered.">        for (Object edge : this.getEdges()) {</span>
+<span class="fc bfc" id="L226" title="All 4 branches covered.">            if (((Edge) edge).getContent() == ArrowRelation.up || ((Edge) edge).getContent() == ArrowRelation.updown) {</span>
+<span class="fc" id="L227">                context.addExtentIntent(((Edge) edge).getSource(), ((Edge) edge).getTarget());</span>
+            }
+<span class="fc" id="L229">        }</span>
+<span class="fc" id="L230">        return context;</span>
+    }
+
+    /**
+     * Returns the table of the lattice, composed of the join and meet
+     * irreducibles nodes.
+     *
+     * Each attribute of the table is a copy of a join irreducibles node. Each
+     * observation of the table is a copy of a meet irreducibles node. An
+     * attribute is extent of an observation when its join irreducible node is
+     * in double arrow relation or circ relation with the meet irreducible node
+     * in the lattice.
+     *
+     * @return the table of the lattice
+     */
+    public Context getDoubleCircArrowTable() {
+<span class="fc" id="L246">        Context context = new Context();</span>
+        // observations are join irreductibles
+        // attributes are meet irreductibles
+<span class="fc bfc" id="L249" title="All 2 branches covered.">        for (Object edge : this.getEdges()) {</span>
+<span class="fc" id="L250">            context.addToObservations(((Edge) edge).getSource());</span>
+<span class="fc" id="L251">            context.addToAttributes(((Edge) edge).getTarget());</span>
+<span class="fc" id="L252">        }</span>
+        // generation of extent-intent
+<span class="fc bfc" id="L254" title="All 2 branches covered.">        for (Object edge : this.getEdges()) {</span>
+<span class="fc bfc" id="L255" title="All 4 branches covered.">            if (((Edge) edge).getContent() == ArrowRelation.updown || ((Edge) edge).getContent() == ArrowRelation.circ) {</span>
+<span class="fc" id="L256">                context.addExtentIntent(((Edge) edge).getSource(), ((Edge) edge).getTarget());</span>
+            }
+<span class="fc" id="L258">        }</span>
+<span class="fc" id="L259">        return context;</span>
+    }
+
+    /**
+     * Returns true if and only if there is an up arrow between the source and
+     * the target of
+     * edge e.
+     *
+     * @param edge edge to be tested
+     *
+     * @return true if and only if there is an up arrow between the source and
+     *         the target of
+     *         edge e
+     */
+    public boolean isUp(Edge edge) {
+<span class="fc bfc" id="L274" title="All 2 branches covered.">        return edge.getContent() == ArrowRelation.up;</span>
+    }
+
+    /**
+     * Returns true if and only if there is an down arrow between the source and
+     * the target of
+     * edge e.
+     *
+     * @param edge edge to be tested
+     *
+     * @return true if and only if there is an down arrow between the source and
+     *         the target of
+     *         edge e
+     */
+    public boolean isDown(Edge edge) {
+<span class="fc bfc" id="L289" title="All 2 branches covered.">        return edge.getContent() == ArrowRelation.down;</span>
+    }
+
+    /**
+     * Returns true if and only if there is an up-down arrow between the source
+     * and the target
+     * of edge e.
+     *
+     * @param edge edge to be tested
+     *
+     * @return true if and only if there is an up-down arrow between the source
+     *         and the target
+     *         of edge e
+     */
+    public boolean isUpDown(Edge edge) {
+<span class="fc bfc" id="L304" title="All 2 branches covered.">        return edge.getContent() == ArrowRelation.updown;</span>
+    }
+
+    /**
+     * Returns true if and only if there is an cross arrow between the source
+     * and the target
+     * of edge e.
+     *
+     * @param edge edge to be tested
+     *
+     * @return true if and only if there is an cross arrow between the source
+     *         and the target
+     *         of edge e
+     */
+    public boolean isCross(Edge edge) {
+<span class="pc bpc" id="L319" title="1 of 2 branches missed.">        return edge.getContent() == ArrowRelation.cross;</span>
+    }
+
+    /**
+     * Returns true if and only if there is an circ arrow between the source and
+     * the target of
+     * edge e.
+     *
+     * @param edge edge to be tested
+     *
+     * @return true if and only if there is an circ arrow between the source and
+     *         the target of
+     *         edge e
+     */
+    public boolean isCirc(Edge edge) {
+<span class="pc bpc" id="L334" title="1 of 2 branches missed.">        return edge.getContent() == ArrowRelation.circ;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

@@ -1,0 +1,9 @@
+package org.thegalactic.lattice.io {
+    class ArrowRelationIOFactory {
+    	-ArrowRelationIOFactory instance
+        -ArrowRelationIOFactory()
+        #void init()
+        +{static}ArrowRelationIOFactory getInstance()
+    }
+    org.thegalactic.io.IOFactory <|-- ArrowRelationIOFactory
+}

@@ -1,0 +1,9 @@
+package org.thegalactic.lattice.io {
+    class ImplicationalSystemIOFactory {
+    	-ImplicationalSystemIOFactory instance
+        -ImplicationalSystemIOFactory()
+        #void init()
+        +{static}ImplicationalSystemIOFactory getInstance()
+    }
+    org.thegalactic.io.IOFactory <|-- ImplicationalSystemIOFactory
+}

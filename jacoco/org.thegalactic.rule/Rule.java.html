@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Rule.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lattices</a> &gt; <a href="index.source.html" class="el_package">org.thegalactic.rule</a> &gt; <span class="el_source">Rule.java</span></div><h1>Rule.java</h1><pre class="source lang-java linenums">package org.thegalactic.rule;
+
+/*
+ * Rule.java
+ *
+ * Copyright: 2010-2015 Karell Bertet, France
+ * Copyright: 2015-2016 The Galactic Organization, France
+ *
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
+ * This file is part of java-lattices.
+ * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
+ */
+import java.util.Collection;
+import java.util.SortedSet;
+
+import org.thegalactic.util.ComparableSet;
+
+/**
+ * This class gives a representation for an implicational rule.
+ *
+ * A rule is composed of a premise and a conclusion that are comparable sets,
+ * i.e. sets of elements that can be sorted by the lectic order defined by class
+ * `ComparableSet`.
+ *
+ * This class implements class `Comparable` aiming at sorting rules by providing
+ * the {@link #compareTo} method.
+ *
+ * Comparison between this component and those in parameter is realised by
+ * sorting their premises (lecticaly order), or their conclusion in case of
+ * equality of the premises.
+ *
+ * The coherence of the lectically sort between rules isn't ensured in case of
+ * modification of the rule. Therefore, it is strongly advised to replace each
+ * modified rule by a new one.
+ *
+ * ![Rule](Rule.png)
+ *
+ * @uml
+ *
+ * Rule.png
+ *
+ * !include resources/org/thegalactic/lattice/Rule.iuml
+ *
+ * hide members
+ * show Rule members
+ * class Rule #LightCyan
+ * title Rule UML graph
+ */
+public class Rule implements Comparable&lt;Rule&gt; {
+
+    /*
+     * ------------- FIELDS ------------------
+     */
+    /**
+     * The premise of the rule.
+     */
+    private final ComparableSet premise;
+
+    /**
+     * The conclusion of the rule.
+     */
+    private final ComparableSet conclusion;
+
+    /* ------------- CONSTRUCTORS ------------------ */
+    /**
+     * Constructs a new empty Rule with a empty premise and an empty conclusion.
+     */
+<span class="fc" id="L69">    public Rule() {</span>
+<span class="fc" id="L70">        this.premise = new ComparableSet();</span>
+<span class="fc" id="L71">        this.conclusion = new ComparableSet();</span>
+<span class="fc" id="L72">    }</span>
+
+    /**
+     * Constructs a new Rule with the premise and the conclusion given in
+     * parameters.
+     *
+     * @param premise    a set of indexed elements
+     * @param conclusion a set of indexed elements
+     */
+<span class="fc" id="L81">    public Rule(final SortedSet&lt;Comparable&gt; premise, final SortedSet&lt;Comparable&gt; conclusion) {</span>
+<span class="fc" id="L82">        this.premise = new ComparableSet(premise);</span>
+<span class="fc" id="L83">        this.conclusion = new ComparableSet(conclusion);</span>
+<span class="fc" id="L84">    }</span>
+
+    /*
+     * ------------- ACCESSORS METHODS ------------------
+     */
+    /**
+     * Returns a copy of the premise of the Rule.
+     *
+     * @return premises of this component
+     */
+    public final ComparableSet getPremise() {
+<span class="fc" id="L95">        return this.premise;</span>
+    }
+
+    /**
+     * Returns a copy of the conclusion of the Rule.
+     *
+     * @return conclusions of this component
+     */
+    public final ComparableSet getConclusion() {
+<span class="fc" id="L104">        return this.conclusion;</span>
+    }
+
+    /*
+     * ------------- MODIFICATION METHODS ------------------
+     */
+    /**
+     * Adds the specified comparable to the premise of this component.
+     *
+     * @param a Comparable to add to this component's premises.
+     *
+     * @return true if addition is successfull.
+     */
+    public final boolean addToPremise(final Comparable a) {
+<span class="fc" id="L118">        return this.premise.add(a);</span>
+    }
+
+    /**
+     * Removes the specified comparable from the premise of this component.
+     *
+     * @param a Comparable to remove to this component's premises.
+     *
+     * @return true if addition is successfull.
+     */
+    public final boolean removeFromPremise(final Comparable a) {
+<span class="fc" id="L129">        return this.premise.remove(a);</span>
+    }
+
+    /**
+     * Adds the specified element to the conclusion of this component.
+     *
+     * @param a Comparable to add to this component's conclusions.
+     *
+     * @return true if addition is successfull.
+     */
+    public final boolean addToConclusion(final Comparable a) {
+<span class="fc" id="L140">        return this.conclusion.add(a);</span>
+    }
+
+    /**
+     * Removes the specified comparable from the conclusion of this component.
+     *
+     * @param a Comparable to remove to this component's conclusions.
+     *
+     * @return true if addition is successfull.
+     */
+    public final boolean removeFromConclusion(final Object a) {
+<span class="fc" id="L151">        return this.conclusion.remove(a);</span>
+    }
+
+    /**
+     * Adds the specified collection of indexed elements to the premise of this
+     * component.
+     *
+     * @param a Collection of comparables to add to this component's premises.
+     *
+     * @return true if addition is successfull.
+     */
+    public final boolean addAllToPremise(final Collection&lt;Comparable&gt; a) {
+<span class="fc" id="L163">        return this.premise.addAll(a);</span>
+    }
+
+    /**
+     * Removes the specified collection of indexed elements from the premise of
+     * this component.
+     *
+     * @param a Collection of comparables to remove to this component's
+     *          premises.
+     *
+     * @return true if addition is successfull.
+     */
+    public final boolean removeAllFromPremise(final Collection&lt;Comparable&gt; a) {
+<span class="fc" id="L176">        return this.premise.removeAll(a);</span>
+    }
+
+    /**
+     * Adds the specified collection of indexed elements to the conclusion of
+     * this component.
+     *
+     * @param a Collection of comparables to add to this component's
+     *          conclusions.
+     *
+     * @return true if addition is successfull.
+     */
+    public final boolean addAllToConclusion(final Collection&lt;Comparable&gt; a) {
+<span class="fc" id="L189">        return this.conclusion.addAll(a);</span>
+    }
+
+    /**
+     * Removes the specified collection of indexed elements from the conclusion
+     * of this component.
+     *
+     * @param a Collection of comparables to remove to this component's
+     *          conclusions.
+     *
+     * @return true if addition is successfull.
+     */
+    public final boolean removeAllFromConclusion(final Collection&lt;Comparable&gt; a) {
+<span class="fc" id="L202">        return this.conclusion.removeAll(a);</span>
+    }
+
+    /*
+     * ------------- OVERRIDDEN METHODS ------------------
+     */
+    /**
+     * Returns a String representation of this component.
+     *
+     * The following format is used:
+     *
+     * ~~~
+     * [elements of the premise separated by a space] -&gt; [elements of the conclusion separated by a space]
+     * ~~~
+     *
+     * a StringTokenizer is used to delete spaces in the string description of
+     * each element of premise and conclusion
+     *
+     * @return a string made of premises followed by -&gt; and the conclusions.
+     */
+    @Override
+    public String toString() {
+<span class="fc" id="L224">        final StringBuilder builder = new StringBuilder();</span>
+<span class="fc bfc" id="L225" title="All 2 branches covered.">        for (final Object e : this.getPremise()) {</span>
+<span class="fc" id="L226">            builder.append(e).append(' ');</span>
+<span class="fc" id="L227">        }</span>
+<span class="fc" id="L228">        builder.append(&quot;-&gt;&quot;);</span>
+<span class="fc bfc" id="L229" title="All 2 branches covered.">        for (final Object e : this.getConclusion()) {</span>
+<span class="fc" id="L230">            builder.append(' ').append(e);</span>
+<span class="fc" id="L231">        }</span>
+<span class="fc" id="L232">        return builder.toString();</span>
+    }
+
+    /**
+     * Returns the hash code of this component.
+     *
+     * @return hash code of this component
+     */
+    @Override
+    public int hashCode() {
+<span class="fc" id="L242">        return 1013 * this.premise.hashCode() ^ 1009 * this.conclusion.hashCode();</span>
+    }
+
+    /**
+     * Compares this component with the specified one.
+     *
+     * @param object object to compare to this component.
+     *
+     * @return true or false as this componant is equals to the specified
+     *         object.
+     */
+    @Override
+    public boolean equals(final Object object) {
+<span class="pc bpc" id="L255" title="1 of 6 branches missed.">        return this == object || object != null &amp;&amp; this.getClass() == object.getClass()</span>
+<span class="fc bfc" id="L256" title="All 2 branches covered.">                &amp;&amp; this.getPremise().equals(((Rule) object).getPremise())</span>
+<span class="fc bfc" id="L257" title="All 2 branches covered.">                &amp;&amp; this.getConclusion().equals(((Rule) object).getConclusion());</span>
+    }
+
+    /**
+     * Compares this component with the specified one by comparing their
+     * premises, or their conclusion in case of equality of the premises.
+     *
+     * @param rule object to compare to this component.
+     *
+     * @return a negative integer, zero, or a positive integer as this component
+     *         is less than, equal to, or greater than the specified object.
+     */
+    public final int compareTo(final Rule rule) {
+<span class="fc" id="L270">        final ComparableSet thisPremise = (ComparableSet) this.getPremise();</span>
+<span class="fc" id="L271">        final ComparableSet thisConclusion = (ComparableSet) this.getConclusion();</span>
+<span class="fc" id="L272">        int cmp = thisPremise.compareTo(rule.getPremise());</span>
+<span class="fc bfc" id="L273" title="All 2 branches covered.">        if (cmp == 0) {</span>
+<span class="fc" id="L274">            cmp = thisConclusion.compareTo(rule.getConclusion());</span>
+        }
+<span class="fc" id="L276">        return cmp;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

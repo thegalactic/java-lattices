@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ContextSerializerText.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lattices</a> &gt; <a href="index.source.html" class="el_package">org.thegalactic.context.io</a> &gt; <span class="el_source">ContextSerializerText.java</span></div><h1>ContextSerializerText.java</h1><pre class="source lang-java linenums">package org.thegalactic.context.io;
+
+/*
+ * ContextSerializerText.java
+ *
+ * Copyright: 2010-2015 Karell Bertet, France
+ * Copyright: 2015-2016 The Galactic Organization, France
+ *
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
+ * This file is part of java-lattices.
+ * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
+ */
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.thegalactic.context.Context;
+import org.thegalactic.io.Reader;
+import org.thegalactic.io.Writer;
+
+/**
+ * This class defines the way for reading a context from a text file.
+ *
+ * ![ContextSerializerText](ContextSerializerText.png)
+ *
+ * @uml TextSerializer.png
+ * !include resources/org/thegalactic/context/io/TextSerializer.iuml
+ * !include resources/org/thegalactic/io/Reader.iuml
+ * !include resources/org/thegalactic/io/Writer.iuml
+ * hide members
+ * show TextSerializer members
+ * class TextSerializer #LightCyan
+ * title TextSerializer UML graph
+ */
+public final class ContextSerializerText implements Reader&lt;Context&gt;, Writer&lt;Context&gt; {
+
+    /**
+     * String extension.
+     */
+    private static final String EXTENSION = &quot;txt&quot;;
+
+    /**
+     * The singleton instance.
+     */
+<span class="fc" id="L50">    private static final ContextSerializerText INSTANCE = new ContextSerializerText();</span>
+
+    /**
+     * Return the singleton instance of this class.
+     *
+     * @return the singleton instance
+     */
+    public static ContextSerializerText getInstance() {
+<span class="fc" id="L58">        return INSTANCE;</span>
+    }
+
+    /**
+     * Register this class for reading and writing .txt files.
+     */
+    public static void register() {
+<span class="fc" id="L65">        ContextIOFactory.getInstance().registerReader(ContextSerializerText.getInstance(), EXTENSION);</span>
+<span class="fc" id="L66">        ContextIOFactory.getInstance().registerWriter(ContextSerializerText.getInstance(), EXTENSION);</span>
+<span class="fc" id="L67">    }</span>
+
+    /**
+     * This class is not designed to be publicly instantiated.
+     */
+    private ContextSerializerText() {
+<span class="fc" id="L73">        super();</span>
+<span class="fc" id="L74">    }</span>
+
+    /**
+     * Read a context from a file.
+     *
+     * The following format is respected:
+     *
+     * The list of observations separated by a space on the first line ; the
+     * list of attrbutes separated by a space on the second line ; then, for
+     * each observations o, the list of its intent on a line, written like o a1
+     * a2 ...
+     *
+     * ~~~
+     * Observations: 1 2 3
+     * Attributes: a b c d e
+     * 1: a c
+     * 2: a b
+     * 3: b d e
+     * 4: c e
+     * ~~~
+     *
+     * @param context a context to read
+     * @param file    a file
+     *
+     * @throws IOException When an IOException occurs
+     */
+    public void read(final Context context, final BufferedReader file) throws IOException {
+<span class="fc" id="L101">        this.readObservations(context, file);</span>
+<span class="fc" id="L102">        this.readAttributes(context, file);</span>
+<span class="fc" id="L103">        this.readExtentIntent(context, file);</span>
+<span class="fc" id="L104">        context.setBitSets();</span>
+<span class="fc" id="L105">    }</span>
+
+    /**
+     * Read observations from a file.
+     *
+     * The following format is respected:
+     *
+     * ~~~
+     * Observations: 1 2 3
+     * ~~~
+     *
+     * @param context a context to read
+     * @param file    a file
+     *
+     * @throws IOException When an IOException occurs
+     */
+    private void readObservations(final Context context, final BufferedReader file) throws IOException {
+<span class="fc" id="L122">        final List&lt;String&gt; list = this.analyzeString(file.readLine());</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">        if (&quot;Observations&quot;.equals(list.get(0))) {</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">            for (int i = 1; i &lt; list.size(); i++) {</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">                if (!context.addToObservations(list.get(i))) {</span>
+<span class="nc" id="L126">                    throw new IOException(&quot;Duplicated observation&quot;);</span>
+                }
+            }
+        } else {
+<span class="nc" id="L130">            throw new IOException(&quot;Invalid declaration of observations&quot;);</span>
+        }
+<span class="fc" id="L132">    }</span>
+
+    /**
+     * Read attributes from a file.
+     *
+     * The following format is respected:
+     *
+     * ~~~
+     * Attributes: a b c d e
+     * ~~~
+     *
+     * @param context a context to read
+     * @param file    a file
+     *
+     * @throws IOException When an IOException occurs
+     */
+    private void readAttributes(final Context context, final BufferedReader file) throws IOException {
+<span class="fc" id="L149">        final List&lt;String&gt; list = this.analyzeString(file.readLine());</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">        if (&quot;Attributes&quot;.equals(list.get(0))) {</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">            for (int i = 1; i &lt; list.size(); i++) {</span>
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">                if (!context.addToAttributes(list.get(i))) {</span>
+<span class="nc" id="L153">                    throw new IOException(&quot;Duplicated attribute&quot;);</span>
+                }
+            }
+        } else {
+<span class="nc" id="L157">            throw new IOException(&quot;Invalid declaration of attributes&quot;);</span>
+        }
+<span class="fc" id="L159">    }</span>
+
+    /**
+     * Read extension and intension from a file.
+     *
+     * The following format is respected:
+     *
+     * ~~~
+     * 1: a c
+     * 2: a b
+     * 3: b d e
+     * 4: c e
+     * ~~~
+     *
+     * @param context a context to read
+     * @param file    a file
+     *
+     * @throws IOException When an IOException occurs
+     */
+    private void readExtentIntent(final Context context, final BufferedReader file) throws IOException {
+        String line;
+        List&lt;String&gt; list;
+<span class="fc" id="L181">        line = file.readLine();</span>
+<span class="pc bpc" id="L182" title="1 of 4 branches missed.">        while (line != null &amp;&amp; !line.isEmpty()) {</span>
+<span class="fc" id="L183">            list = this.analyzeString(line);</span>
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">            if (!context.containsObservation(list.get(0))) {</span>
+<span class="nc" id="L185">                throw new IOException(&quot;Unexisting observation&quot;);</span>
+            }
+<span class="fc bfc" id="L187" title="All 2 branches covered.">            for (int i = 1; i &lt; list.size(); i++) {</span>
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">                if (!context.containsAttribute(list.get(i))) {</span>
+<span class="nc" id="L189">                    throw new IOException(&quot;Unexisting attribute&quot;);</span>
+                }
+                // Add the extent/intent for the current observation and current attribute
+<span class="fc" id="L192">                context.addExtentIntent(list.get(0), list.get(i));</span>
+            }
+<span class="fc" id="L194">            line = file.readLine();</span>
+        }
+<span class="fc" id="L196">    }</span>
+
+    /**
+     * Analyze a string.
+     *
+     * @param string line to analyze
+     *
+     * @return a list of string
+     */
+    private List&lt;String&gt; analyzeString(final String string) {
+<span class="fc" id="L206">        final Pattern definition = Pattern.compile(&quot;(?:(?:\&quot;(?&lt;quoted&gt;(?:[^\&quot;]|\\\&quot;)+)\&quot;)|(?&lt;simple&gt;[^ :\&quot;]+)):(?&lt;elements&gt;.*)&quot;);</span>
+<span class="fc" id="L207">        final Pattern elements = Pattern.compile(&quot;(?:\&quot;(?&lt;quoted&gt;(?:[^\&quot;]|\\\&quot;)+)\&quot;)|(?&lt;simple&gt;[^ :\&quot;]+)&quot;);</span>
+<span class="fc" id="L208">        final List&lt;String&gt; list = new ArrayList&lt;String&gt;();</span>
+        Matcher matcher;
+
+<span class="fc" id="L211">        matcher = definition.matcher(string);</span>
+<span class="pc bpc" id="L212" title="1 of 2 branches missed.">        if (matcher.find()) {</span>
+            // Get the first name (before the colon)
+<span class="fc" id="L214">            list.add(this.getElement(matcher));</span>
+<span class="fc" id="L215">            matcher = elements.matcher(matcher.group(&quot;elements&quot;));</span>
+<span class="fc bfc" id="L216" title="All 2 branches covered.">            while (matcher.find()) {</span>
+<span class="fc" id="L217">                list.add(this.getElement(matcher));</span>
+            }
+        }
+<span class="fc" id="L220">        return list;</span>
+    }
+
+    /**
+     * Get the element using the matcher.
+     *
+     * @param matcher the matcher
+     *
+     * @return the string
+     */
+    private String getElement(final Matcher matcher) {
+        String element;
+<span class="fc bfc" id="L232" title="All 2 branches covered.">        if (matcher.group(&quot;quoted&quot;) == null) {</span>
+<span class="fc" id="L233">            element = matcher.group(&quot;simple&quot;);</span>
+        } else {
+<span class="fc" id="L235">            element = matcher.group(&quot;quoted&quot;).replace(&quot;\\\&quot;&quot;, &quot;\&quot;&quot;).replace(&quot;\\n&quot;, &quot;\n&quot;).replace(&quot;\\t&quot;, &quot;\t&quot;);</span>
+        }
+<span class="fc" id="L237">        return element;</span>
+    }
+
+    /**
+     * Write a context to a file.
+     *
+     * The following format is respected:
+     *
+     * The list of observations separated by a space on the first line ; the
+     * list of attrbutes separated by a space on the second line ; then, for
+     * each observations o, the list of its intent on a line, written like o a1
+     * a2 ...
+     *
+     * ~~~
+     * Observations: 1 2 3
+     * Attributes: a b c d e
+     * 1: a c
+     * 2: a b
+     * 3: b d e
+     * 4: c e
+     * ~~~
+     *
+     * @param context a context to write
+     * @param file    a file
+     *
+     * @throws IOException When an IOException occurs
+     */
+    public void write(final Context context, final BufferedWriter file) throws IOException {
+<span class="fc" id="L265">        file.write(context.toString());</span>
+<span class="fc" id="L266">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

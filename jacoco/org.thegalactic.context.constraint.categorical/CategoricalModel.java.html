@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CategoricalModel.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lattices</a> &gt; <a href="index.source.html" class="el_package">org.thegalactic.context.constraint.categorical</a> &gt; <span class="el_source">CategoricalModel.java</span></div><h1>CategoricalModel.java</h1><pre class="source lang-java linenums">package org.thegalactic.context.constraint.categorical;
+
+/*
+ * CategoricalModel.java
+ *
+ * Copyright: 2016 The Galactic Organization, France
+ *
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
+ * This file is part of java-lattices.
+ * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
+ */
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Categorical Model.
+ */
+public final class CategoricalModel {
+
+    /**
+     * Instantiated.
+     */
+    private boolean instantiated;
+
+    /**
+     * Values.
+     */
+    private final List&lt;CategoricalAttribute&gt; attributes;
+
+    /**
+     * startIndex.
+     */
+    private final Map&lt;CategoricalAttribute, Integer&gt; startIndex;
+
+    /**
+     * Size.
+     */
+    private int size;
+
+    /**
+     * Factory method to construct a categorical model.
+     *
+     * @return a new CategoricalModel object
+     */
+    public static CategoricalModel create() {
+<span class="fc" id="L49">        return new CategoricalModel();</span>
+    }
+
+    /**
+     * This class is not designed to be publicly instantiated.
+     */
+<span class="fc" id="L55">    private CategoricalModel() {</span>
+<span class="fc" id="L56">        this.instantiated = false;</span>
+<span class="fc" id="L57">        this.startIndex = new HashMap&lt;CategoricalAttribute, Integer&gt;();</span>
+<span class="fc" id="L58">        this.attributes = new ArrayList&lt;CategoricalAttribute&gt;();</span>
+<span class="fc" id="L59">    }</span>
+
+    /**
+     * Add a new categorical attribute.
+     *
+     * @return a new added CategoricalAttribute
+     */
+    public CategoricalAttribute addAttribute() {
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        if (this.instantiated) {</span>
+<span class="fc" id="L68">            throw new IllegalStateException(&quot;This model has already been instantiated&quot;);</span>
+        } else {
+<span class="fc" id="L70">            final CategoricalAttribute attribute = CategoricalAttribute.create(this);</span>
+<span class="fc" id="L71">            this.attributes.add(attribute);</span>
+<span class="fc" id="L72">            return attribute;</span>
+        }
+    }
+
+    /**
+     * Get the collection of CategoricalAttribute.
+     *
+     * @return an iterable collection of CategoricalAttribute
+     */
+    public Iterable&lt;CategoricalAttribute&gt; getAttributes() {
+<span class="fc" id="L82">        return this.attributes;</span>
+    }
+
+    /**
+     * Set the model instantiated.
+     *
+     * @return this for chaining
+     */
+    CategoricalModel instantiate() {
+<span class="fc" id="L91">        int start = 0;</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">        for (final CategoricalAttribute attribute : this.attributes) {</span>
+<span class="fc" id="L93">            this.startIndex.put(attribute, start);</span>
+<span class="fc" id="L94">            start += attribute.size();</span>
+<span class="fc" id="L95">        }</span>
+<span class="fc" id="L96">        this.size = start;</span>
+<span class="fc" id="L97">        this.instantiated = true;</span>
+<span class="fc" id="L98">        return this;</span>
+    }
+
+    /**
+     * Get the instantiated flag.
+     *
+     * @return the instantiated flag
+     */
+    boolean isInstantiated() {
+<span class="fc" id="L107">        return this.instantiated;</span>
+    }
+
+    /**
+     * Get the number of attributes.
+     *
+     * @return the number of attributes
+     */
+    public int sizeAttributes() {
+<span class="fc" id="L116">        return this.attributes.size();</span>
+    }
+
+    /**
+     * Get the number of attributes.
+     *
+     * @return the number of attributes
+     */
+    public int sizeValues() {
+        int value;
+<span class="fc bfc" id="L126" title="All 2 branches covered.">        if (this.instantiated) {</span>
+<span class="fc" id="L127">            value = this.size;</span>
+        } else {
+<span class="fc" id="L129">            value = 0;</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">            for (final CategoricalAttribute attribute : this.attributes) {</span>
+<span class="fc" id="L131">                value += attribute.size();</span>
+<span class="fc" id="L132">            }</span>
+        }
+<span class="fc" id="L134">        return value;</span>
+    }
+
+    /**
+     * Get the index of the CategoricalValue.
+     *
+     * @param value CategoricalValue
+     *
+     * @return the index
+     */
+    public int indexOf(final CategoricalValue value) {
+<span class="fc bfc" id="L145" title="All 2 branches covered.">        if (this.equals(value.getModel())) {</span>
+<span class="fc" id="L146">            return value.index();</span>
+        } else {
+<span class="fc" id="L148">            throw new IllegalArgumentException(&quot;The CategoricalValue is not in this model&quot;);</span>
+        }
+    }
+
+    /**
+     * Get the startIndex index of this attribute in its model.
+     *
+     * @param attribute CategoricalAttribute
+     *
+     * @return the startIndex
+     */
+    public int startIndex(final CategoricalAttribute attribute) {
+<span class="fc bfc" id="L160" title="All 2 branches covered.">        if (this.equals(attribute.getModel())) {</span>
+            int start;
+<span class="fc bfc" id="L162" title="All 2 branches covered.">            if (this.instantiated) {</span>
+<span class="fc" id="L163">                start = this.startIndex.get(attribute);</span>
+            } else {
+<span class="fc" id="L165">                start = 0;</span>
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">                for (final CategoricalAttribute current : this.attributes) {</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">                    if (attribute.equals(current)) {</span>
+<span class="fc" id="L168">                        break;</span>
+                    } else {
+<span class="fc" id="L170">                        start += current.size();</span>
+                    }
+<span class="fc" id="L172">                }</span>
+            }
+<span class="fc" id="L174">            return start;</span>
+        } else {
+<span class="fc" id="L176">            throw new IllegalArgumentException(&quot;The CategoricalAttribute is not in this model&quot;);</span>
+        }
+    }
+
+    /**
+     * Returns a string representation of the object.
+     *
+     * @return a string representation of the object.
+     */
+    @Override
+    public String toString() {
+<span class="fc" id="L187">        return this.attributes.toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

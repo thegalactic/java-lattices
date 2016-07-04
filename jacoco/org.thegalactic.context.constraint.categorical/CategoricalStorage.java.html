@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CategoricalStorage.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lattices</a> &gt; <a href="index.source.html" class="el_package">org.thegalactic.context.constraint.categorical</a> &gt; <span class="el_source">CategoricalStorage.java</span></div><h1>CategoricalStorage.java</h1><pre class="source lang-java linenums">package org.thegalactic.context.constraint.categorical;
+
+/*
+ * CategoricalStorage.java
+ *
+ * Copyright: 2016 The Galactic Organization, France
+ *
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
+ * This file is part of java-lattices.
+ * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
+ */
+import java.util.BitSet;
+
+/**
+ * Categorical Storage.
+ */
+public final class CategoricalStorage {
+
+    /**
+     * Model.
+     */
+    private final CategoricalModel model;
+
+    /**
+     * Values.
+     */
+    private final BitSet values;
+
+    /**
+     * EXCEPTION_VALUE.
+     */
+    private static final String EXCEPTION_VALUE = &quot;The CategoricalValue is not in the model of the CategoricalStorage&quot;;
+
+    /**
+     * EXCEPTION_MODEL.
+     */
+    private static final String EXCEPTION_MODEL = &quot;CategoricalStorage objects must have the same model&quot;;
+
+    /**
+     * Create a CategoricalStorage.
+     *
+     * @param model Model of this storage
+     *
+     * @return a new CategoricalStorage
+     */
+    public static CategoricalStorage create(final CategoricalModel model) {
+<span class="fc" id="L48">        return new CategoricalStorage(model);</span>
+    }
+
+    /**
+     * This class is not designed to be publicly instantiated.
+     *
+     * @param model the underlying model
+     */
+<span class="fc" id="L56">    private CategoricalStorage(final CategoricalModel model) {</span>
+<span class="fc" id="L57">        this.model = model.instantiate();</span>
+<span class="fc" id="L58">        final int size = model.sizeValues();</span>
+<span class="fc" id="L59">        this.values = new BitSet(size);</span>
+<span class="fc" id="L60">        this.values.set(0, size);</span>
+<span class="fc" id="L61">    }</span>
+
+    /**
+     * Get truth value.
+     *
+     * @param value Value to get the truth value
+     *
+     * @return truth value
+     */
+    public boolean get(final CategoricalValue value) {
+<span class="fc bfc" id="L71" title="All 2 branches covered.">        if (this.model.equals(value.getModel())) {</span>
+<span class="fc" id="L72">            return this.values.get(value.index());</span>
+        } else {
+<span class="fc" id="L74">            throw new IllegalArgumentException(EXCEPTION_VALUE);</span>
+        }
+    }
+
+    /**
+     * Get truth value.
+     *
+     * @param value Value to set the truth value
+     * @param truth truth value to be set
+     *
+     * @return this for chaining
+     */
+    public CategoricalStorage set(final CategoricalValue value, final boolean truth) {
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        if (this.model.equals(value.getModel())) {</span>
+<span class="fc" id="L88">            this.values.set(value.index(), truth);</span>
+<span class="fc" id="L89">            return this;</span>
+        } else {
+<span class="fc" id="L91">            throw new IllegalArgumentException(EXCEPTION_VALUE);</span>
+        }
+    }
+
+    /**
+     * Reduce truth value.
+     *
+     * @param value CategoricalValue to reduce
+     * @param truth truth value
+     *
+     * @return this for chaining.
+     */
+    public CategoricalStorage reduce(final CategoricalValue value, final boolean truth) {
+<span class="fc bfc" id="L104" title="All 2 branches covered.">        if (this.model.equals(value.getModel())) {</span>
+<span class="fc" id="L105">            final int index = value.index();</span>
+<span class="fc bfc" id="L106" title="All 4 branches covered.">            this.values.set(index, truth &amp;&amp; this.values.get(index));</span>
+<span class="fc" id="L107">            return this;</span>
+        } else {
+<span class="fc" id="L109">            throw new IllegalArgumentException(EXCEPTION_VALUE);</span>
+        }
+    }
+
+    /**
+     * Extends truth value.
+     *
+     * @param value CategoricalValue to extend
+     * @param truth truth value
+     *
+     * @return this for chaining.
+     */
+    public CategoricalStorage extend(final CategoricalValue value, final boolean truth) {
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        if (this.model.equals(value.getModel())) {</span>
+<span class="fc" id="L123">            final int index = value.index();</span>
+<span class="fc bfc" id="L124" title="All 4 branches covered.">            this.values.set(index, truth || this.values.get(index));</span>
+<span class="fc" id="L125">            return this;</span>
+        } else {
+<span class="fc" id="L127">            throw new IllegalArgumentException(EXCEPTION_VALUE);</span>
+        }
+    }
+
+    /**
+     * Intersection.
+     *
+     * @param storage CategoricalStorage
+     *
+     * @return this for chaining.
+     *
+     * @throws IllegalArgumentException
+     */
+    public CategoricalStorage intersection(final CategoricalStorage storage) {
+<span class="fc bfc" id="L141" title="All 2 branches covered.">        if (this.model.equals(storage.model)) {</span>
+<span class="fc" id="L142">            this.values.and(storage.values);</span>
+        } else {
+<span class="fc" id="L144">            throw new IllegalArgumentException(EXCEPTION_MODEL);</span>
+        }
+<span class="fc" id="L146">        return this;</span>
+    }
+
+    /**
+     * Union.
+     *
+     * @param storage CategoricalStorage
+     *
+     * @return this for chaining.
+     *
+     * @throws IllegalArgumentException
+     */
+    public CategoricalStorage union(final CategoricalStorage storage) {
+<span class="fc bfc" id="L159" title="All 2 branches covered.">        if (this.model.equals(storage.model)) {</span>
+<span class="fc" id="L160">            this.values.or(storage.values);</span>
+        } else {
+<span class="fc" id="L162">            throw new IllegalArgumentException(EXCEPTION_MODEL);</span>
+        }
+<span class="fc" id="L164">        return this;</span>
+    }
+
+    /**
+     * Returns a String representation of this object.
+     *
+     * @return a string representation of this object
+     */
+    @Override
+    public String toString() {
+<span class="fc" id="L174">        final StringBuilder builder = new StringBuilder();</span>
+
+<span class="fc" id="L176">        builder.append('[');</span>
+
+<span class="fc" id="L178">        boolean firstAttribute = true;</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">        for (final CategoricalAttribute attribute : this.model.getAttributes()) {</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">            if (!firstAttribute) {</span>
+<span class="fc" id="L181">                builder.append(&quot;, &quot;);</span>
+            }
+<span class="fc" id="L183">            firstAttribute = false;</span>
+
+<span class="fc" id="L185">            builder.append('[');</span>
+
+<span class="fc" id="L187">            boolean firstValue = true;</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">            for (final CategoricalValue value : attribute.getValues()) {</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">                if (this.get(value)) {</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">                    if (!firstValue) {</span>
+<span class="fc" id="L191">                        builder.append(&quot;, &quot;);</span>
+                    }
+<span class="fc" id="L193">                    firstValue = false;</span>
+<span class="fc" id="L194">                    builder.append(value.toString());</span>
+                }
+<span class="fc" id="L196">            }</span>
+
+<span class="fc" id="L198">            builder.append(']');</span>
+<span class="fc" id="L199">        }</span>
+
+<span class="fc" id="L201">        builder.append(']');</span>
+
+<span class="fc" id="L203">        return builder.toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DGraphSerializerDot.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lattices</a> &gt; <a href="index.source.html" class="el_package">org.thegalactic.dgraph.io</a> &gt; <span class="el_source">DGraphSerializerDot.java</span></div><h1>DGraphSerializerDot.java</h1><pre class="source lang-java linenums">package org.thegalactic.dgraph.io;
+
+/*
+ * DGraphSerializerDot.java
+ *
+ * Copyright: 2010-2015 Karell Bertet, France
+ * Copyright: 2015-2016 The Galactic Organization, France
+ *
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
+ * This file is part of java-lattices.
+ * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
+ */
+import java.io.BufferedWriter;
+import java.io.IOException;
+
+import org.thegalactic.dgraph.ConcreteDGraph;
+import org.thegalactic.dgraph.Edge;
+import org.thegalactic.dgraph.Node;
+import org.thegalactic.io.Writer;
+
+/**
+ * This class defines the way for writing a graph to a text file.
+ *
+ * ![DGraphSerializerDot](DGraphSerializerDot.png)
+ *
+ * @param &lt;N&gt; Node content type
+ * @param &lt;E&gt; Edge content type
+ *
+ * @uml
+ *
+ * DGraphSerializerDot.png
+ *
+ * !include resources/org/thegalactic/dgraph/io/DGraphSerializerDot.iuml
+ * !include resources/org/thegalactic/io/Writer.iuml
+ *
+ * hide members show DGraphSerializerDot members class DGraphSerializerDot
+ * #LightCyan title DGraphSerializerDot UML graph
+ */
+public final class DGraphSerializerDot&lt;N, E&gt; implements Writer&lt;ConcreteDGraph&lt;N, E&gt;&gt; {
+
+    /**
+     * The singleton instance.
+     */
+<span class="fc" id="L45">    private static final DGraphSerializerDot INSTANCE = new DGraphSerializerDot();</span>
+
+    /**
+     * Return the singleton instance of this class.
+     *
+     * @return the singleton instance
+     */
+    public static DGraphSerializerDot getInstance() {
+<span class="fc" id="L53">        return INSTANCE;</span>
+    }
+
+    /**
+     * Register this class for writing .dot files.
+     */
+    public static void register() {
+<span class="fc" id="L60">        DGraphIOFactory.getInstance().registerWriter(DGraphSerializerDot.getInstance(), &quot;dot&quot;);</span>
+<span class="fc" id="L61">    }</span>
+
+    /**
+     * This class is not designed to be publicly instantiated.
+     */
+<span class="fc" id="L66">    private DGraphSerializerDot() {</span>
+<span class="fc" id="L67">    }</span>
+
+    /**
+     * Write a graph to a output stream.
+     *
+     * @param graph a graph to write
+     * @param file  a file
+     *
+     * @throws IOException When an IOException occurs
+     */
+    @Override
+    public void write(final ConcreteDGraph&lt;N, E&gt; graph, final BufferedWriter file) throws IOException {
+        // Writing start of graph
+<span class="fc" id="L80">        file.write(&quot;digraph G {&quot;);</span>
+<span class="fc" id="L81">        file.newLine();</span>
+<span class="fc" id="L82">        file.write(&quot;Graph [rankdir=BT]&quot;);</span>
+<span class="fc" id="L83">        file.newLine();</span>
+
+        // Writing nodes
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        for (final Node&lt;N&gt; node : graph.getNodes()) {</span>
+<span class="fc" id="L87">            file.write(String.valueOf(node.getIdentifier()));</span>
+<span class="fc" id="L88">            this.writeLabel(node.toString(), file);</span>
+<span class="fc" id="L89">            file.newLine();</span>
+<span class="fc" id="L90">        }</span>
+
+        // Writing edges
+<span class="fc bfc" id="L93" title="All 2 branches covered.">        for (final Edge&lt;N, E&gt; edge : graph.getEdges()) {</span>
+<span class="fc" id="L94">            file.write(String.valueOf(edge.getSource().getIdentifier()));</span>
+<span class="fc" id="L95">            file.write(&quot;-&gt;&quot;);</span>
+<span class="fc" id="L96">            file.write(String.valueOf(edge.getTarget().getIdentifier()));</span>
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">            if (edge.hasContent()) {</span>
+<span class="fc" id="L98">                this.writeLabel(edge.getContent().toString(), file);</span>
+            }
+<span class="fc" id="L100">            file.newLine();</span>
+<span class="fc" id="L101">        }</span>
+
+        // Writing end of graph
+<span class="fc" id="L104">        file.write(&quot;}&quot;);</span>
+<span class="fc" id="L105">    }</span>
+
+    /**
+     * Write a label to the dot file.
+     *
+     * @param label a label
+     * @param file  a file
+     *
+     * @throws IOException When an IOException occurs
+     */
+    private void writeLabel(final String label, final BufferedWriter file) throws IOException {
+<span class="fc" id="L116">        file.write(&quot; [label=\&quot;&quot;);</span>
+<span class="fc" id="L117">        file.write(label.replace(&quot;\&quot;&quot;, &quot;\\\&quot;&quot;));</span>
+<span class="fc" id="L118">        file.write(&quot;\&quot;]&quot;);</span>
+<span class="fc" id="L119">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CategoricalValue.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lattices</a> &gt; <a href="index.source.html" class="el_package">org.thegalactic.context.constraint.categorical</a> &gt; <span class="el_source">CategoricalValue.java</span></div><h1>CategoricalValue.java</h1><pre class="source lang-java linenums">package org.thegalactic.context.constraint.categorical;
+
+/*
+ * CategoricalValue.java
+ *
+ * Copyright: 2016 The Galactic Organization, France
+ *
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
+ * This file is part of java-lattices.
+ * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
+ */
+/**
+ * Categorical Value.
+ */
+public final class CategoricalValue {
+
+    /**
+     * Data.
+     */
+    private Object data;
+
+    /**
+     * Attribute.
+     */
+    private final CategoricalAttribute attribute;
+
+    /**
+     * Create a new CategoricalValue.
+     *
+     * @param data      Object
+     * @param attribute CategoricalAttribute
+     *
+     * @return a new CategoricalValue
+     */
+    static CategoricalValue create(final Object data, final CategoricalAttribute attribute) {
+<span class="fc" id="L37">        return new CategoricalValue(data, attribute);</span>
+    }
+
+    /**
+     * This class is nod designed to be publicly instantiated.
+     *
+     * @param object    Object
+     * @param attribute CategoricalAttribute
+     */
+<span class="fc" id="L46">    private CategoricalValue(final Object object, final CategoricalAttribute attribute) {</span>
+<span class="fc" id="L47">        this.setData(object);</span>
+<span class="fc" id="L48">        this.attribute = attribute;</span>
+<span class="fc" id="L49">    }</span>
+
+    /**
+     * Get the underlying attribute.
+     *
+     * @return the underlying attribute
+     */
+    public CategoricalAttribute getAttribute() {
+<span class="fc" id="L57">        return this.attribute;</span>
+    }
+
+    /**
+     * Get the underlying model.
+     *
+     * @return the underlying model
+     */
+    public CategoricalModel getModel() {
+<span class="fc" id="L66">        return this.attribute.getModel();</span>
+    }
+
+    /**
+     * Get the underlying data.
+     *
+     * @return the underlying data
+     */
+    public Object getData() {
+<span class="fc" id="L75">        return this.data;</span>
+    }
+
+    /**
+     * Set the underlying data.
+     *
+     * @param data the underlying data
+     *
+     * @return this for chaining
+     */
+    public CategoricalValue setData(final Object data) {
+<span class="fc" id="L86">        this.data = data;</span>
+<span class="fc" id="L87">        return this;</span>
+    }
+
+    /**
+     * Get the index of this value relatively to its model.
+     *
+     * @return the index of this value
+     */
+    public int index() {
+<span class="fc" id="L96">        return this.attribute.startIndex() + this.attribute.indexOf(this);</span>
+    }
+
+    /**
+     * Returns a string representation of the data.
+     *
+     * @return a string representation of the data.
+     */
+    @Override
+    public String toString() {
+<span class="fc" id="L106">        final String string = this.data.toString();</span>
+<span class="fc bfc" id="L107" title="All 4 branches covered.">        if (string.contains(&quot; &quot;) || string.contains(&quot;\&quot;&quot;)) {</span>
+<span class="fc" id="L108">            return &quot;\&quot;&quot; + string.replace(&quot;\&quot;&quot;, &quot;\\\&quot;&quot;) + &quot;\&quot;&quot;;</span>
+        } else {
+<span class="fc" id="L110">            return string;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

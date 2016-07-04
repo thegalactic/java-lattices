@@ -1,0 +1,12 @@
+package org.thegalactic.context.io {
+    class ContextSerializerBurmeister {
+    	-{static}ContextSerializerBurmeister instance
+        +void read(Context context, BufferedReader file)
+        +void write(Context context, BufferedWriter file)
+        +{static}ContextSerializerBurmeister getInstance()
+        +{static}void register()
+    }
+
+    org.thegalactic.io.Reader <|-- ContextSerializerBurmeister
+    org.thegalactic.io.Writer <|-- ContextSerializerBurmeister
+}

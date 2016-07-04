@@ -1,0 +1,13 @@
+package org.thegalactic.lattice.io {
+    class ImplicationalSystemSerializerText {
+    	-{static}ImplicationalSystemSerializerText instance
+        +void read(ImplicationalSystem system, BufferedReader file)
+        +void write(ImplicationalSystem system, BufferedWriter file)
+        +{static}ImplicationalSystemSerializerText getInstance()
+        +{static}void register()
+    }
+
+    org.thegalactic.io.Reader <|-- ImplicationalSystemSerializerText
+    org.thegalactic.io.Writer <|-- ImplicationalSystemSerializerText
+
+}

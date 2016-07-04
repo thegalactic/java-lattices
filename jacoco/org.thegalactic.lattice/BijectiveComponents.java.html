@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BijectiveComponents.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lattices</a> &gt; <a href="index.source.html" class="el_package">org.thegalactic.lattice</a> &gt; <span class="el_source">BijectiveComponents.java</span></div><h1>BijectiveComponents.java</h1><pre class="source lang-java linenums">package org.thegalactic.lattice;
+
+/*
+ * BijectiveComponents.java
+ *
+ * Copyright: 2010-2015 Karell Bertet, France
+ * Copyright: 2015-2016 The Galactic Organization, France
+ *
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
+ * This file is part of java-lattices.
+ * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
+ */
+import org.thegalactic.rule.ImplicationalSystem;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Date;
+import java.util.TreeSet;
+
+import org.thegalactic.context.Context;
+import org.thegalactic.dgraph.ConcreteDGraph;
+import org.thegalactic.util.ComparableSet;
+
+/**
+ * This class generates bijective components issued from lattice theory for a
+ * specified closure system.
+ *
+ * Bijective components are: closed set lattice or concept lattice, reduced
+ * lattice, reduced context, canonical direct basis, minimal generators and
+ * canonical basis, dependency graph.
+ *
+ * A closure system is described by the abstract class {@link ClosureSystem}. In
+ * this package, a closure system can be instancied by an implicational system
+ * described by class {@link ImplicationalSystem}) or a context described by
+ * class {@link Context}).
+ *
+ * This class provides a constructor, and only two methods: the method
+ * {@link #compute} generates all the bijective components of the specified
+ * closure system; and the method {@link #save} saves theses components in
+ * files.
+ *
+ * This class can be used as follows:
+ *
+ * ~~~Java
+ * BijectiveComponents bc = new BijectiveComponents(initialClosureSystem);
+ * bc.compute();
+ * bc.save(dirString,nameString);
+ * ~~~
+ *
+ * ![BijectiveComponents](BijectiveComponents.png)
+ *
+ * @uml BijectiveComponents.png
+ * !include resources/org/thegalactic/lattice/BijectiveComponents.iuml
+ * !include resources/org/thegalactic/lattice/ClosureSystem.iuml
+ *
+ * hide members
+ * show BijectiveComponents members
+ * class BijectiveComponents #LightCyan
+ * title BijectiveComponents UML graph
+ */
+public class BijectiveComponents {
+
+    /*
+     * ------------- FIELDS ------------------
+     */
+    /**
+     * The initial closure system.
+     */
+    private ClosureSystem closureSystem;
+
+    /**
+     * The closed set lattice of the closure system when closure system is an
+     * implicational system.
+     *
+     * The concept lattice of the closure system when closure system is a
+     * context
+     */
+<span class="fc" id="L80">    private ConceptLattice lattice = null;</span>
+
+    /**
+     * The reduced lattice.
+     */
+<span class="fc" id="L85">    private Lattice reducedLattice = null;</span>
+
+    /**
+     * The dependency graph of the reduced lattice.
+     */
+<span class="fc" id="L90">    private ConcreteDGraph dependencyGraph = null;</span>
+
+    /**
+     * The minimal generators of the reduced lattice.
+     */
+<span class="fc" id="L95">    private TreeSet&lt;ComparableSet&gt; minimalGenerators = null;</span>
+
+    /**
+     * The canonical direct basis of the reduced lattice.
+     */
+<span class="fc" id="L100">    private ImplicationalSystem canonicalDirectBasis = null;</span>
+
+    /**
+     * The canonical basis of the reduced lattice.
+     */
+<span class="fc" id="L105">    private ImplicationalSystem canonicalBasis = null;</span>
+
+    /**
+     * The table of the reduced lattice.
+     */
+<span class="fc" id="L110">    private Context table = null;</span>
+
+    /**
+     * Constructs this component with the specified Closure System as initial
+     * closure system.
+     *
+     * @param closureSystem initial closure system
+     */
+<span class="fc" id="L118">    public BijectiveComponents(ClosureSystem closureSystem) {</span>
+<span class="fc" id="L119">        this.initialise(closureSystem);</span>
+<span class="fc" id="L120">    }</span>
+
+    /**
+     * Initialise the closure system.
+     *
+     * @param closureSystem initial closure system
+     *
+     * @return this for chaining
+     */
+    public BijectiveComponents initialise(ClosureSystem closureSystem) {
+<span class="fc" id="L130">        this.closureSystem = closureSystem;</span>
+<span class="fc" id="L131">        this.lattice = null;</span>
+<span class="fc" id="L132">        this.reducedLattice = null;</span>
+<span class="fc" id="L133">        this.table = null;</span>
+<span class="fc" id="L134">        this.dependencyGraph = null;</span>
+<span class="fc" id="L135">        this.minimalGenerators = null;</span>
+<span class="fc" id="L136">        this.canonicalDirectBasis = null;</span>
+<span class="fc" id="L137">        this.canonicalBasis = null;</span>
+<span class="fc" id="L138">        return this;</span>
+    }
+
+    /**
+     * Generates all the bijective components included in this component issued
+     * from the initial closure system `closureSystem`.
+     *
+     * The closed set lattice is generated and obtained by
+     *
+     * ~~~Java
+     * this.getClosureSystem().lattice();
+     * ~~~
+     *
+     * The reduced lattice is obtained by
+     *
+     * ~~~Java
+     * this.getLattice().getIrreduciblesReduction();
+     * ~~~
+     *
+     * The reduced table is obtained by
+     *
+     * ~~~Java
+     * this.getReducedLattice().getTable();
+     * ~~~
+     *
+     * The dependency graph is obtained by
+     *
+     * ~~~Java
+     * this.getReducedLattice().getDependencyGraph();
+     * ~~~
+     *
+     * Minimal generators are obtained by
+     *
+     * ~~~Java
+     * this.getReducedLattice().getMinimalGenerators();
+     * ~~~
+     *
+     * The canonical direct basis is obtained by
+     *
+     * ~~~Java
+     * this.getReducedLattice().getCanonicalDirectBasis();
+     * ~~~
+     *
+     * The canonical basis is obtained by
+     *
+     * ~~~Java
+     * (new
+     * ImplicationalSystem(this.canonicalDirectBasis)).makeCanonicalBasis();
+     * ~~~
+     *
+     * @return time of computation
+     */
+    public long compute() {
+<span class="fc" id="L191">        this.initialise(closureSystem);</span>
+<span class="fc" id="L192">        long debut = new Date().getTime();</span>
+<span class="fc" id="L193">        this.getLattice();</span>
+<span class="fc" id="L194">        this.getReducedLattice();</span>
+<span class="fc" id="L195">        this.getTable();</span>
+<span class="fc" id="L196">        this.getDependencyGraph();</span>
+<span class="fc" id="L197">        this.getMinimalGenerators();</span>
+<span class="fc" id="L198">        this.getCanonicalDirectBasis();</span>
+<span class="fc" id="L199">        this.getCanonicalBasis();</span>
+<span class="fc" id="L200">        long fin = new Date().getTime();</span>
+<span class="fc" id="L201">        return fin - debut;</span>
+    }
+
+    /**
+     * Saves all the bijective components included in this component in files
+     * saved in the specified directory. A global description is saved in file
+     * `name+&quot;Readme.txt&quot;`.
+     *
+     * The specified name is used to defined a name for each file.
+     *
+     * @param directory location to save file
+     * @param name      name of the files
+     *
+     * @throws IOException When an IOException occurs
+     */
+    public void save(String directory, String name) throws IOException {
+        // create the directory
+<span class="fc" id="L218">        String realDirectory = directory + File.separator + name + &quot;BijectiveComponents&quot; + File.separator;</span>
+<span class="fc" id="L219">        File f = new File(realDirectory);</span>
+<span class="fc" id="L220">        f.mkdir();</span>
+<span class="fc" id="L221">        realDirectory += name;</span>
+<span class="fc" id="L222">        BufferedWriter file = new BufferedWriter(new FileWriter(realDirectory + &quot;Readme.txt&quot;));</span>
+        // saves the inital closure system
+<span class="fc" id="L224">        String nameInit = realDirectory + &quot;InitialClosureSystem.txt&quot;;</span>
+<span class="fc" id="L225">        this.closureSystem.save(nameInit);</span>
+<span class="fc" id="L226">        String newLine = System.getProperty(&quot;line.separator&quot;);</span>
+<span class="fc" id="L227">        file.write(&quot;-&gt; Initial closure system saved in &quot; + nameInit + &quot;: &quot; + newLine);</span>
+<span class="fc" id="L228">        file.write(this.closureSystem.toString() + newLine);</span>
+        // saves the closed set lattice
+<span class="fc" id="L230">        String nameLattice = realDirectory + &quot;Lattice.dot&quot;;</span>
+<span class="fc" id="L231">        this.getLattice().save(nameLattice);</span>
+<span class="fc" id="L232">        file.write(&quot;-&gt; Closed set or concept lattice saved in &quot; + nameLattice + newLine);</span>
+        // saves the reduced lattice
+<span class="fc" id="L234">        String nameReducedLattice = realDirectory + &quot;ReducedLattice.dot&quot;;</span>
+<span class="fc" id="L235">        this.getReducedLattice().save(nameReducedLattice);</span>
+<span class="fc" id="L236">        file.write(&quot;-&gt; Reduced lattice saved in &quot; + nameReducedLattice + newLine);</span>
+        // saves the reduced table
+<span class="fc" id="L238">        String nameTable = realDirectory + &quot;Table.txt&quot;;</span>
+<span class="fc" id="L239">        this.getTable().save(nameTable);</span>
+<span class="fc" id="L240">        file.write(&quot;-&gt; Table of the reduced lattice saved in &quot; + nameTable + newLine);</span>
+<span class="fc" id="L241">        file.write(this.table.toString() + newLine);</span>
+        // saves the canonical basis
+<span class="fc" id="L243">        String nameCB = realDirectory + &quot;CanonicalBasis.txt&quot;;</span>
+<span class="fc" id="L244">        this.getCanonicalBasis().save(nameCB);</span>
+<span class="fc" id="L245">        file.write(&quot;-&gt; Canonical basis saved in &quot; + nameCB + &quot;: &quot; + newLine);</span>
+<span class="fc" id="L246">        file.write(this.canonicalBasis.toString() + newLine);</span>
+        // saves the canonical direct basis
+<span class="fc" id="L248">        String nameCDB = realDirectory + &quot;CanonicalDirectBasis.txt&quot;;</span>
+<span class="fc" id="L249">        this.getCanonicalDirectBasis().save(nameCDB);</span>
+<span class="fc" id="L250">        file.write(&quot;-&gt; Canonical direct basis of the reduced lattice saved in &quot; + nameCDB + &quot;: &quot; + newLine);</span>
+<span class="fc" id="L251">        file.write(this.canonicalDirectBasis.toString() + newLine);</span>
+        // saves the dependency graph
+<span class="fc" id="L253">        String nameODGraph = realDirectory + &quot;DependencyGraph.dot&quot;;</span>
+<span class="fc" id="L254">        this.getDependencyGraph().save(nameODGraph);</span>
+<span class="fc" id="L255">        file.write(&quot;-&gt; Dependency Graph  of the reduced lattice saved in &quot; + nameODGraph + &quot; &quot; + newLine);</span>
+        // saves the minimal generators
+<span class="fc" id="L257">        file.write(&quot;-&gt; Minimal generators  of the reduced lattice are &quot; + this.minimalGenerators + newLine);</span>
+<span class="fc" id="L258">        file.close();</span>
+<span class="fc" id="L259">    }</span>
+
+    /**
+     * Returns the closure system of this component.
+     *
+     * @return closure system of this component
+     */
+    public ClosureSystem getClosureSystem() {
+<span class="fc" id="L267">        return closureSystem;</span>
+    }
+
+    /**
+     * Set the closure system of this component.
+     *
+     * @param closureSystem used to define field of this component
+     *
+     * @return this for chaining
+     */
+    protected BijectiveComponents setClosureSystem(ClosureSystem closureSystem) {
+<span class="fc" id="L278">        this.closureSystem = closureSystem;</span>
+<span class="fc" id="L279">        return this;</span>
+    }
+
+    /**
+     * Returns the lattice of this component.
+     *
+     * @return lattice of this component
+     */
+    public ConceptLattice getLattice() {
+<span class="fc bfc" id="L288" title="All 2 branches covered.">        if (lattice == null) {</span>
+<span class="fc" id="L289">            lattice = this.closureSystem.lattice();</span>
+        }
+<span class="fc" id="L291">        return lattice;</span>
+    }
+
+    /**
+     * Set the lattice of this component.
+     *
+     * @param lattice used to define field of this component
+     *
+     * @return this for chaining
+     */
+    protected BijectiveComponents setLattice(ConceptLattice lattice) {
+<span class="fc" id="L302">        this.lattice = lattice;</span>
+<span class="fc" id="L303">        return this;</span>
+    }
+
+    /**
+     * Returns the reduced lattice of this component.
+     *
+     * @return reduced lattice of this component
+     */
+    public Lattice getReducedLattice() {
+<span class="fc bfc" id="L312" title="All 2 branches covered.">        if (reducedLattice == null) {</span>
+<span class="fc" id="L313">            reducedLattice = this.getLattice().getIrreduciblesReduction();</span>
+        }
+<span class="fc" id="L315">        return reducedLattice;</span>
+    }
+
+    /**
+     * Set the reduced lattice of this component.
+     *
+     * @param reducedLattice used to define field of this component
+     *
+     * @return this for chaining
+     */
+    protected BijectiveComponents setReducedLattice(Lattice reducedLattice) {
+<span class="fc" id="L326">        this.reducedLattice = reducedLattice;</span>
+<span class="fc" id="L327">        return this;</span>
+    }
+
+    /**
+     * Returns the dependency graph of this component.
+     *
+     * @return dependencyGraph dependency graph of this component
+     */
+    public ConcreteDGraph getDependencyGraph() {
+<span class="fc bfc" id="L336" title="All 2 branches covered.">        if (dependencyGraph == null) {</span>
+            // FIXME: do we use getLattice or getReducedLattice ?
+<span class="fc" id="L338">            dependencyGraph = this.getReducedLattice().getDependencyGraph();</span>
+        }
+<span class="fc" id="L340">        return dependencyGraph;</span>
+    }
+
+    /**
+     * Set the dependency graph of this component.
+     *
+     * @param dependencyGraph used to define field of this component
+     *
+     * @return this for chaining
+     */
+    protected BijectiveComponents setDependencyGraph(ConcreteDGraph dependencyGraph) {
+<span class="fc" id="L351">        this.dependencyGraph = dependencyGraph;</span>
+<span class="fc" id="L352">        return this;</span>
+    }
+
+    /**
+     * Returns the minimal generators of this component.
+     *
+     * @return minimal generators of this component
+     */
+    public TreeSet&lt;ComparableSet&gt; getMinimalGenerators() {
+<span class="fc bfc" id="L361" title="All 2 branches covered.">        if (minimalGenerators == null) {</span>
+            // FIXME: do we use getLattice or getReducedLattice ?
+<span class="fc" id="L363">            minimalGenerators = this.getReducedLattice().getMinimalGenerators();</span>
+        }
+<span class="fc" id="L365">        return minimalGenerators;</span>
+    }
+
+    /**
+     * Returns the canonical direct basis of this component.
+     *
+     * @return the canonical direct basis of this component
+     */
+    public ImplicationalSystem getCanonicalDirectBasis() {
+<span class="fc bfc" id="L374" title="All 2 branches covered.">        if (canonicalDirectBasis == null) {</span>
+            // FIXME: do we use getLattice or getReducedLattice ?
+<span class="fc" id="L376">            canonicalDirectBasis = this.getReducedLattice().getCanonicalDirectBasis();</span>
+        }
+<span class="fc" id="L378">        return canonicalDirectBasis;</span>
+    }
+
+    /**
+     * Returns the canonical basis of this component.
+     *
+     * @return the canonical basis of this component
+     */
+    public ImplicationalSystem getCanonicalBasis() {
+<span class="fc bfc" id="L387" title="All 2 branches covered.">        if (canonicalBasis == null) {</span>
+<span class="fc" id="L388">            canonicalBasis = new ImplicationalSystem(this.getCanonicalDirectBasis());</span>
+<span class="fc" id="L389">            canonicalBasis.makeCanonicalBasis();</span>
+        }
+<span class="fc" id="L391">        return canonicalBasis;</span>
+    }
+
+    /**
+     * Returns the Table of this component.
+     *
+     * @return table of this component
+     */
+    public Context getTable() {
+<span class="fc bfc" id="L400" title="All 2 branches covered.">        if (table == null) {</span>
+            // FIXME: do we use getLattice or getReducedLattice ?
+<span class="fc" id="L402">            table = this.getReducedLattice().getTable();</span>
+        }
+<span class="fc" id="L404">        return table;</span>
+    }
+
+    /**
+     * Set the minimal generators of this component.
+     *
+     * @param minimalGenerators used to define field of this component
+     *
+     * @return this for chaining
+     */
+    protected BijectiveComponents setMinimalGenerators(TreeSet&lt;ComparableSet&gt; minimalGenerators) {
+<span class="fc" id="L415">        this.minimalGenerators = minimalGenerators;</span>
+<span class="fc" id="L416">        return this;</span>
+    }
+
+    /**
+     * Set the canonical direct basis of this component.
+     *
+     * @param canonicalDirectBasis used to define field of this component
+     *
+     * @return return this for chaining
+     */
+    protected BijectiveComponents setCanonicalDirectBasis(ImplicationalSystem canonicalDirectBasis) {
+<span class="fc" id="L427">        this.canonicalDirectBasis = canonicalDirectBasis;</span>
+<span class="fc" id="L428">        return this;</span>
+    }
+
+    /**
+     * Set the canonical basis of this component.
+     *
+     * @param canonicalBasis used to define field of this component
+     *
+     * @return this for chaining
+     */
+    protected BijectiveComponents setCanonicalBasis(ImplicationalSystem canonicalBasis) {
+<span class="fc" id="L439">        this.canonicalBasis = canonicalBasis;</span>
+<span class="fc" id="L440">        return this;</span>
+    }
+
+    /**
+     * Set the Table of this component.
+     *
+     * @param table used to define field of this component
+     *
+     * @return this for chaining
+     */
+    protected BijectiveComponents setTable(Context table) {
+<span class="fc" id="L451">        this.table = table;</span>
+<span class="fc" id="L452">        return this;</span>
+    }
+
+    /**
+     * Returns the informativ generic basis public IS getApproximativBasis () {
+     * IS IGB = new IS(this.canonicalDirectBasis); IS tmp = new
+     * IS(this.canonicalDirectBasis); for (Rule r : tmp.getRules()) { TreeSet
+     * premise = new TreeSet(r.getPremise()); Concept c = new
+     * Concept(this.closure(premise),false); for (TreeSet conclusion :
+     * this.immediateSuccessors(c)) { TreeSet concl = new TreeSet(conclusion);
+     * conclusion.removeAll(premise); IGB.addRule(new Rule(premise,concl)); } }
+     * return IGB; }
+     *
+     */
+} // end of BijectiveComponents
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

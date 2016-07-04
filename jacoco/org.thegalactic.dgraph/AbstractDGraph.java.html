@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractDGraph.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lattices</a> &gt; <a href="index.source.html" class="el_package">org.thegalactic.dgraph</a> &gt; <span class="el_source">AbstractDGraph.java</span></div><h1>AbstractDGraph.java</h1><pre class="source lang-java linenums">package org.thegalactic.dgraph;
+
+/*
+ * AbstractDGraph.java
+ *
+ * Copyright: 2016 The Galactic Organization, France
+ *
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
+ * This file is part of java-lattices.
+ * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
+ */
+import java.io.IOException;
+import java.util.AbstractSet;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
+import org.thegalactic.dgraph.io.DGraphIOFactory;
+import org.thegalactic.io.Filer;
+
+/**
+ * AbstractDGraph.
+ *
+ * @param &lt;N&gt; Node content type
+ * @param &lt;E&gt; Edge content type
+ */
+public abstract class AbstractDGraph&lt;N, E&gt; implements DGraph&lt;N, E&gt; {
+
+    /**
+     * Basic constructor.
+     */
+    protected AbstractDGraph() {
+<span class="fc" id="L37">        super();</span>
+<span class="fc" id="L38">    }</span>
+
+    /**
+     * Returns a String representation of this component.
+     *
+     * @return the string representation
+     */
+    @Override
+    public final String toString() {
+<span class="fc" id="L47">        final StringBuilder nodes = new StringBuilder();</span>
+<span class="fc" id="L48">        nodes.append(this.sizeNodes()).append(&quot; Nodes: {&quot;);</span>
+<span class="fc" id="L49">        final StringBuilder edges = new StringBuilder();</span>
+<span class="fc" id="L50">        edges.append(this.sizeEdges()).append(&quot; Edges: {&quot;);</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        for (final Node&lt;N&gt; node : this.getNodes()) {</span>
+<span class="fc" id="L52">            nodes.append(node.toString()).append(',');</span>
+<span class="fc" id="L53">        }</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">        for (final Edge&lt;N, E&gt; edge : this.getEdges()) {</span>
+<span class="fc" id="L55">            edges.append(edge.toString()).append(',');</span>
+<span class="fc" id="L56">        }</span>
+<span class="fc" id="L57">        final String newLine = System.getProperty(&quot;line.separator&quot;);</span>
+<span class="fc" id="L58">        nodes.append('}').append(newLine).append(edges).append('}').append(newLine);</span>
+<span class="fc" id="L59">        return nodes.toString();</span>
+    }
+
+
+    /**
+     * Save the description of this component in a file whose name is specified.
+     *
+     * @param filename the name of the file
+     *
+     * @throws IOException When an IOException occurs
+     */
+    @Override
+    public void save(final String filename) throws IOException {
+<span class="fc" id="L72">        Filer.getInstance().save(this, DGraphIOFactory.getInstance(), filename);</span>
+<span class="fc" id="L73">    }</span>
+
+
+    /*
+     * --------------- GRAPH HANDLING METHODS ------------
+     */
+    /**
+     * Returns the sinks of this component.
+     *
+     * @return the sinks
+     */
+    @Override
+    public final SortedSet&lt;Node&lt;N&gt;&gt; getSinks() {
+<span class="fc" id="L86">        return new Sinks(this);</span>
+    }
+
+    /**
+     * Returns the wells of this component.
+     *
+     * @return the wells
+     */
+    @Override
+    public final SortedSet&lt;Node&lt;N&gt;&gt; getWells() {
+<span class="fc" id="L96">        return new Wells(this);</span>
+    }
+
+    /**
+     * Check if this component is acyclic.
+     *
+     * @return true if the component is acyclic
+     */
+    public final boolean isAcyclic() {
+<span class="fc bfc" id="L105" title="All 2 branches covered.">        return this.topologicalSort().size() == this.sizeNodes();</span>
+    }
+
+    /**
+     * Returns a topological sort of the node of this component.
+     *
+     * This topological sort is a sort on all the nodes according to their
+     * successors. If the graph is not acyclic, some nodes don't belong to the
+     * sort. This treatment is performed in O(n+m), where n corresponds to the
+     * number of nodes, and m corresponds to the number of edges.
+     *
+     * @return the nodes
+     */
+    public final List&lt;Node&lt;N&gt;&gt; topologicalSort() {
+<span class="fc" id="L119">        final TreeSet&lt;Node&lt;N&gt;&gt; sinks = new TreeSet&lt;Node&lt;N&gt;&gt;(this.getSinks());</span>
+        // initialise a map with the number of predecessors (value) for each node (key);
+<span class="fc" id="L121">        final TreeMap&lt;Node&lt;N&gt;, Integer&gt; size = new TreeMap&lt;Node&lt;N&gt;, Integer&gt;();</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        for (final Node&lt;N&gt; node : this.getNodes()) {</span>
+<span class="fc" id="L123">            size.put(node, this.getPredecessorNodes(node).size());</span>
+<span class="fc" id="L124">        }</span>
+<span class="fc" id="L125">        final List&lt;Node&lt;N&gt;&gt; sort = new ArrayList&lt;Node&lt;N&gt;&gt;();</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">        while (!sinks.isEmpty()) {</span>
+<span class="fc" id="L127">            final Node&lt;N&gt; node = sinks.pollFirst();</span>
+<span class="fc" id="L128">            sort.add(node);</span>
+            // updating of the set min by considering the successors of node
+<span class="fc bfc" id="L130" title="All 2 branches covered.">            for (final Node&lt;N&gt; successor : this.getSuccessorNodes(node)) {</span>
+<span class="fc" id="L131">                final int newSize = size.get(successor) - 1;</span>
+<span class="fc" id="L132">                size.put(successor, newSize);</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">                if (newSize == 0) {</span>
+<span class="fc" id="L134">                    sinks.add(successor);</span>
+                }
+<span class="fc" id="L136">            }</span>
+<span class="fc" id="L137">        }</span>
+<span class="fc" id="L138">        return sort;</span>
+    }
+
+    /**
+     * AbstractEnds.
+     */
+    private abstract class AbstractEnds extends AbstractSet&lt;Node&lt;N&gt;&gt; implements SortedSet&lt;Node&lt;N&gt;&gt; {
+
+        /**
+         * The underlying graph.
+         */
+        private final AbstractDGraph graph;
+
+        /**
+         * Constructs a sorted set of the edges source a graph.
+         *
+         * @param graph A DGraph
+         */
+<span class="fc" id="L156">        protected AbstractEnds(final AbstractDGraph graph) {</span>
+<span class="fc" id="L157">            super();</span>
+<span class="fc" id="L158">            this.graph = graph;</span>
+<span class="fc" id="L159">        }</span>
+
+        /**
+         * Get the underlying graph.
+         *
+         * @return the graph
+         */
+        protected final AbstractDGraph getGraph() {
+<span class="fc" id="L167">            return this.graph;</span>
+        }
+
+        /**
+         * Implements the SortedSet interface.
+         *
+         * @return the first edge
+         */
+        public final Node&lt;N&gt; first() {
+<span class="nc" id="L176">            throw new UnsupportedOperationException();</span>
+        }
+
+        /**
+         * Implements the SortedSet interface.
+         *
+         * @return the last edge
+         */
+        public final Node&lt;N&gt; last() {
+<span class="nc" id="L185">            throw new UnsupportedOperationException();</span>
+        }
+
+        /**
+         * Implements the SortedSet interface.
+         *
+         * @param node the to node
+         *
+         * @return The head set
+         *
+         * @throws UnsupportedOperationException
+         */
+        public final SortedSet&lt;Node&lt;N&gt;&gt; headSet(final Node&lt;N&gt; node) {
+<span class="nc" id="L198">            throw new UnsupportedOperationException();</span>
+        }
+
+        /**
+         * Implements the SortedSet interface.
+         *
+         * @param node the source node
+         *
+         * @return The tail set
+         *
+         * @throws UnsupportedOperationException
+         */
+        public final SortedSet&lt;Node&lt;N&gt;&gt; tailSet(final Node&lt;N&gt; node) {
+<span class="nc" id="L211">            throw new UnsupportedOperationException();</span>
+        }
+
+        /**
+         * Implements the SortedSet interface.
+         *
+         * @param fromNode the source node
+         * @param toNode   the to node
+         *
+         * @return The sub set
+         *
+         * @throws UnsupportedOperationException
+         */
+        public final SortedSet&lt;Node&lt;N&gt;&gt; subSet(final Node&lt;N&gt; fromNode, final Node&lt;N&gt; toNode) {
+<span class="nc" id="L225">            throw new UnsupportedOperationException();</span>
+        }
+
+        /**
+         * Implements the SortedSet interface.
+         *
+         * @return null
+         */
+        public final Comparator&lt;? super Node&lt;N&gt;&gt; comparator() {
+<span class="fc" id="L234">            return null;</span>
+        }
+
+        /**
+         * Implements the AbstractCollection class.
+         *
+         * @return the size of the collection
+         */
+        public final int size() {
+<span class="fc" id="L243">            int size = 0;</span>
+<span class="fc" id="L244">            final Iterator iterator = this.iterator();</span>
+<span class="fc bfc" id="L245" title="All 2 branches covered.">            while (iterator.hasNext()) {</span>
+<span class="fc" id="L246">                size++;</span>
+<span class="fc" id="L247">                iterator.next();</span>
+            }
+<span class="fc" id="L249">            return size;</span>
+        }
+
+    }
+
+    /**
+     * AbstractEndsIterator.
+     */
+    private abstract class AbstractEndsIterator implements Iterator&lt;Node&lt;N&gt;&gt; {
+
+        /**
+         * The nodes iterator.
+         */
+        private final Iterator&lt;Node&lt;N&gt;&gt; nodesIterator;
+
+        /**
+         * The sinks object.
+         */
+        private final AbstractEnds ends;
+
+        /**
+         * The next sink.
+         */
+        private Node&lt;N&gt; next;
+
+        /**
+         * The hasNext flag.
+         */
+        private boolean hasNext;
+
+        /**
+         * Constructs the iterator source a set of sinks.
+         *
+         * @param ends The ends.
+         */
+<span class="fc" id="L284">        protected AbstractEndsIterator(final AbstractEnds ends) {</span>
+<span class="fc" id="L285">            super();</span>
+<span class="fc" id="L286">            this.ends = ends;</span>
+<span class="fc" id="L287">            this.nodesIterator = ends.getGraph().getNodes().iterator();</span>
+<span class="fc" id="L288">            this.prepareNext();</span>
+<span class="fc" id="L289">        }</span>
+
+        /**
+         * Get the ends.
+         *
+         * @return the ends
+         */
+        protected final AbstractEnds getEnds() {
+<span class="fc" id="L297">            return this.ends;</span>
+        }
+
+        /**
+         * Get the next node to be analyzed.
+         *
+         * @return the next node
+         */
+        protected final Node&lt;N&gt; getNext() {
+<span class="fc" id="L306">            return this.next;</span>
+        }
+
+        /**
+         * Prepare the next sink and the hasNext flag.
+         */
+        private void prepareNext() {
+<span class="fc" id="L313">            this.hasNext = false;</span>
+<span class="fc bfc" id="L314" title="All 4 branches covered.">            while (!this.hasNext &amp;&amp; this.nodesIterator.hasNext()) {</span>
+<span class="fc" id="L315">                this.next = this.nodesIterator.next();</span>
+<span class="fc" id="L316">                this.hasNext = this.computeHasNext();</span>
+            }
+<span class="fc" id="L318">        }</span>
+
+        /**
+         * The remove operation is not supported.
+         *
+         * @throws UnsupportedOperationException
+         */
+        @Override
+        public final void remove() {
+<span class="nc" id="L327">            throw new UnsupportedOperationException();</span>
+        }
+
+        /**
+         * The next method returns the next sink.
+         *
+         * @return The next sink
+         */
+        public final Node&lt;N&gt; next() {
+<span class="fc" id="L336">            final Node&lt;N&gt; sink = this.next;</span>
+<span class="fc" id="L337">            this.prepareNext();</span>
+<span class="fc" id="L338">            return sink;</span>
+        }
+
+        /**
+         * The hasNext method return true if the iterator has a next edge.
+         *
+         * @return true if the iterator has a next edge
+         */
+        public final boolean hasNext() {
+<span class="fc" id="L347">            return this.hasNext;</span>
+        }
+
+        /**
+         * Compute the hasNext flag.
+         *
+         * @return the hasNext flag
+         */
+        protected abstract boolean computeHasNext();
+
+    }
+
+    /**
+     * This class implements a sorted set of the sinks.
+     */
+    private class Sinks extends AbstractEnds {
+
+        /**
+         * Constructor.
+         *
+         * @param graph the underlying graph
+         */
+<span class="fc" id="L369">        protected Sinks(final AbstractDGraph graph) {</span>
+<span class="fc" id="L370">            super(graph);</span>
+<span class="fc" id="L371">        }</span>
+
+        /**
+         * Implements the AbstractCollection class.
+         *
+         * @return a new sinks iterator
+         */
+        public final Iterator iterator() {
+<span class="fc" id="L379">            return new SinksIterator(this);</span>
+        }
+
+        /**
+         * This class implements an iterator over the edges of a graph.
+         */
+        private class SinksIterator extends AbstractEndsIterator {
+
+            /**
+             * Basic constructor.
+             *
+             * @param sinks the sinks
+             */
+<span class="fc" id="L392">            protected SinksIterator(final Sinks sinks) {</span>
+<span class="fc" id="L393">                super(sinks);</span>
+<span class="fc" id="L394">            }</span>
+
+            /**
+             * Compute the hasNext flag value.
+             *
+             * @return the hasNext flag value
+             */
+            protected final boolean computeHasNext() {
+<span class="fc" id="L402">                return this.getEnds().getGraph().getPredecessorEdges(this.getNext()).isEmpty();</span>
+            }
+        }
+    }
+
+    /**
+     * This class implements a sorted set of the wells.
+     */
+    private class Wells extends AbstractEnds {
+
+        /**
+         * Constructor.
+         *
+         * @param graph the underlying graph
+         */
+<span class="fc" id="L417">        protected Wells(final AbstractDGraph graph) {</span>
+<span class="fc" id="L418">            super(graph);</span>
+<span class="fc" id="L419">        }</span>
+
+        /**
+         * Implements the AbstractCollection class.
+         *
+         * @return a new Wells iterator
+         */
+        public final Iterator iterator() {
+<span class="fc" id="L427">            return new WellsIterator(this);</span>
+        }
+
+        /**
+         * This class implements an iterator over the edges of a graph.
+         */
+        private class WellsIterator extends AbstractEndsIterator {
+
+            /**
+             * Constructs the iterator source a set of wells.
+             *
+             * @param wells The wells.
+             */
+<span class="fc" id="L440">            protected WellsIterator(final Wells wells) {</span>
+<span class="fc" id="L441">                super(wells);</span>
+<span class="fc" id="L442">            }</span>
+
+            /**
+             * Compute the hasNext flag value.
+             *
+             * @return the hasNext flag value
+             */
+            protected final boolean computeHasNext() {
+<span class="fc" id="L450">                return this.getEnds().getGraph().getSuccessorEdges(this.getNext()).isEmpty();</span>
+            }
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

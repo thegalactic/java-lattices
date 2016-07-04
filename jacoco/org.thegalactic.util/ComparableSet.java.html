@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ComparableSet.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lattices</a> &gt; <a href="index.source.html" class="el_package">org.thegalactic.util</a> &gt; <span class="el_source">ComparableSet.java</span></div><h1>ComparableSet.java</h1><pre class="source lang-java linenums">package org.thegalactic.util;
+
+/*
+ * ComparableSet.java
+ *
+ * Copyright: 2010-2015 Karell Bertet, France
+ * Copyright: 2015-2016 The Galactic Organization, France
+ *
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
+ * This file is part of java-lattices.
+ * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
+ */
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+/**
+ * This class gives a minimal representation of a comparable set where sets are
+ * compared using the lectic order.
+ *
+ * This class extends class `TreeSet`, implements class `Comparable` and
+ * provides a {@link #compareTo} method that implements the lectic order between
+ * two sets.
+ *
+ * Therefore, a comparable set can be stored in a sorted collection, and in
+ * particular in a sorted set where set operations are provided.
+ *
+ * The lectic order extends the inclusion, and is defined only for comparable
+ * elements, i.e. elements that can be sorted, as follows:
+ *
+ * &quot;a set `A` is smaller than a set `B` iff there exists an element in `B\A`
+ * such that any smaller element belonging to `A` also belongs to `B`.&quot;
+ *
+ * @param &lt;E&gt; Element type
+ *
+ * @todo Check if this class is correctly used (performance). Overload
+ * modification method to compute the hashCode only once.
+ *
+ * ![ComparableSet](ComparableSet.png)
+ *
+ * @uml ComparableSet.png
+ * !include resources/org/thegalactic/util/ComparableSet.iuml
+ *
+ * hide members
+ * show ComparableSet members
+ * class ComparableSet #LightCyan
+ * title ComparableSet UML graph
+ */
+public class ComparableSet&lt;E extends Comparable&gt; extends TreeSet&lt;E&gt; implements Comparable&lt;ComparableSet&gt;, Cloneable {
+
+    /*
+     * ------------- CONSTRUCTORS ------------------
+     */
+    /**
+     * Constructs a new and empty ComparableSet.
+     */
+    public ComparableSet() {
+<span class="fc" id="L58">        super();</span>
+<span class="fc" id="L59">    }</span>
+
+    /**
+     * Constructs a new ComparableSet with the set from the specified set.
+     *
+     * @param set a comparable set
+     */
+    public ComparableSet(final SortedSet&lt;E&gt; set) {
+<span class="fc" id="L67">        super(set);</span>
+<span class="fc" id="L68">    }</span>
+
+    /*
+     * --------------- OVERLAPPING METHODS ------------
+     */
+    /**
+     * Returns a clone of this component.
+     *
+     * @return a clone of this component.
+     */
+    @Override
+    public ComparableSet clone() {
+<span class="fc" id="L80">        return (ComparableSet) super.clone();</span>
+    }
+
+    /**
+     * Compares this component with those in parameter according to the lectic
+     * order.
+     *
+     * The lectic order defines a sort on sets of elements extending the
+     * inclusion order as follows:
+     *
+     * A set `A` is smaller than a set `B` iff there exists an element in `B\A`
+     * such that any smaller element belonging to A also belongs to B. The
+     * result is
+     *
+     * - zero if the identifiers are equal;
+     * - 1 if this component's identifier is greater;
+     * - -1 otherwise.
+     *
+     * This comparison method is needed to define a natural and total sort on a
+     * sets.
+     *
+     * It allows to use sets of this class in a sorted collection
+     *
+     * @param set the specified element to be compared with this component
+     *
+     * @return a negative integer, zero, or a positive integer as this component
+     *         is less than, equal to, or greater than the specified object according to
+     *         the lectic order.
+     *
+     * @todo Is this correct? (see test)
+     */
+    public int compareTo(final ComparableSet set) {
+
+        int cmp;
+
+        // case of equality between this component and object
+<span class="fc bfc" id="L116" title="All 2 branches covered.">        if (this.equals(set)) {</span>
+<span class="fc" id="L117">            cmp = 0;</span>
+        } else {
+            // computes index i of the first element in set minus this
+            // if i doesn't exist, then this component is not smaller than the set by lectic order
+<span class="fc" id="L121">            final TreeSet&lt;Comparable&gt; setMinusThis = new TreeSet(set);</span>
+<span class="fc" id="L122">            setMinusThis.removeAll(this);</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">            if (setMinusThis.isEmpty()) {</span>
+<span class="fc" id="L124">                cmp = 1;</span>
+            } else {
+<span class="fc" id="L126">                final Comparable i = setMinusThis.first();</span>
+                // compute this inter {1, ..., i-1}
+<span class="fc" id="L128">                final TreeSet setAiMinus1 = new TreeSet();</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">                for (final Object c : this) {</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">                    if (i.compareTo(c) &gt; 0) {</span>
+<span class="fc" id="L131">                        setAiMinus1.add(c);</span>
+                    }
+<span class="fc" id="L133">                }</span>
+                // compute set inter {1, ..., i-1}
+<span class="fc" id="L135">                final TreeSet setBiMinus1 = new TreeSet();</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">                for (final Object c : set) {</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">                    if (i.compareTo(c) &gt; 0) {</span>
+<span class="fc" id="L138">                        setBiMinus1.add(c);</span>
+                    }
+<span class="fc" id="L140">                }</span>
+                // if setAiminus1 and setBiminus1 are equal then this component is smaller than B by lectic order
+<span class="fc bfc" id="L142" title="All 2 branches covered.">                if (setAiMinus1.equals(setBiMinus1)) {</span>
+<span class="fc" id="L143">                    cmp = -1;</span>
+                } else {
+<span class="fc" id="L145">                    cmp = 1;</span>
+                }
+            }
+        }
+<span class="fc" id="L149">        return cmp;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

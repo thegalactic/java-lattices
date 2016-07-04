@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>IOFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lattices</a> &gt; <a href="index.source.html" class="el_package">org.thegalactic.io</a> &gt; <span class="el_source">IOFactory.java</span></div><h1>IOFactory.java</h1><pre class="source lang-java linenums">package org.thegalactic.io;
+
+/*
+ * IOFactory.java
+ *
+ * Copyright: 2010-2015 Karell Bertet, France
+ * Copyright: 2015-2016 The Galactic Organization, France
+ *
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
+ * This file is part of java-lattices.
+ * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
+ */
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * This class defines a standard way for getting reader and writer.
+ *
+ * @param &lt;E&gt; Element to be saved and parsed
+
+ ![IOFactory](IOFactory.png)
+ *
+ * @uml Factory.png
+ * !include resources/org/thegalactic/io/IOFactory.iuml
+ * !include resources/org/thegalactic/io/Reader.iuml
+ * !include resources/org/thegalactic/io/Writer.iuml
+ *
+ * hide members
+ * show IOFactory members
+ * class IOFactory #LightCyan
+ * title IOFactory UML graph
+ */
+public class IOFactory&lt;E&gt; {
+
+    /**
+     * Map of extension/reader.
+     */
+<span class="fc" id="L39">    private final Map&lt;String, Reader&lt;E&gt;&gt; readers = new HashMap&lt;String, Reader&lt;E&gt;&gt;();</span>
+
+    /**
+     * Map of extension/writer.
+     */
+<span class="fc" id="L44">    private final Map&lt;String, Writer&lt;E&gt;&gt; writers = new HashMap&lt;String, Writer&lt;E&gt;&gt;();</span>
+
+    /**
+     * Basic constructor.
+     */
+    protected IOFactory() {
+<span class="fc" id="L50">        super();</span>
+<span class="fc" id="L51">    }</span>
+
+    /**
+     * Register a reader with an extension.
+     *
+     * @param reader    The reader to register
+     * @param extension The extension linked to the reader
+     *
+     * @return The old reader or null
+     */
+    public final Reader&lt;E&gt; registerReader(final Reader&lt;E&gt; reader, final String extension) {
+<span class="fc" id="L62">        final Reader&lt;E&gt; old = this.readers.get(extension);</span>
+<span class="fc" id="L63">        this.readers.put(extension, reader);</span>
+<span class="fc" id="L64">        return old;</span>
+    }
+
+    /**
+     * Register a writer with an extension.
+     *
+     * @param writer    The writer to register
+     * @param extension The extension linked to the writer
+     *
+     * @return The old reader or null
+     */
+    public final Writer&lt;E&gt; registerWriter(final Writer&lt;E&gt; writer, final String extension) {
+<span class="fc" id="L76">        final Writer&lt;E&gt; old = this.writers.get(extension);</span>
+<span class="fc" id="L77">        this.writers.put(extension, writer);</span>
+<span class="fc" id="L78">        return old;</span>
+    }
+
+    /**
+     * Unregister a reader extension.
+     *
+     * @param extension The extension linked to a reader
+     *
+     * @return The old reader or null
+     */
+    public final Reader&lt;E&gt; unregisterReader(final String extension) {
+<span class="nc" id="L89">        final Reader&lt;E&gt; old = this.readers.get(extension);</span>
+<span class="nc" id="L90">        this.readers.remove(extension);</span>
+<span class="nc" id="L91">        return old;</span>
+    }
+
+    /**
+     * Unregister a writer extension.
+     *
+     * @param extension The extension linked to a writer
+     *
+     * @return The old writer or null
+     */
+    public final Writer&lt;E&gt; unregisterWriter(final String extension) {
+<span class="nc" id="L102">        final Writer&lt;E&gt; old = this.writers.get(extension);</span>
+<span class="nc" id="L103">        this.writers.remove(extension);</span>
+<span class="nc" id="L104">        return old;</span>
+    }
+
+    /**
+     * Get the reader linked to an extension.
+     *
+     * @param extension The extension linked to a reader
+     *
+     * @return The reader or null
+     */
+    public final Reader&lt;E&gt; getReader(final String extension) {
+<span class="fc" id="L115">        return this.readers.get(extension);</span>
+    }
+
+    /**
+     * Get the writer linked to an extension.
+     *
+     * @param extension The extension linked to a writer
+     *
+     * @return The writer or null
+     */
+    public final Writer&lt;E&gt; getWriter(final String extension) {
+<span class="fc" id="L126">        return this.writers.get(extension);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

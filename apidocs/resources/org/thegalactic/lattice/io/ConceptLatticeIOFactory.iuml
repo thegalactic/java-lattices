@@ -1,0 +1,9 @@
+package org.thegalactic.lattice.io {
+    class ConceptLatticeIOFactory {
+    	-ConceptLatticeIOFactory instance
+        -ConceptLatticeIOFactory()
+        #void init()
+        +{static}ConceptLatticeIOFactory getInstance()
+    }
+    org.thegalactic.io.IOFactory <|-- ConceptLatticeIOFactory
+}

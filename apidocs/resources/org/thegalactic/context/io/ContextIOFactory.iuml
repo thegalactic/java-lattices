@@ -1,0 +1,9 @@
+package org.thegalactic.context.io {
+    class ContextIOFactory {
+    	-ContextIOFactory instance
+        -ContextIOFactory()
+        #void init()
+        +{static}ContextIOFactory getInstance()
+    }
+    org.thegalactic.io.IOFactory <|-- ContextIOFactory
+}

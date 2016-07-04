@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ContextSerializerBurmeister.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lattices</a> &gt; <a href="index.source.html" class="el_package">org.thegalactic.context.io</a> &gt; <span class="el_source">ContextSerializerBurmeister.java</span></div><h1>ContextSerializerBurmeister.java</h1><pre class="source lang-java linenums">package org.thegalactic.context.io;
+
+/*
+ * ContextSerializerBurmeister.java
+ *
+ * Copyright: 2010-2015 Karell Bertet, France
+ * Copyright: 2015-2016 The Galactic Organization, France
+ *
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
+ * This file is part of java-lattices.
+ * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
+ */
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.util.TreeSet;
+
+import org.thegalactic.context.Context;
+import org.thegalactic.io.Reader;
+import org.thegalactic.io.Writer;
+
+/**
+ * This class defines the way for reading a context from a text file.
+ *
+ * ![ContextSerializerBurmeister](ContextSerializerBurmeister.png)
+ *
+ * @uml ContextSerializerBurmeister.png
+ * !include
+ * resources/org/thegalactic/context/io/ContextSerializerBurmeister.iuml
+ * !include resources/org/thegalactic/io/Reader.iuml
+ * !include resources/org/thegalactic/io/Writer.iuml
+ *
+ * hide members
+ * show ContextSerializerBurmeister members
+ * class ContextSerializerBurmeister #LightCyan
+ * title ContextSerializerBurmeister UML graph
+ */
+public final class ContextSerializerBurmeister implements Reader&lt;Context&gt;, Writer&lt;Context&gt; {
+
+    /**
+     * String extension.
+     */
+    private static final String EXTENSION = &quot;cxt&quot;;
+
+    /**
+     * Burmeister header.
+     */
+    private static final String HEADER = &quot;B&quot;;
+
+    /**
+     * The singleton instance.
+     */
+<span class="fc" id="L54">    private static final ContextSerializerBurmeister INSTANCE = new ContextSerializerBurmeister();</span>
+
+    /**
+     * Return the singleton instance of this class.
+     *
+     * @return the singleton instance
+     */
+    public static ContextSerializerBurmeister getInstance() {
+<span class="fc" id="L62">        return INSTANCE;</span>
+    }
+
+    /**
+     * Register this class for reading and writing .cxt files.
+     */
+    public static void register() {
+<span class="fc" id="L69">        ContextIOFactory.getInstance().registerReader(ContextSerializerBurmeister.getInstance(), EXTENSION);</span>
+<span class="fc" id="L70">        ContextIOFactory.getInstance().registerWriter(ContextSerializerBurmeister.getInstance(), EXTENSION);</span>
+<span class="fc" id="L71">    }</span>
+
+    /**
+     * This class is not designed to be publicly instantiated.
+     */
+<span class="fc" id="L76">    private ContextSerializerBurmeister() {</span>
+<span class="fc" id="L77">    }</span>
+
+    /**
+     * Read a context from a file.
+     *
+     * The Burmeister cxt format file is respected :
+     *
+     * The file format is structured as follows:
+     *
+     * The first line consists of a single &quot;B&quot;
+     * The second line contains the name of the context (note that this is
+     * ignored)
+     * The third and fourth line consist of the object and attribute count,
+     * respectively
+     * after that, all objects and all attributes are listed, each on a separate
+     * line
+     * finally, the context is given as a combination of . and X, each row on a
+     * separate line.
+     *
+     * ~~~
+     * B
+     * Example
+     * 2
+     * 2
+     * a
+     * b
+     * 1
+     * 2
+     * .X
+     * XX
+     * ~~~
+     *
+     * @param context a context to read
+     * @param file    a file
+     *
+     * @throws IOException When an IOException occurs
+     */
+    public void read(final Context context, final BufferedReader file) throws IOException {
+        // str corresponds to the string &quot;B&quot;. First line (Unused).
+<span class="fc" id="L116">        String str = file.readLine();</span>
+
+        // Detect Burmeister magic header
+<span class="fc bfc" id="L119" title="All 2 branches covered.">        if (!HEADER.equals(str)) {</span>
+<span class="fc" id="L120">            throw new IOException(&quot;Burmeister magic header not found&quot;);</span>
+        }
+
+        // Second line (Unused in the code).
+<span class="fc" id="L124">        file.readLine();</span>
+
+        try {
+            // number of observations. Third line.
+<span class="fc" id="L128">            final int nbObs = Integer.parseInt(file.readLine());</span>
+
+            // number of attributes. Fourth line.
+<span class="fc" id="L131">            final int nbAtt = Integer.parseInt(file.readLine());</span>
+
+            // Now reading observations
+            // Observations names must be recorded for the reading context phase
+<span class="fc" id="L135">            String[] obsNames = new String[nbObs];</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">            for (int i = 0; i &lt; nbObs; i++) {</span>
+<span class="fc" id="L137">                obsNames[i] = this.readNextLine(file);</span>
+<span class="fc" id="L138">                context.addToObservations(obsNames[i]);</span>
+            }
+
+            // Now reading attributes
+            // Attributes names must be recorded for the reading context phase
+<span class="fc" id="L143">            String[] attNames = new String[nbAtt];</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">            for (int i = 0; i &lt; nbAtt; i++) {</span>
+<span class="fc" id="L145">                attNames[i] = this.readNextLine(file);</span>
+<span class="fc" id="L146">                context.addToAttributes(attNames[i]);</span>
+            }
+
+            // Now reading context
+<span class="fc bfc" id="L150" title="All 2 branches covered.">            for (int i = 0; i &lt; nbObs; i++) {</span>
+<span class="fc" id="L151">                str = this.readNextLine(file);</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">                for (int j = 0; j &lt; nbAtt; j++) {</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">                    if (str.charAt(j) == 'X') {</span>
+<span class="fc" id="L154">                        context.addExtentIntent(obsNames[i], attNames[j]);</span>
+                    }
+                }
+            }
+<span class="fc" id="L158">            context.setBitSets();</span>
+<span class="nc" id="L159">        } catch (NumberFormatException ex) {</span>
+<span class="nc" id="L160">            throw new IOException(ex.getMessage());</span>
+<span class="nc" id="L161">        } catch (IndexOutOfBoundsException ex) {</span>
+<span class="nc" id="L162">            throw new IOException(ex.getMessage());</span>
+<span class="fc" id="L163">        }</span>
+<span class="fc" id="L164">    }</span>
+
+    /**
+     * Return the next non-empty line.
+     *
+     * @param file a file
+     *
+     * @return the next non-empty line
+     *
+     * @throws IOException When an IOException occurs
+     */
+    private String readNextLine(final BufferedReader file) throws IOException {
+        String str;
+        do {
+<span class="fc" id="L178">            str = file.readLine();</span>
+<span class="pc bpc" id="L179" title="1 of 2 branches missed.">        } while (&quot;&quot;.equals(str));</span>
+<span class="fc" id="L180">        return str;</span>
+    }
+
+    /**
+     * Write a context to a file.
+     *
+     * The Burmeister cxt format file is respected :
+     *
+     * The file format is structured as follows:
+     *
+     * The first line consists of a single &quot;B&quot;
+     * The second line contains the name of the context (note that this is
+     * ignored)
+     * The third and fourth line consist of the object and attribute count,
+     * respectively.
+     * The fifth line is empty.
+     * After that, all objects and all attributes are listed, each on a separate
+     * line
+     * finally, the context is given as a combination of . and X, each row on a
+     * separate line.
+     *
+     * ~~~
+     * B
+     * Example
+     * 2
+     * 2
+     *
+     * a
+     * b
+     * 1
+     * 2
+     * .X
+     * XX
+     * ~~~
+     *
+     * @param context a context to write
+     * @param file    a file
+     *
+     * @throws IOException When an IOException occurs
+     */
+    @Override
+    public void write(final Context context, final BufferedWriter file) throws IOException {
+        // Magic header
+<span class="fc" id="L223">        file.write(HEADER);</span>
+<span class="fc" id="L224">        file.newLine();</span>
+
+        // Empty name
+<span class="fc" id="L227">        file.newLine();</span>
+
+<span class="fc" id="L229">        final TreeSet&lt;Comparable&gt; attributes = context.getAttributes();</span>
+<span class="fc" id="L230">        final TreeSet&lt;Comparable&gt; observations = context.getObservations();</span>
+
+        // Observation and attributes size
+<span class="fc" id="L233">        file.write(String.valueOf(observations.size()));</span>
+<span class="fc" id="L234">        file.newLine();</span>
+<span class="fc" id="L235">        file.write(String.valueOf(attributes.size()));</span>
+<span class="fc" id="L236">        file.newLine();</span>
+
+        // Observations
+<span class="fc bfc" id="L239" title="All 2 branches covered.">        for (final Comparable observation : observations) {</span>
+<span class="fc" id="L240">            file.write(observation.toString());</span>
+<span class="fc" id="L241">            file.newLine();</span>
+<span class="fc" id="L242">        }</span>
+
+        // Attributes
+<span class="fc bfc" id="L245" title="All 2 branches covered.">        for (final Comparable attribute : attributes) {</span>
+<span class="fc" id="L246">            file.write(attribute.toString());</span>
+<span class="fc" id="L247">            file.newLine();</span>
+<span class="fc" id="L248">        }</span>
+
+        // Extent/Intent
+<span class="fc" id="L251">        final StringBuilder builder = new StringBuilder();</span>
+<span class="fc bfc" id="L252" title="All 2 branches covered.">        for (final Comparable observation : observations) {</span>
+<span class="fc" id="L253">            builder.setLength(0);</span>
+<span class="fc bfc" id="L254" title="All 2 branches covered.">            for (final Comparable attribute : attributes) {</span>
+<span class="fc bfc" id="L255" title="All 2 branches covered.">                if (context.getIntent(observation).contains(attribute)) {</span>
+<span class="fc" id="L256">                    builder.append('X');</span>
+                } else {
+<span class="fc" id="L258">                    builder.append('.');</span>
+                }
+<span class="fc" id="L260">            }</span>
+<span class="fc" id="L261">            file.write(builder.toString());</span>
+<span class="fc" id="L262">            file.newLine();</span>
+<span class="fc" id="L263">        }</span>
+<span class="fc" id="L264">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

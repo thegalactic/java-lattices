@@ -1,0 +1,1109 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Lattice.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lattices</a> &gt; <a href="index.source.html" class="el_package">org.thegalactic.lattice</a> &gt; <span class="el_source">Lattice.java</span></div><h1>Lattice.java</h1><pre class="source lang-java linenums">package org.thegalactic.lattice;
+
+/*
+ * Lattice.java
+ *
+ * Copyright: 2010-2015 Karell Bertet, France
+ * Copyright: 2015-2016 The Galactic Organization, France
+ *
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
+ * This file is part of java-lattices.
+ * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
+ */
+import org.thegalactic.rule.Rule;
+import org.thegalactic.rule.ImplicationalSystem;
+import org.thegalactic.rule.AssociationRule;
+import java.util.TreeMap;
+import java.util.TreeSet;
+import java.util.SortedSet;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+
+import org.thegalactic.util.ComparableSet;
+import org.thegalactic.context.Context;
+import org.thegalactic.dgraph.DAGraph;
+import org.thegalactic.dgraph.ConcreteDGraph;
+import org.thegalactic.dgraph.Edge;
+import org.thegalactic.dgraph.Node;
+
+/**
+ * This class extends class {@link org.thegalactic.dgraph.DAGraph} to provide
+ * specific methods to manipulate a lattice.
+ *
+ * A lattice is a directed acyclic graph
+ * ({@link org.thegalactic.dgraph.DAGraph}) containing particular nodes denoted
+ * join and meet\ (a dag is a lattice if and only if each pair of nodes admits a
+ * join and a meet).
+ *
+ * Since checking the lattice property is very time-expensive, this property is
+ * not ensured for components of this class. However, it can be explicitely
+ * ckecked using method {@link #isLattice}.
+ *
+ * This class provides methods implementing classical operation on a lattice
+ * issued from join and meet operation and irreducibles elements, and methods
+ * that returns a condensed representation of a lattice.
+ *
+ * A well-known condensed representation of a lattice is its table, obtained by
+ * method {@link #getTable}, where join-irreducibles are in column and
+ * meet-irreducibles are in rown.
+ *
+ * Another condensed representation is its dependency graph obtained by method
+ * {@link #getDependencyGraph}.
+ *
+ * The dependency graph is a directed graph where nodes are join-irreducibles,
+ * edges corresponds to the dependency relation between two join-irreducibles
+ * and are valuated by a family of subsets of irreducibles.
+ *
+ * The dependency graph encodes two other condensed representation of a lattice
+ * that are its minimal generators and its canonical direct basis that can be
+ * obtained from the dependency graph by methods {@link #getMinimalGenerators}
+ * and {@link #getCanonicalDirectBasis}.
+ *
+ * ![Lattice](Lattice.png)
+ *
+ * @param &lt;N&gt; Node content type
+ * @param &lt;E&gt; Edge content type
+ *
+ * @todo remove useless comments: Karell
+ *
+ * @uml Lattice.png
+ * !include resources/org/thegalactic/dgraph/DAGraph.iuml
+ * !include resources/org/thegalactic/dgraph/DGraph.iuml
+ * !include resources/org/thegalactic/dgraph/Edge.iuml
+ * !include resources/org/thegalactic/dgraph/Node.iuml
+ * !include resources/org/thegalactic/lattice/Lattice.iuml
+ *
+ * hide members
+ * show Lattice members
+ * class Lattice #LightCyan
+ * title Lattice UML graph
+ */
+public class Lattice&lt;N, E&gt; extends DAGraph&lt;N, E&gt; {
+
+    /*
+     * ------------- FIELDS ------------------
+     */
+    /**
+     * The dependency graph of a lattice.
+     *
+     * Nodes are join irreducibles elements, and edges correspond to the
+     * dependency relation of the lattice (j -&gt; j' if and only if there exists a
+     * node x in the lattice such that x not greather than j and j', and x v j'
+     * &gt; j), and edges are labeled with the smallest subsets X of
+     * join-irreducibles such that the join of elements of X corresponds to the
+     * node x of the lattice.
+     */
+<span class="fc" id="L98">    private ConcreteDGraph dependencyGraph = null;</span>
+
+    /*
+     * ------------- CONSTRUCTORS ------------------
+     */
+    /**
+     * Constructs this component with an empty set of nodes.
+     */
+    public Lattice() {
+<span class="fc" id="L107">        super();</span>
+<span class="fc" id="L108">    }</span>
+
+    /**
+     * Constructs this component with the specified set of nodes, and empty
+     * treemap of successors and predecessors.
+     *
+     * @param set the set of nodes
+     */
+    public Lattice(SortedSet&lt;Node&lt;N&gt;&gt; set) {
+<span class="fc" id="L117">        super(set);</span>
+<span class="fc" id="L118">    }</span>
+
+    /**
+     * Constructs this component as a copy of the specified lattice.
+     *
+     * Lattice property is checked for the specified lattice.
+     *
+     * When not verified, this component is construct with an empty set of
+     * nodes.
+     *
+     * @param graph the Lattice to be copied
+     */
+    public Lattice(DAGraph&lt;N, E&gt; graph) {
+<span class="fc" id="L131">        super(graph);</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">        if (!this.isAcyclic()) {</span>
+<span class="nc" id="L133">            this.setNodes(new TreeSet&lt;Node&lt;N&gt;&gt;());</span>
+<span class="nc" id="L134">            this.setSuccessors(new TreeMap&lt;Node&lt;N&gt;, TreeSet&lt;Edge&lt;N, E&gt;&gt;&gt;());</span>
+<span class="nc" id="L135">            this.setPredecessors(new TreeMap&lt;Node&lt;N&gt;, TreeSet&lt;Edge&lt;N, E&gt;&gt;&gt;());</span>
+        }
+<span class="fc" id="L137">    }</span>
+
+    /*
+     * ------------- LATTICE CHEKING METHODS ------------------
+     */
+    /**
+     * Check if this component is a lattice.
+     *
+     * There exists several caracterizations of a lattice. The characterization
+     * implemented is the following: A lattice is a DAG if there exists a meet
+     * for each pair of node, and a unique maximal node.
+     *
+     * This treatment is performed in O(n^3), where n is the number of nodes.
+     *
+     * @return the truth value for this property
+     */
+    public boolean isLattice() {
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">        if (!this.isAcyclic()) {</span>
+<span class="nc" id="L155">            return false;</span>
+        }
+<span class="fc bfc" id="L157" title="All 2 branches covered.">        for (Node&lt;N&gt; x : this.getNodes()) {</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">            for (Node&lt;N&gt; y : this.getNodes()) {</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">                if (this.meet(x, y) == null) {</span>
+<span class="fc" id="L160">                    return false;</span>
+                }
+<span class="fc" id="L162">            }</span>
+<span class="fc" id="L163">        }</span>
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">        return this.max().size() == 1;</span>
+    }
+
+    /**
+     * Return true if this component is congruence normal.
+     *
+     * A lattice $L$ is in class CN (Congruence Normal) is there exists a
+     * sequence $L_1,\ldots,L_p$ of lattices with $L_p=L$, together with a
+     * sequence $C_1,\ldots,C_{p-1}$ such that $C_i$ is a convex of $L_i$ and
+     * $L_{i+1}$ is obtained by doubling the convex $C_i$ in $L_i$.
+     *
+     * See {@link org.thegalactic.lattice.LatticeFactory} for the doubling
+     * convex method which is not used here.
+     *
+     * This computation is done in O((|J|+|M|)^2|X|) from the transitive
+     * reduction of L.
+     *
+     * This recognition algorithm was first written in : &quot;Doubling convex serts
+     * in lattices : characterizations and recognition algorithm&quot;, Bertet K.,
+     * Caspard N. 2002.
+     *
+     * @return true if this component is congruence normal.
+     */
+    public boolean isCN() {
+<span class="fc" id="L188">        TreeSet&lt;Node&lt;N&gt;&gt; joins = this.joinIrreducibles();</span>
+<span class="fc" id="L189">        TreeSet&lt;Node&lt;N&gt;&gt; meets = this.meetIrreducibles();</span>
+<span class="fc" id="L190">        ArrowRelation arrows = new ArrowRelation(this);</span>
+<span class="fc" id="L191">        Context dbl = arrows.getDoubleArrowTable();</span>
+        // steps are connected component of the double arrow table.
+<span class="fc" id="L193">        ArrayList&lt;Concept&gt; steps = new ArrayList&lt;Concept&gt;();</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">        while (!joins.isEmpty()) {</span>
+<span class="fc" id="L195">            TreeSet&lt;Comparable&gt; setA = new TreeSet&lt;Comparable&gt;();</span>
+<span class="fc" id="L196">            TreeSet&lt;Comparable&gt; setB = new TreeSet&lt;Comparable&gt;();</span>
+<span class="fc" id="L197">            int cardA = setA.size();</span>
+<span class="fc" id="L198">            setA.add(joins.first());</span>
+<span class="fc bfc" id="L199" title="All 2 branches covered.">            while (cardA != setA.size()) { // something added</span>
+<span class="fc" id="L200">                cardA = setA.size(); // update card</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">                for (Comparable c : setA) {</span>
+<span class="fc" id="L202">                    setB.addAll(dbl.getIntent(c));</span>
+<span class="fc" id="L203">                }</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">                for (Comparable c : setB) {</span>
+<span class="fc" id="L205">                    setA.addAll(dbl.getExtent(c));</span>
+<span class="fc" id="L206">                }</span>
+            }
+<span class="fc" id="L208">            steps.add(new Concept(setA, setB));</span>
+<span class="fc" id="L209">            joins.removeAll(setA);</span>
+<span class="fc" id="L210">        }</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">        for (Concept c : steps) {</span>
+<span class="pc bpc" id="L212" title="1 of 2 branches missed.">            if (c.getSetB().isEmpty()) { // to be verified :-)</span>
+<span class="nc" id="L213">                return false;</span>
+            }
+<span class="fc bfc" id="L215" title="All 2 branches covered.">            for (Comparable j : c.getSetA()) {</span>
+<span class="fc bfc" id="L216" title="All 2 branches covered.">                for (Comparable m : c.getSetB()) {</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">                    if (arrows.getEdge((Node) j, (Node) m).getContent() != &quot;UpDown&quot;</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">                            &amp;&amp; arrows.getEdge((Node) j, (Node) m).getContent() != &quot;Circ&quot;) {</span>
+<span class="fc" id="L219">                        return false;</span>
+                    }
+<span class="fc" id="L221">                }</span>
+<span class="fc" id="L222">            }</span>
+<span class="fc" id="L223">        }</span>
+<span class="fc" id="L224">        joins = this.joinIrreducibles();</span>
+<span class="fc" id="L225">        meets = this.meetIrreducibles();</span>
+<span class="fc" id="L226">        ConcreteDGraph phi = new ConcreteDGraph();</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">        for (Node&lt;N&gt; j : joins) {</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">            for (Node&lt;N&gt; m : meets) {</span>
+<span class="fc" id="L229">                int indJ = 0; // Search for the step containning j</span>
+<span class="pc bpc" id="L230" title="1 of 4 branches missed.">                while (indJ &lt; steps.size() &amp;&amp; !steps.get(indJ).containsInA(j)) {</span>
+<span class="fc" id="L231">                    indJ++;</span>
+                }
+<span class="pc bpc" id="L233" title="1 of 4 branches missed.">                if (phi.getNodeByContent(indJ) == null &amp;&amp; indJ != steps.size()) {</span>
+<span class="fc" id="L234">                    phi.addNode(new Node(indJ));</span>
+                }
+<span class="fc" id="L236">                int indM = 0; // Search for the step containning m</span>
+<span class="pc bpc" id="L237" title="1 of 4 branches missed.">                while (indM &lt; steps.size() &amp;&amp; !steps.get(indM).containsInB(m)) {</span>
+<span class="fc" id="L238">                    indM++;</span>
+                }
+<span class="pc bpc" id="L240" title="1 of 4 branches missed.">                if (phi.getNodeByContent(indM) == null &amp;&amp; indM != steps.size()) {</span>
+<span class="fc" id="L241">                    phi.addNode(new Node(indM));</span>
+                }
+<span class="pc bpc" id="L243" title="2 of 4 branches missed.">                if (indM != steps.size() &amp;&amp; indJ != steps.size()) {</span>
+<span class="fc bfc" id="L244" title="All 2 branches covered.">                    if (arrows.getEdge((Node) j, (Node) m).getContent() == &quot;Up&quot;) {</span>
+<span class="fc" id="L245">                        phi.addEdge(phi.getNodeByContent(indM), phi.getNodeByContent(indJ));</span>
+                    }
+<span class="fc bfc" id="L247" title="All 2 branches covered.">                    if (arrows.getEdge((Node) j, (Node) m).getContent() == &quot;Down&quot;) {</span>
+<span class="fc" id="L248">                        phi.addEdge(phi.getNodeByContent(indJ), phi.getNodeByContent(indM));</span>
+                    }
+                }
+<span class="fc" id="L251">            }</span>
+<span class="fc" id="L252">        }</span>
+<span class="fc" id="L253">        return (phi.isAcyclic());</span>
+    }
+
+    /**
+     * Returns true if this component is an atomistic lattice.
+     *
+     * A lattice is atomistic if its join irreductibles are atoms (e.g.
+     * successors of bottom)
+     *
+     * @return true if this component is atomistic.
+     */
+    public boolean isAtomistic() {
+<span class="fc" id="L265">        TreeSet&lt;Node&lt;N&gt;&gt; join = this.joinIrreducibles();</span>
+<span class="fc" id="L266">        TreeSet&lt;Node&gt; atoms = new TreeSet&lt;Node&gt;(this.getSuccessorNodes(this.bottom()));</span>
+<span class="pc bpc" id="L267" title="1 of 4 branches missed.">        return join.containsAll(atoms) &amp;&amp; atoms.containsAll(join);</span>
+    }
+
+    /**
+     * Returns true if this component is an coatomistic lattice.
+     *
+     * A lattice is coatomistic if its mett irreductibles are coatoms (e.g.
+     * predecessors of top)
+     *
+     * @return true if this component is coatomistic.
+     */
+    public boolean isCoAtomistic() {
+<span class="fc" id="L279">        TreeSet&lt;Node&lt;N&gt;&gt; meet = this.meetIrreducibles();</span>
+<span class="fc" id="L280">        SortedSet&lt;Node&lt;N&gt;&gt; coatoms = this.getPredecessorNodes(this.top());</span>
+<span class="pc bpc" id="L281" title="1 of 4 branches missed.">        return meet.containsAll(coatoms) &amp;&amp; coatoms.containsAll(meet);</span>
+    }
+
+    /*
+     * --------------- LATTICE HANDLING METHODS ------------
+     */
+    /**
+     * Returns the top of the lattice.
+     *
+     * @return the node which is at the top of the lattice or null if it is not
+     *         unique
+     */
+    public Node&lt;N&gt; top() {
+<span class="fc" id="L294">        TreeSet&lt;Node&lt;N&gt;&gt; max = new TreeSet&lt;Node&lt;N&gt;&gt;(this.max());</span>
+<span class="pc bpc" id="L295" title="1 of 2 branches missed.">        if (max.size() == 1) {</span>
+<span class="fc" id="L296">            return max.first();</span>
+        }
+<span class="nc" id="L298">        return null;</span>
+    }
+
+    /**
+     * Returns the bottom of the lattice.
+     *
+     * @return the node which is at the bottom of the lattice or null if it is
+     *         not unique
+     */
+    public Node&lt;N&gt; bottom() {
+<span class="fc" id="L308">        TreeSet&lt;Node&lt;N&gt;&gt; min = new TreeSet&lt;Node&lt;N&gt;&gt;(this.min());</span>
+<span class="pc bpc" id="L309" title="1 of 2 branches missed.">        if (min.size() == 1) {</span>
+<span class="fc" id="L310">            return min.first();</span>
+        }
+<span class="nc" id="L312">        return null;</span>
+    }
+
+    /**
+     * Returns the meet of the two specified nodes if it exists.
+     *
+     * @param x the first node
+     * @param y the second node
+     *
+     * @return the node which is at the meet of the nodes or null if it does not
+     *         exist
+     *
+     * @todo this.minorants should return an iterator
+     */
+    public Node&lt;N&gt; meet(Node&lt;N&gt; x, Node&lt;N&gt; y) {
+        // TODO minorants should return an iterator
+<span class="fc" id="L328">        SortedSet&lt;Node&lt;N&gt;&gt; xMinorants = new TreeSet&lt;Node&lt;N&gt;&gt;(this.minorants(x));</span>
+<span class="fc" id="L329">        xMinorants.add(x);</span>
+
+<span class="fc" id="L331">        SortedSet&lt;Node&lt;N&gt;&gt; yMinorants = new TreeSet&lt;Node&lt;N&gt;&gt;(this.minorants(y));</span>
+<span class="fc" id="L332">        yMinorants.add(y);</span>
+
+<span class="fc" id="L334">        xMinorants.retainAll(yMinorants);</span>
+<span class="fc" id="L335">        DAGraph&lt;N, E&gt; graph = this.getSubgraphByNodes(xMinorants);</span>
+<span class="fc" id="L336">        TreeSet&lt;Node&gt; meet = new TreeSet&lt;Node&gt;(graph.max());</span>
+<span class="fc bfc" id="L337" title="All 2 branches covered.">        if (meet.size() == 1) {</span>
+<span class="fc" id="L338">            return meet.first();</span>
+        }
+<span class="fc" id="L340">        return null;</span>
+    }
+
+    /**
+     * Returns the join of the two specified nodes if it exists.
+     *
+     * @param x the first node
+     * @param y the second node
+     *
+     * @return the node which is at the join of the nodes or null if it does not
+     *         exist
+     *
+     * @todo this.majorants should return an iterator
+     */
+    public Node&lt;N&gt; join(Node&lt;N&gt; x, Node&lt;N&gt; y) {
+        // TODO this.majorants should return an iterator
+<span class="fc" id="L356">        SortedSet&lt;Node&lt;N&gt;&gt; xMajorants = new TreeSet&lt;Node&lt;N&gt;&gt;(this.majorants(x));</span>
+<span class="fc" id="L357">        xMajorants.add(x);</span>
+
+<span class="fc" id="L359">        SortedSet&lt;Node&lt;N&gt;&gt; yMajorants = new TreeSet&lt;Node&lt;N&gt;&gt;(this.majorants(y));</span>
+<span class="fc" id="L360">        yMajorants.add(y);</span>
+
+<span class="fc" id="L362">        xMajorants.retainAll(yMajorants);</span>
+<span class="fc" id="L363">        DAGraph&lt;N, E&gt; graph = this.getSubgraphByNodes(xMajorants);</span>
+<span class="fc" id="L364">        TreeSet&lt;Node&gt; join = new TreeSet&lt;Node&gt;(graph.min());</span>
+<span class="pc bpc" id="L365" title="1 of 2 branches missed.">        if (join.size() == 1) {</span>
+<span class="fc" id="L366">            return join.first();</span>
+        }
+<span class="nc" id="L368">        return null;</span>
+    }
+
+    /*
+     * ------------- IRREDUCIBLES RELATIVE METHODS ------------------
+     */
+    /**
+     * Returns the set of join irreducibles of this component.
+     *
+     * Join irreducibles are nodes with an unique immediate predecessor in the
+     * transitive and reflexive reduction. This component is first reduced
+     * reflexively and transitively.
+     *
+     * @return the set of join irreducibles of this component
+     */
+    public TreeSet&lt;Node&lt;N&gt;&gt; joinIrreducibles() {
+<span class="fc" id="L384">        DAGraph&lt;N, E&gt; graph = new DAGraph(this);</span>
+<span class="fc" id="L385">        graph.reflexiveReduction();</span>
+<span class="fc" id="L386">        graph.transitiveReduction();</span>
+<span class="fc" id="L387">        TreeSet&lt;Node&lt;N&gt;&gt; set = new TreeSet();</span>
+<span class="fc bfc" id="L388" title="All 2 branches covered.">        for (Node&lt;N&gt; node : graph.getNodes()) {</span>
+<span class="fc bfc" id="L389" title="All 2 branches covered.">            if (graph.getPredecessorNodes(node).size() == 1) {</span>
+<span class="fc" id="L390">                set.add(node);</span>
+            }
+<span class="fc" id="L392">        }</span>
+<span class="fc" id="L393">        return set;</span>
+    }
+
+    /**
+     * Returns the set of meet irreducibles of this component.
+     *
+     * Meet irreducibles are nodes with an unique immediate successor in the
+     * transitive and reflexiv reduction. This component is first reduced
+     * reflexively and transitively.
+     *
+     * @return the set of meet irreducibles of this component.
+     */
+    public TreeSet&lt;Node&lt;N&gt;&gt; meetIrreducibles() {
+<span class="fc" id="L406">        DAGraph&lt;N, E&gt; graph = new DAGraph(this);</span>
+<span class="fc" id="L407">        graph.reflexiveReduction();</span>
+<span class="fc" id="L408">        graph.transitiveReduction();</span>
+<span class="fc" id="L409">        TreeSet&lt;Node&lt;N&gt;&gt; set = new TreeSet();</span>
+<span class="fc bfc" id="L410" title="All 2 branches covered.">        for (Node&lt;N&gt; node : graph.getNodes()) {</span>
+<span class="fc bfc" id="L411" title="All 2 branches covered.">            if (graph.getSuccessorNodes(node).size() == 1) {</span>
+<span class="fc" id="L412">                set.add(node);</span>
+            }
+<span class="fc" id="L414">        }</span>
+<span class="fc" id="L415">        return set;</span>
+    }
+
+    /**
+     * Returns the set of join-irreducibles that are minorants of the specified
+     * node.
+     *
+     * @param node a specified node
+     *
+     * @return the set of join-irreducibles thar are minorants of the specified
+     *         node
+     */
+    public TreeSet&lt;Node&lt;N&gt;&gt; joinIrreducibles(Node&lt;N&gt; node) {
+<span class="fc" id="L428">        TreeSet&lt;Node&lt;N&gt;&gt; join = new TreeSet&lt;Node&lt;N&gt;&gt;(this.joinIrreducibles());</span>
+<span class="fc" id="L429">        TreeSet&lt;Node&lt;N&gt;&gt; min = new TreeSet&lt;Node&lt;N&gt;&gt;(this.minorants(node));</span>
+<span class="fc" id="L430">        min.add(node);</span>
+<span class="fc" id="L431">        min.retainAll(join);</span>
+<span class="fc" id="L432">        return min;</span>
+    }
+
+    /**
+     * Returns the set of meet-irreducibles thar are majorants of the specified
+     * node.
+     *
+     * @param node a specified node
+     *
+     * @return the set of meet-irreducibles thar are majorants of the specified
+     *         node
+     */
+    public TreeSet&lt;Node&lt;N&gt;&gt; meetIrreducibles(Node&lt;N&gt; node) {
+<span class="fc" id="L445">        TreeSet&lt;Node&lt;N&gt;&gt; meet = new TreeSet&lt;Node&lt;N&gt;&gt;(this.meetIrreducibles());</span>
+<span class="fc" id="L446">        TreeSet&lt;Node&lt;N&gt;&gt; maj = new TreeSet&lt;Node&lt;N&gt;&gt;(this.majorants(node));</span>
+<span class="fc" id="L447">        maj.retainAll(meet);</span>
+<span class="fc" id="L448">        return maj;</span>
+    }
+
+    /**
+     * Returns the subgraph induced by the join irreducibles nodes of this
+     * component.
+     *
+     * @return the subgraph induced by the join irreducibles nodes of this
+     *         component
+     */
+    public DAGraph&lt;N, E&gt; joinIrreduciblesSubgraph() {
+<span class="fc" id="L459">        TreeSet&lt;Node&lt;N&gt;&gt; irr = this.joinIrreducibles();</span>
+<span class="fc" id="L460">        return this.getSubgraphByNodes(irr);</span>
+    }
+
+    /**
+     * Returns the subgraph induced by the meet irreducibles nodes of this
+     * component.
+     *
+     * @return the subgraph induced by the meet irreducibles nodes of this
+     *         component
+     */
+    public DAGraph&lt;N, E&gt; meetIrreduciblesSubgraph() {
+<span class="fc" id="L471">        TreeSet&lt;Node&lt;N&gt;&gt; irr = this.meetIrreducibles();</span>
+<span class="fc" id="L472">        return this.getSubgraphByNodes(irr);</span>
+    }
+
+    /**
+     * Returns the subgraph induced by the irreducibles nodes of this component.
+     *
+     * @return the subgraph induced by the irreducibles nodes of this component
+     */
+    public DAGraph&lt;N, E&gt; irreduciblesSubgraph() {
+<span class="fc" id="L481">        TreeSet&lt;Node&lt;N&gt;&gt; irr = this.meetIrreducibles();</span>
+<span class="fc" id="L482">        irr.addAll(this.joinIrreducibles());</span>
+<span class="fc" id="L483">        return this.getSubgraphByNodes(irr);</span>
+    }
+
+    /**
+     * Generates and returns the isomorphic closed set lattice defined on the
+     * join irreducibles set.
+     *
+     * Each node of this component is replaced by a node containing its join
+     * irreducibles predecessors stored in a closed set.
+     *
+     * @return the isomorphic closed set lattice defined on the join
+     *         irreducibles set
+     */
+    public ConceptLattice joinClosure() {
+<span class="fc" id="L497">        ConceptLattice csl = new ConceptLattice();</span>
+        // associates each node to a new closed set of join irreducibles
+<span class="fc" id="L499">        TreeSet&lt;Node&lt;N&gt;&gt; join = this.joinIrreducibles();</span>
+<span class="fc" id="L500">        TreeMap&lt;Node, Concept&gt; closure = new TreeMap&lt;Node, Concept&gt;();</span>
+<span class="fc" id="L501">        Lattice&lt;N, E&gt; lattice = new Lattice(this);</span>
+<span class="fc" id="L502">        lattice.transitiveClosure();</span>
+<span class="fc" id="L503">        lattice.reflexiveClosure();</span>
+<span class="fc bfc" id="L504" title="All 2 branches covered.">        for (Node&lt;N&gt; target : lattice.getNodes()) {</span>
+<span class="fc" id="L505">            ComparableSet jx = new ComparableSet();</span>
+<span class="fc bfc" id="L506" title="All 2 branches covered.">            for (Node&lt;N&gt; source : lattice.getPredecessorNodes(target)) {</span>
+<span class="fc bfc" id="L507" title="All 2 branches covered.">                if (join.contains(source)) {</span>
+<span class="fc" id="L508">                    jx.add(source.getContent());</span>
+                }
+<span class="fc" id="L510">            }</span>
+<span class="fc" id="L511">            closure.put(target, new Concept(jx, false));</span>
+<span class="fc" id="L512">        }</span>
+        // addition of nodes
+<span class="fc bfc" id="L514" title="All 2 branches covered.">        for (Node&lt;N&gt; node : this.getNodes()) {</span>
+<span class="fc" id="L515">            csl.addNode(closure.get(node));</span>
+<span class="fc" id="L516">        }</span>
+        // addition of edges
+<span class="fc bfc" id="L518" title="All 2 branches covered.">        for (Edge ed : this.getEdges()) {</span>
+<span class="fc" id="L519">            csl.addEdge(closure.get(ed.getSource()), closure.get(ed.getTarget()));</span>
+<span class="fc" id="L520">        }</span>
+<span class="fc" id="L521">        return csl;</span>
+    }
+
+    /**
+     * Generates and returns the isomorphic closed set lattice defined on the
+     * meet irreducibles set.
+     *
+     * Each node of this component is replaced by a node containing its meet
+     * irreducibles successors stored in a closed set.
+     *
+     * @return the isomorphic closed set lattice defined on the meet
+     *         irreducibles set
+     */
+    public ConceptLattice meetClosure() {
+<span class="fc" id="L535">        ConceptLattice csl = new ConceptLattice();</span>
+        // associates each node to a new closed set of join irreducibles
+<span class="fc" id="L537">        TreeSet&lt;Node&lt;N&gt;&gt; meet = this.meetIrreducibles();</span>
+<span class="fc" id="L538">        TreeMap&lt;Node, Concept&gt; closure = new TreeMap&lt;Node, Concept&gt;();</span>
+<span class="fc" id="L539">        Lattice&lt;N, E&gt; lattice = new Lattice(this);</span>
+<span class="fc" id="L540">        lattice.transitiveClosure();</span>
+<span class="fc" id="L541">        lattice.reflexiveClosure();</span>
+<span class="fc bfc" id="L542" title="All 2 branches covered.">        for (Node&lt;N&gt; target : lattice.getNodes()) {</span>
+<span class="fc" id="L543">            ComparableSet mx = new ComparableSet();</span>
+<span class="fc bfc" id="L544" title="All 2 branches covered.">            for (Node&lt;N&gt; source : lattice.getSuccessorNodes(target)) {</span>
+<span class="fc bfc" id="L545" title="All 2 branches covered.">                if (meet.contains(source)) {</span>
+<span class="fc" id="L546">                    mx.add(source);</span>
+                }
+<span class="fc" id="L548">            }</span>
+<span class="fc" id="L549">            closure.put(target, new Concept(false, mx));</span>
+<span class="fc" id="L550">        }</span>
+        // addition of nodes
+<span class="fc bfc" id="L552" title="All 2 branches covered.">        for (Node node : this.getNodes()) {</span>
+<span class="fc" id="L553">            csl.addNode(closure.get(node));</span>
+<span class="fc" id="L554">        }</span>
+        // addition of edges
+<span class="fc bfc" id="L556" title="All 2 branches covered.">        for (Edge ed : this.getEdges()) {</span>
+<span class="fc" id="L557">            csl.addEdge(closure.get(ed.getSource()), closure.get(ed.getTarget()));</span>
+<span class="fc" id="L558">        }</span>
+<span class="fc" id="L559">        return csl;</span>
+    }
+
+    /**
+     * Generates and returns the isomorphic concept lattice defined on the join
+     * and meet irreducibles sets.
+     *
+     * Each node of this component is replaced by a node containing its meet
+     * irreducibles successors and its join irreducibles predecessors stored in
+     * a concept.
+     *
+     * @return the irreducible closure
+     */
+    public ConceptLattice irreducibleClosure() {
+<span class="fc" id="L573">        ConceptLattice conceptLatice = new ConceptLattice();</span>
+        // associates each node to a new closed set of join irreducibles
+<span class="fc" id="L575">        TreeSet&lt;Node&lt;N&gt;&gt; meet = this.meetIrreducibles();</span>
+<span class="fc" id="L576">        TreeSet&lt;Node&lt;N&gt;&gt; join = this.joinIrreducibles();</span>
+<span class="fc" id="L577">        TreeMap&lt;Node, Concept&gt; closure = new TreeMap&lt;Node, Concept&gt;();</span>
+<span class="fc" id="L578">        Lattice&lt;N, E&gt; lattice = new Lattice(this);</span>
+<span class="fc" id="L579">        lattice.transitiveClosure();</span>
+<span class="fc" id="L580">        lattice.reflexiveClosure();</span>
+<span class="fc bfc" id="L581" title="All 2 branches covered.">        for (Node&lt;N&gt; target : lattice.getNodes()) {</span>
+<span class="fc" id="L582">            ComparableSet jx = new ComparableSet();</span>
+<span class="fc bfc" id="L583" title="All 2 branches covered.">            for (Node&lt;N&gt; source : lattice.getPredecessorNodes(target)) {</span>
+<span class="fc bfc" id="L584" title="All 2 branches covered.">                if (join.contains(source)) {</span>
+<span class="fc" id="L585">                    jx.add(source);</span>
+                }
+<span class="fc" id="L587">            }</span>
+<span class="fc" id="L588">            ComparableSet mx = new ComparableSet();</span>
+<span class="fc bfc" id="L589" title="All 2 branches covered.">            for (Node source : lattice.getSuccessorNodes(target)) {</span>
+<span class="fc bfc" id="L590" title="All 2 branches covered.">                if (meet.contains(source)) {</span>
+<span class="fc" id="L591">                    mx.add(source);</span>
+                }
+<span class="fc" id="L593">            }</span>
+<span class="fc" id="L594">            closure.put(target, new Concept(jx, mx));</span>
+<span class="fc" id="L595">        }</span>
+        // addition of nodes
+<span class="fc bfc" id="L597" title="All 2 branches covered.">        for (Node node : this.getNodes()) {</span>
+<span class="fc" id="L598">            conceptLatice.addNode(closure.get(node));</span>
+<span class="fc" id="L599">        }</span>
+        // addition of edges
+<span class="fc bfc" id="L601" title="All 2 branches covered.">        for (Edge ed : this.getEdges()) {</span>
+<span class="fc" id="L602">            conceptLatice.addEdge(closure.get(ed.getSource()), closure.get(ed.getTarget()));</span>
+<span class="fc" id="L603">        }</span>
+<span class="fc" id="L604">        return conceptLatice;</span>
+    }
+
+    /**
+     * Returns the smallest set of nodes of this component containing S such
+     * that if a,b in JS then join(a,b) in JS.
+     *
+     * @param s set of nodes to be closed
+     *
+     * @return (JS) join-closure of s
+     */
+    public ComparableSet joinClosure(ComparableSet s) {
+        // Algorithm is true because join is idempotent &amp; commutative
+<span class="fc" id="L617">        ComparableSet stack = new ComparableSet();</span>
+<span class="fc" id="L618">        stack.addAll(s); // Nodes to be explored</span>
+<span class="fc" id="L619">        ComparableSet result = new ComparableSet();</span>
+<span class="fc bfc" id="L620" title="All 2 branches covered.">        while (!stack.isEmpty()) {</span>
+<span class="fc" id="L621">            Node c = (Node) stack.first();</span>
+<span class="fc" id="L622">            stack.remove(c);</span>
+<span class="fc" id="L623">            result.add(c);</span>
+<span class="fc" id="L624">            Iterator&lt;Node&gt; it = stack.iterator();</span>
+<span class="fc" id="L625">            ComparableSet newNodes = new ComparableSet(); // Node to be added. Must be done AFTER while</span>
+<span class="fc bfc" id="L626" title="All 2 branches covered.">            while (it.hasNext()) {</span>
+<span class="fc" id="L627">                Node node = this.join(it.next(), c);</span>
+<span class="fc bfc" id="L628" title="All 4 branches covered.">                if (!result.contains(node) &amp;&amp; !stack.contains(node)) {</span>
+<span class="fc" id="L629">                    newNodes.add(node);</span>
+                }
+<span class="fc" id="L631">            }</span>
+<span class="fc" id="L632">            stack.addAll(newNodes);</span>
+<span class="fc" id="L633">        }</span>
+<span class="fc" id="L634">        return result;</span>
+    }
+
+    /**
+     * Returns the smallest set of nodes of this component containing S such
+     * that if a,b in MS then meet(a,b) in MS.
+     *
+     * @param s set of nodes to be closed
+     *
+     * @return (MS) meet-closure of s
+     */
+    public ComparableSet meetClosure(ComparableSet s) {
+        // Algorithm is true because meet is idempotent &amp; commutative
+<span class="fc" id="L647">        ComparableSet stack = new ComparableSet();</span>
+<span class="fc" id="L648">        stack.addAll(s); // Nodes to be explored</span>
+<span class="fc" id="L649">        ComparableSet result = new ComparableSet();</span>
+<span class="fc bfc" id="L650" title="All 2 branches covered.">        while (!stack.isEmpty()) {</span>
+<span class="fc" id="L651">            Node c = (Node) stack.first();</span>
+<span class="fc" id="L652">            stack.remove(c);</span>
+<span class="fc" id="L653">            result.add(c);</span>
+<span class="fc" id="L654">            Iterator&lt;Node&gt; it = stack.iterator();</span>
+<span class="fc" id="L655">            ComparableSet newNodes = new ComparableSet(); // Node to be added. Must be done AFTER while</span>
+<span class="fc bfc" id="L656" title="All 2 branches covered.">            while (it.hasNext()) {</span>
+<span class="fc" id="L657">                Node node = this.meet(it.next(), c);</span>
+<span class="fc bfc" id="L658" title="All 4 branches covered.">                if (!result.contains(node) &amp;&amp; !stack.contains(node)) {</span>
+<span class="fc" id="L659">                    newNodes.add(node);</span>
+                }
+<span class="fc" id="L661">            }</span>
+<span class="fc" id="L662">            stack.addAll(newNodes);</span>
+<span class="fc" id="L663">        }</span>
+<span class="fc" id="L664">        return result;</span>
+    }
+
+    /**
+     * Returns the smallest sublattice of this component containing s.
+     *
+     * @param s set of nodes to be closed.
+     *
+     * @return the smallest sublattice of this component containing s.
+     */
+    public ComparableSet fullClosure(ComparableSet s) {
+<span class="fc" id="L675">        ComparableSet result = new ComparableSet();</span>
+<span class="fc" id="L676">        result.addAll(s);</span>
+<span class="fc" id="L677">        int present = result.size();</span>
+<span class="fc" id="L678">        int previous = 0;</span>
+<span class="fc bfc" id="L679" title="All 2 branches covered.">        while (previous != present) {</span>
+<span class="fc" id="L680">            previous = present;</span>
+<span class="fc" id="L681">            result = this.joinClosure(result);</span>
+<span class="fc" id="L682">            result = this.meetClosure(result);</span>
+<span class="fc" id="L683">            present = result.size();</span>
+        }
+<span class="fc" id="L685">        return result;</span>
+    }
+
+    /**
+     * Returns the list of all sets of nodes that generates all nodes. Both join
+     * and meet operations are allowed and the sets are minimal for inclusion.
+     *
+     * @return : List of all hybridGenerators families.
+     */
+    public TreeSet&lt;ComparableSet&gt; hybridGenerators() {
+<span class="fc" id="L695">        TreeSet&lt;Node&lt;N&gt;&gt; joinIrr = this.joinIrreducibles();</span>
+<span class="fc" id="L696">        TreeSet&lt;Node&lt;N&gt;&gt; meetIrr = this.meetIrreducibles();</span>
+<span class="fc" id="L697">        ComparableSet bothIrr = new ComparableSet();</span>
+<span class="fc bfc" id="L698" title="All 2 branches covered.">        for (Node&lt;N&gt; node : joinIrr) {</span>
+<span class="pc bpc" id="L699" title="1 of 2 branches missed.">            if (meetIrr.contains(node)) {</span>
+<span class="fc" id="L700">                bothIrr.add(node);</span>
+            }
+<span class="fc" id="L702">        } // bothIrr contains nodes that are join and meet irreductibles.</span>
+
+<span class="fc" id="L704">        TreeSet&lt;ComparableSet&gt; generators = new TreeSet&lt;ComparableSet&gt;();</span>
+        // First point is that all minimal families have the same number of nodes.
+<span class="fc" id="L706">        LinkedList&lt;ComparableSet&gt; list = new LinkedList&lt;ComparableSet&gt;(); // Family of sets to be examined</span>
+<span class="fc" id="L707">        list.add(bothIrr);</span>
+<span class="fc bfc" id="L708" title="All 2 branches covered.">        while (!list.isEmpty()) {</span>
+            int test;
+<span class="pc bpc" id="L710" title="1 of 2 branches missed.">            if (generators.isEmpty()) {</span>
+<span class="fc" id="L711">                test = this.sizeNodes();</span>
+            } else {
+<span class="nc" id="L713">                test = generators.first().size();</span>
+            }
+<span class="pc bpc" id="L715" title="1 of 2 branches missed.">            if (test &lt; list.peek().size()) {</span>
+                // Elements are sorted by size, thus if the first is to large, all are.
+<span class="nc" id="L717">                list.clear();</span>
+            } else {
+<span class="fc" id="L719">                ComparableSet family = list.poll(); // Retrieve and remove head.</span>
+<span class="pc bpc" id="L720" title="1 of 2 branches missed.">                if (this.fullClosure(family).size() == this.sizeNodes()) {</span>
+                    // This family generates l
+<span class="fc" id="L722">                    generators.add(family);</span>
+                } else {
+<span class="nc bnc" id="L724" title="All 2 branches missed.">                    for (Node node : this.getNodes()) {</span>
+<span class="nc" id="L725">                        ComparableSet newFamily = new ComparableSet();</span>
+<span class="nc" id="L726">                        newFamily.addAll(family);</span>
+<span class="nc" id="L727">                        newFamily.add(node);</span>
+<span class="nc bnc" id="L728" title="All 2 branches missed.">                        if (!list.contains(newFamily)) {</span>
+<span class="nc" id="L729">                            list.add(newFamily); // add at the end, bigger families</span>
+                        }
+<span class="nc" id="L731">                    }</span>
+                }
+            }
+<span class="fc" id="L734">        }</span>
+<span class="fc" id="L735">        return generators;</span>
+    }
+
+    /**
+     * Returns the table of the lattice, composed of the join and meet
+     * irreducibles nodes.
+     *
+     * Each attribute of the table is a copy of a join irreducibles node. Each
+     * observation of the table is a copy of a meet irreducibles node. An
+     * attribute is extent of an observation when its join irreducible node is
+     * greater than the meet irreducible node in the lattice.
+     *
+     * @return the table of the lattice
+     */
+    public Context getTable() {
+        // generation of attributes
+<span class="fc" id="L751">        TreeSet&lt;Node&lt;N&gt;&gt; join = this.joinIrreducibles();</span>
+        //TreeMap&lt;Node,Node&gt; JoinContent = new TreeMap();
+<span class="fc" id="L753">        Context context = new Context();</span>
+<span class="fc bfc" id="L754" title="All 2 branches covered.">        for (Node&lt;N&gt; j : join) {</span>
+            //  Node&lt;N&gt; nj = new Node(j);
+            //JoinContent.put(j,nj);
+<span class="fc" id="L757">            context.addToAttributes(j);</span>
+<span class="fc" id="L758">        }</span>
+        // generation of observations
+<span class="fc" id="L760">        TreeSet&lt;Node&lt;N&gt;&gt; meet = this.meetIrreducibles();</span>
+        //TreeMap&lt;Node,Node&gt; MeetContent = new TreeMap();
+<span class="fc bfc" id="L762" title="All 2 branches covered.">        for (Node&lt;N&gt; m : meet) {</span>
+            //    Node nm = new Node(m);
+<span class="fc" id="L764">            context.addToObservations(m);</span>
+            //    MeetContent.put(m,nm);
+<span class="fc" id="L766">        }</span>
+        // generation of extent-intent
+<span class="fc" id="L768">        Lattice tmp = new Lattice(this);</span>
+<span class="fc" id="L769">        tmp.transitiveClosure();</span>
+<span class="fc bfc" id="L770" title="All 2 branches covered.">        for (Node j : join) {</span>
+<span class="fc bfc" id="L771" title="All 2 branches covered.">            for (Node m : meet) {</span>
+<span class="pc bpc" id="L772" title="1 of 4 branches missed.">                if (j.equals(m) || tmp.getSuccessorNodes(j).contains(m)) {</span>
+<span class="fc" id="L773">                    context.addExtentIntent(m, j);</span>
+                    //T.addExtentIntent(MeetContent.get(m),JoinContent.get(j));
+                }
+<span class="fc" id="L776">            }</span>
+<span class="fc" id="L777">        }</span>
+<span class="fc" id="L778">        return context;</span>
+    }
+
+    /**
+     * Returns an ImplicationalSystem of the lattice defined on the join
+     * irreducibles nodes.
+     *
+     * Each element of the ImplicationalSystem is a copy of a join irreducible
+     * node.
+     *
+     * @return an implicational system
+     */
+    public ImplicationalSystem getImplicationalSystem() {
+        // initialisation of ImplicationalSystem
+<span class="fc" id="L792">        TreeSet&lt;Node&lt;N&gt;&gt; join = this.joinIrreducibles();</span>
+<span class="fc" id="L793">        ImplicationalSystem sigma = new ImplicationalSystem();</span>
+<span class="fc bfc" id="L794" title="All 2 branches covered.">        for (Node&lt;N&gt; j : join) {</span>
+<span class="fc" id="L795">            sigma.addElement((Comparable) j.getContent());</span>
+<span class="fc" id="L796">        }</span>
+        // generation of the family of closures
+<span class="fc" id="L798">        TreeSet&lt;ComparableSet&gt; family = new TreeSet&lt;ComparableSet&gt;();</span>
+<span class="fc" id="L799">        Lattice lattice = new Lattice(this);</span>
+<span class="fc" id="L800">        ConceptLattice conceptLattice = lattice.joinClosure();</span>
+<span class="fc bfc" id="L801" title="All 2 branches covered.">        for (Object node : conceptLattice.getNodes()) {</span>
+<span class="fc" id="L802">            Concept concept = (Concept) node;</span>
+<span class="fc" id="L803">            ComparableSet setA = new ComparableSet(concept.getSetA());</span>
+<span class="fc" id="L804">            family.add(setA);</span>
+<span class="fc" id="L805">        }</span>
+        // rules generation
+<span class="fc bfc" id="L807" title="All 2 branches covered.">        for (ComparableSet jx : family) {</span>
+<span class="fc bfc" id="L808" title="All 2 branches covered.">            for (Node j : join) {</span>
+<span class="fc" id="L809">                ComparableSet p = new ComparableSet();</span>
+<span class="fc" id="L810">                p.add(j.getContent());</span>
+<span class="fc" id="L811">                p.addAll(jx);</span>
+<span class="fc bfc" id="L812" title="All 2 branches covered.">                if (!family.contains(p)) {</span>
+<span class="fc" id="L813">                    ComparableSet min = new ComparableSet();</span>
+<span class="fc" id="L814">                    min.addAll(family.last());</span>
+<span class="fc bfc" id="L815" title="All 2 branches covered.">                    for (ComparableSet c : family) {</span>
+                        //System.out.println(&quot;min: &quot;+min.getClass()+&quot; -C:&quot;+C.getClass());
+<span class="pc bpc" id="L817" title="2 of 6 branches missed.">                        if (c.containsAll(p) &amp;&amp; !p.containsAll(c) &amp;&amp; min.containsAll(c)) {</span>
+<span class="fc" id="L818">                            min = c.clone();</span>
+                        }
+<span class="fc" id="L820">                    }</span>
+<span class="fc" id="L821">                    Rule r = new Rule();</span>
+<span class="fc" id="L822">                    r.addAllToPremise(p);</span>
+<span class="fc" id="L823">                    min.removeAll(p);</span>
+<span class="fc" id="L824">                    r.addAllToConclusion(min);</span>
+<span class="fc" id="L825">                    sigma.addRule(r);</span>
+                }
+<span class="fc" id="L827">            }</span>
+<span class="fc" id="L828">        }</span>
+
+        /**
+         * for (Node j : join) for (Node m : meet) if (j.equals(m) ||
+         * tmp.getSuccessorNodes(j).contains(m)) T.addExtentIntent (m,j);
+         * //T.addExtentIntent (MeetContent.get(m),JoinContent.get(j)); return
+         * T;*
+         */
+<span class="fc" id="L836">        sigma.makeRightMaximal();</span>
+<span class="fc" id="L837">        return sigma;</span>
+    }
+
+    /*
+     * ------------- dependency GRAPH RELATIVE METHODS ------------------
+     */
+    /**
+     * Returns the dependency graph of this component.
+     *
+     * The dependency graph is a condensed representation of a lattice that
+     * encodes its minimal generators, and its canonical direct basis.
+     *
+     * In the dependency graph, nodes are join irreducibles, egdes correspond to
+     * the dependency relation between join-irreducibles (j -&gt; j' if and only if
+     * there exists a node x in the lattice such that x not greather than j and
+     * j', and x v j' &gt; j), and edges are labeled with the smallest subsets X of
+     * join-irreducibles such that the join of elements of X corresponds to the
+     * node x of the lattice.
+     *
+     * The dependency graph could has been already computed in the case where
+     * this component has been instancied as the diagramm of the closed set
+     * lattice of a closure system using the static method
+     * {@link ConceptLattice#diagramLattice} This method implements an
+     * adaptation adaptation of Bordat's where the dependency graph is computed
+     * while the lattice is generated.
+     *
+     * However, it is generated in O(nj^3) where n is the number of nodes of the
+     * lattice, and j is the number of join-irreducibles of the lattice.
+     *
+     * @return the dependency graph
+     */
+    public ConcreteDGraph getDependencyGraph() {
+<span class="fc bfc" id="L869" title="All 2 branches covered.">        if (!(this.dependencyGraph == null)) {</span>
+<span class="fc" id="L870">            return this.dependencyGraph;</span>
+        }
+<span class="fc" id="L872">        this.dependencyGraph = new ConcreteDGraph();</span>
+        // nodes of the dependency graph are join-irreducibles
+<span class="fc" id="L874">        TreeSet&lt;Node&lt;N&gt;&gt; joins = this.joinIrreducibles();</span>
+<span class="fc bfc" id="L875" title="All 2 branches covered.">        for (Node&lt;N&gt; j : joins) {</span>
+<span class="fc" id="L876">            this.dependencyGraph.addNode(j);</span>
+<span class="fc" id="L877">        }</span>
+        // computes the transitive closure of the join-irreducibles subgraph of this compnent
+<span class="fc" id="L879">        DAGraph joinG = this.irreduciblesSubgraph();</span>
+<span class="fc" id="L880">        joinG.transitiveClosure();</span>
+        // edges of the dependency graph are dependency relation between join-irreducibles
+        // they are first valuated by nodes of the lattice
+<span class="fc bfc" id="L883" title="All 2 branches covered.">        for (Node&lt;N&gt; j1 : joins) {</span>
+<span class="fc" id="L884">            SortedSet&lt;Node&lt;N&gt;&gt; majj1 = this.majorants(j1);</span>
+<span class="fc bfc" id="L885" title="All 2 branches covered.">            for (Node&lt;N&gt; j2 : joins) {</span>
+<span class="fc bfc" id="L886" title="All 2 branches covered.">                if (!j1.equals(j2)) {</span>
+                    // computes the set S of nodes not greather than j1 and j2
+<span class="fc" id="L888">                    TreeSet&lt;Node&lt;N&gt;&gt; set = new TreeSet&lt;Node&lt;N&gt;&gt;(this.getNodes());</span>
+<span class="fc" id="L889">                    set.removeAll(majj1);</span>
+<span class="fc" id="L890">                    set.removeAll(this.majorants(j2));</span>
+<span class="fc" id="L891">                    set.remove(j1);</span>
+<span class="fc" id="L892">                    set.remove(j2);</span>
+<span class="fc bfc" id="L893" title="All 2 branches covered.">                    for (Node&lt;N&gt; x : set) {</span>
+                        // when j2 V x greather than j1 then add a new edge from j1 to J2
+                        // or only a new valuation when the edge already exists
+<span class="fc bfc" id="L896" title="All 2 branches covered.">                        if (majj1.contains(this.join(j2, x))) {</span>
+<span class="fc" id="L897">                            Edge ed = this.dependencyGraph.getEdge(j1, j2);</span>
+<span class="pc bpc" id="L898" title="1 of 2 branches missed.">                            if (ed == null) {</span>
+<span class="fc" id="L899">                                ed = new Edge(j1, j2, new TreeSet&lt;ComparableSet&gt;());</span>
+<span class="fc" id="L900">                                this.dependencyGraph.addEdge(ed);</span>
+                            }
+                            // add {Jx minus predecessors in joinG of j in Jx} as valuation of edge
+                            // from j1 to j2
+<span class="fc" id="L904">                            TreeSet&lt;ComparableSet&gt; valEd = (TreeSet&lt;ComparableSet&gt;) ed.getContent();</span>
+<span class="fc" id="L905">                            ComparableSet newValByNode = new ComparableSet(this.joinIrreducibles(x));</span>
+<span class="pc bpc" id="L906" title="1 of 2 branches missed.">                            for (Node&lt;N&gt; j : this.joinIrreducibles(x)) {</span>
+<span class="nc" id="L907">                                newValByNode.removeAll(joinG.getPredecessorNodes(j));</span>
+<span class="nc" id="L908">                            }</span>
+<span class="fc" id="L909">                            ComparableSet newVal = new ComparableSet();</span>
+<span class="pc bpc" id="L910" title="1 of 2 branches missed.">                            for (Object j : newValByNode) {</span>
+<span class="nc" id="L911">                                Node node = (Node) j;</span>
+<span class="nc" id="L912">                                newVal.add(node.getContent());</span>
+<span class="nc" id="L913">                            }</span>
+<span class="fc" id="L914">                            ((TreeSet&lt;ComparableSet&gt;) ed.getContent()).add(newVal);</span>
+                            // Minimalisation by inclusion of valuations on edge j1-&gt;j2
+<span class="fc" id="L916">                            valEd = new TreeSet&lt;ComparableSet&gt;((TreeSet&lt;ComparableSet&gt;) ed.getContent());</span>
+<span class="fc bfc" id="L917" title="All 2 branches covered.">                            for (ComparableSet x1 : valEd) {</span>
+<span class="pc bpc" id="L918" title="2 of 4 branches missed.">                                if (x1.containsAll(newVal) &amp;&amp; !newVal.containsAll(x1)) {</span>
+<span class="nc" id="L919">                                    ((TreeSet&lt;ComparableSet&gt;) ed.getContent()).remove(x1);</span>
+                                }
+<span class="pc bpc" id="L921" title="3 of 4 branches missed.">                                if (!x1.containsAll(newVal) &amp;&amp; newVal.containsAll(x1)) {</span>
+<span class="nc" id="L922">                                    ((TreeSet&lt;ComparableSet&gt;) ed.getContent()).remove(newVal);</span>
+                                }
+<span class="fc" id="L924">                            }</span>
+                        }
+<span class="fc" id="L926">                    }</span>
+                }
+<span class="fc" id="L928">            }</span>
+<span class="fc" id="L929">        }</span>
+        // minimalisation of edge's content to get only inclusion-minimal valuation for each edge
+        /**
+         * for (Edge ed : this.dependencyGraph.getEdges()) {
+         * TreeSet&lt;ComparableSet&gt; valEd = new
+         * TreeSet&lt;ComparableSet&gt;(((TreeSet&lt;ComparableSet&gt;)ed.getContent()));
+         * for (ComparableSet X1 : valEd) for (ComparableSet X2 : valEd) if
+         * (X1.containsAll(X2) &amp;&amp; !X2.containsAll(X1))
+         * ((TreeSet&lt;ComparableSet&gt;)ed.getContent()).remove(X1); }*
+         */
+<span class="fc" id="L939">        return this.dependencyGraph;</span>
+    }
+
+    /**
+     * Set the dependency graph.
+     *
+     * @param graph the dependency graph
+     *
+     * @return this for chaining
+     */
+    protected Lattice setDependencyGraph(ConcreteDGraph graph) {
+<span class="fc" id="L950">        this.dependencyGraph = graph;</span>
+<span class="fc" id="L951">        return this;</span>
+    }
+
+    /**
+     * Test if this component has a dependency graph.
+     *
+     * @return the truth value for this property
+     */
+    protected boolean hasDependencyGraph() {
+<span class="fc bfc" id="L960" title="All 2 branches covered.">        return this.dependencyGraph != null;</span>
+    }
+
+    /**
+     * Returns the canonical direct basis of the lattice.
+     *
+     * The canonical direct basis is a condensed representation of a lattice
+     * encoding by the dependency graph.
+     *
+     * This canonical direct basis is deduced from the dependency graph of the
+     * lattice: for each edge b -&gt; a valuated by a subset X, the rule a+X-&gt;b is
+     * a rule of the canonical direct basis.
+     *
+     * If not yet exists, the dependency graph of this component has to be
+     * generated by method {@link #getDependencyGraph}.
+     *
+     * @return the canonical direct basis of the lattice
+     */
+    public ImplicationalSystem getCanonicalDirectBasis() {
+<span class="fc" id="L979">        ConcreteDGraph odGraph = this.getDependencyGraph();</span>
+        // initialise elements of the ImplicationalSystem with nodes of the ODGraph
+<span class="fc" id="L981">        ImplicationalSystem bcd = new ImplicationalSystem();</span>
+<span class="fc bfc" id="L982" title="All 2 branches covered.">        for (Object node : odGraph.getNodes()) {</span>
+<span class="fc" id="L983">            bcd.addElement((Comparable) ((Node) node).getContent());</span>
+<span class="fc" id="L984">        }</span>
+        // computes rules of the BCD from edges of the ODGraph
+<span class="fc bfc" id="L986" title="All 2 branches covered.">        for (Object ed : odGraph.getEdges()) {</span>
+<span class="fc" id="L987">            Node source = ((Edge) ed).getSource();</span>
+<span class="fc" id="L988">            Node target = ((Edge) ed).getTarget();</span>
+<span class="fc" id="L989">            TreeSet&lt;ComparableSet&gt; l = (TreeSet&lt;ComparableSet&gt;) ((Edge) ed).getContent();</span>
+<span class="fc bfc" id="L990" title="All 2 branches covered.">            for (ComparableSet set : l) {</span>
+<span class="fc" id="L991">                ComparableSet premise = new ComparableSet(set);</span>
+<span class="fc" id="L992">                premise.add((Comparable) target.getContent());</span>
+<span class="fc" id="L993">                ComparableSet conclusion = new ComparableSet();</span>
+<span class="fc" id="L994">                conclusion.add((Comparable) source.getContent());</span>
+<span class="fc" id="L995">                bcd.addRule(new Rule(premise, conclusion));</span>
+<span class="fc" id="L996">            }</span>
+<span class="fc" id="L997">        }</span>
+        //bcd.makeLeftMinimal();
+<span class="fc" id="L999">        bcd.makeCompact();</span>
+<span class="fc" id="L1000">        return bcd;</span>
+    }
+
+    /**
+     * Returns a set of association rules based on a confidence threshold.
+     *
+     * The canonical direct basis is computed. For each generated rule, a set of
+     * approximative rules (above the confidence threshold) is generated.
+     *
+     * @param context    a context
+     * @param support    a support threshold, between 0 and 1
+     * @param confidence a confidence threshold, between 0 and 1
+     *
+     * @return a set of approximative rules
+     */
+    public ImplicationalSystem getAssociationBasis(Context context, double support, double confidence) {
+
+        //nb of observations in current context
+<span class="nc" id="L1018">        int nbObs = context.getObservations().size();</span>
+
+        //start by getting exact rules
+<span class="nc" id="L1021">        ImplicationalSystem exactRules = this.getCanonicalDirectBasis();</span>
+<span class="nc" id="L1022">        ImplicationalSystem appRules = new ImplicationalSystem();</span>
+
+        //copy elements from exact rules to approximate rules
+<span class="nc bnc" id="L1025" title="All 2 branches missed.">        for (Comparable e : exactRules.getSet()) {</span>
+<span class="nc" id="L1026">            appRules.addElement(e);</span>
+<span class="nc" id="L1027">        }</span>
+
+<span class="nc bnc" id="L1029" title="All 2 branches missed.">        for (Rule rule : exactRules.getRules()) {</span>
+
+            //we get the premisse of the rule, aka the closed set minimal generator
+<span class="nc" id="L1032">            TreeSet&lt;Comparable&gt; gm = rule.getPremise();</span>
+            //then we retrieve the closed set from the minimal generator
+<span class="nc" id="L1034">            TreeSet&lt;Comparable&gt; closedSet = context.closure(gm);</span>
+
+            //we get the cardinality of its extent to compute confidence later
+<span class="nc" id="L1037">            double supportClosedSet = context.getExtentNb(closedSet);</span>
+<span class="nc bnc" id="L1038" title="All 2 branches missed.">            if (supportClosedSet / nbObs &gt; support) {</span>
+                //we get the immediate successors of the concept made of the set
+<span class="nc" id="L1040">                ArrayList&lt;TreeSet&lt;Comparable&gt;&gt; succs = new Concept(closedSet, new TreeSet()).immediateSuccessorsLOA(context);</span>
+<span class="nc bnc" id="L1041" title="All 2 branches missed.">                for (TreeSet&lt;Comparable&gt; succ : succs) {</span>
+                    //we compute the support of the rule as the ratio between closed set and successor extent
+<span class="nc" id="L1043">                    double ex = context.getExtentNb(succ);</span>
+<span class="nc" id="L1044">                    double supportSucc = ex / supportClosedSet;</span>
+
+                    //the rule conclusion is made of the successors minus the minimal generator
+<span class="nc" id="L1047">                    TreeSet&lt;Comparable&gt; conclusions = new TreeSet(succ);</span>
+<span class="nc" id="L1048">                    conclusions.removeAll(gm);</span>
+
+                    //if the ratio support exceed the confidence threshold, the rule is created
+<span class="nc bnc" id="L1051" title="All 2 branches missed.">                    if (supportSucc &gt; confidence) {</span>
+<span class="nc" id="L1052">                        appRules.addRule(new AssociationRule(gm, conclusions, ex / nbObs, supportSucc));</span>
+                    }
+<span class="nc" id="L1054">                }</span>
+                //the exact rule is copied in the output rule set
+<span class="nc" id="L1056">                appRules.addRule(new AssociationRule(rule.getPremise(), rule.getConclusion(), supportClosedSet / nbObs, 1));</span>
+            }
+<span class="nc" id="L1058">        }</span>
+<span class="nc" id="L1059">        appRules.makeCompactAssociation();</span>
+<span class="nc" id="L1060">        return appRules;</span>
+    }
+
+    /**
+     * Returns the minimal generators of the lattice.
+     *
+     * Minimal generators a condensed representation of a lattice encoding by
+     * the dependency graph.
+     *
+     * Minimal generators are premises of the canonical direct basis. that is
+     * deduced from the dependency graph of the lattice.
+     *
+     * If not yet exists, the dependency graph of this component has to be
+     * generated by method {@link #getDependencyGraph}.
+     *
+     * @return a TreeSet of the minimal generators
+     */
+    public TreeSet getMinimalGenerators() {
+<span class="fc" id="L1078">        ImplicationalSystem bcd = this.getCanonicalDirectBasis();</span>
+<span class="fc" id="L1079">        TreeSet genMin = new TreeSet();</span>
+<span class="fc bfc" id="L1080" title="All 2 branches covered.">        for (Rule r : bcd.getRules()) {</span>
+<span class="fc" id="L1081">            genMin.add(r.getPremise());</span>
+<span class="fc" id="L1082">        }</span>
+<span class="fc" id="L1083">        return genMin;</span>
+    }
+
+    /**
+     * The arrowRelation method encodes arrow relations between meet &amp;
+     * join-irreductibles of this component.
+     *
+     * Let m and j be respectively meet and join irreductibles of a lattice.
+     * Recall that m has a unique successor say m+ and j has a unique
+     * predecessor say j-, then :
+     *
+     * - j &quot;Up Arrow&quot; m (stored has &quot;Up&quot;) iff j is not less or equal than m and j is less than m+
+     * - j &quot;Down Arrow&quot; m (stored has &quot;Down&quot;) iff j is not less or equal than m and j- is less than m
+     * - j &quot;Up Down Arrow&quot; m (stored has &quot;UpDown&quot;) iff j &quot;Up&quot; m and j &quot;Down&quot; m
+     * - j &quot;Cross&quot; m (stored has &quot;Cross&quot;) iff j is less or equal than m
+     * - j &quot;Circ&quot; m (stored has &quot;Circ&quot;) iff neither j &quot;Up&quot; m nor j &quot;Down&quot; m nor j &quot;Cross&quot; m
+     *
+     * @return ConcreteDGraph whose :
+         - Nodes are join or meet irreductibles of the lattice.
+         - Edges content encodes arrows as String &quot;Up&quot;, &quot;Down&quot;, &quot;UpDown&quot;, &quot;Cross&quot;, &quot;Circ&quot;.
+     *
+     */
+    public ArrowRelation getArrowRelation() {
+<span class="fc" id="L1106">        return new ArrowRelation(this);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

@@ -1,0 +1,15 @@
+package org.thegalactic.io {
+    class IOFactory<E> {
+    	-HashMap<String, org.thegalactic.io.Reader<E>> readers
+    	-HashMap<String, org.thegalactic.io.Writer<E>> writers
+        +org.thegalactic.io.Reader<E> registerReader(org.thegalactic.io.Reader<E> reader, String extension)
+        +org.thegalactic.io.Writer<E> registerWriter(org.thegalactic.io.Writer<E> writer, String extension)
+        +org.thegalactic.io.Reader<E> unregisterReader(String extension)
+        +org.thegalactic.io.Writer<E> unregisterWriter(String extension)
+        +org.thegalactic.io.Reader<E> getReader(String extension)
+        +org.thegalactic.io.Writer<E> getWriter(String extension)
+    }
+
+    IOFactory o-- org.thegalactic.io.Reader
+    IOFactory o-- org.thegalactic.io.Writer
+}

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CategoricalAttribute.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lattices</a> &gt; <a href="index.source.html" class="el_package">org.thegalactic.context.constraint.categorical</a> &gt; <span class="el_source">CategoricalAttribute.java</span></div><h1>CategoricalAttribute.java</h1><pre class="source lang-java linenums">package org.thegalactic.context.constraint.categorical;
+
+/*
+ * CategoricalAttribute.java
+ *
+ * Copyright: 2016 The Galactic Organization, France
+ *
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
+ * This file is part of java-lattices.
+ * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
+ */
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Categorical Attribute.
+ */
+public final class CategoricalAttribute {
+
+    /**
+     * Values.
+     */
+    private final List&lt;CategoricalValue&gt; values;
+
+    /**
+     * Model.
+     */
+    private final CategoricalModel model;
+
+    /**
+     * Create a CategoricalAttribute.
+     *
+     * @param model The underlying CategoricalModel
+     *
+     * @return new CategoricalAttribute
+     */
+    static CategoricalAttribute create(final CategoricalModel model) {
+<span class="fc" id="L39">        return new CategoricalAttribute(model);</span>
+    }
+
+    /**
+     * This class is not designed to be publicly instantiated.
+     *
+     * @param model The underlying CategoricalModel
+     */
+<span class="fc" id="L47">    private CategoricalAttribute(final CategoricalModel model) {</span>
+<span class="fc" id="L48">        this.values = new ArrayList();</span>
+<span class="fc" id="L49">        this.model = model;</span>
+<span class="fc" id="L50">    }</span>
+
+    /**
+     * Add a value to a CategoricalAttribute.
+     *
+     * @param data the underlying data
+     *
+     * @return the categorical value
+     */
+    public CategoricalValue addValue(final Object data) {
+<span class="fc bfc" id="L60" title="All 2 branches covered.">        if (this.model.isInstantiated()) {</span>
+<span class="fc" id="L61">            throw new IllegalStateException(&quot;The underlying model has already been instantiated&quot;);</span>
+        } else {
+<span class="fc" id="L63">            final CategoricalValue value = CategoricalValue.create(data, this);</span>
+<span class="fc" id="L64">            this.values.add(value);</span>
+<span class="fc" id="L65">            return value;</span>
+        }
+    }
+
+    /**
+     * Get the collection of CategoricalValue.
+     *
+     * @return an iterable collection of CategoricalValue
+     */
+    public Iterable&lt;CategoricalValue&gt; getValues() {
+<span class="fc" id="L75">        return this.values;</span>
+    }
+
+    /**
+     * Get the number of values.
+     *
+     * @return the number of values
+     */
+    public int size() {
+<span class="fc" id="L84">        return this.values.size();</span>
+    }
+
+    /**
+     * Get the startIndex of this.
+     *
+     * @return the startIndex of this
+     */
+    public int startIndex() {
+<span class="fc" id="L93">        return this.model.startIndex(this);</span>
+    }
+
+    /**
+     * Get the index of a CategoricalValue.
+     *
+     * @param value the CategoricalValue
+     *
+     * @return the index of the CategoricalValue
+     */
+    public int indexOf(final CategoricalValue value) {
+<span class="fc" id="L104">        return this.values.indexOf(value);</span>
+    }
+
+    /**
+     * Get the underlying model.
+     *
+     * @return the underlying model
+     */
+    public CategoricalModel getModel() {
+<span class="fc" id="L113">        return this.model;</span>
+    }
+
+    /**
+     * Returns a string representation of the object.
+     *
+     * @return a string representation of the object.
+     */
+    @Override
+    public String toString() {
+<span class="fc" id="L123">        return this.values.toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

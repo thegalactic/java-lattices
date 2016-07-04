@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DAGraphFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lattices</a> &gt; <a href="index.source.html" class="el_package">org.thegalactic.dgraph</a> &gt; <span class="el_source">DAGraphFactory.java</span></div><h1>DAGraphFactory.java</h1><pre class="source lang-java linenums">package org.thegalactic.dgraph;
+
+/*
+ * DAGraphFactory.java
+ *
+ * Copyright: 2010-2015 Karell Bertet, France
+ * Copyright: 2015-2016 The Galactic Organization, France
+ *
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
+ * This file is part of java-lattices.
+ * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
+ */
+/**
+ * DAGraphFactory.
+ */
+public final class DAGraphFactory {
+
+    /**
+     * The singleton instance.
+     */
+<span class="fc" id="L22">    private static final DAGraphFactory INSTANCE = new DAGraphFactory();</span>
+
+    /**
+     * Return the singleton instance of this class.
+     *
+     * @return the singleton instance
+     */
+    public static DAGraphFactory getInstance() {
+<span class="fc" id="L30">        return INSTANCE;</span>
+    }
+
+    /**
+     * This class is not designed to be publicly instantiated.
+     */
+    private DAGraphFactory() {
+<span class="fc" id="L37">        super();</span>
+<span class="fc" id="L38">    }</span>
+
+    /**
+     * Generates the directed asyclic graph (DAG) of divisors for integers
+     * included betwwen 2 and the specified value.
+     *
+     * In this DAG, nodes corresponds to the integers, and there is an edge
+     * between two integers if and only if the second one is divisible by the
+     * first one.
+     *
+     * @param number the maximal integer
+     *
+     * @return the acyclic graph
+     */
+    public DAGraph&lt;Integer, ?&gt; divisors(final int number) {
+<span class="fc" id="L53">        final DAGraph&lt;Integer, ?&gt; graph = new DAGraph&lt;Integer, Object&gt;();</span>
+        // addition of nodes
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        for (int i = 2; i &lt;= number; i++) {</span>
+<span class="fc" id="L56">            graph.addNode(new Node&lt;Integer&gt;(i));</span>
+        }
+        // addition of edges
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        for (final Node&lt;Integer&gt; source : graph.getNodes()) {</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">            for (final Node&lt;Integer&gt; target : graph.getNodes()) {</span>
+<span class="fc" id="L61">                final int v1 = source.getContent();</span>
+<span class="fc" id="L62">                final int v2 = target.getContent();</span>
+<span class="fc bfc" id="L63" title="All 4 branches covered.">                if (v1 &lt; v2 &amp;&amp; v2 % v1 == 0) {</span>
+<span class="fc" id="L64">                    graph.addEdge(source, target);</span>
+                }
+<span class="fc" id="L66">            }</span>
+<span class="fc" id="L67">        }</span>
+<span class="fc" id="L68">        return graph;</span>
+    }
+
+    /**
+     * Generates a random directed and acyclic graph (DAG) of size nodes.
+     *
+     * @param size      the number of nodes of the generated graph
+     * @param threshold the threshold to generate an edge
+     *
+     * @return a random acyclic graph
+     */
+    public DAGraph&lt;Integer, ?&gt; random(final int size, final double threshold) {
+<span class="fc" id="L80">        final DAGraph&lt;Integer, ?&gt; graph = new DAGraph&lt;Integer, Object&gt;();</span>
+        // addition of Nodes
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        for (int i = 1; i &lt;= size; i++) {</span>
+<span class="fc" id="L83">            graph.addNode(new Node&lt;Integer&gt;(i));</span>
+        }
+        // addition of edges
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        for (final Node&lt;Integer&gt; source : graph.getNodes()) {</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">            for (final Node&lt;Integer&gt; target : graph.getNodes()) {</span>
+                // Test to avoid cycles
+<span class="fc bfc" id="L89" title="All 4 branches covered.">                if (source.compareTo(target) &gt; 0 &amp;&amp; Math.random() &lt; threshold) {</span>
+<span class="fc" id="L90">                    graph.addEdge(source, target);</span>
+                }
+<span class="fc" id="L92">            }</span>
+<span class="fc" id="L93">        }</span>
+<span class="fc" id="L94">        return graph;</span>
+    }
+
+    /**
+     * Generates a random directed graph of size nodes.
+     *
+     * @param size the number of nodes of the generated graph
+     *
+     * @return a random acyclic graph
+     */
+    public DAGraph&lt;Integer, ?&gt; random(final int size) {
+<span class="fc" id="L105">        return this.random(size, 0.5);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

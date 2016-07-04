@@ -1,0 +1,10 @@
+package org.thegalactic.lattice.io {
+    class ArrowRelationSerializerTex {
+    	-{static}ArrowRelationSerializerTex instance
+        +void write(ArrowRelation arrow, BufferedWriter file)
+        +{static}ArrowRelationSerializerTex getInstance()
+        +{static}void register()
+    }
+
+    org.thegalactic.io.Writer <|-- ArrowRelationSerializerTex
+}

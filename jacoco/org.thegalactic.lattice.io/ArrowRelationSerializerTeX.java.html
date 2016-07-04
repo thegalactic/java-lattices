@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ArrowRelationSerializerTeX.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lattices</a> &gt; <a href="index.source.html" class="el_package">org.thegalactic.lattice.io</a> &gt; <span class="el_source">ArrowRelationSerializerTeX.java</span></div><h1>ArrowRelationSerializerTeX.java</h1><pre class="source lang-java linenums">package org.thegalactic.lattice.io;
+
+/*
+ * ArrowRelationSerializerTeX.java
+ *
+ * Copyright: 2010-2015 Karell Bertet, France
+ * Copyright: 2015-2016 The Galactic Organization, France
+ *
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
+ * This file is part of java-lattices.
+ * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
+ */
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+import org.thegalactic.dgraph.Edge;
+import org.thegalactic.dgraph.Node;
+import org.thegalactic.io.Writer;
+import org.thegalactic.lattice.ArrowRelation;
+
+/**
+ * This class defines the way for writing an arrow relatin as a tex file.
+ *
+ * ![ArrowRelationSerializerTeX](ArrowRelationSerializerTeX.png)
+ *
+ * @uml ArrowRelationSerializerTeX.png
+ * !include resources/org/thegalactic/lattice/io/ArrowRelationSerializerTeX.iuml
+ * !include resources/org/thegalactic/io/Reader.iuml
+ * !include resources/org/thegalactic/io/Writer.iuml
+ *
+ * hide members
+ * show ArrowRelationSerializerTeX members
+ * class ArrowRelationSerializerTeX #LightCyan
+ * title ArrowRelationSerializerTeX UML graph
+ */
+public final class ArrowRelationSerializerTeX implements Writer&lt;ArrowRelation&gt; {
+
+    /**
+     * The singleton instance.
+     */
+<span class="fc" id="L44">    private static final ArrowRelationSerializerTeX INSTANCE = new ArrowRelationSerializerTeX();</span>
+
+    /**
+     * Return the singleton instance of this class.
+     *
+     * @return the singleton instance
+     */
+    public static ArrowRelationSerializerTeX getInstance() {
+<span class="fc" id="L52">        return INSTANCE;</span>
+    }
+
+    /**
+     * Register this class for writing .tex files.
+     */
+    public static void register() {
+<span class="fc" id="L59">        ArrowRelationIOFactory.getInstance().registerWriter(ArrowRelationSerializerTeX.getInstance(), &quot;tex&quot;);</span>
+<span class="fc" id="L60">    }</span>
+
+    /**
+     * This class is not designed to be publicly instantiated.
+     */
+<span class="fc" id="L65">    private ArrowRelationSerializerTeX() {</span>
+<span class="fc" id="L66">    }</span>
+
+    /**
+     * Produces the LaTex source code for the array of arrows of this component.
+     *
+     * The LaTeX source produced isn't autonomous. It must be included in a
+     * document.
+     *
+     * @param arrow an arrow relation to write
+     * @param file  a file
+     *
+     * @throws IOException When an IOException occurs
+     */
+    public void write(final ArrowRelation arrow, final BufferedWriter file) throws IOException {
+<span class="fc" id="L80">        final SortedSet&lt;Edge&gt; edges = arrow.getEdges();</span>
+<span class="fc" id="L81">        final TreeSet&lt;Node&gt; m = new TreeSet&lt;Node&gt;();</span>
+<span class="fc" id="L82">        final TreeSet&lt;Node&gt; j = new TreeSet&lt;Node&gt;();</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">        for (final Edge edge : edges) {</span>
+<span class="fc" id="L84">            m.add(edge.getSource());</span>
+<span class="fc" id="L85">            j.add(edge.getTarget());</span>
+<span class="fc" id="L86">        }</span>
+
+<span class="fc" id="L88">        file.write(&quot;\\begin{tabular}{|c|*{&quot;);</span>
+<span class="fc" id="L89">        file.write(String.valueOf(j.size()));</span>
+<span class="fc" id="L90">        file.write(&quot;}{c|}}&quot;);</span>
+<span class="fc" id="L91">        file.newLine();</span>
+
+<span class="fc" id="L93">        this.writeHline(file);</span>
+
+<span class="fc bfc" id="L95" title="All 2 branches covered.">        for (final Node nj : j) {</span>
+<span class="fc" id="L96">            file.write(&quot; &amp; &quot;);</span>
+<span class="fc" id="L97">            file.write(nj.getContent().toString());</span>
+<span class="fc" id="L98">        }</span>
+<span class="fc" id="L99">        this.writeEndOfLine(file);</span>
+
+<span class="fc" id="L101">        this.writeHline(file);</span>
+
+<span class="fc bfc" id="L103" title="All 2 branches covered.">        for (final Node nm : m) {</span>
+<span class="fc" id="L104">            file.write(nm.getContent().toString());</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">            for (final Node nj : j) {</span>
+<span class="fc" id="L106">                final Edge edge = arrow.getEdge(nm, nj);</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">                if (arrow.isUp(edge)) {</span>
+<span class="fc" id="L108">                    file.write(&quot; &amp; $\\uparrow$&quot;);</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">                } else if (arrow.isDown(edge)) {</span>
+<span class="fc" id="L110">                    file.write(&quot; &amp; $\\downarrow$&quot;);</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">                } else if (arrow.isUpDown(edge)) {</span>
+<span class="fc" id="L112">                    file.write(&quot; &amp; $\\updownarrow$&quot;);</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">                } else if (arrow.isCross(edge)) {</span>
+<span class="fc" id="L114">                    file.write(&quot; &amp; $\\times$&quot;);</span>
+                } else {
+<span class="nc" id="L116">                    file.write(&quot; &amp; $\\circ$&quot;);</span>
+                }
+<span class="fc" id="L118">            }</span>
+
+<span class="fc" id="L120">            this.writeEndOfLine(file);</span>
+
+<span class="fc" id="L122">            this.writeHline(file);</span>
+<span class="fc" id="L123">        }</span>
+
+<span class="fc" id="L125">        file.write(&quot;\\end{tabular}&quot;);</span>
+<span class="fc" id="L126">        file.newLine();</span>
+<span class="fc" id="L127">    }</span>
+
+    /**
+     * Write a \hline in LaTeX.
+     *
+     * @param file a file
+     *
+     * @throws IOException When an IOException occurs
+     */
+    private void writeHline(final BufferedWriter file) throws IOException {
+<span class="fc" id="L137">        file.write(&quot;\\hline&quot;);</span>
+<span class="fc" id="L138">        file.newLine();</span>
+<span class="fc" id="L139">    }</span>
+
+    /**
+     * Write a LateX end of line.
+     *
+     * @param file a file
+     *
+     * @throws IOException When an IOException occurs
+     */
+    private void writeEndOfLine(final BufferedWriter file) throws IOException {
+<span class="fc" id="L149">        file.write(&quot;\\\\&quot;);</span>
+<span class="fc" id="L150">        file.newLine();</span>
+<span class="fc" id="L151">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

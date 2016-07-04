@@ -1,0 +1,9 @@
+package org.thegalactic.dgraph.io {
+    class DGraphIOFactory {
+        -DGraphIOFactory instance
+        -DGraphIOFactory()
+        #void init()
+        +{static}DGraphIOFactory getInstance()
+    }
+    org.thegalactic.io.IOFactory <|-- DGraphIOFactory
+}

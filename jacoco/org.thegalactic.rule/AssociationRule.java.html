@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AssociationRule.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lattices</a> &gt; <a href="index.source.html" class="el_package">org.thegalactic.rule</a> &gt; <span class="el_source">AssociationRule.java</span></div><h1>AssociationRule.java</h1><pre class="source lang-java linenums">package org.thegalactic.rule;
+
+/*
+ * AssociationRule.java
+ *
+ * Copyright: 2010-2015 Karell Bertet, France
+ * Copyright: 2015-2016 The Galactic Organization, France
+ *
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
+ * This file is part of java-lattices.
+ * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
+ */
+import java.util.SortedSet;
+
+/**
+ * This class gives a representation for an association rule.
+ *
+ * A rule is composed of a premise and a conclusion that are comparable sets,
+ * i.e. sets of elements that can be sorted by the lectic order defined by class
+ * `ComparableSet`. An association rule extends regular rule with the notion of
+ * support and confidence. The confidence represents the number of observations
+ * for which the rule is true. The support represents the minimum number of
+ * observations for the rule to be relevant.
+ *
+ * @todo do we use composition over inheritance?
+ */
+public class AssociationRule extends Rule {
+
+    /* ------------- FIELDS ------------------ */
+    /**
+     * The confidence of the rule.
+     */
+    private double confidence;
+
+    /**
+     * The support of the rule.
+     */
+    private double support;
+
+    /* ------------- CONSTRUCTORS ------------------ */
+    /**
+     * Constructs a new empty Rule with a empty premise and an empty conclusion.
+     */
+    public AssociationRule() {
+<span class="nc" id="L46">        super();</span>
+<span class="nc" id="L47">    }</span>
+
+    /**
+     * Constructs a new Rule with the premise and the conclusion given in
+     * parameters.
+     *
+     * @param premise    a set of indexed elements
+     * @param conclusion a set of indexed elements
+     */
+    public AssociationRule(final SortedSet&lt;Comparable&gt; premise, final SortedSet&lt;Comparable&gt; conclusion) {
+<span class="nc" id="L57">        super(premise, conclusion);</span>
+<span class="nc" id="L58">    }</span>
+
+    /**
+     * Constructs a new Rule with the premise, the conclusion, the confidence
+     * and the support given in parameters.
+     *
+     * @param premise    a set of indexed elements
+     * @param conclusion a set of indexed elements
+     * @param support    a support value
+     * @param confidence a confidence value
+     */
+    public AssociationRule(
+            final SortedSet&lt;Comparable&gt; premise,
+            final SortedSet&lt;Comparable&gt; conclusion,
+            final double support,
+            final double confidence
+    ) {
+<span class="nc" id="L75">        super(premise, conclusion);</span>
+<span class="nc" id="L76">        this.support = support;</span>
+<span class="nc" id="L77">        this.confidence = confidence;</span>
+<span class="nc" id="L78">    }</span>
+
+    /* ------------- ACCESSORS METHODS ------------------ */
+    /**
+     * Returns the confidence value of the rule.
+     *
+     * @return confidence value
+     */
+    public final double getConfidence() {
+<span class="nc" id="L87">        return this.confidence;</span>
+    }
+
+    /**
+     * Returns the support value of the rule.
+     *
+     * @return support value
+     */
+    public final double getSupport() {
+<span class="nc" id="L96">        return this.support;</span>
+    }
+
+    /* ------------- MODIFICATION METHODS ------------------ */
+    /**
+     * Set the confidence value of the rule.
+     *
+     * @param confidence the confidence value
+     */
+    public final void setConfidence(final double confidence) {
+<span class="nc" id="L106">        this.confidence = confidence;</span>
+<span class="nc" id="L107">    }</span>
+
+    /**
+     * Set the support value of the rule.
+     *
+     * @param support the support value
+     */
+    public final void setSupport(final double support) {
+<span class="nc" id="L115">        this.support = support;</span>
+<span class="nc" id="L116">    }</span>
+
+    /* ------------- OVERRIDEN METHODS ------------------ */
+    /**
+     * Returns a String representation of this component.
+     *
+     * The following format is used:
+     *
+     * ~~~
+     * [premise] -&gt; [conclusion] : s:support/c:confidence
+     * ~~~
+     *
+     * @return a string made of premises followed by -&gt; and the conclusions.
+     */
+    @Override
+    public String toString() {
+<span class="nc" id="L132">        final StringBuilder builder = new StringBuilder();</span>
+<span class="nc" id="L133">        builder.append(super.toString()).append(&quot; : s:&quot;).append(this.support).append(&quot;/c:&quot;).append(this.confidence);</span>
+<span class="nc" id="L134">        return builder.toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

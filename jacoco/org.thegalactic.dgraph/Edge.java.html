@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Edge.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lattices</a> &gt; <a href="index.source.html" class="el_package">org.thegalactic.dgraph</a> &gt; <span class="el_source">Edge.java</span></div><h1>Edge.java</h1><pre class="source lang-java linenums">package org.thegalactic.dgraph;
+
+/*
+ * Edge.java
+ *
+ * Copyright: 2010-2015 Karell Bertet, France
+ * Copyright: 2015-2016 The Galactic Organization, France
+ *
+ * License: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html CeCILL-B license
+ *
+ * This file is part of java-lattices.
+ * You can redistribute it and/or modify it under the terms of the CeCILL-B license.
+ */
+/**
+ * This class gives a standard representation for an edge of a graph.
+ *
+ * An edge is composed of a content, and two nodes
+ *
+ * - `source`
+ * - `target`
+ *
+ * of class {@link Node}.
+ *
+ * This class implements class `Comparable` and provides the {@link #compareTo}
+ * method that compares the edge with those in parameter by sorting indexes of
+ * the nodes that compose it.
+ *
+ * Therefore, edges can be stored in a sorted collection since they are
+ * comparable, and in particular in a sorted set where set operations are
+ * provided.
+ *
+ * ![Edge](Edge.png)
+ *
+ * @param &lt;N&gt;
+ * @param &lt;E&gt;
+ *
+ * @uml Edge.png
+ * !include resources/org/thegalactic/dgraph/Edge.iuml
+ * !include resources/org/thegalactic/dgraph/Node.iuml
+ *
+ * hide members
+ * show Edge members
+ * class Edge #LightCyan
+ * title Edge UML graph
+ */
+public class Edge&lt;N, E&gt; implements Comparable&lt;Edge&lt;N, E&gt;&gt; {
+
+    /*
+     * ------------- FIELDS ---------------------
+     */
+    /**
+     * The source node of the edge.
+     */
+    private final Node&lt;N&gt; source;
+
+    /**
+     * The target node of the edge.
+     */
+    private final Node&lt;N&gt; target;
+
+    /**
+     * An object target store information about this edge.
+     */
+    private E content;
+
+    /*
+     * ------------- CONSTRUCTORS ----------------
+     */
+    /**
+     * Constructs a new edge with the specified node as origin and destination
+     * node, with the specified content.
+     *
+     * @param source  the origin node
+     * @param target  the destination node
+     * @param content the edge content
+     */
+<span class="fc" id="L77">    public Edge(final Node&lt;N&gt; source, final Node&lt;N&gt; target, final E content) {</span>
+<span class="fc" id="L78">        this.source = source;</span>
+<span class="fc" id="L79">        this.target = target;</span>
+<span class="fc" id="L80">        this.content = content;</span>
+<span class="fc" id="L81">    }</span>
+
+    /**
+     * Constructs a new edge with the specified node as origin and destination
+     * node, and a null value as content.
+     *
+     * @param source the origin node
+     * @param target the destination node
+     */
+    public Edge(final Node&lt;N&gt; source, final Node&lt;N&gt; target) {
+<span class="fc" id="L91">        this(source, target, null);</span>
+<span class="fc" id="L92">    }</span>
+
+    /*
+     * -------------- ACCESSORS -------------------
+     */
+    /**
+     * Returns the source node of this edge.
+     *
+     * @return the source node
+     */
+    public final Node&lt;N&gt; getSource() {
+<span class="fc" id="L103">        return this.source;</span>
+    }
+
+    /**
+     * Returns the target node of this edge.
+     *
+     * @return the target node
+     */
+    public final Node&lt;N&gt; getTarget() {
+<span class="fc" id="L112">        return this.target;</span>
+    }
+
+    /**
+     * Replaces the content of this edge with the specified one.
+     *
+     * @param content The edge content
+     *
+     * @return this for chaining
+     */
+    public final Edge&lt;N, E&gt; setContent(final E content) {
+<span class="fc" id="L123">        this.content = content;</span>
+<span class="fc" id="L124">        return this;</span>
+    }
+
+    /**
+     * Returns the content this edge.
+     *
+     * @return the content
+     */
+    public final E getContent() {
+<span class="fc" id="L133">        return this.content;</span>
+    }
+
+    /**
+     * Returns true if content of this edge is not the null value.
+     *
+     * @return true if the content is not null
+     */
+    public final boolean hasContent() {
+<span class="fc bfc" id="L142" title="All 2 branches covered.">        return this.content != null;</span>
+    }
+
+    /*
+     * ------------- METHODS ------------------
+     */
+    /**
+     * Compares this edge with the specified one.
+     *
+     * @param object The object target be tested with
+     *
+     * @return true or false as this node is equal target the specified object.
+     */
+    @Override
+    public boolean equals(final Object object) {
+<span class="pc bpc" id="L157" title="2 of 6 branches missed.">        return this == object || object != null &amp;&amp; this.getClass() == object.getClass()</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">                &amp;&amp; this.compareTo((Edge&lt;N, E&gt;) object) == 0;</span>
+    }
+
+    /**
+     * Compute the hash code.
+     *
+     * @return an integer representing the object
+     */
+    @Override
+    public int hashCode() {
+<span class="fc" id="L168">        return 1013 * this.source.hashCode() ^ 1009 * this.target.hashCode();</span>
+    }
+
+    /**
+     * Compares this edge with those in parameter, based on their identifiers.
+     *
+     * The result is zero if the identifiers are equal; positive if this edge's
+     * identifier is greater, and negative otherwise.
+     *
+     * This comparison method is needed target define a natural ordering. It
+     * allows target use objects of this class in a sorted collection
+     *
+     * @param edge the specified element target be compared with this edge
+     *
+     * @return a negative integer, zero, or a positive integer as this edge is
+     *         less than, equal target, or greater than the specified object.
+     */
+    public final int compareTo(final Edge&lt;N, E&gt; edge) {
+<span class="fc" id="L186">        int cmp = this.source.compareTo(edge.source);</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">        if (cmp == 0) {</span>
+<span class="fc" id="L188">            cmp = this.target.compareTo(edge.target);</span>
+        }
+<span class="fc" id="L190">        return cmp;</span>
+    }
+
+    /**
+     * Returns a String representation of this edge.
+     *
+     * @return The string representation of this edge
+     */
+    @Override
+    public String toString() {
+<span class="fc" id="L200">        final StringBuilder builder = new StringBuilder();</span>
+<span class="fc" id="L201">        builder.append('[');</span>
+<span class="fc" id="L202">        this.appendNode(builder, this.source);</span>
+<span class="fc" id="L203">        builder.append(&quot;]-&quot;);</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">        if (this.hasContent()) {</span>
+<span class="fc" id="L205">            builder.append('(').append(this.content).append(&quot;)-&quot;);</span>
+        }
+<span class="fc" id="L207">        builder.append(&quot;&gt;[&quot;);</span>
+<span class="fc" id="L208">        this.appendNode(builder, this.target);</span>
+<span class="fc" id="L209">        builder.append(']');</span>
+<span class="fc" id="L210">        return builder.toString();</span>
+    }
+
+    /**
+     * Append the string representation of a node to the StringBuilder.
+     *
+     * @param builder StringBuilder
+     * @param node    Node
+     */
+    private void appendNode(final StringBuilder builder, final Node node) {
+<span class="fc" id="L220">        builder.append(node.toString().replaceAll(&quot;[^\\w ]&quot;, &quot;&quot;));</span>
+<span class="fc" id="L221">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
