@@ -1,5 +1,7 @@
 package org.thegalactic.descriptionset;
 
+import org.thegalactic.lattice.ConceptLattice;
+
 public class TestDescriptionSet {
 
 	public static void main(String[] args) {
@@ -55,6 +57,10 @@ public class TestDescriptionSet {
 			System.out.println();
 
 			System.out.println(context.allDescriptionClosures());
+			
+			ConceptLattice cl = ConceptLattice.completeDescriptionLatticeLattice(context);
+			System.out.println(cl);
+			
 		}	
 		
 		catch(Exception e){

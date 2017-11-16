@@ -2,7 +2,7 @@ package org.thegalactic.descriptionset;
 
 import java.util.TreeSet;
 
-import org.thegalactic.lattice.Concept;
+import org.thegalactic.dgraph.Node;
 import org.thegalactic.util.ComparableSet;
 
 /**
@@ -14,7 +14,7 @@ import org.thegalactic.util.ComparableSet;
  *
  * @param <E> the type of the descriptions.
  */
-public class DescriptionSetConcept<E extends Description> {
+public class DescriptionSetConcept<E extends Description> extends Node{
 
 		 /*
 	     * ------------- ATTRIBUTES ------------------
@@ -186,7 +186,7 @@ public class DescriptionSetConcept<E extends Description> {
      * @param set the observations set
      * @return true if the specified observation set is included in the extent.
      */
-    public boolean allIncludedInIntent(ComparableSet<String> set){
+    public boolean allIncludedInExtent(ComparableSet<String> set){
     	if(extent.containsAll(set)){
     		return true;
     	}
