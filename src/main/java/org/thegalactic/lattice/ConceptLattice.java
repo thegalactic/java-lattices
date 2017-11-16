@@ -123,7 +123,7 @@ public class ConceptLattice extends Lattice {
     /*
      * -------- STATIC CLOSEDSET LATTICE GENERATION FROM AN ImplicationalSystem OR A CONTEXT ------------------
      */
-    
+
     /**
      * Generates and returns the complete (i.e. transitively closed) closed set
      * lattice of the specified closure system, that can be an implicational
@@ -141,7 +141,7 @@ public class ConceptLattice extends Lattice {
     public static ConceptLattice completeLattice(ClosureSystem init) {
         ConceptLattice lattice = new ConceptLattice();
         // compute all the closed set with allClosures
-        
+
         Vector<Concept> allclosure = init.allClosures();
         for (Concept cl : allclosure) {
             lattice.addNode(cl);
@@ -158,23 +158,23 @@ public class ConceptLattice extends Lattice {
         // Hasse diagram is computed
         return lattice;
     }
-    
+
     /**
      * Computes the Complete Lattice of descriptionSets.
      * Based on nextClosure()
-     * 
+     *
      * @param init a closure system representing description sets
      * @return the complete lattice
      */
     public static ConceptLattice completeDescriptionLatticeLattice(DescriptionSetClosureSystem init) {
         ConceptLattice lattice = new ConceptLattice();
         // compute all the closed set with allClosures
-        
+
         Vector<DescriptionSetConcept> allclosure = init.allDescriptionClosures();
         for (DescriptionSetConcept cl : allclosure) {
             lattice.addNode(cl);
         }
-        
+
         // an edge corresponds to an inclusion between two closed sets
         for (Object source : lattice.getNodes()) {
             for (Object target : lattice.getNodes()) {
@@ -186,8 +186,7 @@ public class ConceptLattice extends Lattice {
         // Hasse diagram is computed
         return lattice;
     }
-    
-    
+
 
     /**
      * Generates and returns the Hasse diagram of the closed set lattice of the
