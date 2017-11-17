@@ -42,6 +42,9 @@ public class AttributeDescriptionSet extends ComparableDescriptionSet<AttributeD
      * Not verified.
      *
      * Compares two attribute sets (AttributeDescription) depending on the lectic order.
+     * If the current attribute set is the bottom concept intent, it returns -1,
+     * If the specified attribute set is the bottom concept intent, it returns 1,
+     * unless the two sets both represent the bottom concept intent, therefore it returns 0.
      *
      * Each AttributeDescriptionSet contains only one attribute set, i.e., an AttributeDescription.
      * The compareTo is performed on each set of the two AttributeDescriptionSets.
@@ -52,6 +55,15 @@ public class AttributeDescriptionSet extends ComparableDescriptionSet<AttributeD
      *          according to the lectic order.
      */
     public int compareTo(ComparableDescriptionSet<AttributeDescription> set) {
+
+        // handling special case of bottom concept intent
+        if (this.isBot() && set.isBot()) {
+            return 0;
+        } else if (this.isBot()) {
+            return -1;
+        } else if (set.isBot()) {
+            return 1;
+        }
 
         // attribute set of the current AttributeDescriptionSet
         TreeSet<Comparable> currentSet = new TreeSet<Comparable>();
@@ -112,7 +124,14 @@ public class AttributeDescriptionSet extends ComparableDescriptionSet<AttributeD
      * @return true if the current attribute set is included in the specified one, else false
      */
     public boolean isIncludedIn(ComparableDescriptionSet<AttributeDescription> set) {
-        return (set.first().getValue().containsAll(this.first().getValue()));
+
+        if (set.isBot()) {
+            return true; // everything is included in the bottom concept
+        } else if (this.isBot()) {
+            return false; // the bottom concept is included in nothing
+        } else {
+            return (set.first().getValue().containsAll(this.first().getValue()));
+        }
     }
 
     @Override
@@ -126,7 +145,11 @@ public class AttributeDescriptionSet extends ComparableDescriptionSet<AttributeD
      *             else false.
      */
     public boolean includes(AttributeDescription desc) {
-        return (this.first().getValue().contains(desc.getValue()));
+        if (this.isBot()) {
+            return true; // everything is included in the bottom concept
+        } else {
+            return (this.first().getValue().contains(desc.getValue()));
+        }
     }
 
     @Override
@@ -141,6 +164,13 @@ public class AttributeDescriptionSet extends ComparableDescriptionSet<AttributeD
      */
     public ComparableDescriptionSet<AttributeDescription> getSimilarity(
             ComparableDescriptionSet<AttributeDescription> set) {
+
+        // handling special case of bottom concept intent
+        if (this.isBot()) {
+            return set.clone();
+        } else if (set.isBot()) {
+            return this.clone();
+        }
 
         // buffer for the intersection
         TreeSet<String> intersection = new TreeSet<String>();
@@ -161,9 +191,38 @@ public class AttributeDescriptionSet extends ComparableDescriptionSet<AttributeD
         return new AttributeDescriptionSet(ad);
     }
 
+    @Override
+    /**
+     * Returns true if the current attribute description set represents the bottom concept intent.
+     * The bottom intent is an attribute description containing '*' only.
+     *
+     * @return true if the current attribute description represents BOT intent
+     */
+    public boolean isBot() {
+        if (this.first().getValue().isEmpty()) {
+            return false; // if the attribute set is empty, it is not the bottom concept
+        } else {
+            return (this.first().getValue().first().equals("*"));
+        }
+    }
+
+    @Override
+    /**
+     * The bottom concept intent is an attribute description containing '*' in its attribute set.
+     */
+    public void setBot() {
+        AttributeDescription ad = new AttributeDescription();
+        TreeSet<String> attSet = new TreeSet<String>();
+        attSet.add("*");
+        ad.setValue(attSet);
+        this.clear();
+        this.add(ad);
+    }
+
      @Override
      /**
      * Compares the two AttributeDescriptionSets.
+     * Works for bottom concept.
      *
      * @return true if the two AttributeDescriptions
      *             contained in the two AttributeDescriptionSets

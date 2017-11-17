@@ -5,7 +5,7 @@ import java.util.TreeSet;
 import org.thegalactic.util.ComparableSet;
 
 /**
- * This class allows to manage set of descriptions as a pattern.
+ * This class allows to manage set of descriptions as a patterns.
  * The descriptions in the description set have to be of the same type E.
  *
  * Description sets should be ordered by lectic order (to be defined with CompareTo).
@@ -16,6 +16,8 @@ import org.thegalactic.util.ComparableSet;
  *  - {@link #isIncludedIn(ComparableDescriptionSet)} returning true if the current description set is
  *      included in the specified one, else false (define the subsumption relation).
  *  - {@link #includes(E)} returning true if the specified description is in the description set.
+ *  - {@link #setBot()} initialising the description set to represents to bottom concept intent.
+ *  - {@link #isBot()} returning true if the description represents to bottom concept intent.
  *
  *  The super class ComparableSet initially took binary attributes arbitrary ordered.
  *
@@ -75,6 +77,8 @@ public abstract class ComparableDescriptionSet<E extends Description> extends Co
     public static ComparableDescriptionSet create(String type) {
         if (type.equals("attribute")) {
             return new AttributeDescriptionSet(new TreeSet<AttributeDescription>());
+        } else if (type.equals("interval")) {
+            return new IntervalDescriptionSet(new TreeSet<IntervalDescription>());
         } else {
             return null;
         }
@@ -124,6 +128,18 @@ public abstract class ComparableDescriptionSet<E extends Description> extends Co
      * @return the similarity of the current description set and the specified one.
      */
     public abstract ComparableDescriptionSet<E> getSimilarity(final ComparableDescriptionSet<E> set);
+
+    /**
+     * Returns true if the comparable set represents the bottom concept intent, else false.
+     *
+     * @return true if the comparable set represents the bottom concept intent, else false
+     */
+    public abstract boolean isBot();
+
+    /**
+     * Initialises the description set as the bottom concept intent.
+     */
+    public abstract void setBot();
 
         /*
          * ------------- IMPLEMENTED METHODS ------------------

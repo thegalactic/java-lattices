@@ -1,5 +1,4 @@
 package org.thegalactic.descriptionset;
-
 /**
  * List of implemented description type.
  *
@@ -10,5 +9,9 @@ public enum DescriptionType {
     /**
      * Description type for attribute sets.
      */
-     attributeSet;
+     attributeSet,
+    /**
+     * Description type for intervals.
+     */
+    interval;
 }

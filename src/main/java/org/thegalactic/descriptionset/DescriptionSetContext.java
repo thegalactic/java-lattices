@@ -27,7 +27,7 @@ import org.thegalactic.util.ComparableSet;
  * *************
  *
  * The computation of all closures is based on nextClosure() algorithm.
- * nextClosure() rely on observation closures, so it works for all kinds of descriptions.
+ * nextClosure() relies on observation closures, so it works for all kinds of descriptions.
  *
  * @author Jessie Carbonnel
  *
@@ -209,7 +209,7 @@ public class DescriptionSetContext<F extends Description> extends DescriptionSet
             exception.printStackTrace();
         }
 
-            // Computing all description sets
+        // Computing all description sets
 
         computeAllDescriptionSets();
 
@@ -401,6 +401,12 @@ public class DescriptionSetContext<F extends Description> extends DescriptionSet
         allDescriptionSets = new Vector<ComparableDescriptionSet<F>>();
         allDescriptionSets.addAll(initialDescriptionSets);
 
+            // adds the description set representing the bottom concept intent
+
+        ComparableDescriptionSet<F> bot = ComparableDescriptionSet.create(type);
+        bot.setBot();
+        allDescriptionSets.add(bot);
+
             // vector that will contain the computed similarities of the description set
             // At each new steps
 
@@ -437,7 +443,7 @@ public class DescriptionSetContext<F extends Description> extends DescriptionSet
 
             stepn.removeAll(allDescriptionSets);
 
-                // if no new descriptions
+            // if no new descriptions
 
             if (stepn.size() == 0) {
 
@@ -473,6 +479,8 @@ public class DescriptionSetContext<F extends Description> extends DescriptionSet
 
     /**
      * Returns the most specific description set corresponding to a set of observations.
+     * If the set of observations is emptu, returns the description set representing the
+     * bottom concept intent.
      *
      * @param observations a set of observations
      * @return the most specific description set corresponding to the observations
@@ -483,10 +491,8 @@ public class DescriptionSetContext<F extends Description> extends DescriptionSet
 
         if (observations.isEmpty()) {
             ComparableDescriptionSet<F> cds = ComparableDescriptionSet.create(type);
-            F desc = (F) Description.create(type);
-            desc.initFromDescriptionSetContext("D");
-            cds.add(desc);
-            return cds;
+            cds.setBot();
+            return cds.clone();
         }
 
             // computes the similarity of the description sets

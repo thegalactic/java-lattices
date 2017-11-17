@@ -70,6 +70,8 @@ public abstract class Description<E> implements Comparable<Description<E>> {
     public static Description create(String type) {
         if (type.equals("attribute")) {
             return new AttributeDescription();
+        } else if (type.equals("interval")) {
+            return new IntervalDescription();
         } else {
             System.err.println("Unknow description type: " + type);
             return null;
@@ -147,10 +149,4 @@ public abstract class Description<E> implements Comparable<Description<E>> {
         return value.toString();
     }
 }
-
-
-
-
-
-
 
